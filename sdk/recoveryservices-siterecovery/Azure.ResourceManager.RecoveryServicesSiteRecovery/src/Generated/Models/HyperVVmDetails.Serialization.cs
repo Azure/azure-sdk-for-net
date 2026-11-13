@@ -7,16 +7,56 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVVmDetails : IUtf8JsonSerializable, IJsonModel<HyperVVmDetails>
+    /// <summary> Single Host fabric provider specific VM settings. </summary>
+    public partial class HyperVVmDetails : SiteRecoveryReplicationProviderSettings, IJsonModel<HyperVVmDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVVmDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SiteRecoveryReplicationProviderSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHyperVVmDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVVmDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVVmDetails IPersistableModel<HyperVVmDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVVmDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HyperVVmDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVVmDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +68,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SourceItemId))
             {
@@ -54,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("diskDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in DiskDetails)
+                foreach (SiteRecoveryDiskDetails item in DiskDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -82,164 +121,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        HyperVVmDetails IJsonModel<HyperVVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVVmDetails IJsonModel<HyperVVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVVmDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SiteRecoveryReplicationProviderSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVVmDetails(document.RootElement, options);
         }
 
-        internal static HyperVVmDetails DeserializeHyperVVmDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVVmDetails DeserializeHyperVVmDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element, options);
+                    case "VmmVirtualMachine":
+                        return VmmVmDetails.DeserializeVmmVmDetails(element, options);
                 }
             }
-            string sourceItemId = default;
-            string generation = default;
-            SiteRecoveryOSDetails osDetails = default;
-            IReadOnlyList<SiteRecoveryDiskDetails> diskDetails = default;
-            HyperVVmDiskPresenceStatus? hasPhysicalDisk = default;
-            HyperVVmDiskPresenceStatus? hasFibreChannelAdapter = default;
-            HyperVVmDiskPresenceStatus? hasSharedVhd = default;
-            string hyperVHostId = default;
-            string instanceType = "HyperVVirtualMachine";
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("sourceItemId"u8))
-                {
-                    sourceItemId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("generation"u8))
-                {
-                    generation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("osDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("diskDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item, options));
-                    }
-                    diskDetails = array;
-                    continue;
-                }
-                if (property.NameEquals("hasPhysicalDisk"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hasPhysicalDisk = new HyperVVmDiskPresenceStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("hasFibreChannelAdapter"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hasFibreChannelAdapter = new HyperVVmDiskPresenceStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("hasSharedVhd"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hasSharedVhd = new HyperVVmDiskPresenceStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("hyperVHostId"u8))
-                {
-                    hyperVHostId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HyperVVmDetails(
-                instanceType,
-                serializedAdditionalRawData,
-                sourceItemId,
-                generation,
-                osDetails,
-                diskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>(),
-                hasPhysicalDisk,
-                hasFibreChannelAdapter,
-                hasSharedVhd,
-                hyperVHostId);
+            return UnknownHyperVVmDetails.DeserializeUnknownHyperVVmDetails(element, options);
         }
-
-        BinaryData IPersistableModel<HyperVVmDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HyperVVmDetails IPersistableModel<HyperVVmDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHyperVVmDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HyperVVmDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,30 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Datastore SAS secrets. </summary>
     public partial class MachineLearningSasDatastoreSecrets : MachineLearningDatastoreSecrets
     {
+        private string _sasToken;
+        private bool _sasTokenIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningSasDatastoreSecrets"/>. </summary>
-        public MachineLearningSasDatastoreSecrets()
+        public MachineLearningSasDatastoreSecrets() : base(SecretsType.Sas)
         {
-            SecretsType = SecretsType.Sas;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSasDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sasToken"> Storage container SAS token. </param>
-        internal MachineLearningSasDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string sasToken) : base(secretsType, serializedAdditionalRawData)
+        internal MachineLearningSasDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sasToken) : base(secretsType, additionalBinaryDataProperties)
         {
-            SasToken = sasToken;
-            SecretsType = secretsType;
+            _sasToken = sasToken;
         }
 
         /// <summary> Storage container SAS token. </summary>
         [WirePath("sasToken")]
-        public string SasToken { get; set; }
+        public string SasToken
+        {
+            get
+            {
+                return _sasToken;
+            }
+            set
+            {
+                _sasToken = value;
+                _sasTokenIsDefined = true;
+            }
+        }
     }
 }

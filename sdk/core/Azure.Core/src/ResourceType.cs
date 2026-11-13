@@ -10,7 +10,7 @@ namespace Azure.Core
     /// Structure representing a resource type.
     /// </summary>
     /// <remarks> See https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types for more info. </remarks>
-    public readonly struct ResourceType : IEquatable<ResourceType>
+    public readonly struct ResourceType : IEquatable<ResourceType>, IComparable<ResourceType>
     {
         internal static ResourceType Tenant = new ResourceType(ResourceNamespace, "tenants", "Microsoft.Resources/tenants");
         internal static ResourceType Subscription = new ResourceType(ResourceNamespace, "subscriptions", "Microsoft.Resources/subscriptions");
@@ -76,8 +76,13 @@ namespace Azure.Core
         /// Implicit operator for initializing a <see cref="ResourceType"/> instance from a string.
         /// </summary>
         /// <param name="resourceType"> String to be converted into a <see cref="ResourceType"/> object. </param>
-        public static implicit operator ResourceType(string resourceType)
+        public static implicit operator ResourceType(string? resourceType)
         {
+            if (resourceType is null)
+            {
+                return default;
+            }
+
             return new ResourceType(resourceType);
         }
 
@@ -120,6 +125,12 @@ namespace Azure.Core
         public bool Equals(ResourceType other)
         {
             return string.Equals(_stringValue, other._stringValue, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <inheritdoc/>
+        public int CompareTo(ResourceType other)
+        {
+            return string.Compare(_stringValue, other._stringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>

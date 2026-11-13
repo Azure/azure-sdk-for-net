@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The solution builder extension (SBE) partner deployment info for cluster. </summary>
     public partial class SbePartnerInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SbePartnerInfo"/>. </summary>
         public SbePartnerInfo()
@@ -56,21 +28,23 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sbeDeploymentInfo"> SBE package and manifest information for the solution Builder Extension staged for AzureStackHCI cluster deployment. </param>
         /// <param name="partnerProperties"> List of SBE partner properties for AzureStackHCI cluster deployment. </param>
         /// <param name="credentialList"> SBE credentials list for AzureStackHCI cluster deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SbePartnerInfo(SbeDeploymentInfo sbeDeploymentInfo, IList<SbePartnerProperties> partnerProperties, IList<SbeCredentials> credentialList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SbePartnerInfo(SbeDeploymentInfo sbeDeploymentInfo, IList<SbePartnerProperties> partnerProperties, IList<SbeCredentials> credentialList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SbeDeploymentInfo = sbeDeploymentInfo;
             PartnerProperties = partnerProperties;
             CredentialList = credentialList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SBE package and manifest information for the solution Builder Extension staged for AzureStackHCI cluster deployment. </summary>
         [WirePath("sbeDeploymentInfo")]
         public SbeDeploymentInfo SbeDeploymentInfo { get; set; }
+
         /// <summary> List of SBE partner properties for AzureStackHCI cluster deployment. </summary>
         [WirePath("partnerProperties")]
         public IList<SbePartnerProperties> PartnerProperties { get; }
+
         /// <summary> SBE credentials list for AzureStackHCI cluster deployment. </summary>
         [WirePath("credentialList")]
         public IList<SbeCredentials> CredentialList { get; }

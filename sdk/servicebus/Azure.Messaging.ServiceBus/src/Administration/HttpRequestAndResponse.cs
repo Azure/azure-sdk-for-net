@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 
         internal void ThrowIfRequestFailed(Request request, Response response)
         {
-            if ((response.Status >= 200) && (response.Status < 400))
+            if (response.Status is >= 200 and < 400)
             {
                 return;
             }
@@ -132,7 +132,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 scope = Constants.DefaultScope;
             }
-            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext(new[] { scope }), CancellationToken.None).ConfigureAwait(false);
+            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext([scope]), CancellationToken.None).ConfigureAwait(false);
             return token.Token;
         }
 
@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 var token = await GetTokenAsync(forwardTo).ConfigureAwait(false);
                 request.Headers.Add(
                     AdministrationClientConstants.ServiceBusSupplementartyAuthorizationHeaderName,
-                    credential.IsSharedAccessCredential ? token : $"Bearer { token }");
+                    credential.IsSharedAccessCredential ? token : $"Bearer {token}");
             }
 
             if (!string.IsNullOrWhiteSpace(fwdDeadLetterTo))
@@ -234,7 +234,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 var token = await GetTokenAsync(fwdDeadLetterTo).ConfigureAwait(false);
                 request.Headers.Add(
                     AdministrationClientConstants.ServiceBusDlqSupplementaryAuthorizationHeaderName,
-                    credential.IsSharedAccessCredential ? token : $"Bearer { token }");
+                    credential.IsSharedAccessCredential ? token : $"Bearer {token}");
             }
 
             Response response = await SendHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);

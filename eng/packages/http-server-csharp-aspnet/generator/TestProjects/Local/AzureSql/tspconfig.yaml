@@ -1,0 +1,5 @@
+emit:
+  - "@azure-typespec/http-server-csharp-aspnet"
+options:
+  "@azure-typespec/http-server-csharp-aspnet":
+    package-name: "Azure.TypeSpec.Generator.AspNetServer.AzureSql"

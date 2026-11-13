@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridCompute
 {
+    /// <summary></summary>
     public partial class HybridComputeMachineExtensionResource : IJsonModel<HybridComputeMachineExtensionData>
     {
-        private static HybridComputeMachineExtensionData s_dataDeserializationInstance;
-        private static HybridComputeMachineExtensionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HybridComputeMachineExtensionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HybridComputeMachineExtensionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HybridComputeMachineExtensionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridComputeMachineExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeMachineExtensionData>)Data).Write(writer, options);
 
-        HybridComputeMachineExtensionData IJsonModel<HybridComputeMachineExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeMachineExtensionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridComputeMachineExtensionData IJsonModel<HybridComputeMachineExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HybridComputeMachineExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputeMachineExtensionData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HybridComputeMachineExtensionData IPersistableModel<HybridComputeMachineExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputeMachineExtensionData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        string IPersistableModel<HybridComputeMachineExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputeMachineExtensionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridComputeMachineExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

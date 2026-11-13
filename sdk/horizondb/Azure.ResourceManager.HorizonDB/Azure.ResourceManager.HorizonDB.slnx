@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.HorizonDB.csproj" />
+  <Project Path="tests/Azure.ResourceManager.HorizonDB.Tests.csproj" />
+</Solution>

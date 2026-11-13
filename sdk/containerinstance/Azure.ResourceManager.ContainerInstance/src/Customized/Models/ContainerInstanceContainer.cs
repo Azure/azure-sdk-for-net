@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -8,6 +8,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
+    // Backward compatibility: the old SDK had a 3-param constructor taking (name, image, resources).
+    // The new generator produces a different constructor signature.
     public partial class ContainerInstanceContainer
     {
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/>. </summary>
@@ -24,11 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
             Name = name;
             Image = image;
-            Command = new ChangeTrackingList<string>();
-            Ports = new ChangeTrackingList<ContainerPort>();
-            EnvironmentVariables = new ChangeTrackingList<ContainerEnvironmentVariable>();
             Resources = resources;
-            VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
     }
 }

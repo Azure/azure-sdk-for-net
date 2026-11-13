@@ -406,7 +406,7 @@ The result we declared an `IAsyncEnumerable<T>` in the previous example was actu
 // set this to already existing continuation token to pick up where you previously left off
 string initialContinuationToken = null;
 AsyncPageable<BlobItem> results = containerClient.GetBlobsAsync();
-IAsyncEnumerable<Page<BlobItem>> pages =  results.AsPages(initialContinuationToken);
+IAsyncEnumerable<Page<BlobItem>> pages = results.AsPages(initialContinuationToken);
 
 // the foreach loop requests the next page of results every loop
 // you do not need to explicitly access the continuation token just to get the next page
@@ -446,7 +446,12 @@ v12
 
 v12 has explicit methods for listing by hierarchy.
 ```C# Snippet:SampleSnippetsBlobMigration_ListHierarchy
-IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
+GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+{
+    Prefix = blobPrefix,
+    Delimiter = delimiter
+};
+IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(options);
 await foreach (BlobHierarchyItem item in results)
 {
     MyConsumeBlobItemFunc(item);
@@ -810,7 +815,7 @@ V12
 
 ```C# Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 Stream targetStream = new MemoryStream();
 await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SourceControlDeploymentState : IEquatable<SourceControlDeploymentState>
     {
         private readonly string _value;
+        /// <summary> In_Progress. </summary>
+        private const string InProgressValue = "In_Progress";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Queued. </summary>
+        private const string QueuedValue = "Queued";
+        /// <summary> Canceling. </summary>
+        private const string CancelingValue = "Canceling";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlDeploymentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlDeploymentState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InProgressValue = "In_Progress";
-        private const string CompletedValue = "Completed";
-        private const string QueuedValue = "Queued";
-        private const string CancelingValue = "Canceling";
+            _value = value;
+        }
 
         /// <summary> In_Progress. </summary>
         public static SourceControlDeploymentState InProgress { get; } = new SourceControlDeploymentState(InProgressValue);
+
         /// <summary> Completed. </summary>
         public static SourceControlDeploymentState Completed { get; } = new SourceControlDeploymentState(CompletedValue);
+
         /// <summary> Queued. </summary>
         public static SourceControlDeploymentState Queued { get; } = new SourceControlDeploymentState(QueuedValue);
+
         /// <summary> Canceling. </summary>
         public static SourceControlDeploymentState Canceling { get; } = new SourceControlDeploymentState(CancelingValue);
+
         /// <summary> Determines if two <see cref="SourceControlDeploymentState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlDeploymentState left, SourceControlDeploymentState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlDeploymentState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlDeploymentState left, SourceControlDeploymentState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlDeploymentState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlDeploymentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlDeploymentState(string value) => new SourceControlDeploymentState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlDeploymentState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlDeploymentState?(string value) => value == null ? null : new SourceControlDeploymentState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlDeploymentState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlDeploymentState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

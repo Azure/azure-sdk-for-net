@@ -28,6 +28,7 @@ The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.C
 - Exceptions for reporting errors from service requests in a consistent fashion. (`RequestFailedException`).
 - Customizing requests (`RequestContext`).
 - Abstractions for representing Azure SDK credentials. (`TokenCredentials`).
+- Authenticating Azure SDK clients to Microsoft Entra ID using token-based credential types without a separate package dependency. `DefaultAzureCredential`, `ManagedIdentityCredential`, and all other credential types from the `Azure.Identity` package are included in `Azure.Core`, starting with version 1.53.0.
 
 Below, you will find sections explaining these shared concepts in more detail.
 
@@ -49,6 +50,29 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Examples
 
 **NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`.
+
+### Authenticating with AKS identity bindings
+
+AKS identity binding support in `WorkloadIdentityCredential` is generally available
+in Azure.Core 1.64.0 and later. The credential is provided by Azure.Core and retains
+the `Azure.Identity` namespace; a separate Azure.Identity package is not required.
+Identity binding is opt-in and does not require an experimental diagnostic suppression:
+
+```C# Snippet:WorkloadIdentityCredentialWithIdentityBinding
+var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
+{
+    IsAzureProxyEnabled = true  // Enable identity binding mode
+});
+```
+
+`IsAzureProxyEnabled` defaults to `false`. Follow the
+[AKS identity binding setup instructions](https://learn.microsoft.com/azure/aks/identity-bindings)
+to configure the binding, service-account permissions, and workload identity
+webhook settings. Enabling the SDK option does not create resources or grant
+permission to use the managed identity. Use `WorkloadIdentityCredential` directly;
+this mode is not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`.
+The [Azure.Core live tests](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/tests/IdentityBinding/WorkloadIdentityBindingTests.md) describe validation
+against real AKS resources.
 
 ### Configuring Service Clients Using `ClientOptions`
 
@@ -224,7 +248,7 @@ var mockValue = SecretModelFactory.KeyVaultSecret(
 var mock = new Mock<SecretClient>();
 
 // Setup client method
-mock.Setup(c => c.GetSecret("Name", null, default))
+mock.Setup(c => c.GetSecret("Name", null, null, default))
     .Returns(Response.FromValue(mockValue, mockResponse.Object));
 
 // Use the client mock
@@ -233,6 +257,24 @@ KeyVaultSecret secret = client.GetSecret("Name");
 ```
 
 More on mocking in [Unit testing and mocking with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking).
+
+### Authenticating Service Clients
+
+Starting with Azure.Core 1.53.0, all credential types previously in `Azure.Identity` are available directly from the Azure service client libraries, which all take a dependency on `Azure.Core`:
+
+```C# Snippet:AzureCoreDefaultCredential
+// No Azure.Identity package reference required for client libraries that depend on Azure.Core 1.53.0+
+var credential = new DefaultAzureCredential();
+var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+```
+
+#### Managed identities on Azure Arc
+
+On [Azure Arc-enabled servers](https://learn.microsoft.com/azure/azure-arc/servers/managed-identity-authentication) with user-assigned managed identity support, `ManagedIdentityCredential` supports both system-assigned and user-assigned identities. Select an attached user-assigned identity with `ManagedIdentityId.FromUserAssignedClientId`, `ManagedIdentityId.FromUserAssignedResourceId`, or `ManagedIdentityId.FromUserAssignedObjectId`.
+
+`DefaultAzureCredential` supports selecting an Arc user-assigned identity through `DefaultAzureCredentialOptions.ManagedIdentityClientId` (also defaulted from `AZURE_CLIENT_ID`) or `ManagedIdentityResourceId`. Configure only one selector. Without a selector, the system-assigned identity is used.
+
+These credentials remain in the `Azure.Identity` namespace and are included in `Azure.Core`; no separate Azure.Identity package is required. User-assigned authentication requires a compatible Arc agent and an identity assigned to the host. If the host does not honor the selected identity or the identity is not assigned, authentication fails rather than silently falling back to the system-assigned identity.
 
 ## Distributed tracing with OpenTelemetry
 

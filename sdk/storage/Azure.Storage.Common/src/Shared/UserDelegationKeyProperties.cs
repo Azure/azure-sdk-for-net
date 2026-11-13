@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.Net;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.Storage.Sas
 {
@@ -32,6 +33,9 @@ namespace Azure.Storage.Sas
         // skv
         internal string Version { get; set; }
 
+        // skdutid
+        public string DelegatedUserTenantId { get; set; }
+
         /// <summary>
         /// Builds up the UserDelegationKey portion of the SAS query parameter string.
         /// </summary>
@@ -49,12 +53,12 @@ namespace Azure.Storage.Sas
 
             if (StartsOn != DateTimeOffset.MinValue)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(StartsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture)));
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(StartsOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture)));
             }
 
             if (ExpiresOn != DateTimeOffset.MinValue)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture)));
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(ExpiresOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture)));
             }
 
             if (!string.IsNullOrWhiteSpace(Service))
@@ -65,6 +69,11 @@ namespace Azure.Storage.Sas
             if (!string.IsNullOrWhiteSpace(Version))
             {
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyVersion, Version);
+            }
+
+            if (!string.IsNullOrWhiteSpace(DelegatedUserTenantId))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyDelegatedUserTenantId, DelegatedUserTenantId);
             }
         }
     }

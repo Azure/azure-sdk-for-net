@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct EsuKeyState : IEquatable<EsuKeyState>
     {
         private readonly string _value;
+        /// <summary> Inactive. </summary>
+        private const string InactiveValue = "Inactive";
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
 
         /// <summary> Initializes a new instance of <see cref="EsuKeyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EsuKeyState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InactiveValue = "Inactive";
-        private const string ActiveValue = "Active";
+            _value = value;
+        }
 
         /// <summary> Inactive. </summary>
         public static EsuKeyState Inactive { get; } = new EsuKeyState(InactiveValue);
+
         /// <summary> Active. </summary>
         public static EsuKeyState Active { get; } = new EsuKeyState(ActiveValue);
+
         /// <summary> Determines if two <see cref="EsuKeyState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EsuKeyState left, EsuKeyState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EsuKeyState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EsuKeyState left, EsuKeyState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EsuKeyState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EsuKeyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EsuKeyState(string value) => new EsuKeyState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EsuKeyState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EsuKeyState?(string value) => value == null ? null : new EsuKeyState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EsuKeyState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EsuKeyState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

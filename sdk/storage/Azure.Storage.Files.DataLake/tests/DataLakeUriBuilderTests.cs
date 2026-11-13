@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -73,6 +75,90 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("path", dataLakeUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual("", dataLakeUriBuilder.Snapshot);
             Assert.IsNull(dataLakeUriBuilder.Sas);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_UserDelegationSasKeyTimes_RoundTrip()
+        {
+            string skt = "2026-01-01T10:00:00Z";
+            string ske = "2026-01-01T12:00:00Z";
+            string se = "2026-01-01T13:00:00Z";
+            string uriString =
+                "https://account.dfs.core.windows.net/filesystem/path" +
+                "?skoid=oid&sktid=tid&skt=" + Uri.EscapeDataString(skt) + "&ske=" + Uri.EscapeDataString(ske) + "&sks=b&skv=2022-11-02" +
+                "&sp=r&sr=b&sv=2022-11-02&se=" + Uri.EscapeDataString(se) + "&sig=abc";
+
+            var dataLakeUriBuilder = new DataLakeUriBuilder(new Uri(uriString));
+
+            Dictionary<string, string> queryParameters = dataLakeUriBuilder.ToUri().Query.TrimStart('?').Split('&')
+                .ToDictionary(
+                    s => s.Split('=')[0],
+                    s => Uri.UnescapeDataString(s.Split('=')[1]));
+
+            Assert.AreEqual(skt, queryParameters[Constants.Sas.Parameters.KeyStart]);
+            Assert.AreEqual(ske, queryParameters[Constants.Sas.Parameters.KeyExpiry]);
+        }
+
+        [RecordedTest]
+        [TestCase("https://myaccount.blob.core.windows.net/")]
+        [TestCase("https://myaccount-secondary.blob.core.windows.net/")]
+        [TestCase("https://myaccount-dualstack.blob.core.windows.net/")]
+        [TestCase("https://myaccount-ipv6.blob.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-dualstack.blob.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-ipv6.blob.core.windows.net/")]
+        [TestCase("https://myaccount.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-secondary.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-dualstack.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-ipv6.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-dualstack.dfs.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-ipv6.dfs.core.windows.net/")]
+        public void DataLakeUriBuilder_Secondary_IPV6_Dualstack(string uriString)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var dataLakeUriBuilder = new DataLakeUriBuilder(originalUri.Uri);
+            Uri newUri = dataLakeUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", dataLakeUriBuilder.Scheme);
+            Assert.AreEqual("myaccount", dataLakeUriBuilder.AccountName);
+            Assert.AreEqual("", dataLakeUriBuilder.FileSystemName);
+            Assert.AreEqual("", dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual("", dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", dataLakeUriBuilder.Snapshot);
+            Assert.IsNull(dataLakeUriBuilder.Sas);
+            Assert.AreEqual(443, dataLakeUriBuilder.Port);
+            Assert.AreEqual("", dataLakeUriBuilder.Query);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        [TestCase("https://md-d3rqxhqbxbwq.blob.core.windows.net/", "md-d3rqxhqbxbwq")]
+        [TestCase("https://md-ssd-bndub02px100c21.blob.core.windows.net/", "md-ssd-bndub02px100c21")]
+        [TestCase("https://md-d3rqxhqbxbwq.dfs.core.windows.net/", "md-d3rqxhqbxbwq")]
+        [TestCase("https://md-ssd-bndub02px100c21.dfs.core.windows.net/", "md-ssd-bndub02px100c21")]
+        public void DataLakeUriBuilder_InternalAccounts(string uriString, string actualAccountName)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var dataLakeUriBuilder = new DataLakeUriBuilder(originalUri.Uri);
+            Uri newUri = dataLakeUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", dataLakeUriBuilder.Scheme);
+            Assert.AreEqual(actualAccountName, dataLakeUriBuilder.AccountName);
+            Assert.AreEqual("", dataLakeUriBuilder.FileSystemName);
+            Assert.AreEqual("", dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual("", dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", dataLakeUriBuilder.Snapshot);
+            Assert.IsNull(dataLakeUriBuilder.Sas);
+            Assert.AreEqual(443, dataLakeUriBuilder.Port);
+            Assert.AreEqual("", dataLakeUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
         }
 

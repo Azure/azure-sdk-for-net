@@ -174,9 +174,9 @@ namespace Azure.Messaging.EventGrid.Tests
                 senderClient.Send(cloudEvent);
             }
 
-                // stop activity after extracting the events from the request as this is where the cloudEvents would actually
-                // be serialized
-                activity.Stop();
+            // stop activity after extracting the events from the request as this is where the cloudEvents would actually
+            // be serialized
+            activity.Stop();
 
             // validate
             IDictionary<string, object> cloudEventAttr = cloudEvent.ExtensionAttributes;

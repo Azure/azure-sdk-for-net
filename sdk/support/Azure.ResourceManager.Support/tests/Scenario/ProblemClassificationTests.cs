@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.Support.Tests
             ValidateProblemClassification(list.FirstOrDefault(item => item.Data.Name == _existProblemClassificationName).Data);
         }
 
-/*        [RecordedTest]
-        public async Task ClassifyProblems()
-        {
-            var problemClassificationContent = new ServiceProblemClassificationContent(issueSummary: "database", new Core.ResourceIdentifier(_resourceId), null);
-            var problemClassificationOutput = await DefaultSubscription.ClassifyServiceProblemAsync(_serviceId, problemClassificationContent);
-            this.ValidateProblemClassification(problemClassificationOutput.Value.ProblemClassificationResults.FirstOrDefault());
-        }
+        /*        [RecordedTest]
+                public async Task ClassifyProblems()
+                {
+                    var problemClassificationContent = new ServiceProblemClassificationContent(issueSummary: "database", new Core.ResourceIdentifier(_resourceId), null);
+                    var problemClassificationOutput = await DefaultSubscription.ClassifyServiceProblemAsync(_serviceId, problemClassificationContent);
+                    this.ValidateProblemClassification(problemClassificationOutput.Value.ProblemClassificationResults.FirstOrDefault());
+                }
 
-        private void ValidateProblemClassification(ServiceProblemClassificationResult problemClassification)
-        {
-            Assert.IsNotNull(problemClassification);
-            Assert.IsNotEmpty(problemClassification.ServiceId);
-            Assert.IsNotEmpty(problemClassification.DisplayName);
-            Assert.IsNotEmpty(problemClassification.ProblemClassificationId);
-        }*/
+                private void ValidateProblemClassification(ServiceProblemClassificationResult problemClassification)
+                {
+                    Assert.IsNotNull(problemClassification);
+                    Assert.IsNotEmpty(problemClassification.ServiceId);
+                    Assert.IsNotEmpty(problemClassification.DisplayName);
+                    Assert.IsNotEmpty(problemClassification.ProblemClassificationId);
+                }*/
 
         private void ValidateProblemClassification(ProblemClassificationData supportAzureService)
         {

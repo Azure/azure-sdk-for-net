@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TaskHubsGet()
         {
-            // Generated from example definition: 2025-04-01-preview/TaskHubs_Get.json
+            // Generated from example definition: 2025-11-01/TaskHubs_Get.json
             // this example is just showing the usage of "TaskHub_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_TaskHubsDelete()
         {
-            // Generated from example definition: 2025-04-01-preview/TaskHubs_Delete.json
+            // Generated from example definition: 2025-11-01/TaskHubs_Delete.json
             // this example is just showing the usage of "TaskHub_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TaskHubsCreateOrUpdate()
         {
-            // Generated from example definition: 2025-04-01-preview/TaskHubs_CreateOrUpdate.json
+            // Generated from example definition: 2025-11-01/TaskHubs_CreateOrUpdate.json
             // this example is just showing the usage of "TaskHub_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

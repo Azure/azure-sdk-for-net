@@ -22,12 +22,12 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureCommunicationServicesValue = "AzureCommunicationServices";
-        private const string AzureBlobStorageValue = "AzureBlobStorage";
+        private const string AzureCommunicationServicesValue = "azureCommunicationServices";
+        private const string AzureBlobStorageValue = "azureBlobStorage";
 
-        /// <summary> Storage managed by Azure Communication Services. </summary>
+        /// <summary> azureCommunicationServices. </summary>
         public static RecordingStorageKind AzureCommunicationServices { get; } = new RecordingStorageKind(AzureCommunicationServicesValue);
-        /// <summary> Storage managed by provided Azure blob. </summary>
+        /// <summary> azureBlobStorage. </summary>
         public static RecordingStorageKind AzureBlobStorage { get; } = new RecordingStorageKind(AzureBlobStorageValue);
         /// <summary> Determines if two <see cref="RecordingStorageKind"/> values are the same. </summary>
         public static bool operator ==(RecordingStorageKind left, RecordingStorageKind right) => left.Equals(right);

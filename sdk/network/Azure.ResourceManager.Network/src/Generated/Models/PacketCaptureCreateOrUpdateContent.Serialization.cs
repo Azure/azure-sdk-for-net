@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<PacketCaptureCreateOrUpdateContent>
+    /// <summary> Parameters that define the create packet capture operation. </summary>
+    public partial class PacketCaptureCreateOrUpdateContent : IJsonModel<PacketCaptureCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCaptureCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureCreateOrUpdateContent"/> for deserialization. </summary>
+        internal PacketCaptureCreateOrUpdateContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PacketCaptureCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePacketCaptureCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PacketCaptureCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PacketCaptureCreateOrUpdateContent IPersistableModel<PacketCaptureCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PacketCaptureCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="packetCaptureCreateOrUpdateContent"> The <see cref="PacketCaptureCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PacketCaptureCreateOrUpdateContent packetCaptureCreateOrUpdateContent)
+        {
+            if (packetCaptureCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(packetCaptureCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PacketCaptureCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,73 +85,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("target"u8);
-            writer.WriteStringValue(Target);
-            if (Optional.IsDefined(Scope))
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope, options);
-            }
-            if (Optional.IsDefined(TargetType))
-            {
-                writer.WritePropertyName("targetType"u8);
-                writer.WriteStringValue(TargetType.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(BytesToCapturePerPacket))
-            {
-                writer.WritePropertyName("bytesToCapturePerPacket"u8);
-                writer.WriteNumberValue(BytesToCapturePerPacket.Value);
-            }
-            if (Optional.IsDefined(TotalBytesPerSession))
-            {
-                writer.WritePropertyName("totalBytesPerSession"u8);
-                writer.WriteNumberValue(TotalBytesPerSession.Value);
-            }
-            if (Optional.IsDefined(TimeLimitInSeconds))
-            {
-                writer.WritePropertyName("timeLimitInSeconds"u8);
-                writer.WriteNumberValue(TimeLimitInSeconds.Value);
-            }
-            writer.WritePropertyName("storageLocation"u8);
-            writer.WriteObjectValue(StorageLocation, options);
-            if (Optional.IsCollectionDefined(Filters))
-            {
-                writer.WritePropertyName("filters"u8);
-                writer.WriteStartArray();
-                foreach (var item in Filters)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsContinuousCapture))
-            {
-                writer.WritePropertyName("continuousCapture"u8);
-                writer.WriteBooleanValue(IsContinuousCapture.Value);
-            }
-            if (Optional.IsDefined(CaptureSettings))
-            {
-                writer.WritePropertyName("captureSettings"u8);
-                writer.WriteObjectValue(CaptureSettings, options);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,188 +109,46 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        PacketCaptureCreateOrUpdateContent IJsonModel<PacketCaptureCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PacketCaptureCreateOrUpdateContent IJsonModel<PacketCaptureCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PacketCaptureCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePacketCaptureCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static PacketCaptureCreateOrUpdateContent DeserializePacketCaptureCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PacketCaptureCreateOrUpdateContent DeserializePacketCaptureCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string target = default;
-            PacketCaptureMachineScope scope = default;
-            PacketCaptureTargetType? targetType = default;
-            long? bytesToCapturePerPacket = default;
-            long? totalBytesPerSession = default;
-            int? timeLimitInSeconds = default;
-            PacketCaptureStorageLocation storageLocation = default;
-            IList<PacketCaptureFilter> filters = default;
-            bool? continuousCapture = default;
-            PacketCaptureSettings captureSettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            PacketCaptureParameters properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("target"u8))
-                        {
-                            target = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("scope"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("targetType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetType = property0.Value.GetString().ToPacketCaptureTargetType();
-                            continue;
-                        }
-                        if (property0.NameEquals("bytesToCapturePerPacket"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bytesToCapturePerPacket = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("totalBytesPerSession"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            totalBytesPerSession = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("timeLimitInSeconds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeLimitInSeconds = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageLocation"u8))
-                        {
-                            storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("filters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PacketCaptureFilter> array = new List<PacketCaptureFilter>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item, options));
-                            }
-                            filters = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("continuousCapture"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            continuousCapture = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("captureSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            captureSettings = PacketCaptureSettings.DeserializePacketCaptureSettings(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = PacketCaptureParameters.DeserializePacketCaptureParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PacketCaptureCreateOrUpdateContent(
-                target,
-                scope,
-                targetType,
-                bytesToCapturePerPacket,
-                totalBytesPerSession,
-                timeLimitInSeconds,
-                storageLocation,
-                filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
-                continuousCapture,
-                captureSettings,
-                serializedAdditionalRawData);
+            return new PacketCaptureCreateOrUpdateContent(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<PacketCaptureCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PacketCaptureCreateOrUpdateContent IPersistableModel<PacketCaptureCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePacketCaptureCreateOrUpdateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PacketCaptureCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -34,6 +35,19 @@ namespace Azure.Generator.Management.Providers
 
         protected override FormattableString BuildDescription() => $"A class to add extension methods to {ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace}.";
 
+        protected override IReadOnlyList<MethodProvider> BuildMethodsForBackCompatibility(IEnumerable<MethodProvider> originalMethods)
+        {
+            if (LastContractView?.Methods == null || LastContractView.Methods.Count == 0)
+            {
+                return [.. originalMethods];
+            }
+
+            var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
+            var backCompatMethods = base.BuildMethodsForBackCompatibility(originalMethodList);
+
+            return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
+        }
+
         protected override MethodProvider[] BuildMethods()
         {
             // we have a few methods to get the cached clients for those mockable resources
@@ -50,7 +64,7 @@ namespace Azure.Generator.Management.Providers
             {
                 var getCachedClientMethod = getCachedClientMethods[mockableResource.ArmCoreType];
                 redirectedMethods.AddRange(
-                    mockableResource.Methods.Select(m => BuildRedirectMethod(mockableResource.ArmCoreType, m, getCachedClientMethod))
+                    mockableResource.Methods.Select(m => BuildRedirectMethod(mockableResource, m, getCachedClientMethod))
                     );
             }
 
@@ -82,10 +96,10 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(methodSignature, statements, this);
         }
 
-        private MethodProvider BuildRedirectMethod(CSharpType coreType, MethodProvider targetMethod, MethodProvider getCachedClientMethod)
+        private MethodProvider BuildRedirectMethod(MockableResourceProvider mockableResource, MethodProvider targetMethod, MethodProvider getCachedClientMethod)
         {
+            var coreType = mockableResource.ArmCoreType;
             var target = targetMethod.Signature;
-            // TODO -- add mocking information in method description
             var extensionParameter = new ParameterProvider(
                 GetArmCoreTypeVariableName(coreType),
                 $"The {coreType:C} the method will execute against.",
@@ -111,12 +125,23 @@ namespace Azure.Generator.Management.Providers
                 Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target.Name, arguments, async: target.Modifiers.HasFlag(MethodSignatureModifiers.Async)))
             };
 
-            return new MethodProvider(methodSignature, body, this);
+            var method = new MethodProvider(methodSignature, body, this);
 
-            static ParameterProvider DuplicateParameter(ParameterProvider original)
+            // Add mocking documentation
+            AddMockingDocumentation(method, mockableResource, targetMethod);
+
+            return method;
+
+            ParameterProvider DuplicateParameter(ParameterProvider original, int index)
             {
-                return new ParameterProvider(
-                    original.Name,
+                var name = original.Name;
+                if (original.Location is ParameterLocation.Body or ParameterLocation.Path && original.InputParameter?.IsExactName != true)
+                {
+                    name = SynthesizedParameterNameHelper.GetExistingParameterName(
+                        this, target.Name, [coreType, .. target.Parameters.Select(p => p.Type)], index + 1) ?? name;
+                }
+                var parameter = new ParameterProvider(
+                    name,
                     original.Description,
                     original.Type,
                     defaultValue: original.DefaultValue,
@@ -126,8 +151,48 @@ namespace Azure.Generator.Management.Providers
                     attributes: original.Attributes,
                     initializationValue: original.InitializationValue,
                     location: original.Location,
-                    validation: null);
+                    wireInfo: original.WireInfo,
+                    validation: null,
+                    inputParameter: original.InputParameter);
+                return original.Location is ParameterLocation.Body or ParameterLocation.Path
+                    ? SynthesizedParameterNameHelper.PreserveName(parameter)
+                    : parameter;
             }
+        }
+
+        private void AddMockingDocumentation(MethodProvider method, MockableResourceProvider mockableResource, MethodProvider targetMethod)
+        {
+            if (method.XmlDocs == null)
+            {
+                return;
+            }
+
+            // Build the mocking documentation item
+            // Format: To mock this method, please mock <see cref="MockableType.MethodName(params)"/> instead.
+            var mockingDescription = BuildMockingDescription(mockableResource.Type, targetMethod.Signature);
+            var mockingItem = new XmlDocStatement("item", [],
+                new XmlDocStatement("term", [$"Mocking"]),
+                new XmlDocStatement("description", [mockingDescription]));
+
+            // Create a new summary with the existing description and the mocking item
+            // The targetMethod already has the description we want to keep
+            var descriptionText = targetMethod.Signature.Description ?? $"";
+            var updatedSummary = new XmlDocSummaryStatement([descriptionText], mockingItem);
+            method.XmlDocs.Update(summary: updatedSummary);
+        }
+
+        private FormattableString BuildMockingDescription(CSharpType mockableType, MethodSignature targetSignature)
+        {
+            // Build description: "To mock this method, please mock <see cref="MockableType.MethodName(params)"/> instead."
+            // We need to construct a method reference that includes parameter types
+            // In C# XML docs, method references look like: MethodName(TypeName1, TypeName2)
+
+            // Build parameter type list as a simple string since XML doc cref attributes use simple type names
+            var parameterTypeNames = string.Join(", ", targetSignature.Parameters.Select(p => p.Type.GetXmlDocTypeName()));
+            var methodRef = $"{mockableType.Name}.{targetSignature.Name}({parameterTypeNames})";
+
+            // Return a FormattableString that will be converted to: To mock this method, please mock <see cref="..."/> instead.
+            return $"To mock this method, please mock <see cref=\"{methodRef}\"/> instead.";
         }
 
         private string GetArmCoreTypeVariableName(CSharpType armCoreType)

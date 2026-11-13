@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> A group to be updated. </summary>
     public partial class ContainerServiceFleetUpdateGroup
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/>. </summary>
         /// <param name="name">
@@ -65,20 +37,52 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// Name of the group.
         /// It must match a group name of an existing fleet member.
         /// </param>
+        /// <param name="maxAllowedFailures">
+        /// Limits the number of member (cluster) upgrade failures tolerated within this group.
+        /// Failures are evaluated over members within this group only. 
+        /// Accepts either:
+        ///   • A fixed count n, where n &gt;= 0
+        ///   • A percentage p%, where 0 &lt;= p &lt;= 100
+        ///     Percentage resolves at stage start using: resolvedThreshold = ceil(p * N), 
+        ///     where p is the percentage as a decimal and N is the number of members in this group at scope start.
+        /// Examples:
+        ///   • "3"   --&gt; up to 3 member upgrade failures are tolerated within this group. The 4th failure causes the group to fail.
+        ///   • "25%" --&gt; up to 25% of the members in this group can fail their upgrade before the group is considered failed.
+        /// </param>
+        /// <param name="maxConcurrency">
+        /// The max number of upgrades that can run concurrently in this specific group.
+        /// Acts as a ceiling (and not a quota) for the number of concurrent upgrades within the group you want to tolerate at a time.
+        /// Actual concurrency may be lower depending on stage-level concurrency limits or individual member conditions.
+        /// Group maxConcurrency has a min value of "1". The max value is min(number of clusters in the group, the stage maxConcurrency).
+        /// If no value is provided, defaults to 1.
+        /// Accepts either:
+        ///     • A fixed count, e.g. "3"
+        ///     • A percentage, e.g. "25%" (range 1–100). Percentage is of the number of clusters in the group. 
+        ///       Fractional results are rounded down. A minimum of 1 upgrade is enforced.
+        /// Examples:
+        ///     • "3" --&gt; up to 3 members from this group upgrade at once.
+        ///     • "100%" --&gt; “all at once”, up to all members for this group upgrade at the same time.
+        ///     • "25%" --&gt; up to 25% of the members in the group will be upgraded at the same time.
+        /// </param>
+        /// <param name="memberSelector">
+        /// Select the members of the group.
+        ///   * If specified, label-based selection will override group name based selection,
+        ///     and Name is only used as an identifier.
+        ///   * If not specified, group name based selection will be used, and Name must match a
+        ///     group name of an existing fleet member.
+        /// </param>
         /// <param name="beforeGates"> A list of Gates that will be created before this Group is executed. </param>
         /// <param name="afterGates"> A list of Gates that will be created after this Group is executed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateGroup(string name, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateGroup(string name, string maxAllowedFailures, string maxConcurrency, MemberSelector memberSelector, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            MaxAllowedFailures = maxAllowedFailures;
+            MaxConcurrency = maxConcurrency;
+            MemberSelector = memberSelector;
             BeforeGates = beforeGates;
             AfterGates = afterGates;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/> for deserialization. </summary>
-        internal ContainerServiceFleetUpdateGroup()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -86,9 +90,64 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// It must match a group name of an existing fleet member.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Limits the number of member (cluster) upgrade failures tolerated within this group.
+        /// Failures are evaluated over members within this group only. 
+        /// Accepts either:
+        ///   • A fixed count n, where n &gt;= 0
+        ///   • A percentage p%, where 0 &lt;= p &lt;= 100
+        ///     Percentage resolves at stage start using: resolvedThreshold = ceil(p * N), 
+        ///     where p is the percentage as a decimal and N is the number of members in this group at scope start.
+        /// Examples:
+        ///   • "3"   --&gt; up to 3 member upgrade failures are tolerated within this group. The 4th failure causes the group to fail.
+        ///   • "25%" --&gt; up to 25% of the members in this group can fail their upgrade before the group is considered failed.
+        /// </summary>
+        public string MaxAllowedFailures { get; set; }
+
+        /// <summary>
+        /// The max number of upgrades that can run concurrently in this specific group.
+        /// Acts as a ceiling (and not a quota) for the number of concurrent upgrades within the group you want to tolerate at a time.
+        /// Actual concurrency may be lower depending on stage-level concurrency limits or individual member conditions.
+        /// Group maxConcurrency has a min value of "1". The max value is min(number of clusters in the group, the stage maxConcurrency).
+        /// If no value is provided, defaults to 1.
+        /// Accepts either:
+        ///     • A fixed count, e.g. "3"
+        ///     • A percentage, e.g. "25%" (range 1–100). Percentage is of the number of clusters in the group. 
+        ///       Fractional results are rounded down. A minimum of 1 upgrade is enforced.
+        /// Examples:
+        ///     • "3" --&gt; up to 3 members from this group upgrade at once.
+        ///     • "100%" --&gt; “all at once”, up to all members for this group upgrade at the same time.
+        ///     • "25%" --&gt; up to 25% of the members in the group will be upgraded at the same time.
+        /// </summary>
+        public string MaxConcurrency { get; set; }
+
+        /// <summary>
+        /// Select the members of the group.
+        ///   * If specified, label-based selection will override group name based selection,
+        ///     and Name is only used as an identifier.
+        ///   * If not specified, group name based selection will be used, and Name must match a
+        ///     group name of an existing fleet member.
+        /// </summary>
+        internal MemberSelector MemberSelector { get; set; }
+
         /// <summary> A list of Gates that will be created before this Group is executed. </summary>
         public IList<ContainerServiceFleetGateConfiguration> BeforeGates { get; }
+
         /// <summary> A list of Gates that will be created after this Group is executed. </summary>
         public IList<ContainerServiceFleetGateConfiguration> AfterGates { get; }
+
+        /// <summary> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </summary>
+        public string MemberSelectorByLabel
+        {
+            get
+            {
+                return MemberSelector is null ? default : MemberSelector.ByLabel;
+            }
+            set
+            {
+                MemberSelector = new MemberSelector(value);
+            }
+        }
     }
 }

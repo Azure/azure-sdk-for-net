@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Operation request details. </summary>
     public partial class RequestContract
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RequestContract"/>. </summary>
         public RequestContract()
@@ -58,25 +30,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="queryParameters"> Collection of operation request query parameters. </param>
         /// <param name="headers"> Collection of operation request headers. </param>
         /// <param name="representations"> Collection of operation request representations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RequestContract(string description, IList<ParameterContract> queryParameters, IList<ParameterContract> headers, IList<RepresentationContract> representations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RequestContract(string description, IList<ParameterContract> queryParameters, IList<ParameterContract> headers, IList<RepresentationContract> representations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             QueryParameters = queryParameters;
             Headers = headers;
             Representations = representations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Operation request description. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> Collection of operation request query parameters. </summary>
         [WirePath("queryParameters")]
         public IList<ParameterContract> QueryParameters { get; }
+
         /// <summary> Collection of operation request headers. </summary>
         [WirePath("headers")]
         public IList<ParameterContract> Headers { get; }
+
         /// <summary> Collection of operation request representations. </summary>
         [WirePath("representations")]
         public IList<RepresentationContract> Representations { get; }

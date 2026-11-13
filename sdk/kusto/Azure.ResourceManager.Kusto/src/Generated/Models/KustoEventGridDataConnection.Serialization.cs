@@ -11,14 +11,56 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoEventGridDataConnection : IUtf8JsonSerializable, IJsonModel<KustoEventGridDataConnection>
+    /// <summary> Class representing an Event Grid data connection. </summary>
+    public partial class KustoEventGridDataConnection : KustoDataConnectionData, IJsonModel<KustoEventGridDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoEventGridDataConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKustoEventGridDataConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KustoEventGridDataConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoEventGridDataConnection IPersistableModel<KustoEventGridDataConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (KustoEventGridDataConnection)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoEventGridDataConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoEventGridDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,339 +72,123 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("storageAccountResourceId"u8);
-                writer.WriteStringValue(StorageAccountResourceId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(EventGridResourceId))
-            {
-                writer.WritePropertyName("eventGridResourceId"u8);
-                writer.WriteStringValue(EventGridResourceId);
-            }
-            if (Optional.IsDefined(EventHubResourceId))
-            {
-                writer.WritePropertyName("eventHubResourceId"u8);
-                writer.WriteStringValue(EventHubResourceId);
-            }
-            if (Optional.IsDefined(ConsumerGroup))
-            {
-                writer.WritePropertyName("consumerGroup"u8);
-                writer.WriteStringValue(ConsumerGroup);
-            }
-            if (Optional.IsDefined(TableName))
-            {
-                writer.WritePropertyName("tableName"u8);
-                writer.WriteStringValue(TableName);
-            }
-            if (Optional.IsDefined(MappingRuleName))
-            {
-                writer.WritePropertyName("mappingRuleName"u8);
-                writer.WriteStringValue(MappingRuleName);
-            }
-            if (Optional.IsDefined(DataFormat))
-            {
-                writer.WritePropertyName("dataFormat"u8);
-                writer.WriteStringValue(DataFormat.Value.ToString());
-            }
-            if (Optional.IsDefined(IsFirstRecordIgnored))
-            {
-                writer.WritePropertyName("ignoreFirstRecord"u8);
-                writer.WriteBooleanValue(IsFirstRecordIgnored.Value);
-            }
-            if (Optional.IsDefined(BlobStorageEventType))
-            {
-                writer.WritePropertyName("blobStorageEventType"u8);
-                writer.WriteStringValue(BlobStorageEventType.Value.ToString());
-            }
-            if (Optional.IsDefined(ManagedIdentityResourceId))
-            {
-                writer.WritePropertyName("managedIdentityResourceId"u8);
-                writer.WriteStringValue(ManagedIdentityResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityObjectId))
-            {
-                writer.WritePropertyName("managedIdentityObjectId"u8);
-                writer.WriteStringValue(ManagedIdentityObjectId.Value);
-            }
-            if (Optional.IsDefined(DatabaseRouting))
-            {
-                writer.WritePropertyName("databaseRouting"u8);
-                writer.WriteStringValue(DatabaseRouting.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        KustoEventGridDataConnection IJsonModel<KustoEventGridDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoEventGridDataConnection IJsonModel<KustoEventGridDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KustoEventGridDataConnection)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKustoEventGridDataConnection(document.RootElement, options);
         }
 
-        internal static KustoEventGridDataConnection DeserializeKustoEventGridDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KustoEventGridDataConnection DeserializeKustoEventGridDataConnection(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AzureLocation? location = default;
-            DataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ResourceIdentifier storageAccountResourceId = default;
-            ResourceIdentifier eventGridResourceId = default;
-            ResourceIdentifier eventHubResourceId = default;
-            string consumerGroup = default;
-            string tableName = default;
-            string mappingRuleName = default;
-            KustoEventGridDataFormat? dataFormat = default;
-            bool? ignoreFirstRecord = default;
-            BlobStorageEventType? blobStorageEventType = default;
-            ResourceIdentifier managedIdentityResourceId = default;
-            Guid? managedIdentityObjectId = default;
-            KustoDatabaseRouting? databaseRouting = default;
-            KustoProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            AzureLocation? location = default;
+            DataConnectionKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            EventGridConnectionProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    kind = new DataConnectionKind(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("storageAccountResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("eventGridResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            eventGridResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("eventHubResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            eventHubResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("consumerGroup"u8))
-                        {
-                            consumerGroup = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("tableName"u8))
-                        {
-                            tableName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("mappingRuleName"u8))
-                        {
-                            mappingRuleName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataFormat"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataFormat = new KustoEventGridDataFormat(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ignoreFirstRecord"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ignoreFirstRecord = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("blobStorageEventType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            blobStorageEventType = new BlobStorageEventType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managedIdentityResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managedIdentityObjectId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedIdentityObjectId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("databaseRouting"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            databaseRouting = new KustoDatabaseRouting(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new KustoProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new DataConnectionKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = EventGridConnectionProperties.DeserializeEventGridConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KustoEventGridDataConnection(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
                 location,
                 kind,
-                serializedAdditionalRawData,
-                storageAccountResourceId,
-                eventGridResourceId,
-                eventHubResourceId,
-                consumerGroup,
-                tableName,
-                mappingRuleName,
-                dataFormat,
-                ignoreFirstRecord,
-                blobStorageEventType,
-                managedIdentityResourceId,
-                managedIdentityObjectId,
-                databaseRouting,
-                provisioningState);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        BinaryData IPersistableModel<KustoEventGridDataConnection>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KustoEventGridDataConnection IPersistableModel<KustoEventGridDataConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKustoEventGridDataConnection(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KustoEventGridDataConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

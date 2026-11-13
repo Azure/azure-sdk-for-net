@@ -7,7 +7,7 @@ External IDs can be a useful method of keeping track of assets in multiple syste
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample5_ExternalIds_Create_Client
-            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
+string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```
@@ -17,7 +17,7 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
 Assets in EASM can be uniquely distinguished by `name` and `kind`, so we can create a simple dictionary containing `name`, `kind`, and `external_id`. In a more realistic case, this could be generated using an export from the external system we're using for tagging
 
 ```C# Snippet:Sample5_ExternalIds_Initialize_Mapping
-            Dictionary<string, string> asset1 = new Dictionary<string, string> {
+Dictionary<string, string> asset1 = new Dictionary<string, string> {
     {"name", "example.com" },
     {"kind", "host" },
     {"external_id", "EXT040" } };

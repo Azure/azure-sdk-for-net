@@ -1,8 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -15,34 +14,41 @@ namespace Microsoft.Azure.WebPubSub.Common
             using var jsonDocument = JsonDocument.ParseValue(ref reader);
             var element = jsonDocument.RootElement;
 
-            // tricky part to create a temp request
+            // Tricky part to create a temp request.
             return new ConnectEventRequest(
                 null,
-                element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.ClaimsProperty),
-                element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.QueryProperty),
-                element.ReadToObject<string[]>(ConnectEventRequest.SubprotocolsProperty),
-                element.ReadToObject<WebPubSubClientCertificate[]>(ConnectEventRequest.ClientCertificatesProperty),
-                element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.HeadersProperty));
+                JsonSerializationHelpers.ReadStringArrayDictionary(element.GetProperty(ConnectEventRequest.ClaimsProperty)),
+                JsonSerializationHelpers.ReadStringArrayDictionary(element.GetProperty(ConnectEventRequest.QueryProperty)),
+                JsonSerializationHelpers.ReadStringArray(element.GetProperty(ConnectEventRequest.SubprotocolsProperty)),
+                JsonSerializationHelpers.ReadClientCertificates(element.GetProperty(ConnectEventRequest.ClientCertificatesProperty)),
+                JsonSerializationHelpers.ReadStringArrayDictionary(element.GetProperty(ConnectEventRequest.HeadersProperty)));
         }
 
         public override void Write(Utf8JsonWriter writer, ConnectEventRequest value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
+
             writer.WritePropertyName(ConnectEventRequest.ClaimsProperty);
-            JsonSerializer.Serialize(writer, value.Claims, options);
+            JsonSerializationHelpers.WriteStringArrayDictionary(writer, value.Claims);
+
             writer.WritePropertyName(ConnectEventRequest.QueryProperty);
-            JsonSerializer.Serialize(writer, value.Query, options);
+            JsonSerializationHelpers.WriteStringArrayDictionary(writer, value.Query);
+
             writer.WritePropertyName(ConnectEventRequest.HeadersProperty);
-            JsonSerializer.Serialize(writer, value.Headers, options);
+            JsonSerializationHelpers.WriteStringArrayDictionary(writer, value.Headers);
+
             writer.WritePropertyName(ConnectEventRequest.SubprotocolsProperty);
-            JsonSerializer.Serialize(writer, value.Subprotocols, options);
+            JsonSerializationHelpers.WriteStringArray(writer, value.Subprotocols);
+
             writer.WritePropertyName(ConnectEventRequest.ClientCertificatesProperty);
-            JsonSerializer.Serialize(writer, value.ClientCertificates, options);
+            JsonSerializationHelpers.WriteClientCertificates(writer, value.ClientCertificates);
+
             if (value.ConnectionContext != null)
             {
                 writer.WritePropertyName(WebPubSubEventRequest.ConnectionContextProperty);
-                JsonSerializer.Serialize(writer, value.ConnectionContext, options);
+                JsonSerializationHelpers.WriteConnectionContext(writer, value.ConnectionContext);
             }
+
             writer.WriteEndObject();
         }
     }

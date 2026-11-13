@@ -39,5 +39,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
 
         public Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
+
+        public SecureWrapResult SecureWrapKey(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
+
+        public Task<SecureWrapResult> SecureWrapKeyAsync(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
+
+        public SecureUnwrapResult SecureUnwrapKey(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
+
+        public Task<SecureUnwrapResult> SecureUnwrapKeyAsync(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
     }
 }

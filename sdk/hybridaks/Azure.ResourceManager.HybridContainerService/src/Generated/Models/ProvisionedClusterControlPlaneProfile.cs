@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The properties of the control plane nodes of the provisioned cluster. </summary>
     public partial class ProvisionedClusterControlPlaneProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterControlPlaneProfile"/>. </summary>
         public ProvisionedClusterControlPlaneProfile()
@@ -51,32 +22,40 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterControlPlaneProfile"/>. </summary>
-        /// <param name="count"> Number of control plane nodes. The default value is 1, and the count should be an odd number. </param>
+        /// <param name="count"> Number of control plane nodes. The default value is 1, and the count can be either 2 or odd numbers. </param>
         /// <param name="vmSize"> VM sku size of the control plane nodes. </param>
         /// <param name="controlPlaneEndpoint"> IP Address of the Kubernetes API server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisionedClusterControlPlaneProfile(int? count, string vmSize, ControlPlaneProfileControlPlaneEndpoint controlPlaneEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterControlPlaneProfile(int? count, string vmSize, ProvisionedClusterControlPlaneEndpoint controlPlaneEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             VmSize = vmSize;
             ControlPlaneEndpoint = controlPlaneEndpoint;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Number of control plane nodes. The default value is 1, and the count should be an odd number. </summary>
+        /// <summary> Number of control plane nodes. The default value is 1, and the count can be either 2 or odd numbers. </summary>
         public int? Count { get; set; }
+
         /// <summary> VM sku size of the control plane nodes. </summary>
         public string VmSize { get; set; }
+
         /// <summary> IP Address of the Kubernetes API server. </summary>
-        internal ControlPlaneProfileControlPlaneEndpoint ControlPlaneEndpoint { get; set; }
+        internal ProvisionedClusterControlPlaneEndpoint ControlPlaneEndpoint { get; set; }
+
         /// <summary> IP address of the Kubernetes API server. </summary>
         public string ControlPlaneEndpointHostIP
         {
-            get => ControlPlaneEndpoint is null ? default : ControlPlaneEndpoint.HostIP;
+            get
+            {
+                return ControlPlaneEndpoint is null ? default : ControlPlaneEndpoint.HostIP;
+            }
             set
             {
                 if (ControlPlaneEndpoint is null)
-                    ControlPlaneEndpoint = new ControlPlaneProfileControlPlaneEndpoint();
+                {
+                    ControlPlaneEndpoint = new ProvisionedClusterControlPlaneEndpoint();
+                }
                 ControlPlaneEndpoint.HostIP = value;
             }
         }

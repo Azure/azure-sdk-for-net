@@ -1,0 +1,1969 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using NUnit.Framework;
+
+namespace System.ClientModel.Primitives.Tests;
+
+[NonParallelizable]
+public class CredentialResolverTests
+{
+    [SetUp]
+    public void SetUp()
+    {
+        // CredentialCache is internal with no public Clear hook; reach in via reflection
+        // so each test starts with an empty process-wide cache.
+        Type cacheType = typeof(AuthenticationTokenProvider).Assembly
+            .GetType("System.ClientModel.Primitives.CredentialCache", throwOnError: true)!;
+        var field = cacheType.GetField("s_cache", BindingFlags.NonPublic | BindingFlags.Static)!;
+        var dict = (System.Collections.IDictionary)field.GetValue(null)!;
+        dict.Clear();
+    }
+
+    [Test]
+    public void GetCredentialSettings_NoResolvers_ReturnsSettingsWithNullProvider()
+    {
+        // Section exists but no resolver chain is supplied. GetCredentialSettings
+        // returns a populated CredentialSettings (so callers can still read
+        // Key/CredentialSource/AdditionalProperties) with TokenProvider
+        // set to null, distinguishing "section is there but unclaimed" from
+        // "section is missing" (which still returns null).
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "TestCredential",
+            ["TestClient:Credential:TenantId"] = "tenant-1"
+        });
+
+        CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential");
+
+        Assert.That(cred, Is.Not.Null);
+        Assert.That(cred!.TokenProvider, Is.Null);
+        Assert.That(cred.CredentialSource, Is.EqualTo("testcredential"));
+    }
+
+    [Test]
+    public void GetCredentialSettings_WalksResolversInOrder_FirstMatchWins()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1"
+        });
+
+        var first = new ScopedRecordingResolver("Match", "first");
+        var second = new ScopedRecordingResolver("Match", "second");
+
+        CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", first, second);
+
+        Assert.That(cred?.TokenProvider, Is.SameAs(first.LastProvider));
+        Assert.That(second.WasCalled, Is.False);
+    }
+
+    [Test]
+    public void GetCredentialSettings_DefersToNextWhenResolverReturnsFalse()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Second",
+        });
+
+        var first = new ScopedRecordingResolver("First", "first");
+        var second = new ScopedRecordingResolver("Second", "second");
+
+        CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", first, second);
+
+        Assert.That(cred?.TokenProvider, Is.SameAs(second.LastProvider));
+    }
+
+    [Test]
+    public void GetCredentialSettings_MissingSection_ReturnsNull()
+    {
+        // Missing section is the ONLY case in which GetCredentialSettings returns
+        // null; any other "no provider" case returns a CredentialSettings
+        // with TokenProvider == null.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>());
+        CredentialSettings? cred = config.GetCredentialSettings(
+            "TestClient:Credential",
+            new ScopedRecordingResolver("Anything", "x"));
+        Assert.That(cred, Is.Null);
+    }
+
+    [Test]
+    public void CredentialCache_NullMergedSection_ReturnsNullWithoutInvokingResolver()
+    {
+        // The engine guards against null/!Exists() sections before reaching the cache,
+        // so in production mergedSection is always non-null. CredentialSectionHasher
+        // returns an empty key string only for a null section; if that ever happens
+        // (e.g., a future caller bypasses the engine), the cache must not invoke the
+        // resolver: a resolver expecting an IConfigurationSection cannot produce a
+        // meaningful provider from null. Pin that contract here.
+        Type cacheType = typeof(AuthenticationTokenProvider).Assembly
+            .GetType("System.ClientModel.Primitives.CredentialCache", throwOnError: true)!;
+        MethodInfo getOrTryResolve = cacheType.GetMethod(
+            "GetOrTryResolve", BindingFlags.Public | BindingFlags.Static)!;
+
+        var resolver = new ScopedRecordingResolver("Anything", "x");
+
+        // GetOrTryResolve(IConfigurationSection, CredentialResolver, Func<...>) —
+        // the third param is required so callers honor the resolver's
+        // chain-aware contract. Pass an explicit no-op resolveChild since
+        // this test bypasses the engine and has no chain.
+        Func<IConfigurationSection, AuthenticationTokenProvider?> noChain = static _ => null;
+        var result = getOrTryResolve.Invoke(
+            null,
+            new object?[] { null, resolver, noChain });
+
+        Assert.That(result, Is.Null);
+        Assert.That(resolver.WasCalled, Is.False, "resolver must not run when the merged section is null");
+    }
+
+    [Test]
+    public void GetCredentialSettings_ResolverThrows_ExceptionPropagates()
+    {
+        // A throwing resolver indicates a real bug in the resolver
+        // implementation (e.g., a NullReferenceException), not "I can't
+        // handle this credential source" — that case is signaled by
+        // returning false from TryResolve. The engine surfaces the
+        // exception so the bug isn't silently swallowed.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Throws"
+        });
+
+        Assert.Throws<InvalidOperationException>(() =>
+            config.GetCredentialSettings("TestClient:Credential", new ThrowingResolver()));
+    }
+
+    [Test]
+    public void GetCredentialSettings_OverridesAreApplied()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "original-tenant"
+        });
+
+        var resolver = new ScopedRecordingResolver("Match", "override");
+        var resolvers = new CredentialResolver[] { resolver };
+
+        config.GetCredentialSettings("TestClient:Credential", resolvers, section =>
+        {
+            section["TenantId"] = "override-tenant";
+            section["ClientId"] = "added-client";
+        });
+
+        Assert.That(resolver.LastSection!["TenantId"], Is.EqualTo("override-tenant"));
+        Assert.That(resolver.LastSection!["ClientId"], Is.EqualTo("added-client"));
+    }
+
+    [Test]
+    public void GetCredentialSettings_OverrideUsingReferenceSyntax_Resolves()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "original-tenant",
+            ["Shared:TenantId"] = "shared-tenant",
+        });
+
+        var resolver = new ScopedRecordingResolver("Match", "override");
+        var resolvers = new CredentialResolver[] { resolver };
+
+        config.GetCredentialSettings("TestClient:Credential", resolvers, section =>
+        {
+            section["TenantId"] = "$Shared:TenantId";
+        });
+
+        Assert.That(resolver.LastSection!["TenantId"], Is.EqualTo("shared-tenant"));
+    }
+
+    [Test]
+    public void GetCredentialSettings_OverrideSetToNullRemovesKey()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "original-tenant"
+        });
+
+        var resolver = new ScopedRecordingResolver("Match", "p");
+        var resolvers = new CredentialResolver[] { resolver };
+
+        config.GetCredentialSettings("TestClient:Credential", resolvers, section =>
+        {
+            section["TenantId"] = null;
+        });
+
+        Assert.That(resolver.LastSection!["TenantId"], Is.Null);
+    }
+
+    [Test]
+    public void GetCredentialSettings_DifferentResolverChains_DoNotShareCacheEntries()
+    {
+        // Demonstrates a cache-leakage bug raised in PR review: with the cache
+        // keyed only by merged section content, a second call with a DIFFERENT
+        // resolver chain (different implementation type) returns the provider
+        // produced by the first chain even though the second chain would have
+        // produced a different provider. The fix salts the cache key with an
+        // ordered fingerprint of the resolver implementation types.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1"
+        });
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedBResolver());
+
+        Assert.That(c1, Is.Not.Null);
+        Assert.That(c2, Is.Not.Null);
+        Assert.That(((StubTokenProvider)c1!.TokenProvider!).Name, Is.EqualTo("A"));
+        Assert.That(((StubTokenProvider)c2!.TokenProvider!).Name, Is.EqualTo("B"),
+            "Second chain (different resolver type) should produce its own provider; the cache must not leak across distinct resolver sets.");
+        Assert.That(c1.TokenProvider, Is.Not.SameAs(c2.TokenProvider));
+    }
+
+    [Test]
+    public void GetCredentialSettings_SameResolverInstance_SharesCacheEntry()
+    {
+        // Realistic DI case: a singleton resolver instance is reused for many
+        // calls. The cache uses reference identity, so the same instance hits
+        // the same cache entry and we share the produced provider.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1"
+        });
+
+        var resolver = new MatchAllNamedAResolver();
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
+
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
+    }
+
+    [Test]
+    public void GetCredentialSettings_DifferentInstancesOfSameType_DoNotShareCacheEntry()
+    {
+        // Reference-identity keying: even two distinct instances of the SAME
+        // resolver type don't share a cache entry. This protects against
+        // state-bearing custom resolvers (e.g., MyResolver(secretsA) vs
+        // MyResolver(secretsB)) at the cost of cross-host sharing for stateless
+        // resolvers (acceptable — provider construction is cheap and the
+        // resolver's own internal caches are typically static).
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1"
+        });
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
+
+        Assert.That(c1?.TokenProvider, Is.Not.SameAs(c2?.TokenProvider));
+    }
+
+    [Test]
+    public void GetCredentialSettings_CachesByMergedContent()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1"
+        });
+
+        var resolver = new ScopedRecordingResolver("Match", "cached");
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
+
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
+        Assert.That(resolver.CallCount, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void GetCredentialSettings_DifferentOverrides_ProduceDifferentEntries()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1"
+        });
+
+        var resolver = new ScopedRecordingResolver("Match", "p");
+        var resolvers = new CredentialResolver[] { resolver };
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolvers,
+            s => s["TenantId"] = "a");
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolvers,
+            s => s["TenantId"] = "b");
+
+        Assert.That(c1?.TokenProvider, Is.Not.SameAs(c2?.TokenProvider));
+        Assert.That(resolver.CallCount, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void AddCredentialResolver_IsIdempotentByImplementationType()
+    {
+        var services = new ServiceCollection();
+        services.AddCredentialResolver<ScopedDefaultResolver>();
+        services.AddCredentialResolver<ScopedDefaultResolver>();
+        services.AddCredentialResolver<ScopedDefaultResolver>();
+
+        IServiceProvider sp = services.BuildServiceProvider();
+        IEnumerable<CredentialResolver> registered = sp.GetServices<CredentialResolver>();
+
+        Assert.That(registered, Has.Exactly(1).Items);
+    }
+
+    [Test]
+    public void AddCredentialResolver_DifferentTypes_BothRegistered()
+    {
+        var services = new ServiceCollection();
+        services.AddCredentialResolver<ScopedDefaultResolver>();
+        services.AddCredentialResolver<OtherResolver>();
+
+        IServiceProvider sp = services.BuildServiceProvider();
+        IEnumerable<CredentialResolver> registered = sp.GetServices<CredentialResolver>();
+
+        Assert.That(registered, Has.Exactly(2).Items);
+    }
+
+    [Test]
+    public void AddClient_NoCredentialSection_LeavesProviderNullAndDoesNotThrow()
+    {
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+        });
+
+        builder.AddCredentialResolver<MatchEverythingResolver>();
+        builder.AddClient<TestClient, TestClientSettings>("TestClient");
+
+        using IHost host = builder.Build();
+        TestClient client = host.Services.GetRequiredService<TestClient>();
+
+        Assert.That(client.Settings.CredentialProvider, Is.Null);
+        Assert.That(client.Settings.Credential, Is.Not.Null);
+        Assert.That(client.Settings.Credential!.CredentialSource, Is.Null);
+    }
+
+    [Test]
+    public void AddClient_AutoResolvesCredentialFromRegisteredResolvers()
+    {
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1",
+        });
+
+        builder.AddCredentialResolver<MatchEverythingResolver>();
+        builder.AddClient<TestClient, TestClientSettings>("TestClient");
+
+        using IHost host = builder.Build();
+        TestClient client = host.Services.GetRequiredService<TestClient>();
+
+        Assert.That(client.Settings.CredentialProvider, Is.Not.Null);
+        Assert.That(client.Settings.CredentialProvider, Is.InstanceOf<StubTokenProvider>());
+    }
+
+    [Test]
+    public void AddClient_ConfigureCredential_AppliesOverridesBeforeResolver()
+    {
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "original",
+        });
+
+        var resolver = new RecordingMatchAllResolver();
+        builder.Services.AddSingleton<CredentialResolver>(resolver);
+        builder.AddClient<TestClient, TestClientSettings>("TestClient")
+               .ConfigureCredential(section =>
+               {
+                   section["TenantId"] = "overridden";
+               });
+
+        using IHost host = builder.Build();
+        _ = host.Services.GetRequiredService<TestClient>();
+
+        Assert.That(resolver.LastTenantId, Is.EqualTo("overridden"));
+    }
+
+    [Test]
+    public void GetCredentialSettings_Params_ResolvesReferencesInCredentialSection()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "$Shared:TenantId",
+            ["Shared:TenantId"] = "real-tenant",
+        });
+
+        var resolver = new RecordingMatchAllResolver();
+        CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", resolver);
+
+        Assert.That(cred, Is.Not.Null);
+        Assert.That(cred!.TokenProvider, Is.Not.Null);
+        Assert.That(resolver.LastTenantId, Is.EqualTo("real-tenant"));
+    }
+
+    [Test]
+    public void GetCredentialSettings_WithOverrides_ResolvesReferencesInCredentialSection()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "$Shared:TenantId",
+            ["Shared:TenantId"] = "real-tenant",
+        });
+
+        var resolver = new RecordingMatchAllResolver();
+        CredentialResolver[] resolvers = new CredentialResolver[] { resolver };
+
+        CredentialSettings? cred = config.GetCredentialSettings(
+            "TestClient:Credential",
+            resolvers,
+            section => section["ClientId"] = "client-override");
+
+        Assert.That(cred, Is.Not.Null);
+        Assert.That(cred!.TokenProvider, Is.Not.Null);
+        Assert.That(resolver.LastTenantId, Is.EqualTo("real-tenant"));
+        Assert.That(resolver.LastClientId, Is.EqualTo("client-override"));
+    }
+
+    [Test]
+    public void GetClientSettings_Params_ResolvesReferencesInBothCredentialAndSettings()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "$Shared:Endpoint",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "$Shared:TenantId",
+            ["Shared:Endpoint"] = "https://shared.example.com/",
+            ["Shared:TenantId"] = "real-tenant",
+        });
+
+        var resolver = new RecordingMatchAllResolver();
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>("TestClient", resolver);
+
+        Assert.That(settings.Endpoint?.ToString(), Is.EqualTo("https://shared.example.com/"));
+        Assert.That(settings.CredentialProvider, Is.Not.Null);
+        Assert.That(resolver.LastTenantId, Is.EqualTo("real-tenant"));
+    }
+
+    [Test]
+    public void GetClientSettings_WithOverrides_ResolvesReferencesInCredentialSection()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com/",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "$Shared:TenantId",
+            ["Shared:TenantId"] = "real-tenant",
+        });
+
+        var resolver = new RecordingMatchAllResolver();
+        CredentialResolver[] resolvers = new CredentialResolver[] { resolver };
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>(
+            "TestClient",
+            resolvers,
+            section => section["ClientId"] = "overridden-client");
+
+        Assert.That(settings.CredentialProvider, Is.Not.Null);
+        Assert.That(resolver.LastTenantId, Is.EqualTo("real-tenant"));
+        Assert.That(resolver.LastClientId, Is.EqualTo("overridden-client"));
+    }
+
+    [Test]
+    public void AddClient_AutoResolve_ResolvesReferencesInCredentialSection()
+    {
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "$Shared:Endpoint",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "$Shared:TenantId",
+            ["Shared:Endpoint"] = "https://shared.example.com/",
+            ["Shared:TenantId"] = "real-tenant",
+        });
+
+        var resolver = new RecordingMatchAllResolver();
+        builder.Services.AddSingleton<CredentialResolver>(resolver);
+        builder.AddClient<TestClient, TestClientSettings>("TestClient");
+
+        using IHost host = builder.Build();
+        TestClient client = host.Services.GetRequiredService<TestClient>();
+
+        Assert.That(client.Settings.Endpoint?.ToString(), Is.EqualTo("https://shared.example.com/"));
+        Assert.That(client.Settings.CredentialProvider, Is.Not.Null);
+        Assert.That(resolver.LastTenantId, Is.EqualTo("real-tenant"));
+    }
+
+    [Test]
+    public void Cache_OverlappingChains_SameWinningInstance_Share()
+    {
+        // The cache key depends on (section, winning-resolver-instance), NOT
+        // on the whole chain. Leaf resolvers (those that don't invoke
+        // resolveChild) are chain-independent, so two calls with overlapping
+        // chains where the same leaf resolver instance wins must share the
+        // produced provider.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+        });
+        var resolverA = new MatchAllNamedAResolver();
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential",
+            resolverA, new MatchAllNamedBResolver());
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolverA);
+
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
+    }
+
+    [Test]
+    public void Cache_NonMatchingResolverBeforeMatch_DoesNotPreventSharing()
+    {
+        // Even if a non-matching resolver appears earlier in the chain, the
+        // caching is keyed on the resolver that produces the provider — so a
+        // later call with just the matching resolver shares the cache entry.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+        });
+        var nonMatching = new ScopedRecordingResolver("Other", "x");
+        var matching = new MatchAllNamedAResolver();
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential",
+            nonMatching, matching);
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", matching);
+
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
+    }
+
+    // -------- Cache key behavior: comprehensive coverage --------
+
+    [Test]
+    public void Cache_SameInstance_SameSection_SharesProvider()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1",
+        });
+        var resolver = new MatchAllNamedAResolver();
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
+
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
+    }
+
+    [Test]
+    public void Cache_SameInstance_DifferentSections_ProducesDifferentProviders()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["A:Credential:CredentialSource"] = "Match",
+            ["A:Credential:TenantId"] = "tenant-A",
+            ["B:Credential:CredentialSource"] = "Match",
+            ["B:Credential:TenantId"] = "tenant-B",
+        });
+        var resolver = new MatchAllNamedAResolver();
+
+        CredentialSettings? cA = config.GetCredentialSettings("A:Credential", resolver);
+        CredentialSettings? cB = config.GetCredentialSettings("B:Credential", resolver);
+
+        Assert.That(cA?.TokenProvider, Is.Not.SameAs(cB?.TokenProvider));
+    }
+
+    [Test]
+    public void Cache_DifferentInstancesOfSameType_DoNotShare()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1",
+        });
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
+
+        Assert.That(c1?.TokenProvider, Is.Not.SameAs(c2?.TokenProvider));
+    }
+
+    [Test]
+    public void Cache_DifferentResolverTypes_DoNotShare()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1",
+        });
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedBResolver());
+
+        Assert.That(((StubTokenProvider)c1!.TokenProvider!).Name, Is.EqualTo("A"));
+        Assert.That(((StubTokenProvider)c2!.TokenProvider!).Name, Is.EqualTo("B"));
+        Assert.That(c1.TokenProvider, Is.Not.SameAs(c2.TokenProvider));
+    }
+
+    [Test]
+    public void Cache_HonorsResolverChainOrder_SameSetReorderedDoesNotLeak()
+    {
+        // Different chain ORDER with overlapping types: the FIRST match wins,
+        // so [A,B] vs [B,A] could legitimately produce different providers.
+        // Reference-identity fingerprinting incorporates instance order.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+        });
+        var a = new MatchAllNamedAResolver();
+        var b = new MatchAllNamedBResolver();
+
+        CredentialSettings? ab = config.GetCredentialSettings("TestClient:Credential", a, b);
+        CredentialSettings? ba = config.GetCredentialSettings("TestClient:Credential", b, a);
+
+        Assert.That(((StubTokenProvider)ab!.TokenProvider!).Name, Is.EqualTo("A"));
+        Assert.That(((StubTokenProvider)ba!.TokenProvider!).Name, Is.EqualTo("B"));
+    }
+
+    [Test]
+    public void Cache_DisposableProvider_IsNotCached()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+        });
+        var resolver = new DisposableProviderResolver();
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
+
+        Assert.That(c1?.TokenProvider, Is.Not.Null);
+        Assert.That(c2?.TokenProvider, Is.Not.Null);
+        Assert.That(c1!.TokenProvider, Is.Not.SameAs(c2!.TokenProvider),
+            "Disposable providers must never be cached — a disposed cached instance handed back to a later caller would throw ObjectDisposedException.");
+        Assert.That(resolver.CallCount, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void Cache_AsyncDisposableProvider_IsNotCached()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match",
+        });
+        var resolver = new AsyncDisposableProviderResolver();
+
+        CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
+        CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
+
+        Assert.That(c1?.TokenProvider, Is.Not.SameAs(c2?.TokenProvider));
+        Assert.That(resolver.CallCount, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void Cache_NoMatchingResolver_DoesNotPolluteCache()
+    {
+        // The "no resolver matched" case used to surface as a null return;
+        // it now surfaces as a CredentialSettings whose TokenProvider
+        // is null. The cache must not memoize that miss in the resolver-keyed
+        // table — a subsequent call with a matching resolver must produce a
+        // real provider.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Unknown",
+        });
+        var matching = new MatchAllNamedAResolver();
+        var nonMatching = new ScopedRecordingResolver("Other", "x");
+
+        CredentialSettings? miss = config.GetCredentialSettings("TestClient:Credential", nonMatching);
+        Assert.That(miss, Is.Not.Null);
+        Assert.That(miss!.TokenProvider, Is.Null);
+
+        // A subsequent call with a matching resolver must NOT see a stale null.
+        CredentialSettings? hit = config.GetCredentialSettings("TestClient:Credential", matching);
+        Assert.That(hit?.TokenProvider, Is.Not.Null);
+        Assert.That(((StubTokenProvider)hit!.TokenProvider!).Name, Is.EqualTo("A"));
+    }
+
+    [Test]
+    public void Cache_InlineApiKey_NoResolverMatch_ReturnsSameCachedSettings()
+    {
+        // Inline ApiKey path: the credential lives directly on the section as
+        // Key/CredentialSource and no resolver claims it. Pin that the engine
+        // returns the SAME cached CredentialSettings instance on repeated
+        // calls with the same section content, so the inline-credential path
+        // benefits from caching too.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "inline-key-value",
+        });
+
+        CredentialSettings? first = config.GetCredentialSettings("TestClient:Credential");
+        CredentialSettings? second = config.GetCredentialSettings("TestClient:Credential");
+
+        Assert.That(first, Is.Not.Null);
+        Assert.That(second, Is.Not.Null);
+        Assert.That(second, Is.SameAs(first),
+            "Inline-only CredentialSettings must be cached and shared across calls for the same section content.");
+        Assert.That(first!.Key, Is.EqualTo("inline-key-value"));
+        Assert.That(first.TokenProvider, Is.Null);
+    }
+
+    [Test]
+    public void Cache_InlineApiKey_DifferentSectionContent_GetsDifferentCachedSettings()
+    {
+        // Sanity: distinct section content must produce distinct cached
+        // entries (the cache key is content-based, not name-based).
+        IConfigurationRoot configA = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "key-A",
+        });
+        IConfigurationRoot configB = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "key-B",
+        });
+
+        CredentialSettings? a = configA.GetCredentialSettings("TestClient:Credential");
+        CredentialSettings? b = configB.GetCredentialSettings("TestClient:Credential");
+
+        Assert.That(a, Is.Not.SameAs(b));
+        Assert.That(a!.Key, Is.EqualTo("key-A"));
+        Assert.That(b!.Key, Is.EqualTo("key-B"));
+    }
+
+    // -------- DI: cache interaction with the auto-resolve path --------
+
+    [Test]
+    public void DI_TwoClientsSameSectionInOneHost_ShareCachedProvider()
+    {
+        // Within one host, AddCredentialResolver<T>() registers as singleton
+        // (TryAddEnumerable). Two AddClient calls referencing the same
+        // credential section therefore use the same resolver instance and hit
+        // the same cache entry → shared provider.
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "tenant-1",
+        });
+
+        builder.AddCredentialResolver<MatchEverythingResolver>();
+        builder.AddClient<TestClient, TestClientSettings>("TestClient");
+        builder.AddKeyedClient<TestClient, TestClientSettings>("alt", "TestClient");
+
+        using IHost host = builder.Build();
+        TestClient c1 = host.Services.GetRequiredService<TestClient>();
+        TestClient c2 = host.Services.GetRequiredKeyedService<TestClient>("alt");
+
+        Assert.That(c1.Settings.CredentialProvider, Is.Not.Null);
+        Assert.That(c1.Settings.CredentialProvider, Is.SameAs(c2.Settings.CredentialProvider));
+    }
+
+    [Test]
+    public void DI_TwoClientsDifferentSections_GetDifferentProviders()
+    {
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["A:Endpoint"] = "https://a.example.com",
+            ["A:Credential:CredentialSource"] = "Match",
+            ["A:Credential:TenantId"] = "tenant-A",
+            ["B:Endpoint"] = "https://b.example.com",
+            ["B:Credential:CredentialSource"] = "Match",
+            ["B:Credential:TenantId"] = "tenant-B",
+        });
+
+        builder.AddCredentialResolver<MatchEverythingResolver>();
+        builder.AddKeyedClient<TestClient, TestClientSettings>("A", "A");
+        builder.AddKeyedClient<TestClient, TestClientSettings>("B", "B");
+
+        using IHost host = builder.Build();
+        TestClient cA = host.Services.GetRequiredKeyedService<TestClient>("A");
+        TestClient cB = host.Services.GetRequiredKeyedService<TestClient>("B");
+
+        Assert.That(cA.Settings.CredentialProvider, Is.Not.Null);
+        Assert.That(cB.Settings.CredentialProvider, Is.Not.Null);
+        Assert.That(cA.Settings.CredentialProvider, Is.Not.SameAs(cB.Settings.CredentialProvider));
+    }
+
+    [Test]
+    public void DI_TwoHostsWithIdenticalConfig_DoNotShare()
+    {
+        // Each host registers its own resolver instance via AddCredentialResolver.
+        // Reference-identity keying means the two instances do NOT share cache
+        // entries → each host gets its own provider. This is the property that
+        // makes per-host disposal safe (one host's shutdown can't break the other).
+        AuthenticationTokenProvider? p1 = BuildHostAndGetProvider();
+        AuthenticationTokenProvider? p2 = BuildHostAndGetProvider();
+
+        Assert.That(p1, Is.Not.Null);
+        Assert.That(p2, Is.Not.Null);
+        Assert.That(p1, Is.Not.SameAs(p2));
+
+        static AuthenticationTokenProvider? BuildHostAndGetProvider()
+        {
+            var b = Host.CreateEmptyApplicationBuilder(null);
+            b.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Endpoint"] = "https://example.com",
+                ["TestClient:Credential:CredentialSource"] = "Match",
+                ["TestClient:Credential:TenantId"] = "tenant-1",
+            });
+            b.AddCredentialResolver<MatchEverythingResolver>();
+            b.AddClient<TestClient, TestClientSettings>("TestClient");
+            using IHost h = b.Build();
+            return h.Services.GetRequiredService<TestClient>().Settings.CredentialProvider;
+        }
+    }
+
+    [Test]
+    public void DI_AddCredentialResolverCalledMultipleTimes_StillSharesProvider()
+    {
+        // Idempotent registration → still one resolver instance → still shares.
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+        });
+
+        builder.AddCredentialResolver<MatchEverythingResolver>();
+        builder.AddCredentialResolver<MatchEverythingResolver>();
+        builder.AddCredentialResolver<MatchEverythingResolver>();
+        builder.AddClient<TestClient, TestClientSettings>("TestClient");
+        builder.AddKeyedClient<TestClient, TestClientSettings>("alt", "TestClient");
+
+        using IHost host = builder.Build();
+        TestClient c1 = host.Services.GetRequiredService<TestClient>();
+        TestClient c2 = host.Services.GetRequiredKeyedService<TestClient>("alt");
+
+        Assert.That(c1.Settings.CredentialProvider, Is.SameAs(c2.Settings.CredentialProvider));
+    }
+
+    [Test]
+    public void DI_ConfigureCredential_OneClientDiverges_OtherClientUnaffected()
+    {
+        // Two clients on the same section: one customizes the credential via
+        // ConfigureCredential. They must NOT share a provider.
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+            ["TestClient:Credential:TenantId"] = "default",
+        });
+
+        builder.AddCredentialResolver<MatchEverythingResolver>();
+        builder.AddClient<TestClient, TestClientSettings>("TestClient");
+        builder.AddKeyedClient<TestClient, TestClientSettings>("custom", "TestClient")
+               .ConfigureCredential(s => s["TenantId"] = "custom-tenant");
+
+        using IHost host = builder.Build();
+        TestClient defaultClient = host.Services.GetRequiredService<TestClient>();
+        TestClient customClient = host.Services.GetRequiredKeyedService<TestClient>("custom");
+
+        Assert.That(defaultClient.Settings.CredentialProvider, Is.Not.Null);
+        Assert.That(customClient.Settings.CredentialProvider, Is.Not.Null);
+        Assert.That(defaultClient.Settings.CredentialProvider,
+            Is.Not.SameAs(customClient.Settings.CredentialProvider));
+    }
+
+    [Test]
+    public void DI_DisposableProvider_NotCached_NoCrossHostDisposalIssue()
+    {
+        // Regression guard for the multi-host disposal sharp edge:
+        // host A produces a disposable provider, disposes; host B must get a
+        // fresh provider, not the one host A's DI just disposed.
+        var builderA = Host.CreateEmptyApplicationBuilder(null);
+        builderA.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+        });
+        builderA.AddCredentialResolver<DisposableProviderResolver>();
+        builderA.AddClient<TestClient, TestClientSettings>("TestClient");
+
+        AuthenticationTokenProvider? providerA;
+        using (IHost hostA = builderA.Build())
+        {
+            providerA = hostA.Services.GetRequiredService<TestClient>().Settings.CredentialProvider;
+        }
+
+        var builderB = Host.CreateEmptyApplicationBuilder(null);
+        builderB.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "Match",
+        });
+        builderB.AddCredentialResolver<DisposableProviderResolver>();
+        builderB.AddClient<TestClient, TestClientSettings>("TestClient");
+
+        using IHost hostB = builderB.Build();
+        AuthenticationTokenProvider? providerB =
+            hostB.Services.GetRequiredService<TestClient>().Settings.CredentialProvider;
+
+        Assert.That(providerA, Is.Not.Null);
+        Assert.That(providerB, Is.Not.Null);
+        Assert.That(providerA, Is.Not.SameAs(providerB));
+    }
+
+    // -------- Inline ApiKey configurations are NOT synthesized by SCM --------
+    //
+    // SCM intentionally does not auto-synthesize an AuthenticationTokenProvider
+    // for inline ApiKey configurations. The source of truth for inline ApiKey
+    // is CredentialSettings.Key, which the consuming library reads directly
+    // when TokenProvider is null. Customer resolvers are still free to
+    // claim ApiKey sections (e.g., to fetch the key from a vault and produce
+    // a refreshable provider) and run before SCM gives up and leaves
+    // TokenProvider null.
+
+    [Test]
+    public void GetCredentialSettings_ApiKeySource_NoResolvers_ReturnsSettingsWithKeyAndNullProvider()
+    {
+        // SCM does not produce a built-in provider for inline ApiKey configs.
+        // The standalone caller reads cred.Key directly when TokenProvider
+        // is null. The CredentialSource is normalized to "apikeycredential"
+        // (the one back-compat alias preserved from 1.13.0).
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential");
+
+        Assert.That(cred, Is.Not.Null);
+        Assert.That(cred!.TokenProvider, Is.Null);
+        Assert.That(cred.Key, Is.EqualTo("secret-key"));
+        Assert.That(cred.CredentialSource, Is.EqualTo("apikeycredential"));
+    }
+
+    [Test]
+    public void GetCredentialSettings_ApiKeySource_CustomResolverClaimsSection()
+    {
+        // Customer resolvers can still claim ApiKey sections — for example,
+        // to back the key with a vault lookup that needs refresh semantics.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "config-key",
+        });
+
+        var customer = new ScopedRecordingResolver("ApiKey", "customer");
+
+        CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", customer);
+
+        Assert.That(cred?.TokenProvider, Is.SameAs(customer.LastProvider));
+        Assert.That(cred!.Key, Is.EqualTo("config-key"));
+    }
+
+    [Test]
+    public void GetCredentialSettings_ApiKeySource_NonMatchingCustomResolver_ReturnsSettingsWithKeyAndNullProvider()
+    {
+        // No fallback: when a customer resolver doesn't claim the section,
+        // SCM does not synthesize a provider for inline ApiKey, but still
+        // returns a populated CredentialSettings so the standalone caller
+        // can read Key.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        var nonMatching = new ScopedRecordingResolver("Other", "nope");
+
+        CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", nonMatching);
+
+        Assert.That(cred, Is.Not.Null);
+        Assert.That(cred!.TokenProvider, Is.Null);
+        Assert.That(cred.Key, Is.EqualTo("secret-key"));
+    }
+
+    [Test]
+    public void GetClientSettings_ApiKeySource_WithEmptyResolverChain_LeavesCredentialProviderNull()
+    {
+        // GetClientSettings must NOT synthesize a TokenProvider for an
+        // inline ApiKey config. The library consuming the settings is
+        // responsible for reading Credential.Key when TokenProvider is
+        // null.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>(
+            "TestClient",
+            Array.Empty<CredentialResolver>());
+
+        Assert.That(settings.CredentialProvider, Is.Null);
+        Assert.That(settings.Credential, Is.Not.Null);
+        Assert.That(settings.Credential!.Key, Is.EqualTo("secret-key"));
+    }
+
+    [Test]
+    public void DI_AddClient_ApiKeySource_NoCustomResolvers_LeavesCredentialProviderNull()
+    {
+        // DI path mirrors GetClientSettings: no synthesis for inline ApiKey;
+        // Credential.Key holds the value the consuming library will read.
+        var builder = Host.CreateEmptyApplicationBuilder(null);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Endpoint"] = "https://example.com",
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "secret-key",
+        });
+
+        builder.AddClient<TestClient, TestClientSettings>("TestClient");
+
+        using IHost host = builder.Build();
+        TestClient client = host.Services.GetRequiredService<TestClient>();
+
+        Assert.That(client.Settings.CredentialProvider, Is.Null);
+        Assert.That(client.Settings.Credential!.Key, Is.EqualTo("secret-key"));
+    }
+
+    private sealed class MatchAllNamedAResolver : CredentialResolver
+    {
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = new StubTokenProvider("A");
+            return true;
+        }
+    }
+
+    private sealed class MatchAllNamedBResolver : CredentialResolver
+    {
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = new StubTokenProvider("B");
+            return true;
+        }
+    }
+
+    private sealed class MatchEverythingResolver : CredentialResolver
+    {
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = new StubTokenProvider("auto");
+            return true;
+        }
+    }
+
+    private sealed class RecordingMatchAllResolver : CredentialResolver
+    {
+        public string? LastTenantId { get; private set; }
+        public string? LastClientId { get; private set; }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            LastTenantId = credentialSection["TenantId"];
+            LastClientId = credentialSection["ClientId"];
+            provider = new StubTokenProvider("recorded");
+            return true;
+        }
+    }
+
+    private static IConfigurationRoot BuildConfig(Dictionary<string, string?> values)
+    {
+        return new ConfigurationBuilder().AddInMemoryCollection(values).Build();
+    }
+
+    private sealed class ScopedRecordingResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly string _name;
+
+        public ScopedRecordingResolver(string matchSource, string name)
+        {
+            _matchSource = matchSource;
+            _name = name;
+        }
+
+        public int CallCount { get; private set; }
+        public bool WasCalled => CallCount > 0;
+        public IConfigurationSection? LastSection { get; private set; }
+        public AuthenticationTokenProvider? LastProvider { get; private set; }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            CallCount++;
+            LastSection = credentialSection;
+            string? source = credentialSection["CredentialSource"];
+            if (string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                LastProvider = new StubTokenProvider(_name);
+                provider = LastProvider;
+                return true;
+            }
+            provider = null;
+            return false;
+        }
+    }
+
+    private sealed class ScopedDefaultResolver : CredentialResolver
+    {
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = null;
+            return false;
+        }
+    }
+
+    private sealed class OtherResolver : CredentialResolver
+    {
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = null;
+            return false;
+        }
+    }
+
+    private sealed class ThrowingResolver : CredentialResolver
+    {
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+            => throw new InvalidOperationException("boom");
+    }
+
+    private sealed class StubTokenProvider : AuthenticationTokenProvider
+    {
+        public string Name { get; }
+        public StubTokenProvider(string name) => Name = name;
+
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override AuthenticationToken GetToken(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public override Threading.Tasks.ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+    }
+
+    private sealed class DisposableStubTokenProvider : AuthenticationTokenProvider, IDisposable
+    {
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override AuthenticationToken GetToken(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public override Threading.Tasks.ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public void Dispose() { }
+    }
+
+    private sealed class AsyncDisposableStubTokenProvider : AuthenticationTokenProvider, IAsyncDisposable
+    {
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override AuthenticationToken GetToken(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public override Threading.Tasks.ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public Threading.Tasks.ValueTask DisposeAsync() => default;
+    }
+
+    private sealed class DisposableProviderResolver : CredentialResolver
+    {
+        public int CallCount { get; private set; }
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            CallCount++;
+            provider = new DisposableStubTokenProvider();
+            return true;
+        }
+    }
+
+    private sealed class AsyncDisposableProviderResolver : CredentialResolver
+    {
+        public int CallCount { get; private set; }
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            CallCount++;
+            provider = new AsyncDisposableStubTokenProvider();
+            return true;
+        }
+    }
+
+    // ---- Phase 1.97: chain-aware TryResolve overload + case-insensitive normalization ----
+
+    [Test]
+    public void CredentialSource_IsLowercasedOnAssignment()
+    {
+        // CredentialSettings normalizes by lowercasing. Resolvers are
+        // responsible for accepting whichever spellings they want (short and/or
+        // long form). The single exception is "apikey" → "apikeycredential",
+        // a back-compat alias preserved from SCM 1.13.0 because generated
+        // client code dispatches on the long form.
+        var settings = new CredentialSettings(null!);
+
+        settings.CredentialSource = "Broker";
+        Assert.That(settings.CredentialSource, Is.EqualTo("broker"));
+
+        settings.CredentialSource = "BrokerCredential";
+        Assert.That(settings.CredentialSource, Is.EqualTo("brokercredential"));
+
+        settings.CredentialSource = "BROKER";
+        Assert.That(settings.CredentialSource, Is.EqualTo("broker"));
+
+        settings.CredentialSource = "ApiKey";
+        Assert.That(settings.CredentialSource, Is.EqualTo("apikeycredential"),
+            "ApiKey is the one back-compat alias preserved from 1.13.0.");
+
+        settings.CredentialSource = null;
+        Assert.That(settings.CredentialSource, Is.Null);
+    }
+
+    [Test]
+    public void TryResolve_NewOverload_DefaultImplForwardsToLegacyOverload()
+    {
+        // A resolver that overrides only the legacy (section, out provider) overload
+        // must still be reachable through the new (section, resolveChild, out provider)
+        // overload — the default virtual forwards.
+        IConfigurationSection section = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "Match"
+        }).GetSection("Cred");
+
+        var legacy = new ScopedRecordingResolver("Match", "legacy");
+
+        bool ok = legacy.TryResolve(section, static _ => null, out AuthenticationTokenProvider? provider);
+
+        Assert.That(ok, Is.True);
+        Assert.That(provider, Is.SameAs(legacy.LastProvider));
+    }
+
+    [Test]
+    public void TryResolve_NewOverload_DefaultImplThrowsOnNullResolveChild()
+    {
+        // The new overload documents resolveChild as non-null; the base virtual
+        // enforces that contract so derived resolvers (which may assume non-null)
+        // see a clear ArgumentNullException at the API boundary rather than an
+        // NRE deep in their override.
+        IConfigurationSection section = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "Match"
+        }).GetSection("Cred");
+
+        var legacy = new ScopedRecordingResolver("Match", "legacy");
+
+        Assert.Throws<ArgumentNullException>(() =>
+            legacy.TryResolve(section, null!, out _));
+    }
+
+    [Test]
+    public void Engine_PassesNonNullResolveChild_ToResolvers()
+    {
+        // Resolvers that override the chain-aware overload receive a non-null
+        // callback from the engine — even when no chain-style nesting is
+        // happening on the top-level call.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match"
+        });
+
+        var capturing = new CapturingChainAwareResolver(matchSource: "Match");
+
+        CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", capturing);
+
+        Assert.That(cred, Is.Not.Null);
+        Assert.That(capturing.LastResolveChild, Is.Not.Null,
+            "Engine must hand resolvers a non-null resolveChild callback so chain-owning resolvers can recurse without a null check.");
+    }
+
+    [Test]
+    public void Engine_ResolveChild_WalksFullChainAndSharesCacheWithTopLevel()
+    {
+        // A chain-owning resolver invokes resolveChild(childSection) on a child
+        // section that another resolver in the same chain can claim.
+        // - The child resolver runs (chain walked correctly).
+        // - The returned provider matches what GetCredentialSettings would
+        //   return for that child section directly (cache shared, same key).
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Parent:CredentialSource"] = "Parent",
+            // child section content
+            ["Parent:Child:CredentialSource"] = "Child",
+            ["Parent:Child:TenantId"] = "t-child",
+        });
+
+        // ChainOwnerResolver: claims "Parent", uses resolveChild to resolve
+        // the child section and stores the returned provider on its stub.
+        var childResolver = new ScopedRecordingResolver("Child", "child-provider");
+        AuthenticationTokenProvider? recursivelyResolved = null;
+        var parentResolver = new InvokeChildResolver("Parent",
+            section => section.GetSection("Child"),
+            provider => recursivelyResolved = provider);
+
+        CredentialSettings? parentCred = config.GetCredentialSettings(
+            "Parent",
+            parentResolver,
+            childResolver);
+
+        Assert.That(parentCred, Is.Not.Null, "parent should resolve");
+        Assert.That(recursivelyResolved, Is.Not.Null, "resolveChild should have produced a provider for the Child section");
+        Assert.That(recursivelyResolved, Is.SameAs(childResolver.LastProvider),
+            "resolveChild should walk the same chain and surface the child resolver's provider");
+
+        // Independent direct call returns the cached child provider — proves
+        // cache identity is shared between recursive path and top-level path.
+        CredentialSettings? childCred = config.GetCredentialSettings(
+            "Parent:Child",
+            parentResolver,
+            childResolver);
+
+        Assert.That(childCred?.TokenProvider, Is.SameAs(recursivelyResolved),
+            "Top-level resolution of the child section must hit the same cache entry the recursive call produced.");
+    }
+
+    [Test]
+    public void Engine_ResolveChild_DoesNotReapplyConfigureOverridesOnRecursion()
+    {
+        // configureOverrides only applies to the top-level call; recursive
+        // resolveChild invocations re-enter the engine with configureOverrides
+        // == null. This is enforced structurally and pinned by an invocation
+        // count — running the override callback twice could double-apply state
+        // (e.g., a callback that increments a counter on the section) and break
+        // resolver caching keyed by merged content.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Parent:CredentialSource"] = "Parent",
+            ["Parent:Child:CredentialSource"] = "Child",
+        });
+
+        var childResolver = new ScopedRecordingResolver("Child", "child");
+        var parentResolver = new InvokeChildResolver("Parent",
+            section => section.GetSection("Child"),
+            _ => { });
+
+        int overrideInvocations = 0;
+        config.GetCredentialSettings(
+            "Parent",
+            new CredentialResolver[] { parentResolver, childResolver },
+            section =>
+            {
+                overrideInvocations++;
+                section["TenantId"] = "override-tenant";
+            });
+
+        Assert.That(overrideInvocations, Is.EqualTo(1),
+            "configureOverrides must be invoked exactly once — recursive resolveChild calls re-enter with null overrides.");
+    }
+
+    [Test]
+    public void Engine_ResolveChild_HandlesSingleUseResolverEnumerable()
+    {
+        // Pinning the contract surfaced in PR review: when a chain-owning
+        // resolver invokes resolveChild, the engine re-enters Resolve with the
+        // same resolver enumerable while the outer foreach is still walking it.
+        // If the engine doesn't materialize the enumerable once per top-level
+        // call, a non-reentrant / single-use IEnumerable<CredentialResolver>
+        // (custom iterator, throws on second GetEnumerator) would blow up.
+        // The engine must enumerate it exactly once and reuse the materialized
+        // copy for the recursive call.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Parent:CredentialSource"] = "Parent",
+            ["Parent:Child:CredentialSource"] = "Child",
+        });
+
+        var childResolver = new ScopedRecordingResolver("Child", "child");
+        var parentResolver = new InvokeChildResolver(
+            "Parent",
+            section => section.GetSection("Child"),
+            _ => { });
+
+        var singleUse = new SingleUseResolverList(parentResolver, childResolver);
+
+        CredentialSettings? cred = config.GetCredentialSettings("Parent", singleUse, _ => { });
+
+        Assert.That(cred, Is.Not.Null,
+            "Top-level resolution should succeed without the recursive call re-enumerating the single-use list.");
+        Assert.That(singleUse.EnumerateCount, Is.EqualTo(1),
+            "Engine must materialize resolvers once and reuse for recursion.");
+        Assert.That(childResolver.WasCalled, Is.True,
+            "resolveChild should have walked the chain and matched the child resolver.");
+    }
+
+    [Test]
+    public void Engine_ChainCache_DifferentDownstream_ProducesDistinctEntries()
+    {
+        // Scenario from PR review: chain-owning resolver reused across two
+        // calls with the same parent section but different downstream resolvers
+        // for the inner section. The cache must NOT return the first call's
+        // wrapped provider for the second call — the second call's downstream
+        // resolver would otherwise be silently bypassed.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "MyChain",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+            ["Cred:Inner:Bar"] = "false",
+        });
+
+        var chainOwner = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var fooRespectsBar = new FooCredResolver("FooCred", respectsBar: true);
+        var fooIgnoresBar = new FooCredResolver("FooCred", respectsBar: false);
+
+        CredentialSettings? first = config.GetCredentialSettings(
+            "Cred", chainOwner, fooRespectsBar);
+        Assert.That(((ChainWrapperProvider)first!.TokenProvider!).Inner, Is.InstanceOf<FooTokenProvider>());
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)first.TokenProvider!).Inner!).RespectsBar, Is.True);
+
+        CredentialSettings? second = config.GetCredentialSettings(
+            "Cred", chainOwner, fooIgnoresBar);
+
+        Assert.That(second?.TokenProvider, Is.Not.SameAs(first.TokenProvider),
+            "Chain-aware result must NOT be served from cache when the downstream chain composition changed.");
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)second!.TokenProvider!).Inner!).RespectsBar, Is.False,
+            "Second call's inner provider must come from fooIgnoresBar — proves the new chain was actually walked.");
+    }
+
+    [Test]
+    public void Engine_LazyCapture_ThrowsAcrossThreads()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "LazyOnly",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var lazyOnly = new LazyCaptureOnlyResolver("LazyOnly", section => section.GetSection("Inner"));
+        var foo = new FooCredResolver("FooCred", respectsBar: true);
+
+        Type cacheType = typeof(AuthenticationTokenProvider).Assembly
+            .GetType("System.ClientModel.Primitives.CredentialCache", throwOnError: true)!;
+        var cacheField = cacheType.GetField("s_cache", BindingFlags.NonPublic | BindingFlags.Static)!;
+        var cache = (System.Collections.IDictionary)cacheField.GetValue(null)!;
+
+        int missed = 0;
+        const int iterations = 2000;
+        for (int i = 0; i < iterations; i++)
+        {
+            cache.Clear();
+
+            CredentialSettings? settings = config.GetCredentialSettings("Cred", lazyOnly, foo);
+            var provider = (LazyCaptureProvider)settings!.TokenProvider!;
+
+            bool threw = false;
+            var t = new Threading.Thread(() =>
+            {
+                try { provider.ResolveInner(); }
+                catch (InvalidOperationException) { threw = true; }
+            });
+            t.Start();
+            t.Join();
+            if (!threw) missed++;
+        }
+        Assert.That(missed, Is.Zero,
+            $"{missed} of {iterations} cross-thread invocations did not throw — memory-ordering race in the guard flag.");
+    }
+
+    [Test]
+    public void Engine_LazyCapture_ThrowsWhenResolveChildInvokedAfterTryResolveReturns()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "LazyOnly",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var lazyOnly = new LazyCaptureOnlyResolver("LazyOnly", section => section.GetSection("Inner"));
+        var fooA = new FooCredResolver("FooCred", respectsBar: true);
+
+        CredentialSettings? settings = config.GetCredentialSettings("Cred", lazyOnly, fooA);
+        var provider = (LazyCaptureProvider)settings!.TokenProvider!;
+
+        InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() => provider.ResolveInner());
+        Assert.That(ex!.Message, Does.Contain("resolveChild was invoked after TryResolve returned"));
+    }
+
+    // Captures resolveChild during TryResolve without invoking it.
+    private sealed class LazyCaptureOnlyResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly Func<IConfigurationSection, IConfigurationSection> _selectChild;
+
+        public LazyCaptureOnlyResolver(
+            string matchSource,
+            Func<IConfigurationSection, IConfigurationSection> selectChild)
+        {
+            _matchSource = matchSource;
+            _selectChild = selectChild;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = null;
+            return false;
+        }
+
+        protected override bool TryResolveCore(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+
+            IConfigurationSection child = _selectChild(credentialSection);
+            provider = new LazyCaptureProvider(child, resolveChild);
+            return true;
+        }
+    }
+
+    private sealed class LazyCaptureProvider : AuthenticationTokenProvider
+    {
+        private readonly IConfigurationSection _child;
+        private readonly Func<IConfigurationSection, AuthenticationTokenProvider?> _resolveChild;
+
+        public LazyCaptureProvider(
+            IConfigurationSection child,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild)
+        {
+            _child = child;
+            _resolveChild = resolveChild;
+        }
+
+        public AuthenticationTokenProvider? ResolveInner() => _resolveChild(_child);
+
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override AuthenticationToken GetToken(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public override Threading.Tasks.ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+    }
+
+    [Test]
+    public void Engine_ChainCache_ChainOwner_AlwaysBuildsFreshWrapper_LeavesStaySharedAcrossChains()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "MyChain",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+            ["Cred:Inner:Bar"] = "false",
+        });
+
+        var chainOwner = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var fooRespectsBar = new FooCredResolver("FooCred", respectsBar: true);
+        var fooIgnoresBar = new FooCredResolver("FooCred", respectsBar: false);
+
+        // Distinct downstream leaves → distinct wrappers, each composed over
+        // the leaf that the active chain produced.
+        CredentialSettings? first = config.GetCredentialSettings(
+            "Cred", chainOwner, fooRespectsBar);
+        CredentialSettings? second = config.GetCredentialSettings(
+            "Cred", chainOwner, fooIgnoresBar);
+
+        Assert.That(second!.TokenProvider, Is.Not.SameAs(first!.TokenProvider),
+            "Chain owners are never cached — each resolution must produce a fresh wrapper.");
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)first.TokenProvider!).Inner!).RespectsBar, Is.True,
+            "First wrapper composes the chain-A leaf (fooRespectsBar).");
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)second.TokenProvider!).Inner!).RespectsBar, Is.False,
+            "Second wrapper composes the chain-B leaf (fooIgnoresBar) — no cross-chain leak.");
+
+        // Same chain composition twice: leaf shared across the two wrappers,
+        // and via the second call sharing with the third (same chain) too.
+        CredentialSettings? third = config.GetCredentialSettings(
+            "Cred", chainOwner, fooIgnoresBar);
+        AuthenticationTokenProvider? secondInner = ((ChainWrapperProvider)second.TokenProvider!).Inner;
+        AuthenticationTokenProvider? thirdInner = ((ChainWrapperProvider)third!.TokenProvider!).Inner;
+        Assert.That(thirdInner, Is.SameAs(secondInner),
+            "Leaf provider must be shared across chain-owner rebuilds — that's where the token cache lives.");
+    }
+
+    [Test]
+    public void Engine_ChainCache_ChainOwner_NotCached_EvenWithIdenticalDownstream()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "MyChain",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var chainOwner = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var foo = new FooCredResolver("FooCred", respectsBar: true);
+
+        CredentialSettings? first = config.GetCredentialSettings("Cred", chainOwner, foo);
+        CredentialSettings? second = config.GetCredentialSettings("Cred", chainOwner, foo);
+
+        Assert.That(second?.TokenProvider, Is.Not.SameAs(first?.TokenProvider),
+            "Chain owners are not cached — even identical chains produce fresh wrappers.");
+        Assert.That(((ChainWrapperProvider)second!.TokenProvider!).Inner,
+            Is.SameAs(((ChainWrapperProvider)first!.TokenProvider!).Inner),
+            "Leaf inside the wrapper IS cached and shared across rebuilds.");
+    }
+
+    [Test]
+    public void Engine_NonChainCache_SharedAcrossDifferentChainCompositions()
+    {
+        // A leaf resolver — one whose TryResolve never invokes resolveChild —
+        // is chain-independent: its output cannot vary based on what other
+        // resolvers happen to be alongside it. The cache key omits chain
+        // identity, so the same leaf instance hands the same provider to
+        // every caller regardless of chain composition. This keeps the
+        // expensive token-layer cache inside the leaf shared across all the
+        // wrappers (and direct callers) that compose it.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "Simple",
+        });
+
+        var simple = new ScopedRecordingResolver("Simple", "simple-provider");
+        var neverMatches = new ScopedRecordingResolver("Other", "other");
+        var alsoNeverMatches = new ScopedRecordingResolver("Yet-Another", "yet-another");
+
+        CredentialSettings? first = config.GetCredentialSettings("Cred", simple, neverMatches);
+        CredentialSettings? second = config.GetCredentialSettings("Cred", simple, alsoNeverMatches);
+
+        Assert.That(second?.TokenProvider, Is.SameAs(first?.TokenProvider),
+            "Leaf resolver output must be shared across different chain compositions — the cache key omits chain identity for non-chain-owning resolvers.");
+    }
+
+    [Test]
+    public void Engine_ChainCache_RespectsResolverOrderInChainKey()
+    {
+        // Two chains containing the same resolver instances but in different
+        // order produce distinct cache entries — the resolver order affects
+        // which resolver actually claims a given inner section, so it must
+        // affect the chain key.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "MyChain",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var chainOwner = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var fooA = new FooCredResolver("FooCred", respectsBar: true);
+        var fooB = new FooCredResolver("FooCred", respectsBar: false);
+
+        // Order: [chainOwner, fooA, fooB] — fooA wins for inner (first match).
+        CredentialSettings? first = config.GetCredentialSettings(
+            "Cred", chainOwner, fooA, fooB);
+        // Order: [chainOwner, fooB, fooA] — fooB wins for inner.
+        CredentialSettings? second = config.GetCredentialSettings(
+            "Cred", chainOwner, fooB, fooA);
+
+        Assert.That(second?.TokenProvider, Is.Not.SameAs(first?.TokenProvider),
+            "Different resolver order can change which downstream resolver wins — must produce a distinct cache entry.");
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)first!.TokenProvider!).Inner!).RespectsBar, Is.True,
+            "First call: fooA (respectsBar:true) wins the inner.");
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)second!.TokenProvider!).Inner!).RespectsBar, Is.False,
+            "Second call: fooB (respectsBar:false) wins the inner.");
+    }
+
+    [Test]
+    public void Engine_ChainCache_DistinctParentInstances_DoNotShareCache()
+    {
+        // Two different chainOwner instances of the same type must produce
+        // distinct cache entries even with identical downstream chain — the
+        // cache key uses resolver reference identity, not type identity, so
+        // resolver instance state cannot leak across instances.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "MyChain",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var chainOwnerA = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var chainOwnerB = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var foo = new FooCredResolver("FooCred", respectsBar: true);
+
+        CredentialSettings? a = config.GetCredentialSettings("Cred", chainOwnerA, foo);
+        CredentialSettings? b = config.GetCredentialSettings("Cred", chainOwnerB, foo);
+
+        Assert.That(b?.TokenProvider, Is.Not.SameAs(a?.TokenProvider),
+            "Distinct resolver instances must get distinct cache entries even when types and downstream chain match.");
+    }
+
+    [Test]
+    public void Engine_ChainCache_ConditionalChainUse_ChoosesSlotPerSection()
+    {
+        // A resolver that calls resolveChild for some sections and not others
+        // is per-section in cache behavior:
+        //   * Plain (no resolveChild call) → leaf-like → cached → shared
+        //     across chain compositions.
+        //   * WithChild (called resolveChild) → chain owner for this section →
+        //     not cached → fresh provider per call.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Plain:CredentialSource"] = "Conditional",
+            ["WithChild:CredentialSource"] = "Conditional",
+            ["WithChild:Child:CredentialSource"] = "FooCred",
+        });
+
+        var conditional = new ConditionalChainResolver("Conditional", "Child");
+        var fooA = new FooCredResolver("FooCred", respectsBar: true);
+        var fooB = new FooCredResolver("FooCred", respectsBar: false);
+
+        // Plain section (no child subsection) → resolveChild never called →
+        // cached as leaf → same instance across different chain compositions.
+        CredentialSettings? plain1 = config.GetCredentialSettings("Plain", conditional, fooA);
+        CredentialSettings? plain2 = config.GetCredentialSettings("Plain", conditional, fooB);
+        Assert.That(plain2?.TokenProvider, Is.SameAs(plain1?.TokenProvider),
+            "Plain section: resolveChild not called → leaf cache → same instance across chains.");
+
+        // WithChild section → resolveChild called → chain owner → not cached →
+        // distinct providers per call (even with identical chain composition).
+        CredentialSettings? chain1 = config.GetCredentialSettings("WithChild", conditional, fooA);
+        CredentialSettings? chain2 = config.GetCredentialSettings("WithChild", conditional, fooB);
+        Assert.That(chain2?.TokenProvider, Is.Not.SameAs(chain1?.TokenProvider),
+            "WithChild section: chain owner → never cached → distinct providers per call.");
+    }
+
+    private sealed class CapturingChainAwareResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+
+        public CapturingChainAwareResolver(string matchSource) => _matchSource = matchSource;
+
+        public Func<IConfigurationSection, AuthenticationTokenProvider?>? LastResolveChild { get; private set; }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            // Should never be called by the engine — engine always invokes the
+            // chain-aware overload, which this class overrides.
+            provider = null;
+            return false;
+        }
+
+        protected override bool TryResolveCore(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            LastResolveChild = resolveChild;
+            string? source = credentialSection["CredentialSource"];
+            if (string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = new StubTokenProvider("chain-aware");
+                return true;
+            }
+            provider = null;
+            return false;
+        }
+    }
+
+    private sealed class InvokeChildResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly Func<IConfigurationSection, IConfigurationSection> _selectChild;
+        private readonly Action<AuthenticationTokenProvider?> _onChildResolved;
+
+        public InvokeChildResolver(
+            string matchSource,
+            Func<IConfigurationSection, IConfigurationSection> selectChild,
+            Action<AuthenticationTokenProvider?> onChildResolved)
+        {
+            _matchSource = matchSource;
+            _selectChild = selectChild;
+            _onChildResolved = onChildResolved;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            // Default forwards here from the chain-aware overload when no
+            // resolveChild is plumbed — but in this test the engine always
+            // calls the chain-aware overload, so this branch is unused.
+            provider = null;
+            return false;
+        }
+
+        protected override bool TryResolveCore(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+
+            IConfigurationSection child = _selectChild(credentialSection);
+            AuthenticationTokenProvider? childProvider = resolveChild(child);
+            _onChildResolved(childProvider);
+
+            provider = new StubTokenProvider("parent");
+            return true;
+        }
+    }
+
+    // Chain-owning resolver that wraps the resolved child provider in a
+    // ChainWrapperProvider so tests can observe which inner provider was
+    // used. Models real chain-owning resolvers (e.g., AzureCredentialResolver
+    // for ChainedTokenCredential) that assemble their output from
+    // downstream provider instances.
+    // Resolver that conditionally invokes resolveChild based on whether the
+    // section has a named child subsection. Pins the conditional-chain-use
+    // scenario where the same resolver routes through both cache slots
+    // depending on the input section.
+    private sealed class ConditionalChainResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly string _childKey;
+
+        public ConditionalChainResolver(string matchSource, string childKey)
+        {
+            _matchSource = matchSource;
+            _childKey = childKey;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = null;
+            return false;
+        }
+
+        protected override bool TryResolveCore(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+
+            IConfigurationSection child = credentialSection.GetSection(_childKey);
+            if (child.Exists())
+            {
+                AuthenticationTokenProvider? inner = resolveChild(child);
+                provider = new ChainWrapperProvider(inner);
+            }
+            else
+            {
+                // Resolve produced a chain-independent provider — resolveChild
+                // was NOT called, so the cache should park us in the shared slot.
+                provider = new StubTokenProvider("conditional-no-child");
+            }
+            return true;
+        }
+    }
+
+    private sealed class ChainWrapperResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly Func<IConfigurationSection, IConfigurationSection> _selectChild;
+
+        public ChainWrapperResolver(
+            string matchSource,
+            Func<IConfigurationSection, IConfigurationSection> selectChild)
+        {
+            _matchSource = matchSource;
+            _selectChild = selectChild;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = null;
+            return false;
+        }
+
+        protected override bool TryResolveCore(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+
+            IConfigurationSection child = _selectChild(credentialSection);
+            AuthenticationTokenProvider? childProvider = resolveChild(child);
+            provider = new ChainWrapperProvider(childProvider);
+            return true;
+        }
+    }
+
+    private sealed class ChainWrapperProvider : AuthenticationTokenProvider
+    {
+        public ChainWrapperProvider(AuthenticationTokenProvider? inner) => Inner = inner;
+        public AuthenticationTokenProvider? Inner { get; }
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override AuthenticationToken GetToken(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public override Threading.Tasks.ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+    }
+
+    // Two distinct FooCredResolver instances (respectsBar:true / :false)
+    // model the chain-swap scenario: same source name claimed by different
+    // resolver instances that produce semantically different providers.
+    private sealed class FooCredResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly bool _respectsBar;
+
+        public FooCredResolver(string matchSource, bool respectsBar)
+        {
+            _matchSource = matchSource;
+            _respectsBar = respectsBar;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+            provider = new FooTokenProvider(_respectsBar);
+            return true;
+        }
+    }
+
+    private sealed class FooTokenProvider : AuthenticationTokenProvider
+    {
+        public FooTokenProvider(bool respectsBar) => RespectsBar = respectsBar;
+        public bool RespectsBar { get; }
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override AuthenticationToken GetToken(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public override Threading.Tasks.ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+    }
+
+    // Enumerable that throws if GetEnumerator() is called more than once.
+    // Mirrors "non-reentrant / single-use" iterators a caller might pass.
+    private sealed class SingleUseResolverList : IEnumerable<CredentialResolver>
+    {
+        private readonly CredentialResolver[] _resolvers;
+        private int _enumerateCount;
+
+        public SingleUseResolverList(params CredentialResolver[] resolvers)
+        {
+            _resolvers = resolvers;
+        }
+
+        public int EnumerateCount => _enumerateCount;
+
+        public IEnumerator<CredentialResolver> GetEnumerator()
+        {
+            int n = System.Threading.Interlocked.Increment(ref _enumerateCount);
+            if (n > 1)
+            {
+                throw new InvalidOperationException("SingleUseResolverList enumerated more than once.");
+            }
+            return ((IEnumerable<CredentialResolver>)_resolvers).GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+}

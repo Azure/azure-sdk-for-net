@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.TestFramework.Tests
 {
-    public class RecordedTestBaseTests: RecordedTestBase
+    public class RecordedTestBaseTests : RecordedTestBase
     {
         public RecordedTestBaseTests(bool isAsync) : base(isAsync)
         {

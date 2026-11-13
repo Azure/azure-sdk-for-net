@@ -3,8 +3,8 @@
 
 using System;
 using Azure;
-using Azure.Core;
 using Azure.AI.Language.QuestionAnswering;
+using Azure.Core;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure

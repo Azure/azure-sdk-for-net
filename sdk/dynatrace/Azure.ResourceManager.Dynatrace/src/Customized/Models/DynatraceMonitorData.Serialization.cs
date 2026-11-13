@@ -4,26 +4,29 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Dynatrace.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    [CodeGenSerialization(nameof(Identity), SerializationValueHook = nameof(WriteIdentity), DeserializationValueHook = nameof(ReadIdentity))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Identity), SerializationValueHook = nameof(WriteIdentity), DeserializationValueHook = nameof(ReadIdentity))]
     public partial class DynatraceMonitorData
     {
         internal void WriteIdentity(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var serializeOptions = new JsonSerializerOptions { Converters = { new DynatraceManagedServiceIdentityTypeConverter() } };
-            JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            ((IJsonModel<ResourceManager.Models.ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
         }
 
-        internal static void ReadIdentity(JsonProperty property, ref ManagedServiceIdentity identity)
+        internal static void ReadIdentity(JsonProperty property, ref ResourceManager.Models.ManagedServiceIdentity identity)
         {
-            var serializeOptions = new JsonSerializerOptions { Converters = { new DynatraceManagedServiceIdentityTypeConverter() } };
-            identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+
+            identity = ModelReaderWriter.Read<ResourceManager.Models.ManagedServiceIdentity>(new System.BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerDynatraceContext.Default);
         }
     }
 }

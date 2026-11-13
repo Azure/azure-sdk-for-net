@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using System.ComponentModel;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager
@@ -16,6 +16,9 @@ namespace Azure.ResourceManager
         // name after the `name` property of returned audience from https://management.azure.com/metadata/endpoints?api-version=2019-11-01
         /// <summary> Azure Public Cloud. </summary>
         public static readonly ArmEnvironment AzurePublicCloud = new(new Uri("https://management.azure.com"), "https://management.azure.com/");
+
+        /// <summary> Bleu Cloud, the national partner cloud for France. </summary>
+        public static readonly ArmEnvironment AzureBleuCloud = new(new Uri("https://management.sovcloud-api.fr"), "https://management.sovcloud-api.fr/");
 
         /// <summary> Azure China Cloud. </summary>
         public static readonly ArmEnvironment AzureChina = new(new Uri("https://management.chinacloudapi.cn"), "https://management.chinacloudapi.cn");

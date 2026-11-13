@@ -46,9 +46,9 @@ List<EventData> backingList = new();
 int batchCountThreshold = 3;
 
 EventDataBatch dataBatchMock = EventHubsModelFactory.EventDataBatch(
-        batchSizeBytes : batchSizeInBytes,
-        batchEventStore : backingList,
-        batchOptions : new CreateBatchOptions(),
+        batchSizeBytes: batchSizeInBytes,
+        batchEventStore: backingList,
+        batchOptions: new CreateBatchOptions(),
         // The model factory allows a custom TryAdd callback, allowing control of what
         // events the batch accepts.
         eventData =>
@@ -219,10 +219,10 @@ Mock<EventHubConsumerClient> mockConsumer = new();
 // This creates a mock LastEnqueuedEventProperties using the model factory.
 
 LastEnqueuedEventProperties lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
-    lastSequenceNumber : 1234,
-    lastOffsetString : "234:1:954-2",
-    lastEnqueuedTime : DateTimeOffset.Parse("1:24 AM"),
-    lastReceivedTime : DateTimeOffset.Parse("1:26 AM"));
+    lastSequenceNumber: 1234,
+    lastOffsetString: "234:1:954-2",
+    lastEnqueuedTime: DateTimeOffset.Parse("1:24 AM"),
+    lastReceivedTime: DateTimeOffset.Parse("1:26 AM"));
 
 // This creates a mock of PartitionContext using the model factory.
 
@@ -230,8 +230,8 @@ PartitionContext partitionContext = EventHubsModelFactory.PartitionContext(
     fullyQualifiedNamespace: "sample-hub.servicebus.windows.net",
     eventHubName: "sample-event-hub",
     consumerGroup: "$Default",
-    partitionId : "0",
-    lastEnqueuedEventProperties : lastEnqueueEventProperties);
+    partitionId: "0",
+    lastEnqueuedEventProperties: lastEnqueueEventProperties);
 
 // This is a simple local method that returns an IAsyncEnumerable to use as the return for
 // ReadEventsAsync below, since IAsyncEnumerables cannot be created directly.

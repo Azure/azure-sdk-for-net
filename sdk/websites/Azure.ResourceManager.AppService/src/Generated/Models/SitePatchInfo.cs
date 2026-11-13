@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,322 +16,748 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a site. </summary>
     public partial class SitePatchInfo : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SitePatchInfo"/>. </summary>
         public SitePatchInfo()
         {
-            HostNames = new ChangeTrackingList<string>();
-            EnabledHostNames = new ChangeTrackingList<string>();
-            HostNameSslStates = new ChangeTrackingList<HostNameSslState>();
-            TrafficManagerHostNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SitePatchInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SitePatchResource resource specific properties. </param>
         /// <param name="identity"> Managed service identity. </param>
-        /// <param name="state"> Current state of the app. </param>
-        /// <param name="hostNames"> Hostnames associated with the app. </param>
-        /// <param name="repositorySiteName"> Name of the repository site. </param>
-        /// <param name="usageState"> State indicating whether the app has exceeded its quota usage. Read-only. </param>
-        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
-        /// <param name="enabledHostNames">
-        /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
-        /// the app is not served on those hostnames.
-        /// </param>
-        /// <param name="availabilityState"> Management information availability state for the app. </param>
-        /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
-        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
-        /// <param name="isReserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
-        /// <param name="isHyperV"> Hyper-V sandbox. </param>
-        /// <param name="lastModifiedOn"> Last time the app was modified, in UTC. Read-only. </param>
-        /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
-        /// <param name="siteConfig"> Configuration of the app. </param>
-        /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
-        /// <param name="isScmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
-        /// <param name="hostingEnvironmentProfile"> App Service Environment to use for the app. </param>
-        /// <param name="isClientAffinityEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="isClientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="clientCertMode">
-        /// This composes with ClientCertEnabled setting.
-        /// - ClientCertEnabled: false means ClientCert is ignored.
-        /// - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
-        /// - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
-        /// </param>
-        /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
-        /// <param name="isHostNameDisabled">
-        /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
-        /// </param>
-        /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
-        /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
-        /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
-        /// <param name="containerSize"> Size of the function container. </param>
-        /// <param name="dailyMemoryTimeQuota"> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </param>
-        /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
-        /// <param name="maxNumberOfWorkers">
-        /// Maximum number of workers.
-        /// This only applies to Functions container.
-        /// </param>
-        /// <param name="cloningInfo"> If specified during app creation, the app is cloned from a source app. </param>
-        /// <param name="resourceGroup"> Name of the resource group the app belongs to. Read-only. </param>
-        /// <param name="isDefaultContainer"> &lt;code&gt;true&lt;/code&gt; if the app is a default container; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="defaultHostName"> Default hostname of the app. Read-only. </param>
-        /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
-        /// <param name="isHttpsOnly">
-        /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
-        /// http requests
-        /// </param>
-        /// <param name="redundancyMode"> Site redundancy mode. </param>
-        /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
-        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
-        /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
-        /// <param name="virtualNetworkSubnetId">
-        /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
-        /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
-        /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteDnsConfig dnsConfiguration, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientAffinityProxyEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SitePatchResourceProperties properties, ManagedServiceIdentity identity, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Identity = identity;
-            State = state;
-            HostNames = hostNames;
-            RepositorySiteName = repositorySiteName;
-            UsageState = usageState;
-            IsEnabled = isEnabled;
-            EnabledHostNames = enabledHostNames;
-            AvailabilityState = availabilityState;
-            HostNameSslStates = hostNameSslStates;
-            ServerFarmId = serverFarmId;
-            IsReserved = isReserved;
-            IsXenon = isXenon;
-            IsHyperV = isHyperV;
-            LastModifiedOn = lastModifiedOn;
-            DnsConfiguration = dnsConfiguration;
-            SiteConfig = siteConfig;
-            TrafficManagerHostNames = trafficManagerHostNames;
-            IsScmSiteAlsoStopped = isScmSiteAlsoStopped;
-            TargetSwapSlot = targetSwapSlot;
-            HostingEnvironmentProfile = hostingEnvironmentProfile;
-            IsClientAffinityEnabled = isClientAffinityEnabled;
-            IsClientAffinityProxyEnabled = isClientAffinityProxyEnabled;
-            IsClientCertEnabled = isClientCertEnabled;
-            ClientCertMode = clientCertMode;
-            ClientCertExclusionPaths = clientCertExclusionPaths;
-            IsHostNameDisabled = isHostNameDisabled;
-            CustomDomainVerificationId = customDomainVerificationId;
-            OutboundIPAddresses = outboundIPAddresses;
-            PossibleOutboundIPAddresses = possibleOutboundIPAddresses;
-            ContainerSize = containerSize;
-            DailyMemoryTimeQuota = dailyMemoryTimeQuota;
-            SuspendOn = suspendOn;
-            MaxNumberOfWorkers = maxNumberOfWorkers;
-            CloningInfo = cloningInfo;
-            ResourceGroup = resourceGroup;
-            IsDefaultContainer = isDefaultContainer;
-            DefaultHostName = defaultHostName;
-            SlotSwapStatus = slotSwapStatus;
-            IsHttpsOnly = isHttpsOnly;
-            RedundancyMode = redundancyMode;
-            InProgressOperationId = inProgressOperationId;
-            IsStorageAccountRequired = isStorageAccountRequired;
-            KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
-            VirtualNetworkSubnetId = virtualNetworkSubnetId;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> SitePatchResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SitePatchResourceProperties Properties { get; set; }
 
         /// <summary> Managed service identity. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+
         /// <summary> Current state of the app. </summary>
         [WirePath("properties.state")]
-        public string State { get; }
+        public string State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> Hostnames associated with the app. </summary>
         [WirePath("properties.hostNames")]
-        public IReadOnlyList<string> HostNames { get; }
+        public IReadOnlyList<string> HostNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                return Properties.HostNames;
+            }
+        }
+
         /// <summary> Name of the repository site. </summary>
         [WirePath("properties.repositorySiteName")]
-        public string RepositorySiteName { get; }
+        public string RepositorySiteName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepositorySiteName;
+            }
+        }
+
         /// <summary> State indicating whether the app has exceeded its quota usage. Read-only. </summary>
         [WirePath("properties.usageState")]
-        public AppServiceUsageState? UsageState { get; }
+        public AppServiceUsageState? UsageState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsageState;
+            }
+        }
+
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </summary>
         [WirePath("properties.enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if site scoped certificates are enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.siteScopedCertificatesEnabled")]
+        public bool? IsSiteScopedCertificatesEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSiteScopedCertificatesEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsSiteScopedCertificatesEnabled = value;
+            }
+        }
+
         /// <summary>
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
         /// the app is not served on those hostnames.
         /// </summary>
         [WirePath("properties.enabledHostNames")]
-        public IReadOnlyList<string> EnabledHostNames { get; }
+        public IReadOnlyList<string> EnabledHostNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                return Properties.EnabledHostNames;
+            }
+        }
+
         /// <summary> Management information availability state for the app. </summary>
         [WirePath("properties.availabilityState")]
-        public WebSiteAvailabilityState? AvailabilityState { get; }
+        public WebSiteAvailabilityState? AvailabilityState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityState;
+            }
+        }
+
         /// <summary> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </summary>
         [WirePath("properties.hostNameSslStates")]
-        public IList<HostNameSslState> HostNameSslStates { get; }
+        public IList<HostNameSslState> HostNameSslStates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                return Properties.HostNameSslStates;
+            }
+        }
+
         /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
         [WirePath("properties.serverFarmId")]
-        public ResourceIdentifier ServerFarmId { get; set; }
+        public ResourceIdentifier ServerFarmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerFarmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.ServerFarmId = value;
+            }
+        }
+
         /// <summary> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.reserved")]
-        public bool? IsReserved { get; set; }
+        public bool? IsReserved
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsReserved;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsReserved = value;
+            }
+        }
+
         /// <summary> Obsolete: Hyper-V sandbox. </summary>
         [WirePath("properties.isXenon")]
-        public bool? IsXenon { get; set; }
+        public bool? IsXenon
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsXenon;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsXenon = value;
+            }
+        }
+
         /// <summary> Hyper-V sandbox. </summary>
         [WirePath("properties.hyperV")]
-        public bool? IsHyperV { get; set; }
+        public bool? IsHyperV
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHyperV;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsHyperV = value;
+            }
+        }
+
         /// <summary> Last time the app was modified, in UTC. Read-only. </summary>
         [WirePath("properties.lastModifiedTimeUtc")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> Property to configure various DNS related settings for a site. </summary>
         [WirePath("properties.dnsConfiguration")]
-        public SiteDnsConfig DnsConfiguration { get; set; }
+        public SiteDnsConfig DnsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.DnsConfiguration = value;
+            }
+        }
+
         /// <summary> Configuration of the app. </summary>
         [WirePath("properties.siteConfig")]
-        public SiteConfigProperties SiteConfig { get; set; }
+        public SiteConfigProperties SiteConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SiteConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.SiteConfig = value;
+            }
+        }
+
+        /// <summary> AI integration configuration for the app. </summary>
+        [WirePath("properties.aiIntegration")]
+        public AiIntegration AiIntegration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AiIntegration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.AiIntegration = value;
+            }
+        }
+
         /// <summary> Azure Traffic Manager hostnames associated with the app. Read-only. </summary>
         [WirePath("properties.trafficManagerHostNames")]
-        public IReadOnlyList<string> TrafficManagerHostNames { get; }
+        public IReadOnlyList<string> TrafficManagerHostNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                return Properties.TrafficManagerHostNames;
+            }
+        }
+
         /// <summary> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.scmSiteAlsoStopped")]
-        public bool? IsScmSiteAlsoStopped { get; set; }
+        public bool? IsScmSiteAlsoStopped
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsScmSiteAlsoStopped;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsScmSiteAlsoStopped = value;
+            }
+        }
+
         /// <summary> Specifies which deployment slot this app will swap into. Read-only. </summary>
         [WirePath("properties.targetSwapSlot")]
-        public string TargetSwapSlot { get; }
+        public string TargetSwapSlot
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetSwapSlot;
+            }
+        }
+
         /// <summary> App Service Environment to use for the app. </summary>
         [WirePath("properties.hostingEnvironmentProfile")]
-        public HostingEnvironmentProfile HostingEnvironmentProfile { get; set; }
+        public HostingEnvironmentProfile HostingEnvironmentProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostingEnvironmentProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.HostingEnvironmentProfile = value;
+            }
+        }
+
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </summary>
         [WirePath("properties.clientAffinityEnabled")]
-        public bool? IsClientAffinityEnabled { get; set; }
+        public bool? IsClientAffinityEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsClientAffinityEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsClientAffinityEnabled = value;
+            }
+        }
+
         /// <summary> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.clientAffinityProxyEnabled")]
-        public bool? IsClientAffinityProxyEnabled { get; set; }
+        public bool? IsClientAffinityProxyEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsClientAffinityProxyEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsClientAffinityProxyEnabled = value;
+            }
+        }
+
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.clientCertEnabled")]
-        public bool? IsClientCertEnabled { get; set; }
+        public bool? IsClientCertEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsClientCertEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsClientCertEnabled = value;
+            }
+        }
+
         /// <summary>
         /// This composes with ClientCertEnabled setting.
-        /// - ClientCertEnabled: false means ClientCert is ignored.
-        /// - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
-        /// - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
+        /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </summary>
         [WirePath("properties.clientCertMode")]
-        public ClientCertMode? ClientCertMode { get; set; }
+        public ClientCertMode? ClientCertMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientCertMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.ClientCertMode = value;
+            }
+        }
+
         /// <summary> client certificate authentication comma-separated exclusion paths. </summary>
         [WirePath("properties.clientCertExclusionPaths")]
-        public string ClientCertExclusionPaths { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
-        /// </summary>
+        public string ClientCertExclusionPaths
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientCertExclusionPaths;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.ClientCertExclusionPaths = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </summary>
         [WirePath("properties.hostNamesDisabled")]
-        public bool? IsHostNameDisabled { get; set; }
+        public bool? IsHostNameDisabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHostNameDisabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsHostNameDisabled = value;
+            }
+        }
+
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
         [WirePath("properties.customDomainVerificationId")]
-        public string CustomDomainVerificationId { get; set; }
+        public string CustomDomainVerificationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomDomainVerificationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.CustomDomainVerificationId = value;
+            }
+        }
+
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </summary>
         [WirePath("properties.outboundIpAddresses")]
-        public string OutboundIPAddresses { get; }
+        public string OutboundIPAddresses
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OutboundIPAddresses;
+            }
+        }
+
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </summary>
         [WirePath("properties.possibleOutboundIpAddresses")]
-        public string PossibleOutboundIPAddresses { get; }
+        public string PossibleOutboundIPAddresses
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PossibleOutboundIPAddresses;
+            }
+        }
+
         /// <summary> Size of the function container. </summary>
         [WirePath("properties.containerSize")]
-        public int? ContainerSize { get; set; }
+        public int? ContainerSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.ContainerSize = value;
+            }
+        }
+
         /// <summary> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </summary>
         [WirePath("properties.dailyMemoryTimeQuota")]
-        public int? DailyMemoryTimeQuota { get; set; }
+        public int? DailyMemoryTimeQuota
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DailyMemoryTimeQuota;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.DailyMemoryTimeQuota = value;
+            }
+        }
+
         /// <summary> App suspended till in case memory-time quota is exceeded. </summary>
         [WirePath("properties.suspendedTill")]
-        public DateTimeOffset? SuspendOn { get; }
+        public DateTimeOffset? SuspendOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SuspendOn;
+            }
+        }
+
         /// <summary>
         /// Maximum number of workers.
         /// This only applies to Functions container.
         /// </summary>
         [WirePath("properties.maxNumberOfWorkers")]
-        public int? MaxNumberOfWorkers { get; }
+        public int? MaxNumberOfWorkers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxNumberOfWorkers;
+            }
+        }
+
         /// <summary> If specified during app creation, the app is cloned from a source app. </summary>
         [WirePath("properties.cloningInfo")]
-        public CloningInfo CloningInfo { get; set; }
+        public CloningInfo CloningInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CloningInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.CloningInfo = value;
+            }
+        }
+
         /// <summary> Name of the resource group the app belongs to. Read-only. </summary>
         [WirePath("properties.resourceGroup")]
-        public string ResourceGroup { get; }
+        public string ResourceGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGroup;
+            }
+        }
+
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app is a default container; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.isDefaultContainer")]
-        public bool? IsDefaultContainer { get; }
+        public bool? IsDefaultContainer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDefaultContainer;
+            }
+        }
+
         /// <summary> Default hostname of the app. Read-only. </summary>
         [WirePath("properties.defaultHostName")]
-        public string DefaultHostName { get; }
+        public string DefaultHostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultHostName;
+            }
+        }
+
         /// <summary> Status of the last deployment slot swap operation. </summary>
         [WirePath("properties.slotSwapStatus")]
-        public SlotSwapStatus SlotSwapStatus { get; }
+        public SlotSwapStatus SlotSwapStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SlotSwapStatus;
+            }
+        }
+
         /// <summary>
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
         /// http requests
         /// </summary>
         [WirePath("properties.httpsOnly")]
-        public bool? IsHttpsOnly { get; set; }
+        public bool? IsHttpsOnly
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHttpsOnly;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsHttpsOnly = value;
+            }
+        }
+
         /// <summary> Site redundancy mode. </summary>
         [WirePath("properties.redundancyMode")]
-        public RedundancyMode? RedundancyMode { get; set; }
+        public RedundancyMode? RedundancyMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedundancyMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.RedundancyMode = value;
+            }
+        }
+
         /// <summary> Specifies an operation id if this site has a pending operation. </summary>
         [WirePath("properties.inProgressOperationId")]
-        public Guid? InProgressOperationId { get; }
+        public Guid? InProgressOperationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InProgressOperationId;
+            }
+        }
+
+        /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public string PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
         /// <summary> Checks if Customer provided storage account is required. </summary>
         [WirePath("properties.storageAccountRequired")]
-        public bool? IsStorageAccountRequired { get; set; }
+        public bool? IsStorageAccountRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsStorageAccountRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.IsStorageAccountRequired = value;
+            }
+        }
+
         /// <summary> Identity to use for Key Vault Reference authentication. </summary>
         [WirePath("properties.keyVaultReferenceIdentity")]
-        public string KeyVaultReferenceIdentity { get; set; }
+        public string KeyVaultReferenceIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultReferenceIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.KeyVaultReferenceIdentity = value;
+            }
+        }
+
         /// <summary>
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </summary>
         [WirePath("properties.virtualNetworkSubnetId")]
-        public ResourceIdentifier VirtualNetworkSubnetId { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        public ResourceIdentifier VirtualNetworkSubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkSubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePatchResourceProperties();
+                }
+                Properties.VirtualNetworkSubnetId = value;
+            }
+        }
     }
 }

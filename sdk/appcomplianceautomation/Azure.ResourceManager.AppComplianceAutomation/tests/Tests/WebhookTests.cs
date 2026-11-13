@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.AppComplianceAutomation;
-using NUnit.Framework;
-using Azure.ResourceManager.AppComplianceAutomation.Models;
 using System.Collections.Generic;
-using Azure.Core;
 using System.Linq;
 using System.Security.Policy;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.AppComplianceAutomation;
+using Azure.ResourceManager.AppComplianceAutomation.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
 {

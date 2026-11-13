@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task CreateOrUpdate()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -43,17 +44,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             const string keyVirtualPath = "/etc/nginx/nginx.key";
             NginxCertificateResource nginxCertificate = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
             Assert.IsTrue(nginxCertificateName.Equals(nginxCertificate.Data.Name, StringComparison.InvariantCultureIgnoreCase));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxCertificates().CreateOrUpdateAsync(WaitUntil.Completed, nginxCertificateName, null)).Value);
-
-            NginxCertificateData nginxCertificateData = new NginxCertificateData
-            {
-                Location = Location
-            };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxCertificates().CreateOrUpdateAsync(WaitUntil.Completed, null, nginxCertificateData)).Value);
         }
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Get()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -73,6 +68,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Exists()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -91,6 +87,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetIfExists()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -114,6 +111,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetAll()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");

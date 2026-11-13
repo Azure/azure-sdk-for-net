@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct NotebookParameterType : IEquatable<NotebookParameterType>
     {
         private readonly string _value;
+        /// <summary> string. </summary>
+        private const string StringValue = "string";
+        /// <summary> int. </summary>
+        private const string IntValue = "int";
+        /// <summary> float. </summary>
+        private const string FloatValue = "float";
+        /// <summary> bool. </summary>
+        private const string BoolValue = "bool";
 
         /// <summary> Initializes a new instance of <see cref="NotebookParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotebookParameterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "string";
-        private const string IntValue = "int";
-        private const string FloatValue = "float";
-        private const string BoolValue = "bool";
+            _value = value;
+        }
 
         /// <summary> string. </summary>
         public static NotebookParameterType String { get; } = new NotebookParameterType(StringValue);
+
         /// <summary> int. </summary>
         public static NotebookParameterType Int { get; } = new NotebookParameterType(IntValue);
+
         /// <summary> float. </summary>
         public static NotebookParameterType Float { get; } = new NotebookParameterType(FloatValue);
+
         /// <summary> bool. </summary>
         public static NotebookParameterType Bool { get; } = new NotebookParameterType(BoolValue);
+
         /// <summary> Determines if two <see cref="NotebookParameterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotebookParameterType left, NotebookParameterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotebookParameterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotebookParameterType left, NotebookParameterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotebookParameterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotebookParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotebookParameterType(string value) => new NotebookParameterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotebookParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotebookParameterType?(string value) => value == null ? null : new NotebookParameterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotebookParameterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotebookParameterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

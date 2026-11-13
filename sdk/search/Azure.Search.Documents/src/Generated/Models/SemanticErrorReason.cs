@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct SemanticErrorReason : IEquatable<SemanticErrorReason>
     {
         private readonly string _value;
+        /// <summary> If `semanticMaxWaitInMilliseconds` was set and the semantic processing duration exceeded that value. Only the base results were returned. </summary>
+        private const string MaxWaitExceededValue = "maxWaitExceeded";
+        /// <summary> The request was throttled. Only the base results were returned. </summary>
+        private const string CapacityOverloadedValue = "capacityOverloaded";
+        /// <summary> At least one step of the semantic process failed. </summary>
+        private const string TransientValue = "transient";
 
         /// <summary> Initializes a new instance of <see cref="SemanticErrorReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SemanticErrorReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MaxWaitExceededValue = "maxWaitExceeded";
-        private const string CapacityOverloadedValue = "capacityOverloaded";
-        private const string TransientValue = "transient";
+            _value = value;
+        }
 
         /// <summary> If `semanticMaxWaitInMilliseconds` was set and the semantic processing duration exceeded that value. Only the base results were returned. </summary>
         public static SemanticErrorReason MaxWaitExceeded { get; } = new SemanticErrorReason(MaxWaitExceededValue);
+
         /// <summary> The request was throttled. Only the base results were returned. </summary>
         public static SemanticErrorReason CapacityOverloaded { get; } = new SemanticErrorReason(CapacityOverloadedValue);
+
         /// <summary> At least one step of the semantic process failed. </summary>
         public static SemanticErrorReason Transient { get; } = new SemanticErrorReason(TransientValue);
+
         /// <summary> Determines if two <see cref="SemanticErrorReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SemanticErrorReason left, SemanticErrorReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SemanticErrorReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SemanticErrorReason left, SemanticErrorReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SemanticErrorReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SemanticErrorReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SemanticErrorReason(string value) => new SemanticErrorReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SemanticErrorReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SemanticErrorReason?(string value) => value == null ? null : new SemanticErrorReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SemanticErrorReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SemanticErrorReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

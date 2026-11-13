@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class MonitorScaleTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MonitorScaleType value) => value switch
         {
             MonitorScaleType.ChangeCount => "ChangeCount",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorScaleType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MonitorScaleType ToMonitorScaleType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ChangeCount")) return MonitorScaleType.ChangeCount;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PercentChangeCount")) return MonitorScaleType.PercentChangeCount;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExactCount")) return MonitorScaleType.ExactCount;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceAllowedNextValue")) return MonitorScaleType.ServiceAllowedNextValue;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ChangeCount"))
+            {
+                return MonitorScaleType.ChangeCount;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PercentChangeCount"))
+            {
+                return MonitorScaleType.PercentChangeCount;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExactCount"))
+            {
+                return MonitorScaleType.ExactCount;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceAllowedNextValue"))
+            {
+                return MonitorScaleType.ServiceAllowedNextValue;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorScaleType value.");
         }
     }

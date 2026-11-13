@@ -7,29 +7,57 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> Describes a License Update. </summary>
+    /// <summary> Describes a Gateway Update. </summary>
     public partial class ArcGatewayPatch : HybridComputeResourceUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ArcGatewayPatch"/>. </summary>
         public ArcGatewayPatch()
         {
-            AllowedFeatures = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcGatewayPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
-        internal ArcGatewayPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> allowedFeatures) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Gateway Update properties. </param>
+        internal ArcGatewayPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, GatewayUpdateProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            AllowedFeatures = allowedFeatures;
+            Properties = properties;
         }
+
+        /// <summary> Gateway Update properties. </summary>
+        [WirePath("properties")]
+        internal GatewayUpdateProperties Properties { get; set; }
 
         /// <summary> Specifies the list of features that are enabled for this Gateway. </summary>
         [WirePath("properties.allowedFeatures")]
-        public IList<string> AllowedFeatures { get; }
+        public IList<string> AllowedFeatures
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GatewayUpdateProperties();
+                }
+                return Properties.AllowedFeatures;
+            }
+        }
+
+        /// <summary> Specifies the list of domain names that should bypass the gateway. Each entry must be a valid DNS hostname. </summary>
+        [WirePath("properties.gatewayBypass")]
+        public IList<string> GatewayBypass
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GatewayUpdateProperties();
+                }
+                return Properties.GatewayBypass;
+            }
+        }
     }
 }

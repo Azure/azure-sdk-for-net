@@ -8,181 +8,29 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableHybridConnectivityArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridConnectivityArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHybridConnectivityArmClient for mocking. </summary>
         protected MockableHybridConnectivityArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridConnectivityArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHybridConnectivityArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHybridConnectivityArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableHybridConnectivityArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of HybridConnectivityEndpointResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of HybridConnectivityEndpointResources and their operations over a HybridConnectivityEndpointResource. </returns>
-        public virtual HybridConnectivityEndpointCollection GetHybridConnectivityEndpoints(ResourceIdentifier scope)
-        {
-            return new HybridConnectivityEndpointCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Gets the endpoint to the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EndpointResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridConnectivityEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HybridConnectivityEndpointResource>> GetHybridConnectivityEndpointAsync(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
-        {
-            return await GetHybridConnectivityEndpoints(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the endpoint to the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EndpointResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridConnectivityEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HybridConnectivityEndpointResource> GetHybridConnectivityEndpoint(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
-        {
-            return GetHybridConnectivityEndpoints(scope).Get(endpointName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PublicCloudConnectorSolutionConfigurationResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of PublicCloudConnectorSolutionConfigurationResources and their operations over a PublicCloudConnectorSolutionConfigurationResource. </returns>
-        public virtual PublicCloudConnectorSolutionConfigurationCollection GetPublicCloudConnectorSolutionConfigurations(ResourceIdentifier scope)
-        {
-            return new PublicCloudConnectorSolutionConfigurationCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get a SolutionConfiguration
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PublicCloudConnectorSolutionConfigurationResource>> GetPublicCloudConnectorSolutionConfigurationAsync(ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
-        {
-            return await GetPublicCloudConnectorSolutionConfigurations(scope).GetAsync(solutionConfiguration, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a SolutionConfiguration
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/solutionConfigurations/{solutionConfiguration}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionConfiguration_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PublicCloudConnectorSolutionConfigurationResource> GetPublicCloudConnectorSolutionConfiguration(ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
-        {
-            return GetPublicCloudConnectorSolutionConfigurations(scope).Get(solutionConfiguration, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridConnectivityEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridConnectivityEndpointResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectivityEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HybridConnectivityEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridConnectivityEndpointResource"/> object. </returns>
         public virtual HybridConnectivityEndpointResource GetHybridConnectivityEndpointResource(ResourceIdentifier id)
@@ -191,10 +39,43 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             return new HybridConnectivityEndpointResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridConnectivityServiceConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridConnectivityServiceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectivityServiceConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="HybridConnectivityEndpointCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="HybridConnectivityEndpointResource"/> objects. </returns>
+        public virtual HybridConnectivityEndpointCollection GetHybridConnectivityEndpoints(ResourceIdentifier scope)
+        {
+            return new HybridConnectivityEndpointCollection(Client, scope);
+        }
+
+        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HybridConnectivityEndpointResource> GetHybridConnectivityEndpoint(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return GetHybridConnectivityEndpoints(scope).Get(endpointName, cancellationToken);
+        }
+
+        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="endpointName"> The endpoint name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridConnectivityEndpointResource>> GetHybridConnectivityEndpointAsync(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return await GetHybridConnectivityEndpoints(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HybridConnectivityServiceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridConnectivityServiceConfigurationResource"/> object. </returns>
         public virtual HybridConnectivityServiceConfigurationResource GetHybridConnectivityServiceConfigurationResource(ResourceIdentifier id)
@@ -203,10 +84,43 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             return new HybridConnectivityServiceConfigurationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="PublicCloudConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublicCloudConnectorResource.CreateResourceIdentifier" /> to create a <see cref="PublicCloudConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="HybridConnectivityServiceConfigurationCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="HybridConnectivityServiceConfigurationResource"/> objects. </returns>
+        public virtual HybridConnectivityServiceConfigurationCollection GetHybridConnectivityServiceConfigurations(ResourceIdentifier scope)
+        {
+            return new HybridConnectivityServiceConfigurationCollection(Client, scope);
+        }
+
+        /// <summary> Gets the details about the service to the resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="serviceConfigurationName"> The service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HybridConnectivityServiceConfigurationResource> GetHybridConnectivityServiceConfiguration(ResourceIdentifier scope, string serviceConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+
+            return GetHybridConnectivityServiceConfigurations(scope).Get(serviceConfigurationName, cancellationToken);
+        }
+
+        /// <summary> Gets the details about the service to the resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="serviceConfigurationName"> The service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridConnectivityServiceConfigurationResource>> GetHybridConnectivityServiceConfigurationAsync(ResourceIdentifier scope, string serviceConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+
+            return await GetHybridConnectivityServiceConfigurations(scope).GetAsync(serviceConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PublicCloudConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicCloudConnectorResource"/> object. </returns>
         public virtual PublicCloudConnectorResource GetPublicCloudConnectorResource(ResourceIdentifier id)
@@ -215,10 +129,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             return new PublicCloudConnectorResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="PublicCloudConnectorSolutionConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublicCloudConnectorSolutionConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PublicCloudConnectorSolutionConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PublicCloudConnectorSolutionConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicCloudConnectorSolutionConfigurationResource"/> object. </returns>
         public virtual PublicCloudConnectorSolutionConfigurationResource GetPublicCloudConnectorSolutionConfigurationResource(ResourceIdentifier id)
@@ -227,10 +138,43 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             return new PublicCloudConnectorSolutionConfigurationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="PublicCloudInventoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublicCloudInventoryResource.CreateResourceIdentifier" /> to create a <see cref="PublicCloudInventoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="PublicCloudConnectorSolutionConfigurationCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="PublicCloudConnectorSolutionConfigurationResource"/> objects. </returns>
+        public virtual PublicCloudConnectorSolutionConfigurationCollection GetPublicCloudConnectorSolutionConfigurations(ResourceIdentifier scope)
+        {
+            return new PublicCloudConnectorSolutionConfigurationCollection(Client, scope);
+        }
+
+        /// <summary> Get a SolutionConfiguration. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PublicCloudConnectorSolutionConfigurationResource> GetPublicCloudConnectorSolutionConfiguration(ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
+
+            return GetPublicCloudConnectorSolutionConfigurations(scope).Get(solutionConfiguration, cancellationToken);
+        }
+
+        /// <summary> Get a SolutionConfiguration. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionConfiguration"> Represent Solution Configuration Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PublicCloudConnectorSolutionConfigurationResource>> GetPublicCloudConnectorSolutionConfigurationAsync(ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
+
+            return await GetPublicCloudConnectorSolutionConfigurations(scope).GetAsync(solutionConfiguration, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PublicCloudInventoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicCloudInventoryResource"/> object. </returns>
         public virtual PublicCloudInventoryResource GetPublicCloudInventoryResource(ResourceIdentifier id)
@@ -239,10 +183,43 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             return new PublicCloudInventoryResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="PublicCloudConnectorSolutionTypeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublicCloudConnectorSolutionTypeResource.CreateResourceIdentifier" /> to create a <see cref="PublicCloudConnectorSolutionTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="PublicCloudInventoryCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="PublicCloudInventoryResource"/> objects. </returns>
+        public virtual PublicCloudInventoryCollection GetPublicCloudInventories(ResourceIdentifier scope)
+        {
+            return new PublicCloudInventoryCollection(Client, scope);
+        }
+
+        /// <summary> Get a InventoryResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="inventoryId"> Inventory resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PublicCloudInventoryResource> GetPublicCloudInventory(ResourceIdentifier scope, string inventoryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inventoryId, nameof(inventoryId));
+
+            return GetPublicCloudInventories(scope).Get(inventoryId, cancellationToken);
+        }
+
+        /// <summary> Get a InventoryResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="inventoryId"> Inventory resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PublicCloudInventoryResource>> GetPublicCloudInventoryAsync(ResourceIdentifier scope, string inventoryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inventoryId, nameof(inventoryId));
+
+            return await GetPublicCloudInventories(scope).GetAsync(inventoryId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PublicCloudConnectorSolutionTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicCloudConnectorSolutionTypeResource"/> object. </returns>
         public virtual PublicCloudConnectorSolutionTypeResource GetPublicCloudConnectorSolutionTypeResource(ResourceIdentifier id)

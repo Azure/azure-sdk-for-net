@@ -6,12 +6,10 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.ServerSentEvents;
 using System.Text.Json;
 using System.Threading;
 using Azure.AI.Agents.Persistent.Telemetry;
-using System.Threading.Tasks;
 
 #nullable enable
 
@@ -95,7 +93,10 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
                     }
                     catch (Exception ex)
                     {
-                        string errorJson = JsonSerializer.Serialize(new { error = ex.GetBaseException().Message });
+                        string errorJson = JsonSerializer.Serialize(
+                            new SerializableError(ex.GetBaseException().Message),
+                            SourceGenerationContext.Default.SerializableError
+                        );
                         toolOutput = new ToolOutput(newActionUpdate.ToolCallId, errorJson);
                         hasError = true;
                     }
@@ -203,7 +204,12 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
                         return false;
                     }
 
-                    var updates = StreamingUpdate.FromEvent(_events.Current);
+                    IEnumerable<StreamingUpdate> updates = StreamingUpdate.FromEvent(_events.Current);
+                    if (updates is null)
+                    {
+                        StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(_events.Current.EventType);
+                        throw new InvalidOperationException($"Unknown streaming update reason {updateKind}");
+                    }
                     _updates = updates.GetEnumerator();
 
                     if (_updates.MoveNext())

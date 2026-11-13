@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct WebhookNotificationEvent : IEquatable<WebhookNotificationEvent>
     {
         private readonly string _value;
+        /// <summary> The subscribed report's snapshot is successfully generated. </summary>
+        private const string GenerateSnapshotSuccessValue = "generate_snapshot_success";
+        /// <summary> The subscribed report's snapshot is failed to generate. </summary>
+        private const string GenerateSnapshotFailedValue = "generate_snapshot_failed";
+        /// <summary> The subscribed report failed while collecting the assessments. </summary>
+        private const string AssessmentFailureValue = "assessment_failure";
+        /// <summary> The subscribed report's configuration is changed. </summary>
+        private const string ReportConfigurationChangesValue = "report_configuration_changes";
+        /// <summary> The subscribed report is deleted. </summary>
+        private const string ReportDeletionValue = "report_deletion";
 
         /// <summary> Initializes a new instance of <see cref="WebhookNotificationEvent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebhookNotificationEvent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GenerateSnapshotSuccessValue = "generate_snapshot_success";
-        private const string GenerateSnapshotFailedValue = "generate_snapshot_failed";
-        private const string AssessmentFailureValue = "assessment_failure";
-        private const string ReportConfigurationChangesValue = "report_configuration_changes";
-        private const string ReportDeletionValue = "report_deletion";
+            _value = value;
+        }
 
         /// <summary> The subscribed report's snapshot is successfully generated. </summary>
         public static WebhookNotificationEvent GenerateSnapshotSuccess { get; } = new WebhookNotificationEvent(GenerateSnapshotSuccessValue);
+
         /// <summary> The subscribed report's snapshot is failed to generate. </summary>
         public static WebhookNotificationEvent GenerateSnapshotFailed { get; } = new WebhookNotificationEvent(GenerateSnapshotFailedValue);
+
         /// <summary> The subscribed report failed while collecting the assessments. </summary>
         public static WebhookNotificationEvent AssessmentFailure { get; } = new WebhookNotificationEvent(AssessmentFailureValue);
+
         /// <summary> The subscribed report's configuration is changed. </summary>
         public static WebhookNotificationEvent ReportConfigurationChanges { get; } = new WebhookNotificationEvent(ReportConfigurationChangesValue);
+
         /// <summary> The subscribed report is deleted. </summary>
         public static WebhookNotificationEvent ReportDeletion { get; } = new WebhookNotificationEvent(ReportDeletionValue);
+
         /// <summary> Determines if two <see cref="WebhookNotificationEvent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebhookNotificationEvent left, WebhookNotificationEvent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebhookNotificationEvent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebhookNotificationEvent left, WebhookNotificationEvent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebhookNotificationEvent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebhookNotificationEvent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebhookNotificationEvent(string value) => new WebhookNotificationEvent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebhookNotificationEvent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebhookNotificationEvent?(string value) => value == null ? null : new WebhookNotificationEvent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebhookNotificationEvent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebhookNotificationEvent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

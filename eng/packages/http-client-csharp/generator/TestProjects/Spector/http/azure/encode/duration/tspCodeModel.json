@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "durationConstantContentType",
+      "name": "DurationConstantContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -25,15 +26,23 @@
       "$id": "3",
       "kind": "model",
       "name": "DurationModel",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.Encode.Duration",
       "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.DurationModel",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DurationModel"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "4",
           "kind": "property",
           "name": "input",
+          "apiVersions": [],
           "serializedName": "input",
           "type": {
             "$id": "5",
@@ -61,7 +70,8 @@
               "name": "input"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -71,6 +81,7 @@
       "$id": "7",
       "kind": "client",
       "name": "DurationClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.Encode.Duration",
       "doc": "Test for azure related encode decorator.",
       "methods": [
@@ -78,13 +89,14 @@
           "$id": "8",
           "kind": "basic",
           "name": "durationConstant",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Test duration with azure specific encoding.",
           "operation": {
             "$id": "9",
             "name": "durationConstant",
-            "resourceName": "Duration",
+            "isExactName": false,
             "doc": "Test duration with azure specific encoding.",
             "accessibility": "public",
             "parameters": [
@@ -103,10 +115,32 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.durationConstant.contentType"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.durationConstant.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "11",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.durationConstant.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "11",
+                "$id": "12",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
@@ -122,7 +156,33 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.durationConstant.body"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.durationConstant.body",
+                "methodParameterSegments": [
+                  {
+                    "$id": "13",
+                    "kind": "method",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "3"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.durationConstant.body",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -131,7 +191,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "PUT",
@@ -144,43 +205,15 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.durationConstant",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Encode.Duration"
           },
           "parameters": [
             {
-              "$id": "12",
-              "kind": "method",
-              "name": "body",
-              "serializedName": "body",
-              "type": {
-                "$ref": "3"
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.durationConstant.body",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "13"
             },
             {
-              "$id": "13",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "doc": "Body parameter's content type. Known values are application/json",
-              "type": {
-                "$ref": "1"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.durationConstant.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "11"
             }
           ],
           "response": {},
@@ -219,12 +252,15 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

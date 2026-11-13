@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -14,47 +15,79 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public readonly partial struct LinkerAuthType : IEquatable<LinkerAuthType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LinkerAuthType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LinkerAuthType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SystemAssignedIdentityValue = "systemAssignedIdentity";
         private const string UserAssignedIdentityValue = "userAssignedIdentity";
         private const string ServicePrincipalSecretValue = "servicePrincipalSecret";
         private const string ServicePrincipalCertificateValue = "servicePrincipalCertificate";
         private const string SecretValue = "secret";
+        private const string AccessKeyValue = "accessKey";
+        private const string UserAccountValue = "userAccount";
+        private const string EasyAuthMicrosoftEntraIDValue = "easyAuthMicrosoftEntraID";
 
-        /// <summary> systemAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LinkerAuthType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SystemAssignedIdentity. </summary>
         public static LinkerAuthType SystemAssignedIdentity { get; } = new LinkerAuthType(SystemAssignedIdentityValue);
-        /// <summary> userAssignedIdentity. </summary>
+
+        /// <summary> Gets the UserAssignedIdentity. </summary>
         public static LinkerAuthType UserAssignedIdentity { get; } = new LinkerAuthType(UserAssignedIdentityValue);
-        /// <summary> servicePrincipalSecret. </summary>
+
+        /// <summary> Gets the ServicePrincipalSecret. </summary>
         public static LinkerAuthType ServicePrincipalSecret { get; } = new LinkerAuthType(ServicePrincipalSecretValue);
-        /// <summary> servicePrincipalCertificate. </summary>
+
+        /// <summary> Gets the ServicePrincipalCertificate. </summary>
         public static LinkerAuthType ServicePrincipalCertificate { get; } = new LinkerAuthType(ServicePrincipalCertificateValue);
-        /// <summary> secret. </summary>
+
+        /// <summary> Gets the Secret. </summary>
         public static LinkerAuthType Secret { get; } = new LinkerAuthType(SecretValue);
+
+        /// <summary> Gets the AccessKey. </summary>
+        public static LinkerAuthType AccessKey { get; } = new LinkerAuthType(AccessKeyValue);
+
+        /// <summary> Gets the UserAccount. </summary>
+        public static LinkerAuthType UserAccount { get; } = new LinkerAuthType(UserAccountValue);
+
+        /// <summary> Gets the EasyAuthMicrosoftEntraID. </summary>
+        public static LinkerAuthType EasyAuthMicrosoftEntraID { get; } = new LinkerAuthType(EasyAuthMicrosoftEntraIDValue);
+
         /// <summary> Determines if two <see cref="LinkerAuthType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LinkerAuthType left, LinkerAuthType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LinkerAuthType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LinkerAuthType left, LinkerAuthType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkerAuthType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LinkerAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LinkerAuthType(string value) => new LinkerAuthType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LinkerAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LinkerAuthType?(string value) => value == null ? null : new LinkerAuthType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LinkerAuthType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LinkerAuthType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

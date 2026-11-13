@@ -5,11 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure;
-using Azure.Core;
-
-namespace _Specs_.Azure.Core.Lro.Rpc
+namespace Specs.Azure.Core.Lro.Rpc
 {
     public static partial class _Specs_AzureCoreLroRpcModelFactory
     {

@@ -106,6 +106,66 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
     }
 
     [Test]
+    public void ContentBlockSlicesAreNotPaddedWhenLoggedToILogger()
+    {
+        using TestLoggingFactory factory = new(LogLevel.Debug);
+
+        PipelineMessageLogger messageLogger = new(new PipelineMessageSanitizer([], []), factory);
+
+        byte[] buffer = CreatePoisonedBufferContaining("Hello");
+
+        messageLogger.LogResponseContentBlock("requestId", 1, buffer, 0, 5, null);
+        messageLogger.LogResponseContentBlock("requestId", 2, buffer, 0, 5, Encoding.UTF8);
+        messageLogger.LogErrorResponseContentBlock("requestId", 1, buffer, 0, 5, null);
+        messageLogger.LogErrorResponseContentBlock("requestId", 2, buffer, 0, 5, Encoding.UTF8);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+
+        Assert.AreEqual("Hello"u8.ToArray(), logger.SingleEventById(ResponseContentBlockEvent).GetValueFromArguments<byte[]>("content"));
+        Assert.AreEqual("Hello", logger.SingleEventById(ResponseContentTextBlockEvent).GetValueFromArguments<string>("content"));
+        Assert.AreEqual("Hello"u8.ToArray(), logger.SingleEventById(ErrorResponseContentBlockEvent).GetValueFromArguments<byte[]>("content"));
+        Assert.AreEqual("Hello", logger.SingleEventById(ErrorResponseContentTextBlockEvent).GetValueFromArguments<string>("content"));
+    }
+
+    [Test]
+    public void ContentBlockSlicesAreNotPaddedWhenLoggedToEventSource()
+    {
+        using TestClientEventListener listener = new();
+
+        PipelineMessageLogger messageLogger = new(new PipelineMessageSanitizer([], []), null);
+
+        byte[] buffer = CreatePoisonedBufferContaining("Hello");
+
+        messageLogger.LogResponseContentBlock("requestId", 1, buffer, 0, 5, null);
+        messageLogger.LogResponseContentBlock("requestId", 2, buffer, 0, 5, Encoding.UTF8);
+        messageLogger.LogErrorResponseContentBlock("requestId", 1, buffer, 0, 5, null);
+        messageLogger.LogErrorResponseContentBlock("requestId", 2, buffer, 0, 5, Encoding.UTF8);
+
+        Assert.AreEqual("Hello"u8.ToArray(), listener.SingleEventById(ResponseContentBlockEvent).GetProperty<byte[]>("content"));
+        Assert.AreEqual("Hello", listener.SingleEventById(ResponseContentTextBlockEvent).GetProperty<string>("content"));
+        Assert.AreEqual("Hello"u8.ToArray(), listener.SingleEventById(ErrorResponseContentBlockEvent).GetProperty<byte[]>("content"));
+        Assert.AreEqual("Hello", listener.SingleEventById(ErrorResponseContentTextBlockEvent).GetProperty<string>("content"));
+    }
+
+    /// <summary>
+    /// Produces an oversized buffer whose leading bytes are <paramref name="content"/> and whose
+    /// remainder is a recognizable poison value, mimicking a recycled pooled array.
+    /// See https://github.com/Azure/azure-sdk-for-net/issues/61399.
+    /// </summary>
+    private static byte[] CreatePoisonedBufferContaining(string content)
+    {
+        byte[] buffer = new byte[1024];
+
+        for (int index = 0; index < buffer.Length; ++index)
+        {
+            buffer[index] = 0xAA;
+        }
+
+        Encoding.UTF8.GetBytes(content, 0, content.Length, buffer, 0);
+        return buffer;
+    }
+
+    [Test]
     public void LogsAreNotWrittenToEventSourceWhenILoggerIsProvidedAndLogLevelIsWarning()
     {
         using TestClientEventListener listener = new();

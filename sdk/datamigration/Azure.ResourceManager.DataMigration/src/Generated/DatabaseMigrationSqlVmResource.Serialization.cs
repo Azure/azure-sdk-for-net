@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataMigration
 {
+    /// <summary></summary>
     public partial class DatabaseMigrationSqlVmResource : IJsonModel<DatabaseMigrationSqlVmData>
     {
-        private static DatabaseMigrationSqlVmData s_dataDeserializationInstance;
-        private static DatabaseMigrationSqlVmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DatabaseMigrationSqlVmData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DatabaseMigrationSqlVmData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatabaseMigrationSqlVmData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseMigrationSqlVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseMigrationSqlVmData>)Data).Write(writer, options);
 
-        DatabaseMigrationSqlVmData IJsonModel<DatabaseMigrationSqlVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseMigrationSqlVmData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseMigrationSqlVmData IJsonModel<DatabaseMigrationSqlVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DatabaseMigrationSqlVmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseMigrationSqlVmData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DatabaseMigrationSqlVmData IPersistableModel<DatabaseMigrationSqlVmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseMigrationSqlVmData>(data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        string IPersistableModel<DatabaseMigrationSqlVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseMigrationSqlVmData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseMigrationSqlVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

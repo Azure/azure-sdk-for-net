@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var expected = partitions[index % partitions.Length];
                 var assigned = resolver.AssignRoundRobin(partitions);
 
-                Assert.That(assigned, Is.EqualTo(expected), $"The assignment was unexpected for index: [{ index }].");
+                Assert.That(assigned, Is.EqualTo(expected), $"The assignment was unexpected for index: [{index}].");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var concurrentIndex = 0; concurrentIndex < concurrentCount; ++concurrentIndex)
             {
-               activeTasks.Add(roundRobin());
+                activeTasks.Add(roundRobin());
             }
 
             await Task.WhenAll(activeTasks);
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionAssignments = assigned
                 .GroupBy(item => item)
-                .Select( group => new { Key = group.Key, Count = group.Count() });
+                .Select(group => new { Key = group.Key, Count = group.Count() });
 
             var assignmentHash = new HashSet<string>();
             var expectedAssignmentCount = (concurrentCount * assignmentsPerPartition);
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partitionAssignment in partitionAssignments)
             {
-                Assert.That(partitionAssignment.Count, Is.EqualTo(expectedAssignmentCount), $"The count for key: [{ partitionAssignment.Key}] should match the total number of iterations.");
+                Assert.That(partitionAssignment.Count, Is.EqualTo(expectedAssignmentCount), $"The count for key: [{partitionAssignment.Key}] should match the total number of iterations.");
                 assignmentHash.Add(partitionAssignment.Key);
             }
 
@@ -140,7 +140,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partition in partitions)
             {
-                Assert.That(assignmentHash.Contains(partition), Is.True, $"Partition: [{ partition }] should have had assignments.");
+                Assert.That(assignmentHash.Contains(partition), Is.True, $"Partition: [{partition}] should have had assignments.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionAssignments = assigned
                 .GroupBy(item => item)
-                .Select( group => new { Key = group.Key, Count = group.Count() });
+                .Select(group => new { Key = group.Key, Count = group.Count() });
 
             var assignmentHash = new HashSet<string>();
 
@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partitionAssignment in partitionAssignments)
             {
-                Assert.That(partitionAssignment.Count, Is.EqualTo(assignmentsPerPartition).Within(2), $"The count for key: [{ partitionAssignment.Key}] should match the total number of iterations.");
+                Assert.That(partitionAssignment.Count, Is.EqualTo(assignmentsPerPartition).Within(2), $"The count for key: [{partitionAssignment.Key}] should match the total number of iterations.");
                 assignmentHash.Add(partitionAssignment.Key);
             }
 
@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partition in partitions)
             {
-                Assert.That(assignmentHash.Contains(partition), Is.True, $"Partition: [{ partition }] should have had assignments.");
+                Assert.That(assignmentHash.Contains(partition), Is.True, $"Partition: [{partition}] should have had assignments.");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var concurrentIndex = 0; concurrentIndex < concurrentCount; ++concurrentIndex)
             {
-               activeTasks.Add(roundRobin());
+                activeTasks.Add(roundRobin());
             }
 
             await Task.WhenAll(activeTasks);
@@ -242,7 +242,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionAssignments = assigned
                 .GroupBy(item => item)
-                .Select( group => new { Key = group.Key, Count = group.Count() });
+                .Select(group => new { Key = group.Key, Count = group.Count() });
 
             var assignmentHash = new HashSet<string>();
             var expectedAssignmentCount = (concurrentCount * assignmentsPerPartition);
@@ -253,7 +253,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partitionAssignment in partitionAssignments)
             {
-                Assert.That(partitionAssignment.Count, Is.EqualTo(expectedAssignmentCount).Within(2), $"The count for key: [{ partitionAssignment.Key}] should match the total number of iterations.");
+                Assert.That(partitionAssignment.Count, Is.EqualTo(expectedAssignmentCount).Within(2), $"The count for key: [{partitionAssignment.Key}] should match the total number of iterations.");
                 assignmentHash.Add(partitionAssignment.Key);
             }
 
@@ -261,7 +261,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partition in partitions)
             {
-                Assert.That(assignmentHash.Contains(partition), Is.True, $"Partition: [{ partition }] should have had assignments.");
+                Assert.That(assignmentHash.Contains(partition), Is.True, $"Partition: [{partition}] should have had assignments.");
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < iterationCount; ++index)
             {
-                Assert.That(resolver.AssignForPartitionKey(key, partitions), Is.EqualTo(expected), $"The assignment for iteration: [{ index }] was unstable.");
+                Assert.That(resolver.AssignForPartitionKey(key, partitions), Is.EqualTo(expected), $"The assignment for iteration: [{index}] was unstable.");
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                short hashCode)
         {
             var actual = InvokeGenerateHashcode(partitionKey);
-            Assert.That(actual, Is.EqualTo(hashCode), $"The value for key: { partitionKey } was incorrect.");
+            Assert.That(actual, Is.EqualTo(hashCode), $"The value for key: {partitionKey} was incorrect.");
         }
 
         /// <summary>

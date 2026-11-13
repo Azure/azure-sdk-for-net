@@ -13,27 +13,53 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Ranking function based on the Okapi BM25 similarity algorithm. BM25 is a TF-IDF-like algorithm that includes length normalization (controlled by the 'b' parameter) as well as term frequency saturation (controlled by the 'k1' parameter). </summary>
     public partial class BM25Similarity : SimilarityAlgorithm
     {
+        private double? _k1;
+        private bool _k1IsDefined;
+        private double? _b;
+        private bool _bIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="BM25Similarity"/>. </summary>
-        public BM25Similarity()
+        public BM25Similarity() : base("#Microsoft.Azure.Search.BM25Similarity")
         {
-            ODataType = "#Microsoft.Azure.Search.BM25Similarity";
         }
 
         /// <summary> Initializes a new instance of <see cref="BM25Similarity"/>. </summary>
-        /// <param name="oDataType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="k1"> This property controls the scaling function between the term frequency of each matching terms and the final relevance score of a document-query pair. By default, a value of 1.2 is used. A value of 0.0 means the score does not scale with an increase in term frequency. </param>
         /// <param name="b"> This property controls how the length of a document affects the relevance score. By default, a value of 0.75 is used. A value of 0.0 means no length normalization is applied, while a value of 1.0 means the score is fully normalized by the length of the document. </param>
-        internal BM25Similarity(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData, double? k1, double? b) : base(oDataType, serializedAdditionalRawData)
+        internal BM25Similarity(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties, double? k1, double? b) : base(odataType, additionalBinaryDataProperties)
         {
-            K1 = k1;
-            B = b;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.BM25Similarity";
+            _k1 = k1;
+            _b = b;
         }
 
         /// <summary> This property controls the scaling function between the term frequency of each matching terms and the final relevance score of a document-query pair. By default, a value of 1.2 is used. A value of 0.0 means the score does not scale with an increase in term frequency. </summary>
-        public double? K1 { get; set; }
+        public double? K1
+        {
+            get
+            {
+                return _k1;
+            }
+            set
+            {
+                _k1 = value;
+                _k1IsDefined = true;
+            }
+        }
+
         /// <summary> This property controls how the length of a document affects the relevance score. By default, a value of 0.75 is used. A value of 0.0 means no length normalization is applied, while a value of 1.0 means the score is fully normalized by the length of the document. </summary>
-        public double? B { get; set; }
+        public double? B
+        {
+            get
+            {
+                return _b;
+            }
+            set
+            {
+                _b = value;
+                _bIsDefined = true;
+            }
+        }
     }
 }

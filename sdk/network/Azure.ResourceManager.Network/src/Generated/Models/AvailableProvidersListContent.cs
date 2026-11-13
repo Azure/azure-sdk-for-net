@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Constraints that determine the list of available Internet service providers. </summary>
     public partial class AvailableProvidersListContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvailableProvidersListContent"/>. </summary>
         public AvailableProvidersListContent()
@@ -57,25 +29,28 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="country"> The country for available providers list. </param>
         /// <param name="state"> The state for available providers list. </param>
         /// <param name="city"> The city or town for available providers list. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableProvidersListContent(IList<AzureLocation> azureLocations, string country, string state, string city, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableProvidersListContent(IList<AzureLocation> azureLocations, string country, string state, string city, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureLocations = azureLocations;
             Country = country;
             State = state;
             City = city;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of Azure regions. </summary>
         [WirePath("azureLocations")]
         public IList<AzureLocation> AzureLocations { get; }
+
         /// <summary> The country for available providers list. </summary>
         [WirePath("country")]
         public string Country { get; set; }
+
         /// <summary> The state for available providers list. </summary>
         [WirePath("state")]
         public string State { get; set; }
+
         /// <summary> The city or town for available providers list. </summary>
         [WirePath("city")]
         public string City { get; set; }

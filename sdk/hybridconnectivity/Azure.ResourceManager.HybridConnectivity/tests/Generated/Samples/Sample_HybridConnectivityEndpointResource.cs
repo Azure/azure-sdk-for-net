@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
                 ServiceName = HybridConnectivityServiceName.SSH,
             };
             long? expiresin = 10800L;
-            TargetResourceEndpointAccess result = await hybridConnectivityEndpoint.GetCredentialsAsync(content: content, expiresin: expiresin);
+            TargetResourceEndpointAccess result = await hybridConnectivityEndpoint.GetCredentialsAsync(content, expiresin);
 
             Console.WriteLine($"Succeeded: {result}");
         }

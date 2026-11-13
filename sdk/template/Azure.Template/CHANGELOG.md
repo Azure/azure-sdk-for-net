@@ -1,11 +1,17 @@
 # Release History
 
+## 1.0.3-beta.21 (Unreleased)
+
+### Features Added
+
+- Added `WidgetAnalyticsClientSettings` to support creating a `WidgetAnalyticsClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ## 1.0.3-beta.20 (2022-04-26)
 
 ### Other Changes
 - Release DPG library
 - Add Grow-up story
-  
+
 ## 1.0.3-beta.19 (2020-09-24)
 - Test Submit-PR
 

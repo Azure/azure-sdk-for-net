@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> ARM usage. </summary>
     public partial class InstancePoolUsage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InstancePoolUsage"/>. </summary>
         internal InstancePoolUsage()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentValue"> Usage current value. </param>
         /// <param name="limit"> Usage limit. </param>
         /// <param name="requestedLimit"> Usage requested limit. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstancePoolUsage(ResourceIdentifier id, InstancePoolUsageName name, ResourceType? resourceType, string unit, int? currentValue, int? limit, int? requestedLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InstancePoolUsage(ResourceIdentifier id, InstancePoolUsageName name, ResourceType? resourceType, string unit, int? currentValue, int? limit, int? requestedLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -69,27 +41,33 @@ namespace Azure.ResourceManager.Sql.Models
             CurrentValue = currentValue;
             Limit = limit;
             RequestedLimit = requestedLimit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; }
+
         /// <summary> Resource name. </summary>
         [WirePath("name")]
         public InstancePoolUsageName Name { get; }
+
         /// <summary> Resource type. </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; }
+
         /// <summary> Usage unit. </summary>
         [WirePath("unit")]
         public string Unit { get; }
+
         /// <summary> Usage current value. </summary>
         [WirePath("currentValue")]
         public int? CurrentValue { get; }
+
         /// <summary> Usage limit. </summary>
         [WirePath("limit")]
         public int? Limit { get; }
+
         /// <summary> Usage requested limit. </summary>
         [WirePath("requestedLimit")]
         public int? RequestedLimit { get; }

@@ -5,23 +5,17 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RoutingConfigurationNfvSubResource : IUtf8JsonSerializable, IJsonModel<RoutingConfigurationNfvSubResource>
+    public partial class RoutingConfigurationNfvSubResource : IJsonModel<RoutingConfigurationNfvSubResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingConfigurationNfvSubResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<RoutingConfigurationNfvSubResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfvSubResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(RoutingConfigurationNfvSubResource)} does not support '{format}' format.");
-            }
-
+            ValidateFormat(options);
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceUri))
             {
@@ -33,36 +27,23 @@ namespace Azure.ResourceManager.Network.Models
 
         RoutingConfigurationNfvSubResource IJsonModel<RoutingConfigurationNfvSubResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfvSubResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(RoutingConfigurationNfvSubResource)} does not support '{format}' format.");
-            }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRoutingConfigurationNfvSubResource(document.RootElement, options);
         }
 
         internal static RoutingConfigurationNfvSubResource DeserializeRoutingConfigurationNfvSubResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
-
+            ValidateFormat(options ?? new ModelReaderWriterOptions("W"));
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-
             Uri resourceUri = default;
-            foreach (var property in element.EnumerateObject())
+            foreach (JsonProperty property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceUri"u8))
+                if (property.NameEquals("resourceUri"u8) && property.Value.ValueKind != JsonValueKind.Null)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceUri = new Uri(property.Value.GetString());
-                    continue;
                 }
             }
             return new RoutingConfigurationNfvSubResource(resourceUri);
@@ -70,33 +51,29 @@ namespace Azure.ResourceManager.Network.Models
 
         BinaryData IPersistableModel<RoutingConfigurationNfvSubResource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfvSubResource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
+            ValidateFormat(options);
+            using MemoryStream stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RoutingConfigurationNfvSubResource)} does not support '{options.Format}' format.");
+                ((IJsonModel<RoutingConfigurationNfvSubResource>)this).Write(writer, options);
             }
+            return new BinaryData(stream.ToArray());
         }
 
         RoutingConfigurationNfvSubResource IPersistableModel<RoutingConfigurationNfvSubResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfvSubResource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRoutingConfigurationNfvSubResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RoutingConfigurationNfvSubResource)} does not support '{options.Format}' format.");
-            }
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRoutingConfigurationNfvSubResource(document.RootElement, options);
         }
 
         string IPersistableModel<RoutingConfigurationNfvSubResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private static void ValidateFormat(ModelReaderWriterOptions options)
+        {
+            if (options.Format != "J" && options.Format != "W")
+            {
+                throw new FormatException($"The model {nameof(RoutingConfigurationNfvSubResource)} does not support '{options.Format}' format.");
+            }
+        }
     }
 }

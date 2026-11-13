@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct ScaleRuleMetricDimensionOperationType : IEquatable<ScaleRuleMetricDimensionOperationType>
     {
         private readonly string _value;
+        /// <summary> Equals. </summary>
+        private const string EqualsValueValue = "Equals";
+        /// <summary> NotEquals. </summary>
+        private const string NotEqualsValue = "NotEquals";
 
         /// <summary> Initializes a new instance of <see cref="ScaleRuleMetricDimensionOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScaleRuleMetricDimensionOperationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualsValueValue = "Equals";
-        private const string NotEqualsValue = "NotEquals";
+            _value = value;
+        }
 
         /// <summary> Equals. </summary>
         public static ScaleRuleMetricDimensionOperationType EqualsValue { get; } = new ScaleRuleMetricDimensionOperationType(EqualsValueValue);
+
         /// <summary> NotEquals. </summary>
         public static ScaleRuleMetricDimensionOperationType NotEquals { get; } = new ScaleRuleMetricDimensionOperationType(NotEqualsValue);
+
         /// <summary> Determines if two <see cref="ScaleRuleMetricDimensionOperationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScaleRuleMetricDimensionOperationType left, ScaleRuleMetricDimensionOperationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScaleRuleMetricDimensionOperationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScaleRuleMetricDimensionOperationType left, ScaleRuleMetricDimensionOperationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScaleRuleMetricDimensionOperationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScaleRuleMetricDimensionOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScaleRuleMetricDimensionOperationType(string value) => new ScaleRuleMetricDimensionOperationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScaleRuleMetricDimensionOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScaleRuleMetricDimensionOperationType?(string value) => value == null ? null : new ScaleRuleMetricDimensionOperationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScaleRuleMetricDimensionOperationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScaleRuleMetricDimensionOperationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

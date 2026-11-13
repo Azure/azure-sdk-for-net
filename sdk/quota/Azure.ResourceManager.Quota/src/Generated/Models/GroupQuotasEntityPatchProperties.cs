@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of <see cref="GroupQuotasEntityPatchProperties"/>. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotasEntityPatchProperties(string displayName, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(displayName, provisioningState, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GroupQuotasEntityPatchProperties(string displayName, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(displayName, provisioningState, additionalBinaryDataProperties)
         {
         }
     }

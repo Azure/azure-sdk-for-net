@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.4 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2026-09-04)
+
+### Features Added
+
+- Upgraded API version to `2026-07-01`.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.61.0.
+
+## 1.3.1 (2026-06-03)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.3.0 (2025-09-29)
+
+### Features Added
+
+- Release stable version for our service based on our latest beta version.
+
+## 1.3.0-beta.4 (2025-09-16)
+
+### Bugs Fixed
+
+- Added missing ContainerGroup properties: ConfigMap, ContainerGroupProfile, StandbyPoolProfile, and IsCreatedFromStandbyPool.
+- Corrected required flag on properties in Container and ContainerGroup models.
+- Fixed the response handling for ContainerGroupProfile DELETE operation.
+- Aligned requiredness of ContainerGroupProfile properties and normalized the Revision property format with the existing codebase.
 
 ## 1.3.0-beta.3 (2025-08-11)
 

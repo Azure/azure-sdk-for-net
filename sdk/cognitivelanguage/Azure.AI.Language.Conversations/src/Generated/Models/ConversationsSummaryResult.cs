@@ -14,49 +14,15 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Conversations Summary Result. </summary>
     public partial class ConversationsSummaryResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationsSummaryResult"/>. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="summaries"> array of summaries. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="summaries"/> is null. </exception>
         internal ConversationsSummaryResult(string id, IEnumerable<InputWarning> warnings, IEnumerable<SummaryResultItem> summaries)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(warnings, nameof(warnings));
-            Argument.AssertNotNull(summaries, nameof(summaries));
-
             Id = id;
             Warnings = warnings.ToList();
             Summaries = summaries.ToList();
@@ -67,28 +33,26 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="summaries"> array of summaries. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationsSummaryResult(string id, IReadOnlyList<InputWarning> warnings, ConversationStatistics statistics, IReadOnlyList<SummaryResultItem> summaries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationsSummaryResult(string id, IList<InputWarning> warnings, ConversationStatistics statistics, IList<SummaryResultItem> summaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Warnings = warnings;
             Statistics = statistics;
             Summaries = summaries;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationsSummaryResult"/> for deserialization. </summary>
-        internal ConversationsSummaryResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique, non-empty conversation identifier. </summary>
         public string Id { get; }
+
         /// <summary> Warnings encountered in processing the document. </summary>
-        public IReadOnlyList<InputWarning> Warnings { get; }
+        public IList<InputWarning> Warnings { get; }
+
         /// <summary> If showStats=true was specified in the request this field will contain information about the conversation payload. </summary>
         public ConversationStatistics Statistics { get; }
+
         /// <summary> array of summaries. </summary>
-        public IReadOnlyList<SummaryResultItem> Summaries { get; }
+        public IList<SummaryResultItem> Summaries { get; }
     }
 }

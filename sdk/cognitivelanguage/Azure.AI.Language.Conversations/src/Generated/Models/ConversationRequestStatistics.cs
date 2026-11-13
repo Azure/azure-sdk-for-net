@@ -13,37 +13,8 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> if showStats=true was specified in the request, this field contains information about the request payload. </summary>
     public partial class ConversationRequestStatistics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationRequestStatistics"/>. </summary>
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
@@ -72,8 +43,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="conversationsCount"> Number of conversations submitted in the request. </param>
         /// <param name="validConversationsCount"> Number of conversation documents. This excludes documents that are empty, over the size limit, or in unsupported languages. </param>
         /// <param name="erroneousConversationsCount"> Number of invalid documents. This includes documents that are empty, over the size limit, or in unsupported languages. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationRequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount, int conversationsCount, int validConversationsCount, int erroneousConversationsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationRequestStatistics(int documentsCount, int validDocumentsCount, int erroneousDocumentsCount, long transactionsCount, int conversationsCount, int validConversationsCount, int erroneousConversationsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DocumentsCount = documentsCount;
             ValidDocumentsCount = validDocumentsCount;
@@ -82,26 +53,27 @@ namespace Azure.AI.Language.Conversations.Models
             ConversationsCount = conversationsCount;
             ValidConversationsCount = validConversationsCount;
             ErroneousConversationsCount = erroneousConversationsCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationRequestStatistics"/> for deserialization. </summary>
-        internal ConversationRequestStatistics()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Number of documents submitted in the request. </summary>
         public int DocumentsCount { get; }
+
         /// <summary> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </summary>
         public int ValidDocumentsCount { get; }
+
         /// <summary> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </summary>
         public int ErroneousDocumentsCount { get; }
+
         /// <summary> Number of transactions for the request. </summary>
         public long TransactionsCount { get; }
+
         /// <summary> Number of conversations submitted in the request. </summary>
         public int ConversationsCount { get; }
+
         /// <summary> Number of conversation documents. This excludes documents that are empty, over the size limit, or in unsupported languages. </summary>
         public int ValidConversationsCount { get; }
+
         /// <summary> Number of invalid documents. This includes documents that are empty, over the size limit, or in unsupported languages. </summary>
         public int ErroneousConversationsCount { get; }
     }

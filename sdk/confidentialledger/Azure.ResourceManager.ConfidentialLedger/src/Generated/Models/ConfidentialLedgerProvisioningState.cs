@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     public readonly partial struct ConfidentialLedgerProvisioningState : IEquatable<ConfidentialLedgerProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConfidentialLedgerProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConfidentialLedgerProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ConfidentialLedgerProvisioningState Unknown { get; } = new ConfidentialLedgerProvisioningState(UnknownValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ConfidentialLedgerProvisioningState Succeeded { get; } = new ConfidentialLedgerProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ConfidentialLedgerProvisioningState Failed { get; } = new ConfidentialLedgerProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static ConfidentialLedgerProvisioningState Canceled { get; } = new ConfidentialLedgerProvisioningState(CanceledValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static ConfidentialLedgerProvisioningState Creating { get; } = new ConfidentialLedgerProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ConfidentialLedgerProvisioningState Deleting { get; } = new ConfidentialLedgerProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static ConfidentialLedgerProvisioningState Updating { get; } = new ConfidentialLedgerProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfidentialLedgerProvisioningState left, ConfidentialLedgerProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfidentialLedgerProvisioningState left, ConfidentialLedgerProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialLedgerProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConfidentialLedgerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConfidentialLedgerProvisioningState(string value) => new ConfidentialLedgerProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConfidentialLedgerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConfidentialLedgerProvisioningState?(string value) => value == null ? null : new ConfidentialLedgerProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfidentialLedgerProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConfidentialLedgerProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,3 +1,6 @@
-directory: specification/ews/SecretSyncController.Management
-commit: 54d955f05392c6d680023dd8fb6fde882ec41e56
+directory: specification/ews/resource-manager/Microsoft.SecretSyncController/SecretSyncController
+commit: 7199df7b2d45312addbd2a5fea1a64199369e8cf
 repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

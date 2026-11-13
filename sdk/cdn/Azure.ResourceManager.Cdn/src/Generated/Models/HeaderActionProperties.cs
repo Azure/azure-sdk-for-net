@@ -7,76 +7,48 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for the request header action.
-    /// Serialized Name: HeaderActionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for the request header action. </summary>
     public partial class HeaderActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
-        /// <param name="headerAction">
-        /// Action to perform
-        /// Serialized Name: HeaderActionParameters.headerAction
-        /// </param>
-        /// <param name="headerName">
-        /// Name of the header to modify
-        /// Serialized Name: HeaderActionParameters.headerName
-        /// </param>
+        /// <param name="headerAction"> Action to perform. </param>
+        /// <param name="headerName"> Name of the header to modify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
-        public HeaderActionProperties(HeaderAction headerAction, string headerName)
+        public HeaderActionProperties(HeaderAction headerAction, string headerName) : base(DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters)
         {
             Argument.AssertNotNull(headerName, nameof(headerName));
 
             HeaderAction = headerAction;
             HeaderName = headerName;
-            TypeName = DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="headerAction">
-        /// Action to perform
-        /// Serialized Name: HeaderActionParameters.headerAction
-        /// </param>
-        /// <param name="headerName">
-        /// Name of the header to modify
-        /// Serialized Name: HeaderActionParameters.headerName
-        /// </param>
-        /// <param name="value">
-        /// Value for the specified action
-        /// Serialized Name: HeaderActionParameters.value
-        /// </param>
-        internal HeaderActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderAction headerAction, string headerName, string value) : base(typeName, serializedAdditionalRawData)
+        /// <param name="typeName"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="headerAction"> Action to perform. </param>
+        /// <param name="headerName"> Name of the header to modify. </param>
+        /// <param name="value"> Value for the specified action. </param>
+        internal HeaderActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, HeaderAction headerAction, string headerName, string value) : base(typeName, additionalBinaryDataProperties)
         {
             HeaderAction = headerAction;
             HeaderName = headerName;
             Value = value;
-            TypeName = typeName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/> for deserialization. </summary>
-        internal HeaderActionProperties()
-        {
-        }
-
-        /// <summary>
-        /// Action to perform
-        /// Serialized Name: HeaderActionParameters.headerAction
-        /// </summary>
+        /// <summary> Action to perform. </summary>
+        [WirePath("headerAction")]
         public HeaderAction HeaderAction { get; set; }
-        /// <summary>
-        /// Name of the header to modify
-        /// Serialized Name: HeaderActionParameters.headerName
-        /// </summary>
+
+        /// <summary> Name of the header to modify. </summary>
+        [WirePath("headerName")]
         public string HeaderName { get; set; }
-        /// <summary>
-        /// Value for the specified action
-        /// Serialized Name: HeaderActionParameters.value
-        /// </summary>
+
+        /// <summary> Value for the specified action. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

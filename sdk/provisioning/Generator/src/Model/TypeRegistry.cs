@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Provisioning.Generator.Model;
 
@@ -58,6 +57,16 @@ public static class TypeRegistry
         if (type?.ArmType is not null)
         {
             _mapping[type.ArmType] = type;
+
+            // if this type is a resource, we also register its data here so that next time we have a property with this type, we could return the built resource type
+            if (type is Resource)
+            {
+                var dataType = ReflectionExtensions.GetDataTypeFromResource(type.ArmType);
+                if (dataType is not null)
+                {
+                    _mapping[dataType] = type;
+                }
+            }
         }
     }
 

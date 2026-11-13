@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct DeleteInvoiceSectionEligibilityCode : IEquatable<DeleteInvoiceSectionEligibilityCode>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> LastInvoiceSection. </summary>
+        private const string LastInvoiceSectionValue = "LastInvoiceSection";
+        /// <summary> ActiveAzurePlans. </summary>
+        private const string ActiveAzurePlansValue = "ActiveAzurePlans";
+        /// <summary> ReservedInstances. </summary>
+        private const string ReservedInstancesValue = "ReservedInstances";
+        /// <summary> ActiveBillingSubscriptions. </summary>
+        private const string ActiveBillingSubscriptionsValue = "ActiveBillingSubscriptions";
 
         /// <summary> Initializes a new instance of <see cref="DeleteInvoiceSectionEligibilityCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeleteInvoiceSectionEligibilityCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string LastInvoiceSectionValue = "LastInvoiceSection";
-        private const string ActiveAzurePlansValue = "ActiveAzurePlans";
-        private const string ReservedInstancesValue = "ReservedInstances";
-        private const string ActiveBillingSubscriptionsValue = "ActiveBillingSubscriptions";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static DeleteInvoiceSectionEligibilityCode Other { get; } = new DeleteInvoiceSectionEligibilityCode(OtherValue);
+
         /// <summary> LastInvoiceSection. </summary>
         public static DeleteInvoiceSectionEligibilityCode LastInvoiceSection { get; } = new DeleteInvoiceSectionEligibilityCode(LastInvoiceSectionValue);
+
         /// <summary> ActiveAzurePlans. </summary>
         public static DeleteInvoiceSectionEligibilityCode ActiveAzurePlans { get; } = new DeleteInvoiceSectionEligibilityCode(ActiveAzurePlansValue);
+
         /// <summary> ReservedInstances. </summary>
         public static DeleteInvoiceSectionEligibilityCode ReservedInstances { get; } = new DeleteInvoiceSectionEligibilityCode(ReservedInstancesValue);
+
         /// <summary> ActiveBillingSubscriptions. </summary>
         public static DeleteInvoiceSectionEligibilityCode ActiveBillingSubscriptions { get; } = new DeleteInvoiceSectionEligibilityCode(ActiveBillingSubscriptionsValue);
+
         /// <summary> Determines if two <see cref="DeleteInvoiceSectionEligibilityCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeleteInvoiceSectionEligibilityCode left, DeleteInvoiceSectionEligibilityCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeleteInvoiceSectionEligibilityCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeleteInvoiceSectionEligibilityCode left, DeleteInvoiceSectionEligibilityCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeleteInvoiceSectionEligibilityCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeleteInvoiceSectionEligibilityCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeleteInvoiceSectionEligibilityCode(string value) => new DeleteInvoiceSectionEligibilityCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeleteInvoiceSectionEligibilityCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeleteInvoiceSectionEligibilityCode?(string value) => value == null ? null : new DeleteInvoiceSectionEligibilityCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeleteInvoiceSectionEligibilityCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeleteInvoiceSectionEligibilityCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </summary>
+    /// <summary></summary>
     public readonly partial struct AttachedDatabaseType : IEquatable<AttachedDatabaseType>
     {
         private readonly string _value;
+        /// <summary> Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </summary>
+        private const string MicrosoftKustoClustersAttachedDatabaseConfigurationsValue = "Microsoft.Kusto/clusters/attachedDatabaseConfigurations";
 
         /// <summary> Initializes a new instance of <see cref="AttachedDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AttachedDatabaseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftKustoClustersAttachedDatabaseConfigurationsValue = "Microsoft.Kusto/clusters/attachedDatabaseConfigurations";
+            _value = value;
+        }
 
         /// <summary> Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </summary>
         public static AttachedDatabaseType MicrosoftKustoClustersAttachedDatabaseConfigurations { get; } = new AttachedDatabaseType(MicrosoftKustoClustersAttachedDatabaseConfigurationsValue);
+
         /// <summary> Determines if two <see cref="AttachedDatabaseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AttachedDatabaseType left, AttachedDatabaseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AttachedDatabaseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AttachedDatabaseType left, AttachedDatabaseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AttachedDatabaseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AttachedDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AttachedDatabaseType(string value) => new AttachedDatabaseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AttachedDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AttachedDatabaseType?(string value) => value == null ? null : new AttachedDatabaseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AttachedDatabaseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AttachedDatabaseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

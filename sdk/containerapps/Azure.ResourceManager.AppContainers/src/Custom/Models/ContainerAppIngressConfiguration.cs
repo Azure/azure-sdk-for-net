@@ -1,0 +1,25 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.AppContainers.Models
+{
+    public partial class ContainerAppIngressConfiguration
+    {
+        // The affinity type now has a service-specific name, so preserve the shipped property with conversion to the generated property.
+        /// <summary> Sticky Session Affinity. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsoleted and will be removed in a future version. Use StickySessionAffinity instead.", false)]
+        public Affinity? StickySessionsAffinity
+        {
+            get => StickySessionAffinity.HasValue
+                ? new Affinity(StickySessionAffinity.Value.ToString())
+                : null;
+            set => StickySessionAffinity = value.HasValue
+                ? new StickySessionAffinity(value.Value.ToString())
+                : null;
+        }
+    }
+}

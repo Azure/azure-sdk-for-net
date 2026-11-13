@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBAccountRestoreMode : IEquatable<CosmosDBAccountRestoreMode>
     {
         private readonly string _value;
+        private const string PointInTimeValue = "PointInTime";
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountRestoreMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CosmosDBAccountRestoreMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PointInTimeValue = "PointInTime";
-
-        /// <summary> PointInTime. </summary>
+        /// <summary> Gets the PointInTime. </summary>
         public static CosmosDBAccountRestoreMode PointInTime { get; } = new CosmosDBAccountRestoreMode(PointInTimeValue);
+
         /// <summary> Determines if two <see cref="CosmosDBAccountRestoreMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBAccountRestoreMode left, CosmosDBAccountRestoreMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBAccountRestoreMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBAccountRestoreMode left, CosmosDBAccountRestoreMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBAccountRestoreMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBAccountRestoreMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBAccountRestoreMode(string value) => new CosmosDBAccountRestoreMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBAccountRestoreMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBAccountRestoreMode?(string value) => value == null ? null : new CosmosDBAccountRestoreMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBAccountRestoreMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBAccountRestoreMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

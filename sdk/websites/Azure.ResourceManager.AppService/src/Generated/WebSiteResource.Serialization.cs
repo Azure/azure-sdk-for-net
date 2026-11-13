@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebSiteResource : IJsonModel<WebSiteData>
+    /// <summary></summary>
+    public partial class WebSiteResource : ArmResource, IJsonModel<WebSiteData>
     {
-        private static WebSiteData s_dataDeserializationInstance;
-        private static WebSiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WebSiteData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WebSiteData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WebSiteData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebSiteData>)Data).Write(writer, options);
 
-        WebSiteData IJsonModel<WebSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebSiteData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebSiteData IJsonModel<WebSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WebSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebSiteData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WebSiteData IPersistableModel<WebSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebSiteData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WebSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebSiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

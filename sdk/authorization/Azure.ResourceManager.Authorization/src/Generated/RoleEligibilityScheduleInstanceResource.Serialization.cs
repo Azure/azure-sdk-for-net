@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Authorization
 {
+    /// <summary></summary>
     public partial class RoleEligibilityScheduleInstanceResource : IJsonModel<RoleEligibilityScheduleInstanceData>
     {
-        private static RoleEligibilityScheduleInstanceData s_dataDeserializationInstance;
-        private static RoleEligibilityScheduleInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RoleEligibilityScheduleInstanceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RoleEligibilityScheduleInstanceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RoleEligibilityScheduleInstanceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RoleEligibilityScheduleInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RoleEligibilityScheduleInstanceData>)Data).Write(writer, options);
 
-        RoleEligibilityScheduleInstanceData IJsonModel<RoleEligibilityScheduleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleEligibilityScheduleInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleEligibilityScheduleInstanceData IJsonModel<RoleEligibilityScheduleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RoleEligibilityScheduleInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoleEligibilityScheduleInstanceData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RoleEligibilityScheduleInstanceData IPersistableModel<RoleEligibilityScheduleInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleEligibilityScheduleInstanceData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        string IPersistableModel<RoleEligibilityScheduleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleEligibilityScheduleInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RoleEligibilityScheduleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

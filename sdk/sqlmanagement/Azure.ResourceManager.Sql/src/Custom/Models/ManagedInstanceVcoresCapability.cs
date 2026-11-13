@@ -1,36 +1,25 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The managed instance virtual cores capability. </summary>
     public partial class ManagedInstanceVcoresCapability
     {
         /// <summary>
-        /// Supported memory sizes in MB. Deprecated, use SupportedMemorySizesInGB.
+        /// Supported memory sizes in MB. Deprecated, use SupportedMemoryLimitsInMB.
         /// </summary>
         [Obsolete("This property is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("supportedMemoryLimitsMB")]
         public MaxLimitRangeCapability SupportedMemoryLimitsMB
         {
             get
             {
-                return ConvertFromGBtoMB(SupportedMemorySizesInGB);
+                return SupportedMemoryLimitsInMB;
             }
-        }
-
-        private MaxLimitRangeCapability ConvertFromGBtoMB(MaxLimitRangeCapability value)
-        {
-            return new MaxLimitRangeCapability(
-                minValue: value.MinValue.HasValue ? value.MinValue.Value * 1024 : null,
-                maxValue: value.MaxValue.HasValue ? value.MaxValue.Value * 1024 : null,
-                scaleSize: value.ScaleSize.HasValue ? value.ScaleSize.Value * 1024 : null,
-                status: value.Status,
-                reason: value.Reason,
-                serializedAdditionalRawData: null);
         }
     }
 }

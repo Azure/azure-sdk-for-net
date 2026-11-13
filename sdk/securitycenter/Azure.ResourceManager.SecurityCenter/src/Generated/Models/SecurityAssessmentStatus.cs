@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The result of the assessment. </summary>
     public partial class SecurityAssessmentStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatus"/>. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
@@ -56,24 +27,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentStatus(SecurityAssessmentStatusCode code, string cause, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentStatus(SecurityAssessmentStatusCode code, string cause, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Cause = cause;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatus"/> for deserialization. </summary>
-        internal SecurityAssessmentStatus()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Programmatic code for the status of the assessment. </summary>
         public SecurityAssessmentStatusCode Code { get; set; }
+
         /// <summary> Programmatic code for the cause of the assessment status. </summary>
         public string Cause { get; set; }
+
         /// <summary> Human readable description of the assessment status. </summary>
         public string Description { get; set; }
     }

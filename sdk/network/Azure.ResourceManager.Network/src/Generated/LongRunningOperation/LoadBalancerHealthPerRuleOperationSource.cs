@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class LoadBalancerHealthPerRuleOperationSource : IOperationSource<LoadBalancerHealthPerRule>
+    /// <summary></summary>
+    internal partial class LoadBalancerHealthPerRuleOperationSource : IOperationSource<LoadBalancerHealthPerRule>
     {
-        LoadBalancerHealthPerRule IOperationSource<LoadBalancerHealthPerRule>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal LoadBalancerHealthPerRuleOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return LoadBalancerHealthPerRule.DeserializeLoadBalancerHealthPerRule(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        LoadBalancerHealthPerRule IOperationSource<LoadBalancerHealthPerRule>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return LoadBalancerHealthPerRule.DeserializeLoadBalancerHealthPerRule(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<LoadBalancerHealthPerRule> IOperationSource<LoadBalancerHealthPerRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return LoadBalancerHealthPerRule.DeserializeLoadBalancerHealthPerRule(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return LoadBalancerHealthPerRule.DeserializeLoadBalancerHealthPerRule(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
+    /// <summary></summary>
     public partial class DevTestLabServiceRunnerResource : IJsonModel<DevTestLabServiceRunnerData>
     {
-        private static DevTestLabServiceRunnerData s_dataDeserializationInstance;
-        private static DevTestLabServiceRunnerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DevTestLabServiceRunnerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DevTestLabServiceRunnerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DevTestLabServiceRunnerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabServiceRunnerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabServiceRunnerData>)Data).Write(writer, options);
 
-        DevTestLabServiceRunnerData IJsonModel<DevTestLabServiceRunnerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabServiceRunnerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevTestLabServiceRunnerData IJsonModel<DevTestLabServiceRunnerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DevTestLabServiceRunnerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabServiceRunnerData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DevTestLabServiceRunnerData IPersistableModel<DevTestLabServiceRunnerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabServiceRunnerData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabServiceRunnerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabServiceRunnerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevTestLabServiceRunnerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

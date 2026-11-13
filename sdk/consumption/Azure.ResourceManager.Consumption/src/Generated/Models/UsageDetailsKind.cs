@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Consumption.Models
     internal readonly partial struct UsageDetailsKind : IEquatable<UsageDetailsKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="UsageDetailsKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UsageDetailsKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string LegacyValue = "legacy";
         private const string ModernValue = "modern";
 
-        /// <summary> legacy. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageDetailsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public UsageDetailsKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Legacy. </summary>
         public static UsageDetailsKind Legacy { get; } = new UsageDetailsKind(LegacyValue);
-        /// <summary> modern. </summary>
+
+        /// <summary> Gets the Modern. </summary>
         public static UsageDetailsKind Modern { get; } = new UsageDetailsKind(ModernValue);
+
         /// <summary> Determines if two <see cref="UsageDetailsKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UsageDetailsKind left, UsageDetailsKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UsageDetailsKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UsageDetailsKind left, UsageDetailsKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UsageDetailsKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UsageDetailsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UsageDetailsKind(string value) => new UsageDetailsKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UsageDetailsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UsageDetailsKind?(string value) => value == null ? null : new UsageDetailsKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UsageDetailsKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UsageDetailsKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

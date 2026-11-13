@@ -2,18 +2,39 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry;
-using OpenTelemetry.Trace;
 using OpenTelemetry.Exporter;
+using OpenTelemetry.Trace;
 using Xunit;
-using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests;
 
 public class RateLimitedSamplerTests
 {
+    [Fact]
+    public void DuplicateSampleRateAttributesFromMultipleProvidersDoNotThrow()
+    {
+        const string activitySourceName = "Azure.Monitor.OpenTelemetry.Exporter.Tests.DuplicateSampleRate";
+        using var activitySource = new ActivitySource(activitySourceName);
+        using var firstProvider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(activitySourceName)
+            .SetSampler(new RateLimitedSampler(1e9))
+            .Build();
+        using var secondProvider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(activitySourceName)
+            .SetSampler(new RateLimitedSampler(1e9))
+            .Build();
+
+        System.Threading.Thread.Sleep(50);
+        using var activity = activitySource.StartActivity("root");
+
+        Assert.NotNull(activity);
+        Assert.NotNull(activity.GetTagItem("microsoft.sample_rate"));
+    }
+
     [Fact]
     public void RespectLocalParentDecision()
     {
@@ -167,7 +188,6 @@ public class RateLimitedSamplerTests
             {
                 sampledin++;
             }
-            System.Threading.Thread.Sleep(2);
         }
         // We would expect 50 to be sampled in, but there may be some variance based on sleep scheduling/elapsed time.
         DateTime end = DateTime.UtcNow;

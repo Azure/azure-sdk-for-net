@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class AsyncOperationStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AsyncOperationStatus value) => value switch
         {
             AsyncOperationStatus.Started => "Started",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AsyncOperationStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AsyncOperationStatus ToAsyncOperationStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Started")) return AsyncOperationStatus.Started;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return AsyncOperationStatus.InProgress;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return AsyncOperationStatus.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return AsyncOperationStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Started"))
+            {
+                return AsyncOperationStatus.Started;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress"))
+            {
+                return AsyncOperationStatus.InProgress;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return AsyncOperationStatus.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return AsyncOperationStatus.Failed;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AsyncOperationStatus value.");
         }
     }

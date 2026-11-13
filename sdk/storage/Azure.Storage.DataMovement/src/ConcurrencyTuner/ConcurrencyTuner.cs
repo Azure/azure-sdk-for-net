@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement
             _initialConcurrency = initialConcurrency;
             _maxConcurrency = maxConcurrency;
             _resourceMonitor = new ResourceMonitor();
-            _finalReason = (int) ConcurrencyTunerState.ConcurrencyReasonNone;
+            _finalReason = (int)ConcurrencyTunerState.ConcurrencyReasonNone;
             _finalConcurrency = _initialConcurrency;
             _observations = Channel.CreateUnbounded<ConcurrencyObservation>();
             _recommendations = Channel.CreateUnbounded<ConcurrencyRecommendation>();
@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement
         internal void StoreFinalState(ConcurrencyRecommendation recommendation)
         {
             Volatile.Write(ref _finalConcurrency, recommendation.Concurrency);
-            Volatile.Write(ref _finalReason, (int) recommendation.State);
+            Volatile.Write(ref _finalReason, (int)recommendation.State);
         }
 
         internal ConcurrencyRecommendation GetFinalState()
@@ -101,7 +101,8 @@ namespace Azure.Storage.DataMovement
             };
         }
 
-        internal Task RequestCallbackWhenStable(){
+        internal Task RequestCallbackWhenStable()
+        {
             throw new NotImplementedException();
         }
 
@@ -133,7 +134,8 @@ namespace Azure.Storage.DataMovement
                 // enforce a ceiling
                 atMax = (concurrency * multiplier) > (float)_maxConcurrency;
 
-                if (atMax) {
+                if (atMax)
+                {
                     multiplier = (float)(_maxConcurrency) / concurrency;
                     rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonHitMax;
                 }
@@ -168,7 +170,8 @@ namespace Azure.Storage.DataMovement
                 {
                     // Our concurrency change gave the hoped-for speed increase, so loop around and see if another increase will also work,
                     // unless already at max
-                    if (atMax) {
+                    if (atMax)
+                    {
                         break;
                     }
                 }
@@ -200,7 +203,7 @@ namespace Azure.Storage.DataMovement
 
                     if (multiplierReductionCount <= 2)
                     {
-                        while ( (int)multiplier * concurrency == (int)concurrency)
+                        while ((int)multiplier * concurrency == (int)concurrency)
                         {
                             multiplier += 0.05;
                         }

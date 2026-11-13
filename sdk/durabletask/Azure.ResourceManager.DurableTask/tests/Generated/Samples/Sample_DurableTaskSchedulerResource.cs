@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SchedulersGet()
         {
-            // Generated from example definition: 2025-04-01-preview/Schedulers_Get.json
+            // Generated from example definition: 2025-11-01/Schedulers_Get.json
             // this example is just showing the usage of "Scheduler_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_SchedulersDelete()
         {
-            // Generated from example definition: 2025-04-01-preview/Schedulers_Delete.json
+            // Generated from example definition: 2025-11-01/Schedulers_Delete.json
             // this example is just showing the usage of "Scheduler_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_SchedulersUpdate()
         {
-            // Generated from example definition: 2025-04-01-preview/Schedulers_Update.json
+            // Generated from example definition: 2025-11-01/Schedulers_Update.json
             // this example is just showing the usage of "Scheduler_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
                     IPAllowlist = { "10.0.0.0/8" },
                     Sku = new DurableTaskSchedulerSkuUpdate
                     {
-                        Name = "Dedicated",
+                        Name = DurableTaskSchedulerSkuName.Dedicated,
                         Capacity = 3,
                     },
                 },

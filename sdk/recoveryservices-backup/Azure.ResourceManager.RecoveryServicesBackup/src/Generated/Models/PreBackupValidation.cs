@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Pre-backup validation for Azure VM Workload provider. </summary>
     public partial class PreBackupValidation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PreBackupValidation"/>. </summary>
         public PreBackupValidation()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="status"> Status of protectable item, i.e. InProgress,Succeeded,Failed. </param>
         /// <param name="code"> Error code of protectable item. </param>
         /// <param name="message"> Message corresponding to the error code for the protectable item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PreBackupValidation(InquiryStatus? status, string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PreBackupValidation(InquiryStatus? status, string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Code = code;
             Message = message;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Status of protectable item, i.e. InProgress,Succeeded,Failed. </summary>
         public InquiryStatus? Status { get; set; }
+
         /// <summary> Error code of protectable item. </summary>
         public string Code { get; set; }
+
         /// <summary> Message corresponding to the error code for the protectable item. </summary>
         public string Message { get; set; }
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class SecurityCenterPricingResource : IJsonModel<SecurityCenterPricingData>
     {
-        private static SecurityCenterPricingData s_dataDeserializationInstance;
-        private static SecurityCenterPricingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityCenterPricingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityCenterPricingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityCenterPricingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityCenterPricingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterPricingData>)Data).Write(writer, options);
 
-        SecurityCenterPricingData IJsonModel<SecurityCenterPricingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterPricingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityCenterPricingData IJsonModel<SecurityCenterPricingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityCenterPricingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityCenterPricingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityCenterPricingData IPersistableModel<SecurityCenterPricingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterPricingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityCenterPricingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCenterPricingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityCenterPricingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

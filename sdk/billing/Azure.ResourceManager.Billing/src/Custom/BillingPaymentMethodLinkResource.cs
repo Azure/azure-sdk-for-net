@@ -8,17 +8,15 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary>
-    /// A Class representing a BillingPaymentMethodLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodLinkResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingPaymentMethodLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingPaymentMethodLink method.
-    /// </summary>
-    public partial class BillingPaymentMethodLinkResource : ArmResource
+    // The 2024-04-01 TypeSpec drops PaymentMethods_DeleteAtBillingProfile, but the GA
+    // surface still exposes BillingPaymentMethodLinkResource.Delete/DeleteAsync (hidden
+    // via EditorBrowsable). Inline the HTTP shim here against the original 2021-10-01
+    // endpoint so callers compiled against the GA library keep working.
+    public partial class BillingPaymentMethodLinkResource
     {
         /// <summary>
         /// Deletes a payment method link and removes the payment method from a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
@@ -46,14 +44,20 @@ namespace Azure.ResourceManager.Billing
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Delete");
+            using DiagnosticScope scope = _paymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.DeleteAtBillingProfileAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(_billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _billingPaymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                using HttpMessage message = CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "Location", null, OperationFinalStateVia.Location.ToString());
+                BillingArmOperation operation = new BillingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -89,14 +93,20 @@ namespace Azure.ResourceManager.Billing
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Delete");
+            using DiagnosticScope scope = _paymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = _billingPaymentMethodLinkPaymentMethodsRestClient.DeleteAtBillingProfile(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(_billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _billingPaymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                using HttpMessage message = CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "Location", null, OperationFinalStateVia.Location.ToString());
+                BillingArmOperation operation = new BillingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,6 +114,25 @@ namespace Azure.ResourceManager.Billing
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private HttpMessage CreateDeleteAtBillingProfileRequest(string billingAccountName, string billingProfileName, string paymentMethodName)
+        {
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Method = RequestMethod.Delete;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(Endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/paymentMethodLinks/", false);
+            uri.AppendPath(paymentMethodName, true);
+            uri.AppendQuery("api-version", "2021-10-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }

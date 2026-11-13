@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoScaleType : IEquatable<KustoScaleType>
     {
         private readonly string _value;
+        /// <summary> automatic. </summary>
+        private const string AutomaticValue = "automatic";
+        /// <summary> manual. </summary>
+        private const string ManualValue = "manual";
+        /// <summary> none. </summary>
+        private const string NoneValue = "none";
 
         /// <summary> Initializes a new instance of <see cref="KustoScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoScaleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutomaticValue = "automatic";
-        private const string ManualValue = "manual";
-        private const string NoneValue = "none";
+            _value = value;
+        }
 
         /// <summary> automatic. </summary>
         public static KustoScaleType Automatic { get; } = new KustoScaleType(AutomaticValue);
+
         /// <summary> manual. </summary>
         public static KustoScaleType Manual { get; } = new KustoScaleType(ManualValue);
+
         /// <summary> none. </summary>
         public static KustoScaleType None { get; } = new KustoScaleType(NoneValue);
+
         /// <summary> Determines if two <see cref="KustoScaleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoScaleType left, KustoScaleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoScaleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoScaleType left, KustoScaleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoScaleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoScaleType(string value) => new KustoScaleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoScaleType?(string value) => value == null ? null : new KustoScaleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoScaleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoScaleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

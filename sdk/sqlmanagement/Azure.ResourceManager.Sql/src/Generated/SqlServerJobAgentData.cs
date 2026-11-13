@@ -13,87 +13,75 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SqlServerJobAgent data model.
-    /// An Azure SQL job agent.
-    /// </summary>
+    /// <summary> An Azure SQL job agent. </summary>
     public partial class SqlServerJobAgentData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerJobAgentData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SqlServerJobAgentData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerJobAgentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="identity"> The identity of the job agent. </param>
-        /// <param name="databaseId"> Resource ID of the database to store job metadata in. </param>
-        /// <param name="state"> The state of the job agent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerJobAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, JobAgentIdentity identity, ResourceIdentifier databaseId, JobAgentState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerJobAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, JobAgentProperties properties, SqlSku sku, JobAgentIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Sku = sku;
             Identity = identity;
-            DatabaseId = databaseId;
-            State = state;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlServerJobAgentData"/> for deserialization. </summary>
-        internal SqlServerJobAgentData()
-        {
-        }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal JobAgentProperties Properties { get; set; }
 
         /// <summary> The name and tier of the SKU. </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; set; }
+
         /// <summary> The identity of the job agent. </summary>
         [WirePath("identity")]
         public JobAgentIdentity Identity { get; set; }
+
         /// <summary> Resource ID of the database to store job metadata in. </summary>
         [WirePath("properties.databaseId")]
-        public ResourceIdentifier DatabaseId { get; set; }
+        public ResourceIdentifier DatabaseId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobAgentProperties();
+                }
+                Properties.DatabaseId = value;
+            }
+        }
+
         /// <summary> The state of the job agent. </summary>
         [WirePath("properties.state")]
-        public JobAgentState? State { get; }
+        public JobAgentState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
     }
 }

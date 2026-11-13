@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class QuickBooksLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="QuickBooksLinkedService"/>. </summary>
-        public QuickBooksLinkedService()
+        public QuickBooksLinkedService() : base("QuickBooks")
         {
-            LinkedServiceType = "QuickBooks";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="QuickBooksLinkedService"/>. </summary>
@@ -27,80 +27,116 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionProperties"> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
-        /// <param name="endpoint"> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </param>
-        /// <param name="companyId"> The company ID of the QuickBooks company to authorize. </param>
-        /// <param name="consumerKey"> The consumer key for OAuth 2.0 authentication. </param>
-        /// <param name="consumerSecret"> The consumer secret for OAuth 2.0 authentication. </param>
-        /// <param name="accessToken"> The access token for OAuth 2.0 authentication. </param>
-        /// <param name="accessTokenSecret"> The access token secret is deprecated for OAuth 1.0 authentication. Only used for version 1.0. </param>
-        /// <param name="refreshToken"> The refresh token for OAuth 2.0 authentication. </param>
-        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Only used for version 1.0. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal QuickBooksLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> companyId, DataFactoryElement<string> consumerKey, DataFactorySecret consumerSecret, DataFactorySecret accessToken, DataFactorySecret accessTokenSecret, DataFactorySecret refreshToken, DataFactoryElement<bool> useEncryptedEndpoints, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> QuickBooks server linked service properties. </param>
+        internal QuickBooksLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, QuickBooksLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionProperties = connectionProperties;
-            Endpoint = endpoint;
-            CompanyId = companyId;
-            ConsumerKey = consumerKey;
-            ConsumerSecret = consumerSecret;
-            AccessToken = accessToken;
-            AccessTokenSecret = accessTokenSecret;
-            RefreshToken = refreshToken;
-            UseEncryptedEndpoints = useEncryptedEndpoints;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "QuickBooks";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary>
-        /// Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ConnectionProperties { get; set; }
+        /// <summary> QuickBooks server linked service properties. </summary>
+        internal QuickBooksLinkedServiceTypeProperties TypeProperties { get; set; }
+
+        /// <summary> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public BinaryData ConnectionProperties
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionProperties;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new QuickBooksLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionProperties = value;
+            }
+        }
+
         /// <summary> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </summary>
-        public DataFactoryElement<string> Endpoint { get; set; }
+        public DataFactoryElement<string> Endpoint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Endpoint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new QuickBooksLinkedServiceTypeProperties();
+                }
+                TypeProperties.Endpoint = value;
+            }
+        }
+
         /// <summary> The company ID of the QuickBooks company to authorize. </summary>
-        public DataFactoryElement<string> CompanyId { get; set; }
+        public DataFactoryElement<string> CompanyId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CompanyId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new QuickBooksLinkedServiceTypeProperties();
+                }
+                TypeProperties.CompanyId = value;
+            }
+        }
+
         /// <summary> The consumer key for OAuth 2.0 authentication. </summary>
-        public DataFactoryElement<string> ConsumerKey { get; set; }
-        /// <summary> The consumer secret for OAuth 2.0 authentication. </summary>
-        public DataFactorySecret ConsumerSecret { get; set; }
-        /// <summary> The access token for OAuth 2.0 authentication. </summary>
-        public DataFactorySecret AccessToken { get; set; }
-        /// <summary> The access token secret is deprecated for OAuth 1.0 authentication. Only used for version 1.0. </summary>
-        public DataFactorySecret AccessTokenSecret { get; set; }
-        /// <summary> The refresh token for OAuth 2.0 authentication. </summary>
-        public DataFactorySecret RefreshToken { get; set; }
+        public DataFactoryElement<string> ConsumerKey
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConsumerKey;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new QuickBooksLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConsumerKey = value;
+            }
+        }
+
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Only used for version 1.0. </summary>
-        public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
+        public DataFactoryElement<bool> UseEncryptedEndpoints
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseEncryptedEndpoints;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new QuickBooksLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseEncryptedEndpoints = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new QuickBooksLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

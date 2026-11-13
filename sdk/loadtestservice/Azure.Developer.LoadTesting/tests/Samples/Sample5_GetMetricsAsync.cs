@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using NUnit.Framework;
@@ -62,7 +62,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
                         testRunId,
                         metricNamespaces.Value.First().Name,
                         metricDefinitions.Value.First().Name,
-                        testRun.StartDateTime.Value.ToString("o") + "/" + testRun.EndDateTime.Value.ToString("o")
+                        testRun.StartsOn.Value.ToString("o") + "/" + testRun.EndsOn.Value.ToString("o")
                     );
             }
             catch (Exception ex)

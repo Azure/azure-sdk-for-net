@@ -1,12 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Autorest.CSharp.Core;
-using System.Threading;
 using System;
-using Azure.Core;
+using System.ClientModel.Primitives;
+using System.Threading;
 using System.Threading.Tasks;
-
+using Azure.Core;
 namespace Azure.AI.Agents.Persistent
 {
     internal partial class VectorStoreFiles
@@ -14,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Returns a list of vector store files. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="filter"> Filter by file status. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -36,8 +35,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             return new ContinuationTokenPageableAsync<VectorStoreFile>(
                 createPageRequest: PageRequest,
-                valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e),
-                pipeline: _pipeline,
+                valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e, new ModelReaderWriterOptions("W")),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -48,7 +47,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Returns a list of vector store files. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="filter"> Filter by file status. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -70,8 +69,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             return new ContinuationTokenPageable<VectorStoreFile>(
                 createPageRequest: PageRequest,
-                valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e),
-                pipeline: _pipeline,
+                valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e, new ModelReaderWriterOptions("W")),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -111,8 +110,7 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVectorStoreFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "VectorStoreFilesClient.GetVectorStoreFiles", "data", null, context);
+            throw new NotSupportedException("Protocol paging is not yet supported.");
         }
 
         /// <summary>
@@ -147,8 +145,7 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVectorStoreFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "VectorStoreFilesClient.GetVectorStoreFiles", "data", null, context);
+            throw new NotSupportedException("Protocol paging is not yet supported.");
         }
 
         /// <summary> Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself). </summary>

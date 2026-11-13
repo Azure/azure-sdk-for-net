@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2026-09-04)
+
+### Features Added
+
+- Upgraded API version to 2026-07-01.
+
+### Bugs Fixed
+
+- Corrected the `MachineLearnin*` typo in registry component container and version resource and collection type names. The misspelled types remain available as hidden, obsolete compatibility shims.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.61.0.
+
+## 1.2.4 (2026-06-13)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.2.3 (2025-08-11)
 

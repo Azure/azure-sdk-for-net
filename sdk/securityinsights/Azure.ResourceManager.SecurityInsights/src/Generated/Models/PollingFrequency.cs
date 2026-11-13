@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct PollingFrequency : IEquatable<PollingFrequency>
     {
         private readonly string _value;
+        /// <summary> Once a minute. </summary>
+        private const string OnceAMinuteValue = "OnceAMinute";
+        /// <summary> Once an hour. </summary>
+        private const string OnceAnHourValue = "OnceAnHour";
+        /// <summary> Once a day. </summary>
+        private const string OnceADayValue = "OnceADay";
 
         /// <summary> Initializes a new instance of <see cref="PollingFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PollingFrequency(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OnceAMinuteValue = "OnceAMinute";
-        private const string OnceAnHourValue = "OnceAnHour";
-        private const string OnceADayValue = "OnceADay";
+            _value = value;
+        }
 
         /// <summary> Once a minute. </summary>
         public static PollingFrequency OnceAMinute { get; } = new PollingFrequency(OnceAMinuteValue);
+
         /// <summary> Once an hour. </summary>
         public static PollingFrequency OnceAnHour { get; } = new PollingFrequency(OnceAnHourValue);
+
         /// <summary> Once a day. </summary>
         public static PollingFrequency OnceADay { get; } = new PollingFrequency(OnceADayValue);
+
         /// <summary> Determines if two <see cref="PollingFrequency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PollingFrequency left, PollingFrequency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PollingFrequency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PollingFrequency left, PollingFrequency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PollingFrequency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PollingFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PollingFrequency(string value) => new PollingFrequency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PollingFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PollingFrequency?(string value) => value == null ? null : new PollingFrequency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PollingFrequency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PollingFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

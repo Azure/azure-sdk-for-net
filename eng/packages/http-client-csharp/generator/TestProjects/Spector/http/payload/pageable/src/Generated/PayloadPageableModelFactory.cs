@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Payload.Pageable._ServerDrivenPagination;
-using Payload.Pageable._ServerDrivenPagination.ContinuationToken;
+using Payload.Pageable._ServerDrivenPagination.AlternateInitialVerb;
 
 namespace Payload.Pageable
 {
@@ -16,5 +13,9 @@ namespace Payload.Pageable
     {
 
         public static Pet Pet(string id = default, string name = default) => throw null;
+
+        public static XmlPet XmlPet(string id = default, string name = default) => throw null;
+
+        public static Filter Filter(string filterProperty = default) => throw null;
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     internal static partial class DataFactoryDayOfWeekExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataFactoryDayOfWeek value) => value switch
         {
             DataFactoryDayOfWeek.Sunday => "Sunday",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataFactoryDayOfWeek value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataFactoryDayOfWeek ToDataFactoryDayOfWeek(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return DataFactoryDayOfWeek.Sunday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return DataFactoryDayOfWeek.Monday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return DataFactoryDayOfWeek.Tuesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return DataFactoryDayOfWeek.Wednesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return DataFactoryDayOfWeek.Thursday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return DataFactoryDayOfWeek.Friday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return DataFactoryDayOfWeek.Saturday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday"))
+            {
+                return DataFactoryDayOfWeek.Sunday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday"))
+            {
+                return DataFactoryDayOfWeek.Monday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday"))
+            {
+                return DataFactoryDayOfWeek.Tuesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday"))
+            {
+                return DataFactoryDayOfWeek.Wednesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday"))
+            {
+                return DataFactoryDayOfWeek.Thursday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday"))
+            {
+                return DataFactoryDayOfWeek.Friday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday"))
+            {
+                return DataFactoryDayOfWeek.Saturday;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataFactoryDayOfWeek value.");
         }
     }

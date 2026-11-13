@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct GatewayLoadBalancerTunnelProtocol : IEquatable<GatewayLoadBalancerTunnelProtocol>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Native. </summary>
+        private const string NativeValue = "Native";
+        /// <summary> VXLAN. </summary>
+        private const string VxlanValue = "VXLAN";
 
         /// <summary> Initializes a new instance of <see cref="GatewayLoadBalancerTunnelProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GatewayLoadBalancerTunnelProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string NativeValue = "Native";
-        private const string VxlanValue = "VXLAN";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static GatewayLoadBalancerTunnelProtocol None { get; } = new GatewayLoadBalancerTunnelProtocol(NoneValue);
+
         /// <summary> Native. </summary>
         public static GatewayLoadBalancerTunnelProtocol Native { get; } = new GatewayLoadBalancerTunnelProtocol(NativeValue);
+
         /// <summary> VXLAN. </summary>
         public static GatewayLoadBalancerTunnelProtocol Vxlan { get; } = new GatewayLoadBalancerTunnelProtocol(VxlanValue);
+
         /// <summary> Determines if two <see cref="GatewayLoadBalancerTunnelProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GatewayLoadBalancerTunnelProtocol left, GatewayLoadBalancerTunnelProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GatewayLoadBalancerTunnelProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GatewayLoadBalancerTunnelProtocol left, GatewayLoadBalancerTunnelProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GatewayLoadBalancerTunnelProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GatewayLoadBalancerTunnelProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GatewayLoadBalancerTunnelProtocol(string value) => new GatewayLoadBalancerTunnelProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GatewayLoadBalancerTunnelProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GatewayLoadBalancerTunnelProtocol?(string value) => value == null ? null : new GatewayLoadBalancerTunnelProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GatewayLoadBalancerTunnelProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GatewayLoadBalancerTunnelProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

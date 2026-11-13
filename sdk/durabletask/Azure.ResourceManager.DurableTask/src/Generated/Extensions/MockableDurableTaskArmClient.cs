@@ -6,38 +6,36 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DurableTask;
 
 namespace Azure.ResourceManager.DurableTask.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDurableTaskArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDurableTaskArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDurableTaskArmClient for mocking. </summary>
         protected MockableDurableTaskArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDurableTaskArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDurableTaskArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDurableTaskArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDurableTaskArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        /// <summary> Gets an object representing a <see cref="DurableTaskDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DurableTaskDetectorResource"/> object. </returns>
+        public virtual DurableTaskDetectorResource GetDurableTaskDetectorResource(ResourceIdentifier id)
         {
+            DurableTaskDetectorResource.ValidateResourceId(id);
+            return new DurableTaskDetectorResource(Client, id);
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DurableTaskSchedulerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DurableTaskSchedulerResource.CreateResourceIdentifier" /> to create a <see cref="DurableTaskSchedulerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DurableTaskSchedulerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DurableTaskSchedulerResource"/> object. </returns>
         public virtual DurableTaskSchedulerResource GetDurableTaskSchedulerResource(ResourceIdentifier id)
@@ -46,10 +44,25 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             return new DurableTaskSchedulerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DurableTaskHubResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DurableTaskHubResource.CreateResourceIdentifier" /> to create a <see cref="DurableTaskHubResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DurableTaskSchedulerPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DurableTaskSchedulerPrivateLinkResource"/> object. </returns>
+        public virtual DurableTaskSchedulerPrivateLinkResource GetDurableTaskSchedulerPrivateLinkResource(ResourceIdentifier id)
+        {
+            DurableTaskSchedulerPrivateLinkResource.ValidateResourceId(id);
+            return new DurableTaskSchedulerPrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DurableTaskPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DurableTaskPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual DurableTaskPrivateEndpointConnectionResource GetDurableTaskPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            DurableTaskPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new DurableTaskPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DurableTaskHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DurableTaskHubResource"/> object. </returns>
         public virtual DurableTaskHubResource GetDurableTaskHubResource(ResourceIdentifier id)
@@ -58,16 +71,40 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             return new DurableTaskHubResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DurableTaskRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DurableTaskRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DurableTaskRetentionPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TaskQueueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TaskQueueResource"/> object. </returns>
+        public virtual TaskQueueResource GetTaskQueueResource(ResourceIdentifier id)
+        {
+            TaskQueueResource.ValidateResourceId(id);
+            return new TaskQueueResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DurableTaskRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
         public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(ResourceIdentifier id)
         {
             DurableTaskRetentionPolicyResource.ValidateResourceId(id);
             return new DurableTaskRetentionPolicyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TransparentDataEncryptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TransparentDataEncryptionResource"/> object. </returns>
+        public virtual TransparentDataEncryptionResource GetTransparentDataEncryptionResource(ResourceIdentifier id)
+        {
+            TransparentDataEncryptionResource.ValidateResourceId(id);
+            return new TransparentDataEncryptionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FailoverInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FailoverInstanceResource"/> object. </returns>
+        public virtual FailoverInstanceResource GetFailoverInstanceResource(ResourceIdentifier id)
+        {
+            FailoverInstanceResource.ValidateResourceId(id);
+            return new FailoverInstanceResource(Client, id);
         }
     }
 }

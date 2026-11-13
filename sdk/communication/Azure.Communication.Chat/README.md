@@ -225,7 +225,7 @@ Use `GetChatThreads` to get the list of chat threads for the participant that in
 AsyncPageable<ChatThreadItem> chatThreadItems = chatClient.GetChatThreadsAsync();
 await foreach (ChatThreadItem chatThreadItem in chatThreadItems)
 {
-    Console.WriteLine($"{ chatThreadItem.Id}");
+    Console.WriteLine($"{chatThreadItem.Id}");
 }
 ```
 
@@ -262,7 +262,7 @@ Use `SendMessage` to send a message to a thread.
 - Use `senderDisplayName` to specify the display name of the sender. If not specified, empty string will be set.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
-SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync(content:"hello world");
+SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync(content: "hello world");
 var messageId = sendChatMessageResult.Id;
 ```
 

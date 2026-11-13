@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public readonly partial struct DataReplicationJobState : IEquatable<DataReplicationJobState>
     {
         private readonly string _value;
+        /// <summary> Job has not been started. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Job is in progress. </summary>
+        private const string StartedValue = "Started";
+        /// <summary> Job cancellation is in progress. </summary>
+        private const string CancellingValue = "Cancelling";
+        /// <summary> Job has completed successfully. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Job failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Job has been cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> Job has completed with information. </summary>
+        private const string CompletedWithInformationValue = "CompletedWithInformation";
+        /// <summary> Job has completed with warnings. </summary>
+        private const string CompletedWithWarningsValue = "CompletedWithWarnings";
+        /// <summary> Job has completed with errors. </summary>
+        private const string CompletedWithErrorsValue = "CompletedWithErrors";
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataReplicationJobState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string StartedValue = "Started";
-        private const string CancellingValue = "Cancelling";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
-        private const string CompletedWithInformationValue = "CompletedWithInformation";
-        private const string CompletedWithWarningsValue = "CompletedWithWarnings";
-        private const string CompletedWithErrorsValue = "CompletedWithErrors";
+            _value = value;
+        }
 
         /// <summary> Job has not been started. </summary>
         public static DataReplicationJobState Pending { get; } = new DataReplicationJobState(PendingValue);
+
         /// <summary> Job is in progress. </summary>
         public static DataReplicationJobState Started { get; } = new DataReplicationJobState(StartedValue);
+
         /// <summary> Job cancellation is in progress. </summary>
         public static DataReplicationJobState Cancelling { get; } = new DataReplicationJobState(CancellingValue);
+
         /// <summary> Job has completed successfully. </summary>
         public static DataReplicationJobState Succeeded { get; } = new DataReplicationJobState(SucceededValue);
+
         /// <summary> Job failed. </summary>
         public static DataReplicationJobState Failed { get; } = new DataReplicationJobState(FailedValue);
+
         /// <summary> Job has been cancelled. </summary>
         public static DataReplicationJobState Cancelled { get; } = new DataReplicationJobState(CancelledValue);
+
         /// <summary> Job has completed with information. </summary>
         public static DataReplicationJobState CompletedWithInformation { get; } = new DataReplicationJobState(CompletedWithInformationValue);
+
         /// <summary> Job has completed with warnings. </summary>
         public static DataReplicationJobState CompletedWithWarnings { get; } = new DataReplicationJobState(CompletedWithWarningsValue);
+
         /// <summary> Job has completed with errors. </summary>
         public static DataReplicationJobState CompletedWithErrors { get; } = new DataReplicationJobState(CompletedWithErrorsValue);
+
         /// <summary> Determines if two <see cref="DataReplicationJobState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataReplicationJobState left, DataReplicationJobState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataReplicationJobState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataReplicationJobState left, DataReplicationJobState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationJobState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataReplicationJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataReplicationJobState(string value) => new DataReplicationJobState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataReplicationJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataReplicationJobState?(string value) => value == null ? null : new DataReplicationJobState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataReplicationJobState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataReplicationJobState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

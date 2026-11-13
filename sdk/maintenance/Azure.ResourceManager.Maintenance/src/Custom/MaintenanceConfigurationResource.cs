@@ -6,32 +6,39 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
-
-// In the swagger this delete operation is defined to returen a `MaintenanceConfigurationData` model, but actually the service doesn't return, that cause exception when try to descerialize the response payload .
-// Use `directive` to fix the swagger and custom code to keep backward compatibility as this lib has already GAed.
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    /// <summary>
-    /// A Class representing a MaintenanceConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MaintenanceConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMaintenanceConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMaintenanceConfiguration method.
-    /// </summary>
-    public partial class MaintenanceConfigurationResource : ArmResource
+    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
+
+    public partial class MaintenanceConfigurationResource
     {
         /// <summary>
         /// Delete Configuration record
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurationOperationGroup_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MaintenanceConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -39,14 +46,24 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<MaintenanceConfigurationResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Delete");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _maintenanceConfigurationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(this, response));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateDeleteExRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -60,12 +77,20 @@ namespace Azure.ResourceManager.Maintenance
         /// Delete Configuration record
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurationOperationGroup_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MaintenanceConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,14 +98,24 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<MaintenanceConfigurationResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Delete");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = _maintenanceConfigurationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(this, response));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceConfigurationsRestClient.CreateDeleteExRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionAsync(cancellationToken);
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

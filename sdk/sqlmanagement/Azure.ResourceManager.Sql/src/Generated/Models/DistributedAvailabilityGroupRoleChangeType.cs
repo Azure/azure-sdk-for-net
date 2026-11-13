@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct DistributedAvailabilityGroupRoleChangeType : IEquatable<DistributedAvailabilityGroupRoleChangeType>
     {
         private readonly string _value;
+        /// <summary> Forced. </summary>
+        private const string ForcedValue = "Forced";
+        /// <summary> Planned. </summary>
+        private const string PlannedValue = "Planned";
 
         /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupRoleChangeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DistributedAvailabilityGroupRoleChangeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ForcedValue = "Forced";
-        private const string PlannedValue = "Planned";
+            _value = value;
+        }
 
         /// <summary> Forced. </summary>
         public static DistributedAvailabilityGroupRoleChangeType Forced { get; } = new DistributedAvailabilityGroupRoleChangeType(ForcedValue);
+
         /// <summary> Planned. </summary>
         public static DistributedAvailabilityGroupRoleChangeType Planned { get; } = new DistributedAvailabilityGroupRoleChangeType(PlannedValue);
+
         /// <summary> Determines if two <see cref="DistributedAvailabilityGroupRoleChangeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DistributedAvailabilityGroupRoleChangeType left, DistributedAvailabilityGroupRoleChangeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DistributedAvailabilityGroupRoleChangeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DistributedAvailabilityGroupRoleChangeType left, DistributedAvailabilityGroupRoleChangeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DistributedAvailabilityGroupRoleChangeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DistributedAvailabilityGroupRoleChangeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DistributedAvailabilityGroupRoleChangeType(string value) => new DistributedAvailabilityGroupRoleChangeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DistributedAvailabilityGroupRoleChangeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DistributedAvailabilityGroupRoleChangeType?(string value) => value == null ? null : new DistributedAvailabilityGroupRoleChangeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DistributedAvailabilityGroupRoleChangeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DistributedAvailabilityGroupRoleChangeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

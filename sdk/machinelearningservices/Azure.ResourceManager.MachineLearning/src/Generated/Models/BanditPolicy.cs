@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,30 +15,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class BanditPolicy : MachineLearningEarlyTerminationPolicy
     {
         /// <summary> Initializes a new instance of <see cref="BanditPolicy"/>. </summary>
-        public BanditPolicy()
+        public BanditPolicy() : base(EarlyTerminationPolicyType.Bandit)
         {
-            PolicyType = EarlyTerminationPolicyType.Bandit;
         }
 
         /// <summary> Initializes a new instance of <see cref="BanditPolicy"/>. </summary>
-        /// <param name="policyType"> [Required] Name of policy configuration. </param>
-        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="slackFactor"> Ratio of the allowed distance from the best performing run. </param>
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <param name="policyType"> [Required] Name of policy configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="slackAmount"> Absolute distance allowed from the best performing run. </param>
-        internal BanditPolicy(EarlyTerminationPolicyType policyType, int? evaluationInterval, int? delayEvaluation, IDictionary<string, BinaryData> serializedAdditionalRawData, float? slackFactor, float? slackAmount) : base(policyType, evaluationInterval, delayEvaluation, serializedAdditionalRawData)
+        /// <param name="slackFactor"> Ratio of the allowed distance from the best performing run. </param>
+        internal BanditPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? slackAmount, float? slackFactor) : base(delayEvaluation, evaluationInterval, policyType, additionalBinaryDataProperties)
         {
-            SlackFactor = slackFactor;
             SlackAmount = slackAmount;
-            PolicyType = policyType;
+            SlackFactor = slackFactor;
         }
+
+        /// <summary> Absolute distance allowed from the best performing run. </summary>
+        [WirePath("slackAmount")]
+        public float? SlackAmount { get; set; }
 
         /// <summary> Ratio of the allowed distance from the best performing run. </summary>
         [WirePath("slackFactor")]
         public float? SlackFactor { get; set; }
-        /// <summary> Absolute distance allowed from the best performing run. </summary>
-        [WirePath("slackAmount")]
-        public float? SlackAmount { get; set; }
     }
 }

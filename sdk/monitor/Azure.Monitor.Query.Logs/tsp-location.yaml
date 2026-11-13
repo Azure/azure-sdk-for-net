@@ -1,0 +1,4 @@
+repo: Azure/azure-rest-api-specs
+directory: specification/monitor/Monitor.Query.Logs
+commit: cef62866fe3dbf240a6d6734a8a556b49743b33c
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"

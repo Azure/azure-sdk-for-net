@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     public readonly partial struct PureStorageAvsVmVolumeType : IEquatable<PureStorageAvsVmVolumeType>
     {
         private readonly string _value;
+        /// <summary> AVS/VMware. </summary>
+        private const string AVSValue = "avs";
 
         /// <summary> Initializes a new instance of <see cref="PureStorageAvsVmVolumeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PureStorageAvsVmVolumeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AVSValue = "avs";
+            _value = value;
+        }
 
         /// <summary> AVS/VMware. </summary>
         public static PureStorageAvsVmVolumeType AVS { get; } = new PureStorageAvsVmVolumeType(AVSValue);
+
         /// <summary> Determines if two <see cref="PureStorageAvsVmVolumeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PureStorageAvsVmVolumeType left, PureStorageAvsVmVolumeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PureStorageAvsVmVolumeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PureStorageAvsVmVolumeType left, PureStorageAvsVmVolumeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PureStorageAvsVmVolumeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PureStorageAvsVmVolumeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PureStorageAvsVmVolumeType(string value) => new PureStorageAvsVmVolumeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PureStorageAvsVmVolumeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PureStorageAvsVmVolumeType?(string value) => value == null ? null : new PureStorageAvsVmVolumeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PureStorageAvsVmVolumeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PureStorageAvsVmVolumeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

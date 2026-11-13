@@ -4,51 +4,135 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> NVA Inbound Security Rule resource. </summary>
+    /// <summary> Compatibility type for inbound security rules. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class InboundSecurityRule : NetworkResourceData
+    [Obsolete("This model is obsolete. Please use InboundSecurityRuleData instead.")]
+    public partial class InboundSecurityRule : NetworkResourceData, IJsonModel<InboundSecurityRule>, IPersistableModel<InboundSecurityRule>
     {
-        /// <summary> Initializes a new instance of <see cref="InboundSecurityRule"/>. </summary>
-        public InboundSecurityRule()
-        {
-            Rules = new ChangeTrackingList<InboundSecurityRules>();
-        }
+        private readonly InboundSecurityRuleProperties _properties;
 
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRule"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="ruleType"> Rule Type. This should be either AutoExpire or Permanent. Auto Expire Rule only creates NSG rules. Permanent Rule creates NSG rule and SLB LB Rule. </param>
-        /// <param name="rules"> List of allowed rules. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal InboundSecurityRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, InboundSecurityRuleType? ruleType, IList<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        public InboundSecurityRule() : this(default, default, default, default, new InboundSecurityRuleProperties(), default)
+        {
+        }
+
+        internal InboundSecurityRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, InboundSecurityRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+            : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             ETag = etag;
-            RuleType = ruleType;
-            Rules = rules;
-            ProvisioningState = provisioningState;
+            _properties = properties ?? new InboundSecurityRuleProperties();
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
-        /// <summary> Rule Type. This should be either AutoExpire or Permanent. Auto Expire Rule only creates NSG rules. Permanent Rule creates NSG rule and SLB LB Rule. </summary>
-        public InboundSecurityRuleType? RuleType { get; set; }
-        /// <summary> List of allowed rules. </summary>
-        public IList<InboundSecurityRules> Rules { get; }
-        /// <summary> The provisioning state of the resource. </summary>
-        public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The rule type. </summary>
+        public InboundSecurityRuleType? RuleType
+        {
+            get => _properties.RuleType;
+            set => _properties.RuleType = value;
+        }
 
-        /// <summary> Implicitly converts an <see cref="InboundSecurityRule"/> to an <see cref="InboundSecurityRuleData"/>. </summary>
-        /// <param name="r"> The <see cref="InboundSecurityRule"/> to convert. </param>
-        /// <returns> The converted <see cref="InboundSecurityRuleData"/>. </returns>
-        public static implicit operator InboundSecurityRuleData(InboundSecurityRule r) => new InboundSecurityRuleData(r.Id, r.Name, r.ResourceType, new Dictionary<string, BinaryData>(), r.ETag, r.RuleType, r.Rules, r.ProvisioningState);
+        /// <summary> Inbound security rules. </summary>
+        public IList<InboundSecurityRules> Rules => _properties.Rules;
+
+        /// <summary> Provisioning state. </summary>
+        public NetworkProvisioningState? ProvisioningState => _properties.ProvisioningState;
+
+        /// <summary> Entity tag. </summary>
+        public ETag? ETag { get; }
+
+        /// <summary> Converts the compatibility model to the generated resource data model. </summary>
+        /// <param name="r"> The compatibility model to convert. </param>
+        public static implicit operator InboundSecurityRuleData(InboundSecurityRule r)
+        {
+            if (r is null)
+            {
+                return null;
+            }
+            var additionalProperties = r._additionalBinaryDataProperties is null
+                ? new Dictionary<string, BinaryData>()
+                : new Dictionary<string, BinaryData>(r._additionalBinaryDataProperties);
+            // Preserve the legacy conversion while assigning modeled metadata through the native constructor.
+            return new InboundSecurityRuleData(r.Id, additionalProperties, r.Name, r.ResourceType, r._properties, r.ETag);
+        }
+
+        InboundSecurityRule IJsonModel<InboundSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            => (InboundSecurityRule)JsonModelCreateCore(ref reader, options);
+
+        void IJsonModel<InboundSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+        InboundSecurityRule IPersistableModel<InboundSecurityRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+            => (InboundSecurityRule)PersistableModelCreateCore(data, options);
+
+        string IPersistableModel<InboundSecurityRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<InboundSecurityRule>.Write(ModelReaderWriterOptions options)
+            => PersistableModelWriteCore(options);
+
+        /// <summary> Writes the model as JSON. </summary>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            // Serialize a distinct native instance, not this derived model through a covariant interface.
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write<InboundSecurityRuleData>(this, options, AzureResourceManagerNetworkContext.Default));
+            foreach (JsonProperty property in document.RootElement.EnumerateObject())
+            {
+                property.WriteTo(writer);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return Deserialize(document.RootElement, options);
+        }
+
+        /// <inheritdoc/>
+        protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.Parse(data);
+            return Deserialize(document.RootElement, options);
+        }
+
+        /// <inheritdoc/>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+            => ModelReaderWriter.Write<InboundSecurityRuleData>(this, options, AzureResourceManagerNetworkContext.Default);
+
+        private static InboundSecurityRule Deserialize(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (options.Format != "J" && options.Format != "W")
+            {
+                throw new FormatException($"The model {nameof(InboundSecurityRule)} does not support reading '{options.Format}' format.");
+            }
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            // Reuse the generated resource/property readers for rules, provisioning state, unknown fields and wire formats.
+            InboundSecurityRuleData data = InboundSecurityRuleData.DeserializeInboundSecurityRuleData(element, options);
+            var additionalProperties = new Dictionary<string, BinaryData>();
+            if (options.Format != "W")
+            {
+                foreach (JsonProperty property in element.EnumerateObject())
+                {
+                    if (property.Name != "id" && property.Name != "name" && property.Name != "type" && property.Name != "properties" && property.Name != "etag")
+                    {
+                        additionalProperties[property.Name] = BinaryData.FromString(property.Value.GetRawText());
+                    }
+                }
+            }
+            return new InboundSecurityRule(data.Id, data.Name, data.ResourceType, data.ETag, data.Properties, additionalProperties);
+        }
     }
 }

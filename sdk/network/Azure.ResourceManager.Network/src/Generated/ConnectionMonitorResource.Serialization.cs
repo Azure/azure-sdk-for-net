@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class ConnectionMonitorResource : IJsonModel<ConnectionMonitorData>
     {
-        private static ConnectionMonitorData s_dataDeserializationInstance;
-        private static ConnectionMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ConnectionMonitorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ConnectionMonitorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ConnectionMonitorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectionMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionMonitorData>)Data).Write(writer, options);
 
-        ConnectionMonitorData IJsonModel<ConnectionMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionMonitorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectionMonitorData IJsonModel<ConnectionMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ConnectionMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectionMonitorData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ConnectionMonitorData IPersistableModel<ConnectionMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectionMonitorData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ConnectionMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectionMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectionMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

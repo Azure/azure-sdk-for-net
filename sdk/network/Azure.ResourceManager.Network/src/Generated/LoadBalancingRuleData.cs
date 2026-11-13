@@ -7,15 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the LoadBalancingRule data model.
-    /// A load balancing rule for a load balancer.
-    /// </summary>
+    /// <summary> A load balancing rule for a load balancer. </summary>
     public partial class LoadBalancingRuleData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleData"/>. </summary>
@@ -25,20 +23,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of load balancer load balancing rule. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal LoadBalancingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, LoadBalancingRuleProperties properties, ETag? etag) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal LoadBalancingRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, LoadBalancingRuleProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
-            ETag = etag;
+            ETag = eTag;
         }
 
         /// <summary> Properties of load balancer load balancing rule. </summary>
         [WirePath("properties")]
         public LoadBalancingRuleProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

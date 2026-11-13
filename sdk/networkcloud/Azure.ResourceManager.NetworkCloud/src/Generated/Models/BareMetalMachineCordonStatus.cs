@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineCordonStatus : IEquatable<BareMetalMachineCordonStatus>
     {
         private readonly string _value;
+        /// <summary> The bare metal machine is cordoned. </summary>
+        private const string CordonedValue = "Cordoned";
+        /// <summary> The bare metal machine is uncordoned. </summary>
+        private const string UncordonedValue = "Uncordoned";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineCordonStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineCordonStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CordonedValue = "Cordoned";
-        private const string UncordonedValue = "Uncordoned";
-
-        /// <summary> Cordoned. </summary>
+        /// <summary> The bare metal machine is cordoned. </summary>
         public static BareMetalMachineCordonStatus Cordoned { get; } = new BareMetalMachineCordonStatus(CordonedValue);
-        /// <summary> Uncordoned. </summary>
+
+        /// <summary> The bare metal machine is uncordoned. </summary>
         public static BareMetalMachineCordonStatus Uncordoned { get; } = new BareMetalMachineCordonStatus(UncordonedValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineCordonStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineCordonStatus left, BareMetalMachineCordonStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineCordonStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineCordonStatus left, BareMetalMachineCordonStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineCordonStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineCordonStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineCordonStatus(string value) => new BareMetalMachineCordonStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineCordonStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineCordonStatus?(string value) => value == null ? null : new BareMetalMachineCordonStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineCordonStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineCordonStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

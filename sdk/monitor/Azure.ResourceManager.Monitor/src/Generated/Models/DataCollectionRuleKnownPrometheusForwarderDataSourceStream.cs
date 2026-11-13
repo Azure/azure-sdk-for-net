@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The DataCollectionRuleKnownPrometheusForwarderDataSourceStream. </summary>
+    /// <summary></summary>
     public readonly partial struct DataCollectionRuleKnownPrometheusForwarderDataSourceStream : IEquatable<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>
     {
         private readonly string _value;
+        /// <summary> Microsoft-PrometheusMetrics. </summary>
+        private const string MicrosoftPrometheusMetricsValue = "Microsoft-PrometheusMetrics";
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataCollectionRuleKnownPrometheusForwarderDataSourceStream(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftPrometheusMetricsValue = "Microsoft-PrometheusMetrics";
+            _value = value;
+        }
 
         /// <summary> Microsoft-PrometheusMetrics. </summary>
         public static DataCollectionRuleKnownPrometheusForwarderDataSourceStream MicrosoftPrometheusMetrics { get; } = new DataCollectionRuleKnownPrometheusForwarderDataSourceStream(MicrosoftPrometheusMetricsValue);
+
         /// <summary> Determines if two <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataCollectionRuleKnownPrometheusForwarderDataSourceStream left, DataCollectionRuleKnownPrometheusForwarderDataSourceStream right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataCollectionRuleKnownPrometheusForwarderDataSourceStream left, DataCollectionRuleKnownPrometheusForwarderDataSourceStream right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataCollectionRuleKnownPrometheusForwarderDataSourceStream(string value) => new DataCollectionRuleKnownPrometheusForwarderDataSourceStream(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataCollectionRuleKnownPrometheusForwarderDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataCollectionRuleKnownPrometheusForwarderDataSourceStream?(string value) => value == null ? null : new DataCollectionRuleKnownPrometheusForwarderDataSourceStream(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataCollectionRuleKnownPrometheusForwarderDataSourceStream other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataCollectionRuleKnownPrometheusForwarderDataSourceStream other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

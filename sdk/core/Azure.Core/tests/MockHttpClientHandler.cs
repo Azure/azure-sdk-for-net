@@ -15,7 +15,8 @@ namespace Azure.Core.Tests
 
         public MockHttpClientHandler(Action<HttpRequestMessage> onSend)
         {
-            _onSend = req => {
+            _onSend = req =>
+            {
                 onSend(req);
                 return Task.FromResult<HttpResponseMessage>(null);
             };

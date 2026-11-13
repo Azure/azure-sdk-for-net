@@ -7,16 +7,56 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaPolicyContent : IUtf8JsonSerializable, IJsonModel<HyperVReplicaPolicyContent>
+    /// <summary> Hyper-V Replica specific policy Input. </summary>
+    public partial class HyperVReplicaPolicyContent : PolicyProviderSpecificContent, IJsonModel<HyperVReplicaPolicyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaPolicyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PolicyProviderSpecificContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHyperVReplicaPolicyContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVReplicaPolicyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaPolicyContent IPersistableModel<HyperVReplicaPolicyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVReplicaPolicyContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HyperVReplicaPolicyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVReplicaPolicyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +68,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RecoveryPoints))
             {
@@ -87,169 +126,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        HyperVReplicaPolicyContent IJsonModel<HyperVReplicaPolicyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaPolicyContent IJsonModel<HyperVReplicaPolicyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVReplicaPolicyContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PolicyProviderSpecificContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVReplicaPolicyContent(document.RootElement, options);
         }
 
-        internal static HyperVReplicaPolicyContent DeserializeHyperVReplicaPolicyContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVReplicaPolicyContent DeserializeHyperVReplicaPolicyContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVReplica2012R2": return HyperVReplicaBluePolicyContent.DeserializeHyperVReplicaBluePolicyContent(element, options);
+                    case "HyperVReplica2012R2":
+                        return HyperVReplicaBluePolicyContent.DeserializeHyperVReplicaBluePolicyContent(element, options);
                 }
             }
-            int? recoveryPoints = default;
-            int? applicationConsistentSnapshotFrequencyInHours = default;
-            string compression = default;
-            string initialReplicationMethod = default;
-            string onlineReplicationStartTime = default;
-            string offlineReplicationImportPath = default;
-            string offlineReplicationExportPath = default;
-            int? replicationPort = default;
-            int? allowedAuthenticationType = default;
-            string replicaDeletion = default;
-            string instanceType = "HyperVReplica2012";
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("recoveryPoints"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryPoints = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("applicationConsistentSnapshotFrequencyInHours"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    applicationConsistentSnapshotFrequencyInHours = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("compression"u8))
-                {
-                    compression = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("initialReplicationMethod"u8))
-                {
-                    initialReplicationMethod = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("onlineReplicationStartTime"u8))
-                {
-                    onlineReplicationStartTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("offlineReplicationImportPath"u8))
-                {
-                    offlineReplicationImportPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("offlineReplicationExportPath"u8))
-                {
-                    offlineReplicationExportPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("replicationPort"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    replicationPort = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("allowedAuthenticationType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allowedAuthenticationType = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("replicaDeletion"u8))
-                {
-                    replicaDeletion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HyperVReplicaPolicyContent(
-                instanceType,
-                serializedAdditionalRawData,
-                recoveryPoints,
-                applicationConsistentSnapshotFrequencyInHours,
-                compression,
-                initialReplicationMethod,
-                onlineReplicationStartTime,
-                offlineReplicationImportPath,
-                offlineReplicationExportPath,
-                replicationPort,
-                allowedAuthenticationType,
-                replicaDeletion);
+            return UnknownHyperVReplicaPolicyContent.DeserializeUnknownHyperVReplicaPolicyContent(element, options);
         }
-
-        BinaryData IPersistableModel<HyperVReplicaPolicyContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HyperVReplicaPolicyContent IPersistableModel<HyperVReplicaPolicyContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHyperVReplicaPolicyContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HyperVReplicaPolicyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

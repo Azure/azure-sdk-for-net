@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The ContainerRegistryImportImageContent. </summary>
     public partial class ContainerRegistryImportImageContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportImageContent"/>. </summary>
         /// <param name="source"> The source of the image. </param>
@@ -62,30 +34,28 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="targetTags"> List of strings of the form repo[:tag]. When tag is omitted the source will be used (or 'latest' if source tag is also omitted). </param>
         /// <param name="untaggedTargetRepositories"> List of strings of repository names to do a manifest only copy. No tag will be created. </param>
         /// <param name="mode"> When Force, any existing target tags will be overwritten. When NoForce, any existing target tags will fail the operation before any copying begins. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryImportImageContent(ContainerRegistryImportSource source, IList<string> targetTags, IList<string> untaggedTargetRepositories, ContainerRegistryImportMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryImportImageContent(ContainerRegistryImportSource source, IList<string> targetTags, IList<string> untaggedTargetRepositories, ContainerRegistryImportMode? mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             TargetTags = targetTags;
             UntaggedTargetRepositories = untaggedTargetRepositories;
             Mode = mode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportImageContent"/> for deserialization. </summary>
-        internal ContainerRegistryImportImageContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The source of the image. </summary>
         [WirePath("source")]
         public ContainerRegistryImportSource Source { get; }
+
         /// <summary> List of strings of the form repo[:tag]. When tag is omitted the source will be used (or 'latest' if source tag is also omitted). </summary>
         [WirePath("targetTags")]
         public IList<string> TargetTags { get; }
+
         /// <summary> List of strings of repository names to do a manifest only copy. No tag will be created. </summary>
         [WirePath("untaggedTargetRepositories")]
         public IList<string> UntaggedTargetRepositories { get; }
+
         /// <summary> When Force, any existing target tags will be overwritten. When NoForce, any existing target tags will fail the operation before any copying begins. </summary>
         [WirePath("mode")]
         public ContainerRegistryImportMode? Mode { get; set; }

@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests
@@ -15,8 +16,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         protected SubscriptionResource Subscription;
         protected string LedgerName;
 
+        private const int MaxResourceGroupCreateRetries = 8;
         private readonly string _testResourceGroupPrefix = "sdk-test-rg-";
         private static readonly AzureLocation s_defaultTestLocation = AzureLocation.WestEurope;
+        private static readonly TimeSpan s_resourceGroupCreateRetryDelay = TimeSpan.FromSeconds(15);
         private string _resourceGroupName;
         private readonly string _testFixtureName;
         private ResourceGroupResource _resourceGroup;
@@ -37,10 +40,34 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
             SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             _resourceGroupName = _testResourceGroupPrefix + _testFixtureName;
-            await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed,
-                _resourceGroupName, new ResourceGroupData(s_defaultTestLocation));
 
-            await StopSessionRecordingAsync();
+            // Retry if the resource group from a previous run is still being deprovisioned.
+            RequestFailedException lastException = null;
+            for (int attempt = 1; attempt <= MaxResourceGroupCreateRetries; attempt++)
+            {
+                try
+                {
+                    await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed,
+                        _resourceGroupName, new ResourceGroupData(s_defaultTestLocation));
+                    await StopSessionRecordingAsync();
+                    return;
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == "ResourceGroupBeingDeleted")
+                {
+                    lastException = ex;
+
+                    if (attempt == MaxResourceGroupCreateRetries)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(s_resourceGroupCreateRetryDelay);
+                }
+            }
+
+            throw new InvalidOperationException(
+                $"Failed to create resource group '{_resourceGroupName}' after {MaxResourceGroupCreateRetries} attempts while waiting for a previous deletion to complete.",
+                lastException);
         }
 
         [SetUp]
@@ -50,7 +77,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
             Subscription = armClient.GetSubscriptionResource(
                 new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}"));
             ResourceGroupCollection resourceGroups = Subscription.GetResourceGroups();
-            _resourceGroup =  resourceGroups.GetAsync(_resourceGroupName).Result;
+            _resourceGroup = resourceGroups.GetAsync(_resourceGroupName).Result;
             LedgerName = TestEnvironment.TestLedgerNamePrefix + _testFixtureName;
         }
 

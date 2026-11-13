@@ -11,7 +11,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Unknown version of EffectiveBaseSecurityAdminRule. </summary>
     internal partial class UnknownEffectiveBaseSecurityAdminRule : EffectiveBaseSecurityAdminRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEffectiveBaseSecurityAdminRule"/>. </summary>
@@ -21,14 +20,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleCollectionAppliesToGroups"> Groups for rule collection. </param>
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceId, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownEffectiveBaseSecurityAdminRule"/> for deserialization. </summary>
-        internal UnknownEffectiveBaseSecurityAdminRule()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceId, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

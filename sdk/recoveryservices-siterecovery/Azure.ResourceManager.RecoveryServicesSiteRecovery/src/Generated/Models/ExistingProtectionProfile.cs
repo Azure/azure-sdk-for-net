@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="ExistingProtectionProfile"/>. </summary>
         /// <param name="protectionProfileId"> The protection profile Arm Id. Throw error, if resource does not exists. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="protectionProfileId"/> is null. </exception>
-        public ExistingProtectionProfile(string protectionProfileId)
+        public ExistingProtectionProfile(string protectionProfileId) : base("Existing")
         {
             Argument.AssertNotNull(protectionProfileId, nameof(protectionProfileId));
 
             ProtectionProfileId = protectionProfileId;
-            ResourceType = "Existing";
         }
 
         /// <summary> Initializes a new instance of <see cref="ExistingProtectionProfile"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="protectionProfileId"> The protection profile Arm Id. Throw error, if resource does not exists. </param>
-        internal ExistingProtectionProfile(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string protectionProfileId) : base(resourceType, serializedAdditionalRawData)
+        internal ExistingProtectionProfile(string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string protectionProfileId) : base(resourceType, additionalBinaryDataProperties)
         {
             ProtectionProfileId = protectionProfileId;
-            ResourceType = resourceType ?? "Existing";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExistingProtectionProfile"/> for deserialization. </summary>
-        internal ExistingProtectionProfile()
-        {
         }
 
         /// <summary> The protection profile Arm Id. Throw error, if resource does not exists. </summary>

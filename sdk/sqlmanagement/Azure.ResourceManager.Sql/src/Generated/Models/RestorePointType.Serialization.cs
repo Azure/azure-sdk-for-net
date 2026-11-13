@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class RestorePointTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RestorePointType value) => value switch
         {
             RestorePointType.Continuous => "CONTINUOUS",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RestorePointType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RestorePointType ToRestorePointType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CONTINUOUS")) return RestorePointType.Continuous;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DISCRETE")) return RestorePointType.Discrete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CONTINUOUS"))
+            {
+                return RestorePointType.Continuous;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DISCRETE"))
+            {
+                return RestorePointType.Discrete;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RestorePointType value.");
         }
     }

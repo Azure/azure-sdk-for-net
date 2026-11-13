@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,15 +18,17 @@ namespace _Type.Union
     {
         protected StringsOnly() => throw null;
 
+        internal StringsOnly(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 
         public virtual Task<Response> GetAsync(RequestContext context) => throw null;
 
-        public virtual Response<GetResponse> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<GetResult> Get(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<GetResponse>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<GetResult>> GetAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Send(RequestContent content, RequestContext context = null) => throw null;
 

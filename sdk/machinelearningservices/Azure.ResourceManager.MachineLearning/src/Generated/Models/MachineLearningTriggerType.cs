@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Is the trigger type recurrence or cron. </summary>
+    /// <summary></summary>
     public readonly partial struct MachineLearningTriggerType : IEquatable<MachineLearningTriggerType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningTriggerType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningTriggerType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RecurrenceValue = "Recurrence";
         private const string CronValue = "Cron";
 
-        /// <summary> Recurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningTriggerType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Recurrence. </summary>
         public static MachineLearningTriggerType Recurrence { get; } = new MachineLearningTriggerType(RecurrenceValue);
-        /// <summary> Cron. </summary>
+
+        /// <summary> Gets the Cron. </summary>
         public static MachineLearningTriggerType Cron { get; } = new MachineLearningTriggerType(CronValue);
+
         /// <summary> Determines if two <see cref="MachineLearningTriggerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningTriggerType left, MachineLearningTriggerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningTriggerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningTriggerType left, MachineLearningTriggerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningTriggerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningTriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningTriggerType(string value) => new MachineLearningTriggerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningTriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningTriggerType?(string value) => value == null ? null : new MachineLearningTriggerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningTriggerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningTriggerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

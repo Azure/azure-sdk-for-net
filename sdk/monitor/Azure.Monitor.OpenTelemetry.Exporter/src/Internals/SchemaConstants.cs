@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -121,9 +122,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int Tags_AiOperationName_MaxLength = 1024;
         public const int Tags_AiOperationParentId_MaxLength = 512;
         public const int Tags_AiUserAuthUserId_MaxLength = 1024;
+        public const int Tags_AiUserId_MaxLength = 1024;
         public const int Tags_AiApplicationVer_MaxLength = 1024;
         public const int Tags_AiCloudRole_MaxLength = 256;
         public const int Tags_AiCloudRoleInstance_MaxLength = 256;
         public const int Tags_AiInternalSdkVersion_MaxLength = 64;
+        public const int Tags_AiSessionId_MaxLength = 64;
+        public const int Tags_AiDeviceId_MaxLength = 1024;
+        public const int Tags_AiDeviceModel_MaxLength = 256;
+        public const int Tags_AiDeviceType_MaxLength = 64;
+        public const int Tags_AiDeviceOsVersion_MaxLength = 256;
+        public const int Tags_AiOperationSyntheticSource_MaxLength = 1024;
+        public const int Tags_AiUserAccountId_MaxLength = 1024;
+
+        /// <summary>
+        /// Maximum value length for GenAI semantic convention properties (256 KiB).
+        /// These properties may carry large payloads (e.g. full prompt/completion content)
+        /// and are truncated to a higher limit than standard properties.
+        /// </summary>
+        public const int GenAi_Properties_MaxValueLength = 256 * 1024;
+
+        /// <summary>
+        /// Maximum value length for <c>gen_ai.input.messages</c> and <c>gen_ai.output.messages</c> (4 MiB)
+        /// when the <c>gen_ai_input_output_limit_increase</c> experimental switch is enabled.
+        /// These properties may carry multimodal content (e.g. base64-encoded images or audio).
+        /// </summary>
+        public const int GenAi_Messages_MaxValueLength = 4 * 1024 * 1024;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -18,38 +19,57 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetLinuxVmGuestPatchMode : IEquatable<ComputeFleetLinuxVmGuestPatchMode>
     {
         private readonly string _value;
+        /// <summary> The virtual machine's default patching configuration is used. </summary>
+        private const string ImageDefaultValue = "ImageDefault";
+        /// <summary> The virtual machine will be automatically updated by the platform. The property provisionVMAgent must be true. </summary>
+        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxVmGuestPatchMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetLinuxVmGuestPatchMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ImageDefaultValue = "ImageDefault";
-        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
+            _value = value;
+        }
 
         /// <summary> The virtual machine's default patching configuration is used. </summary>
         public static ComputeFleetLinuxVmGuestPatchMode ImageDefault { get; } = new ComputeFleetLinuxVmGuestPatchMode(ImageDefaultValue);
+
         /// <summary> The virtual machine will be automatically updated by the platform. The property provisionVMAgent must be true. </summary>
         public static ComputeFleetLinuxVmGuestPatchMode AutomaticByPlatform { get; } = new ComputeFleetLinuxVmGuestPatchMode(AutomaticByPlatformValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetLinuxVmGuestPatchMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetLinuxVmGuestPatchMode left, ComputeFleetLinuxVmGuestPatchMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetLinuxVmGuestPatchMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetLinuxVmGuestPatchMode left, ComputeFleetLinuxVmGuestPatchMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetLinuxVmGuestPatchMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxVmGuestPatchMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetLinuxVmGuestPatchMode(string value) => new ComputeFleetLinuxVmGuestPatchMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxVmGuestPatchMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetLinuxVmGuestPatchMode?(string value) => value == null ? null : new ComputeFleetLinuxVmGuestPatchMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetLinuxVmGuestPatchMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetLinuxVmGuestPatchMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

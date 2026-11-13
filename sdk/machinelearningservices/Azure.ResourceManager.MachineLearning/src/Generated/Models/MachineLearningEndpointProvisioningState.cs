@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningEndpointProvisioningState : IEquatable<MachineLearningEndpointProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningEndpointProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string SucceededValue = "Succeeded";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UpdatingValue = "Updating";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningEndpointProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static MachineLearningEndpointProvisioningState Creating { get; } = new MachineLearningEndpointProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static MachineLearningEndpointProvisioningState Deleting { get; } = new MachineLearningEndpointProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static MachineLearningEndpointProvisioningState Succeeded { get; } = new MachineLearningEndpointProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static MachineLearningEndpointProvisioningState Failed { get; } = new MachineLearningEndpointProvisioningState(FailedValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static MachineLearningEndpointProvisioningState Updating { get; } = new MachineLearningEndpointProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static MachineLearningEndpointProvisioningState Canceled { get; } = new MachineLearningEndpointProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="MachineLearningEndpointProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningEndpointProvisioningState left, MachineLearningEndpointProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningEndpointProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningEndpointProvisioningState left, MachineLearningEndpointProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningEndpointProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningEndpointProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningEndpointProvisioningState(string value) => new MachineLearningEndpointProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningEndpointProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningEndpointProvisioningState?(string value) => value == null ? null : new MachineLearningEndpointProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningEndpointProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningEndpointProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

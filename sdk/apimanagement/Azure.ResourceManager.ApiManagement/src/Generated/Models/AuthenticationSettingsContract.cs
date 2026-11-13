@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API Authentication Settings. </summary>
     public partial class AuthenticationSettingsContract
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationSettingsContract"/>. </summary>
         public AuthenticationSettingsContract()
@@ -57,25 +29,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="openId"> OpenID Connect Authentication Settings. </param>
         /// <param name="oAuth2AuthenticationSettings"> Collection of OAuth2 authentication settings included into this API. </param>
         /// <param name="openidAuthenticationSettings"> Collection of Open ID Connect authentication settings included into this API. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId, IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings, IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId, IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings, IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OAuth2 = oAuth2;
             OpenId = openId;
             OAuth2AuthenticationSettings = oAuth2AuthenticationSettings;
             OpenidAuthenticationSettings = openidAuthenticationSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> OAuth2 Authentication settings. </summary>
         [WirePath("oAuth2")]
         public OAuth2AuthenticationSettingsContract OAuth2 { get; set; }
+
         /// <summary> OpenID Connect Authentication Settings. </summary>
         [WirePath("openid")]
         public OpenIdAuthenticationSettingsContract OpenId { get; set; }
+
         /// <summary> Collection of OAuth2 authentication settings included into this API. </summary>
         [WirePath("oAuth2AuthenticationSettings")]
         public IList<OAuth2AuthenticationSettingsContract> OAuth2AuthenticationSettings { get; }
+
         /// <summary> Collection of Open ID Connect authentication settings included into this API. </summary>
         [WirePath("openidAuthenticationSettings")]
         public IList<OpenIdAuthenticationSettingsContract> OpenidAuthenticationSettings { get; }

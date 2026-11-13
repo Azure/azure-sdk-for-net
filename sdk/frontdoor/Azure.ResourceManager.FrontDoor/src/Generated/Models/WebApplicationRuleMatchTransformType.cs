@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct WebApplicationRuleMatchTransformType : IEquatable<WebApplicationRuleMatchTransformType>
     {
         private readonly string _value;
+        /// <summary> Lowercase. </summary>
+        private const string LowercaseValue = "Lowercase";
+        /// <summary> Uppercase. </summary>
+        private const string UppercaseValue = "Uppercase";
+        /// <summary> Trim. </summary>
+        private const string TrimValue = "Trim";
+        /// <summary> UrlDecode. </summary>
+        private const string UriDecodeValue = "UrlDecode";
+        /// <summary> UrlEncode. </summary>
+        private const string UriEncodeValue = "UrlEncode";
+        /// <summary> RemoveNulls. </summary>
+        private const string RemoveNullsValue = "RemoveNulls";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationRuleMatchTransformType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationRuleMatchTransformType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowercaseValue = "Lowercase";
-        private const string UppercaseValue = "Uppercase";
-        private const string TrimValue = "Trim";
-        private const string UriDecodeValue = "UrlDecode";
-        private const string UriEncodeValue = "UrlEncode";
-        private const string RemoveNullsValue = "RemoveNulls";
+            _value = value;
+        }
 
         /// <summary> Lowercase. </summary>
         public static WebApplicationRuleMatchTransformType Lowercase { get; } = new WebApplicationRuleMatchTransformType(LowercaseValue);
+
         /// <summary> Uppercase. </summary>
         public static WebApplicationRuleMatchTransformType Uppercase { get; } = new WebApplicationRuleMatchTransformType(UppercaseValue);
+
         /// <summary> Trim. </summary>
         public static WebApplicationRuleMatchTransformType Trim { get; } = new WebApplicationRuleMatchTransformType(TrimValue);
+
         /// <summary> UrlDecode. </summary>
         public static WebApplicationRuleMatchTransformType UriDecode { get; } = new WebApplicationRuleMatchTransformType(UriDecodeValue);
+
         /// <summary> UrlEncode. </summary>
         public static WebApplicationRuleMatchTransformType UriEncode { get; } = new WebApplicationRuleMatchTransformType(UriEncodeValue);
+
         /// <summary> RemoveNulls. </summary>
         public static WebApplicationRuleMatchTransformType RemoveNulls { get; } = new WebApplicationRuleMatchTransformType(RemoveNullsValue);
+
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchTransformType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebApplicationRuleMatchTransformType left, WebApplicationRuleMatchTransformType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchTransformType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebApplicationRuleMatchTransformType left, WebApplicationRuleMatchTransformType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationRuleMatchTransformType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebApplicationRuleMatchTransformType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebApplicationRuleMatchTransformType(string value) => new WebApplicationRuleMatchTransformType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebApplicationRuleMatchTransformType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebApplicationRuleMatchTransformType?(string value) => value == null ? null : new WebApplicationRuleMatchTransformType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebApplicationRuleMatchTransformType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebApplicationRuleMatchTransformType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

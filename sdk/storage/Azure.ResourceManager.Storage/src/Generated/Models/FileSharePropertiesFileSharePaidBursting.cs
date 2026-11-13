@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> File Share Paid Bursting properties. </summary>
     public partial class FileSharePropertiesFileSharePaidBursting
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileSharePropertiesFileSharePaidBursting"/>. </summary>
         public FileSharePropertiesFileSharePaidBursting()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="paidBurstingEnabled"> Indicates whether paid bursting is enabled for the share. This property is only for file shares created under Files Provisioned v1 SSD account type. </param>
         /// <param name="paidBurstingMaxIops"> The maximum paid bursting IOPS for the share. This property is only for file shares created under Files Provisioned v1 SSD account type. The maximum allowed value is 102400 which is the maximum allowed IOPS for a share. </param>
         /// <param name="paidBurstingMaxBandwidthMibps"> The maximum paid bursting bandwidth for the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v1 SSD account type. The maximum allowed value is 10340 which is the maximum allowed bandwidth for a share. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSharePropertiesFileSharePaidBursting(bool? paidBurstingEnabled, int? paidBurstingMaxIops, int? paidBurstingMaxBandwidthMibps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileSharePropertiesFileSharePaidBursting(bool? paidBurstingEnabled, int? paidBurstingMaxIops, int? paidBurstingMaxBandwidthMibps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PaidBurstingEnabled = paidBurstingEnabled;
             PaidBurstingMaxIops = paidBurstingMaxIops;
             PaidBurstingMaxBandwidthMibps = paidBurstingMaxBandwidthMibps;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether paid bursting is enabled for the share. This property is only for file shares created under Files Provisioned v1 SSD account type. </summary>
         [WirePath("paidBurstingEnabled")]
         public bool? PaidBurstingEnabled { get; set; }
+
         /// <summary> The maximum paid bursting IOPS for the share. This property is only for file shares created under Files Provisioned v1 SSD account type. The maximum allowed value is 102400 which is the maximum allowed IOPS for a share. </summary>
         [WirePath("paidBurstingMaxIops")]
         public int? PaidBurstingMaxIops { get; set; }
+
         /// <summary> The maximum paid bursting bandwidth for the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v1 SSD account type. The maximum allowed value is 10340 which is the maximum allowed bandwidth for a share. </summary>
         [WirePath("paidBurstingMaxBandwidthMibps")]
         public int? PaidBurstingMaxBandwidthMibps { get; set; }

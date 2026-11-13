@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The RecommendedSensitivityLabelUpdateKind. </summary>
+    /// <summary></summary>
     public enum RecommendedSensitivityLabelUpdateKind
     {
         /// <summary> enable. </summary>

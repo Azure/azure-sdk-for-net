@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
     public partial class BarQuotaResource : IJsonModel<BarQuotaResourceData>
@@ -27,11 +27,11 @@ namespace MgmtTypeSpec
         BarQuotaResourceData IJsonModel<BarQuotaResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BarQuotaResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BarQuotaResourceData>(Data, options, MgmtTypeSpecContext.Default);
+        BinaryData IPersistableModel<BarQuotaResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BarQuotaResourceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BarQuotaResourceData IPersistableModel<BarQuotaResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BarQuotaResourceData>(data, options, MgmtTypeSpecContext.Default);
+        BarQuotaResourceData IPersistableModel<BarQuotaResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BarQuotaResourceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BarQuotaResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

@@ -1,18 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
-pr:
+trigger:
   branches:
     include:
     - main
-    - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/keyvault/ci.mgmt.yml
-    - sdk/keyvault/Azure.ResourceManager.KeyVault/
-
+    - sdk/keyvault/Azure.ResourceManager.KeyVault
+    - sdk/keyvault/Azure.Provisioning.KeyVault
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -21,3 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.KeyVault
       safeName: AzureResourceManagerKeyVault
+    - name: Azure.Provisioning.KeyVault
+      safeName: AzureProvisioningKeyVault

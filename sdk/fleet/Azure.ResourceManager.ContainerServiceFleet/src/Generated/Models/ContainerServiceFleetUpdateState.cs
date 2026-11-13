@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public readonly partial struct ContainerServiceFleetUpdateState : IEquatable<ContainerServiceFleetUpdateState>
     {
         private readonly string _value;
+        /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has not been started. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that is running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that is being stopped. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has been skipped. </summary>
+        private const string SkippedValue = "Skipped";
+        /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that is pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has completed. </summary>
+        private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceFleetUpdateState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string RunningValue = "Running";
-        private const string StoppingValue = "Stopping";
-        private const string StoppedValue = "Stopped";
-        private const string SkippedValue = "Skipped";
-        private const string FailedValue = "Failed";
-        private const string PendingValue = "Pending";
-        private const string CompletedValue = "Completed";
+            _value = value;
+        }
 
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has not been started. </summary>
         public static ContainerServiceFleetUpdateState NotStarted { get; } = new ContainerServiceFleetUpdateState(NotStartedValue);
+
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that is running. </summary>
         public static ContainerServiceFleetUpdateState Running { get; } = new ContainerServiceFleetUpdateState(RunningValue);
+
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that is being stopped. </summary>
         public static ContainerServiceFleetUpdateState Stopping { get; } = new ContainerServiceFleetUpdateState(StoppingValue);
+
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has stopped. </summary>
         public static ContainerServiceFleetUpdateState Stopped { get; } = new ContainerServiceFleetUpdateState(StoppedValue);
+
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has been skipped. </summary>
         public static ContainerServiceFleetUpdateState Skipped { get; } = new ContainerServiceFleetUpdateState(SkippedValue);
+
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has failed. </summary>
         public static ContainerServiceFleetUpdateState Failed { get; } = new ContainerServiceFleetUpdateState(FailedValue);
+
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that is pending. </summary>
         public static ContainerServiceFleetUpdateState Pending { get; } = new ContainerServiceFleetUpdateState(PendingValue);
+
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has completed. </summary>
         public static ContainerServiceFleetUpdateState Completed { get; } = new ContainerServiceFleetUpdateState(CompletedValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetUpdateState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceFleetUpdateState left, ContainerServiceFleetUpdateState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetUpdateState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceFleetUpdateState left, ContainerServiceFleetUpdateState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceFleetUpdateState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceFleetUpdateState(string value) => new ContainerServiceFleetUpdateState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceFleetUpdateState?(string value) => value == null ? null : new ContainerServiceFleetUpdateState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceFleetUpdateState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceFleetUpdateState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

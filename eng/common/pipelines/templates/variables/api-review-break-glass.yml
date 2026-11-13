@@ -1,0 +1,12 @@
+variables:
+  IsRequesterAuthorizedToSkipApiReview: >-
+    $[in(
+      lower(variables['Build.RequestedForEmail']),
+      'bebroder@microsoft.com',
+      'mharder@microsoft.com',
+      'djurek@microsoft.com',
+      'chononiw@microsoft.com',
+      'raychen@microsoft.com',
+      'trpresco@microsoft.com',
+      'prmarott@microsoft.com'
+    )]

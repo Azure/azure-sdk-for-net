@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VMwareCbtResumeReplicationContent : ResumeReplicationProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="VMwareCbtResumeReplicationContent"/>. </summary>
-        public VMwareCbtResumeReplicationContent()
+        public VMwareCbtResumeReplicationContent() : base("VMwareCbt")
         {
-            InstanceType = "VMwareCbt";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtResumeReplicationContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deleteMigrationResources"> A value indicating whether Migration resources to be deleted. </param>
-        internal VMwareCbtResumeReplicationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string deleteMigrationResources) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareCbtResumeReplicationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string deleteMigrationResources) : base(instanceType, additionalBinaryDataProperties)
         {
             DeleteMigrationResources = deleteMigrationResources;
-            InstanceType = instanceType ?? "VMwareCbt";
         }
 
         /// <summary> A value indicating whether Migration resources to be deleted. </summary>

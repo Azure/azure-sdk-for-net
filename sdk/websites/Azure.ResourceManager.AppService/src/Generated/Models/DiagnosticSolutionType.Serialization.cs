@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class DiagnosticSolutionTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DiagnosticSolutionType value) => value switch
         {
             DiagnosticSolutionType.QuickSolution => "QuickSolution",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DiagnosticSolutionType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DiagnosticSolutionType ToDiagnosticSolutionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuickSolution")) return DiagnosticSolutionType.QuickSolution;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeepInvestigation")) return DiagnosticSolutionType.DeepInvestigation;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BestPractices")) return DiagnosticSolutionType.BestPractices;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuickSolution"))
+            {
+                return DiagnosticSolutionType.QuickSolution;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeepInvestigation"))
+            {
+                return DiagnosticSolutionType.DeepInvestigation;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BestPractices"))
+            {
+                return DiagnosticSolutionType.BestPractices;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DiagnosticSolutionType value.");
         }
     }

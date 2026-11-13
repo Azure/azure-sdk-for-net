@@ -1,0 +1,154 @@
+# Analyzer Allow-List
+
+This directory contains per-package analyzer allow-list files that record SDK-team-**approved**
+diagnostic suppressions for shipping client libraries. Every file in this directory represents an
+explicit, reviewed approval with a justification.
+
+## File Naming
+
+Files are named by `$(MSBuildProjectName)`:
+
+```
+eng/analyzerallowlist/<ProjectName>.txt
+```
+
+For example: `Azure.Storage.Blobs.txt`, `Azure.Identity.txt`
+
+## File Format
+
+```
+# Comments start with #
+# Blank lines are ignored
+
+# Whole-assembly NoWarn entries — codes injected into $(NoWarn) at build time
+nowarn:AZC0035
+nowarn:CS1591
+
+# Per-symbol entries — handled by AllowListDiagnosticSuppressor in Azure.SdkAnalyzers
+nowarn:AZC0034 T:Azure.Foo.Bar                       # all sites inside type Foo.Bar
+nowarn:AZC0007 M:Azure.Foo.Bar.#ctor(System.String)  # one specific member
+nowarn:CS0618 N:Azure.Foo.Models                     # everything in namespace + descendants
+nowarn:OPENAI001 SourceGenerated                     # only sites inside *.g.cs generator output
+```
+
+### `nowarn:CODE`
+
+A bare `nowarn:` line (no scope) approves the use of `CODE` for the entire project
+**and applies it automatically** — the build system injects approved codes into
+`$(NoWarn)` before compilation, so projects should **not** keep an equivalent entry
+in the csproj's `<NoWarn>` property. The allow-list file is the single source of
+truth: every listed code is both reviewed and active.
+
+If a code appears in the csproj's `<NoWarn>` without being on this list (and not
+in the central allow-list), the build fails with `AZSDK0002`.
+
+### `nowarn:CODE Target` — per-symbol suppression
+
+A scoped entry is written as `nowarn:CODE Target` where `CODE` and `Target` are
+separated by **a single space character** (not a tab or any other whitespace).
+The `Target` is a Roslyn DocumentationCommentId; the kind prefix tells the
+analyzer what scope to apply:
+
+| Prefix | Scope |
+|--------|-------|
+| `T:`   | The named type and everything declared inside it (including nested types) |
+| `M:`   | The named method or constructor |
+| `N:`   | The named namespace and every type / member declared inside it |
+| `P:`   | The named property |
+| `F:`   | The named field |
+| `E:`   | The named event |
+
+A leading `~` (e.g., `~T:Foo`) is tolerated for parity with the
+`[SuppressMessage(Target = "~T:Foo")]` attribute form but is not required.
+
+**Why use scoped entries?** A bare `nowarn:AZC0034` silences the diagnostic for
+the entire assembly forever — including types that don't exist yet. A scoped
+entry keeps the analyzer live for every site except the specific symbol the
+SDK team has reviewed and approved.
+
+### `nowarn:CODE SourceGenerated` — source-generator-output suppression
+
+A scoped entry whose target is the keyword `SourceGenerated` (case-insensitive)
+suppresses `CODE` only at sites inside **source-generator output** — files whose
+path ends with `.g.cs`. These are emitted by a source generator at build time and
+exist only in the compiler's view, so they cannot be edited or `#pragma`-annotated
+at the source (e.g. the compile-time `ModelReaderWriterContext` partial that
+references external experimental types).
+
+This scope deliberately does **not** cover checked-in generated code under a
+`Generated/` folder. That code is regenerable, so a diagnostic there should be
+fixed at its source — correct per-symbol `[Experimental]` attribution or a tight
+`#pragma` emitted by the code generator — rather than silenced by a blanket
+suppression. Example:
+
+```
+# OPENAI001 refs the source generator emits into the compile-time
+# ModelReaderWriterContext .g.cs (references to the external experimental
+# OpenAI.OpenAIContext) that we cannot annotate at the source. Hand-written and
+# checked-in generated code carry per-symbol [Experimental]/pragmas instead.
+nowarn:OPENAI001 SourceGenerated
+```
+
+**Limitation:** scoped suppression (both symbol- and `SourceGenerated`-scoped)
+only works for diagnostics whose descriptor declares `DiagnosticSeverity.Warning`
+(or lower). Roslyn's `DiagnosticSuppressor` pipeline dispatches on the
+descriptor's **default** severity, so a warning promoted to an error by
+`/warnaserror` is still suppressible; a diagnostic whose descriptor ships as
+`DiagnosticSeverity.Error` (e.g., `AZC0034` in `azure-sdk-tools`) is not. Note
+that `[Experimental("…")]` diagnostics such as `OPENAI001` have a **Warning**
+default severity (the attribute promotes them to errors), so they *can* be
+scoped-suppressed — for a genuine `Error`-descriptor diagnostic, the underlying
+analyzer must instead ship the descriptor as Warning with `/warnaserror+`
+elevating it back to Error globally.
+
+
+## How It Works
+
+1. `eng/AnalyzerAllowList.targets` reads the per-package `.txt` file at build time.
+2. It extracts `nowarn:` lines into the `_ProjectAllowedNoWarn` MSBuild property and
+   **appends them to `$(NoWarn)`** so the compiler honors the suppression without
+   the project needing to duplicate the code in its csproj.
+3. `eng/NoWarnValidation.targets` uses `_ProjectAllowedNoWarn` to validate that any
+   codes the project itself declares in `<NoWarn>` are all approved. Any unapproved
+   csproj-declared code fails the build with `AZSDK0002`.
+
+## Workflow
+
+### Adding an approved suppression
+
+Use this only when the suppression is genuinely project-wide and the underlying warning
+cannot be fixed or narrowed:
+
+1. Create or edit `eng/analyzerallowlist/<YourProjectName>.txt`.
+2. Add a `nowarn:CODE` line for the diagnostic you need to suppress. **Do not also add
+   the code to `<NoWarn>` in the csproj** — the build injects it automatically.
+3. **Include a comment immediately above each entry** explaining *why* the suppression is
+   needed and why it can't be narrowed.
+4. The PR adding the entry will be reviewed by the SDK team.
+
+**Preferred alternatives:**
+
+- Fix the underlying warning so the suppression can be removed.
+- Use a scoped `#pragma warning disable CODE // justification` at the file or member level,
+  then remove the `<NoWarn>` entry from the csproj.
+- Use `[SuppressMessage]` with a `Justification` parameter for non-pragma-compatible scopes.
+
+### Resolving an AZSDK0002 build failure
+
+The validator reports every unapproved `<NoWarn>` code in the project as an `AZSDK0002`
+error. For each one, decide between:
+
+- **Fix:** make the underlying warning go away and delete the code from `<NoWarn>`.
+- **Migrate:** convert to a scoped `#pragma warning disable` with a justification and
+  remove from `<NoWarn>`.
+- **Approve:** add a `nowarn:CODE` entry to this directory's file for the project, with
+  a justification comment, **and remove the code from the csproj `<NoWarn>`** — the
+  allow-list entry both records the approval and applies the suppression.
+
+## Related
+
+- `eng/NoWarnValidation.targets` — The validation target that enforces NoWarn policy
+- `eng/AnalyzerAllowList.targets` — MSBuild logic that reads these files
+- [Issue #55312](https://github.com/Azure/azure-sdk-for-net/issues/55312) — NoWarn visibility
+- [Issue #57586](https://github.com/Azure/azure-sdk-for-net/issues/57586) — Suppression validation
+

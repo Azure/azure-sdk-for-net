@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.Quota.Models
     internal readonly partial struct LimitType : IEquatable<LimitType>
     {
         private readonly string _value;
+        private const string LimitValueValue = "LimitValue";
 
         /// <summary> Initializes a new instance of <see cref="LimitType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LimitType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string LimitValueValue = "LimitValue";
-
-        /// <summary> LimitValue. </summary>
+        /// <summary> Gets the LimitValue. </summary>
         public static LimitType LimitValue { get; } = new LimitType(LimitValueValue);
+
         /// <summary> Determines if two <see cref="LimitType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LimitType left, LimitType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LimitType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LimitType left, LimitType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LimitType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LimitType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LimitType(string value) => new LimitType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LimitType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LimitType?(string value) => value == null ? null : new LimitType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LimitType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LimitType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

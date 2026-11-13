@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct BackendPrivateEndpointStatus : IEquatable<BackendPrivateEndpointStatus>
     {
         private readonly string _value;
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Rejected. </summary>
+        private const string RejectedValue = "Rejected";
+        /// <summary> Disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
+        /// <summary> Timeout. </summary>
+        private const string TimeoutValue = "Timeout";
 
         /// <summary> Initializes a new instance of <see cref="BackendPrivateEndpointStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BackendPrivateEndpointStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
-        private const string DisconnectedValue = "Disconnected";
-        private const string TimeoutValue = "Timeout";
+            _value = value;
+        }
 
         /// <summary> Pending. </summary>
         public static BackendPrivateEndpointStatus Pending { get; } = new BackendPrivateEndpointStatus(PendingValue);
+
         /// <summary> Approved. </summary>
         public static BackendPrivateEndpointStatus Approved { get; } = new BackendPrivateEndpointStatus(ApprovedValue);
+
         /// <summary> Rejected. </summary>
         public static BackendPrivateEndpointStatus Rejected { get; } = new BackendPrivateEndpointStatus(RejectedValue);
+
         /// <summary> Disconnected. </summary>
         public static BackendPrivateEndpointStatus Disconnected { get; } = new BackendPrivateEndpointStatus(DisconnectedValue);
+
         /// <summary> Timeout. </summary>
         public static BackendPrivateEndpointStatus Timeout { get; } = new BackendPrivateEndpointStatus(TimeoutValue);
+
         /// <summary> Determines if two <see cref="BackendPrivateEndpointStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackendPrivateEndpointStatus left, BackendPrivateEndpointStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackendPrivateEndpointStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackendPrivateEndpointStatus left, BackendPrivateEndpointStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackendPrivateEndpointStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackendPrivateEndpointStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackendPrivateEndpointStatus(string value) => new BackendPrivateEndpointStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackendPrivateEndpointStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackendPrivateEndpointStatus?(string value) => value == null ? null : new BackendPrivateEndpointStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackendPrivateEndpointStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackendPrivateEndpointStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

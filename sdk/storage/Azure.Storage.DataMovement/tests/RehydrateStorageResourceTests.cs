@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationParentPath = string.Concat("/", random.NextString(15));
             List<string> destinationPaths = new List<string>();
             int jobPartCount = 10;
-            for (int i = 0; i< jobPartCount; i++)
+            for (int i = 0; i < jobPartCount; i++)
             {
                 string childPath = random.NextString(5);
                 sourcePaths.Add(Path.Combine(sourceParentPath, childPath));

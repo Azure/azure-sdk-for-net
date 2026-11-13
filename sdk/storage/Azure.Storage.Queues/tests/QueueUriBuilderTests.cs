@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
-using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
@@ -40,6 +41,80 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(queueUriBuilder.Sas);
             Assert.AreEqual("comp=list", queueUriBuilder.Query);
 
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void QueueUriBuilder_UserDelegationSasKeyTimes_RoundTrip()
+        {
+            string skt = "2026-01-01T10:00:00Z";
+            string ske = "2026-01-01T12:00:00Z";
+            string se = "2026-01-01T13:00:00Z";
+            string uriString =
+                "https://account.queue.core.windows.net/queue" +
+                "?skoid=oid&sktid=tid&skt=" + Uri.EscapeDataString(skt) + "&ske=" + Uri.EscapeDataString(ske) + "&sks=b&skv=2022-11-02" +
+                "&sp=r&sr=q&sv=2022-11-02&se=" + Uri.EscapeDataString(se) + "&sig=abc";
+
+            var queueUriBuilder = new QueueUriBuilder(new Uri(uriString));
+
+            Dictionary<string, string> queryParameters = queueUriBuilder.ToUri().Query.TrimStart('?').Split('&')
+                .ToDictionary(
+                    s => s.Split('=')[0],
+                    s => Uri.UnescapeDataString(s.Split('=')[1]));
+
+            Assert.AreEqual(skt, queryParameters[Constants.Sas.Parameters.KeyStart]);
+            Assert.AreEqual(ske, queryParameters[Constants.Sas.Parameters.KeyExpiry]);
+        }
+
+        [RecordedTest]
+        [TestCase("https://myaccount.queue.core.windows.net/")]
+        [TestCase("https://myaccount-secondary.queue.core.windows.net/")]
+        [TestCase("https://myaccount-dualstack.queue.core.windows.net/")]
+        [TestCase("https://myaccount-ipv6.queue.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-dualstack.queue.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-ipv6.queue.core.windows.net/")]
+        public void QueueUriBuilder_Secondary_IPV6_Dualstack(string uriString)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
+            Uri newUri = queueUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", queueUriBuilder.Scheme);
+            Assert.AreEqual("myaccount", queueUriBuilder.AccountName);
+            Assert.AreEqual("", queueUriBuilder.QueueName);
+            Assert.IsFalse(queueUriBuilder.Messages);
+            Assert.AreEqual("", queueUriBuilder.MessageId);
+            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.AreEqual(443, queueUriBuilder.Port);
+            Assert.AreEqual("", queueUriBuilder.Query);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        [TestCase("https://md-d3rqxhqbxbwq.queue.core.windows.net/", "md-d3rqxhqbxbwq")]
+        [TestCase("https://md-ssd-bndub02px100c21.queue.core.windows.net/", "md-ssd-bndub02px100c21")]
+        public void QueueUriBuilder_InternalAccounts(string uriString, string actualAccountName)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
+            Uri newUri = queueUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", queueUriBuilder.Scheme);
+            Assert.AreEqual(actualAccountName, queueUriBuilder.AccountName);
+            Assert.AreEqual("", queueUriBuilder.QueueName);
+            Assert.IsFalse(queueUriBuilder.Messages);
+            Assert.AreEqual("", queueUriBuilder.MessageId);
+            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.AreEqual(443, queueUriBuilder.Port);
+            Assert.AreEqual("", queueUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
         }
 

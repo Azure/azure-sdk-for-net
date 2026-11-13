@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -14,35 +15,55 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     internal readonly partial struct AzureResourceType : IEquatable<AzureResourceType>
     {
         private readonly string _value;
+        private const string KeyVaultValue = "KeyVault";
+        private const string AppConfigValue = "AppConfig";
 
         /// <summary> Initializes a new instance of <see cref="AzureResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string KeyVaultValue = "KeyVault";
-
-        /// <summary> KeyVault. </summary>
+        /// <summary> Gets the KeyVault. </summary>
         public static AzureResourceType KeyVault { get; } = new AzureResourceType(KeyVaultValue);
+
+        /// <summary> Gets the AppConfig. </summary>
+        public static AzureResourceType AppConfig { get; } = new AzureResourceType(AppConfigValue);
+
         /// <summary> Determines if two <see cref="AzureResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureResourceType left, AzureResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureResourceType left, AzureResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureResourceType(string value) => new AzureResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureResourceType?(string value) => value == null ? null : new AzureResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    /// <summary></summary>
     public partial class DataFactoryPrivateEndpointResource : IJsonModel<DataFactoryPrivateEndpointData>
     {
-        private static DataFactoryPrivateEndpointData s_dataDeserializationInstance;
-        private static DataFactoryPrivateEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataFactoryPrivateEndpointData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataFactoryPrivateEndpointData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataFactoryPrivateEndpointData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryPrivateEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryPrivateEndpointData>)Data).Write(writer, options);
 
-        DataFactoryPrivateEndpointData IJsonModel<DataFactoryPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryPrivateEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryPrivateEndpointData IJsonModel<DataFactoryPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataFactoryPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryPrivateEndpointData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataFactoryPrivateEndpointData IPersistableModel<DataFactoryPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryPrivateEndpointData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        string IPersistableModel<DataFactoryPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryPrivateEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct ImplementationEffort : IEquatable<ImplementationEffort>
     {
         private readonly string _value;
+        /// <summary> Low. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Moderate. </summary>
+        private const string ModerateValue = "Moderate";
+        /// <summary> High. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="ImplementationEffort"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImplementationEffort(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowValue = "Low";
-        private const string ModerateValue = "Moderate";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Low. </summary>
         public static ImplementationEffort Low { get; } = new ImplementationEffort(LowValue);
+
         /// <summary> Moderate. </summary>
         public static ImplementationEffort Moderate { get; } = new ImplementationEffort(ModerateValue);
+
         /// <summary> High. </summary>
         public static ImplementationEffort High { get; } = new ImplementationEffort(HighValue);
+
         /// <summary> Determines if two <see cref="ImplementationEffort"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImplementationEffort left, ImplementationEffort right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImplementationEffort"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImplementationEffort left, ImplementationEffort right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImplementationEffort"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImplementationEffort"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImplementationEffort(string value) => new ImplementationEffort(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImplementationEffort"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImplementationEffort?(string value) => value == null ? null : new ImplementationEffort(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImplementationEffort other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImplementationEffort other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

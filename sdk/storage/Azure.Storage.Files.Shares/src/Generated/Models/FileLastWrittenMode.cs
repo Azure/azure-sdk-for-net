@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The FileLastWrittenMode. </summary>
+    /// <summary> The file last written mode. </summary>
     public enum FileLastWrittenMode
     {
         /// <summary> Now. </summary>

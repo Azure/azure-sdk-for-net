@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Linq;
@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         [Ignore("Must be manually operate.Error: Private Endpoint connection is requesting a status change for 'Approved', while current status is: 'Approved'.")]
         public async Task CreateOrUpdate()
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 Properties = new PrivateLinkConnectionApprovalRequest()
                 {
                     PrivateEndpointId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-7129/providers/Microsoft.Network/privateEndpoints/dafasfsdf"),
-                    PrivateEndpoint = new Resources.Models.WritableSubResource()
+                    PrivateEndpoint = new PrivateEndpoint()
                     {
                         Id = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-7129/providers/Microsoft.Network/privateEndpoints/dafasfsdf"),
                     },
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.IsNotNull(connection);
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         [PlaybackOnly("need to create a PrivateEndpointConnection manually")]
         public async Task PrivateEndpointConnectionApiTests()
         {

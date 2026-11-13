@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class UnauthenticatedClientActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this UnauthenticatedClientAction value) => value switch
         {
             UnauthenticatedClientAction.RedirectToLoginPage => "RedirectToLoginPage",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UnauthenticatedClientAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static UnauthenticatedClientAction ToUnauthenticatedClientAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedirectToLoginPage")) return UnauthenticatedClientAction.RedirectToLoginPage;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllowAnonymous")) return UnauthenticatedClientAction.AllowAnonymous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedirectToLoginPage"))
+            {
+                return UnauthenticatedClientAction.RedirectToLoginPage;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllowAnonymous"))
+            {
+                return UnauthenticatedClientAction.AllowAnonymous;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UnauthenticatedClientAction value.");
         }
     }

@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> Gets or sets a value indicating diff disk. </summary>
+    /// <summary> Create diff disk. </summary>
     public readonly partial struct CreateDiffDisk : IEquatable<CreateDiffDisk>
     {
         private readonly string _value;
+        /// <summary> Enable create diff disk. </summary>
+        private const string TrueValue = "true";
+        /// <summary> Disable create diff disk. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="CreateDiffDisk"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CreateDiffDisk(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string FalseValue = "false";
-        private const string TrueValue = "true";
-
-        /// <summary> false. </summary>
-        public static CreateDiffDisk False { get; } = new CreateDiffDisk(FalseValue);
-        /// <summary> true. </summary>
+        /// <summary> Enable create diff disk. </summary>
         public static CreateDiffDisk True { get; } = new CreateDiffDisk(TrueValue);
+
+        /// <summary> Disable create diff disk. </summary>
+        public static CreateDiffDisk False { get; } = new CreateDiffDisk(FalseValue);
+
         /// <summary> Determines if two <see cref="CreateDiffDisk"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CreateDiffDisk left, CreateDiffDisk right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CreateDiffDisk"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CreateDiffDisk left, CreateDiffDisk right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CreateDiffDisk"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CreateDiffDisk"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CreateDiffDisk(string value) => new CreateDiffDisk(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CreateDiffDisk"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CreateDiffDisk?(string value) => value == null ? null : new CreateDiffDisk(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CreateDiffDisk other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CreateDiffDisk other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

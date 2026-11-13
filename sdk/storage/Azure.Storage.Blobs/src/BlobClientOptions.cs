@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Shared;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Storage.Blobs
 {
@@ -13,7 +15,7 @@ namespace Azure.Storage.Blobs
     /// Provides the client configuration options for connecting to Azure Blob
     /// Storage.
     /// </summary>
-    public class BlobClientOptions : ClientOptions, ISupportsTenantIdChallenges
+    public partial class BlobClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -169,9 +171,39 @@ namespace Azure.Storage.Blobs
             V2025_07_05 = 27,
 
             /// <summary>
-            /// 2025-11-05 service version.
+            /// The 2025-11-05 service version.
             /// </summary>
-            V2025_11_05 = 28
+            V2025_11_05 = 28,
+
+            /// <summary>
+            /// The 2026-02-06 service version.
+            /// </summary>
+            V2026_02_06 = 29,
+
+            /// <summary>
+            /// The 2026-04-06 service version.
+            /// </summary>
+            V2026_04_06 = 30,
+
+            /// <summary>
+            /// The 2026-06-06 service version.
+            /// </summary>
+            V2026_06_06 = 31,
+
+            /// <summary>
+            /// The 2026-10-06 service version.
+            /// </summary>
+            V2026_10_06 = 32,
+
+            /// <summary>
+            /// The 2026-12-06 service version.
+            /// </summary>
+            V2026_12_06 = 33,
+
+            /// <summary>
+            /// The 2027-03-07 service version.
+            /// </summary>
+            V2027_03_07 = 34
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -223,6 +255,12 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public Request100ContinueOptions Request100ContinueOptions { get; set; }
 
+        /// <summary>
+        /// Options for configuring session token authentication for blob operations.
+        /// Note: Session token authentication currently only applies when using TokenCredentials for Blob Download operations.
+        /// </summary>
+        public SessionOptions SessionOptions { get; set; }
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion
@@ -249,31 +287,51 @@ namespace Azure.Storage.Blobs
 
             this.Initialize();
             AddHeadersAndQueryParameters();
+            this.AddPolicy(DataLocalityPolicy.Shared, HttpPipelinePosition.PerCall);
         }
 
-        /// <summary>
-        /// Initializes new instance of <see cref="BlobClientOptions"/>
-        /// with the same values.
-        /// </summary>
-        /// <param name="options"></param>
-        internal BlobClientOptions(BlobClientOptions options)
-            : base(options.Diagnostics)
+        /// <summary> Initializes a new instance of BlobClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal BlobClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Transport = options.Transport;
-            RetryPolicy = options.RetryPolicy;
-            Version = options.Version;
-            CustomerProvidedKey = options.CustomerProvidedKey;
-            EncryptionScope = options.EncryptionScope;
-            GeoRedundantSecondaryUri = options.GeoRedundantSecondaryUri;
-            TransferValidation = options.TransferValidation;
-            TrimBlobNameSlashes = options.TrimBlobNameSlashes;
-            Request100ContinueOptions = options.Request100ContinueOptions;
-            _clientSideEncryptionOptions = options._clientSideEncryptionOptions;
-            Retry.Mode = options.Retry.Mode;
-            Retry.MaxRetries = options.Retry.MaxRetries;
-            Retry.MaxDelay = options.Retry.MaxDelay;
-            Retry.NetworkTimeout = options.Retry.NetworkTimeout;
-            Retry.Delay = options.Retry.Delay;
+            Version = LatestVersion;
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version && TryGetServiceVersion(version, out ServiceVersion serviceVersion))
+            {
+                Version = serviceVersion;
+            }
+            if (section["CustomerProvidedKey"] is string customerProvidedKey)
+            {
+                CustomerProvidedKey = new CustomerProvidedKey(customerProvidedKey);
+            }
+            string encryptionScope = section["EncryptionScope"];
+            if (!string.IsNullOrEmpty(encryptionScope))
+            {
+                EncryptionScope = encryptionScope;
+            }
+            if (Uri.TryCreate(section["GeoRedundantSecondaryUri"], UriKind.Absolute, out Uri geoRedundantSecondaryUri))
+            {
+                GeoRedundantSecondaryUri = geoRedundantSecondaryUri;
+            }
+            if (bool.TryParse(section["TrimBlobNameSlashes"], out bool trimBlobNameSlashes))
+            {
+                TrimBlobNameSlashes = trimBlobNameSlashes;
+            }
+            if (bool.TryParse(section["EnableTenantDiscovery"], out bool enableTenantDiscovery))
+            {
+                EnableTenantDiscovery = enableTenantDiscovery;
+            }
+            if (section["Audience"] is string audience)
+            {
+                Audience = new BlobAudience(audience);
+            }
+            this.Initialize();
+            AddHeadersAndQueryParameters();
+            this.AddPolicy(DataLocalityPolicy.Shared, HttpPipelinePosition.PerCall);
         }
 
         /// <summary>
@@ -358,6 +416,8 @@ namespace Azure.Storage.Blobs
             Diagnostics.LoggedHeaderNames.Add("x-ms-encryption-key-sha256");
             Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-error-code");
             Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-status-code");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-structured-body");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-structured-content-length");
 
             Diagnostics.LoggedQueryParameters.Add("comp");
             Diagnostics.LoggedQueryParameters.Add("maxresults");
@@ -422,5 +482,117 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <value>If <c>null</c>, <see cref="BlobAudience.DefaultAudience" /> will be assumed.</value>
         public BlobAudience? Audience { get; set; }
+
+        internal static bool TryGetServiceVersion(string version, out ServiceVersion serviceVersion)
+        {
+            serviceVersion = ServiceVersion.V2019_02_02;
+            switch (version)
+            {
+                case "2019-02-02":
+                    serviceVersion = ServiceVersion.V2019_02_02;
+                    return true;
+                case "2019-07-07":
+                    serviceVersion = ServiceVersion.V2019_07_07;
+                    return true;
+                case "2019-12-12":
+                    serviceVersion = ServiceVersion.V2019_12_12;
+                    return true;
+                case "2020-02-10":
+                    serviceVersion = ServiceVersion.V2020_02_10;
+                    return true;
+                case "2020-04-08":
+                    serviceVersion = ServiceVersion.V2020_04_08;
+                    return true;
+                case "2020-06-12":
+                    serviceVersion = ServiceVersion.V2020_06_12;
+                    return true;
+                case "2020-08-04":
+                    serviceVersion = ServiceVersion.V2020_08_04;
+                    return true;
+                case "2020-10-02":
+                    serviceVersion = ServiceVersion.V2020_10_02;
+                    return true;
+                case "2020-12-06":
+                    serviceVersion = ServiceVersion.V2020_12_06;
+                    return true;
+                case "2021-02-12":
+                    serviceVersion = ServiceVersion.V2021_02_12;
+                    return true;
+                case "2021-04-10":
+                    serviceVersion = ServiceVersion.V2021_04_10;
+                    return true;
+                case "2021-06-08":
+                    serviceVersion = ServiceVersion.V2021_06_08;
+                    return true;
+                case "2021-08-06":
+                    serviceVersion = ServiceVersion.V2021_08_06;
+                    return true;
+                case "2021-10-04":
+                    serviceVersion = ServiceVersion.V2021_10_04;
+                    return true;
+                case "2021-12-02":
+                    serviceVersion = ServiceVersion.V2021_12_02;
+                    return true;
+                case "2022-11-02":
+                    serviceVersion = ServiceVersion.V2022_11_02;
+                    return true;
+                case "2023-01-03":
+                    serviceVersion = ServiceVersion.V2023_01_03;
+                    return true;
+                case "2023-05-03":
+                    serviceVersion = ServiceVersion.V2023_05_03;
+                    return true;
+                case "2023-08-03":
+                    serviceVersion = ServiceVersion.V2023_08_03;
+                    return true;
+                case "2023-11-03":
+                    serviceVersion = ServiceVersion.V2023_11_03;
+                    return true;
+                case "2024-02-04":
+                    serviceVersion = ServiceVersion.V2024_02_04;
+                    return true;
+                case "2024-05-04":
+                    serviceVersion = ServiceVersion.V2024_05_04;
+                    return true;
+                case "2024-08-04":
+                    serviceVersion = ServiceVersion.V2024_08_04;
+                    return true;
+                case "2024-11-04":
+                    serviceVersion = ServiceVersion.V2024_11_04;
+                    return true;
+                case "2025-01-05":
+                    serviceVersion = ServiceVersion.V2025_01_05;
+                    return true;
+                case "2025-05-05":
+                    serviceVersion = ServiceVersion.V2025_05_05;
+                    return true;
+                case "2025-07-05":
+                    serviceVersion = ServiceVersion.V2025_07_05;
+                    return true;
+                case "2025-11-05":
+                    serviceVersion = ServiceVersion.V2025_11_05;
+                    return true;
+                case "2026-02-06":
+                    serviceVersion = ServiceVersion.V2026_02_06;
+                    return true;
+                case "2026-04-06":
+                    serviceVersion = ServiceVersion.V2026_04_06;
+                    return true;
+                case "2026-06-06":
+                    serviceVersion = ServiceVersion.V2026_06_06;
+                    return true;
+                case "2026-10-06":
+                    serviceVersion = ServiceVersion.V2026_10_06;
+                    return true;
+                case "2026-12-06":
+                    serviceVersion = ServiceVersion.V2026_12_06;
+                    return true;
+                case "2027-03-07":
+                    serviceVersion = ServiceVersion.V2027_03_07;
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }

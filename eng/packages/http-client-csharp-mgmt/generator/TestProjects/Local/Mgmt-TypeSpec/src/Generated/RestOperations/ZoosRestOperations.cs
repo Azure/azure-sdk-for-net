@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class Zoos
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of Zoos for mocking. </summary>
         protected Zoos()
@@ -25,14 +26,16 @@ namespace MgmtTypeSpec
         /// <summary> Initializes a new instance of Zoos. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Zoos(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Zoos(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(Zoos).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -43,9 +46,6 @@ namespace MgmtTypeSpec
 
         internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string zooName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -54,8 +54,12 @@ namespace MgmtTypeSpec
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -64,9 +68,6 @@ namespace MgmtTypeSpec
 
         internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string zooName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -75,17 +76,18 @@ namespace MgmtTypeSpec
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string zooName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Delete;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -94,16 +96,17 @@ namespace MgmtTypeSpec
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
         internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string zooName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Patch;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -112,8 +115,12 @@ namespace MgmtTypeSpec
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -122,9 +129,6 @@ namespace MgmtTypeSpec
 
         internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -132,57 +136,77 @@ namespace MgmtTypeSpec
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetZoosCustomRequest(Guid subscriptionId, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetZoosCustomRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateZooAddressListRequest(Guid subscriptionId, string resourceGroupName, string zooName, int? maxpagesize, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -192,13 +216,40 @@ namespace MgmtTypeSpec
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
             uri.AppendPath("/zooAddressList", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteZooItemsRequest(Guid subscriptionId, string resourceGroupName, string zooName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
+            uri.AppendPath(zooName, true);
+            uri.AppendPath("/deleteZooItems", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -16,75 +17,244 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoEventGridDataConnection : KustoDataConnectionData
     {
         /// <summary> Initializes a new instance of <see cref="KustoEventGridDataConnection"/>. </summary>
-        public KustoEventGridDataConnection()
+        public KustoEventGridDataConnection() : base(DataConnectionKind.EventGrid)
         {
-            Kind = DataConnectionKind.EventGrid;
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoEventGridDataConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="storageAccountResourceId"> The resource ID of the storage account where the data resides. </param>
-        /// <param name="eventGridResourceId"> The resource ID of the event grid that is subscribed to the storage account events. </param>
-        /// <param name="eventHubResourceId"> The resource ID where the event grid is configured to send events. </param>
-        /// <param name="consumerGroup"> The event hub consumer group. </param>
-        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
-        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
-        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
-        /// <param name="isFirstRecordIgnored"> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </param>
-        /// <param name="blobStorageEventType"> The name of blob storage event type to process. </param>
-        /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </param>
-        /// <param name="managedIdentityObjectId"> The object ID of managedIdentityResourceId. </param>
-        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoEventGridDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier storageAccountResourceId, ResourceIdentifier eventGridResourceId, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoEventGridDataFormat? dataFormat, bool? isFirstRecordIgnored, BlobStorageEventType? blobStorageEventType, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the Event Grid data connection. </param>
+        internal KustoEventGridDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventGridConnectionProperties properties) : base(id, name, resourceType, systemData, location, kind, additionalBinaryDataProperties)
         {
-            StorageAccountResourceId = storageAccountResourceId;
-            EventGridResourceId = eventGridResourceId;
-            EventHubResourceId = eventHubResourceId;
-            ConsumerGroup = consumerGroup;
-            TableName = tableName;
-            MappingRuleName = mappingRuleName;
-            DataFormat = dataFormat;
-            IsFirstRecordIgnored = isFirstRecordIgnored;
-            BlobStorageEventType = blobStorageEventType;
-            ManagedIdentityResourceId = managedIdentityResourceId;
-            ManagedIdentityObjectId = managedIdentityObjectId;
-            DatabaseRouting = databaseRouting;
-            ProvisioningState = provisioningState;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> The properties of the Event Grid data connection. </summary>
+        [WirePath("properties")]
+        internal EventGridConnectionProperties Properties { get; set; }
+
         /// <summary> The resource ID of the storage account where the data resides. </summary>
-        public ResourceIdentifier StorageAccountResourceId { get; set; }
+        [WirePath("properties.storageAccountResourceId")]
+        public ResourceIdentifier StorageAccountResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.StorageAccountResourceId = value;
+            }
+        }
+
         /// <summary> The resource ID of the event grid that is subscribed to the storage account events. </summary>
-        public ResourceIdentifier EventGridResourceId { get; set; }
+        [WirePath("properties.eventGridResourceId")]
+        public ResourceIdentifier EventGridResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventGridResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.EventGridResourceId = value;
+            }
+        }
+
         /// <summary> The resource ID where the event grid is configured to send events. </summary>
-        public ResourceIdentifier EventHubResourceId { get; set; }
+        [WirePath("properties.eventHubResourceId")]
+        public ResourceIdentifier EventHubResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventHubResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.EventHubResourceId = value;
+            }
+        }
+
         /// <summary> The event hub consumer group. </summary>
-        public string ConsumerGroup { get; set; }
+        [WirePath("properties.consumerGroup")]
+        public string ConsumerGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsumerGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.ConsumerGroup = value;
+            }
+        }
+
         /// <summary> The table where the data should be ingested. Optionally the table information can be added to each message. </summary>
-        public string TableName { get; set; }
+        [WirePath("properties.tableName")]
+        public string TableName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TableName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.TableName = value;
+            }
+        }
+
         /// <summary> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </summary>
-        public string MappingRuleName { get; set; }
+        [WirePath("properties.mappingRuleName")]
+        public string MappingRuleName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MappingRuleName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.MappingRuleName = value;
+            }
+        }
+
         /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
-        public KustoEventGridDataFormat? DataFormat { get; set; }
+        [WirePath("properties.dataFormat")]
+        public KustoEventGridDataFormat? DataFormat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataFormat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.DataFormat = value;
+            }
+        }
+
         /// <summary> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </summary>
-        public bool? IsFirstRecordIgnored { get; set; }
+        [WirePath("properties.ignoreFirstRecord")]
+        public bool? IsFirstRecordIgnored
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFirstRecordIgnored;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.IsFirstRecordIgnored = value;
+            }
+        }
+
         /// <summary> The name of blob storage event type to process. </summary>
-        public BlobStorageEventType? BlobStorageEventType { get; set; }
+        [WirePath("properties.blobStorageEventType")]
+        public BlobStorageEventType? BlobStorageEventType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BlobStorageEventType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.BlobStorageEventType = value;
+            }
+        }
+
         /// <summary> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </summary>
-        public ResourceIdentifier ManagedIdentityResourceId { get; set; }
+        [WirePath("properties.managedIdentityResourceId")]
+        public ResourceIdentifier ManagedIdentityResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedIdentityResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.ManagedIdentityResourceId = value;
+            }
+        }
+
         /// <summary> The object ID of managedIdentityResourceId. </summary>
-        public Guid? ManagedIdentityObjectId { get; }
+        [WirePath("properties.managedIdentityObjectId")]
+        public Guid? ManagedIdentityObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedIdentityObjectId;
+            }
+        }
+
         /// <summary> Indication for database routing information from the data connection, by default only database routing information is allowed. </summary>
-        public KustoDatabaseRouting? DatabaseRouting { get; set; }
+        [WirePath("properties.databaseRouting")]
+        public KustoDatabaseRouting? DatabaseRouting
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseRouting;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventGridConnectionProperties();
+                }
+                Properties.DatabaseRouting = value;
+            }
+        }
+
         /// <summary> The provisioned state of the resource. </summary>
-        public KustoProvisioningState? ProvisioningState { get; }
+        [WirePath("properties.provisioningState")]
+        public KustoProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

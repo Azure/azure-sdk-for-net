@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Sync Session status object. </summary>
     public partial class ServerEndpointSyncSessionStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncSessionStatus"/>. </summary>
         internal ServerEndpointSyncSessionStatus()
@@ -60,8 +32,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="transientFilesNotSyncingCount"> Count of transient files not syncing. </param>
         /// <param name="filesNotSyncingErrors"> Array of per-item errors coming from the last sync session. </param>
         /// <param name="lastSyncMode"> Sync mode. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEndpointSyncSessionStatus(int? lastSyncResult, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastSyncSuccessTimestamp, long? lastSyncPerItemErrorCount, long? persistentFilesNotSyncingCount, long? transientFilesNotSyncingCount, IReadOnlyList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors, ServerEndpointSyncMode? lastSyncMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEndpointSyncSessionStatus(int? lastSyncResult, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastSyncSuccessTimestamp, long? lastSyncPerItemErrorCount, long? persistentFilesNotSyncingCount, long? transientFilesNotSyncingCount, IReadOnlyList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors, ServerEndpointSyncMode? lastSyncMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastSyncResult = lastSyncResult;
             LastSyncTimestamp = lastSyncTimestamp;
@@ -71,23 +43,30 @@ namespace Azure.ResourceManager.StorageSync.Models
             TransientFilesNotSyncingCount = transientFilesNotSyncingCount;
             FilesNotSyncingErrors = filesNotSyncingErrors;
             LastSyncMode = lastSyncMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Last sync result (HResult). </summary>
         public int? LastSyncResult { get; }
+
         /// <summary> Last sync timestamp. </summary>
         public DateTimeOffset? LastSyncTimestamp { get; }
+
         /// <summary> Last sync success timestamp. </summary>
         public DateTimeOffset? LastSyncSuccessTimestamp { get; }
+
         /// <summary> Last sync per item error count. </summary>
         public long? LastSyncPerItemErrorCount { get; }
+
         /// <summary> Count of persistent files not syncing. </summary>
         public long? PersistentFilesNotSyncingCount { get; }
+
         /// <summary> Count of transient files not syncing. </summary>
         public long? TransientFilesNotSyncingCount { get; }
+
         /// <summary> Array of per-item errors coming from the last sync session. </summary>
         public IReadOnlyList<ServerEndpointFilesNotSyncingError> FilesNotSyncingErrors { get; }
+
         /// <summary> Sync mode. </summary>
         public ServerEndpointSyncMode? LastSyncMode { get; }
     }

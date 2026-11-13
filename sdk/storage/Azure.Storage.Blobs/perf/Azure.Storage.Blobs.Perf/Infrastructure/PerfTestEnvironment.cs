@@ -33,6 +33,19 @@ namespace Azure.Storage.Blobs.Perf
         /// <value>The Blob storage account key, read from the "AZURE_STORAGE_ACCOUNT_KEY" environment variable.</value>
         public string StorageAccountKey => GetOptionalVariable("AZURE_STORAGE_ACCOUNT_KEY");
 
+        public bool StorageUseManagedIdentity
+        {
+            get
+            {
+                string useManagedIdentity = GetOptionalVariable("AZURE_STORAGE_USE_MANAGED_IDENTITY");
+                if (bool.TryParse(useManagedIdentity, out bool result))
+                {
+                    return result;
+                }
+                return false;
+            }
+        }
+
         /// <summary>
         /// The Blob storage endpoint.
         /// </summary>

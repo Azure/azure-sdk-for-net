@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,39 +15,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningTritonModelJobInput : MachineLearningJobInput
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningTritonModelJobInput"/>. </summary>
-        /// <param name="uri"> [Required] Input Asset URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public MachineLearningTritonModelJobInput(Uri uri)
-        {
-            Argument.AssertNotNull(uri, nameof(uri));
-
-            Uri = uri;
-            JobInputType = JobInputType.TritonModel;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningTritonModelJobInput"/>. </summary>
-        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="description"> Description for the input. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="mode"> Enum to determine the input data delivery mode. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
-        /// <param name="mode"> Input Asset Delivery Mode. </param>
-        internal MachineLearningTritonModelJobInput(JobInputType jobInputType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, MachineLearningInputDeliveryMode? mode) : base(jobInputType, description, serializedAdditionalRawData)
+        internal MachineLearningTritonModelJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningInputDeliveryMode? mode, Uri uri) : base(description, jobInputType, additionalBinaryDataProperties)
         {
-            Uri = uri;
             Mode = mode;
-            JobInputType = jobInputType;
+            Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningTritonModelJobInput"/> for deserialization. </summary>
-        internal MachineLearningTritonModelJobInput()
-        {
-        }
+        /// <summary> Enum to determine the input data delivery mode. </summary>
+        [WirePath("mode")]
+        public MachineLearningInputDeliveryMode? Mode { get; set; }
 
         /// <summary> [Required] Input Asset URI. </summary>
         [WirePath("uri")]
         public Uri Uri { get; set; }
-        /// <summary> Input Asset Delivery Mode. </summary>
-        [WirePath("mode")]
-        public MachineLearningInputDeliveryMode? Mode { get; set; }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class StaticSiteBasicAuthPropertyResource : IJsonModel<StaticSiteBasicAuthPropertyData>
     {
-        private static StaticSiteBasicAuthPropertyData s_dataDeserializationInstance;
-        private static StaticSiteBasicAuthPropertyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StaticSiteBasicAuthPropertyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StaticSiteBasicAuthPropertyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StaticSiteBasicAuthPropertyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StaticSiteBasicAuthPropertyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteBasicAuthPropertyData>)Data).Write(writer, options);
 
-        StaticSiteBasicAuthPropertyData IJsonModel<StaticSiteBasicAuthPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteBasicAuthPropertyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StaticSiteBasicAuthPropertyData IJsonModel<StaticSiteBasicAuthPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StaticSiteBasicAuthPropertyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteBasicAuthPropertyData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StaticSiteBasicAuthPropertyData IPersistableModel<StaticSiteBasicAuthPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBasicAuthPropertyData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<StaticSiteBasicAuthPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteBasicAuthPropertyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StaticSiteBasicAuthPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

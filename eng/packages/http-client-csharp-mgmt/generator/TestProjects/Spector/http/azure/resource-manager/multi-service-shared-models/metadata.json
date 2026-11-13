@@ -1,0 +1,6 @@
+{
+  "apiVersions": {
+    "Azure.ResourceManager.MultiServiceSharedModels.Compute": "2025-05-01",
+    "Azure.ResourceManager.MultiServiceSharedModels.Storage": "2025-02-01"
+  }
+}

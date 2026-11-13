@@ -37,7 +37,11 @@ namespace Azure.Storage.DataMovement.Tests
             async Task<List<IResourceEnumerationItem>> ListBlobs(CancellationToken cancellationToken)
             {
                 List<IResourceEnumerationItem> result = new();
-                await foreach (BlobItem blobItem in container.GetBlobsAsync(prefix: blobPrefix, cancellationToken: cancellationToken))
+                GetBlobsOptions options = new()
+                {
+                    Prefix = blobPrefix
+                };
+                await foreach (BlobItem blobItem in container.GetBlobsAsync(options, cancellationToken: cancellationToken))
                 {
                     result.Add(new BlobResourceEnumerationItem(container.GetBlobClient(blobItem.Name), blobItem.Name.Substring(blobPrefix.Length)));
                 }

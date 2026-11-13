@@ -7,7 +7,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         public const int Success = 200;
         public const int PartialSuccess = 206;
+        public const int TemporaryRedirect = 307;
+        public const int PermanentRedirect = 308;
         public const int Unauthorized = 401;
+        public const int PaymentRequired = 402;
         public const int Forbidden = 403;
         public const int RequestTimeout = 408;
         public const int ResponseCodeTooManyRequests = 429;

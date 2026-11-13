@@ -47,7 +47,9 @@ namespace Azure.Developer.DevCenter.Tests
                                               .WithAuthority(_authority)
                                               .Build();
 
+#pragma warning disable CS0618 // Suppress obsolete warning for AcquireTokenByUsernamePassword in test-only code
             AuthenticationResult userAuthentication = await publicApp.AcquireTokenByUsernamePassword(new string[] { $"api://{_clientId}/fidalgotest" }, _userName, _userSecret).ExecuteAsync();
+#pragma warning restore CS0618
 
             IConfidentialClientApplication confidentialApp = ConfidentialClientApplicationBuilder.Create(_clientId)
                                           .WithAuthority(_authority)

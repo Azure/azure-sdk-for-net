@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchWindowsLoginModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchWindowsLoginMode value) => value switch
         {
             BatchWindowsLoginMode.Batch => "Batch",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchWindowsLoginMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchWindowsLoginMode ToBatchWindowsLoginMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Batch")) return BatchWindowsLoginMode.Batch;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Interactive")) return BatchWindowsLoginMode.Interactive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Batch"))
+            {
+                return BatchWindowsLoginMode.Batch;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Interactive"))
+            {
+                return BatchWindowsLoginMode.Interactive;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchWindowsLoginMode value.");
         }
     }

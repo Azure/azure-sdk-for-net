@@ -43,8 +43,6 @@ namespace _Type.Property.AdditionalProperties
     [ModelReaderWriterBuildable(typeof(SpreadRecordForNonDiscriminatedUnion3))]
     [ModelReaderWriterBuildable(typeof(SpreadRecordForUnion))]
     [ModelReaderWriterBuildable(typeof(SpreadStringRecord))]
-    [ModelReaderWriterBuildable(typeof(UnknownExtendsUnknownAdditionalPropertiesDiscriminated))]
-    [ModelReaderWriterBuildable(typeof(UnknownIsUnknownAdditionalPropertiesDiscriminated))]
     [ModelReaderWriterBuildable(typeof(WidgetData0))]
     [ModelReaderWriterBuildable(typeof(WidgetData1))]
     [ModelReaderWriterBuildable(typeof(WidgetData2))]

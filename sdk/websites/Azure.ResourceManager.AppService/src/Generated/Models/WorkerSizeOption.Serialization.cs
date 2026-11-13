@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class WorkerSizeOptionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WorkerSizeOption value) => value switch
         {
             WorkerSizeOption.Small => "Small",
@@ -28,20 +29,57 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WorkerSizeOption value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WorkerSizeOption ToWorkerSizeOption(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Small")) return WorkerSizeOption.Small;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Medium")) return WorkerSizeOption.Medium;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Large")) return WorkerSizeOption.Large;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "D1")) return WorkerSizeOption.D1;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "D2")) return WorkerSizeOption.D2;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "D3")) return WorkerSizeOption.D3;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SmallV3")) return WorkerSizeOption.SmallV3;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MediumV3")) return WorkerSizeOption.MediumV3;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LargeV3")) return WorkerSizeOption.LargeV3;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NestedSmall")) return WorkerSizeOption.NestedSmall;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NestedSmallLinux")) return WorkerSizeOption.NestedSmallLinux;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return WorkerSizeOption.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Small"))
+            {
+                return WorkerSizeOption.Small;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Medium"))
+            {
+                return WorkerSizeOption.Medium;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Large"))
+            {
+                return WorkerSizeOption.Large;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "D1"))
+            {
+                return WorkerSizeOption.D1;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "D2"))
+            {
+                return WorkerSizeOption.D2;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "D3"))
+            {
+                return WorkerSizeOption.D3;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SmallV3"))
+            {
+                return WorkerSizeOption.SmallV3;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MediumV3"))
+            {
+                return WorkerSizeOption.MediumV3;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LargeV3"))
+            {
+                return WorkerSizeOption.LargeV3;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NestedSmall"))
+            {
+                return WorkerSizeOption.NestedSmall;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NestedSmallLinux"))
+            {
+                return WorkerSizeOption.NestedSmallLinux;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default"))
+            {
+                return WorkerSizeOption.Default;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WorkerSizeOption value.");
         }
     }

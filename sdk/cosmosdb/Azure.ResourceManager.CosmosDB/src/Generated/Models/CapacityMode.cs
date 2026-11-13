@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CapacityMode : IEquatable<CapacityMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CapacityMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CapacityMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string ProvisionedValue = "Provisioned";
         private const string ServerlessValue = "Serverless";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CapacityMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static CapacityMode None { get; } = new CapacityMode(NoneValue);
-        /// <summary> Provisioned. </summary>
+
+        /// <summary> Gets the Provisioned. </summary>
         public static CapacityMode Provisioned { get; } = new CapacityMode(ProvisionedValue);
-        /// <summary> Serverless. </summary>
+
+        /// <summary> Gets the Serverless. </summary>
         public static CapacityMode Serverless { get; } = new CapacityMode(ServerlessValue);
+
         /// <summary> Determines if two <see cref="CapacityMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CapacityMode left, CapacityMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CapacityMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CapacityMode left, CapacityMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CapacityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CapacityMode(string value) => new CapacityMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CapacityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CapacityMode?(string value) => value == null ? null : new CapacityMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CapacityMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CapacityMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

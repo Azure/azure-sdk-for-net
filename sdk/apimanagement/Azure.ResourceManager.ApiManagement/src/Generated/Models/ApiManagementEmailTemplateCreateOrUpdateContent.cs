@@ -7,81 +7,118 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Email Template update Parameters. </summary>
     public partial class ApiManagementEmailTemplateCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateCreateOrUpdateContent"/>. </summary>
         public ApiManagementEmailTemplateCreateOrUpdateContent()
         {
-            Parameters = new ChangeTrackingList<EmailTemplateParametersContractProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateCreateOrUpdateContent"/>. </summary>
-        /// <param name="subject"> Subject of the Template. </param>
-        /// <param name="title"> Title of the Template. </param>
-        /// <param name="description"> Description of the Email Template. </param>
-        /// <param name="body"> Email Template Body. This should be a valid XDocument. </param>
-        /// <param name="parameters"> Email Template Parameter values. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementEmailTemplateCreateOrUpdateContent(string subject, string title, string description, string body, IList<EmailTemplateParametersContractProperties> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Email Template Update contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementEmailTemplateCreateOrUpdateContent(EmailTemplateUpdateParameterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Subject = subject;
-            Title = title;
-            Description = description;
-            Body = body;
-            Parameters = parameters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Email Template Update contract properties. </summary>
+        [WirePath("properties")]
+        internal EmailTemplateUpdateParameterProperties Properties { get; set; }
 
         /// <summary> Subject of the Template. </summary>
         [WirePath("properties.subject")]
-        public string Subject { get; set; }
+        public string Subject
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateUpdateParameterProperties();
+                }
+                Properties.Subject = value;
+            }
+        }
+
         /// <summary> Title of the Template. </summary>
         [WirePath("properties.title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Title;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateUpdateParameterProperties();
+                }
+                Properties.Title = value;
+            }
+        }
+
         /// <summary> Description of the Email Template. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateUpdateParameterProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Email Template Body. This should be a valid XDocument. </summary>
         [WirePath("properties.body")]
-        public string Body { get; set; }
+        public string Body
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Body;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateUpdateParameterProperties();
+                }
+                Properties.Body = value;
+            }
+        }
+
         /// <summary> Email Template Parameter values. </summary>
         [WirePath("properties.parameters")]
-        public IList<EmailTemplateParametersContractProperties> Parameters { get; }
+        public IList<EmailTemplateParametersContractProperties> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateUpdateParameterProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
     }
 }

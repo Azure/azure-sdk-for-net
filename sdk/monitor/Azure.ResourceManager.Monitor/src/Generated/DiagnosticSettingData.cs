@@ -13,97 +13,176 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary>
-    /// A class representing the DiagnosticSetting data model.
-    /// The diagnostic setting resource.
-    /// </summary>
+    /// <summary> The diagnostic setting resource. </summary>
     public partial class DiagnosticSettingData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticSettingData"/>. </summary>
         public DiagnosticSettingData()
         {
-            Metrics = new ChangeTrackingList<MetricSettings>();
-            Logs = new ChangeTrackingList<LogSettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageAccountId"> The resource ID of the storage account to which you would like to send Diagnostic Logs. </param>
-        /// <param name="serviceBusRuleId"> The service bus rule Id of the diagnostic setting. This is here to maintain backwards compatibility. </param>
-        /// <param name="eventHubAuthorizationRuleId"> The resource Id for the event hub authorization rule. </param>
-        /// <param name="eventHubName"> The name of the event hub. If none is specified, the default event hub will be selected. </param>
-        /// <param name="metrics"> The list of metric settings. </param>
-        /// <param name="logs"> The list of logs settings. </param>
-        /// <param name="workspaceId"> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
-        /// <param name="marketplacePartnerId"> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </param>
-        /// <param name="logAnalyticsDestinationType"> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, ResourceIdentifier eventHubAuthorizationRuleId, string eventHubName, IList<MetricSettings> metrics, IList<LogSettings> logs, ResourceIdentifier workspaceId, ResourceIdentifier marketplacePartnerId, string logAnalyticsDestinationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of a Diagnostic Settings Resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.DiagnosticSettings properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            StorageAccountId = storageAccountId;
-            ServiceBusRuleId = serviceBusRuleId;
-            EventHubAuthorizationRuleId = eventHubAuthorizationRuleId;
-            EventHubName = eventHubName;
-            Metrics = metrics;
-            Logs = logs;
-            WorkspaceId = workspaceId;
-            MarketplacePartnerId = marketplacePartnerId;
-            LogAnalyticsDestinationType = logAnalyticsDestinationType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of a Diagnostic Settings Resource. </summary>
+        internal Models.DiagnosticSettings Properties { get; set; }
+
         /// <summary> The resource ID of the storage account to which you would like to send Diagnostic Logs. </summary>
-        public ResourceIdentifier StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.DiagnosticSettings();
+                }
+                Properties.StorageAccountId = value;
+            }
+        }
+
         /// <summary> The service bus rule Id of the diagnostic setting. This is here to maintain backwards compatibility. </summary>
-        public ResourceIdentifier ServiceBusRuleId { get; set; }
+        public ResourceIdentifier ServiceBusRuleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceBusRuleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.DiagnosticSettings();
+                }
+                Properties.ServiceBusRuleId = value;
+            }
+        }
+
         /// <summary> The resource Id for the event hub authorization rule. </summary>
-        public ResourceIdentifier EventHubAuthorizationRuleId { get; set; }
+        public ResourceIdentifier EventHubAuthorizationRuleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventHubAuthorizationRuleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.DiagnosticSettings();
+                }
+                Properties.EventHubAuthorizationRuleId = value;
+            }
+        }
+
         /// <summary> The name of the event hub. If none is specified, the default event hub will be selected. </summary>
-        public string EventHubName { get; set; }
+        public string EventHubName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventHubName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.DiagnosticSettings();
+                }
+                Properties.EventHubName = value;
+            }
+        }
+
         /// <summary> The list of metric settings. </summary>
-        public IList<MetricSettings> Metrics { get; }
+        public IList<MetricSettings> Metrics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.DiagnosticSettings();
+                }
+                return Properties.Metrics;
+            }
+        }
+
         /// <summary> The list of logs settings. </summary>
-        public IList<LogSettings> Logs { get; }
+        public IList<LogSettings> Logs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.DiagnosticSettings();
+                }
+                return Properties.Logs;
+            }
+        }
+
         /// <summary> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </summary>
-        public ResourceIdentifier WorkspaceId { get; set; }
+        public ResourceIdentifier WorkspaceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkspaceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.DiagnosticSettings();
+                }
+                Properties.WorkspaceId = value;
+            }
+        }
+
         /// <summary> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </summary>
-        public ResourceIdentifier MarketplacePartnerId { get; set; }
+        public ResourceIdentifier MarketplacePartnerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplacePartnerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.DiagnosticSettings();
+                }
+                Properties.MarketplacePartnerId = value;
+            }
+        }
+
         /// <summary> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </summary>
-        public string LogAnalyticsDestinationType { get; set; }
+        public string LogAnalyticsDestinationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogAnalyticsDestinationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.DiagnosticSettings();
+                }
+                Properties.LogAnalyticsDestinationType = value;
+            }
+        }
     }
 }

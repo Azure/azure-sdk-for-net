@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SignalR
 {
+    /// <summary></summary>
     public partial class SignalRCustomDomainResource : IJsonModel<SignalRCustomDomainData>
     {
-        private static SignalRCustomDomainData s_dataDeserializationInstance;
-        private static SignalRCustomDomainData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SignalRCustomDomainData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SignalRCustomDomainData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SignalRCustomDomainData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRCustomDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomDomainData>)Data).Write(writer, options);
 
-        SignalRCustomDomainData IJsonModel<SignalRCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomDomainData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SignalRCustomDomainData IJsonModel<SignalRCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SignalRCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRCustomDomainData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SignalRCustomDomainData IPersistableModel<SignalRCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRCustomDomainData>(data, options, AzureResourceManagerSignalRContext.Default);
 
-        string IPersistableModel<SignalRCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRCustomDomainData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SignalRCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

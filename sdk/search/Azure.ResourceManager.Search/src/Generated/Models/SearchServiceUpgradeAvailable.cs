@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Indicates if the search service has an upgrade available. </summary>
+    /// <summary> Indicates if the dedicated search service has an upgrade available. </summary>
     public readonly partial struct SearchServiceUpgradeAvailable : IEquatable<SearchServiceUpgradeAvailable>
     {
         private readonly string _value;
+        /// <summary> An upgrade is currently not available for the dedicated service. </summary>
+        private const string NotAvailableValue = "notAvailable";
+        /// <summary> There is an upgrade available for the dedicated service. </summary>
+        private const string AvailableValue = "available";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceUpgradeAvailable"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchServiceUpgradeAvailable(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NotAvailableValue = "notAvailable";
-        private const string AvailableValue = "available";
-
-        /// <summary> An upgrade is currently not available for the service. </summary>
+        /// <summary> An upgrade is currently not available for the dedicated service. </summary>
         public static SearchServiceUpgradeAvailable NotAvailable { get; } = new SearchServiceUpgradeAvailable(NotAvailableValue);
-        /// <summary> There is an upgrade available for the service. </summary>
+
+        /// <summary> There is an upgrade available for the dedicated service. </summary>
         public static SearchServiceUpgradeAvailable Available { get; } = new SearchServiceUpgradeAvailable(AvailableValue);
+
         /// <summary> Determines if two <see cref="SearchServiceUpgradeAvailable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchServiceUpgradeAvailable left, SearchServiceUpgradeAvailable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchServiceUpgradeAvailable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchServiceUpgradeAvailable left, SearchServiceUpgradeAvailable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceUpgradeAvailable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchServiceUpgradeAvailable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchServiceUpgradeAvailable(string value) => new SearchServiceUpgradeAvailable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchServiceUpgradeAvailable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchServiceUpgradeAvailable?(string value) => value == null ? null : new SearchServiceUpgradeAvailable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchServiceUpgradeAvailable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchServiceUpgradeAvailable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

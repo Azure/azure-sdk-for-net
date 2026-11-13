@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Properties of Access Rule. </summary>
     public partial class NspAccessRuleProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NspAccessRuleProperties"/>. </summary>
         internal NspAccessRuleProperties()
@@ -53,6 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
             Subscriptions = new ChangeTrackingList<SubResource>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
+            ServiceTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NspAccessRuleProperties"/>. </summary>
@@ -61,31 +34,41 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> FQDN for outbound rules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspAccessRuleProperties(NspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="serviceTags"> Service Tags for inbound rules. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NspAccessRuleProperties(NspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IList<string> serviceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
             Subscriptions = subscriptions;
             NetworkSecurityPerimeters = networkSecurityPerimeters;
             FullyQualifiedDomainNames = fullyQualifiedDomainNames;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ServiceTags = serviceTags;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Direction of Access Rule. </summary>
         [WirePath("direction")]
         public NspAccessRuleDirection? Direction { get; }
+
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
         [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
+
         /// <summary> Subscriptions for inbound rules. </summary>
         [WirePath("subscriptions")]
         public IReadOnlyList<SubResource> Subscriptions { get; }
+
         /// <summary> NetworkSecurityPerimeters for inbound rules. </summary>
         [WirePath("networkSecurityPerimeters")]
         public IReadOnlyList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
+
         /// <summary> FQDN for outbound rules. </summary>
         [WirePath("fullyQualifiedDomainNames")]
         public IReadOnlyList<string> FullyQualifiedDomainNames { get; }
+
+        /// <summary> Service Tags for inbound rules. </summary>
+        [WirePath("serviceTags")]
+        public IList<string> ServiceTags { get; }
     }
 }

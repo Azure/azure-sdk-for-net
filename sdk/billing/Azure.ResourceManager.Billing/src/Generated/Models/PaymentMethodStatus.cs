@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct PaymentMethodStatus : IEquatable<PaymentMethodStatus>
     {
         private readonly string _value;
+        /// <summary> active. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> inactive. </summary>
+        private const string InactiveValue = "inactive";
 
         /// <summary> Initializes a new instance of <see cref="PaymentMethodStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PaymentMethodStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "active";
-        private const string InactiveValue = "inactive";
+            _value = value;
+        }
 
         /// <summary> active. </summary>
         public static PaymentMethodStatus Active { get; } = new PaymentMethodStatus(ActiveValue);
+
         /// <summary> inactive. </summary>
         public static PaymentMethodStatus Inactive { get; } = new PaymentMethodStatus(InactiveValue);
+
         /// <summary> Determines if two <see cref="PaymentMethodStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PaymentMethodStatus left, PaymentMethodStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PaymentMethodStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PaymentMethodStatus left, PaymentMethodStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PaymentMethodStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PaymentMethodStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PaymentMethodStatus(string value) => new PaymentMethodStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PaymentMethodStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PaymentMethodStatus?(string value) => value == null ? null : new PaymentMethodStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PaymentMethodStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PaymentMethodStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

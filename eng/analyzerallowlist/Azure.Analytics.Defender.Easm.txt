@@ -1,0 +1,7 @@
+# Azure.Analytics.Defender.Easm approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# Generated error-envelope models whose names collide with Azure.Core and
+# Azure.DigitalTwins.Core; the libraries are never referenced together.
+nowarn:AZC0034 T:Azure.Analytics.Defender.Easm.ErrorResponse
+nowarn:AZC0034 T:Azure.Analytics.Defender.Easm.InnerError

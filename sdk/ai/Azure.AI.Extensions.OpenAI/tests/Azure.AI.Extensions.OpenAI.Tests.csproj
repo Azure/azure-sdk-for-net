@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!--Ignore XML doc comments on test types and members-->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Experimental surface consumed by tests. AAIP002 and OPENAI001/OPENAICUA001 mark surface that is
+         experimental because of the underlying OpenAI dependency (not because we are changing it), so they
+         are suppressed project-wide here just like the OpenAI ids. Our own intentional AAIP001 surface is
+         acknowledged per-file with #pragma so each test opts in explicitly. -->
+    <NoWarn>$(NoWarn);OPENAI001;OPENAICUA001;AAIP002;SCME0001;</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\favorite_foods.pdf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.AI.Projects\src\Azure.AI.Projects.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.Extensions.OpenAI\src\Azure.AI.Extensions.OpenAI.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
+    <PackageReference Include="Microsoft.ClientModel.TestFramework" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\tests-shared\AiTestEnvironmentBootstrap.cs" Link="Shared\AiTestEnvironmentBootstrap.cs" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+			<_Parameter1>SourcePath</_Parameter1>
+			<_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Assets\favorite_foods.pdf">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+</Project>

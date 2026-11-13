@@ -1,0 +1,22 @@
+# Keep the docker build context tiny.
+**/.vs/
+**/bin/
+**/obj/
+**/.git/
+**/node_modules/
+**/*.user
+**/*.suo
+**/*.log
+**/launchSettings.json
+
+# Source-only files — not needed at runtime since we copy from publish/.
+*.cs
+*.csproj
+
+# Sample assets that aren't needed inside the runtime image.
+.azure/
+datasets/
+evaluators/
+scripts/
+*.md
+infra/

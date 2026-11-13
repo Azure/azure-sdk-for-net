@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct DHGroup : IEquatable<DHGroup>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> DHGroup1. </summary>
+        private const string DHGroup1Value = "DHGroup1";
+        /// <summary> DHGroup2. </summary>
+        private const string DHGroup2Value = "DHGroup2";
+        /// <summary> DHGroup14. </summary>
+        private const string DHGroup14Value = "DHGroup14";
+        /// <summary> DHGroup2048. </summary>
+        private const string DHGroup2048Value = "DHGroup2048";
+        /// <summary> ECP256. </summary>
+        private const string Ecp256Value = "ECP256";
+        /// <summary> ECP384. </summary>
+        private const string Ecp384Value = "ECP384";
+        /// <summary> DHGroup24. </summary>
+        private const string DHGroup24Value = "DHGroup24";
 
         /// <summary> Initializes a new instance of <see cref="DHGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DHGroup(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string DHGroup1Value = "DHGroup1";
-        private const string DHGroup2Value = "DHGroup2";
-        private const string DHGroup14Value = "DHGroup14";
-        private const string DHGroup2048Value = "DHGroup2048";
-        private const string Ecp256Value = "ECP256";
-        private const string Ecp384Value = "ECP384";
-        private const string DHGroup24Value = "DHGroup24";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static DHGroup None { get; } = new DHGroup(NoneValue);
+
         /// <summary> DHGroup1. </summary>
         public static DHGroup DHGroup1 { get; } = new DHGroup(DHGroup1Value);
+
         /// <summary> DHGroup2. </summary>
         public static DHGroup DHGroup2 { get; } = new DHGroup(DHGroup2Value);
+
         /// <summary> DHGroup14. </summary>
         public static DHGroup DHGroup14 { get; } = new DHGroup(DHGroup14Value);
+
         /// <summary> DHGroup2048. </summary>
         public static DHGroup DHGroup2048 { get; } = new DHGroup(DHGroup2048Value);
+
         /// <summary> ECP256. </summary>
         public static DHGroup Ecp256 { get; } = new DHGroup(Ecp256Value);
+
         /// <summary> ECP384. </summary>
         public static DHGroup Ecp384 { get; } = new DHGroup(Ecp384Value);
+
         /// <summary> DHGroup24. </summary>
         public static DHGroup DHGroup24 { get; } = new DHGroup(DHGroup24Value);
+
         /// <summary> Determines if two <see cref="DHGroup"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DHGroup left, DHGroup right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DHGroup"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DHGroup left, DHGroup right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DHGroup"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DHGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DHGroup(string value) => new DHGroup(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DHGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DHGroup?(string value) => value == null ? null : new DHGroup(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DHGroup other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DHGroup other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

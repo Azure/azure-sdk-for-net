@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableCreateAndUpdate()
@@ -104,7 +103,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyTables(table, table2);
         }
 
-        [Test]
         [RecordedTest]
         //[Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableRestoreTest()
@@ -157,7 +155,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsFalse(exists);
         }
 
-        [Test]
         [RecordedTest]
         [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableList()
@@ -171,7 +168,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyTables(databases[0], database);
         }
 
-        [Test]
         [RecordedTest]
         [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableThroughput()
@@ -191,9 +187,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task TableMigrateToAutoscale()
         {
             var database = await CreateTable(null);
@@ -204,9 +200,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertAutoscale(throughputData);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task TableMigrateToManual()
         {
             var database = await CreateTable(new AutoscaleSettings()
@@ -221,7 +217,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertManualThroughput(throughputData);
         }
 
-        [Test]
         [RecordedTest]
         [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableDelete()

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ApiManagementWorkspaceLinksResource : IJsonModel<ApiManagementWorkspaceLinksData>
     {
-        private static ApiManagementWorkspaceLinksData s_dataDeserializationInstance;
-        private static ApiManagementWorkspaceLinksData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiManagementWorkspaceLinksData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiManagementWorkspaceLinksData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiManagementWorkspaceLinksData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementWorkspaceLinksData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementWorkspaceLinksData>)Data).Write(writer, options);
 
-        ApiManagementWorkspaceLinksData IJsonModel<ApiManagementWorkspaceLinksData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementWorkspaceLinksData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementWorkspaceLinksData IJsonModel<ApiManagementWorkspaceLinksData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiManagementWorkspaceLinksData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementWorkspaceLinksData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiManagementWorkspaceLinksData IPersistableModel<ApiManagementWorkspaceLinksData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementWorkspaceLinksData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementWorkspaceLinksData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementWorkspaceLinksData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementWorkspaceLinksData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

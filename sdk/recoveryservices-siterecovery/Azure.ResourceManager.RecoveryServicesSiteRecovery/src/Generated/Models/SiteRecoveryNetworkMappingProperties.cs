@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Network Mapping Properties. </summary>
     public partial class SiteRecoveryNetworkMappingProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingProperties"/>. </summary>
         internal SiteRecoveryNetworkMappingProperties()
@@ -60,13 +31,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryNetworkId"> The recovery network id for network mapping. </param>
         /// <param name="recoveryFabricArmId"> The recovery fabric ARM id. </param>
         /// <param name="recoveryFabricFriendlyName"> The recovery fabric friendly name. </param>
-        /// <param name="fabricSpecificSettings">
-        /// The fabric specific settings.
-        /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryNetworkMappingProperties(string state, string primaryNetworkFriendlyName, ResourceIdentifier primaryNetworkId, string primaryFabricFriendlyName, string recoveryNetworkFriendlyName, ResourceIdentifier recoveryNetworkId, ResourceIdentifier recoveryFabricArmId, string recoveryFabricFriendlyName, NetworkMappingFabricSpecificSettings fabricSpecificSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="fabricSpecificSettings"> The fabric specific settings. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryNetworkMappingProperties(string state, string primaryNetworkFriendlyName, ResourceIdentifier primaryNetworkId, string primaryFabricFriendlyName, string recoveryNetworkFriendlyName, ResourceIdentifier recoveryNetworkId, ResourceIdentifier recoveryFabricArmId, string recoveryFabricFriendlyName, NetworkMappingFabricSpecificSettings fabricSpecificSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             PrimaryNetworkFriendlyName = primaryNetworkFriendlyName;
@@ -77,30 +44,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryFabricArmId = recoveryFabricArmId;
             RecoveryFabricFriendlyName = recoveryFabricFriendlyName;
             FabricSpecificSettings = fabricSpecificSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The pairing state for network mapping. </summary>
         public string State { get; }
+
         /// <summary> The primary network friendly name. </summary>
         public string PrimaryNetworkFriendlyName { get; }
+
         /// <summary> The primary network id for network mapping. </summary>
         public ResourceIdentifier PrimaryNetworkId { get; }
+
         /// <summary> The primary fabric friendly name. </summary>
         public string PrimaryFabricFriendlyName { get; }
+
         /// <summary> The recovery network friendly name. </summary>
         public string RecoveryNetworkFriendlyName { get; }
+
         /// <summary> The recovery network id for network mapping. </summary>
         public ResourceIdentifier RecoveryNetworkId { get; }
+
         /// <summary> The recovery fabric ARM id. </summary>
         public ResourceIdentifier RecoveryFabricArmId { get; }
+
         /// <summary> The recovery fabric friendly name. </summary>
         public string RecoveryFabricFriendlyName { get; }
-        /// <summary>
-        /// The fabric specific settings.
-        /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
-        /// </summary>
+
+        /// <summary> The fabric specific settings. </summary>
         public NetworkMappingFabricSpecificSettings FabricSpecificSettings { get; }
     }
 }

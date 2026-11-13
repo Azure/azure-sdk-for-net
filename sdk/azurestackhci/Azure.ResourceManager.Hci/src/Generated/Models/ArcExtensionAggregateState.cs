@@ -7,93 +7,145 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </summary>
+    /// <summary> Aggregate state of Arc Extensions across the nodes in this HCI cluster. This reflects the overall status of the extension deployment and operation across all nodes. </summary>
     public readonly partial struct ArcExtensionAggregateState : IEquatable<ArcExtensionAggregateState>
     {
         private readonly string _value;
+        /// <summary> The aggregate state is not specified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> An error occurred in the aggregate state. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> The operation succeeded across all nodes. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The operation was canceled across the nodes. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The operation failed on all or most nodes. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> All nodes are connected. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> All nodes are disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
+        /// <summary> The extension has been deleted from all nodes. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> The extension is being created across the nodes. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The extension is being updated across the nodes. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The extension is being deleted across the nodes. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The extension is being moved across the nodes. </summary>
+        private const string MovingValue = "Moving";
+        /// <summary> The operation succeeded on some nodes. </summary>
+        private const string PartiallySucceededValue = "PartiallySucceeded";
+        /// <summary> Some nodes are connected, others are not. </summary>
+        private const string PartiallyConnectedValue = "PartiallyConnected";
+        /// <summary> The operation is currently in progress across the nodes. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The operation has been accepted and is pending execution. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The extension is currently being provisioned across the nodes. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Extension upgrade failed, but rollback succeeded across the nodes. </summary>
+        private const string UpgradeFailedRollbackSucceededValue = "UpgradeFailedRollbackSucceeded";
 
         /// <summary> Initializes a new instance of <see cref="ArcExtensionAggregateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArcExtensionAggregateState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string ErrorValue = "Error";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string ConnectedValue = "Connected";
-        private const string DisconnectedValue = "Disconnected";
-        private const string DeletedValue = "Deleted";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string MovingValue = "Moving";
-        private const string PartiallySucceededValue = "PartiallySucceeded";
-        private const string PartiallyConnectedValue = "PartiallyConnected";
-        private const string InProgressValue = "InProgress";
-        private const string AcceptedValue = "Accepted";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpgradeFailedRollbackSucceededValue = "UpgradeFailedRollbackSucceeded";
-
-        /// <summary> NotSpecified. </summary>
+        /// <summary> The aggregate state is not specified. </summary>
         public static ArcExtensionAggregateState NotSpecified { get; } = new ArcExtensionAggregateState(NotSpecifiedValue);
-        /// <summary> Error. </summary>
+
+        /// <summary> An error occurred in the aggregate state. </summary>
         public static ArcExtensionAggregateState Error { get; } = new ArcExtensionAggregateState(ErrorValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> The operation succeeded across all nodes. </summary>
         public static ArcExtensionAggregateState Succeeded { get; } = new ArcExtensionAggregateState(SucceededValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The operation was canceled across the nodes. </summary>
         public static ArcExtensionAggregateState Canceled { get; } = new ArcExtensionAggregateState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The operation failed on all or most nodes. </summary>
         public static ArcExtensionAggregateState Failed { get; } = new ArcExtensionAggregateState(FailedValue);
-        /// <summary> Connected. </summary>
+
+        /// <summary> All nodes are connected. </summary>
         public static ArcExtensionAggregateState Connected { get; } = new ArcExtensionAggregateState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+
+        /// <summary> All nodes are disconnected. </summary>
         public static ArcExtensionAggregateState Disconnected { get; } = new ArcExtensionAggregateState(DisconnectedValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> The extension has been deleted from all nodes. </summary>
         public static ArcExtensionAggregateState Deleted { get; } = new ArcExtensionAggregateState(DeletedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> The extension is being created across the nodes. </summary>
         public static ArcExtensionAggregateState Creating { get; } = new ArcExtensionAggregateState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> The extension is being updated across the nodes. </summary>
         public static ArcExtensionAggregateState Updating { get; } = new ArcExtensionAggregateState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> The extension is being deleted across the nodes. </summary>
         public static ArcExtensionAggregateState Deleting { get; } = new ArcExtensionAggregateState(DeletingValue);
-        /// <summary> Moving. </summary>
+
+        /// <summary> The extension is being moved across the nodes. </summary>
         public static ArcExtensionAggregateState Moving { get; } = new ArcExtensionAggregateState(MovingValue);
-        /// <summary> PartiallySucceeded. </summary>
+
+        /// <summary> The operation succeeded on some nodes. </summary>
         public static ArcExtensionAggregateState PartiallySucceeded { get; } = new ArcExtensionAggregateState(PartiallySucceededValue);
-        /// <summary> PartiallyConnected. </summary>
+
+        /// <summary> Some nodes are connected, others are not. </summary>
         public static ArcExtensionAggregateState PartiallyConnected { get; } = new ArcExtensionAggregateState(PartiallyConnectedValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> The operation is currently in progress across the nodes. </summary>
         public static ArcExtensionAggregateState InProgress { get; } = new ArcExtensionAggregateState(InProgressValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> The operation has been accepted and is pending execution. </summary>
         public static ArcExtensionAggregateState Accepted { get; } = new ArcExtensionAggregateState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> The extension is currently being provisioned across the nodes. </summary>
         public static ArcExtensionAggregateState Provisioning { get; } = new ArcExtensionAggregateState(ProvisioningValue);
-        /// <summary> UpgradeFailedRollbackSucceeded. </summary>
+
+        /// <summary> Extension upgrade failed, but rollback succeeded across the nodes. </summary>
         public static ArcExtensionAggregateState UpgradeFailedRollbackSucceeded { get; } = new ArcExtensionAggregateState(UpgradeFailedRollbackSucceededValue);
+
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArcExtensionAggregateState left, ArcExtensionAggregateState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArcExtensionAggregateState left, ArcExtensionAggregateState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArcExtensionAggregateState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArcExtensionAggregateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArcExtensionAggregateState(string value) => new ArcExtensionAggregateState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArcExtensionAggregateState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArcExtensionAggregateState?(string value) => value == null ? null : new ArcExtensionAggregateState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArcExtensionAggregateState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArcExtensionAggregateState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

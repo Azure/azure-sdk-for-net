@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="KeyVaultAccessControlClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="vaultUri"> A  to the vault on which the client operates. Appears as "DNS Name" in the Azure portal. You should validate that this URI references a valid Key Vault or Managed HSM resource. See  for details. </param>
+        /// <param name="vaultUri"></param>
         public static IAzureClientBuilder<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions> AddKeyVaultAccessControlClient<TBuilder>(this TBuilder builder, Uri vaultUri)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
@@ -33,6 +33,26 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions>(configuration);
+        }
+
+        /// <summary> Registers a <see cref="KeyVaultEkmClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="vaultUri"></param>
+        public static IAzureClientBuilder<KeyVaultEkmClient, KeyVaultAdministrationClientOptions> AddKeyVaultEkmClient<TBuilder>(this TBuilder builder, Uri vaultUri)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<KeyVaultEkmClient, KeyVaultAdministrationClientOptions>((options, credential) => new KeyVaultEkmClient(vaultUri, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="KeyVaultEkmClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<KeyVaultEkmClient, KeyVaultAdministrationClientOptions> AddKeyVaultEkmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<KeyVaultEkmClient, KeyVaultAdministrationClientOptions>(configuration);
         }
     }
 }

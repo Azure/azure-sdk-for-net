@@ -7,91 +7,154 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> User update parameters. </summary>
     public partial class ApiManagementUserPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementUserPatch"/>. </summary>
         public ApiManagementUserPatch()
         {
-            Identities = new ChangeTrackingList<UserIdentityContract>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementUserPatch"/>. </summary>
-        /// <param name="state"> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </param>
-        /// <param name="note"> Optional note about a user set by the administrator. </param>
-        /// <param name="identities"> Collection of user identities. </param>
-        /// <param name="email"> Email address. Must not be empty and must be unique within the service instance. </param>
-        /// <param name="password"> User Password. </param>
-        /// <param name="firstName"> First name. </param>
-        /// <param name="lastName"> Last name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementUserPatch(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string email, string password, string firstName, string lastName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> User entity update contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementUserPatch(UserUpdateParametersProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            State = state;
-            Note = note;
-            Identities = identities;
-            Email = email;
-            Password = password;
-            FirstName = firstName;
-            LastName = lastName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> User entity update contract properties. </summary>
+        [WirePath("properties")]
+        internal UserUpdateParametersProperties Properties { get; set; }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
         [WirePath("properties.state")]
-        public ApiManagementUserState? State { get; set; }
+        public ApiManagementUserState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserUpdateParametersProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> Optional note about a user set by the administrator. </summary>
         [WirePath("properties.note")]
-        public string Note { get; set; }
+        public string Note
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Note;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserUpdateParametersProperties();
+                }
+                Properties.Note = value;
+            }
+        }
+
         /// <summary> Collection of user identities. </summary>
         [WirePath("properties.identities")]
-        public IList<UserIdentityContract> Identities { get; }
+        public IList<UserIdentityContract> Identities
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserUpdateParametersProperties();
+                }
+                return Properties.Identities;
+            }
+        }
+
         /// <summary> Email address. Must not be empty and must be unique within the service instance. </summary>
         [WirePath("properties.email")]
-        public string Email { get; set; }
+        public string Email
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Email;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserUpdateParametersProperties();
+                }
+                Properties.Email = value;
+            }
+        }
+
         /// <summary> User Password. </summary>
         [WirePath("properties.password")]
-        public string Password { get; set; }
+        public string Password
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Password;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserUpdateParametersProperties();
+                }
+                Properties.Password = value;
+            }
+        }
+
         /// <summary> First name. </summary>
         [WirePath("properties.firstName")]
-        public string FirstName { get; set; }
+        public string FirstName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FirstName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserUpdateParametersProperties();
+                }
+                Properties.FirstName = value;
+            }
+        }
+
         /// <summary> Last name. </summary>
         [WirePath("properties.lastName")]
-        public string LastName { get; set; }
+        public string LastName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserUpdateParametersProperties();
+                }
+                Properties.LastName = value;
+            }
+        }
     }
 }

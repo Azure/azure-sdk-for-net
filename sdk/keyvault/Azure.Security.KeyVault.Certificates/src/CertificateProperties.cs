@@ -129,6 +129,12 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal bool HasTags => _tags != null;
 
+        // Refactor-safe accessor for the backing tag dictionary used by CertificateMapper
+        // when serializing PATCH bodies. Returning null when the customer never touched
+        // .Tags preserves the legacy "only emit a tags object if non-empty" wire shape
+        // (the public Tags getter would otherwise eagerly allocate an empty dictionary).
+        internal IDictionary<string, string> TagsIfSet => _tags;
+
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())

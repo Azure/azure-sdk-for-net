@@ -1,14 +1,39 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.5.0 (2026-11-10)
+
+### Other Changes
+
+- Upgraded the service API version to 2026-11-01.
+
+## 1.4.0 (2026-08-26)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded the service API version to `2026-07-01`.
+- Added `RegionOfChoiceStatus` to `RecoveryServicesVaultProperties`.
 
-### Bugs Fixed
+## 1.3.0 (2026-07-10)
+
+### Features Added
+
+- Upgraded api-version to 2026-05-01.
+- Added `ImmutabilitySettings` property to `RecoveryServicesSecuritySettings` for full immutability configuration access.
+- Added `ImmutabilityConfiguration` and `ImmutabilityType` models for vault immutability settings.
+- Added `RecoveryServicesCostGranularityLevel` enum for cost management granularity settings.
+- Added `CostManagementGranularityLevel` property to `RecoveryServicesVaultProperties`.
+
+## 1.2.0 (2026-03-20)
+
+### Features Added
+
+- Upgraded api-version to 2025-08-01.
+- Make `Azure.ResourceManager.RecoveryServices` AOT-compatible.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.51.1.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.2.0-beta.1 (2024-10-15)
 

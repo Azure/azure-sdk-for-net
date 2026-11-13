@@ -1,0 +1,158 @@
+# ContentSource — Field grounding references
+
+This sample demonstrates how to access **grounding source references** from analysis results. When the service extracts a field value (e.g., a customer name or invoice total), it also reports *where* in the original content that value was found. These locations are exposed as `ContentSource` objects.
+
+## ContentSource hierarchy
+
+| Class | Wire format | Use case |
+|-------|------------|----------|
+| `ContentSource` (abstract) | — | Base class; use `ContentSource.Parse()` to create typed instances |
+| `DocumentSource` | `D(page,x1,y1,...,xN,yN)` or `D(page)` | Document/image: page number + polygon coordinates + computed `BoundingBox` |
+
+In the wire format (what the result JSON returns), each source is an encoded string that contains the page number and polygon coordinates. This can be useful when you want to render these sources by location in a PDF viewer — for example, for human review.
+
+However, given that these are encoded, for ease of access we provide a `ContentSource` class that parses the encoded string and returns the page number and the enclosing polygons in the unit of the document (such as inches or pixels). `ContentSource` even computes a `BoundingBox` — a rectangle that encompasses the polygons — if you only want to draw the bounding rectangles.
+
+Multiple regions are separated by `;` in the raw string. For example, a field whose value spans two regions on page 1:
+
+```
+D(1,0.10,0.20,0.50,0.20,0.50,0.25,0.10,0.25);D(1,0.10,0.30,0.50,0.30,0.50,0.35,0.10,0.35)
+```
+
+The source of this value is from two polygons:
+
+- The first polygon is on page **1** and has four points (in inches): (0.10, 0.20), (0.50, 0.20), (0.50, 0.25) and (0.10, 0.25).
+- The second polygon is also on page **1** and has four points (in inches): (0.10, 0.30), (0.50, 0.30), (0.50, 0.35) and (0.10, 0.35).
+
+To eliminate the need for you to parse these, we provide `DocumentSource` to access the page number and polygons in an object model. See the sample code below.
+
+## Prerequisites
+
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
+
+## Creating a `ContentUnderstandingClient`
+
+For full client setup details, see [Sample 00: Configure model deployment defaults][sample00].
+
+### Using DefaultAzureCredential (recommended)
+
+```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+var credential = new DefaultAzureCredential();
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+```
+
+### Using API key
+
+```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
+
+> **⚠️ Security Warning**: API key authentication is less secure and is only recommended for testing purposes with test resources. For production, use `DefaultAzureCredential` or other secure authentication methods.
+
+## Accessing sources from analysis results
+
+Analyze a document (e.g., an invoice) and iterate over fields to access their grounding sources. Each source identifies the page and precise region where the extracted value appears.
+
+```C# Snippet:ContentUnderstandingContentSourceFromAnalysis
+// Analyze an invoice to get fields with grounding sources.
+Uri invoiceUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
+Operation<AnalysisResult> operation = await client.AnalyzeAsync(
+    WaitUntil.Completed,
+    "prebuilt-invoice",
+    inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
+
+AnalysisResult result = operation.Value;
+DocumentContent documentContent = (DocumentContent)result.Contents!.First();
+
+// Iterate over all fields and access their grounding sources.
+foreach (var kvp in documentContent.Fields)
+{
+    string fieldName = kvp.Key;
+    ContentField field = kvp.Value;
+
+    Console.WriteLine($"Field: {fieldName} = {field.Value}");
+
+    // Sources identify where the field value appears in the original content.
+    // For documents, each source is a DocumentSource with page number and polygon.
+    if (field.Sources != null)
+    {
+        foreach (ContentSource source in field.Sources)
+        {
+            if (source is DocumentSource docSource)
+            {
+                Console.WriteLine($"  Source: page {docSource.PageNumber}");
+
+                // Polygon: the precise region (rotated quadrilateral) around the text.
+                if (docSource.Polygon != null)
+                {
+                    string coords = string.Join(", ", docSource.Polygon.Select(p => $"({p.X:F4},{p.Y:F4})"));
+                    Console.WriteLine($"  Polygon: [{coords}]");
+                }
+
+                // BoundingBox: axis-aligned rectangle computed from the polygon —
+                // convenient for drawing highlight overlays.
+                if (docSource.BoundingBox.HasValue)
+                {
+                    RectangleF bbox = docSource.BoundingBox.Value;
+                    Console.WriteLine($"  BoundingBox: x={bbox.X:F4}, y={bbox.Y:F4}, w={bbox.Width:F4}, h={bbox.Height:F4}");
+                }
+            }
+        }
+    }
+}
+```
+
+## Parsing source strings
+
+These two APIs are used by the `ContentSource` implementation, and it's rare that you need to call these two directly. However, they are included here for completeness.
+
+The SDK provides two parse APIs for converting wire-format source strings back into typed objects:
+
+- **`DocumentSource.Parse()`** — returns `DocumentSource[]` directly; no casting needed.
+- **`ContentSource.Parse()`** — polymorphic base-class API that returns `ContentSource[]`; cast each element to the concrete type.
+
+Use `ToRawString()` on a field's `Sources` to obtain the wire-format string, then pass it to either parse method.
+
+```C# Snippet:ContentUnderstandingContentSourceParse
+// Get the grounding source from a real analysis result and round-trip it.
+// Find a field that has grounding sources.
+ContentField fieldWithSource = documentContent.Fields.Values
+    .First(f => f.Sources != null);
+
+// --- DocumentSource.Parse(): typed API that returns DocumentSource[] directly ---
+string sourceString = fieldWithSource.Sources!.ToRawString();
+Console.WriteLine($"Source wire format: {sourceString}");
+
+// DocumentSource.Parse() returns DocumentSource[] — no casting needed.
+DocumentSource[] docSources = DocumentSource.Parse(sourceString);
+DocumentSource firstDoc = docSources[0];
+Console.WriteLine($"DocumentSource.Parse: page {firstDoc.PageNumber}, polygon points: {firstDoc.Polygon?.Count ?? 0}");
+Console.WriteLine($"  BoundingBox: {firstDoc.BoundingBox}");
+
+// --- ContentSource.Parse(): base-class API that returns ContentSource[] (polymorphic) ---
+ContentSource[] roundTripped = ContentSource.Parse(sourceString);
+DocumentSource roundTrippedDoc = (DocumentSource)roundTripped[0];
+Console.WriteLine($"ContentSource.Parse: page {roundTrippedDoc.PageNumber}, polygon points: {roundTrippedDoc.Polygon?.Count ?? 0}");
+
+// Find a field with multiple source segments (e.g., multi-line addresses).
+ContentField multiSourceField = documentContent.Fields.Values
+    .First(f => f.Sources != null && f.Sources.Length > 1);
+string multiSourceString = multiSourceField.Sources!.ToRawString();
+Console.WriteLine($"Multi-segment wire format: {multiSourceString}");
+
+ContentSource[] multiParsed = ContentSource.Parse(multiSourceString);
+Console.WriteLine($"Multi-segment: {multiParsed.Length} sources on pages {string.Join(", ", multiParsed.OfType<DocumentSource>().Select(s => s.PageNumber))}");
+
+// ContentSource.Parse() also handles page-only format (no polygon coordinates).
+int realPageNumber = ((DocumentSource)fieldWithSource.Sources![0]).PageNumber;
+ContentSource[] pageOnlySources = ContentSource.Parse($"D({realPageNumber})");
+DocumentSource pageOnly = (DocumentSource)pageOnlySources[0];
+Console.WriteLine($"Page-only source: page {pageOnly.PageNumber}, polygon: {(pageOnly.Polygon != null ? "yes" : "none")}");
+```
+
+[sample00]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md

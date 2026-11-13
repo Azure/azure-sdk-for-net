@@ -9,12 +9,17 @@ using System.Threading.Tasks;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The Azure Communication Services Notification Messages client.
     /// </summary>
+    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(AzureKeyCredential))]
+    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(TokenCredential))]
+    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(AzureKeyCredential), typeof(CommunicationMessagesClientOptions))]
+    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(TokenCredential), typeof(CommunicationMessagesClientOptions))]
     public partial class NotificationMessagesClient
     {
         #region public constructors
@@ -52,6 +57,34 @@ namespace Azure.Communication.Messages
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NotificationMessagesClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        public NotificationMessagesClient(Uri endpoint, AzureKeyCredential credential)
+             : this(endpoint, credential, default)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationMessagesClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests.</param>
+        /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public NotificationMessagesClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
+            : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)),
+                (options ?? new CommunicationMessagesClientOptions()).BuildHttpPipeline(credential),
+                options ?? new CommunicationMessagesClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationMessagesClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests.</param>
+        public NotificationMessagesClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, default)
+        {
+        }
+
         /// <summary>Initializes a new instance of <see cref="NotificationMessagesClient"/> for mocking.</summary>
         protected NotificationMessagesClient()
         {
@@ -68,13 +101,12 @@ namespace Azure.Communication.Messages
         private NotificationMessagesClient(string endpoint, AzureKeyCredential credential, CommunicationMessagesClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(credential), options)
         {
-            _keyCredential = credential;
         }
 
         private NotificationMessagesClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
             ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = httpPipeline;
+            Pipeline = httpPipeline;
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -90,11 +122,11 @@ namespace Azure.Communication.Messages
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
             scope.Start();
-            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            Argument.AssertNotNullOrEmpty(mediaContentId, nameof(mediaContentId));
 
             try
             {
-                RequestContext context = FromCancellationToken(cancellationToken);
+                RequestContext context = cancellationToken.ToRequestContext();
                 Response response = await DownloadMediaInternalAsync(mediaContentId, context).ConfigureAwait(false);
                 return Response.FromValue(response.Content.ToStream(), response);
             }
@@ -116,11 +148,11 @@ namespace Azure.Communication.Messages
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
             scope.Start();
-            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            Argument.AssertNotNullOrEmpty(mediaContentId, nameof(mediaContentId));
 
             try
             {
-                RequestContext context = FromCancellationToken(cancellationToken);
+                RequestContext context = cancellationToken.ToRequestContext();
                 Response response = DownloadMediaInternal(mediaContentId, context);
                 return Response.FromValue(response.Content.ToStream(), response);
             }
@@ -143,7 +175,7 @@ namespace Azure.Communication.Messages
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaTo)}");
             scope.Start();
-            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            Argument.AssertNotNullOrEmpty(mediaContentId, nameof(mediaContentId));
 
             try
             {
@@ -168,7 +200,7 @@ namespace Azure.Communication.Messages
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaTo)}");
             scope.Start();
-            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            Argument.AssertNotNullOrEmpty(mediaContentId, nameof(mediaContentId));
 
             try
             {
@@ -193,7 +225,7 @@ namespace Azure.Communication.Messages
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaTo)}");
             scope.Start();
-            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            Argument.AssertNotNullOrEmpty(mediaContentId, nameof(mediaContentId));
 
             using Stream destinationStream = File.Create(destinationPath);
 
@@ -220,7 +252,7 @@ namespace Azure.Communication.Messages
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaTo)}");
             scope.Start();
-            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            Argument.AssertNotNullOrEmpty(mediaContentId, nameof(mediaContentId));
 
             using Stream destinationStream = File.Create(destinationPath);
 

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
+    /// <summary></summary>
     public partial class GuestConfigurationVMwarevSphereAssignmentResource : IJsonModel<GuestConfigurationAssignmentData>
     {
-        private static GuestConfigurationAssignmentData s_dataDeserializationInstance;
-        private static GuestConfigurationAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GuestConfigurationAssignmentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GuestConfigurationAssignmentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GuestConfigurationAssignmentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GuestConfigurationAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GuestConfigurationAssignmentData>)Data).Write(writer, options);
 
-        GuestConfigurationAssignmentData IJsonModel<GuestConfigurationAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GuestConfigurationAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GuestConfigurationAssignmentData IJsonModel<GuestConfigurationAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GuestConfigurationAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GuestConfigurationAssignmentData>(Data, options, AzureResourceManagerGuestConfigurationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GuestConfigurationAssignmentData IPersistableModel<GuestConfigurationAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GuestConfigurationAssignmentData>(data, options, AzureResourceManagerGuestConfigurationContext.Default);
 
-        string IPersistableModel<GuestConfigurationAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GuestConfigurationAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GuestConfigurationAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

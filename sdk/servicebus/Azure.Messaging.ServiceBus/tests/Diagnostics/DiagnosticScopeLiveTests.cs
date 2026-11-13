@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: useSessions))
             {
-                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 string sessionId = null;
                 if (useSessions)
@@ -185,7 +185,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await receiver.PurgeMessagesAsync();
                 var purgeScope = _listener.AssertAndRemoveScope(DiagnosticProperty.PurgeActivityName);
                 AssertCommonTags(purgeScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-            };
+            }
+            ;
         }
 
         [Test]
@@ -209,7 +210,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 });
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCt = 2;
                 var msgs = ServiceBusTestUtilities.GetMessages(messageCt);
@@ -236,15 +237,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                Assert.IsFalse(_listener.Scopes.Any(scope => scope.Name == DiagnosticProperty.ReceiveActivityName));
                 for (int i = 0; i < messageCt; i++)
                 {
-                    _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessMessageActivityName);
                     Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);
-            };
+            }
+            ;
         }
 
         [Test]
@@ -268,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 });
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCt = 2;
                 var msgs = ServiceBusTestUtilities.GetMessages(messageCt, "sessionId");
@@ -296,9 +298,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                Assert.IsFalse(_listener.Scopes.Any(scope => scope.Name == DiagnosticProperty.ReceiveActivityName));
                 for (int i = 0; i < messageCt; i++)
                 {
-                    _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessSessionMessageActivityName);
                     Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
@@ -312,7 +314,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
                 for (int i = 0; i < 100; i++)
                 {

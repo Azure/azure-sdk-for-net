@@ -2,10 +2,12 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
+
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public partial class AIProjectClient
+    public partial class AIProjectClient : ClientConnectionProvider
     {
     }
 }

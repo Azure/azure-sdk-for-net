@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
-                    {
-                        Name = frontendIpConfigName,
-                        PublicIPAddress = new PublicIPAddressData()
+                    {Name = frontendIpConfigName, PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = lbPublicIp.Id
                         }
@@ -85,9 +83,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 LoadBalancingRules = {
                     new LoadBalancingRuleData()
-                    {
-                        Name = loadBalancingRuleName,
-                        Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
+                    {Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
                         {
                             FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                             BackendPort = 80,
@@ -100,9 +96,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 Probes = {
                     new ProbeData()
-                    {
-                        Name = probeName,
-                        Protocol = ProbeProtocol.Http,
+                    {Protocol = ProbeProtocol.Http,
                         Port = 80,
                         RequestPath = "healthcheck.aspx",
                         IntervalInSeconds = 10,
@@ -111,13 +105,8 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 InboundNatRules = {
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new WritableSubResource()
-                        {
-                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                        },
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3389,
                         BackendPort = 3389,
@@ -125,13 +114,8 @@ namespace Azure.ResourceManager.Network.Tests
                         EnableFloatingIP = false
                     },
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new WritableSubResource()
-                        {
-                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                        },
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3390,
                         BackendPort = 3389,
@@ -142,7 +126,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Create the loadBalancer
-            var putLoadBalancerOperation = await resourceGroup.GetLoadBalancers().CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer);
+            var putLoadBalancerOperation = await resourceGroup.GetLoadBalancers().CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer, System.Threading.CancellationToken.None);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             Response<LoadBalancerResource> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
 
@@ -203,7 +187,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Verify List FrontendIPConfigurations in LoadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            var loadBalancerOperations = loadBalancerCollection.Get(lbName).Value;
+            LoadBalancerResource loadBalancerOperations = getLoadBalancer.Value;
             AsyncPageable<FrontendIPConfigurationResource> listLoadBalancerFrontendIPConfigurationsAP = loadBalancerOperations.GetFrontendIPConfigurations().GetAllAsync();
             List<FrontendIPConfigurationResource> listLoadBalancerFrontendIPConfigurations = await listLoadBalancerFrontendIPConfigurationsAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerFrontendIPConfigurations);
@@ -227,7 +211,7 @@ namespace Azure.ResourceManager.Network.Tests
             // TODO: ADO 5975
             //Response<LoadBalancingRuleResource> getLoadBalancerLoadBalancingRule = await loadBalancerOperations.GetLoadBalancerLoadBalancingRuleAsync();
             // Verify List NetworkInterfaces in LoadBalancer
-            AsyncPageable<NetworkInterfaceResource> listLoadBalancerNetworkInterfacesAP = loadBalancerOperations.GetLoadBalancerNetworkInterfacesAsync();
+            AsyncPageable<NetworkInterfaceResource> listLoadBalancerNetworkInterfacesAP = loadBalancerOperations.GetLoadBalancerNetworkInterfacesAsync(System.Threading.CancellationToken.None);
             List<NetworkInterfaceResource> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
             Assert.IsEmpty(listLoadBalancerNetworkInterfaces);
 
@@ -247,11 +231,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Prepare the third InboundNatRule
             var inboundNatRule3Params = new InboundNatRuleData()
             {
-                FrontendIPConfiguration = new WritableSubResource()
-                {
-                    Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                                resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                },
+                FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                                resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                 Protocol = LoadBalancingTransportProtocol.Tcp,
                 FrontendPort = 3391,
                 BackendPort = 3389,
@@ -261,7 +242,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Verify Put InboundNatRuleResource in LoadBalancer
             var inboundNatRuleCollection = loadBalancerOperations.GetInboundNatRules();
-            var putInboundNatRuleOperation = await inboundNatRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, inboundNatRule3Name, inboundNatRule3Params);
+            var putInboundNatRuleOperation = await inboundNatRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, inboundNatRule3Name, inboundNatRule3Params, System.Threading.CancellationToken.None);
             Response<InboundNatRuleResource> putInboundNatRule = await putInboundNatRuleOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual(inboundNatRule3Name, putInboundNatRule.Value.Data.Name);
@@ -289,10 +270,10 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(inboundNatRule3Name, listInboundNatRules[2].Data.Name);
 
             // Delete InboundNatRuleResource in LoadBalancer
-            await getInboundNatRule.Value.DeleteAsync(WaitUntil.Completed);
+            await getInboundNatRule.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Delete LoadBalancer
-            var deleteOperation1 = await loadBalancerOperations.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation1 = await loadBalancerOperations.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation1.WaitForCompletionResponseAsync();
             ;
 
@@ -302,7 +283,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(WaitUntil.Completed);
+            await lbPublicIp.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -336,10 +317,8 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
-                    {
-                        Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        Subnet = vnet.Data.Subnets[0]
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        Subnet = new SubnetData(vnet.Data.Subnets[0].Id, null, null, null, null, null)
                     }
                 },
                 BackendAddressPools = {
@@ -350,9 +329,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 LoadBalancingRules = {
                     new LoadBalancingRuleData()
-                    {
-                        Name = loadBalancingRuleName,
-                        Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
+                    {Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
                         {
                             FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                             BackendPort = 80,
@@ -365,9 +342,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 Probes = {
                     new ProbeData()
-                    {
-                        Name = probeName,
-                        Protocol = ProbeProtocol.Http,
+                    {Protocol = ProbeProtocol.Http,
                         Port = 80,
                         RequestPath = "healthcheck.aspx",
                         IntervalInSeconds = 10,
@@ -376,13 +351,8 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 InboundNatRules = {
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new WritableSubResource()
-                        {
-                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                        },
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3389,
                         BackendPort = 3389,
@@ -390,13 +360,8 @@ namespace Azure.ResourceManager.Network.Tests
                         EnableFloatingIP = false,
                     },
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new WritableSubResource()
-                        {
-                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                        },
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3390,
                         BackendPort = 3389,
@@ -408,7 +373,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = GetLoadBalancerCollection(resourceGroup);
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater, System.Threading.CancellationToken.None);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancerResource> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
@@ -452,7 +417,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(listLoadBalancerSubscription.First().Data.ETag);
 
             // Delete LoadBalancer
-            await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
+            await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Verify Delete
             listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
@@ -460,7 +425,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(WaitUntil.Completed);
+            await vnet.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -494,11 +459,9 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
-                    {
-                        Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
-                        Subnet = vnet.Data.Subnets[0]
+                        Subnet = new SubnetData(vnet.Data.Subnets[0].Id, null, null, null, null, null)
                     }
                 },
                 BackendAddressPools = {
@@ -509,9 +472,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 LoadBalancingRules = {
                     new LoadBalancingRuleData()
-                    {
-                        Name = loadBalancingRuleName,
-                        Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
+                    {Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
                         {
                             FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                             BackendPort = 80,
@@ -523,9 +484,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 Probes = {
                     new ProbeData()
-                    {
-                        Name = probeName,
-                        Protocol = ProbeProtocol.Http,
+                    {Protocol = ProbeProtocol.Http,
                         Port = 80,
                         RequestPath = "healthcheck.aspx",
                         IntervalInSeconds = 10,
@@ -534,26 +493,16 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 InboundNatRules = {
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new WritableSubResource()
-                        {
-                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                        },
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3389,
                         BackendPort = 3389,
                         EnableFloatingIP = false,
                     },
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new WritableSubResource()
-                        {
-                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                        },
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3390,
                         BackendPort = 3389,
@@ -564,7 +513,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = GetLoadBalancerCollection(resourceGroup);
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater, System.Threading.CancellationToken.None);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
@@ -612,7 +561,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(listLoadBalancerSubscription.First().Data.ETag);
 
             // Delete LoadBalancer
-            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 
@@ -622,7 +571,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(WaitUntil.Completed);
+            await vnet.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -655,11 +604,9 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
-                    {
-                        Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
-                        Subnet = vnet.Data.Subnets[0]
+                        Subnet = new SubnetData(vnet.Data.Subnets[0].Id, null, null, null, null, null)
                     }
                 },
                 BackendAddressPools = {
@@ -670,9 +617,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 LoadBalancingRules = {
                     new LoadBalancingRuleData()
-                    {
-                        Name = loadBalancingRuleName,
-                        Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
+                    {Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
                         {
                             FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                             BackendPort = 80,
@@ -684,9 +629,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 Probes = {
                     new ProbeData()
-                    {
-                        Name = probeName,
-                        Protocol = ProbeProtocol.Http,
+                    {Protocol = ProbeProtocol.Http,
                         Port = 80,
                         RequestPath = "healthcheck.aspx",
                         IntervalInSeconds = 10,
@@ -695,18 +638,14 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 InboundNatRules = {
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule1Name,
-                        FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3389,
                         BackendPort = 3389,
                         EnableFloatingIP = false
                     },
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule2Name,
-                        FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3390,
                         BackendPort = 3389,
@@ -717,7 +656,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater, System.Threading.CancellationToken.None);
 
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
@@ -757,19 +696,19 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Do another put after changing the distribution policy
             loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIP;
-            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater, System.Threading.CancellationToken.None);
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             Assert.AreEqual(LoadDistribution.SourceIP, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
 
             loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIPProtocol;
-            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater, System.Threading.CancellationToken.None);
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             Assert.AreEqual(LoadDistribution.SourceIPProtocol, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
 
             // Delete LoadBalancer
-            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
+            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None)).WaitForCompletionResponseAsync();
 
             // Verify Delete
             listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
@@ -777,7 +716,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(WaitUntil.Completed);
+            await vnet.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -797,7 +736,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, loadbalancerparamater, System.Threading.CancellationToken.None);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
@@ -812,7 +751,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
 
             // Delete LoadBalancer
-            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
+            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None)).WaitForCompletionResponseAsync();
             ;
 
             // Verify Delete
@@ -849,11 +788,9 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
-                    {
-                        Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
-                        Subnet = vnet.Data.Subnets[0]
+                        Subnet = new SubnetData(vnet.Data.Subnets[0].Id, null, null, null, null, null)
                     }
                 },
                 BackendAddressPools = {
@@ -864,9 +801,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 LoadBalancingRules = {
                     new LoadBalancingRuleData()
-                    {
-                        Name = loadBalancingRuleName,
-                        Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
+                    {Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
                         {
                             FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbname, "frontendIPConfigurations", frontendIpConfigName),
                             BackendPort = 80,
@@ -879,7 +814,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, loadbalancerparamater, System.Threading.CancellationToken.None);
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
 
             // Verify the GET LoadBalancer
@@ -895,7 +830,6 @@ namespace Azure.ResourceManager.Network.Tests
             getLoadBalancer.Value.Data.Probes.Add(
                 new ProbeData()
                 {
-                    Name = probeName,
                     Protocol = ProbeProtocol.Http,
                     Port = 80,
                     RequestPath = "healthcheck.aspx",
@@ -907,7 +841,7 @@ namespace Azure.ResourceManager.Network.Tests
             getLoadBalancer.Value.Data.LoadBalancingRules[0].Properties.ProbeId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbname, "probes", probeName);
 
             // update load balancer
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, getLoadBalancer.Value.Data);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, getLoadBalancer.Value.Data, System.Threading.CancellationToken.None);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
@@ -923,7 +857,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
 
             // Delete LoadBalancer
-            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
+            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None)).WaitForCompletionResponseAsync();
             ;
 
             // Verify Delete
@@ -932,7 +866,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(WaitUntil.Completed);
+            await vnet.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -981,9 +915,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
-                    {
-                        Name = frontendIpConfigName,
-                        PublicIPAddress = new PublicIPAddressData()
+                    {PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = lbPublicIp.Id
                         }
@@ -997,9 +929,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 LoadBalancingRules = {
                     new LoadBalancingRuleData()
-                    {
-                        Name = loadBalancingRuleName,
-                        Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
+                    {Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
                         {
                             FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                             BackendPort = 80,
@@ -1012,9 +942,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 Probes = {
                     new ProbeData()
-                    {
-                        Name = probeName,
-                        Protocol = ProbeProtocol.Http,
+                    {Protocol = ProbeProtocol.Http,
                         Port = 80,
                         RequestPath = "healthcheck.aspx",
                         IntervalInSeconds = 10,
@@ -1023,13 +951,8 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 InboundNatRules = {
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new WritableSubResource()
-                        {
-                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                        },
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3389,
                         BackendPort = 3389,
@@ -1037,13 +960,8 @@ namespace Azure.ResourceManager.Network.Tests
                         EnableFloatingIP = false
                     },
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new WritableSubResource()
-                        {
-                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                        },
+                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3390,
                         BackendPort = 3389,
@@ -1055,7 +973,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer, System.Threading.CancellationToken.None);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
@@ -1068,13 +986,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nics
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var nic1Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic1name, nic1.Data);
+            var nic1Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic1name, nic1.Data, System.Threading.CancellationToken.None);
             await nic1Operation.WaitForCompletionAsync();
 
-            var nic2Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic2name, nic2.Data);
+            var nic2Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic2name, nic2.Data, System.Threading.CancellationToken.None);
             await nic2Operation.WaitForCompletionAsync();
 
-            var nic3Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic3name, nic3.Data);
+            var nic3Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic3name, nic3.Data, System.Threading.CancellationToken.None);
             await nic3Operation.WaitForCompletionAsync();
 
             // Get Nics
@@ -1090,12 +1008,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(nic1.Data.IPConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
 
             // Verify List NetworkInterfaces in LoadBalancer// Verify List NetworkInterfaces in LoadBalancer
-            AsyncPageable<NetworkInterfaceResource> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync();
+            AsyncPageable<NetworkInterfaceResource> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync(System.Threading.CancellationToken.None);
             List<NetworkInterfaceResource> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
             Assert.AreEqual(2, listLoadBalancerNetworkInterfaces.Count());
 
             // Delete LoadBalancer
-            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // Verify Delete
@@ -1104,12 +1022,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all NetworkInterfaces
-            await nic1.DeleteAsync(WaitUntil.Completed);
-            await nic2.DeleteAsync(WaitUntil.Completed);
-            await nic2.DeleteAsync(WaitUntil.Completed);
+            await nic1.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
+            await nic2.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
+            await nic2.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(WaitUntil.Completed);
+            await lbPublicIp.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -1138,9 +1056,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
-                    {
-                        Name = frontendIpConfigName,
-                        PublicIPAddress = new PublicIPAddressData()
+                    {PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = lbPublicIp.Id
                         }
@@ -1148,9 +1064,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 InboundNatPools = {
                     new LoadBalancerInboundNatPool()
-                    {
-                        Name = inboundNatPool1Name,
-                        Properties = new LoadBalancerInboundNatPoolProperties(LoadBalancingTransportProtocol.Tcp, frontendPortRangeStart: 100, frontendPortRangeEnd: 105, backendPort: 81)
+                    {Properties = new LoadBalancerInboundNatPoolProperties(LoadBalancingTransportProtocol.Tcp, frontendPortRangeStart: 100, frontendPortRangeEnd: 105, backendPort: 81)
                         {
                             FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
                         }
@@ -1160,7 +1074,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer, System.Threading.CancellationToken.None);
             Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Verify the GET LoadBalancer
@@ -1182,20 +1096,19 @@ namespace Azure.ResourceManager.Network.Tests
             // Add a new nat pool
             LoadBalancerInboundNatPool natpool2 = new LoadBalancerInboundNatPool()
             {
-                Name = inboundNatPool2Name,
                 Properties = new LoadBalancerInboundNatPoolProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPortRangeStart: 107, frontendPortRangeEnd: 110, backendPort: 81)
                 {
                     FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
                 }
             };
             getLoadBalancer.Value.Data.InboundNatPools.Add(natpool2);
-            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, getLoadBalancer.Value.Data);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, getLoadBalancer.Value.Data, System.Threading.CancellationToken.None);
 
             // Verify the nat pool
             Assert.AreEqual(2, getLoadBalancer.Value.Data.InboundNatPools.Count);
 
             // Delete LoadBalancer
-            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 
@@ -1205,7 +1118,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(WaitUntil.Completed);
+            await lbPublicIp.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [RecordedTest]
@@ -1275,9 +1188,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
-                    {
-                        Name = frontendIpConfigName,
-                        PublicIPAddress = new PublicIPAddressData()
+                    {PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = lbPublicIp.Id
                         }
@@ -1285,15 +1196,11 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 BackendAddressPools = {
                     new BackendAddressPoolData()
-                    {
-                        Name = backEndAddressPoolName,
-                    }
+                    {Name = backEndAddressPoolName}
                 },
                 LoadBalancingRules = {
                     new LoadBalancingRuleData()
-                    {
-                        Name = loadBalancingRuleName,
-                        Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
+                    {Name = loadBalancingRuleName, Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
                         {
                             FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
                             BackendPort = 80,
@@ -1306,9 +1213,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 Probes = {
                     new ProbeData()
-                    {
-                        Name = probeName,
-                        Protocol = ProbeProtocol.Http,
+                    {Name = probeName, Protocol = ProbeProtocol.Http,
                         Port = 80,
                         RequestPath = "healthcheck.aspx",
                         IntervalInSeconds = 10,
@@ -1317,9 +1222,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 InboundNatRules = {
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule1Name,
-                        FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
+                    {Name = inboundNatRule1Name, FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3389,
                         BackendPort = 3389,
@@ -1327,9 +1230,7 @@ namespace Azure.ResourceManager.Network.Tests
                         EnableFloatingIP = false
                     },
                     new InboundNatRuleData()
-                    {
-                        Name = inboundNatRule2Name,
-                        FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
+                    {Name = inboundNatRule2Name, FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3390,
                         BackendPort = 3389,
@@ -1341,7 +1242,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            LoadBalancerResource loadBalancer = (await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancerData)).Value;
+            LoadBalancerResource loadBalancer = (await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancerData, System.Threading.CancellationToken.None)).Value;
 
             // Associate the nic with LB
             nic1.Data.IPConfigurations.First().LoadBalancerBackendAddressPools.Add(loadBalancer.Data.BackendAddressPools.First());
@@ -1352,9 +1253,9 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nics
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            nic1 = (await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic1name, nic1.Data)).Value;
-            nic2 = (await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic2name, nic2.Data)).Value;
-            nic3 = (await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic3name, nic3.Data)).Value;
+            nic1 = (await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic1name, nic1.Data, System.Threading.CancellationToken.None)).Value;
+            nic2 = (await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic2name, nic2.Data, System.Threading.CancellationToken.None)).Value;
+            nic3 = (await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic3name, nic3.Data, System.Threading.CancellationToken.None)).Value;
 
             // Get lb with expanded nics from nat rules
             loadBalancer = await loadBalancerCollection.GetAsync(lbName, "InboundNatRules/backendIPConfiguration");
@@ -1389,7 +1290,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // Delete LoadBalancer
-            Operation deleteOperation = await (await loadBalancerCollection.GetAsync(lbName)).Value.DeleteAsync(WaitUntil.Completed);
+            Operation deleteOperation = await (await loadBalancerCollection.GetAsync(lbName)).Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // Verify Delete

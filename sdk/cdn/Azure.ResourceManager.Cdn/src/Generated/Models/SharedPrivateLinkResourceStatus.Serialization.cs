@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     internal static partial class SharedPrivateLinkResourceStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SharedPrivateLinkResourceStatus value) => value switch
         {
             SharedPrivateLinkResourceStatus.Pending => "Pending",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.Cdn.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SharedPrivateLinkResourceStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SharedPrivateLinkResourceStatus ToSharedPrivateLinkResourceStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return SharedPrivateLinkResourceStatus.Pending;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved")) return SharedPrivateLinkResourceStatus.Approved;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected")) return SharedPrivateLinkResourceStatus.Rejected;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected")) return SharedPrivateLinkResourceStatus.Disconnected;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Timeout")) return SharedPrivateLinkResourceStatus.Timeout;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending"))
+            {
+                return SharedPrivateLinkResourceStatus.Pending;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved"))
+            {
+                return SharedPrivateLinkResourceStatus.Approved;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected"))
+            {
+                return SharedPrivateLinkResourceStatus.Rejected;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected"))
+            {
+                return SharedPrivateLinkResourceStatus.Disconnected;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Timeout"))
+            {
+                return SharedPrivateLinkResourceStatus.Timeout;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SharedPrivateLinkResourceStatus value.");
         }
     }

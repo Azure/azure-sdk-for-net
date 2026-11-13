@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class Sample4_DetectLivenessWithSession: FaceSamplesBase
+    public partial class Sample4_DetectLivenessWithSession : FaceSamplesBase
     {
         [Test]
         [TestCase(true)] // Change deleteSession to false to keep the session and perform liveness detection with liveness SDK
@@ -17,7 +17,8 @@ namespace Azure.AI.Vision.Face.Samples
             var sessionClient = CreateSessionClient();
 
             #region Snippet:CreateLivenessSessionAsync
-            var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
+            var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
+            {
                 SendResultsToClient = true,
                 DeviceCorrelationId = Guid.NewGuid().ToString(),
             };
@@ -53,7 +54,8 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
             Console.WriteLine($"Status: {sessionResult.Status}");
             Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-            if (sessionResult.Result != null) {
+            if (sessionResult.Result != null)
+            {
                 WriteLivenessSessionAuditEntry(sessionResult.Result);
             }
             #endregion

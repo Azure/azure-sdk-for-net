@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
+    /// <summary></summary>
     public partial class SiteRecoveryVCenterResource : IJsonModel<SiteRecoveryVCenterData>
     {
-        private static SiteRecoveryVCenterData s_dataDeserializationInstance;
-        private static SiteRecoveryVCenterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SiteRecoveryVCenterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SiteRecoveryVCenterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SiteRecoveryVCenterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteRecoveryVCenterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryVCenterData>)Data).Write(writer, options);
 
-        SiteRecoveryVCenterData IJsonModel<SiteRecoveryVCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryVCenterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryVCenterData IJsonModel<SiteRecoveryVCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SiteRecoveryVCenterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryVCenterData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SiteRecoveryVCenterData IPersistableModel<SiteRecoveryVCenterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryVCenterData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<SiteRecoveryVCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryVCenterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteRecoveryVCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

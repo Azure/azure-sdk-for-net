@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityInsightsRecommendationResource : IJsonModel<SecurityInsightsRecommendationData>
     {
-        private static SecurityInsightsRecommendationData s_dataDeserializationInstance;
-        private static SecurityInsightsRecommendationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsRecommendationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityInsightsRecommendationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsightsRecommendationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsRecommendationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsRecommendationData>)Data).Write(writer, options);
 
-        SecurityInsightsRecommendationData IJsonModel<SecurityInsightsRecommendationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsRecommendationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsRecommendationData IJsonModel<SecurityInsightsRecommendationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityInsightsRecommendationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsRecommendationData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityInsightsRecommendationData IPersistableModel<SecurityInsightsRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsRecommendationData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsRecommendationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

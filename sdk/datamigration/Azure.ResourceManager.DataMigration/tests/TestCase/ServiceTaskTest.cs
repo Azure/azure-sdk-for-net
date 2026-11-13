@@ -5,15 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.DataMigration.Tests.Helpers;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Network;
-using NUnit.Framework;
 using Azure.ResourceManager.DataMigration.Models;
-using System.Threading;
+using Azure.ResourceManager.DataMigration.Tests.Helpers;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataMigration.Tests
 {

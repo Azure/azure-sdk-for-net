@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes properties of a connected resource. </summary>
     public partial class ConnectedResourceInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedResourceInfo"/>. </summary>
         internal ConnectedResourceInfo()
@@ -55,19 +26,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="connectedResourceId"> The Azure resource id of the connected resource. </param>
         /// <param name="tcpPorts"> The allowed tcp ports. </param>
         /// <param name="udpPorts"> The allowed udp ports. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedResourceInfo(ResourceIdentifier connectedResourceId, string tcpPorts, string udpPorts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedResourceInfo(ResourceIdentifier connectedResourceId, string tcpPorts, string udpPorts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectedResourceId = connectedResourceId;
             TcpPorts = tcpPorts;
             UdpPorts = udpPorts;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure resource id of the connected resource. </summary>
         public ResourceIdentifier ConnectedResourceId { get; }
+
         /// <summary> The allowed tcp ports. </summary>
         public string TcpPorts { get; }
+
         /// <summary> The allowed udp ports. </summary>
         public string UdpPorts { get; }
     }

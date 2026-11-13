@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct DistributedAvailabilityGroupManagedInstanceRole : IEquatable<DistributedAvailabilityGroupManagedInstanceRole>
     {
         private readonly string _value;
+        /// <summary> Primary. </summary>
+        private const string PrimaryValue = "Primary";
+        /// <summary> Secondary. </summary>
+        private const string SecondaryValue = "Secondary";
 
         /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupManagedInstanceRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DistributedAvailabilityGroupManagedInstanceRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrimaryValue = "Primary";
-        private const string SecondaryValue = "Secondary";
+            _value = value;
+        }
 
         /// <summary> Primary. </summary>
         public static DistributedAvailabilityGroupManagedInstanceRole Primary { get; } = new DistributedAvailabilityGroupManagedInstanceRole(PrimaryValue);
+
         /// <summary> Secondary. </summary>
         public static DistributedAvailabilityGroupManagedInstanceRole Secondary { get; } = new DistributedAvailabilityGroupManagedInstanceRole(SecondaryValue);
+
         /// <summary> Determines if two <see cref="DistributedAvailabilityGroupManagedInstanceRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DistributedAvailabilityGroupManagedInstanceRole left, DistributedAvailabilityGroupManagedInstanceRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DistributedAvailabilityGroupManagedInstanceRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DistributedAvailabilityGroupManagedInstanceRole left, DistributedAvailabilityGroupManagedInstanceRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DistributedAvailabilityGroupManagedInstanceRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DistributedAvailabilityGroupManagedInstanceRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DistributedAvailabilityGroupManagedInstanceRole(string value) => new DistributedAvailabilityGroupManagedInstanceRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DistributedAvailabilityGroupManagedInstanceRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DistributedAvailabilityGroupManagedInstanceRole?(string value) => value == null ? null : new DistributedAvailabilityGroupManagedInstanceRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DistributedAvailabilityGroupManagedInstanceRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DistributedAvailabilityGroupManagedInstanceRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

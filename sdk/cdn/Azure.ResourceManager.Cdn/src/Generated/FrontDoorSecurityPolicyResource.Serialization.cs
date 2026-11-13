@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Cdn
 {
+    /// <summary></summary>
     public partial class FrontDoorSecurityPolicyResource : IJsonModel<FrontDoorSecurityPolicyData>
     {
-        private static FrontDoorSecurityPolicyData s_dataDeserializationInstance;
-        private static FrontDoorSecurityPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FrontDoorSecurityPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FrontDoorSecurityPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FrontDoorSecurityPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontDoorSecurityPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorSecurityPolicyData>)Data).Write(writer, options);
 
-        FrontDoorSecurityPolicyData IJsonModel<FrontDoorSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorSecurityPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorSecurityPolicyData IJsonModel<FrontDoorSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FrontDoorSecurityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorSecurityPolicyData>(Data, options, AzureResourceManagerCdnContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FrontDoorSecurityPolicyData IPersistableModel<FrontDoorSecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorSecurityPolicyData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<FrontDoorSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorSecurityPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontDoorSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

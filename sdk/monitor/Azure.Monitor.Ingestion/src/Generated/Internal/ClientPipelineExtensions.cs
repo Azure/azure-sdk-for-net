@@ -17,10 +17,10 @@ namespace Azure.Monitor.Ingestion
     {
         public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            (CancellationToken userCancellationToken, ErrorOptions statusOption) = context.Parse();
+            (CancellationToken userCancellationToken, ErrorOptions errorOptions) = context.Parse();
             await pipeline.SendAsync(message, userCancellationToken).ConfigureAwait(false);
 
-            if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+            if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
                 throw new RequestFailedException(message.Response);
             }
@@ -30,10 +30,10 @@ namespace Azure.Monitor.Ingestion
 
         public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
-            (CancellationToken userCancellationToken, ErrorOptions statusOption) = context.Parse();
+            (CancellationToken userCancellationToken, ErrorOptions errorOptions) = context.Parse();
             pipeline.Send(message, userCancellationToken);
 
-            if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+            if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
                 throw new RequestFailedException(message.Response);
             }
@@ -44,11 +44,15 @@ namespace Azure.Monitor.Ingestion
         public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             Response response = await pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            if (response.IsError)
+            {
+                return new ErrorResult<bool>(response, new RequestFailedException(response));
+            }
             switch (response.Status)
             {
                 case >= 200 and < 300:
                     return Response.FromValue(true, response);
-                case >= 400 and < 500:
+                case 404:
                     return Response.FromValue(false, response);
                 default:
                     return new ErrorResult<bool>(response, new RequestFailedException(response));
@@ -58,11 +62,15 @@ namespace Azure.Monitor.Ingestion
         public static Response<bool> ProcessHeadAsBoolMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             Response response = pipeline.ProcessMessage(message, context);
+            if (response.IsError)
+            {
+                return new ErrorResult<bool>(response, new RequestFailedException(response));
+            }
             switch (response.Status)
             {
                 case >= 200 and < 300:
                     return Response.FromValue(true, response);
-                case >= 400 and < 500:
+                case 404:
                     return Response.FromValue(false, response);
                 default:
                     return new ErrorResult<bool>(response, new RequestFailedException(response));

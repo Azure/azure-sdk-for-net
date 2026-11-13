@@ -14,10 +14,12 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
     public class NextLinkPaginationTests : SpectorTestBase
     {
         [SpectorTest]
-        public Task ConvenienceMethod() => Test(async (host) =>
+        [TestCase(false)]
+        [TestCase(true)]
+        public Task ConvenienceMethod(bool stringNextLink) => Test(async (host) =>
         {
-            var client = new PageableClient(host, null);
-            var result = client.GetServerDrivenPaginationClient().LinkAsync();
+            var client = new PageableClient(host, null).GetServerDrivenPaginationClient();
+            var result = stringNextLink ? client.LinkStringAsync() : client.LinkAsync();
             int count = 0;
             var expectedPets = new Dictionary<string, string>()
             {
@@ -32,13 +34,16 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
                 Assert.AreEqual((++count).ToString(), pet.Id);
                 Assert.AreEqual(expectedPets[pet.Id], pet.Name);
             }
+            Assert.AreEqual(4, count);
         });
 
         [SpectorTest]
-        public Task ConvenienceMethodSync() => Test((host) =>
+        [TestCase(false)]
+        [TestCase(true)]
+        public Task ConvenienceMethodSync(bool stringNextLink) => Test((host) =>
         {
-            var client = new PageableClient(host, null);
-            var result = client.GetServerDrivenPaginationClient().Link();
+            var client = new PageableClient(host, null).GetServerDrivenPaginationClient();
+            var result = stringNextLink ? client.LinkString() : client.Link();
             int count = 0;
             var expectedPets = new Dictionary<string, string>()
             {
@@ -53,14 +58,17 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
                 Assert.AreEqual((++count).ToString(), pet.Id);
                 Assert.AreEqual(expectedPets[pet.Id], pet.Name);
             }
+            Assert.AreEqual(4, count);
             return Task.CompletedTask;
         });
 
         [SpectorTest]
-        public Task ProtocolMethod() => Test(async (host) =>
+        [TestCase(false)]
+        [TestCase(true)]
+        public Task ProtocolMethod(bool stringNextLink) => Test(async (host) =>
         {
-            var client = new PageableClient(host, null);
-            var result = client.GetServerDrivenPaginationClient().LinkAsync(new RequestContext());
+            var client = new PageableClient(host, null).GetServerDrivenPaginationClient();
+            var result = stringNextLink ? client.LinkStringAsync(new RequestContext()) : client.LinkAsync(new RequestContext());
             int count = 0;
             var expectedPets = new Dictionary<string, string>()
             {
@@ -81,13 +89,16 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
                     Assert.AreEqual(expectedPets[pet["id"]!.ToString()], pet["name"]!.ToString());
                 }
             }
+            Assert.AreEqual(4, count);
         });
 
         [SpectorTest]
-        public Task ProtocolMethodSync() => Test((host) =>
+        [TestCase(false)]
+        [TestCase(true)]
+        public Task ProtocolMethodSync(bool stringNextLink) => Test((host) =>
         {
-            var client = new PageableClient(host, null);
-            var result = client.GetServerDrivenPaginationClient().Link(new RequestContext());
+            var client = new PageableClient(host, null).GetServerDrivenPaginationClient();
+            var result = stringNextLink ? client.LinkString(new RequestContext()) : client.Link(new RequestContext());
             int count = 0;
             var expectedPets = new Dictionary<string, string>()
             {
@@ -108,7 +119,47 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
                     Assert.AreEqual(expectedPets[pet["id"]!.ToString()], pet["name"]!.ToString());
                 }
             }
+            Assert.AreEqual(4, count);
             return Task.CompletedTask;
+        });
+
+        [SpectorTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        public Task ContinuationTokenResumesFromNextPage(bool stringNextLink) => Test(async (host) =>
+        {
+            var client = new PageableClient(host, null).GetServerDrivenPaginationClient();
+            var result = stringNextLink ? client.LinkStringAsync(new RequestContext()) : client.LinkAsync(new RequestContext());
+
+            // Capture the continuation token exposed by the first page.
+            string? firstPageToken = null;
+            await foreach (var page in result.AsPages())
+            {
+                firstPageToken = page.ContinuationToken;
+                break;
+            }
+
+            // The first page must expose the token needed to fetch the NEXT page. Regression test for
+            // https://github.com/Azure/azure-sdk-for-net/issues/60274, where the token pointed at the
+            // current page (or was null) rather than the next one.
+            Assert.IsNotNull(firstPageToken);
+
+            // Resuming from the captured token should return the remaining pages only (pets 3 and 4).
+            var resumedIds = new List<string>();
+            string? lastPageToken = "unset";
+            await foreach (var page in result.AsPages(firstPageToken))
+            {
+                lastPageToken = page.ContinuationToken;
+                var pageResult = JsonNode.Parse(page.GetRawResponse().Content.ToString())!;
+                foreach (var pet in (pageResult["pets"] as JsonArray)!)
+                {
+                    resumedIds.Add(pet!["id"]!.ToString());
+                }
+            }
+            CollectionAssert.AreEqual(new[] { "3", "4" }, resumedIds);
+
+            // The final page must expose a null continuation token to signal the end of the collection.
+            Assert.IsNull(lastPageToken);
         });
 
         [SpectorTest]

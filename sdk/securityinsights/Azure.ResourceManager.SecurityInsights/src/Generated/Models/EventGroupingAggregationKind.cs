@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct EventGroupingAggregationKind : IEquatable<EventGroupingAggregationKind>
     {
         private readonly string _value;
+        /// <summary> SingleAlert. </summary>
+        private const string SingleAlertValue = "SingleAlert";
+        /// <summary> AlertPerResult. </summary>
+        private const string AlertPerResultValue = "AlertPerResult";
 
         /// <summary> Initializes a new instance of <see cref="EventGroupingAggregationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventGroupingAggregationKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleAlertValue = "SingleAlert";
-        private const string AlertPerResultValue = "AlertPerResult";
+            _value = value;
+        }
 
         /// <summary> SingleAlert. </summary>
         public static EventGroupingAggregationKind SingleAlert { get; } = new EventGroupingAggregationKind(SingleAlertValue);
+
         /// <summary> AlertPerResult. </summary>
         public static EventGroupingAggregationKind AlertPerResult { get; } = new EventGroupingAggregationKind(AlertPerResultValue);
+
         /// <summary> Determines if two <see cref="EventGroupingAggregationKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventGroupingAggregationKind left, EventGroupingAggregationKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventGroupingAggregationKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventGroupingAggregationKind left, EventGroupingAggregationKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGroupingAggregationKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventGroupingAggregationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventGroupingAggregationKind(string value) => new EventGroupingAggregationKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventGroupingAggregationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventGroupingAggregationKind?(string value) => value == null ? null : new EventGroupingAggregationKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventGroupingAggregationKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventGroupingAggregationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

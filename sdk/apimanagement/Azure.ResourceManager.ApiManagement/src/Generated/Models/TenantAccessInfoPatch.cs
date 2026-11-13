@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Tenant access information update parameters. </summary>
     public partial class TenantAccessInfoPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TenantAccessInfoPatch"/>. </summary>
         public TenantAccessInfoPatch()
@@ -51,16 +23,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TenantAccessInfoPatch"/>. </summary>
-        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TenantAccessInfoPatch(bool? isDirectAccessEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Tenant access information update parameter properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TenantAccessInfoPatch(AccessInformationUpdateParameterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsDirectAccessEnabled = isDirectAccessEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Tenant access information update parameter properties. </summary>
+        [WirePath("properties")]
+        internal AccessInformationUpdateParameterProperties Properties { get; set; }
 
         /// <summary> Determines whether direct access is enabled. </summary>
         [WirePath("properties.enabled")]
-        public bool? IsDirectAccessEnabled { get; set; }
+        public bool? IsDirectAccessEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDirectAccessEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessInformationUpdateParameterProperties();
+                }
+                Properties.IsDirectAccessEnabled = value;
+            }
+        }
     }
 }

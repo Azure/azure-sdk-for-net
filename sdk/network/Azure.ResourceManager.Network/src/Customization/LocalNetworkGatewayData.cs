@@ -4,25 +4,23 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the LocalNetworkGateway data model.
-    /// A common class for general resource information.
-    /// </summary>
-    public partial class LocalNetworkGatewayData : NetworkTrackedResourceData
+    public partial class LocalNetworkGatewayData
     {
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        // 1.15.0 exposes this custom convenience list alongside public LocalNetworkAddressSpace; flattening would remove that contract.
+        /// <summary> Gets the local network address prefixes in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> LocalNetworkAddressPrefixes
         {
             get
             {
-                if (LocalNetworkAddressSpace is null)
-                    LocalNetworkAddressSpace = new VirtualNetworkAddressSpace();
+                LocalNetworkAddressSpace ??= new VirtualNetworkAddressSpace();
                 return LocalNetworkAddressSpace.AddressPrefixes;
             }
         }
-   }
+    }
 }

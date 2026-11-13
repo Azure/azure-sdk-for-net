@@ -3,6 +3,7 @@ $CI_YAML_FILE = "ci.yml"
 $TSP_LOCATION_FILE = "tsp-location.yaml"
 
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
+. (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "ChangeLog-Operations.ps1")
 
 #mgmt: swagger directory name to sdk directory name map
 $packageNameHash = [ordered]@{
@@ -304,11 +305,25 @@ function Update-MgmtPackageFolder() {
     $projectFolder = (Join-Path $sdkPath "sdk" $packageName "Azure.ResourceManager.*")
     $mgmtPackageName = ""
     $projectFolder = $projectFolder -replace "\\", "/"
-    if (Test-Path -Path $projectFolder) {
+    $projectFolders = @(Get-ChildItem -Path $projectFolder -Directory -ErrorAction SilentlyContinue)
+    if ($projectFolders.Count -gt 0) {
       Write-Host "Path exists!"
-      $folderinfo = Get-ChildItem -Path $projectFolder
+      if ($projectFolders.Count -eq 1) {
+        $folderinfo = $projectFolders[0]
+      } else {
+        $autorestProjectFolders = @($projectFolders | Where-Object {
+          Test-Path -Path (Join-Path $_.FullName "src" $AUTOREST_CONFIG_FILE)
+        })
+        if ($autorestProjectFolders.Count -eq 1) {
+          $folderinfo = $autorestProjectFolders[0]
+        } else {
+          $projectFolderNames = $projectFolders.Name -join ", "
+          Write-Host "[ERROR] Multiple management SDK packages match sdk/${packageName}: $projectFolderNames. Cannot infer which package to generate for readme '$readme'."
+          exit 1
+        }
+      }
       $mgmtPackageName = $folderinfo.Name
-      $projectFolder = "$sdkPath/sdk/$packageName/$mgmtPackageName"
+      $projectFolder = $folderinfo.FullName -replace "\\", "/"
     } else {
       Write-Host "[ERROR] Project directory doesn't exist. It is a new .NET SDK. We will not support onboard a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
       exit 1
@@ -676,6 +691,270 @@ function Invoke-GenerateAndBuildSDK () {
     }
 }
 
+function New-ChangeLogIfNotExists()
+{
+    param(
+        [string]$projectFolder,
+        [string]$version
+    )
+
+    $changeLogPath = Join-Path $projectFolder "CHANGELOG.md"
+    
+    if (!(Test-Path $changeLogPath)) {
+        Write-Host "CHANGELOG.md does not exist at $changeLogPath. Creating a new one with version $version"
+        
+        try {
+            # Create a new changelog entry using the helper function
+            $newEntry = New-ChangeLogEntry -Version $version -Status "Unreleased" -InitialAtxHeader "#"
+            
+            if ($newEntry) {
+                # Create the changelog content
+                $changeLogContent = @()
+                $changeLogContent += "# Release History"
+                $changeLogContent += ""
+                $changeLogContent += $newEntry.ReleaseTitle
+                $changeLogContent += $newEntry.ReleaseContent
+                
+                # Write the changelog file
+                Set-Content -Path $changeLogPath -Value $changeLogContent
+                Write-Host "Successfully created CHANGELOG.md with initial entry for version $version"
+            }
+            else {
+                Write-Warning "Failed to create changelog entry for version $version. The New-ChangeLogEntry function returned null, which may indicate an invalid version format."
+            }
+        }
+        catch {
+            Write-Warning "Failed to create CHANGELOG.md for version $version. Error: $_"
+        }
+    }
+    else {
+        Write-Host "CHANGELOG.md exists at $changeLogPath"
+    }
+}
+
+# Creates scaffolding files for a new management-plane TypeSpec SDK package.
+# This is a temporary bridge until the emitter itself creates all required files.
+# Reads file content from eng/templates/Azure.ResourceManager.Template/ and applies
+# the same placeholder substitutions that `dotnet new azuremgmt` would.
+function New-MgmtPackageScaffolding()
+{
+    param(
+        [string]$sdkProjectFolder,
+        [string]$packageName,
+        [string]$sdkRootPath
+    )
+
+    Write-Host "Creating management SDK scaffolding for $packageName in $sdkProjectFolder"
+
+    # The service directory is the parent of the package folder (sdk/{service}/{package})
+    $serviceDirectory = Split-Path $sdkProjectFolder -Parent
+
+    # Derive naming components from the package name
+    # e.g. Azure.ResourceManager.HorizonDb => providerShortName = HorizonDb, safeName = AzureResourceManagerHorizonDb
+    $nameParts = $packageName.Split(".")
+    $providerShortName = $nameParts[-1]
+    $safeName = $packageName.Replace(".", "")
+
+    # Infer the resource provider name (e.g. Microsoft.HorizonDb) from the package name
+    # Azure.ResourceManager.Foo => Microsoft.Foo, Azure.ResourceManager.Compute.Bulkactions => Microsoft.Compute.Bulkactions
+    if ($nameParts.Count -gt 3) {
+        $providerSuffix = ($nameParts[2..($nameParts.Count - 1)] -join ".")
+    } else {
+        $providerSuffix = $providerShortName
+    }
+    $providerFullName = "Microsoft.$providerSuffix"
+    # LowercaseProviderShortName in templates maps to the service directory name
+    # (e.g. sdk/compute/Azure.ResourceManager.Compute.Bulkactions => "compute"),
+    # not the package's last segment. Otherwise multi-segment packages would write
+    # an incorrect ServiceDirectory into ci.mgmt.yml.
+    $lowercaseProviderShortName = (Split-Path $serviceDirectory -Leaf).ToLower()
+
+    # Locate the mgmt template directory
+    $templateDir = Join-Path $sdkRootPath "eng" "templates" "Azure.ResourceManager.Template"
+    if (!(Test-Path $templateDir)) {
+        Write-Warning "Management template not found at $templateDir. Skipping scaffolding."
+        return
+    }
+
+    # Helper: read a template file and apply placeholder substitutions matching dotnet new azuremgmt
+    function Read-MgmtTemplate([string]$relativePath) {
+        $templateFile = Join-Path $templateDir $relativePath
+        if (!(Test-Path $templateFile)) {
+            Write-Warning "Template file not found: $templateFile"
+            return $null
+        }
+        $content = Get-Content -Path $templateFile -Raw
+        # Apply substitutions in order: longer/more-specific tokens first to avoid
+        # partial matches (e.g. ProviderShortName inside LowercaseProviderShortName)
+        $content = $content.Replace("Azure.ResourceManager.Template", $packageName)
+        $content = $content.Replace("AzureManagementTemplateSafeName", $safeName)
+        $content = $content.Replace("LowercaseProviderShortName", $lowercaseProviderShortName)
+        $content = $content.Replace("ProviderFullName", $providerFullName)
+        $content = $content.Replace("ProviderShortName", $providerShortName)
+        # Trim trailing whitespace to prevent Set-Content from adding extra newlines (SA1518)
+        return $content.TrimEnd()
+    }
+
+    # --- ci.mgmt.yml (in service directory, not package directory) ---
+    $ciMgmtPath = Join-Path $serviceDirectory "ci.mgmt.yml"
+    if (!(Test-Path $ciMgmtPath)) {
+        Write-Host "Creating ci.mgmt.yml at $ciMgmtPath"
+        $ciContent = Read-MgmtTemplate "content/ci.mgmt.yml"
+        if ($ciContent) {
+            Set-Content -Path $ciMgmtPath -Value $ciContent
+        }
+    } else {
+        Write-Host "ci.mgmt.yml already exists, updating to include $packageName"
+        Update-CIYmlFile -ciFilePath $ciMgmtPath -artifact $packageName
+    }
+
+    # --- Directory.Build.props ---
+    $dirBuildPropsPath = Join-Path $sdkProjectFolder "Directory.Build.props"
+    if (!(Test-Path $dirBuildPropsPath)) {
+        Write-Host "Creating Directory.Build.props"
+        $propsContent = Read-MgmtTemplate "Directory.Build.props"
+        if ($propsContent) {
+            Set-Content -Path $dirBuildPropsPath -Value $propsContent
+        }
+    }
+
+    # --- README.md ---
+    $readmePath = Join-Path $sdkProjectFolder "README.md"
+    if (!(Test-Path $readmePath)) {
+        Write-Host "Creating README.md"
+        $readmeContent = Read-MgmtTemplate "README.md"
+        if ($readmeContent) {
+            Set-Content -Path $readmePath -Value $readmeContent
+        }
+    }
+
+    # --- CHANGELOG.md ---
+    $changelogPath = Join-Path $sdkProjectFolder "CHANGELOG.md"
+    if (!(Test-Path $changelogPath)) {
+        # Try to read version from csproj, fall back to 1.0.0-beta.1
+        $version = "1.0.0-beta.1"
+        $csprojPath = Join-Path $sdkProjectFolder "src" "$packageName.csproj"
+        if (Test-Path $csprojPath) {
+            try {
+                $csproj = New-Object xml
+                $csproj.PreserveWhitespace = $true
+                $csproj.Load($csprojPath)
+                $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
+                if ($versionNode -and ![string]::IsNullOrWhiteSpace($versionNode.InnerText)) {
+                    $version = $versionNode.InnerText
+                }
+            } catch {
+                Write-Warning "Could not read version from csproj, using default: $version"
+            }
+        }
+        New-ChangeLogIfNotExists -projectFolder $sdkProjectFolder -version $version
+    }
+
+    # --- src/Properties/AssemblyInfo.cs ---
+    $propertiesDir = Join-Path $sdkProjectFolder "src" "Properties"
+    $assemblyInfoPath = Join-Path $propertiesDir "AssemblyInfo.cs"
+    if (!(Test-Path $assemblyInfoPath)) {
+        Write-Host "Creating AssemblyInfo.cs"
+        if (!(Test-Path $propertiesDir)) {
+            New-Item -ItemType Directory -Path $propertiesDir -Force | Out-Null
+        }
+        $asmContent = Read-MgmtTemplate "src/Properties/AssemblyInfo.cs"
+        if ($asmContent) {
+            Set-Content -Path $assemblyInfoPath -Value $asmContent
+        }
+    }
+
+    # --- tests/<Package>.Tests.csproj ---
+    $testsDir = Join-Path $sdkProjectFolder "tests"
+    $testCsprojPath = Join-Path $testsDir "$packageName.Tests.csproj"
+    if (!(Test-Path $testCsprojPath)) {
+        Write-Host "Creating test project"
+        if (!(Test-Path $testsDir)) {
+            New-Item -ItemType Directory -Path $testsDir -Force | Out-Null
+        }
+        $testCsprojContent = Read-MgmtTemplate "tests/Azure.ResourceManager.Template.Tests.csproj"
+        if ($testCsprojContent) {
+            Set-Content -Path $testCsprojPath -Value $testCsprojContent
+        }
+    }
+
+    # --- tests/<ProviderShortName>ManagementTestBase.cs ---
+    $testBasePath = Join-Path $testsDir "${providerShortName}ManagementTestBase.cs"
+    if (!(Test-Path $testBasePath)) {
+        Write-Host "Creating test base class"
+        $testBaseContent = Read-MgmtTemplate "tests/ProviderShortNameManagementTestBase.cs"
+        if ($testBaseContent) {
+            Set-Content -Path $testBasePath -Value $testBaseContent
+        }
+    }
+
+    # --- tests/<ProviderShortName>ManagementTestEnvironment.cs ---
+    $testEnvPath = Join-Path $testsDir "${providerShortName}ManagementTestEnvironment.cs"
+    if (!(Test-Path $testEnvPath)) {
+        Write-Host "Creating test environment class"
+        $testEnvContent = Read-MgmtTemplate "tests/ProviderShortNameManagementTestEnvironment.cs"
+        if ($testEnvContent) {
+            Set-Content -Path $testEnvPath -Value $testEnvContent
+        }
+    }
+
+    # --- Fix .sln/.slnx to include test project ---
+    $slnFile = Get-ChildItem -Path $sdkProjectFolder -Filter "$packageName.sln*" -File | Where-Object { $_.Extension -in '.sln', '.slnx' } | Select-Object -First 1
+    if ($slnFile) {
+        $slnContent = Get-Content $slnFile.FullName -Raw
+        if ($slnContent -notmatch [regex]::Escape("$packageName.Tests")) {
+            Write-Host "Adding test project to solution ($($slnFile.Name))"
+            Push-Location $sdkProjectFolder
+            try {
+                dotnet sln $slnFile.Name add "tests/$packageName.Tests.csproj" 2>&1 | Out-Null
+                if (!$?) {
+                    Write-Warning "Failed to add test project to solution via dotnet sln. The test project may need to be added manually."
+                }
+            } finally {
+                Pop-Location
+            }
+        }
+    }
+
+    Write-Host "Management SDK scaffolding complete for $packageName"
+}
+
+function Get-SDKValidationBuildArguments()
+{
+    param(
+        [string]$sdkRootPath,
+        [string]$service,
+        [string]$packageName
+    )
+
+    return @(
+        "build",
+        "/p:Scope=$service",
+        "/p:Project=$packageName",
+        "/p:RunApiCompat=false",
+        "/p:IncludeSamples=false",
+        "/p:IncludePerf=false",
+        "/p:IncludeStress=false",
+        (Join-Path $sdkRootPath "eng" "service.proj")
+    )
+}
+
+function Get-SDKPackageResult()
+{
+    param(
+        [bool]$isGenerateSuccess,
+        [bool]$hasValidationWarning
+    )
+
+    if (!$isGenerateSuccess) {
+        return "failed"
+    }
+    if ($hasValidationWarning) {
+        return "warning"
+    }
+    return "succeeded"
+}
+
 function GeneratePackage()
 {
     param(
@@ -699,8 +978,9 @@ function GeneratePackage()
     $hasBreakingChange = $false
     $breakingChangeItems = @()
     $content = ""
-    $result = "succeeded"
     $isGenerateSuccess = $true
+    $hasValidationWarning = $false
+    $version = ""
 
     # Generate Code
     $srcPath = Join-Path $projectFolder 'src'
@@ -714,34 +994,46 @@ function GeneratePackage()
         }
         if ( !$?) {
             Write-Host "[ERROR] Failed to generate sdk for package:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-            $result = "failed"
             $isGenerateSuccess = $false
         }
     }
 
     if ($isGenerateSuccess) {
+        # Get the version from csproj before building
+        $projectFile = Join-Path $srcPath "$packageName.csproj"
+        $csproj = new-object xml
+        $csproj.PreserveWhitespace = $true
+        $csproj.Load($projectFile)
+        $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
+        if ($versionNode) {
+            $version = $versionNode.InnerText
+        }
+        
+        # Create CHANGELOG.md if it doesn't exist
+        if (![string]::IsNullOrWhiteSpace($version)) {
+            New-ChangeLogIfNotExists -projectFolder $projectFolder -version $version
+        }
+        
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
-            Write-Host "[ERROR] Failed to build the sdk project: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-            $result = "failed"
+            Write-Host "[WARNING] Failed to build the sdk project: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            $hasValidationWarning = $true
         } else {
-            # Build the whole solution and generate artifacts if the project build successfully
-            # Build the whole solution
-            Write-Host "Start to build sdk solution: $projectFolder"
-            $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
-            dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
+            Write-Host "Start to build sdk validation target: $projectFolder"
+            $validationBuildArguments = Get-SDKValidationBuildArguments -sdkRootPath $sdkRootPath -service $service -packageName $packageName
+            dotnet @validationBuildArguments
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to build sdk solution:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "failed"
+                Write-Host "[WARNING] Failed to build sdk validation target: $packageName. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $hasValidationWarning = $true
             }
             # pack
             Write-Host "Start to pack sdk"
             dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "failed"
+                Write-Host "[WARNING] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $hasValidationWarning = $true
             } else {
                 # artifacts
                 Push-Location $sdkRootPath
@@ -781,8 +1073,8 @@ function GeneratePackage()
             Write-Host "Start to export api for $service"
             & $sdkRootPath/eng/scripts/Export-API.ps1 $service
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "failed"
+                Write-Host "[WARNING] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $hasValidationWarning = $true
             }
             # breaking change validation
             Write-Host "Start to validate breaking change. srcPath:$srcPath"
@@ -825,16 +1117,8 @@ function GeneratePackage()
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
 
-    # get the sdk version
-    $version = ""
-    $projectFile = Join-Path $srcPath "$packageName.csproj"
-    $csproj = new-object xml
-    $csproj.PreserveWhitespace = $true
-    $csproj.Load($projectFile)
-    $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
-    if ($versionNode) {
-        $version = $versionNode.InnerText
-    }
+    $result = Get-SDKPackageResult -isGenerateSuccess $isGenerateSuccess -hasValidationWarning $hasValidationWarning
+
     $packageDetails = @{
         version=$version;
         packageName="$packageName";
@@ -901,35 +1185,192 @@ function UpdateExistingSDKByInputFiles()
 
 }
 
+function Get-TypeSpecEmitterPackageJsonPath {
+    param(
+        [string]$typespecEmitter,
+        [string]$sdkRepoRoot
+    )
+
+    if ([string]::IsNullOrWhiteSpace($typespecEmitter)) {
+        return
+    }
+
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    $configPath = Join-Path $sdkRepoRoot "eng" "tsp-client-config.yaml"
+    $config = ConvertFrom-Yaml (Get-Content $configPath -Raw -ErrorAction Stop)
+    $emitter = $config["supportedEmitters"] | Where-Object { $_["name"] -ceq $typespecEmitter } | Select-Object -First 1
+    if (-not $emitter -or [string]::IsNullOrWhiteSpace($emitter["path"])) {
+        throw "[ERROR] TypeSpec emitter '$typespecEmitter' is not supported. Configure it in '$configPath' with an emitter package JSON path."
+    }
+
+    $packageJsonPath = Join-Path $sdkRepoRoot $emitter["path"]
+    if (-not (Test-Path $packageJsonPath -PathType Leaf)) {
+        throw "[ERROR] Emitter package JSON for '$typespecEmitter' was not found at '$packageJsonPath'."
+    }
+    return $packageJsonPath
+}
+
 function GetSDKProjectFolder()
 {
     param(
         [string]$typespecConfigurationFile,
-        [string]$sdkRepoRoot
+        [string]$sdkRepoRoot,
+        [string]$typespecEmitter
     )
     $tspConfigYaml = Get-Content -Path $typespecConfigurationFile -Raw
 
     Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
     $yml = ConvertFrom-YAML $tspConfigYaml
-    $service = ""
-    $packageDir = ""
+    $service = $null
+    $namespace = $null
+    $packageDir = $null
+    $packageName = $null
+    $emitterOutputDir = $null
+
     if ($yml) {
-        if ($yml["parameters"] -And $yml["parameters"]["service-dir"]) {
-            $service = $yml["parameters"]["service-dir"]["default"];
+        if ($yml["parameters"] -and $yml["parameters"]["service-dir"]) {
+            $service = $yml["parameters"]["service-dir"]["default"]
         }
-        if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"]) {
-            $csharpOpts = $yml["options"]["@azure-tools/typespec-csharp"]
+
+        $csharpOptionKeys = @(
+            "@azure-tools/typespec-csharp",
+            "@azure-typespec/http-client-csharp",
+            "@azure-typespec/http-client-csharp-mgmt",
+            "@typespec/http-client-csharp"
+        )
+        if (-not [string]::IsNullOrWhiteSpace($typespecEmitter)) {
+            $csharpOptionKeys = @($typespecEmitter)
+            if (-not $yml["options"] -or -not $yml["options"][$typespecEmitter]) {
+                throw "[ERROR] Options for TypeSpec emitter '$typespecEmitter' were not found in '$typespecConfigurationFile'."
+            }
+        }
+
+        $csharpOpts = $null
+        if ($yml["options"]) {
+            foreach ($key in $csharpOptionKeys) {
+                if ($yml["options"]["$key"]) {
+                    $csharpOpts = $yml["options"]["$key"]
+                    break
+                }
+            }
+        }
+
+        if ($csharpOpts) {
+            if ($csharpOpts["namespace"]) {
+                $namespace = $csharpOpts["namespace"]
+            }
+
+            # TODO: This is should be removed once all package-dir usages are removed in spec repo
             if ($csharpOpts["package-dir"]) {
                 $packageDir = $csharpOpts["package-dir"]
             }
+
+            if ($csharpOpts["package-name"]) {
+                $packageName = $csharpOpts["package-name"]
+            }
+
             if ($csharpOpts["service-dir"]) {
                 $service = $csharpOpts["service-dir"]
             }
+
+            if ($csharpOpts["emitter-output-dir"]) {
+                $emitterOutputDir = $csharpOpts["emitter-output-dir"]
+            }
+
+            # Interpolate {variable} references across emitter option values to mirror TypeSpec's
+            # variable substitution behavior (e.g. namespace: "{package-name}" or package-name: "{namespace}").
+            # Excludes deprecated package-dir.
+            $optionVars = @{}
+            if (-not [string]::IsNullOrWhiteSpace($packageName)) { $optionVars["package-name"] = $packageName }
+            if (-not [string]::IsNullOrWhiteSpace($service)) { $optionVars["service-dir"] = $service }
+            if (-not [string]::IsNullOrWhiteSpace($namespace)) { $optionVars["namespace"] = $namespace }
+            foreach ($key in @($optionVars.Keys)) {
+                $value = $optionVars[$key]
+                if ([string]::IsNullOrWhiteSpace($value) -or $value -notmatch '\{.+\}') { continue }
+                $newValue = $value
+                foreach ($otherKey in @($optionVars.Keys)) {
+                    if ($otherKey -ne $key -and -not [string]::IsNullOrWhiteSpace($optionVars[$otherKey])) {
+                        $newValue = $newValue.Replace("{$otherKey}", $optionVars[$otherKey])
+                    }
+                }
+                if ($newValue -ne $value) {
+                    $optionVars[$key] = $newValue
+                }
+            }
+            if ($optionVars.ContainsKey("namespace")) { $namespace = $optionVars["namespace"] }
+            if ($optionVars.ContainsKey("package-name")) { $packageName = $optionVars["package-name"] }
+            if ($optionVars.ContainsKey("service-dir")) { $service = $optionVars["service-dir"] }
         }
     }
-    if (!$service || !$packageDir) {
-        throw "[ERROR] 'serviceDir' or 'packageDir' not provided. Please configure these settings in the 'tspconfig.yaml' file."
+
+    if (-not [string]::IsNullOrWhiteSpace($emitterOutputDir)) {
+        $relativePath = $emitterOutputDir
+        $prefix = "{output-dir}/"
+        if ($relativePath.StartsWith($prefix)) {
+            $relativePath = $relativePath.Substring($prefix.Length)
+        }
+
+        $resolvedSegments = @()
+        $segments = $relativePath -split "/"
+        foreach ($segment in $segments) {
+            switch ($segment) {
+                "{service-dir}" {
+                    if ([string]::IsNullOrWhiteSpace($service)) {
+                        throw "[ERROR] 'service-dir' must be provided when '{service-dir}' is used in 'emitter-output-dir'."
+                    }
+                    $normalizedService = ($service -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedService | Where-Object { $_ })
+                    continue
+                }
+                "{namespace}" {
+                    if ([string]::IsNullOrWhiteSpace($namespace)) {
+                        throw "[ERROR] 'namespace' must be provided when '{namespace}' is used in 'emitter-output-dir'."
+                    }
+                    $normalizedNamespace = ($namespace -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedNamespace | Where-Object { $_ })
+                    continue
+                }
+                "{package-name}" {
+                    if ([string]::IsNullOrWhiteSpace($packageName)) {
+                        throw "[ERROR] 'package-name' must be provided when '{package-name}' is used in 'emitter-output-dir'."
+                    }
+                    $normalizedPackageName = ($packageName -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedPackageName | Where-Object { $_ })
+                    continue
+                }
+                default {
+                    if (![string]::IsNullOrWhiteSpace($segment)) {
+                        $resolvedSegments += $segment
+                    }
+                }
+            }
+        }
+
+        if ($resolvedSegments.Count -eq 0) {
+            throw "[ERROR] Unable to resolve SDK project path from 'emitter-output-dir'."
+        }
+
+        $projectFolder = $sdkRepoRoot
+        foreach ($resolvedSegment in $resolvedSegments) {
+            $projectFolder = Join-Path $projectFolder $resolvedSegment
+        }
+
+        return $projectFolder
     }
-    $projectFolder = (Join-Path $sdkRepoRoot $service $packageDir)
-    return $projectFolder
+
+    if ([string]::IsNullOrWhiteSpace($packageDir)) {
+        if (![string]::IsNullOrWhiteSpace($packageName)) {
+            Write-Host "Package directory is reset by package name: $packageName"
+            $packageDir = $packageName
+        } else {
+            Write-Host "Package directory is reset by namespace: $namespace"
+            $packageDir = $namespace
+        }
+    }
+
+    if ([string]::IsNullOrWhiteSpace($service) -or [string]::IsNullOrWhiteSpace($namespace)) {
+        throw "[ERROR] 'service-dir' or 'namespace'/'package-dir' not provided. Please configure these settings in the 'tspconfig.yaml' file."
+    }
+
+    return (Join-Path $sdkRepoRoot $service $packageDir)
 }

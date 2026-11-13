@@ -1,0 +1,9 @@
+# Microsoft.Azure.WebJobs.Extensions.Storage.Blobs approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# The public types in this WebJobs extension implement and override members from the external
+# Microsoft.Azure.WebJobs.* SDK (IWebJobsStartup, binding/attribute/descriptor base types). Those
+# assemblies do not ship XML documentation, so the InheritDocTask cannot resolve the many
+# <inheritdoc/> comments and emits IDT002. Using <inheritdoc/> is the correct intent here, so
+# IDT002 is approved for the whole project.
+nowarn:IDT002

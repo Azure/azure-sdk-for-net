@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class AvsCloudLinkResource : IJsonModel<AvsCloudLinkData>
     {
-        private static AvsCloudLinkData s_dataDeserializationInstance;
-        private static AvsCloudLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AvsCloudLinkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AvsCloudLinkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AvsCloudLinkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsCloudLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvsCloudLinkData>)Data).Write(writer, options);
 
-        AvsCloudLinkData IJsonModel<AvsCloudLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsCloudLinkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsCloudLinkData IJsonModel<AvsCloudLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AvsCloudLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsCloudLinkData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AvsCloudLinkData IPersistableModel<AvsCloudLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsCloudLinkData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<AvsCloudLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsCloudLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsCloudLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

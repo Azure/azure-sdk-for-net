@@ -5,6 +5,7 @@
 
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class DataProtectionBackupVaultPatchProperties
@@ -21,6 +22,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 if (FeatureSettings is null)
                     FeatureSettings = new BackupVaultFeatureSettings();
                 FeatureSettings.CrossSubscriptionRestoreState = value;
+            }
+        }
+
+        /// <summary> Gets or sets the alert settings for all job failures. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AzureMonitorAlertsState? AlertSettingsForAllJobFailures
+        {
+            get
+            {
+                return MonitoringSettings is null ? default : MonitoringSettings.AlertSettingsForAllJobFailures;
+            }
+            set
+            {
+                if (MonitoringSettings is null)
+                {
+                    MonitoringSettings = new MonitoringSettings();
+                }
+                MonitoringSettings.AlertSettingsForAllJobFailures = value;
             }
         }
     }

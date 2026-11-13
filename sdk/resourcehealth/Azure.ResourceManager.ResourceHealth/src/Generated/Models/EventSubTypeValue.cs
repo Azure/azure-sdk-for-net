@@ -7,42 +7,95 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    /// <summary> Sub type of the event. Currently used to determine retirement communications for health advisory events. </summary>
+    /// <summary> Sub-type of event. </summary>
     public readonly partial struct EventSubTypeValue : IEquatable<EventSubTypeValue>
     {
         private readonly string _value;
+        /// <summary> Retirement. </summary>
+        private const string RetirementValue = "Retirement";
+        /// <summary> ForeignExchangeRateChange. </summary>
+        private const string ForeignExchangeRateChangeValue = "ForeignExchangeRateChange";
+        /// <summary> Underbilling. </summary>
+        private const string UnderbillingValue = "Underbilling";
+        /// <summary> Overbilling. </summary>
+        private const string OverbillingValue = "Overbilling";
+        /// <summary> PriceChanges. </summary>
+        private const string PriceChangesValue = "PriceChanges";
+        /// <summary> TaxChanges. </summary>
+        private const string TaxChangesValue = "TaxChanges";
+        /// <summary> MeterIDChanges. </summary>
+        private const string MeterIdChangesValue = "MeterIDChanges";
+        /// <summary> UnauthorizedPartyAbuse. </summary>
+        private const string UnauthorizedPartyAbuseValue = "UnauthorizedPartyAbuse";
 
         /// <summary> Initializes a new instance of <see cref="EventSubTypeValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventSubTypeValue(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RetirementValue = "Retirement";
+            _value = value;
+        }
 
         /// <summary> Retirement. </summary>
         public static EventSubTypeValue Retirement { get; } = new EventSubTypeValue(RetirementValue);
+
+        /// <summary> ForeignExchangeRateChange. </summary>
+        public static EventSubTypeValue ForeignExchangeRateChange { get; } = new EventSubTypeValue(ForeignExchangeRateChangeValue);
+
+        /// <summary> Underbilling. </summary>
+        public static EventSubTypeValue Underbilling { get; } = new EventSubTypeValue(UnderbillingValue);
+
+        /// <summary> Overbilling. </summary>
+        public static EventSubTypeValue Overbilling { get; } = new EventSubTypeValue(OverbillingValue);
+
+        /// <summary> PriceChanges. </summary>
+        public static EventSubTypeValue PriceChanges { get; } = new EventSubTypeValue(PriceChangesValue);
+
+        /// <summary> TaxChanges. </summary>
+        public static EventSubTypeValue TaxChanges { get; } = new EventSubTypeValue(TaxChangesValue);
+
+        /// <summary> MeterIDChanges. </summary>
+        public static EventSubTypeValue MeterIdChanges { get; } = new EventSubTypeValue(MeterIdChangesValue);
+
+        /// <summary> UnauthorizedPartyAbuse. </summary>
+        public static EventSubTypeValue UnauthorizedPartyAbuse { get; } = new EventSubTypeValue(UnauthorizedPartyAbuseValue);
+
         /// <summary> Determines if two <see cref="EventSubTypeValue"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventSubTypeValue left, EventSubTypeValue right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventSubTypeValue"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventSubTypeValue left, EventSubTypeValue right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventSubTypeValue"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventSubTypeValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventSubTypeValue(string value) => new EventSubTypeValue(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventSubTypeValue"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventSubTypeValue?(string value) => value == null ? null : new EventSubTypeValue(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventSubTypeValue other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventSubTypeValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

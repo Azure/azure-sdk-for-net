@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> vCenter Single Sign On Identity Source. </summary>
     public partial class SingleSignOnIdentitySource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SingleSignOnIdentitySource"/>. </summary>
         public SingleSignOnIdentitySource()
@@ -67,8 +38,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// The password of the Active Directory user with a minimum of read-only access to
         /// Base DN for users and groups.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, Uri primaryServer, Uri secondaryServer, SslCertificateStatus? ssl, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, Uri primaryServer, Uri secondaryServer, SslCertificateStatus? ssl, string username, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Alias = @alias;
@@ -80,30 +51,39 @@ namespace Azure.ResourceManager.Avs.Models
             Ssl = ssl;
             Username = username;
             Password = password;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the identity source. </summary>
         public string Name { get; set; }
+
         /// <summary> The domain's NetBIOS name. </summary>
         public string Alias { get; set; }
+
         /// <summary> The domain's DNS name. </summary>
         public string Domain { get; set; }
+
         /// <summary> The base distinguished name for users. </summary>
         public string BaseUserDN { get; set; }
+
         /// <summary> The base distinguished name for groups. </summary>
         public string BaseGroupDN { get; set; }
+
         /// <summary> Primary server URL. </summary>
         public Uri PrimaryServer { get; set; }
+
         /// <summary> Secondary server URL. </summary>
         public Uri SecondaryServer { get; set; }
+
         /// <summary> Protect LDAP communication using SSL certificate (LDAPS). </summary>
         public SslCertificateStatus? Ssl { get; set; }
+
         /// <summary>
         /// The ID of an Active Directory user with a minimum of read-only access to Base
         /// DN for users and group
         /// </summary>
         public string Username { get; set; }
+
         /// <summary>
         /// The password of the Active Directory user with a minimum of read-only access to
         /// Base DN for users and groups.

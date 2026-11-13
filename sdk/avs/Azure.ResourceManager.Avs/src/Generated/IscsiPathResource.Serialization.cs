@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class IscsiPathResource : IJsonModel<IscsiPathData>
     {
-        private static IscsiPathData s_dataDeserializationInstance;
-        private static IscsiPathData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IscsiPathData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IscsiPathData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IscsiPathData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IscsiPathData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IscsiPathData>)Data).Write(writer, options);
 
-        IscsiPathData IJsonModel<IscsiPathData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IscsiPathData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IscsiPathData IJsonModel<IscsiPathData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IscsiPathData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IscsiPathData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IscsiPathData IPersistableModel<IscsiPathData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IscsiPathData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<IscsiPathData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IscsiPathData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IscsiPathData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -149,6 +149,18 @@ public class ClientResultTests
         Assert.AreEqual(resultAsClientResultOfNullableInt.Value, resultAsNullableInt);
     }
 
+    [Test]
+    public void CanImplicitlyCastNullClientResultOfT()
+    {
+        ClientResult<string> nullClientResult = null!;
+        string convertedValue = nullClientResult;
+        Assert.That(convertedValue, Is.Null);
+
+        ClientResult<int> nullIntResult = null!;
+        int convertedInt = nullIntResult;
+        Assert.That(convertedInt, Is.EqualTo(0));
+    }
+
     #endregion
 
     #region MockClient Tests

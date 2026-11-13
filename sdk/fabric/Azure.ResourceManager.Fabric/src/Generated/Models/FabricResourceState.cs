@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Fabric;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
@@ -14,68 +15,107 @@ namespace Azure.ResourceManager.Fabric.Models
     public readonly partial struct FabricResourceState : IEquatable<FabricResourceState>
     {
         private readonly string _value;
+        /// <summary> Resource is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Resource is provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Resource is failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource is updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Resource is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Resource is suspending. </summary>
+        private const string SuspendingValue = "Suspending";
+        /// <summary> Resource is suspended. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Resource is pausing. </summary>
+        private const string PausingValue = "Pausing";
+        /// <summary> Resource is paused. </summary>
+        private const string PausedValue = "Paused";
+        /// <summary> Resource is resuming. </summary>
+        private const string ResumingValue = "Resuming";
+        /// <summary> Resource is scaling. </summary>
+        private const string ScalingValue = "Scaling";
+        /// <summary> Resource is preparing. </summary>
+        private const string PreparingValue = "Preparing";
 
         /// <summary> Initializes a new instance of <see cref="FabricResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FabricResourceState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string ProvisioningValue = "Provisioning";
-        private const string FailedValue = "Failed";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SuspendingValue = "Suspending";
-        private const string SuspendedValue = "Suspended";
-        private const string PausingValue = "Pausing";
-        private const string PausedValue = "Paused";
-        private const string ResumingValue = "Resuming";
-        private const string ScalingValue = "Scaling";
-        private const string PreparingValue = "Preparing";
+            _value = value;
+        }
 
         /// <summary> Resource is active. </summary>
         public static FabricResourceState Active { get; } = new FabricResourceState(ActiveValue);
+
         /// <summary> Resource is provisioning. </summary>
         public static FabricResourceState Provisioning { get; } = new FabricResourceState(ProvisioningValue);
+
         /// <summary> Resource is failed. </summary>
         public static FabricResourceState Failed { get; } = new FabricResourceState(FailedValue);
+
         /// <summary> Resource is updating. </summary>
         public static FabricResourceState Updating { get; } = new FabricResourceState(UpdatingValue);
+
         /// <summary> Resource is deleting. </summary>
         public static FabricResourceState Deleting { get; } = new FabricResourceState(DeletingValue);
+
         /// <summary> Resource is suspending. </summary>
         public static FabricResourceState Suspending { get; } = new FabricResourceState(SuspendingValue);
+
         /// <summary> Resource is suspended. </summary>
         public static FabricResourceState Suspended { get; } = new FabricResourceState(SuspendedValue);
+
         /// <summary> Resource is pausing. </summary>
         public static FabricResourceState Pausing { get; } = new FabricResourceState(PausingValue);
+
         /// <summary> Resource is paused. </summary>
         public static FabricResourceState Paused { get; } = new FabricResourceState(PausedValue);
+
         /// <summary> Resource is resuming. </summary>
         public static FabricResourceState Resuming { get; } = new FabricResourceState(ResumingValue);
+
         /// <summary> Resource is scaling. </summary>
         public static FabricResourceState Scaling { get; } = new FabricResourceState(ScalingValue);
+
         /// <summary> Resource is preparing. </summary>
         public static FabricResourceState Preparing { get; } = new FabricResourceState(PreparingValue);
+
         /// <summary> Determines if two <see cref="FabricResourceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FabricResourceState left, FabricResourceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FabricResourceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FabricResourceState left, FabricResourceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FabricResourceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FabricResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FabricResourceState(string value) => new FabricResourceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FabricResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FabricResourceState?(string value) => value == null ? null : new FabricResourceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FabricResourceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FabricResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

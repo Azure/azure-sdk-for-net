@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class BM25Similarity : IUtf8JsonSerializable, IJsonModel<BM25Similarity>
+    /// <summary> Ranking function based on the Okapi BM25 similarity algorithm. BM25 is a TF-IDF-like algorithm that includes length normalization (controlled by the 'b' parameter) as well as term frequency saturation (controlled by the 'k1' parameter). </summary>
+    public partial class BM25Similarity : SimilarityAlgorithm, IJsonModel<BM25Similarity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BM25Similarity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SimilarityAlgorithm PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBM25Similarity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BM25Similarity)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BM25Similarity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BM25Similarity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BM25Similarity IPersistableModel<BM25Similarity>.Create(BinaryData data, ModelReaderWriterOptions options) => (BM25Similarity)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BM25Similarity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BM25Similarity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,14 +69,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BM25Similarity)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(K1))
+            if (Optional.IsDefined(K1, _k1IsDefined))
             {
                 if (K1 != null)
                 {
@@ -44,10 +84,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 else
                 {
-                    writer.WriteNull("k1");
+                    writer.WriteNull("k1"u8);
                 }
             }
-            if (Optional.IsDefined(B))
+            if (Optional.IsDefined(B, _bIsDefined))
             {
                 if (B != null)
                 {
@@ -56,117 +96,81 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 else
                 {
-                    writer.WriteNull("b");
+                    writer.WriteNull("b"u8);
                 }
             }
         }
 
-        BM25Similarity IJsonModel<BM25Similarity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BM25Similarity IJsonModel<BM25Similarity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BM25Similarity)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SimilarityAlgorithm JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BM25Similarity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBM25Similarity(document.RootElement, options);
         }
 
-        internal static BM25Similarity DeserializeBM25Similarity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BM25Similarity DeserializeBM25Similarity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string odataType = "#Microsoft.Azure.Search.BM25Similarity";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool k1IsDefined = false;
             double? k1 = default;
+            bool bIsDefined = false;
             double? b = default;
-            string odataType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("k1"u8))
+                if (prop.NameEquals("@odata.type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    odataType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("k1"u8))
+                {
+                    k1IsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         k1 = null;
                         continue;
                     }
-                    k1 = property.Value.GetDouble();
+                    k1 = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("b"u8))
+                if (prop.NameEquals("b"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    bIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         b = null;
                         continue;
                     }
-                    b = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
+                    b = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BM25Similarity(odataType, serializedAdditionalRawData, k1, b);
-        }
-
-        BinaryData IPersistableModel<BM25Similarity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
+            return new BM25Similarity(odataType, additionalBinaryDataProperties, k1, b)
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BM25Similarity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BM25Similarity IPersistableModel<BM25Similarity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBM25Similarity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BM25Similarity)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BM25Similarity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new BM25Similarity FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBM25Similarity(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+                _k1IsDefined = k1IsDefined,
+                _bIsDefined = bIsDefined
+            };
         }
     }
 }

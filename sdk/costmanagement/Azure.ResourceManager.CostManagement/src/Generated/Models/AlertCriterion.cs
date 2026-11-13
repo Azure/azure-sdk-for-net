@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct AlertCriterion : IEquatable<AlertCriterion>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AlertCriterion"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AlertCriterion(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CostThresholdExceededValue = "CostThresholdExceeded";
         private const string UsageThresholdExceededValue = "UsageThresholdExceeded";
         private const string CreditThresholdApproachingValue = "CreditThresholdApproaching";
@@ -37,51 +30,88 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string CrossCloudCollectionErrorValue = "CrossCloudCollectionError";
         private const string GeneralThresholdErrorValue = "GeneralThresholdError";
 
-        /// <summary> CostThresholdExceeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertCriterion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AlertCriterion(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the CostThresholdExceeded. </summary>
         public static AlertCriterion CostThresholdExceeded { get; } = new AlertCriterion(CostThresholdExceededValue);
-        /// <summary> UsageThresholdExceeded. </summary>
+
+        /// <summary> Gets the UsageThresholdExceeded. </summary>
         public static AlertCriterion UsageThresholdExceeded { get; } = new AlertCriterion(UsageThresholdExceededValue);
-        /// <summary> CreditThresholdApproaching. </summary>
+
+        /// <summary> Gets the CreditThresholdApproaching. </summary>
         public static AlertCriterion CreditThresholdApproaching { get; } = new AlertCriterion(CreditThresholdApproachingValue);
-        /// <summary> CreditThresholdReached. </summary>
+
+        /// <summary> Gets the CreditThresholdReached. </summary>
         public static AlertCriterion CreditThresholdReached { get; } = new AlertCriterion(CreditThresholdReachedValue);
-        /// <summary> QuotaThresholdApproaching. </summary>
+
+        /// <summary> Gets the QuotaThresholdApproaching. </summary>
         public static AlertCriterion QuotaThresholdApproaching { get; } = new AlertCriterion(QuotaThresholdApproachingValue);
-        /// <summary> QuotaThresholdReached. </summary>
+
+        /// <summary> Gets the QuotaThresholdReached. </summary>
         public static AlertCriterion QuotaThresholdReached { get; } = new AlertCriterion(QuotaThresholdReachedValue);
-        /// <summary> MultiCurrency. </summary>
+
+        /// <summary> Gets the MultiCurrency. </summary>
         public static AlertCriterion MultiCurrency { get; } = new AlertCriterion(MultiCurrencyValue);
-        /// <summary> ForecastCostThresholdExceeded. </summary>
+
+        /// <summary> Gets the ForecastCostThresholdExceeded. </summary>
         public static AlertCriterion ForecastCostThresholdExceeded { get; } = new AlertCriterion(ForecastCostThresholdExceededValue);
-        /// <summary> ForecastUsageThresholdExceeded. </summary>
+
+        /// <summary> Gets the ForecastUsageThresholdExceeded. </summary>
         public static AlertCriterion ForecastUsageThresholdExceeded { get; } = new AlertCriterion(ForecastUsageThresholdExceededValue);
-        /// <summary> InvoiceDueDateApproaching. </summary>
+
+        /// <summary> Gets the InvoiceDueDateApproaching. </summary>
         public static AlertCriterion InvoiceDueDateApproaching { get; } = new AlertCriterion(InvoiceDueDateApproachingValue);
-        /// <summary> InvoiceDueDateReached. </summary>
+
+        /// <summary> Gets the InvoiceDueDateReached. </summary>
         public static AlertCriterion InvoiceDueDateReached { get; } = new AlertCriterion(InvoiceDueDateReachedValue);
-        /// <summary> CrossCloudNewDataAvailable. </summary>
+
+        /// <summary> Gets the CrossCloudNewDataAvailable. </summary>
         public static AlertCriterion CrossCloudNewDataAvailable { get; } = new AlertCriterion(CrossCloudNewDataAvailableValue);
-        /// <summary> CrossCloudCollectionError. </summary>
+
+        /// <summary> Gets the CrossCloudCollectionError. </summary>
         public static AlertCriterion CrossCloudCollectionError { get; } = new AlertCriterion(CrossCloudCollectionErrorValue);
-        /// <summary> GeneralThresholdError. </summary>
+
+        /// <summary> Gets the GeneralThresholdError. </summary>
         public static AlertCriterion GeneralThresholdError { get; } = new AlertCriterion(GeneralThresholdErrorValue);
+
         /// <summary> Determines if two <see cref="AlertCriterion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AlertCriterion left, AlertCriterion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AlertCriterion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AlertCriterion left, AlertCriterion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertCriterion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AlertCriterion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AlertCriterion(string value) => new AlertCriterion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AlertCriterion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AlertCriterion?(string value) => value == null ? null : new AlertCriterion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AlertCriterion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AlertCriterion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -440,7 +440,7 @@ namespace Azure.Core.Tests
 
                 if (Position > _throwAfter)
                 {
-                    throw (Exception) Activator.CreateInstance(_exceptionType, $"Failed at {_offset}");
+                    throw (Exception)Activator.CreateInstance(_exceptionType, $"Failed at {_offset}");
                 }
 
                 for (int i = 0; i < left; i++)

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public readonly partial struct DataPointObservabilityMode : IEquatable<DataPointObservabilityMode>
     {
         private readonly string _value;
+        /// <summary> No mapping to OpenTelemetry. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Map as counter to OpenTelemetry. </summary>
+        private const string CounterValue = "Counter";
+        /// <summary> Map as gauge to OpenTelemetry. </summary>
+        private const string GaugeValue = "Gauge";
+        /// <summary> Map as histogram to OpenTelemetry. </summary>
+        private const string HistogramValue = "Histogram";
+        /// <summary> Map as log to OpenTelemetry. </summary>
+        private const string LogValue = "Log";
 
         /// <summary> Initializes a new instance of <see cref="DataPointObservabilityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataPointObservabilityMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string CounterValue = "Counter";
-        private const string GaugeValue = "Gauge";
-        private const string HistogramValue = "Histogram";
-        private const string LogValue = "Log";
+            _value = value;
+        }
 
         /// <summary> No mapping to OpenTelemetry. </summary>
         public static DataPointObservabilityMode None { get; } = new DataPointObservabilityMode(NoneValue);
+
         /// <summary> Map as counter to OpenTelemetry. </summary>
         public static DataPointObservabilityMode Counter { get; } = new DataPointObservabilityMode(CounterValue);
+
         /// <summary> Map as gauge to OpenTelemetry. </summary>
         public static DataPointObservabilityMode Gauge { get; } = new DataPointObservabilityMode(GaugeValue);
+
         /// <summary> Map as histogram to OpenTelemetry. </summary>
         public static DataPointObservabilityMode Histogram { get; } = new DataPointObservabilityMode(HistogramValue);
+
         /// <summary> Map as log to OpenTelemetry. </summary>
         public static DataPointObservabilityMode Log { get; } = new DataPointObservabilityMode(LogValue);
+
         /// <summary> Determines if two <see cref="DataPointObservabilityMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataPointObservabilityMode left, DataPointObservabilityMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataPointObservabilityMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataPointObservabilityMode left, DataPointObservabilityMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataPointObservabilityMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataPointObservabilityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataPointObservabilityMode(string value) => new DataPointObservabilityMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataPointObservabilityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataPointObservabilityMode?(string value) => value == null ? null : new DataPointObservabilityMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataPointObservabilityMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataPointObservabilityMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

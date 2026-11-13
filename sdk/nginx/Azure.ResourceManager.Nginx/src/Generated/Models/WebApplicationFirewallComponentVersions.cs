@@ -13,47 +13,14 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Versions of the NGINX App Protect Web Application Firewall (WAF) components. </summary>
     public partial class WebApplicationFirewallComponentVersions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallComponentVersions"/>. </summary>
         /// <param name="wafEngineVersion"> The version of the NGINX App Protect Web Application Firewall (WAF) engine. </param>
         /// <param name="wafNginxVersion"> The version of the NGINX App Protect Web Application Firewall (WAF) module for NGINX. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="wafEngineVersion"/> or <paramref name="wafNginxVersion"/> is null. </exception>
         internal WebApplicationFirewallComponentVersions(string wafEngineVersion, string wafNginxVersion)
         {
-            Argument.AssertNotNull(wafEngineVersion, nameof(wafEngineVersion));
-            Argument.AssertNotNull(wafNginxVersion, nameof(wafNginxVersion));
-
             WafEngineVersion = wafEngineVersion;
             WafNginxVersion = wafNginxVersion;
         }
@@ -61,21 +28,17 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallComponentVersions"/>. </summary>
         /// <param name="wafEngineVersion"> The version of the NGINX App Protect Web Application Firewall (WAF) engine. </param>
         /// <param name="wafNginxVersion"> The version of the NGINX App Protect Web Application Firewall (WAF) module for NGINX. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallComponentVersions(string wafEngineVersion, string wafNginxVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebApplicationFirewallComponentVersions(string wafEngineVersion, string wafNginxVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WafEngineVersion = wafEngineVersion;
             WafNginxVersion = wafNginxVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallComponentVersions"/> for deserialization. </summary>
-        internal WebApplicationFirewallComponentVersions()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The version of the NGINX App Protect Web Application Firewall (WAF) engine. </summary>
         public string WafEngineVersion { get; }
+
         /// <summary> The version of the NGINX App Protect Web Application Firewall (WAF) module for NGINX. </summary>
         public string WafNginxVersion { get; }
     }

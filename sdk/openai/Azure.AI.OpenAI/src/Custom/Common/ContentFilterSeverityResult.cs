@@ -9,6 +9,7 @@ namespace Azure.AI.OpenAI;
 [CodeGenType("AzureContentFilterSeverityResult")]
 public partial class ContentFilterSeverityResult
 {
+    /// <summary> Gets the assessed severity level for this content filter category. </summary>
     [CodeGenMember("Severity")]
     public ContentFilterSeverity Severity { get; }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    /// <summary></summary>
     public partial class NetworkFabricExternalNetworkResource : IJsonModel<NetworkFabricExternalNetworkData>
     {
-        private static NetworkFabricExternalNetworkData s_dataDeserializationInstance;
-        private static NetworkFabricExternalNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkFabricExternalNetworkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkFabricExternalNetworkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFabricExternalNetworkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricExternalNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricExternalNetworkData>)Data).Write(writer, options);
 
-        NetworkFabricExternalNetworkData IJsonModel<NetworkFabricExternalNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricExternalNetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricExternalNetworkData IJsonModel<NetworkFabricExternalNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkFabricExternalNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricExternalNetworkData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFabricExternalNetworkData IPersistableModel<NetworkFabricExternalNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricExternalNetworkData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricExternalNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricExternalNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricExternalNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

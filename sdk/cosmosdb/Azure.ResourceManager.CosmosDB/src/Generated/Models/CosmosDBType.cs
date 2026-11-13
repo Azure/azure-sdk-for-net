@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBType : IEquatable<CosmosDBType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SqlValue = "Sql";
         private const string TableValue = "Table";
         private const string MongoDBValue = "MongoDB";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string GremlinV2Value = "GremlinV2";
         private const string UndefinedValue = "Undefined";
 
-        /// <summary> Sql. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Sql. </summary>
         public static CosmosDBType Sql { get; } = new CosmosDBType(SqlValue);
-        /// <summary> Table. </summary>
+
+        /// <summary> Gets the Table. </summary>
         public static CosmosDBType Table { get; } = new CosmosDBType(TableValue);
-        /// <summary> MongoDB. </summary>
+
+        /// <summary> Gets the MongoDB. </summary>
         public static CosmosDBType MongoDB { get; } = new CosmosDBType(MongoDBValue);
-        /// <summary> Cassandra. </summary>
+
+        /// <summary> Gets the Cassandra. </summary>
         public static CosmosDBType Cassandra { get; } = new CosmosDBType(CassandraValue);
-        /// <summary> CassandraConnectorMetadata. </summary>
+
+        /// <summary> Gets the CassandraConnectorMetadata. </summary>
         public static CosmosDBType CassandraConnectorMetadata { get; } = new CosmosDBType(CassandraConnectorMetadataValue);
-        /// <summary> Gremlin. </summary>
+
+        /// <summary> Gets the Gremlin. </summary>
         public static CosmosDBType Gremlin { get; } = new CosmosDBType(GremlinValue);
-        /// <summary> SqlDedicatedGateway. </summary>
+
+        /// <summary> Gets the SqlDedicatedGateway. </summary>
         public static CosmosDBType SqlDedicatedGateway { get; } = new CosmosDBType(SqlDedicatedGatewayValue);
-        /// <summary> GremlinV2. </summary>
+
+        /// <summary> Gets the GremlinV2. </summary>
         public static CosmosDBType GremlinV2 { get; } = new CosmosDBType(GremlinV2Value);
-        /// <summary> Undefined. </summary>
+
+        /// <summary> Gets the Undefined. </summary>
         public static CosmosDBType Undefined { get; } = new CosmosDBType(UndefinedValue);
+
         /// <summary> Determines if two <see cref="CosmosDBType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBType left, CosmosDBType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBType left, CosmosDBType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBType(string value) => new CosmosDBType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBType?(string value) => value == null ? null : new CosmosDBType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

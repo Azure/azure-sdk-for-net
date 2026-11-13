@@ -123,7 +123,6 @@ namespace Azure.Maps.Weather
         public static Azure.Maps.Weather.WeatherLanguage Urdu { get { throw null; } }
         public static Azure.Maps.Weather.WeatherLanguage Uzbek { get { throw null; } }
         public static Azure.Maps.Weather.WeatherLanguage Vietnamese { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator Azure.Maps.Weather.WeatherLanguage (string value) { throw null; }
         public override string ToString() { throw null; }
@@ -165,7 +164,7 @@ namespace Azure.Maps.Weather.Models
         public Azure.Maps.Weather.Models.DominantPollutant? DominantPollutant { get { throw null; } }
         public float? GlobalIndex { get { throw null; } }
         public float? Index { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Weather.Models.Pollutant> Pollutants { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Weather.Models.WeatherPollutant> Pollutants { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
     public partial class AirQualityResult
@@ -199,9 +198,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.BasinId SI { get { throw null; } }
         public static Azure.Maps.Weather.Models.BasinId SP { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.BasinId other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.BasinId left, Azure.Maps.Weather.Models.BasinId right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.BasinId (string value) { throw null; }
@@ -281,9 +278,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.DailyDuration ThreeDays { get { throw null; } }
         public static Azure.Maps.Weather.Models.DailyDuration TwoDays { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.DailyDuration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.DailyDuration left, Azure.Maps.Weather.Models.DailyDuration right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.DailyDuration (int value) { throw null; }
@@ -418,9 +413,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.DayQuarter SecondQuarter { get { throw null; } }
         public static Azure.Maps.Weather.Models.DayQuarter ThirdQuarter { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.DayQuarter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.DayQuarter left, Azure.Maps.Weather.Models.DayQuarter right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.DayQuarter (int value) { throw null; }
@@ -446,9 +439,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.DominantPollutant ParticulateMatter25 { get { throw null; } }
         public static Azure.Maps.Weather.Models.DominantPollutant SulfurDioxide { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.DominantPollutant other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.DominantPollutant left, Azure.Maps.Weather.Models.DominantPollutant right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.DominantPollutant (string value) { throw null; }
@@ -487,9 +478,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.HazardIndex PayAttention { get { throw null; } }
         public static Azure.Maps.Weather.Models.HazardIndex TakeAction { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.HazardIndex other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.HazardIndex left, Azure.Maps.Weather.Models.HazardIndex right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.HazardIndex (int value) { throw null; }
@@ -508,9 +497,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.HourlyDuration TwelveHours { get { throw null; } }
         public static Azure.Maps.Weather.Models.HourlyDuration TwentyFourHours { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.HourlyDuration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.HourlyDuration left, Azure.Maps.Weather.Models.HourlyDuration right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.HourlyDuration (int value) { throw null; }
@@ -597,9 +584,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.IconCode Thunderstorms { get { throw null; } }
         public static Azure.Maps.Weather.Models.IconCode Windy { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.IconCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.IconCode left, Azure.Maps.Weather.Models.IconCode right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.IconCode (int value) { throw null; }
@@ -625,9 +610,7 @@ namespace Azure.Maps.Weather.Models
         public JsonFormat(string value) { throw null; }
         public static Azure.Maps.Weather.Models.JsonFormat Json { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.JsonFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.JsonFormat left, Azure.Maps.Weather.Models.JsonFormat right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.JsonFormat (string value) { throw null; }
@@ -655,9 +638,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.LatestStatusKeyword Update { get { throw null; } }
         public static Azure.Maps.Weather.Models.LatestStatusKeyword Upgrade { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.LatestStatusKeyword other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.LatestStatusKeyword left, Azure.Maps.Weather.Models.LatestStatusKeyword right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.LatestStatusKeyword (string value) { throw null; }
@@ -682,7 +663,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.ActiveStorm ActiveStorm(string year = null, Azure.Maps.Weather.Models.BasinId? basinId = default(Azure.Maps.Weather.Models.BasinId?), string name = null, bool? isActive = default(bool?), bool? isSubtropical = default(bool?), int? govId = default(int?)) { throw null; }
         public static Azure.Maps.Weather.Models.ActiveStormResult ActiveStormResult(System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.ActiveStorm> activeStorms = null, string nextLink = null) { throw null; }
         public static Azure.Maps.Weather.Models.AirAndPollen AirAndPollen(string description = null, int? value = default(int?), string category = null, int? categoryValue = default(int?), string airQualityType = null) { throw null; }
-        public static Azure.Maps.Weather.Models.AirQuality AirQuality(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), float? index = default(float?), float? globalIndex = default(float?), Azure.Maps.Weather.Models.DominantPollutant? dominantPollutant = default(Azure.Maps.Weather.Models.DominantPollutant?), string category = null, string categoryColor = null, string description = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.Pollutant> pollutants = null) { throw null; }
+        public static Azure.Maps.Weather.Models.AirQuality AirQuality(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), float? index = default(float?), float? globalIndex = default(float?), Azure.Maps.Weather.Models.DominantPollutant? dominantPollutant = default(Azure.Maps.Weather.Models.DominantPollutant?), string category = null, string categoryColor = null, string description = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.WeatherPollutant> pollutants = null) { throw null; }
         public static Azure.Maps.Weather.Models.AirQualityResult AirQualityResult(System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.AirQuality> airQualityResults = null, string nextLink = null) { throw null; }
         public static Azure.Maps.Weather.Models.AlertDetails AlertDetails(string name = null, string description = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.Maps.Weather.Models.LatestStatus latestStatus = null, string details = null, string language = null) { throw null; }
         public static Azure.Maps.Weather.Models.ColorValue ColorValue(int? red = default(int?), int? green = default(int?), int? blue = default(int?), string hex = null) { throw null; }
@@ -714,7 +695,6 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.MinuteForecastResult MinuteForecastResult(Azure.Maps.Weather.Models.MinuteForecastSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.IntervalSummary> intervalSummaries = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.ForecastInterval> intervals = null) { throw null; }
         public static Azure.Maps.Weather.Models.MinuteForecastSummary MinuteForecastSummary(string briefPhrase60 = null, string shortDescription = null, string briefDescription = null, string longPhrase = null, Azure.Maps.Weather.Models.IconCode? iconCode = default(Azure.Maps.Weather.Models.IconCode?)) { throw null; }
         public static Azure.Maps.Weather.Models.PastHoursTemperature PastHoursTemperature(Azure.Maps.Weather.Models.WeatherValue minimum = null, Azure.Maps.Weather.Models.WeatherValue maximum = null) { throw null; }
-        public static Azure.Maps.Weather.Models.Pollutant Pollutant(Azure.Maps.Weather.Models.PollutantType? type = default(Azure.Maps.Weather.Models.PollutantType?), string name = null, float? index = default(float?), float? globalIndex = default(float?), Azure.Maps.Weather.Models.WeatherValue concentration = null) { throw null; }
         public static Azure.Maps.Weather.Models.PrecipitationSummary PrecipitationSummary(Azure.Maps.Weather.Models.WeatherValue pastHour = null, Azure.Maps.Weather.Models.WeatherValue pastThreeHours = null, Azure.Maps.Weather.Models.WeatherValue pastSixHours = null, Azure.Maps.Weather.Models.WeatherValue pastNineHours = null, Azure.Maps.Weather.Models.WeatherValue pastTwelveHours = null, Azure.Maps.Weather.Models.WeatherValue pastEighteenHours = null, Azure.Maps.Weather.Models.WeatherValue pastTwentyFourHours = null) { throw null; }
         public static Azure.Maps.Weather.Models.PressureTendency PressureTendency(string description = null, string code = null) { throw null; }
         public static Azure.Maps.Weather.Models.QuarterDayForecast QuarterDayForecast(System.DateTimeOffset? dateTime = default(System.DateTimeOffset?), System.DateTimeOffset? effectiveDate = default(System.DateTimeOffset?), Azure.Maps.Weather.Models.DayQuarter? quarter = default(Azure.Maps.Weather.Models.DayQuarter?), Azure.Maps.Weather.Models.IconCode? iconCode = default(Azure.Maps.Weather.Models.IconCode?), string iconPhrase = null, string phrase = null, Azure.Maps.Weather.Models.WeatherValueRange temperature = null, Azure.Maps.Weather.Models.WeatherValueRange realFeelTemperature = null, Azure.Maps.Weather.Models.WeatherValue dewPoint = null, int? relativeHumidity = default(int?), Azure.Maps.Weather.Models.WindDetails wind = null, Azure.Maps.Weather.Models.WindDetails windGust = null, Azure.Maps.Weather.Models.WeatherValue visibility = null, int? cloudCover = default(int?), bool? hasPrecipitation = default(bool?), Azure.Maps.Weather.Models.PrecipitationType? precipitationType = default(Azure.Maps.Weather.Models.PrecipitationType?), string precipitationIntensity = null, int? precipitationProbability = default(int?), int? thunderstormProbability = default(int?), Azure.Maps.Weather.Models.WeatherValue totalLiquid = null, Azure.Maps.Weather.Models.WeatherValue rain = null, Azure.Maps.Weather.Models.WeatherValue snow = null, Azure.Maps.Weather.Models.WeatherValue ice = null) { throw null; }
@@ -738,6 +718,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.WeatherAlongRouteSummary WeatherAlongRouteSummary(Azure.Maps.Weather.Models.IconCode? iconCode = default(Azure.Maps.Weather.Models.IconCode?), Azure.Maps.Weather.Models.WeatherHazards hazards = null) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherHazards WeatherHazards(Azure.Maps.Weather.Models.HazardIndex? maxHazardIndex = default(Azure.Maps.Weather.Models.HazardIndex?), System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.HazardDetail> details = null) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherNotification WeatherNotification(string type = null, Azure.Maps.Weather.Models.HazardIndex? hazardIndex = default(Azure.Maps.Weather.Models.HazardIndex?), string hazardCode = null, string shortDescription = null) { throw null; }
+        public static Azure.Maps.Weather.Models.WeatherPollutant WeatherPollutant(Azure.Maps.Weather.Models.PollutantType? type = default(Azure.Maps.Weather.Models.PollutantType?), string name = null, float? index = default(float?), float? globalIndex = default(float?), Azure.Maps.Weather.Models.WeatherValue concentration = null) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherValue WeatherValue(float? value = default(float?), string unitLabel = null, Azure.Maps.Weather.Models.UnitType? unitType = default(Azure.Maps.Weather.Models.UnitType?)) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherValueMaxMinAvg WeatherValueMaxMinAvg(Azure.Maps.Weather.Models.WeatherValue maximum = null, Azure.Maps.Weather.Models.WeatherValue minimum = null, Azure.Maps.Weather.Models.WeatherValue average = null) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherValueRange WeatherValueRange(Azure.Maps.Weather.Models.WeatherValue minimum = null, Azure.Maps.Weather.Models.WeatherValue maximum = null) { throw null; }
@@ -770,15 +751,6 @@ namespace Azure.Maps.Weather.Models
         public Azure.Maps.Weather.Models.WeatherValue Maximum { get { throw null; } }
         public Azure.Maps.Weather.Models.WeatherValue Minimum { get { throw null; } }
     }
-    public partial class Pollutant
-    {
-        internal Pollutant() { }
-        public Azure.Maps.Weather.Models.WeatherValue Concentration { get { throw null; } }
-        public float? GlobalIndex { get { throw null; } }
-        public float? Index { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.Maps.Weather.Models.PollutantType? Type { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PollutantType : System.IEquatable<Azure.Maps.Weather.Models.PollutantType>
     {
@@ -792,9 +764,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.PollutantType PM25 { get { throw null; } }
         public static Azure.Maps.Weather.Models.PollutantType SO2 { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.PollutantType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.PollutantType left, Azure.Maps.Weather.Models.PollutantType right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.PollutantType (string value) { throw null; }
@@ -823,9 +793,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.PrecipitationType Rain { get { throw null; } }
         public static Azure.Maps.Weather.Models.PrecipitationType Snow { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.PrecipitationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.PrecipitationType left, Azure.Maps.Weather.Models.PrecipitationType right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.PrecipitationType (string value) { throw null; }
@@ -1010,9 +978,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.UnitType Percent { get { throw null; } }
         public static Azure.Maps.Weather.Models.UnitType PoundsPerSquareInch { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.UnitType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.UnitType left, Azure.Maps.Weather.Models.UnitType right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.UnitType (int value) { throw null; }
@@ -1074,9 +1040,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.WeatherDataUnit Imperial { get { throw null; } }
         public static Azure.Maps.Weather.Models.WeatherDataUnit Metric { get { throw null; } }
         public bool Equals(Azure.Maps.Weather.Models.WeatherDataUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Weather.Models.WeatherDataUnit left, Azure.Maps.Weather.Models.WeatherDataUnit right) { throw null; }
         public static implicit operator Azure.Maps.Weather.Models.WeatherDataUnit (string value) { throw null; }
@@ -1096,6 +1060,15 @@ namespace Azure.Maps.Weather.Models
         public Azure.Maps.Weather.Models.HazardIndex? HazardIndex { get { throw null; } }
         public string ShortDescription { get { throw null; } }
         public string Type { get { throw null; } }
+    }
+    public partial class WeatherPollutant
+    {
+        internal WeatherPollutant() { }
+        public Azure.Maps.Weather.Models.WeatherValue Concentration { get { throw null; } }
+        public float? GlobalIndex { get { throw null; } }
+        public float? Index { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Maps.Weather.Models.PollutantType? Type { get { throw null; } }
     }
     public partial class WeatherValue
     {

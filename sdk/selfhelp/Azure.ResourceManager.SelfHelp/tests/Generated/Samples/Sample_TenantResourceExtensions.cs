@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             // invoke the operation
             string solutionId = "SolutionId1";
-            SelfHelpSolutionResult result = await tenantResource.GetSelfHelpSolutionByIdAsync(solutionId);
+            SelfHelpSolutionResultResource result = await tenantResource.GetSelfHelpSolutionResultAsync(solutionId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

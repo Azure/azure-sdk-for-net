@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class SiteLoadBalancingExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SiteLoadBalancing value) => value switch
         {
             SiteLoadBalancing.WeightedRoundRobin => "WeightedRoundRobin",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteLoadBalancing value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SiteLoadBalancing ToSiteLoadBalancing(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WeightedRoundRobin")) return SiteLoadBalancing.WeightedRoundRobin;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LeastRequests")) return SiteLoadBalancing.LeastRequests;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LeastResponseTime")) return SiteLoadBalancing.LeastResponseTime;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WeightedTotalTraffic")) return SiteLoadBalancing.WeightedTotalTraffic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RequestHash")) return SiteLoadBalancing.RequestHash;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PerSiteRoundRobin")) return SiteLoadBalancing.PerSiteRoundRobin;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LeastRequestsWithTieBreaker")) return SiteLoadBalancing.LeastRequestsWithTieBreaker;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WeightedRoundRobin"))
+            {
+                return SiteLoadBalancing.WeightedRoundRobin;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LeastRequests"))
+            {
+                return SiteLoadBalancing.LeastRequests;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LeastResponseTime"))
+            {
+                return SiteLoadBalancing.LeastResponseTime;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WeightedTotalTraffic"))
+            {
+                return SiteLoadBalancing.WeightedTotalTraffic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RequestHash"))
+            {
+                return SiteLoadBalancing.RequestHash;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PerSiteRoundRobin"))
+            {
+                return SiteLoadBalancing.PerSiteRoundRobin;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LeastRequestsWithTieBreaker"))
+            {
+                return SiteLoadBalancing.LeastRequestsWithTieBreaker;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteLoadBalancing value.");
         }
     }

@@ -1,16 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Cdn.Tests.Helper;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected CdnManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         protected CdnManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         [SetUp]

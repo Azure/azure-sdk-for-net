@@ -72,7 +72,7 @@ namespace Azure.Core.Tests
             var list = new ChangeTrackingList<string>();
             list.Add("a");
 
-            Assert.AreEqual(new[] { "a" },list.ToArray());
+            Assert.AreEqual(new[] { "a" }, list.ToArray());
         }
 
         [Test]

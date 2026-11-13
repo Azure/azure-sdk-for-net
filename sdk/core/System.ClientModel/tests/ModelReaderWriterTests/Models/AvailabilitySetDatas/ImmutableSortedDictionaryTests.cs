@@ -11,6 +11,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override string GetJsonCollectionType() => "Dictionary";
 
+        protected override bool HasReflectionBuilderSupport => false;
+
         protected override string CollectionTypeName => "ImmutableSortedDictionary<String, AvailabilitySetData>";
 
         protected override ModelReaderWriterContext Context => new LocalContext();

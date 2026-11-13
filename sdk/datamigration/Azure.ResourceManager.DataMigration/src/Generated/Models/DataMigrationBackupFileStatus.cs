@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationBackupFileStatus : IEquatable<DataMigrationBackupFileStatus>
     {
         private readonly string _value;
+        /// <summary> Arrived. </summary>
+        private const string ArrivedValue = "Arrived";
+        /// <summary> Queued. </summary>
+        private const string QueuedValue = "Queued";
+        /// <summary> Uploading. </summary>
+        private const string UploadingValue = "Uploading";
+        /// <summary> Uploaded. </summary>
+        private const string UploadedValue = "Uploaded";
+        /// <summary> Restoring. </summary>
+        private const string RestoringValue = "Restoring";
+        /// <summary> Restored. </summary>
+        private const string RestoredValue = "Restored";
+        /// <summary> Cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationBackupFileStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationBackupFileStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ArrivedValue = "Arrived";
-        private const string QueuedValue = "Queued";
-        private const string UploadingValue = "Uploading";
-        private const string UploadedValue = "Uploaded";
-        private const string RestoringValue = "Restoring";
-        private const string RestoredValue = "Restored";
-        private const string CancelledValue = "Cancelled";
+            _value = value;
+        }
 
         /// <summary> Arrived. </summary>
         public static DataMigrationBackupFileStatus Arrived { get; } = new DataMigrationBackupFileStatus(ArrivedValue);
+
         /// <summary> Queued. </summary>
         public static DataMigrationBackupFileStatus Queued { get; } = new DataMigrationBackupFileStatus(QueuedValue);
+
         /// <summary> Uploading. </summary>
         public static DataMigrationBackupFileStatus Uploading { get; } = new DataMigrationBackupFileStatus(UploadingValue);
+
         /// <summary> Uploaded. </summary>
         public static DataMigrationBackupFileStatus Uploaded { get; } = new DataMigrationBackupFileStatus(UploadedValue);
+
         /// <summary> Restoring. </summary>
         public static DataMigrationBackupFileStatus Restoring { get; } = new DataMigrationBackupFileStatus(RestoringValue);
+
         /// <summary> Restored. </summary>
         public static DataMigrationBackupFileStatus Restored { get; } = new DataMigrationBackupFileStatus(RestoredValue);
+
         /// <summary> Cancelled. </summary>
         public static DataMigrationBackupFileStatus Cancelled { get; } = new DataMigrationBackupFileStatus(CancelledValue);
+
         /// <summary> Determines if two <see cref="DataMigrationBackupFileStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationBackupFileStatus left, DataMigrationBackupFileStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationBackupFileStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationBackupFileStatus left, DataMigrationBackupFileStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationBackupFileStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationBackupFileStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationBackupFileStatus(string value) => new DataMigrationBackupFileStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationBackupFileStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationBackupFileStatus?(string value) => value == null ? null : new DataMigrationBackupFileStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationBackupFileStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationBackupFileStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedInstancePrivateLinkResource : IJsonModel<ManagedInstancePrivateLinkData>
     {
-        private static ManagedInstancePrivateLinkData s_dataDeserializationInstance;
-        private static ManagedInstancePrivateLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedInstancePrivateLinkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedInstancePrivateLinkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedInstancePrivateLinkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstancePrivateLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstancePrivateLinkData>)Data).Write(writer, options);
 
-        ManagedInstancePrivateLinkData IJsonModel<ManagedInstancePrivateLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstancePrivateLinkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstancePrivateLinkData IJsonModel<ManagedInstancePrivateLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedInstancePrivateLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstancePrivateLinkData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedInstancePrivateLinkData IPersistableModel<ManagedInstancePrivateLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstancePrivateLinkData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstancePrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstancePrivateLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstancePrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

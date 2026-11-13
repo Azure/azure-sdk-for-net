@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableInformaticaDataManagementArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableInformaticaDataManagementArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableInformaticaDataManagementArmClient for mocking. </summary>
         protected MockableInformaticaDataManagementArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableInformaticaDataManagementArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableInformaticaDataManagementArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableInformaticaDataManagementArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableInformaticaDataManagementArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="InformaticaOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InformaticaOrganizationResource.CreateResourceIdentifier" /> to create an <see cref="InformaticaOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="InformaticaOrganizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InformaticaOrganizationResource"/> object. </returns>
         public virtual InformaticaOrganizationResource GetInformaticaOrganizationResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             return new InformaticaOrganizationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="InformaticaServerlessRuntimeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InformaticaServerlessRuntimeResource.CreateResourceIdentifier" /> to create an <see cref="InformaticaServerlessRuntimeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="InformaticaServerlessRuntimeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InformaticaServerlessRuntimeResource"/> object. </returns>
         public virtual InformaticaServerlessRuntimeResource GetInformaticaServerlessRuntimeResource(ResourceIdentifier id)

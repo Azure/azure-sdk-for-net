@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ForwardProxyConventionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ForwardProxyConvention value) => value switch
         {
             ForwardProxyConvention.NoProxy => "NoProxy",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ForwardProxyConvention value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ForwardProxyConvention ToForwardProxyConvention(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoProxy")) return ForwardProxyConvention.NoProxy;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return ForwardProxyConvention.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return ForwardProxyConvention.Custom;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoProxy"))
+            {
+                return ForwardProxyConvention.NoProxy;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return ForwardProxyConvention.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom"))
+            {
+                return ForwardProxyConvention.Custom;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ForwardProxyConvention value.");
         }
     }

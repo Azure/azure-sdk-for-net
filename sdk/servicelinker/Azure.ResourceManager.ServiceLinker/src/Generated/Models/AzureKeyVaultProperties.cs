@@ -13,23 +13,35 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The resource properties when type is Azure Key Vault. </summary>
     public partial class AzureKeyVaultProperties : AzureResourceBaseProperties
     {
+        private bool? _doesConnectAsKubernetesCsiDriver;
+        private bool _doesConnectAsKubernetesCsiDriverIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultProperties"/>. </summary>
-        public AzureKeyVaultProperties()
+        public AzureKeyVaultProperties() : base(AzureResourceType.KeyVault)
         {
-            AzureResourceType = AzureResourceType.KeyVault;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultProperties"/>. </summary>
-        /// <param name="azureResourceType"> The azure resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The azure resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="doesConnectAsKubernetesCsiDriver"> True if connect via Kubernetes CSI Driver. </param>
-        internal AzureKeyVaultProperties(AzureResourceType azureResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? doesConnectAsKubernetesCsiDriver) : base(azureResourceType, serializedAdditionalRawData)
+        internal AzureKeyVaultProperties(AzureResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? doesConnectAsKubernetesCsiDriver) : base(@type, additionalBinaryDataProperties)
         {
-            DoesConnectAsKubernetesCsiDriver = doesConnectAsKubernetesCsiDriver;
-            AzureResourceType = azureResourceType;
+            _doesConnectAsKubernetesCsiDriver = doesConnectAsKubernetesCsiDriver;
         }
 
         /// <summary> True if connect via Kubernetes CSI Driver. </summary>
-        public bool? DoesConnectAsKubernetesCsiDriver { get; set; }
+        public bool? DoesConnectAsKubernetesCsiDriver
+        {
+            get
+            {
+                return _doesConnectAsKubernetesCsiDriver;
+            }
+            set
+            {
+                _doesConnectAsKubernetesCsiDriver = value;
+                _doesConnectAsKubernetesCsiDriverIsDefined = true;
+            }
+        }
     }
 }

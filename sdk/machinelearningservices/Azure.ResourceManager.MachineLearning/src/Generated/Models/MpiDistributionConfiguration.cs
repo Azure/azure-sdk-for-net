@@ -7,30 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> MPI distribution configuration. </summary>
     public partial class MpiDistributionConfiguration : MachineLearningDistributionConfiguration
     {
+        private int? _processCountPerInstance;
+        private bool _processCountPerInstanceIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MpiDistributionConfiguration"/>. </summary>
-        public MpiDistributionConfiguration()
+        public MpiDistributionConfiguration() : base(DistributionType.Mpi)
         {
-            DistributionType = DistributionType.Mpi;
         }
 
         /// <summary> Initializes a new instance of <see cref="MpiDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="processCountPerInstance"> Number of processes per MPI node. </param>
-        internal MpiDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? processCountPerInstance) : base(distributionType, serializedAdditionalRawData)
+        internal MpiDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? processCountPerInstance) : base(distributionType, additionalBinaryDataProperties)
         {
-            ProcessCountPerInstance = processCountPerInstance;
-            DistributionType = distributionType;
+            _processCountPerInstance = processCountPerInstance;
         }
 
         /// <summary> Number of processes per MPI node. </summary>
         [WirePath("processCountPerInstance")]
-        public int? ProcessCountPerInstance { get; set; }
+        public int? ProcessCountPerInstance
+        {
+            get
+            {
+                return _processCountPerInstance;
+            }
+            set
+            {
+                _processCountPerInstance = value;
+                _processCountPerInstanceIsDefined = true;
+            }
+        }
     }
 }

@@ -11,9 +11,9 @@
 // | CreateEnumerator |     5 | 76.548 ns | 0.2156 ns | 0.1800 ns | 0.0011 |     104 B |
 
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 
@@ -23,10 +23,10 @@ namespace Azure.Core.Perf
     public class HeaderStringValueToStringVsEnumerator
     {
 #if NET6_0_OR_GREATER
-        private static string[] _acceptValues = { "chunked", "compress", "deflate", "gzip", "identity"};
+        private static string[] _acceptValues = { "chunked", "compress", "deflate", "gzip", "identity" };
         private HeaderStringValues _headerStringValues;
 
-        [Params(1,2,5)]
+        [Params(1, 2, 5)]
         public int Count { get; set; }
 
         [GlobalSetup]
@@ -45,7 +45,7 @@ namespace Azure.Core.Perf
         public string CreateEnumerator()
         {
             var count = _headerStringValues.Count;
-            var interpolatedStringHandler = new DefaultInterpolatedStringHandler(count-1, count);
+            var interpolatedStringHandler = new DefaultInterpolatedStringHandler(count - 1, count);
             var isFirst = true;
             foreach (var str in _headerStringValues)
             {

@@ -1,6 +1,6 @@
 # Release History
 
-## 4.9.0-beta.1 (Unreleased)
+## 4.13.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,72 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.13.0-beta.1 (2026-11-11)
+
+### Other Changes
+
+- Updated the `Azure.Core` dependency to `1.65.0`, which includes the MSAL `4.92.0` update.
+
+## 4.12.0 (2026-10-27)
+
+### Other Changes
+
+- Regenerated the library for stable Key Vault API version `2026-04-01`.
+
+## 4.12.0-beta.3 (2026-10-08)
+
+### Bugs Fixed
+
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
+- Improved authentication challenge resource validation.
+
+## 4.12.0-beta.2 (2026-09-27)
+
+### Features Added
+
+- Added `IDisposable` to `SecretClient` to release its internally owned HTTP pipeline and transport. Reuse clients and dispose them after all operations have completed; caller-provided transports are not disposed.
+- Added a narrowly scoped bearer-token fallback for attested managed-identity tenant eligibility denials, with the decision remembered by the Key Vault client for subsequent token acquisitions.
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
+
+### Bugs Fixed
+
+- Fixed intermittent authentication failures by retrying requests rejected because the mTLS Proof-of-Possession certificate did not match the token binding.
+- Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
+
+### Other Changes
+
+- Internal: the `SecretClient` transport now delegates to a TypeSpec-generated implementation. Public API surface, default service version, exception contracts, on-the-wire requests, and OpenTelemetry / `DiagnosticListener` activity names are all unchanged. `SecretClientOptions` (custom retry, transport, diagnostics allow-lists, `AddPolicy` entries) continues to flow end-to-end. The TypeSpec emitter incidentally adds one additive public type (`AzureSecurityKeyVaultSecretsContext`, the `ModelReaderWriterContext` required for AOT-friendly `ModelReaderWriter` round-trip), matching the sibling `Azure.Security.KeyVault.Administration` package convention.
+
+## 4.11.0 (2026-05-05)
+
+### Other Changes
+
+- Updated dependency on `Azure.Core` to `1.54.0`, which includes fixes for duplicate schema registration.
+
+## 4.10.0 (2026-04-13)
+
+### Features Added
+
+- Added `AddSecretClient` and `AddKeyedSecretClient` extension methods on `IHostApplicationBuilder` for registering `SecretClient` via dependency injection using configuration-based setup.
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for `SecretClientSettings` configuration in `appsettings.json`.
+
+## 4.9.0 (2026-02-25)
+
+### Features Added
+
+- Added `SecretClientSettings` to support creating a `SecretClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added the `outContentType` query parameter to the `SecretClient.GetSecret` and `SecretClient.GetSecretAsync` to specify the format in which the certificate will be returned.
+- Added the `previousVersion` property to `SecretProperties`.
+
+### Bugs Fixed
+
+- Fixed challenge-based authentication to correctly parse tenant ID from DSTSv2 authority URIs.
+
+### Other Changes
+
+- The default service version is now `2025-07-01`.
 
 ## 4.8.0 (2025-06-13)
 

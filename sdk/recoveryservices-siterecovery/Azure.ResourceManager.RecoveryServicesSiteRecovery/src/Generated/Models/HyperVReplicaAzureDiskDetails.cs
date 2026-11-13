@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk input details. </summary>
     public partial class HyperVReplicaAzureDiskDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureDiskDetails"/>. </summary>
         public HyperVReplicaAzureDiskDetails()
@@ -57,26 +28,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskType"> The disk type. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HyperVReplicaAzureDiskDetails(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType? diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="iops"> The number of IOPS allowed for Premium V2 and Ultra disks. </param>
+        /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
+        /// <param name="diskSizeInGB"> The target disk size in GB. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HyperVReplicaAzureDiskDetails(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType? diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes, long? iops, long? throughputInMbps, long? diskSizeInGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             LogStorageAccountId = logStorageAccountId;
             DiskType = diskType;
             DiskEncryptionSetId = diskEncryptionSetId;
             SectorSizeInBytes = sectorSizeInBytes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Iops = iops;
+            ThroughputInMbps = throughputInMbps;
+            DiskSizeInGB = diskSizeInGB;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The DiskId. </summary>
         public string DiskId { get; set; }
+
         /// <summary> The LogStorageAccountId. </summary>
         public ResourceIdentifier LogStorageAccountId { get; set; }
+
         /// <summary> The disk type. </summary>
         public SiteRecoveryDiskAccountType? DiskType { get; set; }
+
         /// <summary> The DiskEncryptionSet ARM ID. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
+
         /// <summary> The logical sector size (in bytes), 512 by default. </summary>
         public int? SectorSizeInBytes { get; set; }
+
+        /// <summary> The number of IOPS allowed for Premium V2 and Ultra disks. </summary>
+        public long? Iops { get; set; }
+
+        /// <summary> The total throughput in Mbps for Premium V2 and Ultra disks. </summary>
+        public long? ThroughputInMbps { get; set; }
+
+        /// <summary> The target disk size in GB. </summary>
+        public long? DiskSizeInGB { get; set; }
     }
 }

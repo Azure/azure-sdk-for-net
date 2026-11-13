@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ServiceFabricManagedClustersSkuName : IEquatable<ServiceFabricManagedClustersSkuName>
     {
         private readonly string _value;
+        /// <summary> Basic requires a minimum of 3 nodes and allows only 1 node type. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Requires a minimum of 5 nodes and allows 1 or more node type. </summary>
+        private const string StandardValue = "Standard";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClustersSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricManagedClustersSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string StandardValue = "Standard";
+            _value = value;
+        }
 
         /// <summary> Basic requires a minimum of 3 nodes and allows only 1 node type. </summary>
         public static ServiceFabricManagedClustersSkuName Basic { get; } = new ServiceFabricManagedClustersSkuName(BasicValue);
+
         /// <summary> Requires a minimum of 5 nodes and allows 1 or more node type. </summary>
         public static ServiceFabricManagedClustersSkuName Standard { get; } = new ServiceFabricManagedClustersSkuName(StandardValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedClustersSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricManagedClustersSkuName left, ServiceFabricManagedClustersSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedClustersSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricManagedClustersSkuName left, ServiceFabricManagedClustersSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedClustersSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClustersSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricManagedClustersSkuName(string value) => new ServiceFabricManagedClustersSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClustersSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricManagedClustersSkuName?(string value) => value == null ? null : new ServiceFabricManagedClustersSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricManagedClustersSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricManagedClustersSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

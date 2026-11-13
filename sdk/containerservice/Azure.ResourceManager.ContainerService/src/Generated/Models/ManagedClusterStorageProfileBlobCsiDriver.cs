@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
     internal partial class ManagedClusterStorageProfileBlobCsiDriver
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileBlobCsiDriver"/>. </summary>
         public ManagedClusterStorageProfileBlobCsiDriver()
@@ -51,16 +23,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileBlobCsiDriver"/>. </summary>
-        /// <param name="isEnabled"> Whether to enable AzureBlob CSI Driver. The default value is false. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterStorageProfileBlobCsiDriver(bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="isBlobCsiDriverEnabled"> Whether to enable AzureBlob CSI Driver. The default value is false. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterStorageProfileBlobCsiDriver(bool? isBlobCsiDriverEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = isEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IsBlobCsiDriverEnabled = isBlobCsiDriverEnabled;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
         [WirePath("enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool? IsBlobCsiDriverEnabled { get; set; }
     }
 }

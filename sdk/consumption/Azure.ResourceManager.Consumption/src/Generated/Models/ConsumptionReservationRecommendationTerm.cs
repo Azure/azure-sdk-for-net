@@ -7,45 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The ConsumptionReservationRecommendationTerm. </summary>
+    /// <summary></summary>
     public readonly partial struct ConsumptionReservationRecommendationTerm : IEquatable<ConsumptionReservationRecommendationTerm>
     {
         private readonly string _value;
+        /// <summary> 1 month reservation term. </summary>
+        private const string P1MValue = "P1M";
+        /// <summary> 1 year reservation term. </summary>
+        private const string P1YValue = "P1Y";
+        /// <summary> 3 year reservation term. </summary>
+        private const string P3YValue = "P3Y";
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConsumptionReservationRecommendationTerm(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string P1YValue = "P1Y";
-        private const string P3YValue = "P3Y";
+        /// <summary> 1 month reservation term. </summary>
+        public static ConsumptionReservationRecommendationTerm P1M { get; } = new ConsumptionReservationRecommendationTerm(P1MValue);
 
         /// <summary> 1 year reservation term. </summary>
         public static ConsumptionReservationRecommendationTerm P1Y { get; } = new ConsumptionReservationRecommendationTerm(P1YValue);
+
         /// <summary> 3 year reservation term. </summary>
         public static ConsumptionReservationRecommendationTerm P3Y { get; } = new ConsumptionReservationRecommendationTerm(P3YValue);
+
         /// <summary> Determines if two <see cref="ConsumptionReservationRecommendationTerm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConsumptionReservationRecommendationTerm left, ConsumptionReservationRecommendationTerm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConsumptionReservationRecommendationTerm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConsumptionReservationRecommendationTerm left, ConsumptionReservationRecommendationTerm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsumptionReservationRecommendationTerm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConsumptionReservationRecommendationTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConsumptionReservationRecommendationTerm(string value) => new ConsumptionReservationRecommendationTerm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConsumptionReservationRecommendationTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConsumptionReservationRecommendationTerm?(string value) => value == null ? null : new ConsumptionReservationRecommendationTerm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConsumptionReservationRecommendationTerm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConsumptionReservationRecommendationTerm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

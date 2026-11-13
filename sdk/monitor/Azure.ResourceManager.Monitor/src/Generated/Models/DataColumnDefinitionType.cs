@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct DataColumnDefinitionType : IEquatable<DataColumnDefinitionType>
     {
         private readonly string _value;
+        /// <summary> string. </summary>
+        private const string StringValue = "string";
+        /// <summary> int. </summary>
+        private const string IntValue = "int";
+        /// <summary> long. </summary>
+        private const string LongValue = "long";
+        /// <summary> real. </summary>
+        private const string RealValue = "real";
+        /// <summary> boolean. </summary>
+        private const string BooleanValue = "boolean";
+        /// <summary> datetime. </summary>
+        private const string DatetimeValue = "datetime";
+        /// <summary> dynamic. </summary>
+        private const string DynamicValue = "dynamic";
 
         /// <summary> Initializes a new instance of <see cref="DataColumnDefinitionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataColumnDefinitionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "string";
-        private const string IntValue = "int";
-        private const string LongValue = "long";
-        private const string RealValue = "real";
-        private const string BooleanValue = "boolean";
-        private const string DatetimeValue = "datetime";
-        private const string DynamicValue = "dynamic";
+            _value = value;
+        }
 
         /// <summary> string. </summary>
         public static DataColumnDefinitionType String { get; } = new DataColumnDefinitionType(StringValue);
+
         /// <summary> int. </summary>
         public static DataColumnDefinitionType Int { get; } = new DataColumnDefinitionType(IntValue);
+
         /// <summary> long. </summary>
         public static DataColumnDefinitionType Long { get; } = new DataColumnDefinitionType(LongValue);
+
         /// <summary> real. </summary>
         public static DataColumnDefinitionType Real { get; } = new DataColumnDefinitionType(RealValue);
+
         /// <summary> boolean. </summary>
         public static DataColumnDefinitionType Boolean { get; } = new DataColumnDefinitionType(BooleanValue);
+
         /// <summary> datetime. </summary>
         public static DataColumnDefinitionType Datetime { get; } = new DataColumnDefinitionType(DatetimeValue);
+
         /// <summary> dynamic. </summary>
         public static DataColumnDefinitionType Dynamic { get; } = new DataColumnDefinitionType(DynamicValue);
+
         /// <summary> Determines if two <see cref="DataColumnDefinitionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataColumnDefinitionType left, DataColumnDefinitionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataColumnDefinitionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataColumnDefinitionType left, DataColumnDefinitionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataColumnDefinitionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataColumnDefinitionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataColumnDefinitionType(string value) => new DataColumnDefinitionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataColumnDefinitionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataColumnDefinitionType?(string value) => value == null ? null : new DataColumnDefinitionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataColumnDefinitionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataColumnDefinitionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

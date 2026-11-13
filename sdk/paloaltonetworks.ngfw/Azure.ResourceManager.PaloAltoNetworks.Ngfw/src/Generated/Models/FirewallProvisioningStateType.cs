@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallProvisioningStateType : IEquatable<FirewallProvisioningStateType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FirewallProvisioningStateType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FirewallProvisioningStateType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string DeletedValue = "Deleted";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallProvisioningStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FirewallProvisioningStateType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static FirewallProvisioningStateType Succeeded { get; } = new FirewallProvisioningStateType(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static FirewallProvisioningStateType Failed { get; } = new FirewallProvisioningStateType(FailedValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static FirewallProvisioningStateType Deleted { get; } = new FirewallProvisioningStateType(DeletedValue);
+
         /// <summary> Determines if two <see cref="FirewallProvisioningStateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallProvisioningStateType left, FirewallProvisioningStateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallProvisioningStateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallProvisioningStateType left, FirewallProvisioningStateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallProvisioningStateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallProvisioningStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallProvisioningStateType(string value) => new FirewallProvisioningStateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallProvisioningStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallProvisioningStateType?(string value) => value == null ? null : new FirewallProvisioningStateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallProvisioningStateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallProvisioningStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

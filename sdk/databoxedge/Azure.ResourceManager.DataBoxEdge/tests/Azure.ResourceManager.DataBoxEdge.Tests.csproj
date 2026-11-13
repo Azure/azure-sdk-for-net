@@ -1,4 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Suppress CS0618: generated sample files reference types/methods marked [Obsolete] for ApiCompat backward-compat -->
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DataBoxEdge.csproj" />
   </ItemGroup>

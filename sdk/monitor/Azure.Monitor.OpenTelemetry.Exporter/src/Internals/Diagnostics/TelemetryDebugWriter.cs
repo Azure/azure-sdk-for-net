@@ -35,11 +35,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Routed sends carry a destination chosen per item, so the payload alone does not say where
+        /// it went.
+        /// </summary>
+        public static void WriteTelemetry(NDJsonWriter content, Uri trackUri)
+        {
+            if (content == null)
+            {
+                return;
+            }
+
+            if (Debugger.IsAttached && Debugger.IsLogging())
+            {
+                Debugger.Log(0, null, $"(TRANSMITTING TELEMETRY TO {trackUri})\n{content}");
+            }
+        }
+
         public static void WriteTelemetryFromStorage(ReadOnlyMemory<byte> content)
         {
             if (Debugger.IsAttached && Debugger.IsLogging())
             {
                 Debugger.Log(0, null, "(TRANSMITTING TELEMETRY FROM STORAGE)\n" + Encoding.UTF8.GetString(content.ToArray()));
+            }
+        }
+
+        public static void WriteTelemetryFromStorage(ReadOnlyMemory<byte> content, Uri trackUri)
+        {
+            if (Debugger.IsAttached && Debugger.IsLogging())
+            {
+                Debugger.Log(0, null, $"(TRANSMITTING TELEMETRY FROM STORAGE TO {trackUri})\n{Encoding.UTF8.GetString(content.ToArray())}");
             }
         }
     }

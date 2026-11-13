@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -15,25 +16,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="CustomSeasonality"/>. </summary>
         /// <param name="value"> [Required] Seasonality value. </param>
-        public CustomSeasonality(int value)
+        public CustomSeasonality(int value) : base(SeasonalityMode.Custom)
         {
             Value = value;
-            Mode = SeasonalityMode.Custom;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomSeasonality"/>. </summary>
         /// <param name="mode"> [Required] Seasonality mode. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> [Required] Seasonality value. </param>
-        internal CustomSeasonality(SeasonalityMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData, int value) : base(mode, serializedAdditionalRawData)
+        internal CustomSeasonality(SeasonalityMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties, int value) : base(mode, additionalBinaryDataProperties)
         {
             Value = value;
-            Mode = mode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomSeasonality"/> for deserialization. </summary>
-        internal CustomSeasonality()
-        {
         }
 
         /// <summary> [Required] Seasonality value. </summary>

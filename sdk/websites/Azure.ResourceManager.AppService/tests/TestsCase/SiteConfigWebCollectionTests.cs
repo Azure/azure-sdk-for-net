@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         public async Task CreateOrUpdate()
         {
             var container = await GetSiteSlotConfigWebCollectionAsync();
-        var name = Recording.GenerateAssetName("testSiteSlotConfigWeb");
-        var Input = ResourceDataHelper.GetBasicSiteConfigResourceData(DefaultLocation);
-        var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Input);
+            var name = Recording.GenerateAssetName("testSiteSlotConfigWeb");
+            var Input = ResourceDataHelper.GetBasicSiteConfigResourceData(DefaultLocation);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Input);
             WebSiteSlotConfigResource siteSlotConfigWeb = lro.Value;
-        Assert.AreEqual(name, siteSlotConfigWeb.Data.Name);
+            Assert.AreEqual(name, siteSlotConfigWeb.Data.Name);
         }
-}
+    }
 }

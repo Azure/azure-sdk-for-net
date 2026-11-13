@@ -13,6 +13,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager
 {
+    [RequiresDynamicCode("This type uses reflection.")]
+    [RequiresUnreferencedCode("This type uses reflection.")]
     internal class GenericOperationSource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T> : IOperationSource<T>
     {
         private readonly ArmClient _client;

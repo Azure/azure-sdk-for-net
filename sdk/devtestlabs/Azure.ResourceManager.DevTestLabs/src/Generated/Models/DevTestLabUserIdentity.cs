@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Identity attributes of a lab user. </summary>
     public partial class DevTestLabUserIdentity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabUserIdentity"/>. </summary>
         public DevTestLabUserIdentity()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="tenantId"> Set to the tenant ID of the client JWT making the request. </param>
         /// <param name="objectId"> Set to the object Id of the client JWT making the request. Not all users have object Id. For CSP (reseller) scenarios for example, object Id is not available. </param>
         /// <param name="appId"> Set to the app Id of the client JWT making the request. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabUserIdentity(string principalName, string principalId, Guid? tenantId, string objectId, string appId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabUserIdentity(string principalName, string principalId, Guid? tenantId, string objectId, string appId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalName = principalName;
             PrincipalId = principalId;
             TenantId = tenantId;
             ObjectId = objectId;
             AppId = appId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Set to the principal name / UPN of the client JWT making the request. </summary>
         public string PrincipalName { get; set; }
+
         /// <summary> Set to the principal Id of the client JWT making the request. Service principal will not have the principal Id. </summary>
         public string PrincipalId { get; set; }
+
         /// <summary> Set to the tenant ID of the client JWT making the request. </summary>
         public Guid? TenantId { get; set; }
+
         /// <summary> Set to the object Id of the client JWT making the request. Not all users have object Id. For CSP (reseller) scenarios for example, object Id is not available. </summary>
         public string ObjectId { get; set; }
+
         /// <summary> Set to the app Id of the client JWT making the request. </summary>
         public string AppId { get; set; }
     }

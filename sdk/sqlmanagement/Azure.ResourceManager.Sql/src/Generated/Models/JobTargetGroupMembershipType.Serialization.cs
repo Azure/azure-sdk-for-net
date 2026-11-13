@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class JobTargetGroupMembershipTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this JobTargetGroupMembershipType value) => value switch
         {
             JobTargetGroupMembershipType.Include => "Include",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobTargetGroupMembershipType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static JobTargetGroupMembershipType ToJobTargetGroupMembershipType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Include")) return JobTargetGroupMembershipType.Include;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Exclude")) return JobTargetGroupMembershipType.Exclude;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Include"))
+            {
+                return JobTargetGroupMembershipType.Include;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Exclude"))
+            {
+                return JobTargetGroupMembershipType.Exclude;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobTargetGroupMembershipType value.");
         }
     }

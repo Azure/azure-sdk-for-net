@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class BastionHostResource : IJsonModel<BastionHostData>
     {
-        private static BastionHostData s_dataDeserializationInstance;
-        private static BastionHostData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BastionHostData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BastionHostData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BastionHostData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BastionHostData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BastionHostData>)Data).Write(writer, options);
 
-        BastionHostData IJsonModel<BastionHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BastionHostData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BastionHostData IJsonModel<BastionHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BastionHostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BastionHostData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BastionHostData IPersistableModel<BastionHostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BastionHostData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<BastionHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BastionHostData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BastionHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

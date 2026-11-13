@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct MonitorComputeIdentityType : IEquatable<MonitorComputeIdentityType>
     {
         private readonly string _value;
+        /// <summary> Authenticates through user's AML token. </summary>
+        private const string AmlTokenValue = "AmlToken";
+        /// <summary> Authenticates through a user-provided managed identity. </summary>
+        private const string ManagedIdentityValue = "ManagedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="MonitorComputeIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorComputeIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AmlTokenValue = "AmlToken";
-        private const string ManagedIdentityValue = "ManagedIdentity";
+            _value = value;
+        }
 
         /// <summary> Authenticates through user's AML token. </summary>
         public static MonitorComputeIdentityType AmlToken { get; } = new MonitorComputeIdentityType(AmlTokenValue);
+
         /// <summary> Authenticates through a user-provided managed identity. </summary>
         public static MonitorComputeIdentityType ManagedIdentity { get; } = new MonitorComputeIdentityType(ManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="MonitorComputeIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorComputeIdentityType left, MonitorComputeIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorComputeIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorComputeIdentityType left, MonitorComputeIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorComputeIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorComputeIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorComputeIdentityType(string value) => new MonitorComputeIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorComputeIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorComputeIdentityType?(string value) => value == null ? null : new MonitorComputeIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorComputeIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorComputeIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -6,11 +6,15 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.Core.Extensions;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Extension methods to add <see cref="JobRouterAdministrationClient"/>, <see cref="JobRouterClient"/> to client builder. </summary>
-    public static class JobRouterClientBuilderExtensions
+    [CodeGenType("JobRouterClientBuilderExtensions")]
+    [CodeGenSuppress("AddJobRouterAdministrationClient", typeof(IAzureClientFactoryBuilderWithCredential), typeof(Uri))]
+    [CodeGenSuppress("AddJobRouterClient", typeof(IAzureClientFactoryBuilderWithCredential), typeof(Uri))]
+    public static partial class JobRouterClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

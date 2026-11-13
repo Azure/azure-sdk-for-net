@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary></summary>
     public partial class DomainTopicResource : IJsonModel<DomainTopicData>
     {
-        private static DomainTopicData s_dataDeserializationInstance;
-        private static DomainTopicData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DomainTopicData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DomainTopicData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DomainTopicData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DomainTopicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DomainTopicData>)Data).Write(writer, options);
 
-        DomainTopicData IJsonModel<DomainTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DomainTopicData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DomainTopicData IJsonModel<DomainTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DomainTopicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DomainTopicData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DomainTopicData IPersistableModel<DomainTopicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DomainTopicData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<DomainTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DomainTopicData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DomainTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

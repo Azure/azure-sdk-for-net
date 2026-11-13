@@ -9,9 +9,9 @@ namespace Azure.Storage
     /// </summary>
     internal class StorageSharedKeyCredentialInternals : StorageSharedKeyCredential
     {
-        #pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable IDE0051 // Remove unused private members
         private StorageSharedKeyCredentialInternals(string accountName, string accountKey) :
-        #pragma warning restore IDE0051 // Remove unused private members
+#pragma warning restore IDE0051 // Remove unused private members
             base(accountName, accountKey)
         {
         }

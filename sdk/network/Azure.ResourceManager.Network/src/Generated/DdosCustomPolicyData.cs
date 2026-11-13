@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the DdosCustomPolicy data model.
-    /// A DDoS custom policy in a resource group.
-    /// </summary>
+    /// <summary> A DDoS custom policy in a resource group. </summary>
     public partial class DdosCustomPolicyData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
@@ -29,25 +28,97 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
-        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
-        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the DDoS custom policy. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, DdosCustomPolicyPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            ResourceGuid = resourceGuid;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the DDoS custom policy. </summary>
+        [WirePath("properties")]
+        internal DdosCustomPolicyPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </summary>
         [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> The provisioning state of the DDoS custom policy resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The list of DDoS detection rules associated with the custom policy. </summary>
+        [WirePath("properties.detectionRules")]
+        public IList<DdosDetectionRule> DetectionRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosCustomPolicyPropertiesFormat();
+                }
+                return Properties.DetectionRules;
+            }
+        }
+
+        /// <summary> The list of DDoS mitigation rules associated with the custom policy. </summary>
+        [WirePath("properties.mitigationRules")]
+        public IList<DdosMitigationRule> MitigationRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosCustomPolicyPropertiesFormat();
+                }
+                return Properties.MitigationRules;
+            }
+        }
+
+        /// <summary> The list of frontend IP configurations associated with the custom policy. </summary>
+        [WirePath("properties.frontEndIpConfiguration")]
+        public IList<WritableSubResource> FrontEndIPConfiguration
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosCustomPolicyPropertiesFormat();
+                }
+                return Properties.FrontEndIPConfiguration;
+            }
+        }
+
+        /// <summary> The list of public IP addresses associated with the custom policy. This list is read-only. </summary>
+        [WirePath("properties.publicIPAddresses")]
+        public IReadOnlyList<WritableSubResource> PublicIPAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosCustomPolicyPropertiesFormat();
+                }
+                return Properties.PublicIPAddresses;
+            }
+        }
     }
 }

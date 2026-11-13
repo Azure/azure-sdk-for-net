@@ -2,16 +2,15 @@
 // Licensed under the MIT License.
 
 extern alias BaseBlobs;
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.DataMovement.Blobs.Tests;
+using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Stress;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.DataMovement.Blobs.Tests;
-using Azure.Storage.Stress;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {

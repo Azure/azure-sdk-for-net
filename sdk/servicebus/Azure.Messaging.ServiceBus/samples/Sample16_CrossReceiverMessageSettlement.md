@@ -14,7 +14,7 @@ actually part of the AMQP message so it needs to stored separately from the AMQP
 
 ```C# Snippet:ServiceBusWriteReceivedMessage
 var credential = new DefaultAzureCredential();
-ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
+await using ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
 ServiceBusSender sender = client1.CreateSender(queueName);
 
 ServiceBusMessage message = new("some message");
@@ -32,7 +32,7 @@ In order to rehydrate the message in another process, we would do the following:
 AmqpAnnotatedMessage amqpMessage = AmqpAnnotatedMessage.FromBytes(new BinaryData(amqpMessageBytes));
 ServiceBusReceivedMessage rehydratedMessage = ServiceBusReceivedMessage.FromAmqpMessage(amqpMessage, new BinaryData(lockTokenBytes));
 
-var client2 = new ServiceBusClient(fullyQualifiedNamespace, credential);
+await using var client2 = new ServiceBusClient(fullyQualifiedNamespace, credential);
 ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
 await receiver2.CompleteMessageAsync(rehydratedMessage);
 ```
@@ -44,7 +44,7 @@ lock token. In the example below, we store off the lock token using its GUID byt
 string if that is easier for your scenario.
 
 ```C# Snippet:ServiceBusWriteReceivedMessageLockToken
-ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
+await using ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
 ServiceBusSender sender = client1.CreateSender(queueName);
 
 ServiceBusMessage message = new("some message");
@@ -62,7 +62,7 @@ In order to rehydrate the message in another process using the lock token, we wo
 ```C# Snippet:ServiceBusReadReceivedMessageLockToken
 ServiceBusReceivedMessage rehydratedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(lockTokenGuid: new Guid(lockTokenBytes.ToArray()));
 
-ServiceBusClient client2 = new(fullyQualifiedNamespace, credential);
+await using ServiceBusClient client2 = new(fullyQualifiedNamespace, credential);
 ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
 await receiver2.CompleteMessageAsync(rehydratedMessage);
 ```

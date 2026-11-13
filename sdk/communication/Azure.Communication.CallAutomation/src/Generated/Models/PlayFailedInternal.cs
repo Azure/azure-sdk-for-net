@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
         /// <param name="failedPlaySourceIndex"> Contains the index of the failed play source. </param>
         internal PlayFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, int? failedPlaySourceIndex)
         {

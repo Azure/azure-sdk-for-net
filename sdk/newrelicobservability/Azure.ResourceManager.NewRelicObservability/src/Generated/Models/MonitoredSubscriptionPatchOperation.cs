@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct MonitoredSubscriptionPatchOperation : IEquatable<MonitoredSubscriptionPatchOperation>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPatchOperation"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MonitoredSubscriptionPatchOperation(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AddBeginValue = "AddBegin";
         private const string AddCompleteValue = "AddComplete";
         private const string DeleteBeginValue = "DeleteBegin";
         private const string DeleteCompleteValue = "DeleteComplete";
         private const string ActiveValue = "Active";
 
-        /// <summary> AddBegin. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPatchOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MonitoredSubscriptionPatchOperation(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AddBegin. </summary>
         public static MonitoredSubscriptionPatchOperation AddBegin { get; } = new MonitoredSubscriptionPatchOperation(AddBeginValue);
-        /// <summary> AddComplete. </summary>
+
+        /// <summary> Gets the AddComplete. </summary>
         public static MonitoredSubscriptionPatchOperation AddComplete { get; } = new MonitoredSubscriptionPatchOperation(AddCompleteValue);
-        /// <summary> DeleteBegin. </summary>
+
+        /// <summary> Gets the DeleteBegin. </summary>
         public static MonitoredSubscriptionPatchOperation DeleteBegin { get; } = new MonitoredSubscriptionPatchOperation(DeleteBeginValue);
-        /// <summary> DeleteComplete. </summary>
+
+        /// <summary> Gets the DeleteComplete. </summary>
         public static MonitoredSubscriptionPatchOperation DeleteComplete { get; } = new MonitoredSubscriptionPatchOperation(DeleteCompleteValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static MonitoredSubscriptionPatchOperation Active { get; } = new MonitoredSubscriptionPatchOperation(ActiveValue);
+
         /// <summary> Determines if two <see cref="MonitoredSubscriptionPatchOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitoredSubscriptionPatchOperation left, MonitoredSubscriptionPatchOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitoredSubscriptionPatchOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitoredSubscriptionPatchOperation left, MonitoredSubscriptionPatchOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoredSubscriptionPatchOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitoredSubscriptionPatchOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitoredSubscriptionPatchOperation(string value) => new MonitoredSubscriptionPatchOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitoredSubscriptionPatchOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitoredSubscriptionPatchOperation?(string value) => value == null ? null : new MonitoredSubscriptionPatchOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitoredSubscriptionPatchOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitoredSubscriptionPatchOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

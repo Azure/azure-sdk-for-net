@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct PolicyOverrideCancellation : IEquatable<PolicyOverrideCancellation>
     {
         private readonly string _value;
+        /// <summary> NotAllowed. </summary>
+        private const string NotAllowedValue = "NotAllowed";
+        /// <summary> Allowed. </summary>
+        private const string AllowedValue = "Allowed";
 
         /// <summary> Initializes a new instance of <see cref="PolicyOverrideCancellation"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyOverrideCancellation(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotAllowedValue = "NotAllowed";
-        private const string AllowedValue = "Allowed";
+            _value = value;
+        }
 
         /// <summary> NotAllowed. </summary>
         public static PolicyOverrideCancellation NotAllowed { get; } = new PolicyOverrideCancellation(NotAllowedValue);
+
         /// <summary> Allowed. </summary>
         public static PolicyOverrideCancellation Allowed { get; } = new PolicyOverrideCancellation(AllowedValue);
+
         /// <summary> Determines if two <see cref="PolicyOverrideCancellation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyOverrideCancellation left, PolicyOverrideCancellation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicyOverrideCancellation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyOverrideCancellation left, PolicyOverrideCancellation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyOverrideCancellation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicyOverrideCancellation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicyOverrideCancellation(string value) => new PolicyOverrideCancellation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolicyOverrideCancellation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolicyOverrideCancellation?(string value) => value == null ? null : new PolicyOverrideCancellation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicyOverrideCancellation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicyOverrideCancellation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

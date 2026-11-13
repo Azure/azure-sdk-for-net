@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct SoftwareAssuranceIntent : IEquatable<SoftwareAssuranceIntent>
     {
         private readonly string _value;
+        /// <summary> Customer intends to enable the Software Assurance benefit. </summary>
+        private const string EnableValue = "Enable";
+        /// <summary> Customer intends to disable the Software Assurance benefit. </summary>
+        private const string DisableValue = "Disable";
 
         /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SoftwareAssuranceIntent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnableValue = "Enable";
-        private const string DisableValue = "Disable";
-
-        /// <summary> Enable. </summary>
+        /// <summary> Customer intends to enable the Software Assurance benefit. </summary>
         public static SoftwareAssuranceIntent Enable { get; } = new SoftwareAssuranceIntent(EnableValue);
-        /// <summary> Disable. </summary>
+
+        /// <summary> Customer intends to disable the Software Assurance benefit. </summary>
         public static SoftwareAssuranceIntent Disable { get; } = new SoftwareAssuranceIntent(DisableValue);
+
         /// <summary> Determines if two <see cref="SoftwareAssuranceIntent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SoftwareAssuranceIntent left, SoftwareAssuranceIntent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SoftwareAssuranceIntent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SoftwareAssuranceIntent left, SoftwareAssuranceIntent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SoftwareAssuranceIntent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SoftwareAssuranceIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SoftwareAssuranceIntent(string value) => new SoftwareAssuranceIntent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SoftwareAssuranceIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SoftwareAssuranceIntent?(string value) => value == null ? null : new SoftwareAssuranceIntent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SoftwareAssuranceIntent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SoftwareAssuranceIntent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

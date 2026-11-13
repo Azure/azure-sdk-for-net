@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,18 +10,46 @@
 
 ### Other Changes
 
+## 1.3.0 (2026-10-06)
+
+### Features Added
+
+- Regenerated from the relocated ProviderHub TypeSpec (`specification/providerhub/resource-manager/Microsoft.ProviderHub/ProviderHub`), targeting API version `2025-10-01`.
+- Added `ManifestInfo` and `OperationsPutContent` resources, along with the models supporting them.
+- Added `ApplicationDataAuthorization.IsApplicationIdExcludedFromManifest`, `ResourceTypeRegistrationProperties.IsSuperScaleEnabled` and the `LinkedAccessCheckOption` enum, all new in API version `2025-10-01`. Their .NET names come from `@@clientName` customizations in the specification so that they follow the [.NET naming guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+
+## 1.2.1 (2026-06-28)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.2.0 (2025-10-21)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2020-11-20' to 'package-2024-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/247a38a5fea02ac50132f591f3b53fec06e9377b/specification/providerhub/resource-manager/readme.md.
+- Make `Azure.ResourceManager.ProviderHub` AOT-compatible.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.45.0 to 1.49.0
+- Upgraded Azure.ResourceManager from 1.13.0 to 1.13.2
+- Obsoleted property 'IList<BinaryData> ResourceAccessRoles' in type Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement
+
 ## 1.1.1 (2025-03-11)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.1.0 (2023-11-29)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -31,7 +59,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -48,7 +76,7 @@ Polishing since last public beta release:
 - Prepended `ProviderHub` / `Provider` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Communication.Models
     public readonly partial struct DomainManagement : IEquatable<DomainManagement>
     {
         private readonly string _value;
+        /// <summary> AzureManaged. </summary>
+        private const string AzureManagedValue = "AzureManaged";
+        /// <summary> CustomerManaged. </summary>
+        private const string CustomerManagedValue = "CustomerManaged";
+        /// <summary> CustomerManagedInExchangeOnline. </summary>
+        private const string CustomerManagedInExchangeOnlineValue = "CustomerManagedInExchangeOnline";
 
         /// <summary> Initializes a new instance of <see cref="DomainManagement"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DomainManagement(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureManagedValue = "AzureManaged";
-        private const string CustomerManagedValue = "CustomerManaged";
-        private const string CustomerManagedInExchangeOnlineValue = "CustomerManagedInExchangeOnline";
+            _value = value;
+        }
 
         /// <summary> AzureManaged. </summary>
         public static DomainManagement AzureManaged { get; } = new DomainManagement(AzureManagedValue);
+
         /// <summary> CustomerManaged. </summary>
         public static DomainManagement CustomerManaged { get; } = new DomainManagement(CustomerManagedValue);
+
         /// <summary> CustomerManagedInExchangeOnline. </summary>
         public static DomainManagement CustomerManagedInExchangeOnline { get; } = new DomainManagement(CustomerManagedInExchangeOnlineValue);
+
         /// <summary> Determines if two <see cref="DomainManagement"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DomainManagement left, DomainManagement right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DomainManagement"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DomainManagement left, DomainManagement right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainManagement"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DomainManagement"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DomainManagement(string value) => new DomainManagement(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DomainManagement"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DomainManagement?(string value) => value == null ? null : new DomainManagement(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DomainManagement other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DomainManagement other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

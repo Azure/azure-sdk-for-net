@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.IsNotNull(result.Value.Data.Id);
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_Create_Exists_Get_List_Delete()
         {
             // Get the resource group
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.IsFalse(flag);
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_BlobTrigger_Create()
         {
             await TriggerCreate("blobtrigger", (DataFactoryResource dataFactory, string linkedServiceName, string pipelineName1, string pipelineName2, string pipelineName3) =>
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_BlobEventsTrigger_Create()
         {
             await TriggerCreate("blobeventtrigger", (DataFactoryResource dataFactory, string linkedServiceName, string pipelineName1, string pipelineName2, string pipelineName3) =>
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_ScheduleTrigger_Create()
         {
             await TriggerCreate("scheduletrigger", (DataFactoryResource dataFactory, string linkedServiceName, string pipelineName1, string pipelineName2, string pipelineName3) =>
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_TumblingWindowTrigger_Hour_Create()
         {
             await TriggerCreate("tumblingwindowtrigger", (DataFactoryResource dataFactory, string linkedServiceName, string pipelineName1, string pipelineName2, string pipelineName3) =>
@@ -265,8 +265,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_TumblingWindowTrigger_Month_Create()
         {
             await TriggerCreate("tumblingwindowtrigger", (DataFactoryResource dataFactory, string linkedServiceName, string pipelineName1, string pipelineName2, string pipelineName3) =>
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_TumblingWindowTrigger_Dependency_Create()
         {
             await TriggerCreate("tumblingwindowtrigger", (DataFactoryResource dataFactory, string linkedServiceName, string pipelineName1, string pipelineName2, string pipelineName3) =>
@@ -334,8 +334,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_CustomEventsTrigger_Create()
         {
             await TriggerCreate("customeventstrigger", (DataFactoryResource dataFactory, string linkedServiceName, string pipelineName1, string pipelineName2, string pipelineName3) =>
@@ -352,8 +352,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_RerunTumblingWindowTrigger_Create()
         {
             await TriggerCreate("returntumblingwindowtrigger", (DataFactoryResource dataFactory, string linkedServiceName, string pipelineName1, string pipelineName2, string pipelineName3) =>
@@ -369,8 +369,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Trigger_TriggerRun_Create()
         {
             // Get the resource group
@@ -384,9 +384,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             await CreateDefaultTumblingWindowTrigger(dataFactory, referenceTriggerName);
             var state = await dataFactory.GetDataFactoryTriggerAsync(referenceTriggerName);
             await state.Value.StartAsync(WaitUntil.Completed);
-            var list = dataFactory.GetTriggerRunsAsync(new RunFilterContent(DateTimeOffset.Parse("2017-04-14T13:00:00Z"), DateTimeOffset.Parse("2030-04-14T13:00:00Z")));
-
-            await foreach (var item in list)
+            await foreach (var item in dataFactory.GetTriggerRunsAsync(new RunFilterContent(DateTimeOffset.Parse("2017-04-14T13:00:00Z"), DateTimeOffset.Parse("2030-04-14T13:00:00Z"))))
             {
                 Console.WriteLine(item);
             }

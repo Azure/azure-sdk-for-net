@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/sandboxCustomImages. </summary>
+    /// <summary></summary>
     public readonly partial struct SandboxCustomImageType : IEquatable<SandboxCustomImageType>
     {
         private readonly string _value;
+        /// <summary> Microsoft.Kusto/clusters/sandboxCustomImages. </summary>
+        private const string MicrosoftKustoClustersSandboxCustomImagesValue = "Microsoft.Kusto/clusters/sandboxCustomImages";
 
         /// <summary> Initializes a new instance of <see cref="SandboxCustomImageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SandboxCustomImageType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftKustoClustersSandboxCustomImagesValue = "Microsoft.Kusto/clusters/sandboxCustomImages";
+            _value = value;
+        }
 
         /// <summary> Microsoft.Kusto/clusters/sandboxCustomImages. </summary>
         public static SandboxCustomImageType MicrosoftKustoClustersSandboxCustomImages { get; } = new SandboxCustomImageType(MicrosoftKustoClustersSandboxCustomImagesValue);
+
         /// <summary> Determines if two <see cref="SandboxCustomImageType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SandboxCustomImageType left, SandboxCustomImageType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SandboxCustomImageType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SandboxCustomImageType left, SandboxCustomImageType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SandboxCustomImageType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SandboxCustomImageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SandboxCustomImageType(string value) => new SandboxCustomImageType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SandboxCustomImageType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SandboxCustomImageType?(string value) => value == null ? null : new SandboxCustomImageType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SandboxCustomImageType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SandboxCustomImageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

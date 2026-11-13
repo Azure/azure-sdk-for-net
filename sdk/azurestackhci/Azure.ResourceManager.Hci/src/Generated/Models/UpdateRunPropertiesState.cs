@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> State of the update run. </summary>
+    /// <summary> Represents the current state of the update run. Indicates whether the update is in progress, has completed successfully, failed, or is in an unknown state. </summary>
     public readonly partial struct UpdateRunPropertiesState : IEquatable<UpdateRunPropertiesState>
     {
         private readonly string _value;
+        /// <summary> The state of the update run is not known. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> The update run completed successfully. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The update run is currently in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The update run failed to complete successfully. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="UpdateRunPropertiesState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpdateRunPropertiesState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string UnknownValue = "Unknown";
-        private const string SucceededValue = "Succeeded";
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Unknown. </summary>
+        /// <summary> The state of the update run is not known. </summary>
         public static UpdateRunPropertiesState Unknown { get; } = new UpdateRunPropertiesState(UnknownValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> The update run completed successfully. </summary>
         public static UpdateRunPropertiesState Succeeded { get; } = new UpdateRunPropertiesState(SucceededValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> The update run is currently in progress. </summary>
         public static UpdateRunPropertiesState InProgress { get; } = new UpdateRunPropertiesState(InProgressValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The update run failed to complete successfully. </summary>
         public static UpdateRunPropertiesState Failed { get; } = new UpdateRunPropertiesState(FailedValue);
+
         /// <summary> Determines if two <see cref="UpdateRunPropertiesState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UpdateRunPropertiesState left, UpdateRunPropertiesState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UpdateRunPropertiesState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UpdateRunPropertiesState left, UpdateRunPropertiesState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdateRunPropertiesState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UpdateRunPropertiesState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UpdateRunPropertiesState(string value) => new UpdateRunPropertiesState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UpdateRunPropertiesState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UpdateRunPropertiesState?(string value) => value == null ? null : new UpdateRunPropertiesState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UpdateRunPropertiesState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UpdateRunPropertiesState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

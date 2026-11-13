@@ -1,3 +1,6 @@
-directory: specification/devopsinfrastructure/Microsoft.DevOpsInfrastructure.Management
-commit: ee39ef4ad91a08dae2ddf47ea4de1176bc24ecc7
+directory: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/DevOpsInfrastructure
+commit: 464b188149ccda738c2db09889b25221b42337b8
 repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

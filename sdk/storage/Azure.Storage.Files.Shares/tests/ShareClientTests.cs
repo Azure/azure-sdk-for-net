@@ -11,8 +11,8 @@ using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
-using NUnit.Framework;
 using Moq;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -767,6 +767,89 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task CreateAsync_ChangeFeed()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnableChangeFeed = true,
+                ChangeFeedRetentionInDays = 3
+            };
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.IsTrue(response.Value.EnableChangeFeed);
+                Assert.AreEqual(3, response.Value.ChangeFeedRetentionInDays);
+                Assert.IsNotNull(response.Value.ChangeFeedBlobContainerName);
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
+        //[RecordedTest]
+        //[TestCase(null)]
+        //[TestCase(true)]
+        //[TestCase(false)]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        //public async Task CreateAsync_EnableDirectoryLease(bool? enableDirectoryLease)
+        //{
+        //    // Arrange
+        //    var shareName = GetNewShareName();
+        //    ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+        //    ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+        //    ShareCreateOptions options = new ShareCreateOptions
+        //    {
+        //        EnableDirectoryLease = enableDirectoryLease,
+        //    };
+
+        //    try
+        //    {
+        //        // Act
+        //        await share.CreateAsync(options);
+
+        //        // Assert
+        //        Response<ShareProperties> response = await share.GetPropertiesAsync();
+        //        if (enableDirectoryLease == null || enableDirectoryLease == true)
+        //        {
+        //            Assert.IsTrue(response.Value.EnableDirectoryLease);
+        //        }
+        //        else
+        //        {
+        //            Assert.IsFalse(response.Value.EnableDirectoryLease);
+        //        }
+
+        //        // Act
+        //        IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+        //        ShareItem shareItem = shares.SingleOrDefault(r => r.Name == share.Name);
+
+        //        // Assert
+        //        if (enableDirectoryLease == null || enableDirectoryLease == true)
+        //        {
+        //            Assert.IsTrue(shareItem.Properties.EnableDirectoryLease);
+        //        }
+        //        else
+        //        {
+        //            Assert.IsFalse(shareItem.Properties.EnableDirectoryLease);
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        await share.DeleteAsync(false);
+        //    }
+        //}
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task CreateAsync_OAuth()
         {
@@ -1206,6 +1289,21 @@ namespace Azure.Storage.Files.Shares.Tests
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Assert.IsNotNull(response.Value.LastModified);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
+        public async Task GetPropertiesAsync_CreatedOn()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Act
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.CreatedOn);
         }
 
         [RecordedTest]
@@ -1903,6 +2001,50 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(ShareAccessTier.Premium.ToString(), response.Value.AccessTier);
         }
 
+        //[RecordedTest]
+        //[TestCase(null)]
+        //[TestCase(true)]
+        //[TestCase(false)]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        //public async Task SetPropertiesAsyncAsync_EnableDirectoryLease(bool? enableDirectoryLease)
+        //{
+        //    // Arrange
+        //    await using DisposingShare test = await GetTestShareAsync();
+
+        //    ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
+        //    {
+        //        EnableDirectoryLease = enableDirectoryLease
+        //    };
+
+        //    // Act
+        //    await test.Share.SetPropertiesAsync(options);
+
+        //    // Assert
+        //    Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+        //    if (enableDirectoryLease == true || enableDirectoryLease == null)
+        //    {
+        //        Assert.IsTrue(response.Value.EnableDirectoryLease);
+        //    }
+        //    else
+        //    {
+        //        Assert.IsFalse(response.Value.EnableDirectoryLease);
+        //    }
+
+        //    // Act
+        //    IList<ShareItem> shares = await test.Share.GetParentServiceClient().GetSharesAsync().ToListAsync();
+        //    ShareItem shareItem = shares.SingleOrDefault(r => r.Name == test.Share.Name);
+
+        //    // Assert
+        //    if (enableDirectoryLease == true || enableDirectoryLease == null)
+        //    {
+        //        Assert.IsTrue(shareItem.Properties.EnableDirectoryLease);
+        //    }
+        //    else
+        //    {
+        //        Assert.IsFalse(shareItem.Properties.EnableDirectoryLease);
+        //    }
+        //}
+
         [RecordedTest]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
@@ -2019,6 +2161,56 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(response.Value.EnablePaidBursting);
             Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
             Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task SetPropertiesAsync_ChangeFeed()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                EnableChangeFeed = true,
+                ChangeFeedRetentionInDays = 5
+            };
+
+            // Act
+            await test.Share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.EnableChangeFeed);
+            Assert.AreEqual(5, response.Value.ChangeFeedRetentionInDays);
+            Assert.IsNotNull(response.Value.ChangeFeedBlobContainerName);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task SetPropertiesAsync_ChangeFeedRetentionInDaysOnly()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            await test.Share.SetPropertiesAsync(new ShareSetPropertiesOptions
+            {
+                EnableChangeFeed = true,
+                ChangeFeedRetentionInDays = 5
+            });
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                ChangeFeedRetentionInDays = 30
+            };
+
+            // Act
+            await test.Share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.EnableChangeFeed);
+            Assert.AreEqual(30, response.Value.ChangeFeedRetentionInDays);
         }
 
         [RecordedTest]

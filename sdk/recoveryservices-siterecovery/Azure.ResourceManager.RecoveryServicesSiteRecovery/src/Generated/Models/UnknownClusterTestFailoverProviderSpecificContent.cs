@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of ClusterTestFailoverProviderSpecificInput. </summary>
     internal partial class UnknownClusterTestFailoverProviderSpecificContent : ClusterTestFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownClusterTestFailoverProviderSpecificContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownClusterTestFailoverProviderSpecificContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownClusterTestFailoverProviderSpecificContent"/> for deserialization. </summary>
-        internal UnknownClusterTestFailoverProviderSpecificContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownClusterTestFailoverProviderSpecificContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

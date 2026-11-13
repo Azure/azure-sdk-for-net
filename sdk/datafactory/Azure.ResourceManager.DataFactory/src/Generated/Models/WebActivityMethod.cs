@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct WebActivityMethod : IEquatable<WebActivityMethod>
     {
         private readonly string _value;
+        /// <summary> GET. </summary>
+        private const string GetValue = "GET";
+        /// <summary> POST. </summary>
+        private const string PostValue = "POST";
+        /// <summary> PUT. </summary>
+        private const string PutValue = "PUT";
+        /// <summary> DELETE. </summary>
+        private const string DeleteValue = "DELETE";
 
         /// <summary> Initializes a new instance of <see cref="WebActivityMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebActivityMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GetValue = "GET";
-        private const string PostValue = "POST";
-        private const string PutValue = "PUT";
-        private const string DeleteValue = "DELETE";
+            _value = value;
+        }
 
         /// <summary> GET. </summary>
         public static WebActivityMethod Get { get; } = new WebActivityMethod(GetValue);
+
         /// <summary> POST. </summary>
         public static WebActivityMethod Post { get; } = new WebActivityMethod(PostValue);
+
         /// <summary> PUT. </summary>
         public static WebActivityMethod Put { get; } = new WebActivityMethod(PutValue);
+
         /// <summary> DELETE. </summary>
         public static WebActivityMethod Delete { get; } = new WebActivityMethod(DeleteValue);
+
         /// <summary> Determines if two <see cref="WebActivityMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebActivityMethod left, WebActivityMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebActivityMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebActivityMethod left, WebActivityMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebActivityMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebActivityMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebActivityMethod(string value) => new WebActivityMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebActivityMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebActivityMethod?(string value) => value == null ? null : new WebActivityMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebActivityMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebActivityMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -12,22 +12,23 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Azure arc kubernetes network function application definition.
-    /// Please note <see cref="AzureArcKubernetesNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureArcKubernetesHelmApplication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureArcKubernetesHelmApplication"/>.
     /// </summary>
     public abstract partial class AzureArcKubernetesNetworkFunctionApplication : NetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionApplication"/>. </summary>
-        protected AzureArcKubernetesNetworkFunctionApplication()
+        /// <param name="artifactType"> The artifact type. </param>
+        private protected AzureArcKubernetesNetworkFunctionApplication(AzureArcKubernetesArtifactType artifactType)
         {
+            ArtifactType = artifactType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactType"> The artifact type. </param>
-        internal AzureArcKubernetesNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureArcKubernetesArtifactType artifactType) : base(name, dependsOnProfile, serializedAdditionalRawData)
+        internal AzureArcKubernetesNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureArcKubernetesArtifactType artifactType) : base(name, dependsOnProfile, additionalBinaryDataProperties)
         {
             ArtifactType = artifactType;
         }

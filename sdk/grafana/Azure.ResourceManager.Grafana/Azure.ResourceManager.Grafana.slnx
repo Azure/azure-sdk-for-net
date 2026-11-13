@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Grafana.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Grafana.Tests.csproj" />
+</Solution>

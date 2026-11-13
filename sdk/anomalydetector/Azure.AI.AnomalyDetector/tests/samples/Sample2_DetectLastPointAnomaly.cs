@@ -49,7 +49,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             try
             {
-                UnivariateLastDetectionResult result = client.GetUnivariateClient().DetectUnivariateLastPoint(request);
+                UnivariateLastDetectionResult result = client.GetUnivariateDetectorClient().DetectUnivariateLastPoint(request);
 
                 if (result.IsAnomaly)
                 {

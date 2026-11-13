@@ -7,67 +7,42 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The list of catalogs and pagination information. </summary>
     internal partial class CatalogsResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CatalogsResult"/>. </summary>
-        internal CatalogsResult()
+        /// <param name="value"> The Catalog items on this page. </param>
+        internal CatalogsResult(IEnumerable<ReservationCatalog> value)
         {
-            Value = new ChangeTrackingList<ReservationCatalog>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CatalogsResult"/>. </summary>
-        /// <param name="value"> The list of catalogs. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value"> The Catalog items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="totalItems"> The total amount of catalog items. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CatalogsResult(IReadOnlyList<ReservationCatalog> value, string nextLink, long? totalItems, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CatalogsResult(IList<ReservationCatalog> value, Uri nextLink, long? totalItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             TotalItems = totalItems;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The list of catalogs. </summary>
-        public IReadOnlyList<ReservationCatalog> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The Catalog items on this page. </summary>
+        public IList<ReservationCatalog> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
+
         /// <summary> The total amount of catalog items. </summary>
         public long? TotalItems { get; }
     }

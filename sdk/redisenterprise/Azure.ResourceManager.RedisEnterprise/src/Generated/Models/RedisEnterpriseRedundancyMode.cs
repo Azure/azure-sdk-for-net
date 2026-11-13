@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseRedundancyMode : IEquatable<RedisEnterpriseRedundancyMode>
     {
         private readonly string _value;
+        /// <summary> No redundancy. Availability loss will occur. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Local redundancy with high availability. </summary>
+        private const string LRValue = "LR";
+        /// <summary> Zone redundant. Higher availability. </summary>
+        private const string ZRValue = "ZR";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRedundancyMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseRedundancyMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string LRValue = "LR";
-        private const string ZRValue = "ZR";
+            _value = value;
+        }
 
         /// <summary> No redundancy. Availability loss will occur. </summary>
         public static RedisEnterpriseRedundancyMode None { get; } = new RedisEnterpriseRedundancyMode(NoneValue);
+
         /// <summary> Local redundancy with high availability. </summary>
         public static RedisEnterpriseRedundancyMode LR { get; } = new RedisEnterpriseRedundancyMode(LRValue);
+
         /// <summary> Zone redundant. Higher availability. </summary>
         public static RedisEnterpriseRedundancyMode ZR { get; } = new RedisEnterpriseRedundancyMode(ZRValue);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseRedundancyMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseRedundancyMode left, RedisEnterpriseRedundancyMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseRedundancyMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseRedundancyMode left, RedisEnterpriseRedundancyMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseRedundancyMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseRedundancyMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseRedundancyMode(string value) => new RedisEnterpriseRedundancyMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseRedundancyMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseRedundancyMode?(string value) => value == null ? null : new RedisEnterpriseRedundancyMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseRedundancyMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseRedundancyMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ConnectedRegistryActivationStatus : IEquatable<ConnectedRegistryActivationStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConnectedRegistryActivationStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectedRegistryActivationStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ActiveValue = "Active";
         private const string InactiveValue = "Inactive";
 
-        /// <summary> Active. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedRegistryActivationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConnectedRegistryActivationStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Active. </summary>
         public static ConnectedRegistryActivationStatus Active { get; } = new ConnectedRegistryActivationStatus(ActiveValue);
-        /// <summary> Inactive. </summary>
+
+        /// <summary> Gets the Inactive. </summary>
         public static ConnectedRegistryActivationStatus Inactive { get; } = new ConnectedRegistryActivationStatus(InactiveValue);
+
         /// <summary> Determines if two <see cref="ConnectedRegistryActivationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectedRegistryActivationStatus left, ConnectedRegistryActivationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectedRegistryActivationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectedRegistryActivationStatus left, ConnectedRegistryActivationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectedRegistryActivationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectedRegistryActivationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectedRegistryActivationStatus(string value) => new ConnectedRegistryActivationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectedRegistryActivationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectedRegistryActivationStatus?(string value) => value == null ? null : new ConnectedRegistryActivationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectedRegistryActivationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectedRegistryActivationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerJobVersionResource : IJsonModel<SqlServerJobVersionData>
     {
-        private static SqlServerJobVersionData s_dataDeserializationInstance;
-        private static SqlServerJobVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerJobVersionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerJobVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerJobVersionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerJobVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobVersionData>)Data).Write(writer, options);
 
-        SqlServerJobVersionData IJsonModel<SqlServerJobVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerJobVersionData IJsonModel<SqlServerJobVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerJobVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobVersionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerJobVersionData IPersistableModel<SqlServerJobVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobVersionData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerJobVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

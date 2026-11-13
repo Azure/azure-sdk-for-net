@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Kubernetes;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Kubernetes.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableKubernetesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableKubernetesResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableKubernetesResourceGroupResource for mocking. </summary>
         protected MockableKubernetesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableKubernetesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableKubernetesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableKubernetesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ConnectedClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ConnectedClusterResources and their operations over a ConnectedClusterResource. </returns>
+        /// <summary> Gets a collection of ConnectedClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ConnectedClusters and their operations over a ConnectedClusterResource. </returns>
         public virtual ConnectedClusterCollection GetConnectedClusters()
         {
             return GetCachedClient(client => new ConnectedClusterCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedCluster_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ConnectedClusterResource>> GetConnectedClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return await GetConnectedClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedCluster_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         [ForwardsClientCalls]
         public virtual Response<ConnectedClusterResource> GetConnectedCluster(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return GetConnectedClusters().Get(clusterName, cancellationToken);
         }
     }

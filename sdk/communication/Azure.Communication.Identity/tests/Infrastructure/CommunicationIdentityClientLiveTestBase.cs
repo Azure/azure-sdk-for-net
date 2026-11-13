@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using Azure.Identity;
-using System.Threading.Tasks;
-using Microsoft.Identity.Client;
+using System;
 using System.Security;
 using System.Threading;
-using Azure.Core.TestFramework.Models;
-using System;
+using System.Threading.Tasks;
 using Azure.Communication.Tests;
-using static Azure.Communication.Identity.CommunicationIdentityClientOptions;
+using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
+using Azure.Identity;
+using Microsoft.Identity.Client;
 using NUnit.Framework.Constraints;
+using static Azure.Communication.Identity.CommunicationIdentityClientOptions;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -87,10 +87,12 @@ namespace Azure.Communication.Identity.Tests
                     "https://auth.msft.communication.azure.com/Teams.ManageChats"
                 };
 
+#pragma warning disable CS0618 // Suppress obsolete warning for test-only usage
                 AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
                     TestEnvironment.CommunicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+#pragma warning restore CS0618
                 options = new GetTokenForTeamsUserOptions(result.AccessToken, TestEnvironment.CommunicationM365AppId, result.UniqueId);
             }
             return options;

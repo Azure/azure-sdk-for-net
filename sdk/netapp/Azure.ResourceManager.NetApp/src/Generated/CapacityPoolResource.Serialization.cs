@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class CapacityPoolResource : IJsonModel<CapacityPoolData>
     {
-        private static CapacityPoolData s_dataDeserializationInstance;
-        private static CapacityPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CapacityPoolData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CapacityPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CapacityPoolData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CapacityPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CapacityPoolData>)Data).Write(writer, options);
 
-        CapacityPoolData IJsonModel<CapacityPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapacityPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CapacityPoolData IJsonModel<CapacityPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CapacityPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CapacityPoolData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CapacityPoolData IPersistableModel<CapacityPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityPoolData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<CapacityPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapacityPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CapacityPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

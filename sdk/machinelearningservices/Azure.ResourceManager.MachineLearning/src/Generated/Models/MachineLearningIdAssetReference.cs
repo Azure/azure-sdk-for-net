@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -17,27 +18,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningIdAssetReference"/>. </summary>
         /// <param name="assetId"> [Required] ARM resource ID of the asset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
-        public MachineLearningIdAssetReference(ResourceIdentifier assetId)
+        public MachineLearningIdAssetReference(ResourceIdentifier assetId) : base(ReferenceType.Id)
         {
             Argument.AssertNotNull(assetId, nameof(assetId));
 
             AssetId = assetId;
-            ReferenceType = ReferenceType.Id;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningIdAssetReference"/>. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="assetId"> [Required] ARM resource ID of the asset. </param>
-        internal MachineLearningIdAssetReference(ReferenceType referenceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier assetId) : base(referenceType, serializedAdditionalRawData)
+        internal MachineLearningIdAssetReference(ReferenceType referenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier assetId) : base(referenceType, additionalBinaryDataProperties)
         {
             AssetId = assetId;
-            ReferenceType = referenceType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningIdAssetReference"/> for deserialization. </summary>
-        internal MachineLearningIdAssetReference()
-        {
         }
 
         /// <summary> [Required] ARM resource ID of the asset. </summary>

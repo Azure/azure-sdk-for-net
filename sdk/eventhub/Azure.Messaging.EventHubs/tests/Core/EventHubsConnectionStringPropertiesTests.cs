@@ -29,13 +29,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKeyName = "sasName";
             var sas = "fullsas";
 
-            yield return new object[] { $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub }", endpoint, eventHub, sasKeyName, sasKey, null };
-            yield return new object[] { $"Endpoint=sb://{ endpoint };SharedAccessKey={ sasKey };EntityPath={ eventHub };SharedAccessKeyName={ sasKeyName }", endpoint, eventHub, sasKeyName, sasKey, null };
-            yield return new object[] { $"Endpoint=sb://{ endpoint };EntityPath={ eventHub };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey }", endpoint, eventHub, sasKeyName, sasKey, null };
-            yield return new object[] { $"SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };Endpoint=sb://{ endpoint };EntityPath={ eventHub }", endpoint, eventHub, sasKeyName, sasKey, null };
-            yield return new object[] { $"EntityPath={ eventHub };SharedAccessKey={ sasKey };SharedAccessKeyName={ sasKeyName };Endpoint=sb://{ endpoint }", endpoint, eventHub, sasKeyName, sasKey, null };
-            yield return new object[] { $"EntityPath={ eventHub };SharedAccessSignature={ sas };Endpoint=sb://{ endpoint }", endpoint, eventHub, null, null, sas };
-            yield return new object[] { $"SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };Endpoint=sb://{ endpoint };EntityPath={ eventHub };SharedAccessSignature={ sas }", endpoint, eventHub, sasKeyName, sasKey, sas };
+            yield return new object[] { $"Endpoint=sb://{endpoint};SharedAccessKeyName={sasKeyName};SharedAccessKey={sasKey};EntityPath={eventHub}", endpoint, eventHub, sasKeyName, sasKey, null };
+            yield return new object[] { $"Endpoint=sb://{endpoint};SharedAccessKey={sasKey};EntityPath={eventHub};SharedAccessKeyName={sasKeyName}", endpoint, eventHub, sasKeyName, sasKey, null };
+            yield return new object[] { $"Endpoint=sb://{endpoint};EntityPath={eventHub};SharedAccessKeyName={sasKeyName};SharedAccessKey={sasKey}", endpoint, eventHub, sasKeyName, sasKey, null };
+            yield return new object[] { $"SharedAccessKeyName={sasKeyName};SharedAccessKey={sasKey};Endpoint=sb://{endpoint};EntityPath={eventHub}", endpoint, eventHub, sasKeyName, sasKey, null };
+            yield return new object[] { $"EntityPath={eventHub};SharedAccessKey={sasKey};SharedAccessKeyName={sasKeyName};Endpoint=sb://{endpoint}", endpoint, eventHub, sasKeyName, sasKey, null };
+            yield return new object[] { $"EntityPath={eventHub};SharedAccessSignature={sas};Endpoint=sb://{endpoint}", endpoint, eventHub, null, null, sas };
+            yield return new object[] { $"SharedAccessKeyName={sasKeyName};SharedAccessKey={sasKey};Endpoint=sb://{endpoint};EntityPath={eventHub};SharedAccessSignature={sas}", endpoint, eventHub, sasKeyName, sasKey, sas };
         }
 
         /// <summary>
@@ -50,14 +50,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKeyName = "sasName";
             var sas = "fullsas";
 
-            yield return new object[] { $"Endpoint=sb://{ endpoint }", endpoint, null, null, null, null };
-            yield return new object[] { $"SharedAccessKey={ sasKey }", null, null, sasKeyName, null, null };
-            yield return new object[] { $"EntityPath={ eventHub };SharedAccessKeyName={ sasKeyName }", null, eventHub, sasKeyName, null, null };
-            yield return new object[] { $"SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey }", null, null, sasKeyName, sasKey, null };
-            yield return new object[] { $"EntityPath={ eventHub };SharedAccessKey={ sasKey };SharedAccessKeyName={ sasKeyName }", null, eventHub, sasKeyName, sasKey, null };
-            yield return new object[] { $"SharedAccessKeyName={ sasKeyName };SharedAccessSignature={ sas }", null, null, null, null, sas };
-            yield return new object[] { $"EntityPath={ eventHub };SharedAccessSignature={ sas }", null, eventHub, null, null, sas };
-            yield return new object[] { $"EntityPath={ eventHub };SharedAccessKey={ sasKey };SharedAccessKeyName={ sasKeyName };SharedAccessSignature={ sas }", null, eventHub, sasKeyName, sasKey, sas };
+            yield return new object[] { $"Endpoint=sb://{endpoint}", endpoint, null, null, null, null };
+            yield return new object[] { $"SharedAccessKey={sasKey}", null, null, sasKeyName, null, null };
+            yield return new object[] { $"EntityPath={eventHub};SharedAccessKeyName={sasKeyName}", null, eventHub, sasKeyName, null, null };
+            yield return new object[] { $"SharedAccessKeyName={sasKeyName};SharedAccessKey={sasKey}", null, null, sasKeyName, sasKey, null };
+            yield return new object[] { $"EntityPath={eventHub};SharedAccessKey={sasKey};SharedAccessKeyName={sasKeyName}", null, eventHub, sasKeyName, sasKey, null };
+            yield return new object[] { $"SharedAccessKeyName={sasKeyName};SharedAccessSignature={sas}", null, null, null, null, sas };
+            yield return new object[] { $"EntityPath={eventHub};SharedAccessSignature={sas}", null, eventHub, null, null, sas };
+            yield return new object[] { $"EntityPath={eventHub};SharedAccessKey={sasKey};SharedAccessKeyName={sasKeyName};SharedAccessSignature={sas}", null, eventHub, sasKeyName, sasKey, sas };
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
             var sharedAccessSignature = "fakeSAS";
-            var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };SharedAccessSignature={ sharedAccessSignature }";
+            var connectionString = $"Endpoint=sb://{endpoint};SharedAccessKeyName={sasKeyName};SharedAccessKey={sasKey};SharedAccessSignature={sharedAccessSignature}";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
             var sharedAccessSignature = "fakeSAS";
-            var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub };SharedAccessSignature={ sharedAccessSignature }";
+            var connectionString = $"Endpoint=sb://{endpoint};SharedAccessKeyName={sasKeyName};SharedAccessKey={sasKey};EntityPath={eventHub};SharedAccessSignature={sharedAccessSignature}";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
@@ -219,7 +219,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "some-path";
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
-            var connectionString = $";Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub }";
+            var connectionString = $";Endpoint=sb://{endpoint};SharedAccessKeyName={sasKeyName};SharedAccessKey={sasKey};EntityPath={eventHub}";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
@@ -240,7 +240,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "some-path";
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
-            var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub };";
+            var connectionString = $"Endpoint=sb://{endpoint};SharedAccessKeyName={sasKeyName};SharedAccessKey={sasKey};EntityPath={eventHub};";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
@@ -261,7 +261,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "some-path";
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
-            var connectionString = $"Endpoint=sb://{ endpoint }; SharedAccessKeyName={ sasKeyName }; SharedAccessKey={ sasKey }; EntityPath={ eventHub }";
+            var connectionString = $"Endpoint=sb://{endpoint}; SharedAccessKeyName={sasKeyName}; SharedAccessKey={sasKey}; EntityPath={eventHub}";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
@@ -282,7 +282,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "some-path";
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
-            var connectionString = $"Endpoint = sb://{ endpoint };SharedAccessKeyName ={ sasKeyName };SharedAccessKey= { sasKey }; EntityPath  =  { eventHub }";
+            var connectionString = $"Endpoint = sb://{endpoint};SharedAccessKeyName ={sasKeyName};SharedAccessKey= {sasKey}; EntityPath  =  {eventHub}";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
@@ -326,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHub = "some-path";
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
-            var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };Unknown=INVALID;SharedAccessKey={ sasKey };EntityPath={ eventHub };Trailing=WHOAREYOU";
+            var connectionString = $"Endpoint=sb://{endpoint};SharedAccessKeyName={sasKeyName};Unknown=INVALID;SharedAccessKey={sasKey};EntityPath={eventHub};Trailing=WHOAREYOU";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
@@ -349,12 +349,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("https://test.endpoint.com:8443")]
         public void ParseAcceptsHostNamesAndUrisForTheEndpoint(string endpointValue)
         {
-            var connectionString = $"Endpoint={ endpointValue };EntityPath=dummy";
+            var connectionString = $"Endpoint={endpointValue};EntityPath=dummy";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             if (!Uri.TryCreate(endpointValue, UriKind.Absolute, out var valueUri))
             {
-                valueUri = new Uri($"fake://{ endpointValue }");
+                valueUri = new Uri($"fake://{endpointValue}");
             }
 
             Assert.That(parsed.Endpoint.Port, Is.EqualTo(valueUri.IsDefaultPort ? -1 : valueUri.Port), "The default port should be used.");
@@ -375,7 +375,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("notvalid=[broke]")]
         public void ParseDoesNotAllowAnInvalidEndpointFormat(string endpointValue)
         {
-            var connectionString = $"Endpoint={endpointValue }";
+            var connectionString = $"Endpoint={endpointValue}";
             Assert.That(() => EventHubsConnectionStringProperties.Parse(connectionString), Throws.InstanceOf<FormatException>());
         }
 
@@ -442,7 +442,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("www.fake.com:443")]
         public void ParseRespectsTheEndpointForDevelopmentEmulatorValue(string host)
         {
-            var connectionString = $"Endpoint={ host };SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
+            var connectionString = $"Endpoint={host};SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
             var endpoint = new Uri(string.Concat(GetEventHubsEndpointScheme(), host));
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
@@ -470,7 +470,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Scheme = GetEventHubsEndpointScheme()
             };
 
-            var connectionString = $"Endpoint={ host };SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
+            var connectionString = $"Endpoint={host};SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             Assert.That(parsed.Endpoint.Host, Is.EqualTo(endpoint.Host), "The endpoint hosts should match.");
@@ -488,11 +488,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("|")]
         public void ParseToleratesDevelopmentEmulatorInvalidValues(string emulatorValue)
         {
-            var connectionString = $"Endpoint=sb://localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator={ emulatorValue }";
+            var connectionString = $"Endpoint=sb://localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator={emulatorValue}";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
 
             Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
-            Assert.That(parsed.UseDevelopmentEmulator, Is.False, $"The development emulator flag should have been unset because { emulatorValue } is not a boolean.");
+            Assert.That(parsed.UseDevelopmentEmulator, Is.False, $"The development emulator flag should have been unset because {emulatorValue} is not a boolean.");
         }
 
         /// <summary>
@@ -505,7 +505,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ToConnectionStringValidatesProperties(EventHubsConnectionStringProperties properties,
                                                           string testDescription)
         {
-            Assert.That(() => properties.ToConnectionString(), Throws.InstanceOf<ArgumentException>(), $"The case for `{ testDescription }` failed.");
+            Assert.That(() => properties.ToConnectionString(), Throws.InstanceOf<ArgumentException>(), $"The case for `{testDescription}` failed.");
         }
 
         /// <summary>
@@ -659,7 +659,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ValidateAllowsMultipleEventHubNamesIfEqual()
         {
             var eventHubName = "myHub";
-            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ eventHubName }";
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={eventHubName}";
             var properties = EventHubsConnectionStringProperties.Parse(fakeConnection);
 
             Assert.That(() => properties.Validate(eventHubName, "dummy"), Throws.Nothing, "Validation should accept the same Event Hub in multiple places.");

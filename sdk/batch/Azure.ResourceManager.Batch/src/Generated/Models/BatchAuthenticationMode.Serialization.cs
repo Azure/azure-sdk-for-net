@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchAuthenticationModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchAuthenticationMode value) => value switch
         {
             BatchAuthenticationMode.SharedKey => "SharedKey",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAuthenticationMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchAuthenticationMode ToBatchAuthenticationMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SharedKey")) return BatchAuthenticationMode.SharedKey;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAD")) return BatchAuthenticationMode.Aad;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskAuthenticationToken")) return BatchAuthenticationMode.TaskAuthenticationToken;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SharedKey"))
+            {
+                return BatchAuthenticationMode.SharedKey;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAD"))
+            {
+                return BatchAuthenticationMode.Aad;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskAuthenticationToken"))
+            {
+                return BatchAuthenticationMode.TaskAuthenticationToken;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAuthenticationMode value.");
         }
     }

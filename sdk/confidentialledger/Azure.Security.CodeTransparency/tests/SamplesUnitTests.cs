@@ -1,11 +1,13 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic; // Added for List<T>
 using System.Formats.Cbor;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.Cose;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -48,42 +50,21 @@ namespace Azure.Security.CodeTransparency.Tests
         [Test]
         public async Task Snippet_Readme_CodeTransparencySubmission_Test()
         {
-            // Create a CBOR writer
-            var createCborWriter = new CborWriter();
-
-            // Write a CBOR map with sample content
-            createCborWriter.WriteStartMap(1);
-            createCborWriter.WriteTextString("OperationId");
-            createCborWriter.WriteTextString("123.45");
-            createCborWriter.WriteEndMap();
-
+            byte[] receiptBytes = readFileBytes("receipt.cose");
             var createResponse = new MockResponse(201);
-            createResponse.SetContent(createCborWriter.Encode());
+            createResponse.AddHeader("Content-Type", "application/cose");
+            createResponse.AddHeader("Location", "https://foo.bar.com/entries/8.198");
+            createResponse.SetContent(receiptBytes);
 
-            var succeededCborWriter = new CborWriter();
+            var statementResponse = new MockResponse(200);
+            statementResponse.AddHeader("Content-Type", "application/cose");
+            statementResponse.SetContent(new byte[] { 0x01, 0x02, 0x03 });
 
-            // Write a CBOR map with sample content
-            succeededCborWriter.WriteStartMap(3);
-            succeededCborWriter.WriteTextString("OperationId");
-            succeededCborWriter.WriteTextString("1.345");
-            succeededCborWriter.WriteTextString("EntryId");
-            succeededCborWriter.WriteTextString("123.23");
-            succeededCborWriter.WriteTextString("Status");
-            succeededCborWriter.WriteTextString("Succeeded");
-            succeededCborWriter.WriteEndMap();
-
-            var succeededResponse = new MockResponse(202);
-            succeededResponse.SetContent(succeededCborWriter.Encode());
-
-            var entryResponse = new MockResponse(200);
-            entryResponse.AddHeader("Content-Type", "application/cose");
-            entryResponse.SetContent(new byte[] { 0x01, 0x02, 0x03 });
-
-            var mockTransport = new MockTransport(createResponse, succeededResponse, entryResponse);
+            var mockTransport = new MockTransport(createResponse, statementResponse);
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
 
             #region Snippet:CodeTransparencySubmission
@@ -102,32 +83,19 @@ namespace Azure.Security.CodeTransparency.Tests
             FileStream fileStream = File.OpenRead("signature.cose");
             BinaryData content = BinaryData.FromStream(fileStream);
 #endif
-            Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
+            NullableResponse<BinaryData> receiptResponse = await client.CreateEntryAsync(content);
             #endregion Snippet:CodeTransparencySubmission
 
-            #region Snippet:CodeTransparencySample1_WaitForResult
-            Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
-
-            string entryId = string.Empty;
-            CborReader cborReader = new CborReader(operationResult.Value);
-            cborReader.ReadStartMap();
-            while (cborReader.PeekState() != CborReaderState.EndMap)
-            {
-                string key = cborReader.ReadTextString();
-                if (key == "EntryId")
-                {
-                    entryId = cborReader.ReadTextString();
-                }
-                else
-                    cborReader.SkipValue();
-            }
-
-            Console.WriteLine($"The entry id to use to get the receipt and Transparent Statement is {{{entryId}}}");
-            #endregion Snippet:CodeTransparencySample1_WaitForResult
-
+            #region Snippet:CodeTransparencyDownloadTransparentStatement
+            string entryId = CcfReceipt.GetRegistrationTransactionId(receiptResponse.Value.ToArray());
+            Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
             #region Snippet:CodeTransparencySample2_GetEntryStatement
-            Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryStatementAsync(entryId);
+            Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
+            byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
             #endregion Snippet:CodeTransparencySample2_GetEntryStatement
+            #endregion Snippet:CodeTransparencyDownloadTransparentStatement
+
+            Assert.IsTrue(receiptResponse.HasValue);
 
             #region Snippet:CodeTransparencySample2_GetRawReceipt
 #if SNIPPET
@@ -135,28 +103,169 @@ namespace Azure.Security.CodeTransparency.Tests
 #endif
             #endregion Snippet:CodeTransparencySample2_GetRawReceipt
 
-            BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
-            byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
-
-            #region Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
+            #region Snippet:CodeTransparencySample1_DownloadStatement
 #if SNIPPET
-            // Create a JsonWebKey
-            JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
-            byte[] inputSignedStatement = readFileBytes("<input_signed_claims");
+            Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
+#endif
+            #endregion Snippet:CodeTransparencySample1_DownloadStatement
+        }
 
+        [Test]
+        public async Task Snippet_Sample1_HelloWorld_SyncReceipt_Test()
+        {
+            byte[] receiptBytes = readFileBytes("receipt.cose");
+            byte[] signedStatementBytes = readFileBytes("input_signed_claims");
+
+            var createResponse = new MockResponse(201);
+            createResponse.AddHeader("Content-Type", "application/cose");
+            createResponse.AddHeader("Location", "https://foo.bar.com/entries/8.198");
+            createResponse.SetContent(receiptBytes);
+
+            var statementResponse = new MockResponse(200);
+            statementResponse.AddHeader("Content-Type", "application/cose");
+            statementResponse.SetContent(new byte[] { 0x01, 0x02, 0x03 });
+
+            var mockTransport = new MockTransport(createResponse, statementResponse);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
+            };
+
+            #region Snippet:CodeTransparencySubmissionSyncReceipt
+#if !SNIPPET
+            CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), options);
+            BinaryData content = BinaryData.FromBytes(signedStatementBytes);
+#endif
+#if SNIPPET
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
+            FileStream fileStream = File.OpenRead("signature.cose");
+            BinaryData content = BinaryData.FromStream(fileStream);
+#endif
+            bool waitForCommit = true;
+            NullableResponse<BinaryData> receiptResponse = await client.CreateEntryAsync(content, waitForCommit);
+            #endregion Snippet:CodeTransparencySubmissionSyncReceipt
+
+            #region Snippet:CodeTransparencySample1_CreateStatement
+            BinaryData receipt = receiptResponse.Value;
+            // Add the receipt to the embedded-receipts unprotected header of the signed statement to create a transparent statement.
+            CoseSign1Message signedStatement = CoseMessage.DecodeSign1(content.ToArray());
+            CborWriter cborWriter = new CborWriter();
+            cborWriter.WriteStartArray(1);
+            cborWriter.WriteByteString(receipt.ToArray());
+            cborWriter.WriteEndArray();
+            signedStatement.UnprotectedHeaders[new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts)] =
+                CoseHeaderValue.FromEncodedValue(cborWriter.Encode());
+            byte[] transparentStatement = signedStatement.Encode();
+            #endregion Snippet:CodeTransparencySample1_CreateStatement
+
+            #region Snippet:CodeTransparencySample1_ExtractEntryId
+            string entryId = CcfReceipt.GetRegistrationTransactionId(receipt.ToArray());
+            #endregion Snippet:CodeTransparencySample1_ExtractEntryId
+
+            Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
+
+            Assert.AreEqual("8.198", entryId);
+            Assert.IsNotNull(transparentStatement);
+            Assert.IsNotNull(transparentStatementResponse.Value);
+        }
+
+        [Test]
+        public void Snippet_Sample2_VerifyTransparentStatement_offline_success()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+
+            // mock first request to get the entry statement
+            var mockedEntryResponse = new MockResponse(200);
+            mockedEntryResponse.AddHeader("Content-Type", "application/cose");
+            mockedEntryResponse.SetContent(transparentStatementBytes);
+
+            // mock second call to download the public keys
+            var mockedKeysResponse = new MockResponse(200);
+            mockedKeysResponse.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}");
+
+            var mockTransport = new MockTransport(mockedEntryResponse, mockedKeysResponse);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
+            };
+
+            #region Snippet:CodeTransparencyVerification_StoreForOfflineUse
+#if !SNIPPET
+            CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), options);
+#endif
+#if SNIPPET
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
+#endif
+            // Download the transparent statement
+            Response<BinaryData> transparentStatementResponse = client.GetEntryStatement("4.44");
+#if !SNIPPET
+            string filePath = Path.Combine(Path.GetTempPath(), $"transparent_statement_{Guid.NewGuid():N}.cose");
+#endif
+#if SNIPPET
+            string filePath = Path.Combine(Path.GetTempPath(), "transparent_statement.cose");
+#endif
+            File.WriteAllBytes(filePath, transparentStatementResponse.Value.ToArray());
+            // Download and store the public keys for offline verification
+            Response<CodeTransparencyVerificationKeySet> ledgerKeys = client.GetPublicKeys();
+            CodeTransparencyTrustStore allKeys = new();
+#if !SNIPPET
+            allKeys.SetKeys("foo.bar.com", ledgerKeys.Value);
+#endif
+#if SNIPPET
+            allKeys.SetKeys("<< service name >>.confidential-ledger.azure.com", ledgerKeys.Value);
+#endif
+#if !SNIPPET
+            string keysFilePath = Path.Combine(Path.GetTempPath(), $"ledger_keys_{Guid.NewGuid():N}.json");
+#endif
+#if SNIPPET
+            string keysFilePath = Path.Combine(Path.GetTempPath(), "ledger_keys.json");
+#endif
+            File.WriteAllBytes(keysFilePath, allKeys.ToBinaryData().ToArray());
+
+            #endregion Snippet:CodeTransparencyVerification_StoreForOfflineUse
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            #region Snippet:CodeTransparencyVerification_Offline
+            var transparentStatement = File.ReadAllBytes(filePath);
+            var keys = File.ReadAllBytes(keysFilePath);
+#if SNIPPET
             try
             {
-                CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
+#endif
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.VerifyAll,
+                TrustStore = CodeTransparencyTrustStore.FromBinaryData(BinaryData.FromBytes(keys)),
+                KeyResolutionMode = CodeTransparencyKeyResolutionMode.TrustStoreOnly
+            };
+            CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+#if SNIPPET
+
+                Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"Verification failed: {e.Message}");
             }
 #endif
-            #endregion Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
-
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            #endregion Snippet:CodeTransparencyVerification_Offline
+#if !SNIPPET
+            File.Delete(filePath);
+            File.Delete(keysFilePath);
+#endif
+#endif
         }
 
         [Test]
@@ -195,25 +304,42 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
-            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-
-            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
             #region Snippet:CodeTransparencyVerification
+#if !SNIPPET
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+#endif
 #if SNIPPET
-            Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
-            byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
-
+            Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
+            byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
+#endif
+            #region Snippet:CodeTransparencyVerificationUsingFileBytes
             try
             {
-                client.RunTransparentStatementVerification(transparentStatementBytes);
+                var verificationOptions = new CodeTransparencyVerificationOptions
+                {
+#if !SNIPPET
+                    AuthorizedDomains = { "foo.bar.com" },
+#endif
+#if SNIPPET
+                    AuthorizedDomains = { "<< service name >>.confidential-ledger.azure.com" },
+#endif
+                    AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+                    UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
+                };
+#if SNIPPET
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+#else
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+#endif
+                Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"Verification failed: {e.Message}");
             }
-#endif
+            #endregion
             #endregion
 #endif
         }
@@ -237,21 +363,102 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+            Response<CodeTransparencyVerificationKeySet> jwksDoc = client.GetPublicKeys();
+            CodeTransparencyVerificationKey verificationKey = jwksDoc.Value.Keys[0];
+            byte[] inputReceipt = readFileBytes("receipt.cose");
+            byte[] inputSignedStatement = readFileBytes("input_signed_claims");
 
-            byte[] receiptBytes = readFileBytes("receipt.cose");
-            byte[] inputSignedPayloadBytes = readFileBytes("input_signed_claims");
-
-            #region Snippet:CodeTransparencyVerifyReceipt
+            #region Snippet:CodeTransparencyVerification_VerifyReceiptAndInputSignedStatement
 #if SNIPPET
-            Response<JwksDocument> key = client.GetPublicKeys();
-
-            CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes);
+            CodeTransparencyVerificationKey verificationKey = new CodeTransparencyVerificationKey("<key id>", <ECDsa public key>);
+            byte[] inputSignedStatement = readFileBytes("<input_signed_claims>");
+            byte[] inputReceipt = readFileBytes("<input_receipt>");
 #endif
-            #endregion Snippet:CodeTransparencyVerifyReceipt
+            try
+            {
+                CcfReceiptVerifier.Verify(inputReceipt, inputSignedStatement, verificationKey);
+                Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Verification failed: {e.Message}");
+            }
+            #endregion Snippet:CodeTransparencyVerification_VerifyReceiptAndInputSignedStatement
 
+#endif
+        }
+
+        [Test]
+        public void Snippet_Readme_DeserializeTransparentStatement_Test()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            #region Snippet:DeserializeTransparentStatement_Sample1
+            // Read the transparent statement bytes from disk.
+#if !SNIPPET
+            byte[] transparentStatement = readFileBytes("transparent_statement.cose");
+#endif
+#if SNIPPET
+            byte[] transparentStatement = File.ReadAllBytes("<input_file>");
+#endif
+
+            CoseSign1Message inputSignedStatement;
+            try
+            {
+                inputSignedStatement = CoseMessage.DecodeSign1(transparentStatement);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to decode transparent statement: {ex.Message}");
+                return; // Stop if decoding fails.
+            }
+
+            // Access the signed payload.
+            ReadOnlyMemory<byte> payload = inputSignedStatement.Content ?? ReadOnlyMemory<byte>.Empty;
+            // Use payload as needed.
+
+            // Access the embedded receipts in unprotected headers.
+            if (!inputSignedStatement.UnprotectedHeaders.TryGetValue(
+                    new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts),
+                    out CoseHeaderValue embeddedReceipts))
+            {
+                Console.WriteLine("Receipts are not present.");
+                return;
+            }
+
+            // Parse CBOR array of receipt COSE_Sign1 messages.
+            var reader = new CborReader(embeddedReceipts.EncodedValue);
+            if (reader.PeekState() != CborReaderState.StartArray)
+            {
+                Console.WriteLine("Embedded receipts value is not a CBOR array.");
+                return;
+            }
+
+            reader.ReadStartArray();
+            var receiptBytesList = new List<byte[]>();
+            while (reader.PeekState() != CborReaderState.EndArray)
+            {
+                receiptBytesList.Add(reader.ReadByteString());
+            }
+            reader.ReadEndArray();
+
+            for (int i = 0; i < receiptBytesList.Count; i++)
+            {
+                try
+                {
+                    CoseSign1Message receipt = CoseMessage.DecodeSign1(receiptBytesList[i]);
+                    // Inspect receipt (headers/signature) as needed.
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to decode receipt #{i}: {ex.Message}");
+                }
+            }
+            #endregion Snippet:DeserializeTransparentStatement_Sample1
 #endif
         }
     }

@@ -1059,9 +1059,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static Azure.ResourceManager.CustomerInsights.Models.CanonicalPropertyValueType DerivedNumeric { get { throw null; } }
         public static Azure.ResourceManager.CustomerInsights.Models.CanonicalPropertyValueType Numeric { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CustomerInsights.Models.CanonicalPropertyValueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CustomerInsights.Models.CanonicalPropertyValueType left, Azure.ResourceManager.CustomerInsights.Models.CanonicalPropertyValueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CustomerInsights.Models.CanonicalPropertyValueType (string value) { throw null; }
@@ -1196,9 +1194,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static Azure.ResourceManager.CustomerInsights.Models.ConnectorType Outbound { get { throw null; } }
         public static Azure.ResourceManager.CustomerInsights.Models.ConnectorType Salesforce { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CustomerInsights.Models.ConnectorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CustomerInsights.Models.ConnectorType left, Azure.ResourceManager.CustomerInsights.Models.ConnectorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CustomerInsights.Models.ConnectorType (string value) { throw null; }
@@ -1231,9 +1227,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static Azure.ResourceManager.CustomerInsights.Models.DataSourceType LinkInteraction { get { throw null; } }
         public static Azure.ResourceManager.CustomerInsights.Models.DataSourceType SystemDefault { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CustomerInsights.Models.DataSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CustomerInsights.Models.DataSourceType left, Azure.ResourceManager.CustomerInsights.Models.DataSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CustomerInsights.Models.DataSourceType (string value) { throw null; }
@@ -1261,9 +1255,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public FormatType(string value) { throw null; }
         public static Azure.ResourceManager.CustomerInsights.Models.FormatType TextFormat { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CustomerInsights.Models.FormatType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CustomerInsights.Models.FormatType left, Azure.ResourceManager.CustomerInsights.Models.FormatType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CustomerInsights.Models.FormatType (string value) { throw null; }
@@ -1553,9 +1545,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static Azure.ResourceManager.CustomerInsights.Models.PredictionModelLifeCycle Training { get { throw null; } }
         public static Azure.ResourceManager.CustomerInsights.Models.PredictionModelLifeCycle TrainingFailed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CustomerInsights.Models.PredictionModelLifeCycle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CustomerInsights.Models.PredictionModelLifeCycle left, Azure.ResourceManager.CustomerInsights.Models.PredictionModelLifeCycle right) { throw null; }
         public static implicit operator Azure.ResourceManager.CustomerInsights.Models.PredictionModelLifeCycle (string value) { throw null; }
@@ -1662,9 +1652,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static Azure.ResourceManager.CustomerInsights.Models.ProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.CustomerInsights.Models.ProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CustomerInsights.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CustomerInsights.Models.ProvisioningState left, Azure.ResourceManager.CustomerInsights.Models.ProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CustomerInsights.Models.ProvisioningState (string value) { throw null; }
@@ -1765,9 +1753,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static Azure.ResourceManager.CustomerInsights.Models.Status Deleted { get { throw null; } }
         public static Azure.ResourceManager.CustomerInsights.Models.Status None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CustomerInsights.Models.Status other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CustomerInsights.Models.Status left, Azure.ResourceManager.CustomerInsights.Models.Status right) { throw null; }
         public static implicit operator Azure.ResourceManager.CustomerInsights.Models.Status (string value) { throw null; }

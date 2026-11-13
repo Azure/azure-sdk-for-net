@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerInstance.Tests
 {
-    public class ContainerGroupOperationTests: ContainerInstanceManagementTestBase
+    public class ContainerGroupOperationTests : ContainerInstanceManagementTestBase
     {
         public ContainerGroupOperationTests(bool isAsync)
             : base(isAsync)

@@ -30,6 +30,19 @@ namespace Azure.Messaging.ServiceBus.Tests
                         MaxRetries = maxRetries
                     }
                 };
+            return CreateClientWithOptions(options);
+        }
+
+        protected ServiceBusClient CreateClientWithOptions(ServiceBusClientOptions options = null)
+        {
+            options ??= new ServiceBusClientOptions
+            {
+                RetryOptions = new ServiceBusRetryOptions
+                {
+                    TryTimeout = TimeSpan.FromSeconds(DefaultTryTimeout),
+                    MaxRetries = 3
+                }
+            };
             return new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
         }
 
@@ -63,10 +76,10 @@ namespace Azure.Messaging.ServiceBus.Tests
         protected static void SimulateNetworkFailure(ServiceBusClient client)
         {
             var amqpClient = client.Connection.InnerClient;
-            AmqpConnectionScope scope = (AmqpConnectionScope) typeof(AmqpClient).GetProperty(
+            AmqpConnectionScope scope = (AmqpConnectionScope)typeof(AmqpClient).GetProperty(
                 "ConnectionScope",
                 BindingFlags.Instance | BindingFlags.NonPublic).GetValue(amqpClient);
-            ((FaultTolerantAmqpObject<AmqpConnection>) typeof(AmqpConnectionScope).GetProperty(
+            ((FaultTolerantAmqpObject<AmqpConnection>)typeof(AmqpConnectionScope).GetProperty(
                 "ActiveConnection",
                 BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
 

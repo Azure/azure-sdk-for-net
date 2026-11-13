@@ -1,0 +1,17 @@
+import:
+  - ../../.vscode/cspell.json
+words:
+  - lifs
+  - ontap
+  - oplocks
+  - svms
+  - vserver
+  - Vserver
+  - SAPHANA
+
+# Optional overrides example for words in a specific file
+# overrides:
+#   - filename: '**/sdk/contosowidgetmanager/somefile.yaml'
+#     words:
+#      - aardwolf
+#      - zoo

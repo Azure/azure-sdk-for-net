@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct CustomerSubscriptionCancellationReason : IEquatable<CustomerSubscriptionCancellationReason>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Compromise. </summary>
+        private const string CompromiseValue = "Compromise";
+        /// <summary> Dispute. </summary>
+        private const string DisputeValue = "Dispute";
 
         /// <summary> Initializes a new instance of <see cref="CustomerSubscriptionCancellationReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CustomerSubscriptionCancellationReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string CompromiseValue = "Compromise";
-        private const string DisputeValue = "Dispute";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static CustomerSubscriptionCancellationReason Other { get; } = new CustomerSubscriptionCancellationReason(OtherValue);
+
         /// <summary> Compromise. </summary>
         public static CustomerSubscriptionCancellationReason Compromise { get; } = new CustomerSubscriptionCancellationReason(CompromiseValue);
+
         /// <summary> Dispute. </summary>
         public static CustomerSubscriptionCancellationReason Dispute { get; } = new CustomerSubscriptionCancellationReason(DisputeValue);
+
         /// <summary> Determines if two <see cref="CustomerSubscriptionCancellationReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomerSubscriptionCancellationReason left, CustomerSubscriptionCancellationReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CustomerSubscriptionCancellationReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomerSubscriptionCancellationReason left, CustomerSubscriptionCancellationReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomerSubscriptionCancellationReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CustomerSubscriptionCancellationReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CustomerSubscriptionCancellationReason(string value) => new CustomerSubscriptionCancellationReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CustomerSubscriptionCancellationReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomerSubscriptionCancellationReason?(string value) => value == null ? null : new CustomerSubscriptionCancellationReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomerSubscriptionCancellationReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CustomerSubscriptionCancellationReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,15 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Storage Service Properties.
     /// </summary>
-    [CodeGenModel("StorageServiceProperties")]
+    [CodeGenType("StorageServiceProperties")]
     public partial class BlobServiceProperties
     {
         /// <summary>
@@ -22,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobServiceProperties instance.
         /// </summary>
-        public BlobServiceProperties() : this(false) {}
+        public BlobServiceProperties() : this(false) { }
 
         /// <summary>
         /// Creates a new BlobServiceProperties instance.

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct TroubleshooterProvisioningState : IEquatable<TroubleshooterProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TroubleshooterProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TroubleshooterProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
         private const string RunningValue = "Running";
         private const string AutoContinueValue = "AutoContinue";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TroubleshooterProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static TroubleshooterProvisioningState Succeeded { get; } = new TroubleshooterProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static TroubleshooterProvisioningState Failed { get; } = new TroubleshooterProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static TroubleshooterProvisioningState Canceled { get; } = new TroubleshooterProvisioningState(CanceledValue);
-        /// <summary> Running. </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static TroubleshooterProvisioningState Running { get; } = new TroubleshooterProvisioningState(RunningValue);
-        /// <summary> AutoContinue. </summary>
+
+        /// <summary> Gets the AutoContinue. </summary>
         public static TroubleshooterProvisioningState AutoContinue { get; } = new TroubleshooterProvisioningState(AutoContinueValue);
+
         /// <summary> Determines if two <see cref="TroubleshooterProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TroubleshooterProvisioningState left, TroubleshooterProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TroubleshooterProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TroubleshooterProvisioningState left, TroubleshooterProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TroubleshooterProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TroubleshooterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TroubleshooterProvisioningState(string value) => new TroubleshooterProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TroubleshooterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TroubleshooterProvisioningState?(string value) => value == null ? null : new TroubleshooterProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TroubleshooterProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TroubleshooterProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

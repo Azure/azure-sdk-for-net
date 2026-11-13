@@ -73,6 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             ConcurrencyManager concurrencyManager = null,
             string functionId = null,
             TimeSpan? maxPollingInterval = null,
+            QueueClient rawQueue = null,
             IDrainModeManager drainModeManager = null)
         {
             if (queueOptions == null)
@@ -138,15 +139,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             _concurrencyManager = concurrencyManager;
 
+            // Scale metrics need a client whose PeekMessages is not filtered by decode failures,
+            // otherwise an empty peek cannot distinguish "nothing visible" from "messages present
+            // but undecodable". Shared queues written and read by this extension always have
+            // matching encodings, so they can omit it and reuse the processing client.
+            QueueClient metricsQueue = rawQueue ?? queue;
+
             _targetScaler = new Lazy<QueueTargetScaler>(
                     () => new QueueTargetScaler(
                         _functionId,
-                        queue,
+                        metricsQueue,
                         queueOptions,
                         loggerFactory
                         ));
 
-            _scaleMonitor = new Lazy<QueueScaleMonitor>(() => new QueueScaleMonitor(_functionId, _queue, loggerFactory));
+            _scaleMonitor = new Lazy<QueueScaleMonitor>(() => new QueueScaleMonitor(_functionId, metricsQueue, loggerFactory));
             _drainModeManager = drainModeManager;
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VirtualNetworkGatewayConnectionType : IEquatable<VirtualNetworkGatewayConnectionType>
     {
         private readonly string _value;
+        /// <summary> IPsec. </summary>
+        private const string IPsecValue = "IPsec";
+        /// <summary> Vnet2Vnet. </summary>
+        private const string Vnet2VnetValue = "Vnet2Vnet";
+        /// <summary> ExpressRoute. </summary>
+        private const string ExpressRouteValue = "ExpressRoute";
+        /// <summary> VPNClient. </summary>
+        private const string VpnClientValue = "VPNClient";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkGatewayConnectionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IPsecValue = "IPsec";
-        private const string Vnet2VnetValue = "Vnet2Vnet";
-        private const string ExpressRouteValue = "ExpressRoute";
-        private const string VpnClientValue = "VPNClient";
+            _value = value;
+        }
 
         /// <summary> IPsec. </summary>
         public static VirtualNetworkGatewayConnectionType IPsec { get; } = new VirtualNetworkGatewayConnectionType(IPsecValue);
+
         /// <summary> Vnet2Vnet. </summary>
         public static VirtualNetworkGatewayConnectionType Vnet2Vnet { get; } = new VirtualNetworkGatewayConnectionType(Vnet2VnetValue);
+
         /// <summary> ExpressRoute. </summary>
         public static VirtualNetworkGatewayConnectionType ExpressRoute { get; } = new VirtualNetworkGatewayConnectionType(ExpressRouteValue);
+
         /// <summary> VPNClient. </summary>
         public static VirtualNetworkGatewayConnectionType VpnClient { get; } = new VirtualNetworkGatewayConnectionType(VpnClientValue);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualNetworkGatewayConnectionType left, VirtualNetworkGatewayConnectionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualNetworkGatewayConnectionType left, VirtualNetworkGatewayConnectionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkGatewayConnectionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualNetworkGatewayConnectionType(string value) => new VirtualNetworkGatewayConnectionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualNetworkGatewayConnectionType?(string value) => value == null ? null : new VirtualNetworkGatewayConnectionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualNetworkGatewayConnectionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualNetworkGatewayConnectionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

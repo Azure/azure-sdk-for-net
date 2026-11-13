@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class AppServiceOperationStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AppServiceOperationStatus value) => value switch
         {
             AppServiceOperationStatus.InProgress => "InProgress",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceOperationStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AppServiceOperationStatus ToAppServiceOperationStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return AppServiceOperationStatus.InProgress;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return AppServiceOperationStatus.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return AppServiceOperationStatus.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TimedOut")) return AppServiceOperationStatus.TimedOut;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Created")) return AppServiceOperationStatus.Created;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress"))
+            {
+                return AppServiceOperationStatus.InProgress;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return AppServiceOperationStatus.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return AppServiceOperationStatus.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TimedOut"))
+            {
+                return AppServiceOperationStatus.TimedOut;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Created"))
+            {
+                return AppServiceOperationStatus.Created;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceOperationStatus value.");
         }
     }

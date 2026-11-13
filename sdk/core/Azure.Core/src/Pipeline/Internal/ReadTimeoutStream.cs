@@ -148,7 +148,7 @@ namespace Azure.Core.Pipeline
 
         public override int ReadTimeout
         {
-            get => (int) _readTimeout.TotalMilliseconds;
+            get => (int)_readTimeout.TotalMilliseconds;
             set
             {
                 _readTimeout = TimeSpan.FromMilliseconds(value);
@@ -162,7 +162,7 @@ namespace Azure.Core.Pipeline
             {
                 if (_stream.CanTimeout)
                 {
-                    _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                    _stream.ReadTimeout = (int)_readTimeout.TotalMilliseconds;
                 }
             }
             catch

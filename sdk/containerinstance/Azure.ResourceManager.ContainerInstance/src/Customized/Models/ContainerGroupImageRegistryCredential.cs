@@ -9,6 +9,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
+    // Backward compatibility: the old SDK had a 2-param constructor taking (server, username).
+    // The new generator produces a 1-param constructor (server only, username is now optional).
     /// <summary> Image registry credential. </summary>
     public partial class ContainerGroupImageRegistryCredential
     {

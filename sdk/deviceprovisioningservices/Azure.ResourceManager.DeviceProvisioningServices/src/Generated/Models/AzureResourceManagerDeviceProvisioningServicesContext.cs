@@ -8,13 +8,12 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CertificateListDescription))]
     [ModelReaderWriterBuildable(typeof(CertificateVerificationCodeContent))]
@@ -27,12 +26,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesCertificateData))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesCertificateResource))]
-    [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesCertificateResourceDeleteOptions))]
-    [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions))]
-    [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesIPFilterRule))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesPrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesPrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesPrivateEndpointConnectionResource))]
@@ -49,9 +46,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(ProvisioningServiceDescriptionListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDeviceProvisioningServicesContext : ModelReaderWriterContext

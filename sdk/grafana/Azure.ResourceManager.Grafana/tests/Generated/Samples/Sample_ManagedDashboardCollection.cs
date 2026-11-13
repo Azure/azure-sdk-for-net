@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DashboardCreate()
         {
-            // Generated from example definition: 2024-11-01-preview/Dashboard_Create.json
+            // Generated from example definition: 2025-08-01/Dashboard_Create.json
             // this example is just showing the usage of "ManagedDashboard_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DashboardGet()
         {
-            // Generated from example definition: 2024-11-01-preview/Dashboard_Get.json
+            // Generated from example definition: 2025-08-01/Dashboard_Get.json
             // this example is just showing the usage of "ManagedDashboard_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DashboardListByResourceGroup()
         {
-            // Generated from example definition: 2024-11-01-preview/Dashboard_ListByResourceGroup.json
+            // Generated from example definition: 2025-08-01/Dashboard_ListByResourceGroup.json
             // this example is just showing the usage of "ManagedDashboard_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_DashboardGet()
         {
-            // Generated from example definition: 2024-11-01-preview/Dashboard_Get.json
+            // Generated from example definition: 2025-08-01/Dashboard_Get.json
             // this example is just showing the usage of "ManagedDashboard_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DashboardGet()
         {
-            // Generated from example definition: 2024-11-01-preview/Dashboard_Get.json
+            // Generated from example definition: 2025-08-01/Dashboard_Get.json
             // this example is just showing the usage of "ManagedDashboard_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

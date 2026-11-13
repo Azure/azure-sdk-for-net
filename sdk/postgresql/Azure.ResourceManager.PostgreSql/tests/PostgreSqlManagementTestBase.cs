@@ -1,23 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.ManagedServiceIdentities;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
+using Azure.ResourceManager.PrivateDns;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
-using System.Threading.Tasks;
-using Azure.ResourceManager.PrivateDns;
-using System.Linq;
 using Azure.Security.KeyVault.Keys;
-using System;
 using Microsoft.Graph;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.Tests
 {

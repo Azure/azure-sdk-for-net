@@ -6,31 +6,38 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the CustomIPPrefix data model.
-    /// Custom IP prefix resource.
-    /// </summary>
-    public partial class CustomIPPrefixData : NetworkTrackedResourceData
+    public partial class CustomIPPrefixData
     {
-        /// <summary> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </summary>
-        [Obsolete("This property is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public CustomIPPrefixData CustomIPPrefixParent
+        // 1.15.0 exposed IReadOnlyList<WritableSubResource> references and an obsolete model-valued child alias.
+        // Project IDs from the native NetworkSubResource lists; Properties still owns deserialization and serialization.
+
+        /// <summary> The list of all Children for IPv6 /48 CustomIpPrefix. </summary>
+        [WirePath("properties.childCustomIpPrefixes")]
+        public IReadOnlyList<WritableSubResource> ChildCustomIPPrefixList
         {
-            get => ParentCustomIPPrefix is null ? null : new CustomIPPrefixData() { Id = ParentCustomIPPrefix.Id };
-            set
+            get
             {
-                if (ParentCustomIPPrefix is null)
-                    ParentCustomIPPrefix = new WritableSubResource();
-                ParentCustomIPPrefix.Id = value.Id;
+                var properties = Properties ??= new CustomIPPrefixPropertiesFormat();
+                var children = properties.ChildCustomIPPrefixes;
+                if (children is null)
+                {
+                    return null;
+                }
+                var result = new WritableSubResource[children.Count];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] = children[i] is null ? null : new WritableSubResource { Id = children[i].Id };
+                }
+                return result;
             }
         }
+
         /// <summary> The list of all Children for IPv6 /48 CustomIpPrefix. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -38,16 +45,47 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                 var list = new ChangeTrackingList<CustomIPPrefixData>();
-                if (ChildCustomIPPrefixList.Count > 0)
+                var properties = Properties ??= new CustomIPPrefixPropertiesFormat();
+                var children = properties.ChildCustomIPPrefixes;
+                var result = new CustomIPPrefixData[children.Count];
+                for (int i = 0; i < result.Length; i++)
                 {
-                    foreach (var item in ChildCustomIPPrefixList)
-                    {
-                        list.Add(new CustomIPPrefixData() { Id = item.Id });
-                    }
+                    result[i] = new CustomIPPrefixData { Id = children[i].Id };
                 }
-                return list;
+                return result;
             }
+        }
+
+        /// <summary> The list of all referenced PublicIpPrefixes. </summary>
+        [WirePath("properties.publicIpPrefixes")]
+        public IReadOnlyList<WritableSubResource> PublicIPPrefixes
+        {
+            get
+            {
+                var properties = Properties ??= new CustomIPPrefixPropertiesFormat();
+                var publicPrefixes = properties.PublicIPPrefixes;
+                if (publicPrefixes is null)
+                {
+                    return null;
+                }
+                var result = new WritableSubResource[publicPrefixes.Count];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] = publicPrefixes[i] is null ? null : new WritableSubResource { Id = publicPrefixes[i].Id };
+                }
+                return result;
+            }
+        }
+
+        // Preserve the released model-valued alias while forwarding its resource identifier.
+        /// <inheritdoc cref="ParentCustomIPPrefixId"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [WirePath("properties.customIpPrefixParent")]
+        public CustomIPPrefixData CustomIPPrefixParent
+        {
+            get => ParentCustomIPPrefixId is null ? null : new CustomIPPrefixData { Id = ParentCustomIPPrefixId };
+            set => ParentCustomIPPrefixId = value?.Id;
         }
     }
 }

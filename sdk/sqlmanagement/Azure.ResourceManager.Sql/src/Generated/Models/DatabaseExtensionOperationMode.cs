@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct DatabaseExtensionOperationMode : IEquatable<DatabaseExtensionOperationMode>
     {
         private readonly string _value;
+        /// <summary> PolybaseImport. </summary>
+        private const string PolybaseImportValue = "PolybaseImport";
+        /// <summary> Import. </summary>
+        private const string ImportValue = "Import";
+        /// <summary> Export. </summary>
+        private const string ExportValue = "Export";
 
         /// <summary> Initializes a new instance of <see cref="DatabaseExtensionOperationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatabaseExtensionOperationMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PolybaseImportValue = "PolybaseImport";
-        private const string ImportValue = "Import";
-        private const string ExportValue = "Export";
+            _value = value;
+        }
 
         /// <summary> PolybaseImport. </summary>
         public static DatabaseExtensionOperationMode PolybaseImport { get; } = new DatabaseExtensionOperationMode(PolybaseImportValue);
+
         /// <summary> Import. </summary>
         public static DatabaseExtensionOperationMode Import { get; } = new DatabaseExtensionOperationMode(ImportValue);
+
         /// <summary> Export. </summary>
         public static DatabaseExtensionOperationMode Export { get; } = new DatabaseExtensionOperationMode(ExportValue);
+
         /// <summary> Determines if two <see cref="DatabaseExtensionOperationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatabaseExtensionOperationMode left, DatabaseExtensionOperationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatabaseExtensionOperationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatabaseExtensionOperationMode left, DatabaseExtensionOperationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseExtensionOperationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatabaseExtensionOperationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatabaseExtensionOperationMode(string value) => new DatabaseExtensionOperationMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatabaseExtensionOperationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatabaseExtensionOperationMode?(string value) => value == null ? null : new DatabaseExtensionOperationMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatabaseExtensionOperationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatabaseExtensionOperationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

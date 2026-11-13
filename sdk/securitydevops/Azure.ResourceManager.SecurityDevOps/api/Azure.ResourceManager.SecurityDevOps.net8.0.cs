@@ -442,9 +442,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationRuleCategory InfrastructureAsCode { get { throw null; } }
         public static Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationRuleCategory Secrets { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationRuleCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationRuleCategory left, Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationRuleCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationRuleCategory (string value) { throw null; }
@@ -461,9 +459,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationState Enabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationState None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationState left, Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationState (string value) { throw null; }
@@ -491,9 +487,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static Azure.ResourceManager.SecurityDevOps.Models.AutoDiscovery Disabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityDevOps.Models.AutoDiscovery Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityDevOps.Models.AutoDiscovery other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityDevOps.Models.AutoDiscovery left, Azure.ResourceManager.SecurityDevOps.Models.AutoDiscovery right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityDevOps.Models.AutoDiscovery (string value) { throw null; }
@@ -679,9 +673,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState left, Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState (string value) { throw null; }

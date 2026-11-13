@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public readonly partial struct NotificationHubNamespaceTypeExt : IEquatable<NotificationHubNamespaceTypeExt>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceTypeExt"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NotificationHubNamespaceTypeExt(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MessagingValue = "Messaging";
         private const string NotificationHubValue = "NotificationHub";
 
-        /// <summary> Messaging. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceTypeExt"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NotificationHubNamespaceTypeExt(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Messaging. </summary>
         public static NotificationHubNamespaceTypeExt Messaging { get; } = new NotificationHubNamespaceTypeExt(MessagingValue);
-        /// <summary> NotificationHub. </summary>
+
+        /// <summary> Gets the NotificationHub. </summary>
         public static NotificationHubNamespaceTypeExt NotificationHub { get; } = new NotificationHubNamespaceTypeExt(NotificationHubValue);
+
         /// <summary> Determines if two <see cref="NotificationHubNamespaceTypeExt"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationHubNamespaceTypeExt left, NotificationHubNamespaceTypeExt right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationHubNamespaceTypeExt"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationHubNamespaceTypeExt left, NotificationHubNamespaceTypeExt right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubNamespaceTypeExt"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationHubNamespaceTypeExt"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationHubNamespaceTypeExt(string value) => new NotificationHubNamespaceTypeExt(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationHubNamespaceTypeExt"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationHubNamespaceTypeExt?(string value) => value == null ? null : new NotificationHubNamespaceTypeExt(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationHubNamespaceTypeExt other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationHubNamespaceTypeExt other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

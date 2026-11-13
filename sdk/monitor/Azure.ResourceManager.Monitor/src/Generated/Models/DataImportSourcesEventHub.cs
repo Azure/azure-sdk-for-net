@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </param>
         /// <param name="consumerGroup"> Event Hub consumer group name. </param>
         /// <param name="stream"> The stream to collect from EventHub. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataImportSourcesEventHub(string name, string consumerGroup, string stream, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, consumerGroup, stream, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataImportSourcesEventHub(string name, string consumerGroup, string stream, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, consumerGroup, stream, additionalBinaryDataProperties)
         {
         }
     }

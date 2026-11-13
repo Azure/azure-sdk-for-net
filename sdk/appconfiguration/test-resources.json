@@ -70,14 +70,15 @@
     "resources": [
         {
             "type": "Microsoft.AppConfiguration/configurationStores",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "2024-05-01",
             "name": "[variables('uniqueAzConfigName')]",
             "location": "[parameters('location')]",
             "sku": {
                 "name": "[parameters('sku')]"
             },
             "properties": {
-                "endpoint":"[variables('endpointValue')]"
+                "endpoint":"[variables('endpointValue')]",
+                "disableLocalAuth": true
             }
         },
         {
@@ -127,10 +128,6 @@
         }
     ],
     "outputs": {
-        "APPCONFIGURATION_CONNECTION_STRING": {
-            "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.AppConfiguration/configurationStores',variables('uniqueAzConfigName')), '2019-02-01-preview').value[0].connectionString]"
-        },
         "APPCONFIGURATION_ENDPOINT_STRING": {
             "type": "string",
             "value": "[variables('endpointValue')]"

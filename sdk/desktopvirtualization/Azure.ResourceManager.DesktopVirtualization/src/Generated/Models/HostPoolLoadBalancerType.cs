@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,41 +15,67 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct HostPoolLoadBalancerType : IEquatable<HostPoolLoadBalancerType>
     {
         private readonly string _value;
+        /// <summary> Uses BreadthFirst algorithm for load balancing. </summary>
+        private const string BreadthFirstValue = "BreadthFirst";
+        /// <summary> Uses DepthFirst algorithm for load balancing. </summary>
+        private const string DepthFirstValue = "DepthFirst";
+        /// <summary> Maintains persistent connections. </summary>
+        private const string PersistentValue = "Persistent";
+        /// <summary> Maintains multiple persistents connections. </summary>
+        private const string MultiplePersistentValue = "MultiplePersistent";
 
         /// <summary> Initializes a new instance of <see cref="HostPoolLoadBalancerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HostPoolLoadBalancerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BreadthFirstValue = "BreadthFirst";
-        private const string DepthFirstValue = "DepthFirst";
-        private const string PersistentValue = "Persistent";
-
-        /// <summary> BreadthFirst. </summary>
+        /// <summary> Uses BreadthFirst algorithm for load balancing. </summary>
         public static HostPoolLoadBalancerType BreadthFirst { get; } = new HostPoolLoadBalancerType(BreadthFirstValue);
-        /// <summary> DepthFirst. </summary>
+
+        /// <summary> Uses DepthFirst algorithm for load balancing. </summary>
         public static HostPoolLoadBalancerType DepthFirst { get; } = new HostPoolLoadBalancerType(DepthFirstValue);
-        /// <summary> Persistent. </summary>
+
+        /// <summary> Maintains persistent connections. </summary>
         public static HostPoolLoadBalancerType Persistent { get; } = new HostPoolLoadBalancerType(PersistentValue);
+
+        /// <summary> Maintains multiple persistents connections. </summary>
+        public static HostPoolLoadBalancerType MultiplePersistent { get; } = new HostPoolLoadBalancerType(MultiplePersistentValue);
+
         /// <summary> Determines if two <see cref="HostPoolLoadBalancerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HostPoolLoadBalancerType left, HostPoolLoadBalancerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HostPoolLoadBalancerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HostPoolLoadBalancerType left, HostPoolLoadBalancerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HostPoolLoadBalancerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HostPoolLoadBalancerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HostPoolLoadBalancerType(string value) => new HostPoolLoadBalancerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HostPoolLoadBalancerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HostPoolLoadBalancerType?(string value) => value == null ? null : new HostPoolLoadBalancerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HostPoolLoadBalancerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HostPoolLoadBalancerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     public readonly partial struct PureStorageBillingUsageSeverity : IEquatable<PureStorageBillingUsageSeverity>
     {
         private readonly string _value;
+        /// <summary> Indicates an alert condition. </summary>
+        private const string ALERTValue = "alert";
+        /// <summary> Provides informational details. </summary>
+        private const string INFORMATIONValue = "information";
+        /// <summary> Indicates a warning condition. </summary>
+        private const string WARNINGValue = "warning";
+        /// <summary> Indicates no severity. </summary>
+        private const string NONEValue = "none";
 
         /// <summary> Initializes a new instance of <see cref="PureStorageBillingUsageSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PureStorageBillingUsageSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ALERTValue = "alert";
-        private const string INFORMATIONValue = "information";
-        private const string WARNINGValue = "warning";
-        private const string NONEValue = "none";
+            _value = value;
+        }
 
         /// <summary> Indicates an alert condition. </summary>
         public static PureStorageBillingUsageSeverity ALERT { get; } = new PureStorageBillingUsageSeverity(ALERTValue);
+
         /// <summary> Provides informational details. </summary>
         public static PureStorageBillingUsageSeverity INFORMATION { get; } = new PureStorageBillingUsageSeverity(INFORMATIONValue);
+
         /// <summary> Indicates a warning condition. </summary>
         public static PureStorageBillingUsageSeverity WARNING { get; } = new PureStorageBillingUsageSeverity(WARNINGValue);
+
         /// <summary> Indicates no severity. </summary>
         public static PureStorageBillingUsageSeverity NONE { get; } = new PureStorageBillingUsageSeverity(NONEValue);
+
         /// <summary> Determines if two <see cref="PureStorageBillingUsageSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PureStorageBillingUsageSeverity left, PureStorageBillingUsageSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PureStorageBillingUsageSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PureStorageBillingUsageSeverity left, PureStorageBillingUsageSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PureStorageBillingUsageSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PureStorageBillingUsageSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PureStorageBillingUsageSeverity(string value) => new PureStorageBillingUsageSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PureStorageBillingUsageSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PureStorageBillingUsageSeverity?(string value) => value == null ? null : new PureStorageBillingUsageSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PureStorageBillingUsageSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PureStorageBillingUsageSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

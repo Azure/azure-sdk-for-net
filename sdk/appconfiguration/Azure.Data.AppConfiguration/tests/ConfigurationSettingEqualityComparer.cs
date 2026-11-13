@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Data.AppConfiguration.Tests {
+namespace Azure.Data.AppConfiguration.Tests
+{
     internal class ConfigurationSettingEqualityComparer : IEqualityComparer<ConfigurationSetting>
     {
         public static IEqualityComparer<ConfigurationSetting> Instance { get; } = new ConfigurationSettingEqualityComparer();
@@ -33,6 +34,8 @@ namespace Azure.Data.AppConfiguration.Tests {
                 return false;
             if (!string.Equals(x.ContentType, y.ContentType, StringComparison.Ordinal))
                 return false;
+            if (!string.Equals(x.Description, y.Description, StringComparison.Ordinal))
+                return false;
             if (!TagsEquals(x, y))
                 return false;
 
@@ -46,6 +49,7 @@ namespace Azure.Data.AppConfiguration.Tests {
             hashCode.Add(setting.Label, StringComparer.Ordinal);
             hashCode.Add(setting.Value, StringComparer.Ordinal);
             hashCode.Add(setting.ContentType, StringComparer.Ordinal);
+            hashCode.Add(setting.Description, StringComparer.Ordinal);
             hashCode.Add(setting.LastModified);
             hashCode.Add(setting.ETag);
             hashCode.Add(setting.IsReadOnly);

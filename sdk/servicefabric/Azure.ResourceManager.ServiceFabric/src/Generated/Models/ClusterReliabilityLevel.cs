@@ -7,63 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-    ///
-    ///   - None - Run the System services with a target replica set count of 1. This should only be used for test clusters.
-    ///   - Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.
-    ///   - Silver - Run the System services with a target replica set count of 5.
-    ///   - Gold - Run the System services with a target replica set count of 7.
-    ///   - Platinum - Run the System services with a target replica set count of 9.
-    ///
-    /// </summary>
+    /// <summary> The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity). </summary>
     public readonly partial struct ClusterReliabilityLevel : IEquatable<ClusterReliabilityLevel>
     {
         private readonly string _value;
+        /// <summary> Run the System services with a target replica set count of 1. This should only be used for test clusters. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Run the System services with a target replica set count of 3. This should only be used for test clusters. </summary>
+        private const string BronzeValue = "Bronze";
+        /// <summary> Run the System services with a target replica set count of 5. </summary>
+        private const string SilverValue = "Silver";
+        /// <summary> Run the System services with a target replica set count of 7. </summary>
+        private const string GoldValue = "Gold";
+        /// <summary> Run the System services with a target replica set count of 9. </summary>
+        private const string PlatinumValue = "Platinum";
 
         /// <summary> Initializes a new instance of <see cref="ClusterReliabilityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterReliabilityLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string BronzeValue = "Bronze";
-        private const string SilverValue = "Silver";
-        private const string GoldValue = "Gold";
-        private const string PlatinumValue = "Platinum";
-
-        /// <summary> None. </summary>
+        /// <summary> Run the System services with a target replica set count of 1. This should only be used for test clusters. </summary>
         public static ClusterReliabilityLevel None { get; } = new ClusterReliabilityLevel(NoneValue);
-        /// <summary> Bronze. </summary>
+
+        /// <summary> Run the System services with a target replica set count of 3. This should only be used for test clusters. </summary>
         public static ClusterReliabilityLevel Bronze { get; } = new ClusterReliabilityLevel(BronzeValue);
-        /// <summary> Silver. </summary>
+
+        /// <summary> Run the System services with a target replica set count of 5. </summary>
         public static ClusterReliabilityLevel Silver { get; } = new ClusterReliabilityLevel(SilverValue);
-        /// <summary> Gold. </summary>
+
+        /// <summary> Run the System services with a target replica set count of 7. </summary>
         public static ClusterReliabilityLevel Gold { get; } = new ClusterReliabilityLevel(GoldValue);
-        /// <summary> Platinum. </summary>
+
+        /// <summary> Run the System services with a target replica set count of 9. </summary>
         public static ClusterReliabilityLevel Platinum { get; } = new ClusterReliabilityLevel(PlatinumValue);
+
         /// <summary> Determines if two <see cref="ClusterReliabilityLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterReliabilityLevel left, ClusterReliabilityLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterReliabilityLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterReliabilityLevel left, ClusterReliabilityLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterReliabilityLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterReliabilityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterReliabilityLevel(string value) => new ClusterReliabilityLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterReliabilityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterReliabilityLevel?(string value) => value == null ? null : new ClusterReliabilityLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterReliabilityLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterReliabilityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

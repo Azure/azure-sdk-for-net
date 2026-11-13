@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
+    /// <summary></summary>
     public partial class DataBoxEdgeRoleAddonResource : IJsonModel<DataBoxEdgeRoleAddonData>
     {
-        private static DataBoxEdgeRoleAddonData s_dataDeserializationInstance;
-        private static DataBoxEdgeRoleAddonData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataBoxEdgeRoleAddonData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataBoxEdgeRoleAddonData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataBoxEdgeRoleAddonData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeRoleAddonData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeRoleAddonData>)Data).Write(writer, options);
 
-        DataBoxEdgeRoleAddonData IJsonModel<DataBoxEdgeRoleAddonData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeRoleAddonData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeRoleAddonData IJsonModel<DataBoxEdgeRoleAddonData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataBoxEdgeRoleAddonData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeRoleAddonData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataBoxEdgeRoleAddonData IPersistableModel<DataBoxEdgeRoleAddonData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeRoleAddonData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DataBoxEdgeRoleAddonData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeRoleAddonData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxEdgeRoleAddonData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

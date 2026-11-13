@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.Consumption.Models
     public readonly partial struct BudgetCategory : IEquatable<BudgetCategory>
     {
         private readonly string _value;
+        private const string CostValue = "Cost";
 
         /// <summary> Initializes a new instance of <see cref="BudgetCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BudgetCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CostValue = "Cost";
-
-        /// <summary> Cost. </summary>
+        /// <summary> Gets the Cost. </summary>
         public static BudgetCategory Cost { get; } = new BudgetCategory(CostValue);
+
         /// <summary> Determines if two <see cref="BudgetCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BudgetCategory left, BudgetCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BudgetCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BudgetCategory left, BudgetCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BudgetCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BudgetCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BudgetCategory(string value) => new BudgetCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BudgetCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BudgetCategory?(string value) => value == null ? null : new BudgetCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BudgetCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BudgetCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Metric configuration. </summary>
     public partial class DataBoxEdgeMetricConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricConfiguration"/>. </summary>
         /// <param name="resourceId"> The Resource ID on which the metrics should be pushed. </param>
@@ -65,27 +37,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="mdmAccount"> The MDM account to which the counters should be pushed. </param>
         /// <param name="metricNameSpace"> The MDM namespace to which the counters should be pushed. This is required if MDMAccount is specified. </param>
         /// <param name="counterSets"> Host name for the IoT hub associated to the device. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeMetricConfiguration(ResourceIdentifier resourceId, string mdmAccount, string metricNameSpace, IList<DataBoxEdgeMetricCounterSet> counterSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeMetricConfiguration(ResourceIdentifier resourceId, string mdmAccount, string metricNameSpace, IList<DataBoxEdgeMetricCounterSet> counterSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             MdmAccount = mdmAccount;
             MetricNameSpace = metricNameSpace;
             CounterSets = counterSets;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricConfiguration"/> for deserialization. </summary>
-        internal DataBoxEdgeMetricConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Resource ID on which the metrics should be pushed. </summary>
         public ResourceIdentifier ResourceId { get; set; }
+
         /// <summary> The MDM account to which the counters should be pushed. </summary>
         public string MdmAccount { get; set; }
+
         /// <summary> The MDM namespace to which the counters should be pushed. This is required if MDMAccount is specified. </summary>
         public string MetricNameSpace { get; set; }
+
         /// <summary> Host name for the IoT hub associated to the device. </summary>
         public IList<DataBoxEdgeMetricCounterSet> CounterSets { get; }
     }

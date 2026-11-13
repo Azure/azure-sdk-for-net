@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Communication.Models
 {
     internal static partial class CommunicationServiceKeyTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CommunicationServiceKeyType value) => value switch
         {
             CommunicationServiceKeyType.Primary => "Primary",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Communication.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CommunicationServiceKeyType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static CommunicationServiceKeyType ToCommunicationServiceKeyType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return CommunicationServiceKeyType.Primary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return CommunicationServiceKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary"))
+            {
+                return CommunicationServiceKeyType.Primary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary"))
+            {
+                return CommunicationServiceKeyType.Secondary;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CommunicationServiceKeyType value.");
         }
     }

@@ -1,18 +1,14 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
-pr:
+trigger:
   branches:
     include:
     - main
-    - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/dependencymap/ci.mgmt.yml
-    - sdk/dependencymap/Azure.ResourceManager.DependencyMap/
-
+    - sdk/dependencymap/Azure.ResourceManager.DependencyMap
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

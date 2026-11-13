@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -39,6 +41,15 @@ namespace Azure.Core.TestFramework
             Type[] parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
 
             var methodName = invocation.Method.Name;
+
+            // Async-only streaming methods return IAsyncEnumerable<T> directly and have no sync counterpart.
+            // Types that merely implement the interface, like AsyncPageable<T>, still map to their sync overloads.
+            if (AsyncEnumerableType.IsInterface(invocation.Method.ReturnType))
+            {
+                invocation.Proceed();
+                return;
+            }
+
             if (!methodName.EndsWith(AsyncSuffix))
             {
                 MethodInfo asyncAlternative = GetMethod(invocation, methodName + AsyncSuffix, parameterTypes);
@@ -71,6 +82,14 @@ namespace Azure.Core.TestFramework
             }
 
             Type returnType = methodInfo.ReturnType;
+
+            if (IsSystemClientModelCollectionResult(returnType))
+            {
+                // TODO - this is not handled in the Azure Test Framework, but only in the ClientModel test framework.
+                invocation.Proceed();
+                return;
+            }
+
             bool returnsSyncCollection = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Pageable<>);
 
             try
@@ -108,6 +127,17 @@ namespace Azure.Core.TestFramework
                     SetAsyncException(invocation, returnType, exception.InnerException);
                 }
             }
+        }
+
+        private static bool IsSystemClientModelCollectionResult(Type type)
+        {
+            if (type.IsGenericType)
+            {
+                var genericDef = type.GetGenericTypeDefinition();
+                return genericDef == typeof(CollectionResult<>) || genericDef == typeof(AsyncCollectionResult<>);
+            }
+
+            return type == typeof(CollectionResult) || type == typeof(AsyncCollectionResult);
         }
 
         private void SetAsyncResult(IInvocation invocation, Type returnType, object result)

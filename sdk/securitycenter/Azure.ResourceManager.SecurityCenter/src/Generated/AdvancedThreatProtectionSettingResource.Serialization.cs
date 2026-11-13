@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class AdvancedThreatProtectionSettingResource : IJsonModel<AdvancedThreatProtectionSettingData>
     {
-        private static AdvancedThreatProtectionSettingData s_dataDeserializationInstance;
-        private static AdvancedThreatProtectionSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AdvancedThreatProtectionSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AdvancedThreatProtectionSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AdvancedThreatProtectionSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AdvancedThreatProtectionSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AdvancedThreatProtectionSettingData>)Data).Write(writer, options);
 
-        AdvancedThreatProtectionSettingData IJsonModel<AdvancedThreatProtectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdvancedThreatProtectionSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AdvancedThreatProtectionSettingData IJsonModel<AdvancedThreatProtectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AdvancedThreatProtectionSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdvancedThreatProtectionSettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AdvancedThreatProtectionSettingData IPersistableModel<AdvancedThreatProtectionSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdvancedThreatProtectionSettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<AdvancedThreatProtectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdvancedThreatProtectionSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AdvancedThreatProtectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

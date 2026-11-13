@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingAccountStatusReasonCode : IEquatable<BillingAccountStatusReasonCode>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> UnusualActivity. </summary>
+        private const string UnusualActivityValue = "UnusualActivity";
+        /// <summary> ManuallyTerminated. </summary>
+        private const string ManuallyTerminatedValue = "ManuallyTerminated";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
+        /// <summary> Transferred. </summary>
+        private const string TransferredValue = "Transferred";
+        /// <summary> TerminateProcessing. </summary>
+        private const string TerminateProcessingValue = "TerminateProcessing";
 
         /// <summary> Initializes a new instance of <see cref="BillingAccountStatusReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingAccountStatusReasonCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string UnusualActivityValue = "UnusualActivity";
-        private const string ManuallyTerminatedValue = "ManuallyTerminated";
-        private const string ExpiredValue = "Expired";
-        private const string TransferredValue = "Transferred";
-        private const string TerminateProcessingValue = "TerminateProcessing";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingAccountStatusReasonCode Other { get; } = new BillingAccountStatusReasonCode(OtherValue);
+
         /// <summary> UnusualActivity. </summary>
         public static BillingAccountStatusReasonCode UnusualActivity { get; } = new BillingAccountStatusReasonCode(UnusualActivityValue);
+
         /// <summary> ManuallyTerminated. </summary>
         public static BillingAccountStatusReasonCode ManuallyTerminated { get; } = new BillingAccountStatusReasonCode(ManuallyTerminatedValue);
+
         /// <summary> Expired. </summary>
         public static BillingAccountStatusReasonCode Expired { get; } = new BillingAccountStatusReasonCode(ExpiredValue);
+
         /// <summary> Transferred. </summary>
         public static BillingAccountStatusReasonCode Transferred { get; } = new BillingAccountStatusReasonCode(TransferredValue);
+
         /// <summary> TerminateProcessing. </summary>
         public static BillingAccountStatusReasonCode TerminateProcessing { get; } = new BillingAccountStatusReasonCode(TerminateProcessingValue);
+
         /// <summary> Determines if two <see cref="BillingAccountStatusReasonCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingAccountStatusReasonCode left, BillingAccountStatusReasonCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingAccountStatusReasonCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingAccountStatusReasonCode left, BillingAccountStatusReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingAccountStatusReasonCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingAccountStatusReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingAccountStatusReasonCode(string value) => new BillingAccountStatusReasonCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingAccountStatusReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingAccountStatusReasonCode?(string value) => value == null ? null : new BillingAccountStatusReasonCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingAccountStatusReasonCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingAccountStatusReasonCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

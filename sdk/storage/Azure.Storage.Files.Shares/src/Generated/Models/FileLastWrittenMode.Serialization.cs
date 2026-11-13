@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class FileLastWrittenModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FileLastWrittenMode value) => value switch
         {
             FileLastWrittenMode.Now => "Now",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileLastWrittenMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static FileLastWrittenMode ToFileLastWrittenMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Now")) return FileLastWrittenMode.Now;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Preserve")) return FileLastWrittenMode.Preserve;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Now"))
+            {
+                return FileLastWrittenMode.Now;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Preserve"))
+            {
+                return FileLastWrittenMode.Preserve;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FileLastWrittenMode value.");
         }
     }

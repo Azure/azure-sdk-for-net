@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Frontend setting for Firewall. </summary>
     public partial class FirewallFrontendSetting
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FirewallFrontendSetting"/>. </summary>
         /// <param name="name"> Settings name. </param>
@@ -68,27 +40,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="protocol"> Protocol Type. </param>
         /// <param name="frontendConfiguration"> Frontend configurations. </param>
         /// <param name="backendConfiguration"> Backend configurations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallFrontendSetting(string name, FirewallProtocolType protocol, FirewallEndpointConfiguration frontendConfiguration, FirewallEndpointConfiguration backendConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallFrontendSetting(string name, FirewallProtocolType protocol, FirewallEndpointConfiguration frontendConfiguration, FirewallEndpointConfiguration backendConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Protocol = protocol;
             FrontendConfiguration = frontendConfiguration;
             BackendConfiguration = backendConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FirewallFrontendSetting"/> for deserialization. </summary>
-        internal FirewallFrontendSetting()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Settings name. </summary>
         public string Name { get; set; }
+
         /// <summary> Protocol Type. </summary>
         public FirewallProtocolType Protocol { get; set; }
+
         /// <summary> Frontend configurations. </summary>
         public FirewallEndpointConfiguration FrontendConfiguration { get; set; }
+
         /// <summary> Backend configurations. </summary>
         public FirewallEndpointConfiguration BackendConfiguration { get; set; }
     }

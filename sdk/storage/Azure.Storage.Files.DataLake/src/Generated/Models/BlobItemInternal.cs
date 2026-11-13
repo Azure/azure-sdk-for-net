@@ -5,26 +5,18 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> An Azure Storage blob. </summary>
     internal partial class BlobItemInternal
     {
         /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="deleted"></param>
-        /// <param name="snapshot"></param>
-        /// <param name="properties"> Properties of a blob. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="snapshot"/> or <paramref name="properties"/> is null. </exception>
+        /// <param name="name"> The blob name. </param>
+        /// <param name="deleted"> Whether the blob is deleted. </param>
+        /// <param name="snapshot"> The snapshot. </param>
+        /// <param name="properties"> The blob properties. </param>
         internal BlobItemInternal(string name, bool deleted, string snapshot, BlobPropertiesInternal properties)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(snapshot, nameof(snapshot));
-            Argument.AssertNotNull(properties, nameof(properties));
-
             Name = name;
             Deleted = deleted;
             Snapshot = snapshot;
@@ -32,13 +24,13 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="deleted"></param>
-        /// <param name="snapshot"></param>
-        /// <param name="versionId"></param>
-        /// <param name="isCurrentVersion"></param>
-        /// <param name="properties"> Properties of a blob. </param>
-        /// <param name="deletionId"></param>
+        /// <param name="name"> The blob name. </param>
+        /// <param name="deleted"> Whether the blob is deleted. </param>
+        /// <param name="snapshot"> The snapshot. </param>
+        /// <param name="versionId"> The version ID. </param>
+        /// <param name="isCurrentVersion"> Whether this is the current version. </param>
+        /// <param name="properties"> The blob properties. </param>
+        /// <param name="deletionId"> The deletion ID. </param>
         internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, string deletionId)
         {
             Name = name;
@@ -50,19 +42,25 @@ namespace Azure.Storage.Files.DataLake.Models
             DeletionId = deletionId;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The blob name. </summary>
         public string Name { get; }
-        /// <summary> Gets the deleted. </summary>
+
+        /// <summary> Whether the blob is deleted. </summary>
         public bool Deleted { get; }
-        /// <summary> Gets the snapshot. </summary>
+
+        /// <summary> The snapshot. </summary>
         public string Snapshot { get; }
-        /// <summary> Gets the version id. </summary>
+
+        /// <summary> The version ID. </summary>
         public string VersionId { get; }
-        /// <summary> Gets the is current version. </summary>
+
+        /// <summary> Whether this is the current version. </summary>
         public bool? IsCurrentVersion { get; }
-        /// <summary> Properties of a blob. </summary>
+
+        /// <summary> The blob properties. </summary>
         public BlobPropertiesInternal Properties { get; }
-        /// <summary> Gets the deletion id. </summary>
+
+        /// <summary> The deletion ID. </summary>
         public string DeletionId { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct SummaryLengthBucket : IEquatable<SummaryLengthBucket>
     {
         private readonly string _value;
+        /// <summary> Instructs model to generate shorter length summaries. </summary>
+        private const string ShortValue = "short";
+        /// <summary> Instructs model to generate medium length summaries. </summary>
+        private const string MediumValue = "medium";
+        /// <summary> Instructs model to generate longer length summaries. </summary>
+        private const string LongValue = "long";
 
         /// <summary> Initializes a new instance of <see cref="SummaryLengthBucket"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SummaryLengthBucket(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ShortValue = "short";
-        private const string MediumValue = "medium";
-        private const string LongValue = "long";
+            _value = value;
+        }
 
         /// <summary> Instructs model to generate shorter length summaries. </summary>
         public static SummaryLengthBucket Short { get; } = new SummaryLengthBucket(ShortValue);
+
         /// <summary> Instructs model to generate medium length summaries. </summary>
         public static SummaryLengthBucket Medium { get; } = new SummaryLengthBucket(MediumValue);
+
         /// <summary> Instructs model to generate longer length summaries. </summary>
         public static SummaryLengthBucket Long { get; } = new SummaryLengthBucket(LongValue);
+
         /// <summary> Determines if two <see cref="SummaryLengthBucket"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SummaryLengthBucket left, SummaryLengthBucket right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SummaryLengthBucket"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SummaryLengthBucket left, SummaryLengthBucket right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SummaryLengthBucket"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SummaryLengthBucket"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SummaryLengthBucket(string value) => new SummaryLengthBucket(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SummaryLengthBucket"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SummaryLengthBucket?(string value) => value == null ? null : new SummaryLengthBucket(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SummaryLengthBucket other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SummaryLengthBucket other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

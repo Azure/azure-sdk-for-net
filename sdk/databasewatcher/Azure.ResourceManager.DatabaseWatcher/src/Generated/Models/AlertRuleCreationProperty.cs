@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     public readonly partial struct AlertRuleCreationProperty : IEquatable<AlertRuleCreationProperty>
     {
         private readonly string _value;
+        /// <summary> The alert rule was created with an action group. </summary>
+        private const string CreatedWithActionGroupValue = "CreatedWithActionGroup";
+        /// <summary> The alert rule was created with no properties. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="AlertRuleCreationProperty"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AlertRuleCreationProperty(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatedWithActionGroupValue = "CreatedWithActionGroup";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> The alert rule was created with an action group. </summary>
         public static AlertRuleCreationProperty CreatedWithActionGroup { get; } = new AlertRuleCreationProperty(CreatedWithActionGroupValue);
+
         /// <summary> The alert rule was created with no properties. </summary>
         public static AlertRuleCreationProperty None { get; } = new AlertRuleCreationProperty(NoneValue);
+
         /// <summary> Determines if two <see cref="AlertRuleCreationProperty"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AlertRuleCreationProperty left, AlertRuleCreationProperty right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AlertRuleCreationProperty"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AlertRuleCreationProperty left, AlertRuleCreationProperty right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertRuleCreationProperty"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AlertRuleCreationProperty"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AlertRuleCreationProperty(string value) => new AlertRuleCreationProperty(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AlertRuleCreationProperty"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AlertRuleCreationProperty?(string value) => value == null ? null : new AlertRuleCreationProperty(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AlertRuleCreationProperty other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AlertRuleCreationProperty other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

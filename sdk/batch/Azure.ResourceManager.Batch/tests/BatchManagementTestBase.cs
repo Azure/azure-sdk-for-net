@@ -4,10 +4,10 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Batch.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.TestFramework;
-using Azure.ResourceManager.Batch.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Tests
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Batch.Tests
         private async Task<StorageAccountResource> CreateStorageAccount(ResourceGroupResource rg, string storageAccountName)
         {
             var storageInput = ResourceDataHelper.GetStorageAccountData();
+            storageInput.AllowBlobPublicAccess = false;
             var lro = await rg.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, storageInput);
             return lro.Value;
         }

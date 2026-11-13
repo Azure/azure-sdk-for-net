@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct InformationUnit : IEquatable<InformationUnit>
     {
         private readonly string _value;
+        /// <summary> Unspecified information unit. </summary>
+        private const string UnspecifiedValue = "Unspecified";
+        /// <summary> Bit information unit. </summary>
+        private const string BitValue = "Bit";
+        /// <summary> Kilobit information unit. </summary>
+        private const string KilobitValue = "Kilobit";
+        /// <summary> Megabit information unit. </summary>
+        private const string MegabitValue = "Megabit";
+        /// <summary> Gigabit information unit. </summary>
+        private const string GigabitValue = "Gigabit";
+        /// <summary> Terabit information unit. </summary>
+        private const string TerabitValue = "Terabit";
+        /// <summary> Petabit information unit. </summary>
+        private const string PetabitValue = "Petabit";
+        /// <summary> Byte information unit. </summary>
+        private const string ByteValue = "Byte";
+        /// <summary> Kilobyte information unit. </summary>
+        private const string KilobyteValue = "Kilobyte";
+        /// <summary> Megabyte information unit. </summary>
+        private const string MegabyteValue = "Megabyte";
+        /// <summary> Gigabyte information unit. </summary>
+        private const string GigabyteValue = "Gigabyte";
+        /// <summary> Terabyte information unit. </summary>
+        private const string TerabyteValue = "Terabyte";
+        /// <summary> Petabyte information unit. </summary>
+        private const string PetabyteValue = "Petabyte";
 
         /// <summary> Initializes a new instance of <see cref="InformationUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InformationUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnspecifiedValue = "Unspecified";
-        private const string BitValue = "Bit";
-        private const string KilobitValue = "Kilobit";
-        private const string MegabitValue = "Megabit";
-        private const string GigabitValue = "Gigabit";
-        private const string TerabitValue = "Terabit";
-        private const string PetabitValue = "Petabit";
-        private const string ByteValue = "Byte";
-        private const string KilobyteValue = "Kilobyte";
-        private const string MegabyteValue = "Megabyte";
-        private const string GigabyteValue = "Gigabyte";
-        private const string TerabyteValue = "Terabyte";
-        private const string PetabyteValue = "Petabyte";
+            _value = value;
+        }
 
         /// <summary> Unspecified information unit. </summary>
         public static InformationUnit Unspecified { get; } = new InformationUnit(UnspecifiedValue);
+
         /// <summary> Bit information unit. </summary>
         public static InformationUnit Bit { get; } = new InformationUnit(BitValue);
+
         /// <summary> Kilobit information unit. </summary>
         public static InformationUnit Kilobit { get; } = new InformationUnit(KilobitValue);
+
         /// <summary> Megabit information unit. </summary>
         public static InformationUnit Megabit { get; } = new InformationUnit(MegabitValue);
+
         /// <summary> Gigabit information unit. </summary>
         public static InformationUnit Gigabit { get; } = new InformationUnit(GigabitValue);
+
         /// <summary> Terabit information unit. </summary>
         public static InformationUnit Terabit { get; } = new InformationUnit(TerabitValue);
+
         /// <summary> Petabit information unit. </summary>
         public static InformationUnit Petabit { get; } = new InformationUnit(PetabitValue);
+
         /// <summary> Byte information unit. </summary>
         public static InformationUnit Byte { get; } = new InformationUnit(ByteValue);
+
         /// <summary> Kilobyte information unit. </summary>
         public static InformationUnit Kilobyte { get; } = new InformationUnit(KilobyteValue);
+
         /// <summary> Megabyte information unit. </summary>
         public static InformationUnit Megabyte { get; } = new InformationUnit(MegabyteValue);
+
         /// <summary> Gigabyte information unit. </summary>
         public static InformationUnit Gigabyte { get; } = new InformationUnit(GigabyteValue);
+
         /// <summary> Terabyte information unit. </summary>
         public static InformationUnit Terabyte { get; } = new InformationUnit(TerabyteValue);
+
         /// <summary> Petabyte information unit. </summary>
         public static InformationUnit Petabyte { get; } = new InformationUnit(PetabyteValue);
+
         /// <summary> Determines if two <see cref="InformationUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InformationUnit left, InformationUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InformationUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InformationUnit left, InformationUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InformationUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InformationUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InformationUnit(string value) => new InformationUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InformationUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InformationUnit?(string value) => value == null ? null : new InformationUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InformationUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InformationUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

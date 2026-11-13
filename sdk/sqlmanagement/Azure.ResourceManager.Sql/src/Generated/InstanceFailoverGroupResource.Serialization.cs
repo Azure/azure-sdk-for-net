@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class InstanceFailoverGroupResource : IJsonModel<InstanceFailoverGroupData>
     {
-        private static InstanceFailoverGroupData s_dataDeserializationInstance;
-        private static InstanceFailoverGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<InstanceFailoverGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<InstanceFailoverGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new InstanceFailoverGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InstanceFailoverGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InstanceFailoverGroupData>)Data).Write(writer, options);
 
-        InstanceFailoverGroupData IJsonModel<InstanceFailoverGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InstanceFailoverGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InstanceFailoverGroupData IJsonModel<InstanceFailoverGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InstanceFailoverGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InstanceFailoverGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         InstanceFailoverGroupData IPersistableModel<InstanceFailoverGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InstanceFailoverGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<InstanceFailoverGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InstanceFailoverGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InstanceFailoverGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

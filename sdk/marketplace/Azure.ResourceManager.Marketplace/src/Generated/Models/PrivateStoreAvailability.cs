@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Marketplace.Models
     public readonly partial struct PrivateStoreAvailability : IEquatable<PrivateStoreAvailability>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PrivateStoreAvailability"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PrivateStoreAvailability(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "enabled";
         private const string DisabledValue = "disabled";
 
-        /// <summary> enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreAvailability"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PrivateStoreAvailability(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static PrivateStoreAvailability Enabled { get; } = new PrivateStoreAvailability(EnabledValue);
-        /// <summary> disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static PrivateStoreAvailability Disabled { get; } = new PrivateStoreAvailability(DisabledValue);
+
         /// <summary> Determines if two <see cref="PrivateStoreAvailability"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrivateStoreAvailability left, PrivateStoreAvailability right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrivateStoreAvailability"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrivateStoreAvailability left, PrivateStoreAvailability right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateStoreAvailability"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PrivateStoreAvailability"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrivateStoreAvailability(string value) => new PrivateStoreAvailability(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrivateStoreAvailability"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrivateStoreAvailability?(string value) => value == null ? null : new PrivateStoreAvailability(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateStoreAvailability other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrivateStoreAvailability other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

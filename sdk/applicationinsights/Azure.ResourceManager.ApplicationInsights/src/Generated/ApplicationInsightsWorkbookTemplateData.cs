@@ -13,123 +13,103 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    /// <summary>
-    /// A class representing the ApplicationInsightsWorkbookTemplate data model.
-    /// An Application Insights workbook template definition.
-    /// </summary>
+    /// <summary> An Application Insights workbook template definition. </summary>
     public partial class ApplicationInsightsWorkbookTemplateData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookTemplateData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ApplicationInsightsWorkbookTemplateData(AzureLocation location) : base(location)
         {
-            Galleries = new ChangeTrackingList<WorkbookTemplateGallery>();
-            LocalizedGalleries = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookTemplateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="priority"> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </param>
-        /// <param name="author"> Information about the author of the workbook template. </param>
-        /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
-        /// <param name="galleries"> Workbook galleries supported by the template. </param>
-        /// <param name="localizedGalleries"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsWorkbookTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? priority, string author, BinaryData templateData, IList<WorkbookTemplateGallery> galleries, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Metadata describing a workbook template for an Azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsWorkbookTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkbookTemplateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Priority = priority;
-            Author = author;
-            TemplateData = templateData;
-            Galleries = galleries;
-            LocalizedGalleries = localizedGalleries;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookTemplateData"/> for deserialization. </summary>
-        internal ApplicationInsightsWorkbookTemplateData()
-        {
-        }
+        /// <summary> Metadata describing a workbook template for an Azure resource. </summary>
+        [WirePath("properties")]
+        internal WorkbookTemplateProperties Properties { get; set; }
 
         /// <summary> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </summary>
         [WirePath("properties.priority")]
-        public int? Priority { get; set; }
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookTemplateProperties();
+                }
+                Properties.Priority = value;
+            }
+        }
+
         /// <summary> Information about the author of the workbook template. </summary>
         [WirePath("properties.author")]
-        public string Author { get; set; }
-        /// <summary>
-        /// Valid JSON object containing workbook template payload.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        public string Author
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Author;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookTemplateProperties();
+                }
+                Properties.Author = value;
+            }
+        }
+
+        /// <summary> Valid JSON object containing workbook template payload. </summary>
         [WirePath("properties.templateData")]
-        public BinaryData TemplateData { get; set; }
+        public BinaryData TemplateData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TemplateData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookTemplateProperties();
+                }
+                Properties.TemplateData = value;
+            }
+        }
+
         /// <summary> Workbook galleries supported by the template. </summary>
         [WirePath("properties.galleries")]
-        public IList<WorkbookTemplateGallery> Galleries { get; }
-        /// <summary> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </summary>
-        [WirePath("properties.localized")]
-        public IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> LocalizedGalleries { get; }
+        public IList<WorkbookTemplateGallery> Galleries
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookTemplateProperties();
+                }
+                return Properties.Galleries;
+            }
+        }
     }
 }

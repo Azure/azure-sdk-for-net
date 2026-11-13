@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ClientType",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.Structure.Service.ClientType",
       "valueType": {
         "$id": "2",
@@ -26,7 +27,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -39,7 +41,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -52,7 +55,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "6",
@@ -65,7 +69,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "7",
@@ -78,14 +83,16 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Client.Structure.Service",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -95,18 +102,20 @@
       "$id": "8",
       "kind": "client",
       "name": "RenamedOperationClient",
+      "isExactName": false,
       "namespace": "Client.Structure.RenamedOperation",
       "methods": [
         {
           "$id": "9",
           "kind": "basic",
           "name": "renamedOne",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "10",
             "name": "renamedOne",
-            "resourceName": "RenamedOperation",
+            "isExactName": false,
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -115,7 +124,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -125,7 +135,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedOne",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -138,12 +149,13 @@
           "$id": "11",
           "kind": "basic",
           "name": "renamedThree",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "12",
             "name": "renamedThree",
-            "resourceName": "RenamedOperation",
+            "isExactName": false,
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -152,7 +164,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -162,7 +175,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedThree",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -175,12 +189,13 @@
           "$id": "13",
           "kind": "basic",
           "name": "renamedFive",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "14",
             "name": "renamedFive",
-            "resourceName": "RenamedOperation",
+            "isExactName": false,
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -189,7 +204,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -199,7 +215,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedFive",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -229,7 +246,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.endpoint",
+          "isExactName": false
         },
         {
           "$id": "17",
@@ -247,9 +265,11 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.client"
+          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.client",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.RenamedOperation",
       "apiVersions": [],
@@ -258,18 +278,20 @@
           "$id": "18",
           "kind": "client",
           "name": "Group",
+          "isExactName": false,
           "namespace": "Client.Structure.RenamedOperation",
           "methods": [
             {
               "$id": "19",
               "kind": "basic",
               "name": "renamedTwo",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "20",
                 "name": "renamedTwo",
-                "resourceName": "Group",
+                "isExactName": false,
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -278,7 +300,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -288,7 +311,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedTwo",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -301,12 +325,13 @@
               "$id": "21",
               "kind": "basic",
               "name": "renamedFour",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "22",
                 "name": "renamedFour",
-                "resourceName": "Group",
+                "isExactName": false,
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -315,7 +340,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -325,7 +351,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedFour",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -338,12 +365,13 @@
               "$id": "23",
               "kind": "basic",
               "name": "renamedSix",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "24",
                 "name": "renamedSix",
-                "resourceName": "Group",
+                "isExactName": false,
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -352,7 +380,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -362,7 +391,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedSix",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -392,7 +422,8 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.endpoint",
+              "isExactName": false
             },
             {
               "$id": "27",
@@ -410,17 +441,21 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.client",
+              "isExactName": false
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group",
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

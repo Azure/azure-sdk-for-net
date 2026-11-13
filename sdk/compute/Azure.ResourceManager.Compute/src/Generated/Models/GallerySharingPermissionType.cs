@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This property allows you to specify the permission of sharing gallery. Possible values are: **Private,** **Groups,** **Community.**. </summary>
+    /// <summary> This property allows you to specify the permission of sharing gallery. Possible values are: <b>Private,</b> <b>Groups,</b> <b>Community.</b>. </summary>
     public readonly partial struct GallerySharingPermissionType : IEquatable<GallerySharingPermissionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="GallerySharingPermissionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GallerySharingPermissionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PrivateValue = "Private";
         private const string GroupsValue = "Groups";
         private const string CommunityValue = "Community";
 
-        /// <summary> Private. </summary>
+        /// <summary> Initializes a new instance of <see cref="GallerySharingPermissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GallerySharingPermissionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Private. </summary>
         public static GallerySharingPermissionType Private { get; } = new GallerySharingPermissionType(PrivateValue);
-        /// <summary> Groups. </summary>
+
+        /// <summary> Gets the Groups. </summary>
         public static GallerySharingPermissionType Groups { get; } = new GallerySharingPermissionType(GroupsValue);
-        /// <summary> Community. </summary>
+
+        /// <summary> Gets the Community. </summary>
         public static GallerySharingPermissionType Community { get; } = new GallerySharingPermissionType(CommunityValue);
+
         /// <summary> Determines if two <see cref="GallerySharingPermissionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GallerySharingPermissionType left, GallerySharingPermissionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GallerySharingPermissionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GallerySharingPermissionType left, GallerySharingPermissionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GallerySharingPermissionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GallerySharingPermissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GallerySharingPermissionType(string value) => new GallerySharingPermissionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GallerySharingPermissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GallerySharingPermissionType?(string value) => value == null ? null : new GallerySharingPermissionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GallerySharingPermissionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GallerySharingPermissionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

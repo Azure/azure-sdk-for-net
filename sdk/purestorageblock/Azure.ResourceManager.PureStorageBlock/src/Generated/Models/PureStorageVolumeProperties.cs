@@ -14,45 +14,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     /// <summary> Volume properties. </summary>
     public partial class PureStorageVolumeProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PureStorageVolumeProperties"/>. </summary>
         /// <param name="softDeletion"> Volume's soft-deletion state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="softDeletion"/> is null. </exception>
         internal PureStorageVolumeProperties(PureStorageSoftDeletionState softDeletion)
         {
-            Argument.AssertNotNull(softDeletion, nameof(softDeletion));
-
             SoftDeletion = softDeletion;
         }
 
@@ -68,8 +36,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="volumeType"> Specify which control plane handles the lifecycle of the volume. </param>
         /// <param name="avs"> AVS-specific volume information. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageVolumeProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string volumeInternalId, string displayName, PureStorageSpaceUsage space, PureStorageSoftDeletionState softDeletion, string createdTimestamp, long? provisionedSize, PureStorageAvsVmVolumeType? volumeType, PureStorageAvsDiskDetails avs, PureStorageResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PureStorageVolumeProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string volumeInternalId, string displayName, PureStorageSpaceUsage space, PureStorageSoftDeletionState softDeletion, string createdTimestamp, long? provisionedSize, PureStorageAvsVmVolumeType? volumeType, PureStorageAvsDiskDetails avs, PureStorageResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StoragePoolInternalId = storagePoolInternalId;
             StoragePoolResourceId = storagePoolResourceId;
@@ -82,34 +50,39 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             VolumeType = volumeType;
             Avs = avs;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PureStorageVolumeProperties"/> for deserialization. </summary>
-        internal PureStorageVolumeProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Pure Storage's internal ID for the storage pool containing the volume. </summary>
         public string StoragePoolInternalId { get; }
+
         /// <summary> Azure Resource ID of the storage pool containing this volume. </summary>
         public ResourceIdentifier StoragePoolResourceId { get; }
+
         /// <summary> Pure Storage's internal ID for the volume. </summary>
         public string VolumeInternalId { get; }
+
         /// <summary> Human-readable name of the volume. </summary>
         public string DisplayName { get; }
+
         /// <summary> Storage space usage. </summary>
         public PureStorageSpaceUsage Space { get; }
+
         /// <summary> Volume's soft-deletion state. </summary>
         public PureStorageSoftDeletionState SoftDeletion { get; }
+
         /// <summary> Volume creation date, as an RFC 3339 timestamp. </summary>
         public string CreatedTimestamp { get; }
+
         /// <summary> Currently provisioned size of the volume, in bytes. </summary>
         public long? ProvisionedSize { get; }
+
         /// <summary> Specify which control plane handles the lifecycle of the volume. </summary>
         public PureStorageAvsVmVolumeType? VolumeType { get; }
+
         /// <summary> AVS-specific volume information. </summary>
         public PureStorageAvsDiskDetails Avs { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public PureStorageResourceProvisioningState? ProvisioningState { get; }
     }

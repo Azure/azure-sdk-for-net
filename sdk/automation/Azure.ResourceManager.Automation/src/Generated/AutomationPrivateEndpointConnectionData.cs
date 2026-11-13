@@ -10,88 +10,81 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the AutomationPrivateEndpointConnection data model.
-    /// A private endpoint connection
-    /// </summary>
+    /// <summary> A private endpoint connection. </summary>
     public partial class AutomationPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationPrivateEndpointConnectionData"/>. </summary>
         public AutomationPrivateEndpointConnectionData()
         {
-            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="groupIds"> Gets the groupIds. </param>
-        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IList<string> groupIds, AutomationPrivateLinkServiceConnectionStateProperty connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            PrivateEndpoint = privateEndpoint;
-            GroupIds = groupIds;
-            ConnectionState = connectionState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Private endpoint which the connection belongs to. </summary>
-        internal WritableSubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PrivateEndpointId
+        /// <summary> Resource properties. </summary>
+        internal PrivateEndpointConnectionProperties Properties { get; set; }
+
+        /// <summary> Gets the groupIds. </summary>
+        public IList<string> GroupIds
         {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-            set
+            get
             {
-                if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
-                PrivateEndpoint.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.GroupIds;
             }
         }
 
-        /// <summary> Gets the groupIds. </summary>
-        public IList<string> GroupIds { get; }
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
-        public AutomationPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
+        public AutomationPrivateLinkServiceConnectionStateProperty ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
+        /// <summary> Resource id of the private endpoint. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateEndpointId = value;
+            }
+        }
     }
 }

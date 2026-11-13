@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.ContainerRegistry.Models;
+using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.ContainerRegistry;
+using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers.Tests
 {
@@ -24,11 +24,10 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/57787 - Recordings need re-recording for api-version 2025-07-01")]
         public async Task CreateOrUpdate()
         {
             ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
-
-            // Create ContainerApp
             var envResource = await CreateContainerAppManagedEnvironment(resourceGroup, Recording.GenerateAssetName("env"));
             var containerApp = await CreateContainerApp(resourceGroup, envResource, Recording.GenerateAssetName("container"));
 
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             ContainerAppJobData data = new ContainerAppJobData(AzureLocation.WestUS)
             {
                 EnvironmentId = envResource.Id,
-                Configuration = new Models.ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual,1800)
+                Configuration = new Models.ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual, 1800)
                 {
                     Registries =
                     {

@@ -34,7 +34,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
             StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None)
         {
-            var disposingFileSystem = await ClientBuilder.GetNewFileSystem(service: service, fileSystemName: containerName);
+            var disposingFileSystem = await ClientBuilder.GetNewFileSystem(
+                service: service,
+                fileSystemName: containerName,
+                publicAccessType: PublicAccessType.None);
 
             disposingFileSystem.FileSystem.ClientConfiguration.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
             disposingFileSystem.FileSystem.ClientConfiguration.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
@@ -98,7 +101,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await client.ReadToAsync(destination, new DataLakeFileReadToOptions
             {
                 TransferValidation = hashingOptions,
-                TransferOptions = transferOptions
+                TransferOptions = transferOptions,
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
             });
         }
 
@@ -116,7 +120,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             return await client.OpenReadAsync(new DataLakeOpenReadOptions(false)
             {
                 TransferValidation = hashingOptions,
-                BufferSize = internalBufferSize
+                BufferSize = internalBufferSize,
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
             });
         }
 

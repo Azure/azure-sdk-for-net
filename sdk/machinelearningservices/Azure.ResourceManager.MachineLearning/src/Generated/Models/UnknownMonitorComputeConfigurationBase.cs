@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of MonitorComputeConfigurationBase. </summary>
     internal partial class UnknownMonitorComputeConfigurationBase : MonitorComputeConfigurationBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMonitorComputeConfigurationBase"/>. </summary>
         /// <param name="computeType"> [Required] Specifies the type of signal to monitor. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMonitorComputeConfigurationBase(MonitorComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(computeType, serializedAdditionalRawData)
-        {
-            ComputeType = computeType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownMonitorComputeConfigurationBase"/> for deserialization. </summary>
-        internal UnknownMonitorComputeConfigurationBase()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMonitorComputeConfigurationBase(MonitorComputeType computeType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(computeType != default ? computeType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

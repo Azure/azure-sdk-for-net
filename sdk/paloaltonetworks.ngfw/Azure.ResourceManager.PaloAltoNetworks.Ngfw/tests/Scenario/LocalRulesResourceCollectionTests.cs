@@ -3,12 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.ResourceManager.Models;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
                 ActionType = RulestackActionType.Allow,
                 EnableLogging = RulestackStateType.Enabled,
                 DecryptionRuleType = DecryptionRuleType.None
-                };
+            };
             return data;
         }
     }

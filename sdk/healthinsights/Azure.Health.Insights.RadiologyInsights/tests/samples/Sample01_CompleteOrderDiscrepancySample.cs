@@ -8,8 +8,8 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
-using NUnit.Framework;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             + "\r\n\nA new US pelvis within the next 6 months is recommended."
             + "\n\nThese results have been discussed with Dr. Jones at 3 PM on November 5 2020.\n "
             + "\r\n";
-            #endregion
+        #endregion
 
         [Test]
         public void RadiologyInsightsCompleteOrderDiscrepancyScenario()

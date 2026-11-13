@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,9 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(items, nameof(items));
             Argument.AssertNotNull(condition, nameof(condition));
 
-            Items = items;
-            Condition = condition;
-            ActivityType = "Filter";
+            TypeProperties = new FilterActivityTypeProperties(items, condition);
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterActivity"/>. </summary>
@@ -37,24 +36,48 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="items"> Input array on which filter should be applied. </param>
-        /// <param name="condition"> Condition to be used for filtering the input. </param>
-        internal FilterActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryExpression items, DataFactoryExpression condition) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Filter activity properties. </param>
+        internal FilterActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FilterActivityTypeProperties typeProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
-            Items = items;
-            Condition = condition;
-            ActivityType = activityType ?? "Filter";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FilterActivity"/> for deserialization. </summary>
-        internal FilterActivity()
-        {
-        }
+        /// <summary> Filter activity properties. </summary>
+        internal FilterActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> Input array on which filter should be applied. </summary>
-        public DataFactoryExpression Items { get; set; }
+        public DataFactoryExpression Items
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Items;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FilterActivityTypeProperties();
+                }
+                TypeProperties.Items = value;
+            }
+        }
+
         /// <summary> Condition to be used for filtering the input. </summary>
-        public DataFactoryExpression Condition { get; set; }
+        public DataFactoryExpression Condition
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Condition;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FilterActivityTypeProperties();
+                }
+                TypeProperties.Condition = value;
+            }
+        }
     }
 }

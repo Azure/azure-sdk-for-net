@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct MqttAuthMethod : IEquatable<MqttAuthMethod>
     {
         private readonly string _value;
+        /// <summary> SystemAssignedManagedIdentity type. </summary>
+        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
+        /// <summary> UserAssignedManagedIdentity type. </summary>
+        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
+        /// <summary> ServiceAccountToken Option. </summary>
+        private const string ServiceAccountTokenValue = "ServiceAccountToken";
+        /// <summary> x509Certificate Option. </summary>
+        private const string X509CertificateValue = "X509Certificate";
+        /// <summary> Anonymous Option. </summary>
+        private const string AnonymousValue = "Anonymous";
 
         /// <summary> Initializes a new instance of <see cref="MqttAuthMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MqttAuthMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
-        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
-        private const string ServiceAccountTokenValue = "ServiceAccountToken";
-        private const string X509CertificateValue = "X509Certificate";
-        private const string AnonymousValue = "Anonymous";
+            _value = value;
+        }
 
         /// <summary> SystemAssignedManagedIdentity type. </summary>
         public static MqttAuthMethod SystemAssignedManagedIdentity { get; } = new MqttAuthMethod(SystemAssignedManagedIdentityValue);
+
         /// <summary> UserAssignedManagedIdentity type. </summary>
         public static MqttAuthMethod UserAssignedManagedIdentity { get; } = new MqttAuthMethod(UserAssignedManagedIdentityValue);
+
         /// <summary> ServiceAccountToken Option. </summary>
         public static MqttAuthMethod ServiceAccountToken { get; } = new MqttAuthMethod(ServiceAccountTokenValue);
+
         /// <summary> x509Certificate Option. </summary>
         public static MqttAuthMethod X509Certificate { get; } = new MqttAuthMethod(X509CertificateValue);
+
         /// <summary> Anonymous Option. </summary>
         public static MqttAuthMethod Anonymous { get; } = new MqttAuthMethod(AnonymousValue);
+
         /// <summary> Determines if two <see cref="MqttAuthMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MqttAuthMethod left, MqttAuthMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MqttAuthMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MqttAuthMethod left, MqttAuthMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MqttAuthMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MqttAuthMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MqttAuthMethod(string value) => new MqttAuthMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MqttAuthMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MqttAuthMethod?(string value) => value == null ? null : new MqttAuthMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MqttAuthMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MqttAuthMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

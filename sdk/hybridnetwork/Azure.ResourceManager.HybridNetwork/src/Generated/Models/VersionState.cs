@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct VersionState : IEquatable<VersionState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VersionState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VersionState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string PreviewValue = "Preview";
         private const string ActiveValue = "Active";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string ValidatingValue = "Validating";
         private const string ValidationFailedValue = "ValidationFailed";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="VersionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VersionState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static VersionState Unknown { get; } = new VersionState(UnknownValue);
-        /// <summary> Preview. </summary>
+
+        /// <summary> Gets the Preview. </summary>
         public static VersionState Preview { get; } = new VersionState(PreviewValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static VersionState Active { get; } = new VersionState(ActiveValue);
-        /// <summary> Deprecated. </summary>
+
+        /// <summary> Gets the Deprecated. </summary>
         public static VersionState Deprecated { get; } = new VersionState(DeprecatedValue);
-        /// <summary> Validating. </summary>
+
+        /// <summary> Gets the Validating. </summary>
         public static VersionState Validating { get; } = new VersionState(ValidatingValue);
-        /// <summary> ValidationFailed. </summary>
+
+        /// <summary> Gets the ValidationFailed. </summary>
         public static VersionState ValidationFailed { get; } = new VersionState(ValidationFailedValue);
+
         /// <summary> Determines if two <see cref="VersionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VersionState left, VersionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VersionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VersionState left, VersionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VersionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VersionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VersionState(string value) => new VersionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VersionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VersionState?(string value) => value == null ? null : new VersionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VersionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VersionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> The TransactionType. </summary>
+    /// <summary></summary>
     public readonly partial struct TransactionType : IEquatable<TransactionType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Billed. </summary>
+        private const string BilledValue = "Billed";
+        /// <summary> Unbilled. </summary>
+        private const string UnbilledValue = "Unbilled";
 
         /// <summary> Initializes a new instance of <see cref="TransactionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TransactionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string BilledValue = "Billed";
-        private const string UnbilledValue = "Unbilled";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static TransactionType Other { get; } = new TransactionType(OtherValue);
+
         /// <summary> Billed. </summary>
         public static TransactionType Billed { get; } = new TransactionType(BilledValue);
+
         /// <summary> Unbilled. </summary>
         public static TransactionType Unbilled { get; } = new TransactionType(UnbilledValue);
+
         /// <summary> Determines if two <see cref="TransactionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TransactionType left, TransactionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TransactionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TransactionType left, TransactionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TransactionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TransactionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TransactionType(string value) => new TransactionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TransactionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TransactionType?(string value) => value == null ? null : new TransactionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TransactionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TransactionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

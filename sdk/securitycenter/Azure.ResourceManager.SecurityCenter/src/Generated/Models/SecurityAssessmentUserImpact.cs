@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityAssessmentUserImpact : IEquatable<SecurityAssessmentUserImpact>
     {
         private readonly string _value;
+        /// <summary> Low. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Moderate. </summary>
+        private const string ModerateValue = "Moderate";
+        /// <summary> High. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentUserImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAssessmentUserImpact(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowValue = "Low";
-        private const string ModerateValue = "Moderate";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Low. </summary>
         public static SecurityAssessmentUserImpact Low { get; } = new SecurityAssessmentUserImpact(LowValue);
+
         /// <summary> Moderate. </summary>
         public static SecurityAssessmentUserImpact Moderate { get; } = new SecurityAssessmentUserImpact(ModerateValue);
+
         /// <summary> High. </summary>
         public static SecurityAssessmentUserImpact High { get; } = new SecurityAssessmentUserImpact(HighValue);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentUserImpact"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityAssessmentUserImpact left, SecurityAssessmentUserImpact right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentUserImpact"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityAssessmentUserImpact left, SecurityAssessmentUserImpact right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAssessmentUserImpact"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentUserImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityAssessmentUserImpact(string value) => new SecurityAssessmentUserImpact(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentUserImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityAssessmentUserImpact?(string value) => value == null ? null : new SecurityAssessmentUserImpact(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityAssessmentUserImpact other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityAssessmentUserImpact other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

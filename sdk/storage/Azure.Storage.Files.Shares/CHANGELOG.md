@@ -1,6 +1,6 @@
 # Release History
 
-## 12.24.0-beta.2 (Unreleased)
+## 12.29.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,90 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.29.0-beta.1 (2026-11-05)
+
+### Features Added
+- Added support for `ShareFileClient` and `ShareDirectoryClient` constructed using File Id-based URLs. `ShareFileClient` constructed via File Id-based URLs can only perform `GetProperties` and `GetFileLinks` operations currently. `ShareDirectoryClient` constructed via File Id-based URLs can only perform `GetProperties` operation currently.
+- Added support for `ShareFileClient.GetFileLinks` and `ShareFileClient.GetFileLinksAsync` operations. These operations are only supported for clients constructed using File Id-based URLs and not path-based URLs.
+- Added support for `ShareProperties.CreatedOn` for `ShareServiceClient.GetShare`, `ShareServiceClient.GetShareAsync`, `ShareClient.GetProperties`, and `ShareClient.GetPropertiesAsync` operations.
+- Added support for `ShareProperties.EnableChangeFeed`, `ShareProperties.ChangeFeedRetentionInDays`, and `ShareProperties.ChangeFeedBlobContainerName` for `ShareClient.GetProperties` and `ShareClient.GetPropertiesAsync` operations.
+- Added support for `ShareSetPropertiesOptions.EnableChangeFeed` and `ShareSetPropertiesOptions.ChangeFeedRetentionInDays` for `ShareClient.SetProperties` and `ShareClient.SetPropertiesAsync` operations.
+- Added support for `ShareCreateOptions.EnableChangeFeed` and `ShareCreateOptions.ChangeFeedRetentionInDays` for `ShareClient.Create` and `ShareClient.CreateAsync` operations.
+
+### Bugs Fixed
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `ShareClient.GenerateSasUri(...)`
+  - `ShareClient.GenerateUserDelegationSasUri(...)`
+  - `ShareDirectoryClient.GenerateSasUri(...)`
+  - `ShareFileClient.GenerateSasUri(...)`
+  - `ShareFileClient.GenerateUserDelegationSasUri(...)`
+  - `ShareServiceClient.GenerateAccountSasUri(...)`
+  - `ShareSasBuilder`
+
+## 12.28.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.28.0-beta.1
+
+## 12.28.0-beta.1 (2026-07-21)
+
+### Features Added
+- Added support for service version 2026-10-06.
+- Added `ShareFileClient.GetAllRangeList()`, `GetAllRangeListAsync()`, `GetAllRangeListDiff()`, and `GetAllRangeListDiffAsync()`.
+
+## 12.27.1 (2026-06-23)
+
+### Bugs Fixed
+- Fixed an issue where the `GenerateUserDelegationSasUri` convenience methods on Share clients did not honor the `DelegatedUserObjectId` property set on the supplied `ShareSasBuilder`.
+
+## 12.27.0 (2026-06-04)
+
+### Features Added
+- Includes all features from 12.27.0-beta.1
+
+## 12.26.0 (2026-05-12)
+
+### Features Added
+- Includes all features from 12.26.0-beta.1
+
+### Bugs Fixed
+- Fixed issue where the `TokenRequestContext.Scopes` contained a double slash (e.g. `https://storage.azure.com//.default`) when using `TokenCredential` authentication. (#58295)
+
+## 12.27.0-beta.1 (2026-03-24)
+
+### Features Added
+- Added support for service version 2026-06-06.
+- Added support for uploading up to 4 MiB of data with ShareFileClient.Create() and .CreateAsync().
+
+## 12.26.0-beta.1 (2026-01-20)
+
+### Features Added
+- Added support for service version 2026-04-06.
+- Added support for Content Validation via Structured Message
+- Added cross-tenant support for Principal-Bound User Delegation SAS.
+- Added support for Files Provisioned V2 Guardrails
+
+### Other Changes
+- Changed the default concurrency upload count from 5 to Math.Clamp(Environment.ProcessorCount * 2, 8, 32). This controls the maximum number of concurrent tasks that will be used during large uploads, and this change should result in higher throughput for these operations by default in most environments. This can be reverted by enabling "Azure.Storage.UseLegacyDefaultConcurrency" in the AppContext switch or "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY" in the environment variable.
+
+## 12.25.0 (2026-01-08)
+
+### Features Added
+- Includes all features from 12.25.0-beta.1
+
+## 12.25.0-beta.1 (2025-11-17)
+
+### Features Added
+- Added support for service version 2026-02-06.
+- Added support for User Delegation SAS.
+- Added support for Principal-Bound Identity User Delegation SAS.
+- Added support for the ShareServiceProperties.Protocol.SMB.EncryptionInTransit parameter on ShareServiceClient.SetProperties() and .SetPropertiesAsync().
+
+## 12.24.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
 
 ## 12.23.0 (2025-07-14)
 

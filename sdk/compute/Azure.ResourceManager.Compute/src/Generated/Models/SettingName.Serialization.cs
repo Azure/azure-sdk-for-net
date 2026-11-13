@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class SettingNameExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SettingName value) => value switch
         {
             SettingName.AutoLogon => "AutoLogon",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SettingName value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SettingName ToSettingName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AutoLogon")) return SettingName.AutoLogon;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FirstLogonCommands")) return SettingName.FirstLogonCommands;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AutoLogon"))
+            {
+                return SettingName.AutoLogon;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FirstLogonCommands"))
+            {
+                return SettingName.FirstLogonCommands;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SettingName value.");
         }
     }

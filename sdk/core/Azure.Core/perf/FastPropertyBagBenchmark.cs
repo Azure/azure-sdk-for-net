@@ -207,7 +207,7 @@ namespace Azure.Core.Perf
         [Arguments(100)]
         public void AddAndSearch_Array(int count)
         {
-            var array =  ArrayPool<(ulong Key, object Value)>.Shared.Rent(count);
+            var array = ArrayPool<(ulong Key, object Value)>.Shared.Rent(count);
             for (int i = 0; i < count; i++)
             {
                 var index = 0;

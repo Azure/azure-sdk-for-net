@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Billing
 {
+    /// <summary></summary>
     public partial class SavingsPlanOrderModelResource : IJsonModel<SavingsPlanOrderModelData>
     {
-        private static SavingsPlanOrderModelData s_dataDeserializationInstance;
-        private static SavingsPlanOrderModelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SavingsPlanOrderModelData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SavingsPlanOrderModelData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SavingsPlanOrderModelData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SavingsPlanOrderModelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SavingsPlanOrderModelData>)Data).Write(writer, options);
 
-        SavingsPlanOrderModelData IJsonModel<SavingsPlanOrderModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SavingsPlanOrderModelData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SavingsPlanOrderModelData IJsonModel<SavingsPlanOrderModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SavingsPlanOrderModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SavingsPlanOrderModelData>(Data, options, AzureResourceManagerBillingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SavingsPlanOrderModelData IPersistableModel<SavingsPlanOrderModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SavingsPlanOrderModelData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<SavingsPlanOrderModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SavingsPlanOrderModelData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SavingsPlanOrderModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

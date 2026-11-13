@@ -7,7 +7,7 @@
 
 using System;
 
-namespace _Specs_.Azure.Encode.Duration
+namespace Specs.Azure.Encode.Duration
 {
     public static partial class _Specs_AzureEncodeDurationModelFactory
     {

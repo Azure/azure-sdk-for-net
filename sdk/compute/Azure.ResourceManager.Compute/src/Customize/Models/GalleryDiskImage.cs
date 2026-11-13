@@ -9,14 +9,17 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryDiskImage
     {
-        /// <summary>
-        /// The source for the disk image.
-        /// This is no longer supported. Please use <see cref="GallerySource"/> instead.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public GalleryArtifactVersionSource Source { get; set; } // the old property to keep backward compatiblility, working as a backing property of GallerySource
-
+        // Backward compatibility: previous AutoRest-generated shape exposed both `Source`
+        // (typed as the base GalleryArtifactVersionSource) and `GallerySource` (typed as
+        // the discriminator value GalleryDiskImageSource). The TypeSpec rename produces
+        // `GallerySource` only; this shim preserves the deprecated `Source` accessor by
+        // forwarding to the same underlying storage as `GallerySource`.
         /// <summary> The source for the disk image. </summary>
-        public GalleryDiskImageSource GallerySource { get => Source as GalleryDiskImageSource; set => Source = value; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public GalleryArtifactVersionSource Source
+        {
+            get => GallerySource;
+            set => GallerySource = value as GalleryDiskImageSource;
+        }
     }
 }

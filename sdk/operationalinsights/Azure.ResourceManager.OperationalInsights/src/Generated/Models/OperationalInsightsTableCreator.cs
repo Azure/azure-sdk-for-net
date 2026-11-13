@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsTableCreator : IEquatable<OperationalInsightsTableCreator>
     {
         private readonly string _value;
+        /// <summary> Tables provisioned by the system, as collected via Diagnostic Settings, the Agents, or any other standard data collection means. </summary>
+        private const string MicrosoftValue = "microsoft";
+        /// <summary> Tables created by the owner of the Workspace, and only found in this Workspace. </summary>
+        private const string CustomerValue = "customer";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableCreator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsTableCreator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftValue = "microsoft";
-        private const string CustomerValue = "customer";
+            _value = value;
+        }
 
         /// <summary> Tables provisioned by the system, as collected via Diagnostic Settings, the Agents, or any other standard data collection means. </summary>
         public static OperationalInsightsTableCreator Microsoft { get; } = new OperationalInsightsTableCreator(MicrosoftValue);
+
         /// <summary> Tables created by the owner of the Workspace, and only found in this Workspace. </summary>
         public static OperationalInsightsTableCreator Customer { get; } = new OperationalInsightsTableCreator(CustomerValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableCreator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsTableCreator left, OperationalInsightsTableCreator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableCreator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsTableCreator left, OperationalInsightsTableCreator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsTableCreator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsTableCreator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsTableCreator(string value) => new OperationalInsightsTableCreator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsTableCreator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsTableCreator?(string value) => value == null ? null : new OperationalInsightsTableCreator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsTableCreator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsTableCreator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

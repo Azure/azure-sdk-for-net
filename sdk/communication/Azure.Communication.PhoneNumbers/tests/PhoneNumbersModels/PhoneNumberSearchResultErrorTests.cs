@@ -34,7 +34,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public void Constructor_SetsValue_WhenValueIsNotNull(string value)
         {
             var error = new PhoneNumberSearchResultError(value);
-            Assert.AreEqual(value, error.ToString());
+            Assert.That(error.ToString(), Is.EqualTo(value));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var error1 = new PhoneNumberSearchResultError("NoError");
             var error2 = new PhoneNumberSearchResultError("NoError");
 
-            Assert.IsTrue(error1 == error2);
+            Assert.That(error1 == error2, Is.True);
         }
 
         [Test]
@@ -52,14 +52,14 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var error1 = new PhoneNumberSearchResultError("NoError");
             var error2 = new PhoneNumberSearchResultError("UnknownErrorCode");
 
-            Assert.IsTrue(error1 != error2);
+            Assert.That(error1 != error2, Is.True);
         }
 
         [Test]
         public void ImplicitConversion_ReturnsCorrectError()
         {
             PhoneNumberSearchResultError error = "NoError";
-            Assert.AreEqual("NoError", error.ToString());
+            Assert.That(error.ToString(), Is.EqualTo("NoError"));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var error1 = new PhoneNumberSearchResultError("NoError");
             var error2 = new PhoneNumberSearchResultError("NoError");
 
-            Assert.IsTrue(error1.Equals(error2));
+            Assert.That(error1.Equals(error2), Is.True);
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var error1 = new PhoneNumberSearchResultError("NoError");
             var error2 = new PhoneNumberSearchResultError("UnknownErrorCode");
 
-            Assert.IsFalse(error1.Equals(error2));
+            Assert.That(error1.Equals(error2), Is.False);
         }
 
         [Test]
@@ -86,14 +86,14 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var error1 = new PhoneNumberSearchResultError("NoError");
             var error2 = new PhoneNumberSearchResultError("NoError");
 
-            Assert.AreEqual(error1.GetHashCode(), error2.GetHashCode());
+            Assert.That(error2.GetHashCode(), Is.EqualTo(error1.GetHashCode()));
         }
 
         [Test]
         public void ToString_ReturnsCorrectValue()
         {
             var error = new PhoneNumberSearchResultError("NoError");
-            Assert.AreEqual("NoError", error.ToString());
+            Assert.That(error.ToString(), Is.EqualTo("NoError"));
         }
     }
 }

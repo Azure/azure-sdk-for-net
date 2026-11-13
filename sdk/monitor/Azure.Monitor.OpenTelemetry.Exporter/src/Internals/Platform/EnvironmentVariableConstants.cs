@@ -15,6 +15,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         {
             APPLICATIONINSIGHTS_CONNECTION_STRING,
             APPLICATIONINSIGHTS_STATSBEAT_DISABLED,
+            APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL,
+            APPLICATIONINSIGHTS_SDKSTATS_DISABLED,
+            APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL,
+            APPLICATIONINSIGHTS_STATS_LONG_EXPORT_INTERVAL,
+            APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL,
+            APPLICATIONINSIGHTS_STATS_CONNECTION_STRING,
+            APPLICATIONINSIGHTS_CLOUD_ROLE_NAME,
+            APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE,
+            APPLICATIONINSIGHTS_COMPONENT_VERSION,
             FUNCTIONS_WORKER_RUNTIME,
             LOCALAPPDATA,
             TEMP,
@@ -26,6 +35,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
             EXPORT_RESOURCE_METRIC,
             ASPNETCORE_DISABLE_URL_QUERY_REDACTION,
             HTTPCLIENT_DISABLE_URL_QUERY_REDACTION,
+            OTEL_TRACES_SAMPLER,
+            OTEL_TRACES_SAMPLER_ARG,
         };
 
         /// <summary>
@@ -43,6 +54,61 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// <see href="https://learn.microsoft.com/azure/azure-monitor/app/statsbeat"/>.
         /// </remarks>
         public const string APPLICATIONINSIGHTS_STATSBEAT_DISABLED = "APPLICATIONINSIGHTS_STATSBEAT_DISABLED";
+
+        /// <summary>
+        /// INTERNAL ONLY. Kill-switch to turn off internal SDKStats (Attach / Feature / Network Statsbeat)
+        /// completely. Set to "true" to fully disable emission of these signals.
+        /// </summary>
+        /// <remarks>
+        /// Maps to the <c>disabledAll</c> configuration in the SDKStats spec. Distinct from the
+        /// customer-facing <see cref="APPLICATIONINSIGHTS_SDKSTATS_DISABLED"/> which governs CustomerSdkStats.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL = "APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL";
+
+        /// <summary>
+        /// Available for users to opt out of customer SDK stats.
+        /// </summary>
+        /// <remarks>
+        /// Customer SDK stats provide insights into SDK success/failure/retry counts and are on by default.
+        /// Set to "true" to disable this feature.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_SDKSTATS_DISABLED = "APPLICATIONINSIGHTS_SDKSTATS_DISABLED";
+
+        /// <summary>
+        /// Available for users to configure customer SDK stats export interval in seconds.
+        /// </summary>
+        /// <remarks>
+        /// Default is 900 seconds (15 minutes). Minimum recommended is 60 seconds.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL = "APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL";
+
+        /// <summary>
+        /// INTERNAL ONLY. Overrides the export interval (in seconds) for long-interval internal SDKStats
+        /// (the Attach / Feature signals, default 24 hours).
+        /// </summary>
+        /// <remarks>
+        /// Maps to the <c>longInterval</c> configuration in the SDKStats spec. Primarily intended for testing.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_STATS_LONG_EXPORT_INTERVAL = "APPLICATIONINSIGHTS_STATS_LONG_EXPORT_INTERVAL";
+
+        /// <summary>
+        /// INTERNAL ONLY. Overrides the export interval (in seconds) for short-interval internal SDKStats
+        /// (the Network signal, default 15 minutes).
+        /// </summary>
+        /// <remarks>
+        /// Maps to the <c>shortInterval</c> configuration in the SDKStats spec. Primarily intended for testing.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL = "APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL";
+
+        /// <summary>
+        /// INTERNAL ONLY. Overrides the destination connection string that internal SDKStats envelopes are
+        /// sent to. When unset (the default), SDKStats flow to the Microsoft-owned SDKStats resources.
+        /// </summary>
+        /// <remarks>
+        /// Maps to the <c>connectionString</c> configuration in the SDKStats spec. Primarily intended for testing
+        /// (e.g. routing SDKStats to a test ingestion endpoint); production deployments should leave this unset.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_STATS_CONNECTION_STRING = "APPLICATIONINSIGHTS_STATS_CONNECTION_STRING";
 
         /// <summary>
         /// INTERNAL ONLY. Used by Statsbeat to identify if the Exporter is running within Azure Functions.
@@ -106,5 +172,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/CHANGELOG.md#181"/>.
         /// </remarks>
         public const string HTTPCLIENT_DISABLE_URL_QUERY_REDACTION = "OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION";
+
+        /// <summary>
+        /// OpenTelemetry environment variable to specify the sampler to use for traces.
+        /// Supported values: microsoft.rate_limited, microsoft.fixed_percentage
+        /// </summary>
+        public const string OTEL_TRACES_SAMPLER = "OTEL_TRACES_SAMPLER";
+
+        /// <summary>
+        /// OpenTelemetry environment variable to specify the sampler argument.
+        /// For microsoft.rate_limited sampler: traces per second (double).
+        /// For microsoft.fixed_percentage sampler: sampling ratio (double from 0 to 1).
+        /// </summary>
+        public const string OTEL_TRACES_SAMPLER_ARG = "OTEL_TRACES_SAMPLER_ARG";
+
+        /// <summary>
+        /// Set by the Application Insights shim (TelemetryClient.Context.Cloud.RoleName) to override
+        /// the cloud role name after the OTel Resource has been built and is immutable.
+        /// </summary>
+        public const string APPLICATIONINSIGHTS_CLOUD_ROLE_NAME = "APPLICATIONINSIGHTS_CLOUD_ROLE_NAME";
+
+        /// <summary>
+        /// Set by the Application Insights shim (TelemetryClient.Context.Cloud.RoleInstance) to override
+        /// the cloud role instance after the OTel Resource has been built and is immutable.
+        /// </summary>
+        public const string APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE = "APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE";
+
+        /// <summary>
+        /// Set by the Application Insights shim (TelemetryClient.Context.Component.Version) to override
+        /// the application version after the OTel Resource has been built and is immutable.
+        /// </summary>
+        public const string APPLICATIONINSIGHTS_COMPONENT_VERSION = "APPLICATIONINSIGHTS_COMPONENT_VERSION";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingTransactionCreditType : IEquatable<BillingTransactionCreditType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> AzureFreeCredit. </summary>
+        private const string AzureFreeCreditValue = "AzureFreeCredit";
+        /// <summary> AzureCreditOffer. </summary>
+        private const string AzureCreditOfferValue = "AzureCreditOffer";
+        /// <summary> ServiceInterruption. </summary>
+        private const string ServiceInterruptionValue = "ServiceInterruption";
+        /// <summary> Refund. </summary>
+        private const string RefundValue = "Refund";
 
         /// <summary> Initializes a new instance of <see cref="BillingTransactionCreditType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingTransactionCreditType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string AzureFreeCreditValue = "AzureFreeCredit";
-        private const string AzureCreditOfferValue = "AzureCreditOffer";
-        private const string ServiceInterruptionValue = "ServiceInterruption";
-        private const string RefundValue = "Refund";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingTransactionCreditType Other { get; } = new BillingTransactionCreditType(OtherValue);
+
         /// <summary> AzureFreeCredit. </summary>
         public static BillingTransactionCreditType AzureFreeCredit { get; } = new BillingTransactionCreditType(AzureFreeCreditValue);
+
         /// <summary> AzureCreditOffer. </summary>
         public static BillingTransactionCreditType AzureCreditOffer { get; } = new BillingTransactionCreditType(AzureCreditOfferValue);
+
         /// <summary> ServiceInterruption. </summary>
         public static BillingTransactionCreditType ServiceInterruption { get; } = new BillingTransactionCreditType(ServiceInterruptionValue);
+
         /// <summary> Refund. </summary>
         public static BillingTransactionCreditType Refund { get; } = new BillingTransactionCreditType(RefundValue);
+
         /// <summary> Determines if two <see cref="BillingTransactionCreditType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingTransactionCreditType left, BillingTransactionCreditType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingTransactionCreditType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingTransactionCreditType left, BillingTransactionCreditType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingTransactionCreditType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingTransactionCreditType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingTransactionCreditType(string value) => new BillingTransactionCreditType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingTransactionCreditType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingTransactionCreditType?(string value) => value == null ? null : new BillingTransactionCreditType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingTransactionCreditType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingTransactionCreditType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.10.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,110 @@
 
 ### Other Changes
 
+## 1.10.0-beta.1 (2026-10-22)
+
+### Features Added
+
+- Upgraded api-version to 2026-08-02-preview.
+
+## 1.9.0 (2026-10-19)
+
+### Features Added
+
+- Upgraded api-version to 2026-08-01.
+- Added NVIDIA GPU management settings to agent pool GPU profiles.
+
+## 1.8.0 (2026-10-08)
+
+### Features Added
+
+- Upgraded api-version to 2026-07-01.
+
+## 1.8.0-beta.1 (2026-09-02)
+
+### Features Added
+
+- Upgraded api-version to 2026-06-02-preview.
+
+## 1.7.0 (2026-08-27)
+
+### Features Added
+
+- Upgraded api-version to 2026-06-01.
+
+## 1.7.0-beta.1 (2026-07-30)
+
+### Features Added
+
+- Upgraded api-version to 2026-05-02-preview.
+
+## 1.6.0 (2026-07-26)
+
+### Features Added
+
+- Upgraded api-version to 2026-05-01.
+
+## 1.6.0-beta.1 (2026-06-17)
+
+### Features Added
+
+- Upgraded api-version to 2026-04-02-preview.
+
+## 1.5.0 (2026-06-05)
+
+### Features Added
+
+- Upgraded api-version to 2026-04-01.
+
+## 1.5.0-beta.1 (2026-04-03)
+
+### Features Added
+
+- Upgraded api-version to 2026-01-02-preview.
+
+## 1.4.0 (2026-03-27)
+
+### Features Added
+
+- Upgraded api-version to 2026-01-01.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.51.1
+- Upgraded dependent Azure.ResourceManager to 1.14.0
+
+## 1.4.0-beta.1 (2026-03-12)
+
+### Features Added
+
+- Upgraded api-version to 2026-01-02-preview.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.51.1
+- Upgraded dependent Azure.ResourceManager to 1.14.0
+
+## 1.3.1 (2026-02-28)
+
+### Other Changes
+
+- Removed `mgmt-debug` flag that was accidentally left in the released library, which added unnecessary `Serialized Name:` comments to XML doc comments.
+
+## 1.3.0 (2025-12-18)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-10' to 'package-2025-10'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/18609d68cf243ee3ce35d7c005ff3c7dd2cd9477/specification/containerservice/resource-manager/Microsoft.ContainerService/aks/readme.md.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core from 1.47.1 to 1.50.0
+
 ## 1.2.5 (2025-07-28)
 
 ### Features Added
 
-- Make `Azure.ResourceManager.ContainerService` AOT-compatible
+- Make `Azure.ResourceManager.ContainerService` AOT-compatible.
 
 ## 1.2.4 (2025-06-24)
 
@@ -38,7 +137,7 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.2.0 (2024-01-12)
@@ -46,13 +145,13 @@
 ### Features Added
 
 - Upgraded api-version tag from 'package-2022-09' to 'package-2023-10'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8e674dd2a88ae73868c6fa7593a0ba4371e45991/specification/containerservice/resource-manager/Microsoft.ContainerService/aks/readme.md.
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ## 1.2.0-beta.3 (2023-11-27)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -62,7 +161,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -115,7 +214,7 @@ Polishing since last public beta release:
 - Prepended `CognitiveServices` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

@@ -6,15 +6,24 @@ param (
   [Parameter()]
   [string]$OutputVariableName,
 
+  # Both counts are used as divisors when splitting the items, so reject zero and
+  # negative values here rather than failing later with a divide-by-zero.
   [Parameter()]
+  [ValidateRange(1, [int]::MaxValue)]
   [int]$JobCount = 8,
 
   # The minimum number of items per job. If the number of items is less than this, then the number of jobs will be reduced.
   [Parameter()]
+  [ValidateRange(1, [int]::MaxValue)]
   [int]$MinimumPerJob = 10,
 
   [Parameter()]
-  [string]$OnlyTypeSpec
+  [string]$OnlyTypeSpec,
+
+  # Optional comma-separated filter patterns applied to package directory names
+  # (e.g., 'Azure.ResourceManager*,Azure.Provisioning*')
+  [Parameter()]
+  [string]$DirectoryFilterPattern
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -35,7 +44,11 @@ function Split-Items([array]$Items) {
   }
   
   $itemsPerGroup = [math]::Floor($itemCount / $JobCount)
-  $largeJobCount = $itemCount % $itemsPerGroup
+  # The remainder has to be taken over the number of groups, not the size of a group.
+  # Taking it over $itemsPerGroup produces too few large groups whenever
+  # $itemCount % $itemsPerGroup -lt $itemCount % $JobCount, and the trailing items are
+  # then silently dropped from the matrix.
+  $largeJobCount = $itemCount % $JobCount
   $groups = [object[]]::new($JobCount)
 
   $i = 0
@@ -64,6 +77,23 @@ else {
   if ($OnlyTypespec) {
     $directoriesForGeneration = $directoriesForGeneration | Where-Object { Test-Path "$_/tsp-location.yaml" }
   }
+}
+
+if ($DirectoryFilterPattern) {
+  $patterns = $DirectoryFilterPattern -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+  $directoriesForGeneration = @($directoriesForGeneration | Where-Object {
+    $name = $_.Name
+    $patterns | Where-Object { $name -like $_ }
+  })
+  Write-Host "Filtered directories to pattern(s) '$DirectoryFilterPattern': $($directoriesForGeneration.Count) matches"
+}
+else {
+  $directoriesForGeneration = @($directoriesForGeneration)
+}
+
+if ($directoriesForGeneration.Count -eq 0) {
+  Write-Error "No directories found for generation after applying filters. DirectoryFilterPattern='$DirectoryFilterPattern', OnlyTypeSpec='$OnlyTypespec'."
+  return
 }
 
 [array]$packageDirectories = $directoriesForGeneration

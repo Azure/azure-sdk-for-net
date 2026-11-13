@@ -1,4 +1,4 @@
- #!/usr/bin/env pwsh -c
+#!/usr/bin/env pwsh -c
 
 <#
 .DESCRIPTION
@@ -29,11 +29,19 @@ List of github teams to add as reviewers
 .PARAMETER Assignees
 Users to assign to the PR after opening. Users should be a comma-separated list
 with no preceding `@` symbol (e.g. "user1,usertwo,user3")
+.PARAMETER MaintainerCanModify
+Whether to allow maintainers of the base repo to push to the PR branch.
+Set to false for cross-fork PRs where the token lacks permission to grant
+collaborator access on the fork.
 .PARAMETER CloseAfterOpenForTesting
 Close the PR after opening to save on CI resources and prevent alerts to code
 owners, assignees, requested reviewers, or others.
 .PARAMETER OpenAsDraft
 Opens the PR as a draft
+.PARAMETER AddBuildSummary
+Whether to add an Azure DevOps build summary attachment for the created or existing PR.
+.PARAMETER UpdateExistingPullRequest
+Whether to update the existing PR title and body when the PR already exists. Defaults to false to preserve current behavior for existing callers.
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
@@ -73,7 +81,11 @@ param(
 
   [boolean]$OpenAsDraft=$false,
 
-  [boolean]$AddBuildSummary=($null -ne $env:SYSTEM_TEAMPROJECTID)
+  [boolean]$MaintainerCanModify=$true,
+
+  [boolean]$AddBuildSummary=($null -ne $env:SYSTEM_TEAMPROJECTID),
+
+  [boolean]$UpdateExistingPullRequest=$false
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -95,14 +107,28 @@ if ($resp.Count -gt 0) {
   $existingNumber = $existingPr.number
   $existingTitle = $existingPr.title
   LogDebug "Pull request already exists $existingUrl"
-  # setting variable to reference the pull request by number
-  Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$existingNumber"
-  if ($AddBuildSummary) {
-    $summaryPath = New-TemporaryFile
-    $summaryMarkdown = "**PR:** [Azure/$RepoName#$existingNumber]($existingUrl)"
-    $summaryMarkdown += "`n**Title:** $existingTitle"
-    $summaryMarkdown | Out-File $summaryPath
-    Write-Host "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Existing Pull Request;]$summaryPath"
+
+  try {
+    if ($UpdateExistingPullRequest) {
+      Update-GitHubIssue -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $existingNumber `
+        -Title $PRTitle -Body $PRBody -AuthToken $AuthToken | Out-Null
+      $existingTitle = $PRTitle
+      LogDebug "Updated existing pull request $existingUrl title and body"
+    }
+
+    # setting variable to reference the pull request by number
+    Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$existingNumber"
+    if ($AddBuildSummary) {
+      $summaryPath = New-TemporaryFile
+      $summaryMarkdown = "**PR:** [Azure/$RepoName#$existingNumber]($existingUrl)"
+      $summaryMarkdown += "`n**Title:** $existingTitle"
+      $summaryMarkdown | Out-File $summaryPath
+      Write-Host "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Existing Pull Request;]$summaryPath"
+    }
+  }
+  catch {
+    LogError "Failed to process existing pull request $existingUrl with exception:`n$_"
+    exit 1
   }
 }
 else {
@@ -114,7 +140,7 @@ else {
       -Head "${PROwner}:${PRBranch}" `
       -Base $BaseBranch `
       -Body $PRBody `
-      -Maintainer_Can_Modify $true `
+      -Maintainer_Can_Modify $MaintainerCanModify `
       -Draft:$OpenAsDraft `
       -AuthToken $AuthToken
 
@@ -130,7 +156,8 @@ else {
 
     # ensure that the user that was used to create the PR is not attempted to add as a reviewer
     # we cast to an array to ensure that length-1 arrays actually stay as array values
-    $cleanedUsers = @(SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ }
+    # we also filter out dependabot user who doesn't have write permission to avoid errors
+    $cleanedUsers = @(SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ -and $_ -inotlike "dependabot*" }
     $cleanedTeamReviewers = @(SplitParameterArray -members $TeamReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ }
 
     if ($cleanedUsers -or $cleanedTeamReviewers) {
@@ -146,8 +173,13 @@ else {
       $prState = "open"
     }
 
+    # Clean assignees - remove null entries and bot accounts
+    $cleanedAssignees = @(SplitParameterArray -members $Assignees) | ? { 
+      $null -ne $_ -and $_ -inotlike "dependabot*" -and $_ -inotlike "copilot*" 
+    }
+
     Update-GitHubIssue -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $prNumber `
-    -State $prState -Labels $PRLabels -Assignees $Assignees -AuthToken $AuthToken
+    -State $prState -Labels $PRLabels -Assignees $cleanedAssignees -AuthToken $AuthToken
 
     if ($AddBuildSummary) {
       $summaryPath = New-TemporaryFile

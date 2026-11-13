@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes the user-defined constraints for virtual machine hardware placement. </summary>
+    /// <summary> Describes the user-defined constraints for resource hardware placement. </summary>
     public partial class VirtualMachinePlacement
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePlacement"/>. </summary>
         public VirtualMachinePlacement()
@@ -53,23 +25,25 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePlacement"/>. </summary>
-        /// <param name="zonePlacementPolicy"> Specifies the policy for virtual machine's placement in availability zone. Possible values are: **Any** - An availability zone will be automatically picked by system as part of virtual machine creation. </param>
-        /// <param name="includeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </param>
-        /// <param name="excludeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any', availability zone selected by the system must not be present in the list of availability zones passed with 'excludeZones'. If 'excludeZones' is not provided, all availability zones in region will be considered for selection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinePlacement(string zonePlacementPolicy, IList<string> includeZones, IList<string> excludeZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="zonePlacementPolicyType"> Specifies the policy for the resource's placement in an availability zone. Use <b>Auto</b> for Virtual Machines and Virtual Machine Scale Sets to let the system automatically select an availability zone during resource creation. <b>Any</b> remains supported for Virtual Machines for backward compatibility. </param>
+        /// <param name="includeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </param>
+        /// <param name="excludeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must not be present in the list of availability zones passed with 'excludeZones'. If 'excludeZones' is not provided, all availability zones in region will be considered for selection. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachinePlacement(ZonePlacementPolicyType? zonePlacementPolicyType, IList<string> includeZones, IList<string> excludeZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ZonePlacementPolicy = zonePlacementPolicy;
+            ZonePlacementPolicyType = zonePlacementPolicyType;
             IncludeZones = includeZones;
             ExcludeZones = excludeZones;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Specifies the policy for virtual machine's placement in availability zone. Possible values are: **Any** - An availability zone will be automatically picked by system as part of virtual machine creation. </summary>
-        public string ZonePlacementPolicy { get; set; }
-        /// <summary> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </summary>
+        /// <summary> Specifies the policy for the resource's placement in an availability zone. Use <b>Auto</b> for Virtual Machines and Virtual Machine Scale Sets to let the system automatically select an availability zone during resource creation. <b>Any</b> remains supported for Virtual Machines for backward compatibility. </summary>
+        public ZonePlacementPolicyType? ZonePlacementPolicyType { get; set; }
+
+        /// <summary> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </summary>
         public IList<string> IncludeZones { get; }
-        /// <summary> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any', availability zone selected by the system must not be present in the list of availability zones passed with 'excludeZones'. If 'excludeZones' is not provided, all availability zones in region will be considered for selection. </summary>
+
+        /// <summary> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must not be present in the list of availability zones passed with 'excludeZones'. If 'excludeZones' is not provided, all availability zones in region will be considered for selection. </summary>
         public IList<string> ExcludeZones { get; }
     }
 }

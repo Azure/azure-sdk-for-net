@@ -35,11 +35,21 @@ namespace Azure.Storage.Test
         {
             // Get all of our configs
             var configs = new List<TenantConfiguration>();
-            try { configs.Add(TestConfigurations.DefaultTargetTenant); } catch (InconclusiveException) { }
-            try { configs.Add(TestConfigurations.DefaultSecondaryTargetTenant); } catch (InconclusiveException) { }
-            try { configs.Add(TestConfigurations.DefaultTargetPremiumBlobTenant); } catch (InconclusiveException) { }
-            try { configs.Add(TestConfigurations.DefaultTargetPreviewBlobTenant); } catch (InconclusiveException) { }
-            try { configs.Add(TestConfigurations.DefaultTargetOAuthTenant); } catch (InconclusiveException) { }
+            try
+            { configs.Add(TestConfigurations.DefaultTargetTenant); }
+            catch (InconclusiveException) { }
+            try
+            { configs.Add(TestConfigurations.DefaultSecondaryTargetTenant); }
+            catch (InconclusiveException) { }
+            try
+            { configs.Add(TestConfigurations.DefaultTargetPremiumBlobTenant); }
+            catch (InconclusiveException) { }
+            try
+            { configs.Add(TestConfigurations.DefaultTargetPreviewBlobTenant); }
+            catch (InconclusiveException) { }
+            try
+            { configs.Add(TestConfigurations.DefaultTargetOAuthTenant); }
+            catch (InconclusiveException) { }
             foreach (TenantConfiguration config in configs)
             {
                 // Blobs

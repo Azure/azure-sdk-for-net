@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary></summary>
     public partial class NamespaceTopicEventSubscriptionResource : IJsonModel<NamespaceTopicEventSubscriptionData>
     {
-        private static NamespaceTopicEventSubscriptionData s_dataDeserializationInstance;
-        private static NamespaceTopicEventSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NamespaceTopicEventSubscriptionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NamespaceTopicEventSubscriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NamespaceTopicEventSubscriptionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NamespaceTopicEventSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NamespaceTopicEventSubscriptionData>)Data).Write(writer, options);
 
-        NamespaceTopicEventSubscriptionData IJsonModel<NamespaceTopicEventSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NamespaceTopicEventSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceTopicEventSubscriptionData IJsonModel<NamespaceTopicEventSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NamespaceTopicEventSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NamespaceTopicEventSubscriptionData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NamespaceTopicEventSubscriptionData IPersistableModel<NamespaceTopicEventSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NamespaceTopicEventSubscriptionData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<NamespaceTopicEventSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NamespaceTopicEventSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NamespaceTopicEventSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class NetworkSecurityPerimeterLoggingConfigurationResource : IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>
     {
-        private static NetworkSecurityPerimeterLoggingConfigurationData s_dataDeserializationInstance;
-        private static NetworkSecurityPerimeterLoggingConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkSecurityPerimeterLoggingConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>)Data).Write(writer, options);
 
-        NetworkSecurityPerimeterLoggingConfigurationData IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkSecurityPerimeterLoggingConfigurationData IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkSecurityPerimeterLoggingConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkSecurityPerimeterLoggingConfigurationData IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterLoggingConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

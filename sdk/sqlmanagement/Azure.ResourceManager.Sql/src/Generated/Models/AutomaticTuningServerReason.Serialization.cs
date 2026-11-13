@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class AutomaticTuningServerReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AutomaticTuningServerReason value) => value switch
         {
             AutomaticTuningServerReason.Default => "Default",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningServerReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AutomaticTuningServerReason ToAutomaticTuningServerReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AutomaticTuningServerReason.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return AutomaticTuningServerReason.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AutoConfigured")) return AutomaticTuningServerReason.AutoConfigured;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default"))
+            {
+                return AutomaticTuningServerReason.Default;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return AutomaticTuningServerReason.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AutoConfigured"))
+            {
+                return AutomaticTuningServerReason.AutoConfigured;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningServerReason value.");
         }
     }

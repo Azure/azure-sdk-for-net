@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ApiGatewaySkuType : IEquatable<ApiGatewaySkuType>
     {
         private readonly string _value;
+        /// <summary> Standard SKU of the API gateway. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Standard SKU of the API gateway to be used in Workspaces. </summary>
+        private const string WorkspaceGatewayStandardValue = "WorkspaceGatewayStandard";
+        /// <summary> Premium SKU of the API gateway to be used in Workspaces. </summary>
+        private const string WorkspaceGatewayPremiumValue = "WorkspaceGatewayPremium";
 
         /// <summary> Initializes a new instance of <see cref="ApiGatewaySkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiGatewaySkuType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string WorkspaceGatewayStandardValue = "WorkspaceGatewayStandard";
-        private const string WorkspaceGatewayPremiumValue = "WorkspaceGatewayPremium";
+            _value = value;
+        }
 
         /// <summary> Standard SKU of the API gateway. </summary>
         public static ApiGatewaySkuType Standard { get; } = new ApiGatewaySkuType(StandardValue);
+
         /// <summary> Standard SKU of the API gateway to be used in Workspaces. </summary>
         public static ApiGatewaySkuType WorkspaceGatewayStandard { get; } = new ApiGatewaySkuType(WorkspaceGatewayStandardValue);
+
         /// <summary> Premium SKU of the API gateway to be used in Workspaces. </summary>
         public static ApiGatewaySkuType WorkspaceGatewayPremium { get; } = new ApiGatewaySkuType(WorkspaceGatewayPremiumValue);
+
         /// <summary> Determines if two <see cref="ApiGatewaySkuType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiGatewaySkuType left, ApiGatewaySkuType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiGatewaySkuType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiGatewaySkuType left, ApiGatewaySkuType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiGatewaySkuType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiGatewaySkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiGatewaySkuType(string value) => new ApiGatewaySkuType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiGatewaySkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiGatewaySkuType?(string value) => value == null ? null : new ApiGatewaySkuType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiGatewaySkuType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiGatewaySkuType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

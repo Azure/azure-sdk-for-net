@@ -18,3 +18,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Naming", "AZC0030:Improper model name suffix", Justification = "This defines the optional parameters used for schedules in ScheduledActions", Scope = "type", Target = "~T:Azure.ResourceManager.ComputeSchedule.Models.ExecutionParameters")]
 
 [assembly: SuppressMessage("Naming", "AZC0033:Improper model name suffix", Justification = "This defines the details of operations done on resources using ScheduledActions", Scope = "type", Target = "~T:Azure.ResourceManager.ComputeSchedule.Models.ResourceOperation")]
+
+[assembly: SuppressMessage("Naming", "AZC0032:Improper model name suffix", Justification = "Keep the Data as the name suffix to be backward compatible", Scope = "type", Target = "~T:Azure.ResourceManager.ComputeSchedule.Models.OccurrenceResourceData")]
+
+[assembly: SuppressMessage("Naming", "AZC0032:Improper model name suffix", Justification = "Keep the Data as the name suffix to be backward compatible", Scope = "type", Target = "~T:Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionResourceData")]

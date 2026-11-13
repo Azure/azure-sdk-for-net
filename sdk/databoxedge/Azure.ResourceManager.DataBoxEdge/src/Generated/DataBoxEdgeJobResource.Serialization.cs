@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
+    /// <summary></summary>
     public partial class DataBoxEdgeJobResource : IJsonModel<DataBoxEdgeJobData>
     {
-        private static DataBoxEdgeJobData s_dataDeserializationInstance;
-        private static DataBoxEdgeJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataBoxEdgeJobData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataBoxEdgeJobData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataBoxEdgeJobData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeJobData>)Data).Write(writer, options);
 
-        DataBoxEdgeJobData IJsonModel<DataBoxEdgeJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeJobData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeJobData IJsonModel<DataBoxEdgeJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataBoxEdgeJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeJobData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataBoxEdgeJobData IPersistableModel<DataBoxEdgeJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeJobData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DataBoxEdgeJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxEdgeJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

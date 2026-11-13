@@ -5,144 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
+    /// <summary>
+    /// By default, Event Grid expects events to be in the Event Grid event schema. Specifying an input schema mapping enables publishing to Event Grid using a custom input schema. Currently, the only supported type of InputSchemaMapping is 'JsonInputSchemaMapping'.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EventGridJsonInputSchemaMapping"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownInputSchemaMapping))]
-    public partial class EventGridInputSchemaMapping : IUtf8JsonSerializable, IJsonModel<EventGridInputSchemaMapping>
+    public abstract partial class EventGridInputSchemaMapping : IJsonModel<EventGridInputSchemaMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridInputSchemaMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<EventGridInputSchemaMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(EventGridInputSchemaMapping)} does not support writing '{format}' format.");
-            }
-
-            writer.WritePropertyName("inputSchemaMappingType"u8);
-            writer.WriteStringValue(InputSchemaMappingType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        EventGridInputSchemaMapping IJsonModel<EventGridInputSchemaMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(EventGridInputSchemaMapping)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEventGridInputSchemaMapping(document.RootElement, options);
-        }
-
-        internal static EventGridInputSchemaMapping DeserializeEventGridInputSchemaMapping(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            if (element.TryGetProperty("inputSchemaMappingType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Json": return EventGridJsonInputSchemaMapping.DeserializeEventGridJsonInputSchemaMapping(element, options);
-                }
-            }
-            return UnknownInputSchemaMapping.DeserializeUnknownInputSchemaMapping(element, options);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InputSchemaMappingType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  inputSchemaMappingType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  inputSchemaMappingType: ");
-                builder.AppendLine($"'{InputSchemaMappingType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EventGridInputSchemaMapping>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EventGridInputSchemaMapping)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EventGridInputSchemaMapping IPersistableModel<EventGridInputSchemaMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEventGridInputSchemaMapping(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EventGridInputSchemaMapping)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EventGridInputSchemaMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

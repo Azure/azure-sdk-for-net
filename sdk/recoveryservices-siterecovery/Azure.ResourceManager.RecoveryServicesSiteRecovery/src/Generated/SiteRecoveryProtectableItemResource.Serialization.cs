@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
+    /// <summary></summary>
     public partial class SiteRecoveryProtectableItemResource : IJsonModel<SiteRecoveryProtectableItemData>
     {
-        private static SiteRecoveryProtectableItemData s_dataDeserializationInstance;
-        private static SiteRecoveryProtectableItemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SiteRecoveryProtectableItemData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SiteRecoveryProtectableItemData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SiteRecoveryProtectableItemData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteRecoveryProtectableItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryProtectableItemData>)Data).Write(writer, options);
 
-        SiteRecoveryProtectableItemData IJsonModel<SiteRecoveryProtectableItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryProtectableItemData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryProtectableItemData IJsonModel<SiteRecoveryProtectableItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SiteRecoveryProtectableItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryProtectableItemData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SiteRecoveryProtectableItemData IPersistableModel<SiteRecoveryProtectableItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryProtectableItemData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<SiteRecoveryProtectableItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryProtectableItemData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteRecoveryProtectableItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,14 +7,21 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: This file adds the old constructor and ConditionType property to SocketAddressMatchCondition for backward API compatibility with the previous SDK.
+    // Reason: The old SDK (AutoRest-generated) used the SocketAddressMatchConditionType struct as the polymorphic discriminator property (conditionType),
+    // with the constructor signature (conditionType, operator). After the TypeSpec migration, the discriminator was changed to a string-typed TypeName property
+    // and the constructor no longer includes the conditionType parameter. The old constructor and ConditionType property (bridging to TypeName) are preserved here,
+    // marked as EditorBrowsable.Never.
     public partial class SocketAddressMatchCondition
     {
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator socketAddressOperator) : this(socketAddressOperator)
         {
             ConditionType = conditionType;
         }
 
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SocketAddressMatchConditionType ConditionType
         {

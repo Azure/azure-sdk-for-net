@@ -7,54 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The DataFlowStream. </summary>
+    /// <summary></summary>
     public readonly partial struct DataFlowStream : IEquatable<DataFlowStream>
     {
         private readonly string _value;
+        /// <summary> Microsoft-Event. </summary>
+        private const string MicrosoftEventValue = "Microsoft-Event";
+        /// <summary> Microsoft-InsightsMetrics. </summary>
+        private const string MicrosoftInsightsMetricsValue = "Microsoft-InsightsMetrics";
+        /// <summary> Microsoft-Perf. </summary>
+        private const string MicrosoftPerfValue = "Microsoft-Perf";
+        /// <summary> Microsoft-Syslog. </summary>
+        private const string MicrosoftSyslogValue = "Microsoft-Syslog";
+        /// <summary> Microsoft-WindowsEvent. </summary>
+        private const string MicrosoftWindowsEventValue = "Microsoft-WindowsEvent";
 
         /// <summary> Initializes a new instance of <see cref="DataFlowStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFlowStream(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftEventValue = "Microsoft-Event";
-        private const string MicrosoftInsightsMetricsValue = "Microsoft-InsightsMetrics";
-        private const string MicrosoftPerfValue = "Microsoft-Perf";
-        private const string MicrosoftSyslogValue = "Microsoft-Syslog";
-        private const string MicrosoftWindowsEventValue = "Microsoft-WindowsEvent";
+            _value = value;
+        }
 
         /// <summary> Microsoft-Event. </summary>
         public static DataFlowStream MicrosoftEvent { get; } = new DataFlowStream(MicrosoftEventValue);
+
         /// <summary> Microsoft-InsightsMetrics. </summary>
         public static DataFlowStream MicrosoftInsightsMetrics { get; } = new DataFlowStream(MicrosoftInsightsMetricsValue);
+
         /// <summary> Microsoft-Perf. </summary>
         public static DataFlowStream MicrosoftPerf { get; } = new DataFlowStream(MicrosoftPerfValue);
+
         /// <summary> Microsoft-Syslog. </summary>
         public static DataFlowStream MicrosoftSyslog { get; } = new DataFlowStream(MicrosoftSyslogValue);
+
         /// <summary> Microsoft-WindowsEvent. </summary>
         public static DataFlowStream MicrosoftWindowsEvent { get; } = new DataFlowStream(MicrosoftWindowsEventValue);
+
         /// <summary> Determines if two <see cref="DataFlowStream"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFlowStream left, DataFlowStream right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFlowStream"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFlowStream left, DataFlowStream right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFlowStream"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFlowStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFlowStream(string value) => new DataFlowStream(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFlowStream"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFlowStream?(string value) => value == null ? null : new DataFlowStream(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFlowStream other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFlowStream other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

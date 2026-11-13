@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct LoadBalancingMode : IEquatable<LoadBalancingMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LoadBalancingMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LoadBalancingMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string WebValue = "Web";
         private const string PublishingValue = "Publishing";
         private const string WebPublishingValue = "Web, Publishing";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LoadBalancingMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static LoadBalancingMode None { get; } = new LoadBalancingMode(NoneValue);
-        /// <summary> Web. </summary>
+
+        /// <summary> Gets the Web. </summary>
         public static LoadBalancingMode Web { get; } = new LoadBalancingMode(WebValue);
-        /// <summary> Publishing. </summary>
+
+        /// <summary> Gets the Publishing. </summary>
         public static LoadBalancingMode Publishing { get; } = new LoadBalancingMode(PublishingValue);
-        /// <summary> Web, Publishing. </summary>
+
+        /// <summary> Gets the WebPublishing. </summary>
         public static LoadBalancingMode WebPublishing { get; } = new LoadBalancingMode(WebPublishingValue);
+
         /// <summary> Determines if two <see cref="LoadBalancingMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoadBalancingMode left, LoadBalancingMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LoadBalancingMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoadBalancingMode left, LoadBalancingMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadBalancingMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LoadBalancingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LoadBalancingMode(string value) => new LoadBalancingMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LoadBalancingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LoadBalancingMode?(string value) => value == null ? null : new LoadBalancingMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LoadBalancingMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LoadBalancingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,19 +13,26 @@ namespace Azure.ResourceManager.Kubernetes
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ClusterUserCredentialHybridConnectionConfig))]
+    [ModelReaderWriterBuildable(typeof(ClusterUserCredentialResult))]
+    [ModelReaderWriterBuildable(typeof(ClusterUserCredentialsResult))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterAadProfile))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterAgentError))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterArcAgentProfile))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterArcAgentryConfiguration))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterData))]
-    [ModelReaderWriterBuildable(typeof(ConnectedClusterList))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterOidcIssuerProfile))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterPatch))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterProperties))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterResource))]
-    [ModelReaderWriterBuildable(typeof(CredentialResult))]
-    [ModelReaderWriterBuildable(typeof(CredentialResults))]
-    [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
-    [ModelReaderWriterBuildable(typeof(ListClusterUserCredentialProperties))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterSystemComponent))]
+    [ModelReaderWriterBuildable(typeof(GetClusterUserCredentialContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerKubernetesContext : ModelReaderWriterContext
     {
     }

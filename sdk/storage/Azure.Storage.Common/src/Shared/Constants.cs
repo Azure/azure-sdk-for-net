@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Storage
 {
@@ -25,7 +26,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2025-11-05";
+        public const string DefaultSasVersion = "2027-03-07";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -129,7 +130,21 @@ namespace Azure.Storage
         public const string DisableExpectContinueHeaderSwitchName = "Azure.Storage.DisableExpectContinueHeader";
         public const string DisableExpectContinueHeaderEnvVar = "AZURE_STORAGE_DISABLE_EXPECT_CONTINUE_HEADER";
 
-        public const string DefaultScope = "/.default";
+        public const string UseLegacyDefaultConcurrencySwitchName = "Azure.Storage.UseLegacyDefaultConcurrency";
+        public const string UseLegacyDefaultConcurrencyEnvVar = "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY";
+
+        public const string CseV2AllowMisorderedAuthRegionsSwitchName = "Azure.Storage.CseV2AllowMisorderedAuthRegions";
+        public const string CseV2AllowMisorderedAuthRegionsEnvVar = "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS";
+
+        public const string DefaultScope = ".default";
+        public const string DefaultAudience = "https://storage.azure.com";
+
+        /// <summary>
+        /// Builds an OAuth scope from an audience value by trimming any trailing slash
+        /// and appending <see cref="DefaultScope"/>.
+        /// </summary>
+        internal static string CreateDefaultScope(string audience) =>
+            $"{audience.TrimEnd('/')}/{DefaultScope}";
 
         /// <summary>
         /// Error string constant values.
@@ -222,6 +237,15 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// URI query parameter names used by the Storage REST protocol.
+        /// </summary>
+        internal static class UriQueryParameters
+        {
+            public const string Comp = "comp";
+            public const string ResType = "restype";
+        }
+
+        /// <summary>
         /// Blob constant values.
         /// </summary>
         internal static class Blob
@@ -231,6 +255,7 @@ namespace Azure.Storage
             public const int QuickQueryDownloadSize = 4 * Constants.MB;
             public const string MetadataHeaderPrefix = "x-ms-meta-";
             public const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
+            public const string ApacheArrowContentType = "application/vnd.apache.arrow.stream";
 
             internal static class Append
             {
@@ -241,8 +266,9 @@ namespace Azure.Storage
 
             internal static class Block
             {
-                public const int DefaultConcurrentTransfersCount = 5;
-                public const int DefaultInitalDownloadRangeSize = 256 * Constants.MB; // 256 MB
+                [EditorBrowsable(EditorBrowsableState.Never)]
+                public const int DefaultConcurrentTransfersCount = LegacyDefaultConcurrentTransfersCount;
+                public const int LegacyDefaultConcurrentTransfersCount = 5;
                 public const int Pre_2019_12_12_MaxUploadBytes = 256 * Constants.MB; // 256 MB
                 public const long MaxUploadBytes = 5000L * Constants.MB; // 5000MB
                 public const int MaxDownloadBytes = 256 * Constants.MB; // 256MB
@@ -298,8 +324,10 @@ namespace Azure.Storage
             public const string FilePermissionInherit = "Inherit";
             public const int MaxFilePermissionHeaderSize = 8 * KB;
             public const int MaxFileUpdateRange = 4 * MB;
+            public const int DefaultGetRangeListPageSize = 10000;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
             public const string SnapshotParameterName = "sharesnapshot";
+            public const string FileIdParameterName = "fileid";
 
             public const string SmbProtocol = "SMB";
             public const string NfsProtocol = "NFS";
@@ -378,7 +406,13 @@ namespace Azure.Storage
             /// <summary>
             /// Default concurrent transfers count.
             /// </summary>
-            public const int DefaultConcurrentTransfersCount = 5;
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            public const int DefaultConcurrentTransfersCount = LegacyDefaultConcurrentTransfersCount;
+
+            /// <summary>
+            /// Legacy default concurrent transfers count.
+            /// </summary>
+            public const int LegacyDefaultConcurrentTransfersCount = 5;
 
             /// <summary>
             /// Max upload bytes for less than Service Version 2019-12-12.
@@ -435,19 +469,21 @@ namespace Azure.Storage
             public const string UriSubDomain = "queue";
 
             public const string QueueTraitsMetadata = "metadata";
+
+            public const string Name = "Queue";
         }
 
         /// <summary>
-        /// ChangeFeed constant values.
+        /// ChangeFeed constant values shared by Blobs and Files Change Feed,
+        /// plus Blob-specific Avro field names.
         /// </summary>
         internal static class ChangeFeed
         {
             public const string ChangeFeedContainerName = "$blobchangefeed";
             public const string SegmentPrefix = "idx/segments/";
-            public const string InitalizationManifestPath = "/0000/";
-            public const string InitalizationSegment = "1601";
+            public const string InitializationSegment = "1601";
             public const string MetaSegmentsPath = "meta/segments.json";
-            public const long ChunkBlockDownloadSize = MB;
+            public const long ChunkBlockDownloadSize = 256 * MB;
             public const int DefaultPageSize = 5000;
             public const int LazyLoadingBlobStreamBlockSize = 3 * Constants.KB;
 
@@ -507,6 +543,107 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// Files ChangeFeed constant values that are unique to the Files implementation
+        /// (snapshots, container discovery header, Files Avro field names).
+        /// Path constants and download sizes shared with Blobs live in <see cref="ChangeFeed"/>.
+        /// </summary>
+        internal static class FilesChangeFeed
+        {
+            public const string SnapshotsPrefix = "idx/snapshots/";
+            public const int TimeWindowMinutes = 15;
+            public const string ChangeFeedContainerHeader = "x-ms-file-blob-container-for-xfiles-change-feed";
+
+            /// <summary>
+            /// Schema version of the Files change-feed continuation-token envelope
+            /// (<c>ShareChangeFeedCursor</c>). Bump when the on-the-wire cursor shape
+            /// changes and gate resume in <c>ShareChangeFeedCursorSerializer.Validate</c>.
+            /// </summary>
+            public const int CursorSchemaVersion = 1;
+
+            /// <summary>
+            /// Schema version of the Files snapshot-mode continuation-token envelope
+            /// (<c>ShareChangeFeedSnapshotCursor</c>). Bump when the on-the-wire cursor
+            /// shape changes and gate resume in <c>SnapshotCursorSerializer.Validate</c>.
+            /// </summary>
+            public const int SnapshotCursorSchemaVersion = 1;
+
+            /// <summary>
+            /// Path (relative to the change-feed container) of the mutable pointer blob
+            /// that identifies the most recent reset marker for the share.
+            /// </summary>
+            public const string ResetLatestJsonPath = "meta/reset-latest.json";
+
+            /// <summary>
+            /// Prefix (relative to the change-feed container) under which per-event
+            /// immutable reset marker blobs are stored (<c>meta/resets/&lt;20-digit-FILETIME&gt;.json</c>).
+            /// </summary>
+            public const string ResetEventPrefix = "meta/resets/";
+
+            internal static class Event
+            {
+                public const string SchemaVersion = "SchemaVersion";
+                public const string Reason = "Reason";
+                public const string Protocol = "Protocol";
+                public const string EventTime = "EventTime";
+                public const string Id = "Id";
+                public const string Cvnt = "Cvnt";
+                public const string Data = "Data";
+            }
+
+            internal static class EventData
+            {
+                public const string FileId = "FileId";
+                public const string ParentFileId = "ParentFileId";
+                public const string NewParentFileId = "NewParentFileId";
+                public const string Etag = "Etag";
+                public const string FileName = "FileName";
+                public const string FullFilePath = "FullFilePath";
+                public const string NewFullFilePath = "NewFullFilePath";
+                public const string Identity = "Identity";
+                public const string Description = "Description";
+                public const string Initiator = "Initiator";
+                public const string IsDirectory = "IsDirectory";
+                public const string ReplacedFileId = "ReplacedFileId";
+            }
+
+            internal static class EventIdentity
+            {
+                public const string EntraOID = "EntraOID";
+                public const string SID = "SID";
+            }
+
+            /// <summary>
+            /// JSON field names for the mutable pointer blob <c>meta/reset-latest.json</c>.
+            /// </summary>
+            internal static class ResetPointer
+            {
+                public const string SchemaVersion = "schemaVersion";
+                public const string LatestResetId = "latestResetId";
+                public const string LatestResetFileTime = "latestResetFileTime";
+                public const string LatestResetTimeUtc = "latestResetTimeUtc";
+                public const string LatestMarkerPath = "latestMarkerPath";
+                public const string AccountName = "accountName";
+                public const string ContainerName = "containerName";
+                public const string Reason = "reason";
+            }
+
+            /// <summary>
+            /// JSON field names for the per-event immutable reset marker blobs
+            /// <c>meta/resets/&lt;20-digit-FILETIME&gt;.json</c>.
+            /// </summary>
+            internal static class ResetMarker
+            {
+                public const string SchemaVersion = "schemaVersion";
+                public const string ResetId = "resetId";
+                public const string ResetFileTime = "resetFileTime";
+                public const string ResetTimeUtc = "resetTimeUtc";
+                public const string AccountName = "accountName";
+                public const string ContainerName = "containerName";
+                public const string Reason = "reason";
+            }
+        }
+
+        /// <summary>
         /// Quick Query constant values.
         /// </summary>
         internal static class QuickQuery
@@ -539,6 +676,10 @@ namespace Azure.Storage
         /// </summary>
         internal static class Sas
         {
+            public const string ObjectId = "oid";
+
+            public const string TenantId = "tid";
+
             internal static class Permissions
             {
                 public const char Read = 'r';
@@ -596,6 +737,8 @@ namespace Azure.Storage
                 public const string KeyServiceUpper = "SKS";
                 public const string KeyVersion = "skv";
                 public const string KeyVersionUpper = "SKV";
+                public const string KeyDelegatedUserTenantId = "skdutid";
+                public const string KeyDelegatedUserTenantIdUpper = "SKDUTID";
                 public const string CacheControl = "rscc";
                 public const string CacheControlUpper = "RSCC";
                 public const string ContentDisposition = "rscd";
@@ -616,6 +759,12 @@ namespace Azure.Storage
                 public const string DirectoryDepthUpper = "SDD";
                 public const string EncryptionScope = "ses";
                 public const string EncryptionScopeUpper = "SES";
+                public const string DelegatedUserObjectId = "sduoid";
+                public const string DelegatedUserObjectIdUpper = "SDUOID";
+                public const string RequestHeaders = "srh";
+                public const string RequestHeadersUpper = "SRH";
+                public const string RequestQueryParameters = "srq";
+                public const string RequestQueryParametersUpper = "SRQ";
             }
 
             internal static class Resource
@@ -627,6 +776,7 @@ namespace Azure.Storage
                 public const string File = "f";
                 public const string Share = "s";
                 public const string Directory = "d";
+                public const string Queue = "q";
             }
 
             internal static class AccountServices
@@ -668,6 +818,15 @@ namespace Azure.Storage
             /// Copied from Microsoft.Azure.Storage.Core.Util
             /// </summary>
             internal static readonly int[] PathStylePorts = { 10000, 10001, 10002, 10003, 10004, 10100, 10101, 10102, 10103, 10104, 11000, 11001, 11002, 11003, 11004, 11100, 11101, 11102, 11103, 11104 };
+        }
+
+        internal static class StructuredMessage
+        {
+            public const string StructuredMessageHeader = "x-ms-structured-body";
+            public const string StructuredContentLength = "x-ms-structured-content-length";
+            public const string CrcStructuredMessage = "XSM/1.0; properties=crc64";
+            public const int DefaultSegmentContentLength = 4 * MB;
+            public const int MaxDownloadCrcWithHeader = 4 * MB;
         }
 
         internal static class ClientSideEncryption
@@ -739,7 +898,7 @@ namespace Azure.Storage
 
         internal static class CopyHttpAuthorization
         {
-            internal static readonly string[] Scopes = { "https://storage.azure.com/.default" };
+            internal static readonly string[] Scopes = { CreateDefaultScope(DefaultAudience) };
             internal const string BearerScheme = "Bearer";
         }
     }

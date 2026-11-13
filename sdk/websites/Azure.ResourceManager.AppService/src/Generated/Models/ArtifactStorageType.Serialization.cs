@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ArtifactStorageTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ArtifactStorageType value) => value switch
         {
             ArtifactStorageType.LocalNode => "LocalNode",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArtifactStorageType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ArtifactStorageType ToArtifactStorageType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalNode")) return ArtifactStorageType.LocalNode;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NetworkFileSystem")) return ArtifactStorageType.NetworkFileSystem;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalNode"))
+            {
+                return ArtifactStorageType.LocalNode;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NetworkFileSystem"))
+            {
+                return ArtifactStorageType.NetworkFileSystem;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArtifactStorageType value.");
         }
     }

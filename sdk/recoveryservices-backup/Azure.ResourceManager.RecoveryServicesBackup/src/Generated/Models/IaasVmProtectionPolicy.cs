@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,77 +15,88 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class IaasVmProtectionPolicy : BackupGenericProtectionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="IaasVmProtectionPolicy"/>. </summary>
-        public IaasVmProtectionPolicy()
+        public IaasVmProtectionPolicy() : base("AzureIaasVM")
         {
             TieringPolicy = new ChangeTrackingDictionary<string, BackupTieringPolicy>();
-            BackupManagementType = "AzureIaasVM";
         }
 
         /// <summary> Initializes a new instance of <see cref="IaasVmProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="instantRPDetails"></param>
-        /// <param name="schedulePolicy">
-        /// Backup schedule specified as part of backup policy.
-        /// Please note <see cref="BackupSchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
-        /// </param>
-        /// <param name="retentionPolicy">
-        /// Retention policy with the details on backup copy retention ranges.
-        /// Please note <see cref="BackupRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
-        /// </param>
+        /// <param name="schedulePolicy"> Backup schedule specified as part of backup policy. </param>
+        /// <param name="retentionPolicy"> Retention policy with the details on backup copy retention ranges. </param>
         /// <param name="tieringPolicy">
         /// Tiering policy to automatically move RPs to another tier
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </param>
         /// <param name="instantRPRetentionRangeInDays"> Instant RP retention policy range in days. </param>
+        /// <param name="instantAccessSnapshotEnabled">
+        /// Specifies whether Instant Access snapshot is enabled for the policy. If false or omitted,
+        /// instantAccessDurationMinutes is ignored and no Instant Access snapshot is retained.
+        /// </param>
+        /// <param name="instantAccessDurationMinutes">
+        /// Duration in minutes for which the Instant Access snapshot is retained, when instantAccessSnapshotEnabled
+        /// is true. Must be between 60 and 300 minutes; defaults to 300 minutes if not specified.
+        /// </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <param name="policyType"></param>
         /// <param name="snapshotConsistencyType"></param>
-        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRPRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType, IaasVmSnapshotConsistencyType? snapshotConsistencyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
+        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRPRetentionRangeInDays, bool? instantAccessSnapshotEnabled, int? instantAccessDurationMinutes, string timeZone, IaasVmPolicyType? policyType, IaasVmSnapshotConsistencyType? snapshotConsistencyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             InstantRPDetails = instantRPDetails;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
             TieringPolicy = tieringPolicy;
             InstantRPRetentionRangeInDays = instantRPRetentionRangeInDays;
+            InstantAccessSnapshotEnabled = instantAccessSnapshotEnabled;
+            InstantAccessDurationMinutes = instantAccessDurationMinutes;
             TimeZone = timeZone;
             PolicyType = policyType;
             SnapshotConsistencyType = snapshotConsistencyType;
-            BackupManagementType = backupManagementType ?? "AzureIaasVM";
         }
 
-        /// <summary> Gets or sets the instant rp details. </summary>
+        /// <summary> Gets or sets the InstantRPDetails. </summary>
         public InstantRPAdditionalDetails InstantRPDetails { get; set; }
-        /// <summary>
-        /// Backup schedule specified as part of backup policy.
-        /// Please note <see cref="BackupSchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
-        /// </summary>
+
+        /// <summary> Backup schedule specified as part of backup policy. </summary>
         public BackupSchedulePolicy SchedulePolicy { get; set; }
-        /// <summary>
-        /// Retention policy with the details on backup copy retention ranges.
-        /// Please note <see cref="BackupRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
-        /// </summary>
+
+        /// <summary> Retention policy with the details on backup copy retention ranges. </summary>
         public BackupRetentionPolicy RetentionPolicy { get; set; }
+
         /// <summary>
         /// Tiering policy to automatically move RPs to another tier
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </summary>
         public IDictionary<string, BackupTieringPolicy> TieringPolicy { get; }
+
         /// <summary> Instant RP retention policy range in days. </summary>
         public int? InstantRPRetentionRangeInDays { get; set; }
+
+        /// <summary>
+        /// Specifies whether Instant Access snapshot is enabled for the policy. If false or omitted,
+        /// instantAccessDurationMinutes is ignored and no Instant Access snapshot is retained.
+        /// </summary>
+        public bool? InstantAccessSnapshotEnabled { get; set; }
+
+        /// <summary>
+        /// Duration in minutes for which the Instant Access snapshot is retained, when instantAccessSnapshotEnabled
+        /// is true. Must be between 60 and 300 minutes; defaults to 300 minutes if not specified.
+        /// </summary>
+        public int? InstantAccessDurationMinutes { get; set; }
+
         /// <summary> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </summary>
         public string TimeZone { get; set; }
-        /// <summary> Gets or sets the policy type. </summary>
+
+        /// <summary> Gets or sets the PolicyType. </summary>
         public IaasVmPolicyType? PolicyType { get; set; }
-        /// <summary> Gets or sets the snapshot consistency type. </summary>
+
+        /// <summary> Gets or sets the SnapshotConsistencyType. </summary>
         public IaasVmSnapshotConsistencyType? SnapshotConsistencyType { get; set; }
     }
 }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
     /// <summary> The properties of a data store. </summary>
     public partial class DatabaseWatcherDatastore
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseWatcherDatastore"/>. </summary>
         /// <param name="kustoClusterUri"> The Kusto cluster URI. </param>
@@ -75,8 +47,8 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="kustoDatabaseName"> The name of a Kusto database. </param>
         /// <param name="kustoManagementUri"> The Kusto management URL. </param>
         /// <param name="kustoOfferingType"> The type of a Kusto offering. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseWatcherDatastore(ResourceIdentifier adxClusterResourceId, string kustoClusterDisplayName, Uri kustoClusterUri, Uri kustoDataIngestionUri, string kustoDatabaseName, Uri kustoManagementUri, KustoOfferingType kustoOfferingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseWatcherDatastore(ResourceIdentifier adxClusterResourceId, string kustoClusterDisplayName, Uri kustoClusterUri, Uri kustoDataIngestionUri, string kustoDatabaseName, Uri kustoManagementUri, KustoOfferingType kustoOfferingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdxClusterResourceId = adxClusterResourceId;
             KustoClusterDisplayName = kustoClusterDisplayName;
@@ -85,26 +57,27 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             KustoDatabaseName = kustoDatabaseName;
             KustoManagementUri = kustoManagementUri;
             KustoOfferingType = kustoOfferingType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherDatastore"/> for deserialization. </summary>
-        internal DatabaseWatcherDatastore()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure resource ID of an Azure Data Explorer cluster. </summary>
         public ResourceIdentifier AdxClusterResourceId { get; set; }
+
         /// <summary> The Kusto cluster display name. </summary>
         public string KustoClusterDisplayName { get; set; }
+
         /// <summary> The Kusto cluster URI. </summary>
         public Uri KustoClusterUri { get; set; }
+
         /// <summary> The Kusto data ingestion URI. </summary>
         public Uri KustoDataIngestionUri { get; set; }
+
         /// <summary> The name of a Kusto database. </summary>
         public string KustoDatabaseName { get; set; }
+
         /// <summary> The Kusto management URL. </summary>
         public Uri KustoManagementUri { get; set; }
+
         /// <summary> The type of a Kusto offering. </summary>
         public KustoOfferingType KustoOfferingType { get; set; }
     }

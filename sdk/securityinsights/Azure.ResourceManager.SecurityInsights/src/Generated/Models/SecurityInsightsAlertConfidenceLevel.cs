@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsAlertConfidenceLevel : IEquatable<SecurityInsightsAlertConfidenceLevel>
     {
         private readonly string _value;
+        /// <summary> Unknown confidence, the is the default value. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Low confidence, meaning we have some doubts this is indeed malicious or part of an attack. </summary>
+        private const string LowValue = "Low";
+        /// <summary> High confidence that the alert is true positive malicious. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertConfidenceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsAlertConfidenceLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string LowValue = "Low";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Unknown confidence, the is the default value. </summary>
         public static SecurityInsightsAlertConfidenceLevel Unknown { get; } = new SecurityInsightsAlertConfidenceLevel(UnknownValue);
+
         /// <summary> Low confidence, meaning we have some doubts this is indeed malicious or part of an attack. </summary>
         public static SecurityInsightsAlertConfidenceLevel Low { get; } = new SecurityInsightsAlertConfidenceLevel(LowValue);
+
         /// <summary> High confidence that the alert is true positive malicious. </summary>
         public static SecurityInsightsAlertConfidenceLevel High { get; } = new SecurityInsightsAlertConfidenceLevel(HighValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsAlertConfidenceLevel left, SecurityInsightsAlertConfidenceLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsAlertConfidenceLevel left, SecurityInsightsAlertConfidenceLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsAlertConfidenceLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertConfidenceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsAlertConfidenceLevel(string value) => new SecurityInsightsAlertConfidenceLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertConfidenceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsAlertConfidenceLevel?(string value) => value == null ? null : new SecurityInsightsAlertConfidenceLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsAlertConfidenceLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsAlertConfidenceLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

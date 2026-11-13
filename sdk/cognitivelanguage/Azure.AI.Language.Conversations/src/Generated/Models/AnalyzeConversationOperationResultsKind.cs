@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.AI.Language.Conversations.Models
     internal readonly partial struct AnalyzeConversationOperationResultsKind : IEquatable<AnalyzeConversationOperationResultsKind>
     {
         private readonly string _value;
+        /// <summary> Conversational Summarization Results. </summary>
+        private const string SummarizationOperationResultsValue = "conversationalSummarizationResults";
+        /// <summary> Conversational PII Results. </summary>
+        private const string PiiOperationResultsValue = "conversationalPIIResults";
+        /// <summary> Custom Conversational Summarization Results. </summary>
+        private const string CustomSummarizationOperationResultsValue = "customConversationalSummarizationResults";
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationResultsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnalyzeConversationOperationResultsKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SummarizationOperationResultsValue = "conversationalSummarizationResults";
-        private const string PiiOperationResultsValue = "conversationalPIIResults";
-        private const string CustomSummarizationOperationResultsValue = "customConversationalSummarizationResults";
+            _value = value;
+        }
 
         /// <summary> Conversational Summarization Results. </summary>
         public static AnalyzeConversationOperationResultsKind SummarizationOperationResults { get; } = new AnalyzeConversationOperationResultsKind(SummarizationOperationResultsValue);
+
         /// <summary> Conversational PII Results. </summary>
         public static AnalyzeConversationOperationResultsKind PiiOperationResults { get; } = new AnalyzeConversationOperationResultsKind(PiiOperationResultsValue);
+
         /// <summary> Custom Conversational Summarization Results. </summary>
         public static AnalyzeConversationOperationResultsKind CustomSummarizationOperationResults { get; } = new AnalyzeConversationOperationResultsKind(CustomSummarizationOperationResultsValue);
+
         /// <summary> Determines if two <see cref="AnalyzeConversationOperationResultsKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AnalyzeConversationOperationResultsKind left, AnalyzeConversationOperationResultsKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AnalyzeConversationOperationResultsKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AnalyzeConversationOperationResultsKind left, AnalyzeConversationOperationResultsKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeConversationOperationResultsKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AnalyzeConversationOperationResultsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AnalyzeConversationOperationResultsKind(string value) => new AnalyzeConversationOperationResultsKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AnalyzeConversationOperationResultsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AnalyzeConversationOperationResultsKind?(string value) => value == null ? null : new AnalyzeConversationOperationResultsKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AnalyzeConversationOperationResultsKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AnalyzeConversationOperationResultsKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

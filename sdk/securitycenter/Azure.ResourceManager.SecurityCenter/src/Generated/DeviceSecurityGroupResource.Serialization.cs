@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class DeviceSecurityGroupResource : IJsonModel<DeviceSecurityGroupData>
     {
-        private static DeviceSecurityGroupData s_dataDeserializationInstance;
-        private static DeviceSecurityGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeviceSecurityGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeviceSecurityGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeviceSecurityGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceSecurityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceSecurityGroupData>)Data).Write(writer, options);
 
-        DeviceSecurityGroupData IJsonModel<DeviceSecurityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceSecurityGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceSecurityGroupData IJsonModel<DeviceSecurityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeviceSecurityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceSecurityGroupData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeviceSecurityGroupData IPersistableModel<DeviceSecurityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceSecurityGroupData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<DeviceSecurityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceSecurityGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceSecurityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The DtcName. </summary>
+    /// <summary></summary>
     public readonly partial struct DtcName : IEquatable<DtcName>
     {
         private readonly string _value;
+        /// <summary> current. </summary>
+        private const string CurrentValue = "current";
 
         /// <summary> Initializes a new instance of <see cref="DtcName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DtcName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CurrentValue = "current";
+            _value = value;
+        }
 
         /// <summary> current. </summary>
         public static DtcName Current { get; } = new DtcName(CurrentValue);
+
         /// <summary> Determines if two <see cref="DtcName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DtcName left, DtcName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DtcName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DtcName left, DtcName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DtcName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DtcName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DtcName(string value) => new DtcName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DtcName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DtcName?(string value) => value == null ? null : new DtcName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DtcName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DtcName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Azure.WebPubSub.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,9 +22,9 @@ namespace Microsoft.AspNetCore.Builder
         /// <param name="endpoints">The <see cref="IEndpointRouteBuilder"/>.</param>
         /// <param name="path">The path to map the <see cref="WebPubSubHub"/>.</param>
         /// <returns>The <see cref="IEndpointConventionBuilder"/>.</returns>
-        public static IEndpointConventionBuilder MapWebPubSubHub<THub>(
+        public static IEndpointConventionBuilder MapWebPubSubHub<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THub>(
             this IEndpointRouteBuilder endpoints,
-            string path) where THub: WebPubSubHub
+            string path) where THub : WebPubSubHub
             => MapWebPubSubHub<THub>(endpoints, path, typeof(THub).Name);
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace Microsoft.AspNetCore.Builder
         /// <param name="path">The path to map the <see cref="WebPubSubHub"/>.</param>
         /// <param name="hubName">The name of the hub to connect to.</param>
         /// <returns>The <see cref="IEndpointConventionBuilder"/>.</returns>
-        public static IEndpointConventionBuilder MapWebPubSubHub<THub>(
+        public static IEndpointConventionBuilder MapWebPubSubHub<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THub>(
             this IEndpointRouteBuilder endpoints, string path,
             string hubName) where THub : WebPubSubHub
         {

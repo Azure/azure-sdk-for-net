@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct ApplicationServerVirtualMachineType : IEquatable<ApplicationServerVirtualMachineType>
     {
         private readonly string _value;
+        /// <summary> Active Application server vm type. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Standby Application server vm type. </summary>
+        private const string StandbyValue = "Standby";
+        /// <summary> Unknown Application server vm type. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationServerVirtualMachineType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationServerVirtualMachineType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string StandbyValue = "Standby";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> Active Application server vm type. </summary>
         public static ApplicationServerVirtualMachineType Active { get; } = new ApplicationServerVirtualMachineType(ActiveValue);
+
         /// <summary> Standby Application server vm type. </summary>
         public static ApplicationServerVirtualMachineType Standby { get; } = new ApplicationServerVirtualMachineType(StandbyValue);
+
         /// <summary> Unknown Application server vm type. </summary>
         public static ApplicationServerVirtualMachineType Unknown { get; } = new ApplicationServerVirtualMachineType(UnknownValue);
+
         /// <summary> Determines if two <see cref="ApplicationServerVirtualMachineType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationServerVirtualMachineType left, ApplicationServerVirtualMachineType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationServerVirtualMachineType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationServerVirtualMachineType left, ApplicationServerVirtualMachineType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationServerVirtualMachineType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationServerVirtualMachineType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationServerVirtualMachineType(string value) => new ApplicationServerVirtualMachineType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationServerVirtualMachineType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationServerVirtualMachineType?(string value) => value == null ? null : new ApplicationServerVirtualMachineType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationServerVirtualMachineType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationServerVirtualMachineType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

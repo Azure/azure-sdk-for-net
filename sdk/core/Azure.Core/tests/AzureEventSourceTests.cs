@@ -83,7 +83,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        internal class TestEventSource: AzureEventSource
+        internal class TestEventSource : AzureEventSource
         {
             public TestEventSource() : base("Azure-Corez")
             {

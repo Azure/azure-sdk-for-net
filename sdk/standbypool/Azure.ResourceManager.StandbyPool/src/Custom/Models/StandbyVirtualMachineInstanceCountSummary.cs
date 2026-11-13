@@ -28,10 +28,21 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
             Zone = zone;
             InstanceCountsByState = instanceCountsByState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = serializedAdditionalRawData;
         }
         /// <summary> The count of pooled virtual machines in each state for the given zone. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<PoolResourceStateCount> InstanceCountsByState { get; }
+
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineInstanceCountSummary"/>. </summary>
+        /// <param name="zone"> The zone that the provided counts are in. It will not have a value if zones are not enabled on the attached VMSS. </param>
+        /// <param name="standbyVirtualMachineInstanceCountsByState"> The count of pooled virtual machines in each state for the given zone. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StandbyVirtualMachineInstanceCountSummary(long? zone, IReadOnlyList<PoolVirtualMachineStateCount> standbyVirtualMachineInstanceCountsByState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Zone = zone;
+            StandbyVirtualMachineInstanceCountsByState = standbyVirtualMachineInstanceCountsByState;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
     }
 }

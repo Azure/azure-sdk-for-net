@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,47 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0-beta.2 (2026-06-28)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.5.0-beta.1 (2026-06-15)
+
+### Features Added
+
+- Upgraded API version to `2026-04-01-preview`.
+- Add operations for MaintenanceEvent: Get, List by Server, Reschedule, and ApplyNow.
+- Add operations for MajorVersionUpgradePrecheck: Get and List by Server.
+- Add operations for Server: StartMajorVersionUpgradePrecheck.
+- Add new properties for multi-tenant Microsoft Entra application for Server.
+- Migrated from AutoRest to TypeSpec-based generation while preserving compatibility with the previously shipped public API surface.
+
+## 1.4.2 (2026-04-28)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
+
+## 1.4.1 (2026-02-12)
+
+### Other Changes
+
+- Removed `show-serialized-names` debug configuration to clean up unnecessary serialized name annotations from XML docs.
+
+## 1.4.0 (2026-01-30)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2020-01-01;package-flexibleserver-2024-08-01' to 'package-flexibleserver-2025-08-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/96086ecacd33f5e91557e03cf5838d5f45be9f3b/specification/postgresql/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.47.1 to 1.50.0
 
 ## 1.3.1 (2025-08-06)
 

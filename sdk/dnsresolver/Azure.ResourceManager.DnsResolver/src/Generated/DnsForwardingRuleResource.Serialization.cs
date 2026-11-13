@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DnsResolver
 {
+    /// <summary></summary>
     public partial class DnsForwardingRuleResource : IJsonModel<DnsForwardingRuleData>
     {
-        private static DnsForwardingRuleData s_dataDeserializationInstance;
-        private static DnsForwardingRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DnsForwardingRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DnsForwardingRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DnsForwardingRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DnsForwardingRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsForwardingRuleData>)Data).Write(writer, options);
 
-        DnsForwardingRuleData IJsonModel<DnsForwardingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsForwardingRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsForwardingRuleData IJsonModel<DnsForwardingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DnsForwardingRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsForwardingRuleData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DnsForwardingRuleData IPersistableModel<DnsForwardingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsForwardingRuleData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        string IPersistableModel<DnsForwardingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsForwardingRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DnsForwardingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

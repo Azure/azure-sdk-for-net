@@ -4,15 +4,15 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Tests
 {
-    public class MySqlServerTests: MySqlManagementTestBase
+    public class MySqlServerTests : MySqlManagementTestBase
     {
         public MySqlServerTests(bool isAsync)
             : base(isAsync)//,RecordedTestMode.Record)
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.MySql.Tests
             var content = new MySqlServerCreateOrUpdateContent(
                 new MySqlServerPropertiesForDefaultCreate(administratorLogin: "testUser", administratorLoginPassword: "testPassword1!"),
                 rg.Data.Location)
-                {
-                    Sku = new MySqlSku("B_Gen5_1")
-                };
+            {
+                Sku = new MySqlSku("B_Gen5_1")
+            };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, content);
             MySqlServerResource server = lro.Value;
             Assert.AreEqual(serverName, server.Data.Name);
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.MySql.Tests
             var content = new MySqlServerCreateOrUpdateContent(
                 new MySqlServerPropertiesForDefaultCreate(administratorLogin: "testUser", administratorLoginPassword: "testPassword1!"),
                 rg.Data.Location)
-                {
-                    Sku = new MySqlSku("B_Gen5_1")
-                };
+            {
+                Sku = new MySqlSku("B_Gen5_1")
+            };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, content);
             MySqlServerResource server = lro.Value;
             Assert.AreEqual(serverName, server.Data.Name);

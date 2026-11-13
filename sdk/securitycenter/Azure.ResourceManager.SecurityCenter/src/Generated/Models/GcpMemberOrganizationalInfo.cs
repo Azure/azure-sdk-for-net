@@ -14,25 +14,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class GcpMemberOrganizationalInfo : GcpOrganizationalInfo
     {
         /// <summary> Initializes a new instance of <see cref="GcpMemberOrganizationalInfo"/>. </summary>
-        public GcpMemberOrganizationalInfo()
+        public GcpMemberOrganizationalInfo() : base(OrganizationMembershipType.Member)
         {
-            OrganizationMembershipType = OrganizationMembershipType.Member;
         }
 
         /// <summary> Initializes a new instance of <see cref="GcpMemberOrganizationalInfo"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parentHierarchyId"> If the multi cloud account is not of membership type organization, this will be the ID of the project's parent. </param>
         /// <param name="managementProjectNumber"> The GCP management project number from organizational onboarding. </param>
-        internal GcpMemberOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData, string parentHierarchyId, string managementProjectNumber) : base(organizationMembershipType, serializedAdditionalRawData)
+        internal GcpMemberOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentHierarchyId, string managementProjectNumber) : base(organizationMembershipType, additionalBinaryDataProperties)
         {
             ParentHierarchyId = parentHierarchyId;
             ManagementProjectNumber = managementProjectNumber;
-            OrganizationMembershipType = organizationMembershipType;
         }
 
         /// <summary> If the multi cloud account is not of membership type organization, this will be the ID of the project's parent. </summary>
         public string ParentHierarchyId { get; set; }
+
         /// <summary> The GCP management project number from organizational onboarding. </summary>
         public string ManagementProjectNumber { get; set; }
     }

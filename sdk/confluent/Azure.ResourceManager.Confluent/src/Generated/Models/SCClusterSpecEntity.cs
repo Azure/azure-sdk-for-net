@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Spec of the cluster record. </summary>
     public partial class SCClusterSpecEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SCClusterSpecEntity"/>. </summary>
-        internal SCClusterSpecEntity()
+        public SCClusterSpecEntity()
         {
         }
 
@@ -55,6 +26,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="availability"> The availability zone configuration of the cluster. </param>
         /// <param name="cloud"> The cloud service provider. </param>
         /// <param name="zone"> type of zone availability. </param>
+        /// <param name="package"> Stream governance configuration. </param>
         /// <param name="region"> The cloud service provider region. </param>
         /// <param name="kafkaBootstrapEndpoint"> The bootstrap endpoint used by Kafka clients to connect to the cluster. </param>
         /// <param name="httpEndpoint"> The cluster HTTP request URL. </param>
@@ -63,13 +35,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="environment"> Specification of the cluster environment. </param>
         /// <param name="network"> Specification of the cluster network. </param>
         /// <param name="byok"> Specification of the cluster byok. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SCClusterSpecEntity(string name, string availability, string cloud, string zone, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, ClusterConfigEntity config, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SCClusterSpecEntity(string name, string availability, string cloud, string zone, ConfluentPackage? package, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, ClusterConfigEntity config, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Availability = availability;
             Cloud = cloud;
             Zone = zone;
+            Package = package;
             Region = region;
             KafkaBootstrapEndpoint = kafkaBootstrapEndpoint;
             HttpEndpoint = httpEndpoint;
@@ -78,38 +51,63 @@ namespace Azure.ResourceManager.Confluent.Models
             Environment = environment;
             Network = network;
             Byok = byok;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the cluster. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
+
         /// <summary> The availability zone configuration of the cluster. </summary>
-        public string Availability { get; }
+        public string Availability { get; set; }
+
         /// <summary> The cloud service provider. </summary>
-        public string Cloud { get; }
+        public string Cloud { get; set; }
+
         /// <summary> type of zone availability. </summary>
-        public string Zone { get; }
+        public string Zone { get; set; }
+
+        /// <summary> Stream governance configuration. </summary>
+        public ConfluentPackage? Package { get; set; }
+
         /// <summary> The cloud service provider region. </summary>
-        public string Region { get; }
+        public string Region { get; set; }
+
         /// <summary> The bootstrap endpoint used by Kafka clients to connect to the cluster. </summary>
-        public string KafkaBootstrapEndpoint { get; }
+        public string KafkaBootstrapEndpoint { get; set; }
+
         /// <summary> The cluster HTTP request URL. </summary>
-        public string HttpEndpoint { get; }
+        public string HttpEndpoint { get; set; }
+
         /// <summary> The Kafka API cluster endpoint. </summary>
-        public string ApiEndpoint { get; }
+        public string ApiEndpoint { get; set; }
+
         /// <summary> Specification of the cluster configuration. </summary>
-        internal ClusterConfigEntity Config { get; }
+        internal ClusterConfigEntity Config { get; set; }
+
+        /// <summary> Specification of the cluster environment. </summary>
+        public SCClusterNetworkEnvironmentEntity Environment { get; set; }
+
+        /// <summary> Specification of the cluster network. </summary>
+        public SCClusterNetworkEnvironmentEntity Network { get; set; }
+
+        /// <summary> Specification of the cluster byok. </summary>
+        public SCClusterByokEntity Byok { get; set; }
+
         /// <summary> The lifecycle phase of the cluster. </summary>
         public string ConfigKind
         {
-            get => Config?.Kind;
+            get
+            {
+                return Config is null ? default : Config.Kind;
+            }
+            set
+            {
+                if (Config is null)
+                {
+                    Config = new ClusterConfigEntity();
+                }
+                Config.Kind = value;
+            }
         }
-
-        /// <summary> Specification of the cluster environment. </summary>
-        public SCClusterNetworkEnvironmentEntity Environment { get; }
-        /// <summary> Specification of the cluster network. </summary>
-        public SCClusterNetworkEnvironmentEntity Network { get; }
-        /// <summary> Specification of the cluster byok. </summary>
-        public SCClusterByokEntity Byok { get; }
     }
 }

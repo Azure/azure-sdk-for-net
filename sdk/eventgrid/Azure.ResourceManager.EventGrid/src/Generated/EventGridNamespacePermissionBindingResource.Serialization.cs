@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary></summary>
     public partial class EventGridNamespacePermissionBindingResource : IJsonModel<EventGridNamespacePermissionBindingData>
     {
-        private static EventGridNamespacePermissionBindingData s_dataDeserializationInstance;
-        private static EventGridNamespacePermissionBindingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EventGridNamespacePermissionBindingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EventGridNamespacePermissionBindingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EventGridNamespacePermissionBindingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventGridNamespacePermissionBindingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespacePermissionBindingData>)Data).Write(writer, options);
 
-        EventGridNamespacePermissionBindingData IJsonModel<EventGridNamespacePermissionBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespacePermissionBindingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventGridNamespacePermissionBindingData IJsonModel<EventGridNamespacePermissionBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EventGridNamespacePermissionBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridNamespacePermissionBindingData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EventGridNamespacePermissionBindingData IPersistableModel<EventGridNamespacePermissionBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespacePermissionBindingData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<EventGridNamespacePermissionBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespacePermissionBindingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventGridNamespacePermissionBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

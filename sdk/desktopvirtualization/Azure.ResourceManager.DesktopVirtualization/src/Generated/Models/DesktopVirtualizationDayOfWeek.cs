@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Day of the week. </summary>
+    /// <summary> Day of the week. Modeled as string. </summary>
     public enum DesktopVirtualizationDayOfWeek
     {
         /// <summary> Monday. </summary>

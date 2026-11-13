@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put PublicIPAddress
             var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp);
+            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp, System.Threading.CancellationToken.None);
             Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
@@ -82,15 +82,12 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24" } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<SubnetResource> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
@@ -105,9 +102,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = getPublicIpAddressResponse.Value.Id
@@ -122,12 +117,12 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
 
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachineId);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
 
             //if single CA, primary flag will be set
@@ -152,7 +147,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Assert.NotNull(getNicIpConfiguration.Value.Etag);
 
             // Verify List LoadBalancers in NetworkInterface
-            AsyncPageable<LoadBalancerResource> listNicLoadBalancersAP = getNicResponse.Value.GetNetworkInterfaceLoadBalancersAsync();
+            AsyncPageable<LoadBalancerResource> listNicLoadBalancersAP = getNicResponse.Value.GetNetworkInterfaceLoadBalancersAsync(System.Threading.CancellationToken.None);
             List<LoadBalancerResource> listNicLoadBalancers = await listNicLoadBalancersAP.ToEnumerableAsync();
             Assert.IsEmpty(listNicLoadBalancers);
 
@@ -169,17 +164,17 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsNotEmpty(listNicSubscription);
 
             // Delete Nic
-            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getListNicResponse);
 
             // Delete PublicIPAddress
-            await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Delete VirtualNetwork
-            await vnetResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await vnetResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -204,21 +199,16 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = {
                     new SubnetData()
-                    {
-                        Name = subnetName,
-                        AddressPrefix = "10.0.0.0/24",
+                    {AddressPrefix = "10.0.0.0/24",
                     }
                 }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<SubnetResource> getSubnetResponse = await putVnetResponseOperation.Value.GetSubnets().GetAsync(subnetName);
@@ -236,9 +226,7 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
-                        Primary = true,
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        Primary = true,PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PrivateIPAddressVersion = NetworkIPVersion.IPv4,
                         Subnet = new SubnetData()
                         {
@@ -250,25 +238,25 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachineId);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
 
             // Delete Nic
-            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getListNicResponse);
 
             // Delete VirtualNetwork
-            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -297,7 +285,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put PublicIPAddress
             var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp);
+            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp, System.Threading.CancellationToken.None);
             Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
@@ -316,15 +304,12 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24" } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<SubnetResource> getSubnetResponse = await putVnetResponseOperation.Value.GetSubnets().GetAsync(subnetName);
@@ -340,9 +325,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Primary = true,
                         PublicIPAddress = new PublicIPAddressData()
                         {
@@ -354,9 +337,7 @@ namespace Azure.ResourceManager.Network.Tests
                         }
                     },
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipconfigName2,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipconfigName2, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Primary = false,
                         Subnet = new SubnetData()
                         {
@@ -368,13 +349,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachineId);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
             Assert.AreEqual(2, getNicResponse.Value.Data.IPConfigurations.Count);
@@ -400,17 +381,17 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsNotEmpty(listNicSubscription);
 
             // Delete Nic
-            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getListNicResponse);
 
             // Delete PublicIPAddress
-            await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Delete VirtualNetwork
-            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -437,13 +418,13 @@ namespace Azure.ResourceManager.Network.Tests
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
                 Subnets = {
-                    new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", },
-                    new SubnetData() { Name = subnetName2, AddressPrefix = "10.0.1.0/24" }
+                    new SubnetData() {AddressPrefix = "10.0.0.0/24", },
+                    new SubnetData() {AddressPrefix = "10.0.1.0/24" }
                 }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<SubnetResource> getSubnet1Response = await putVnetResponseOperation.Value.GetSubnets().GetAsync(subnetName);
@@ -460,9 +441,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Primary = true,
                         Subnet = new SubnetData()
                         {
@@ -470,9 +449,7 @@ namespace Azure.ResourceManager.Network.Tests
                         }
                     },
                         new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipconfigName2,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Primary = false,
                         Subnet = new SubnetData()
                         {
@@ -485,13 +462,13 @@ namespace Azure.ResourceManager.Network.Tests
             try
             {
                 // Test NIC apis
-                var putNicResponseOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+                var putNicResponseOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
                 Response<NetworkInterfaceResource> putNicResponse = await putNicResponseOperation.WaitForCompletionAsync();
                 ;
             }
             catch (Exception ex)
             {
-                Assert.True(ex.Message.Contains("cannot belong to different subnets"));
+                Assert.True(ex.Message.Contains("cannot belong to different subnets"), ex.ToString());
             }
         }
 
@@ -513,12 +490,12 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<SubnetResource> getSubnetResponse = await putVnetResponseOperation.Value.GetSubnets().GetAsync(subnetName);
@@ -533,9 +510,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new SubnetData()
                         {
                             Id = getSubnetResponse.Value.Id
@@ -551,13 +526,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachineId);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
@@ -570,14 +545,14 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(getNicResponse.Value.Data.DnsSettings.InternalFqdn);
 
             // Delete Nic
-            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getListNicResponse);
 
             // Delete VirtualNetwork
-            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         /// currently this test is failing because of nrp valdiation check:cannot have multiple IPv4 IPConfigurations if it specifies a Ipv6 IPConfigurations. Ipv4 Ipconfig Count: 2
@@ -608,7 +583,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put PublicIPAddress
             var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp);
+            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp, System.Threading.CancellationToken.None);
             Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
@@ -628,15 +603,12 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24" } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<SubnetResource> getSubnetResponse = await putVnetResponseOperation.Value.GetSubnets().GetAsync(subnetName);
@@ -654,9 +626,7 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
-                        Primary = true,
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        Name = ipConfigName, Primary = true,PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PrivateIPAddressVersion = NetworkIPVersion.IPv4,
                         Subnet = new SubnetData()
                         {
@@ -664,16 +634,12 @@ namespace Azure.ResourceManager.Network.Tests
                         }
                     },
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipv6IpConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipv6IpConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PrivateIPAddressVersion = NetworkIPVersion.IPv6,
                     },
 
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName2,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName2, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PrivateIPAddressVersion = NetworkIPVersion.IPv4,
                         Subnet = new SubnetData()
                         {
@@ -685,13 +651,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachineId);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
             Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
@@ -719,7 +685,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsNotEmpty(listNicSubscription);
 
             // Delete Nic
-            var deleteOperation = await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
             getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
@@ -727,10 +693,10 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(getListNicResponse);
 
             // Delete PublicIPAddress
-            await putPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await putPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Delete VirtualNetwork
-            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -751,12 +717,12 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24" } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<SubnetResource> getSubnetResponse = await putVnetResponseOperation.Value.GetSubnets().GetAsync(subnetName);
@@ -772,9 +738,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new SubnetData()
                         {
                             Id = getSubnetResponse.Value.Id
@@ -790,13 +754,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachineId);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
@@ -811,14 +775,14 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(getNicResponse.Value.Data.DnsSettings.InternalDomainNameSuffix);
 
             // Delete Nic
-            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getListNicResponse);
 
             // Delete VirtualNetwork
-            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -839,12 +803,12 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<SubnetResource> getSubnetResponse = await putVnetResponseOperation.Value.GetSubnets().GetAsync(subnetName);
@@ -859,9 +823,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new SubnetData()
                         {
                             Id = getSubnetResponse.Value.Id
@@ -873,33 +835,33 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachineId);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
             Assert.False(getNicResponse.Value.Data.EnableIPForwarding);
 
             getNicResponse.Value.Data.EnableIPForwarding = true;
-            await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, getNicResponse.Value.Data);
+            await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, getNicResponse.Value.Data, System.Threading.CancellationToken.None);
             getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.True(getNicResponse.Value.Data.EnableIPForwarding);
 
             // Delete Nic
-            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getListNicResponse);
 
             // Delete VirtualNetwork
-            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -922,12 +884,12 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             Response<VirtualNetworkResource> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             // Create network security group
@@ -937,9 +899,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 SecurityRules = {
                     new SecurityRuleData()
-                    {
-                        Name = securityRule1,
-                        Access = SecurityRuleAccess.Allow,
+                    {Access = SecurityRuleAccess.Allow,
                         Description = "Test security rule",
                         DestinationAddressPrefix = "*",
                         DestinationPortRange = destinationPortRange,
@@ -954,7 +914,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup, System.Threading.CancellationToken.None);
             Response<NetworkSecurityGroupResource> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
@@ -969,21 +929,19 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new SubnetData()
                         {
                             Id = putVnetResponse.Value.Data.Subnets[0].Id
                         }
                     }
                 },
-                NetworkSecurityGroup = putNsgResponse.Value.Data
+                NetworkSecurityGroup = new NetworkSecurityGroupData() { Id = putNsgResponse.Value.Id, Location = location }
             };
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
@@ -996,17 +954,17 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNsgResponse.Value.Data.NetworkInterfaces[0].Id, getNicResponse.Value.Id.ToString());
 
             // Delete Nic
-            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getListNicResponse);
 
             // Delete NSG
-            await getNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNsgResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Delete VirtualNetwork
-            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -1030,12 +988,12 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             Response<VirtualNetworkResource> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             // Create network security group
@@ -1045,9 +1003,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 SecurityRules = {
                     new SecurityRuleData()
-                    {
-                        Name = securityRule1,
-                        Access = SecurityRuleAccess.Allow,
+                    {Access = SecurityRuleAccess.Allow,
                         Description = "Test security rule",
                         DestinationAddressPrefix = "*",
                         DestinationPortRange = destinationPortRange,
@@ -1062,7 +1018,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup, System.Threading.CancellationToken.None);
             Response<NetworkSecurityGroupResource> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
@@ -1077,9 +1033,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new SubnetData()
                         {
                             Id = putVnetResponse.Value.Data.Subnets[0].Id
@@ -1091,7 +1045,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
@@ -1104,23 +1058,23 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNsgResponse.Value.Data.NetworkInterfaces[0].Id, getNicResponse.Value.Id);
 
             // Get effective NSGs
-            var effectiveNsgsOperation = await getNicResponse.Value.GetEffectiveNetworkSecurityGroupsAsync(WaitUntil.Completed);
+            var effectiveNsgsOperation = await getNicResponse.Value.GetEffectiveNetworkSecurityGroupsAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             Response<EffectiveNetworkSecurityGroupListResult> effectiveNsgs = await effectiveNsgsOperation.WaitForCompletionAsync();
             ;
             Assert.NotNull(effectiveNsgs);
 
             // Delete Nic
-            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getListNicResponse);
 
             // Delete NSG
-            await getNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNsgResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Delete VirtualNetwork
-            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -1145,7 +1099,6 @@ namespace Azure.ResourceManager.Network.Tests
             var route1 = new RouteData()
             {
                 AddressPrefix = "192.168.1.0/24",
-                Name = route1Name,
                 NextHopIPAddress = "23.108.1.1",
                 NextHopType = RouteNextHopType.VirtualAppliance
             };
@@ -1154,7 +1107,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put RouteTable
             var routeTableCollection = resourceGroup.GetRouteTables();
-            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
+            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable, System.Threading.CancellationToken.None);
             Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
@@ -1163,12 +1116,12 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", RouteTable = putRouteTableResponse.Value.Data } }
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", RouteTable = putRouteTableResponse.Value.Data } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             Response<VirtualNetworkResource> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             // Create Nic
@@ -1181,9 +1134,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new SubnetData()
                         {
                             Id = putVnetResponse.Value.Data.Subnets[0].Id
@@ -1194,30 +1145,30 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Test NIC apis
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicParameters, System.Threading.CancellationToken.None);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
 
             // Get effective NSGs
-            var effectiveRouteTableOperation = await getNicResponse.Value.GetEffectiveRouteTableAsync(WaitUntil.Completed);
+            var effectiveRouteTableOperation = await getNicResponse.Value.GetEffectiveRouteTableAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             Response<EffectiveRouteListResult> effectiveRouteTable = await effectiveRouteTableOperation.WaitForCompletionAsync();
             ;
             Assert.NotNull(effectiveRouteTable);
 
             // Delete Nic
-            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getNicResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getListNicResponse);
 
             // Delete routetable
-            await putRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await putRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Delete VirtualNetwork
-            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [RecordedTest]

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Fabric
 {
+    /// <summary></summary>
     public partial class FabricCapacityResource : IJsonModel<FabricCapacityData>
     {
-        private static FabricCapacityData s_dataDeserializationInstance;
-        private static FabricCapacityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FabricCapacityData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FabricCapacityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FabricCapacityData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FabricCapacityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FabricCapacityData>)Data).Write(writer, options);
 
-        FabricCapacityData IJsonModel<FabricCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FabricCapacityData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FabricCapacityData IJsonModel<FabricCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FabricCapacityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FabricCapacityData>(Data, options, AzureResourceManagerFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FabricCapacityData IPersistableModel<FabricCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FabricCapacityData>(data, options, AzureResourceManagerFabricContext.Default);
 
-        string IPersistableModel<FabricCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FabricCapacityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FabricCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

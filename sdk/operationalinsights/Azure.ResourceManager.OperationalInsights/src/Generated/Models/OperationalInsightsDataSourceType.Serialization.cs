@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal static partial class OperationalInsightsDataSourceTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this OperationalInsightsDataSourceType value) => value switch
         {
             OperationalInsightsDataSourceType.CustomLogs => "CustomLogs",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperationalInsightsDataSourceType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static OperationalInsightsDataSourceType ToOperationalInsightsDataSourceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomLogs")) return OperationalInsightsDataSourceType.CustomLogs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureWatson")) return OperationalInsightsDataSourceType.AzureWatson;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Query")) return OperationalInsightsDataSourceType.Query;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ingestion")) return OperationalInsightsDataSourceType.Ingestion;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Alerts")) return OperationalInsightsDataSourceType.Alerts;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomLogs"))
+            {
+                return OperationalInsightsDataSourceType.CustomLogs;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureWatson"))
+            {
+                return OperationalInsightsDataSourceType.AzureWatson;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Query"))
+            {
+                return OperationalInsightsDataSourceType.Query;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ingestion"))
+            {
+                return OperationalInsightsDataSourceType.Ingestion;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Alerts"))
+            {
+                return OperationalInsightsDataSourceType.Alerts;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperationalInsightsDataSourceType value.");
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlAlwaysEncryptedEnclaveType : IEquatable<SqlAlwaysEncryptedEnclaveType>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> VBS. </summary>
+        private const string VbsValue = "VBS";
 
         /// <summary> Initializes a new instance of <see cref="SqlAlwaysEncryptedEnclaveType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlAlwaysEncryptedEnclaveType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string VbsValue = "VBS";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static SqlAlwaysEncryptedEnclaveType Default { get; } = new SqlAlwaysEncryptedEnclaveType(DefaultValue);
+
         /// <summary> VBS. </summary>
         public static SqlAlwaysEncryptedEnclaveType Vbs { get; } = new SqlAlwaysEncryptedEnclaveType(VbsValue);
+
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedEnclaveType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlAlwaysEncryptedEnclaveType left, SqlAlwaysEncryptedEnclaveType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedEnclaveType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlAlwaysEncryptedEnclaveType left, SqlAlwaysEncryptedEnclaveType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlAlwaysEncryptedEnclaveType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlAlwaysEncryptedEnclaveType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlAlwaysEncryptedEnclaveType(string value) => new SqlAlwaysEncryptedEnclaveType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlAlwaysEncryptedEnclaveType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlAlwaysEncryptedEnclaveType?(string value) => value == null ? null : new SqlAlwaysEncryptedEnclaveType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlAlwaysEncryptedEnclaveType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlAlwaysEncryptedEnclaveType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

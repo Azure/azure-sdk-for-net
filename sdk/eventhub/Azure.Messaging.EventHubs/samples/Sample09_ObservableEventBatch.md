@@ -111,11 +111,11 @@ try
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventData = new EventData($"Event #{ index }");
+        var eventData = new EventData($"Event #{index}");
 
         if (!observableBatch.TryAdd(eventData))
         {
-            throw new Exception($"The event at { index } could not be added.");
+            throw new Exception($"The event at {index} could not be added.");
         }
     }
 
@@ -123,7 +123,7 @@ try
 
     foreach (var singleEvent in observableBatch.Events)
     {
-        Debug.WriteLine($"Added event { singleEvent.EventBody } at time { singleEvent.EnqueuedTime }");
+        Debug.WriteLine($"Added event {singleEvent.EventBody} at time {singleEvent.EnqueuedTime}");
     }
 
     await producer.SendAsync(observableBatch);
@@ -157,14 +157,14 @@ try
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventData = new EventData($"Event #{ index }")
+        var eventData = new EventData($"Event #{index}")
         {
             MessageId = index.ToString()
         };
 
         if (!observableBatch.TryAdd(eventData))
         {
-            throw new Exception($"The event at { index } could not be added.");
+            throw new Exception($"The event at {index} could not be added.");
         }
     }
 

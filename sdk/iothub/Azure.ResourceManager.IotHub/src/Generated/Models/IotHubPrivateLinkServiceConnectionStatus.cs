@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubPrivateLinkServiceConnectionStatus : IEquatable<IotHubPrivateLinkServiceConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Rejected. </summary>
+        private const string RejectedValue = "Rejected";
+        /// <summary> Disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="IotHubPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubPrivateLinkServiceConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> Pending. </summary>
         public static IotHubPrivateLinkServiceConnectionStatus Pending { get; } = new IotHubPrivateLinkServiceConnectionStatus(PendingValue);
+
         /// <summary> Approved. </summary>
         public static IotHubPrivateLinkServiceConnectionStatus Approved { get; } = new IotHubPrivateLinkServiceConnectionStatus(ApprovedValue);
+
         /// <summary> Rejected. </summary>
         public static IotHubPrivateLinkServiceConnectionStatus Rejected { get; } = new IotHubPrivateLinkServiceConnectionStatus(RejectedValue);
+
         /// <summary> Disconnected. </summary>
         public static IotHubPrivateLinkServiceConnectionStatus Disconnected { get; } = new IotHubPrivateLinkServiceConnectionStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="IotHubPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubPrivateLinkServiceConnectionStatus left, IotHubPrivateLinkServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubPrivateLinkServiceConnectionStatus left, IotHubPrivateLinkServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubPrivateLinkServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubPrivateLinkServiceConnectionStatus(string value) => new IotHubPrivateLinkServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new IotHubPrivateLinkServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubPrivateLinkServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubPrivateLinkServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -15,27 +15,18 @@ namespace Azure.AI.Language.Conversations.Models
     {
         /// <summary> Initializes a new instance of <see cref="ConversationalAITaskResult"/>. </summary>
         /// <param name="result"> Represents the conversational analysis response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
-        internal ConversationalAITaskResult(ConversationalAIResult result)
+        internal ConversationalAITaskResult(ConversationalAIResult result) : base(AnalyzeConversationResultKind.ConversationalAIResult)
         {
-            Argument.AssertNotNull(result, nameof(result));
-
-            Kind = AnalyzeConversationResultKind.ConversationalAIResult;
             Result = result;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationalAITaskResult"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task result. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> Represents the conversational analysis response. </param>
-        internal ConversationalAITaskResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ConversationalAIResult result) : base(kind, serializedAdditionalRawData)
+        internal ConversationalAITaskResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationalAIResult result) : base(kind, additionalBinaryDataProperties)
         {
             Result = result;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationalAITaskResult"/> for deserialization. </summary>
-        internal ConversationalAITaskResult()
-        {
         }
 
         /// <summary> Represents the conversational analysis response. </summary>

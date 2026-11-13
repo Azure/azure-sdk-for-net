@@ -11,6 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation
 {
+    // Generated ReplaceContentRunbookDraft now accepts string content from the new REST helper shape.
+    // Keep the GA Stream overload by converting the stream to RequestContent before sending the request.
     /// <summary>
     /// A Class representing an AutomationRunbook along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationRunbookResource" />
@@ -44,8 +46,13 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var response = await _runbookDraftRestClient.ReplaceContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, true).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _runbookDraftRestClient.CreateReplaceContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RequestContent.Create(runbookContent), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -82,8 +89,13 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var response = _runbookDraftRestClient.ReplaceContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, cancellationToken);
-                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, true).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _runbookDraftRestClient.CreateReplaceContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RequestContent.Create(runbookContent), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
-    /// <summary> The body of the JWT used for the PolicyCertificates APIs. </summary>
     internal partial class PolicyCertificateModification
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PolicyCertificateModification"/>. </summary>
-        public PolicyCertificateModification()
+        internal PolicyCertificateModification()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyCertificateModification"/>. </summary>
         /// <param name="internalPolicyCertificate"> RFC 7517 Json Web Key describing the certificate. </param>
-        internal PolicyCertificateModification(JsonWebKey internalPolicyCertificate)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyCertificateModification(JsonWebKey internalPolicyCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InternalPolicyCertificate = internalPolicyCertificate;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class VirtualMachineCaptureResultOperationSource : IOperationSource<VirtualMachineCaptureResult>
+    /// <summary></summary>
+    internal partial class VirtualMachineCaptureResultOperationSource : IOperationSource<VirtualMachineCaptureResult>
     {
-        VirtualMachineCaptureResult IOperationSource<VirtualMachineCaptureResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal VirtualMachineCaptureResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        VirtualMachineCaptureResult IOperationSource<VirtualMachineCaptureResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VirtualMachineCaptureResult> IOperationSource<VirtualMachineCaptureResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

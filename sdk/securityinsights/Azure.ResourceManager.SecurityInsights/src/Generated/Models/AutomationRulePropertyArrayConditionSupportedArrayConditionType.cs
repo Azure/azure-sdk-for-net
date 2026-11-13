@@ -7,42 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulePropertyArrayConditionSupportedArrayConditionType. </summary>
+    /// <summary></summary>
     public readonly partial struct AutomationRulePropertyArrayConditionSupportedArrayConditionType : IEquatable<AutomationRulePropertyArrayConditionSupportedArrayConditionType>
     {
         private readonly string _value;
+        /// <summary> Evaluate the condition as true if any item fulfills it. </summary>
+        private const string AnyItemValue = "AnyItem";
+        /// <summary> Evaluate the condition as true if all the items fulfill it. </summary>
+        private const string AllItemsValue = "AllItems";
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationRulePropertyArrayConditionSupportedArrayConditionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnyItemValue = "AnyItem";
+            _value = value;
+        }
 
         /// <summary> Evaluate the condition as true if any item fulfills it. </summary>
         public static AutomationRulePropertyArrayConditionSupportedArrayConditionType AnyItem { get; } = new AutomationRulePropertyArrayConditionSupportedArrayConditionType(AnyItemValue);
+
+        /// <summary> Evaluate the condition as true if all the items fulfill it. </summary>
+        public static AutomationRulePropertyArrayConditionSupportedArrayConditionType AllItems { get; } = new AutomationRulePropertyArrayConditionSupportedArrayConditionType(AllItemsValue);
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationRulePropertyArrayConditionSupportedArrayConditionType left, AutomationRulePropertyArrayConditionSupportedArrayConditionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationRulePropertyArrayConditionSupportedArrayConditionType left, AutomationRulePropertyArrayConditionSupportedArrayConditionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationRulePropertyArrayConditionSupportedArrayConditionType(string value) => new AutomationRulePropertyArrayConditionSupportedArrayConditionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationRulePropertyArrayConditionSupportedArrayConditionType?(string value) => value == null ? null : new AutomationRulePropertyArrayConditionSupportedArrayConditionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationRulePropertyArrayConditionSupportedArrayConditionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationRulePropertyArrayConditionSupportedArrayConditionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

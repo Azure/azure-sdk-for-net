@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SelfHelp.Models;
 
@@ -13,13 +14,11 @@ namespace Azure.ResourceManager.SelfHelp
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AutomatedCheckResult))]
-    [ModelReaderWriterBuildable(typeof(ChartFilterGroup))]
     [ModelReaderWriterBuildable(typeof(ClassificationService))]
     [ModelReaderWriterBuildable(typeof(DiscoveryNlpContent))]
-    [ModelReaderWriterBuildable(typeof(DiscoveryNlpResult))]
     [ModelReaderWriterBuildable(typeof(KBSearchResult))]
     [ModelReaderWriterBuildable(typeof(KBWebResult))]
     [ModelReaderWriterBuildable(typeof(MetricsBasedChart))]
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.SelfHelp
     [ModelReaderWriterBuildable(typeof(SelfHelpDiagnosticInsight))]
     [ModelReaderWriterBuildable(typeof(SelfHelpDiagnosticInvocation))]
     [ModelReaderWriterBuildable(typeof(SelfHelpDiagnosticResource))]
-    [ModelReaderWriterBuildable(typeof(SelfHelpDiscoverySolutionResult))]
     [ModelReaderWriterBuildable(typeof(SelfHelpError))]
     [ModelReaderWriterBuildable(typeof(SelfHelpFilter))]
     [ModelReaderWriterBuildable(typeof(SelfHelpNameAvailabilityContent))]
@@ -45,7 +43,8 @@ namespace Azure.ResourceManager.SelfHelp
     [ModelReaderWriterBuildable(typeof(SelfHelpSolutionMetadata))]
     [ModelReaderWriterBuildable(typeof(SelfHelpSolutionPatch))]
     [ModelReaderWriterBuildable(typeof(SelfHelpSolutionResource))]
-    [ModelReaderWriterBuildable(typeof(SelfHelpSolutionResult))]
+    [ModelReaderWriterBuildable(typeof(SelfHelpSolutionResultData))]
+    [ModelReaderWriterBuildable(typeof(SelfHelpSolutionResultResource))]
     [ModelReaderWriterBuildable(typeof(SelfHelpStep))]
     [ModelReaderWriterBuildable(typeof(SelfHelpTroubleshooterData))]
     [ModelReaderWriterBuildable(typeof(SelfHelpTroubleshooterResource))]

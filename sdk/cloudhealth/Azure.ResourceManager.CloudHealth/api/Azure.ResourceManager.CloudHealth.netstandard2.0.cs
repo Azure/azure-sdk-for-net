@@ -41,7 +41,10 @@ namespace Azure.ResourceManager.CloudHealth
     {
         public HealthModelAuthenticationSettingData() { }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.HealthModelAuthenticationSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelAuthenticationSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelAuthenticationSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.HealthModelAuthenticationSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.HealthModelAuthenticationSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -87,9 +90,12 @@ namespace Azure.ResourceManager.CloudHealth
     public partial class HealthModelData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.HealthModelData>
     {
         public HealthModelData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? HealthModelProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.HealthModelProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.HealthModelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.HealthModelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.HealthModelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -117,7 +123,10 @@ namespace Azure.ResourceManager.CloudHealth
     {
         public HealthModelDiscoveryRuleData() { }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.HealthModelDiscoveryRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelDiscoveryRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelDiscoveryRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.HealthModelDiscoveryRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.HealthModelDiscoveryRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -164,7 +173,10 @@ namespace Azure.ResourceManager.CloudHealth
     {
         public HealthModelEntityData() { }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.HealthModelEntityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelEntityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelEntityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.HealthModelEntityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.HealthModelEntityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -177,11 +189,23 @@ namespace Azure.ResourceManager.CloudHealth
         protected HealthModelEntityResource() { }
         public virtual Azure.ResourceManager.CloudHealth.HealthModelEntityData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation> AddDataAnnotation(Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation>> AddDataAnnotationAsync(Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string healthModelName, string entityName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CloudHealth.HealthModelEntityResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CloudHealth.HealthModelEntityResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult> GetDataAnnotations(Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult>> GetDataAnnotationsAsync(Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult> GetHistory(Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult>> GetHistoryAsync(Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult> GetSignalHistory(Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult>> GetSignalHistoryAsync(Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult> GetSignalRecommendations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult>> GetSignalRecommendationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response IngestHealthReport(Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> IngestHealthReportAsync(Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.CloudHealth.HealthModelEntityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelEntityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelEntityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.HealthModelEntityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.HealthModelEntityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -211,7 +235,10 @@ namespace Azure.ResourceManager.CloudHealth
     {
         public HealthModelRelationshipData() { }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.HealthModelRelationshipData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelRelationshipData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelRelationshipData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.HealthModelRelationshipData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.HealthModelRelationshipData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -298,7 +325,10 @@ namespace Azure.ResourceManager.CloudHealth
     {
         public HealthModelSignalDefinitionData() { }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.HealthModelSignalDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelSignalDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.HealthModelSignalDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.HealthModelSignalDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.HealthModelSignalDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -353,167 +383,113 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
 }
 namespace Azure.ResourceManager.CloudHealth.Models
 {
+    public partial class ApplicationInsightsTopologySpecification : Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification>
+    {
+        public ApplicationInsightsTopologySpecification(Azure.Core.ResourceIdentifier applicationInsightsResourceId) { }
+        public Azure.Core.ResourceIdentifier ApplicationInsightsResourceId { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class ArmCloudHealthModelFactory
     {
+        public static Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification ApplicationInsightsTopologySpecification(Azure.Core.ResourceIdentifier applicationInsightsResourceId = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration AzureResourceMetricRecommendationConfiguration(string metricNamespace = null, string metricName = null, Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType aggregationType = default(Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType), string timeGrain = null, string dimensionFilter = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent EntityAddDataAnnotationContent(System.Collections.Generic.IDictionary<string, string> annotationDetails = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration EntityAlertConfiguration(Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity severity = default(Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> actionGroupIds = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityAlerts EntityAlerts(Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration unhealthy = null, Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration degraded = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation EntityDataAnnotation(string annotationId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> annotationDetails = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent EntityGetDataAnnotationsContent(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult EntityGetDataAnnotationsResult(string entityName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation> annotations = null, string nextMarker = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult EntityGetSignalRecommendationsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration> recommendedSignals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration> recommendedConfigurations = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent EntityHealthReportContent(string signalName = null, Azure.ResourceManager.CloudHealth.Models.EntityHealthState healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState), double? value = default(double?), Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule evaluationRules = null, int? expiresInMinutes = default(int?), string additionalContext = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent EntityHistoryContent(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult EntityHistoryResult(string entityName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition> history = null, string nextMarker = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule EntitySignalEvaluationRule(Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule degradedRule = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule unhealthyRule = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups EntitySignalGroups(Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals azureResource = null, Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals azureLogAnalytics = null, Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals azureMonitorWorkspace = null, Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup dependencies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal> externalSignals = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent EntitySignalHistoryContent(string signalName = null, System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult EntitySignalHistoryResult(string entityName = null, string signalName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint> history = null, string nextMarker = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule EntitySignalThresholdRule(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator signalOperator = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator), double? threshold = default(double?), Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? sensitivity = default(Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity?)) { throw null; }
         public static Azure.ResourceManager.CloudHealth.HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties HealthModelAuthenticationSettingProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string authenticationKind = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.HealthModelData HealthModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CloudHealth.Models.HealthModelProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.HealthModelData HealthModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? healthModelProvisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup HealthModelDependenciesSignalGroup(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType aggregationType = default(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType), double? degradedThreshold = default(double?), double? unhealthyThreshold = default(double?), Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit? unit = default(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit?), bool? shouldIgnoreUnknown = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError HealthModelDiscoveryError(string message = null, System.Collections.Generic.IEnumerable<string> context = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.HealthModelDiscoveryRuleData HealthModelDiscoveryRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string resourceGraphQuery = null, string authenticationSetting = null, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior), Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), string errorMessage = null, int? numberOfDiscoveredEntities = default(int?), string entityName = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string authenticationSetting = null, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default(Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior), Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default(Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior), Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification specification = null, Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior? addResourceHealthSignal = default(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior?), Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError error = null, string entityName = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification HealthModelDiscoveryRuleSpecification(string kind = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates HealthModelEntityCoordinates(float x = 0f, float y = 0f) { throw null; }
         public static Azure.ResourceManager.CloudHealth.HealthModelEntityData HealthModelEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties HealthModelEntityProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string kind = null, Azure.ResourceManager.CloudHealth.Models.EntityCoordinates canvasPosition = null, Azure.ResourceManager.CloudHealth.Models.EntityIcon icon = null, float? healthObjective = default(float?), Azure.ResourceManager.CloudHealth.Models.EntityImpact? impact = default(Azure.ResourceManager.CloudHealth.Models.EntityImpact?), System.Collections.Generic.IDictionary<string, string> labels = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup signals = null, string discoveredBy = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), Azure.ResourceManager.CloudHealth.Models.EntityHealthState? healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState?), Azure.ResourceManager.CloudHealth.Models.EntityAlerts alerts = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.HealthModelProperties HealthModelProperties(string dataplaneEndpoint = null, Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings discovery = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon HealthModelEntityIcon(string iconName = null, string customData = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties HealthModelEntityProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates canvasPosition = null, Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon icon = null, float? healthObjective = default(float?), Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact? impact = default(Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups signalGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup> signalAggregationGroups = null, string discoveredBy = null, Azure.ResourceManager.CloudHealth.Models.EntityHealthState? healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState?), Azure.ResourceManager.CloudHealth.Models.EntityAlerts alerts = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal HealthModelExternalSignal(string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus status = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelPatch HealthModelPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.HealthModelRelationshipData HealthModelRelationshipData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties HealthModelRelationshipProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string parentEntityName = null, string childEntityName = null, System.Collections.Generic.IDictionary<string, string> labels = null, string discoveredBy = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties HealthModelRelationshipProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string parentEntityName = null, string childEntityName = null, System.Collections.Generic.IDictionary<string, string> tags = null, string discoveredBy = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal HealthModelResourceMetricSignal(string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus status = null, string metricNamespace = null, string metricName = null, string timeGrain = null, Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType? aggregationType = default(Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType?), string dimensionFilter = null, string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals HealthModelResourceSignals(string authenticationSetting = null, Azure.Core.ResourceIdentifier azureResourceId = null, string azureResourceKind = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal> signals = null, Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal resourceHealth = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup HealthModelSignalAggregationGroup(string name = null, string displayName = null, Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType? aggregationType = default(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType?), System.Collections.Generic.IEnumerable<string> members = null, double? degradedThreshold = default(double?), double? unhealthyThreshold = default(double?), Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit? unit = default(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit?), bool? shouldIgnoreUnknown = default(bool?), Azure.ResourceManager.CloudHealth.Models.EntityHealthState? aggregatedHealthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState?), System.Collections.Generic.IEnumerable<string> unresolvedMembers = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration HealthModelSignalConfiguration(string signalId = null, string displayName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceType> applicableResourceTypes = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration configuration = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.HealthModelSignalDefinitionData HealthModelSignalDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties HealthModelSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string signalKind = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), System.Collections.Generic.IDictionary<string, string> labels = null, string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), System.Collections.Generic.IDictionary<string, string> labels = null, string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), string queryText = null, string timeGrain = null, string valueColumnName = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties HealthModelSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string signalKind = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), System.Collections.Generic.IDictionary<string, string> tags = null, string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint HealthModelSignalHistoryDataPoint(System.DateTimeOffset occurredOn = default(System.DateTimeOffset), double? value = default(double?), Azure.ResourceManager.CloudHealth.Models.EntityHealthState healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState), string additionalContext = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties HealthModelSignalInstanceProperties(string signalKind = null, string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus status = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration HealthModelSignalRecommendationConfiguration(string signalKind = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus HealthModelSignalStatus(Azure.ResourceManager.CloudHealth.Models.EntityHealthState? healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState?), double? value = default(double?), System.DateTimeOffset? reportedOn = default(System.DateTimeOffset?), string error = null, string additionalContext = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule HealthReportEvaluationRule(Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule degradedRule = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule unhealthyRule = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthStateTransition HealthStateTransition(Azure.ResourceManager.CloudHealth.Models.EntityHealthState previousState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState), Azure.ResourceManager.CloudHealth.Models.EntityHealthState newState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState), System.DateTimeOffset occurredOn = default(System.DateTimeOffset), string reason = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration LogAnalyticsQueryRecommendationConfiguration(string queryText = null, string timeGrain = null, string valueColumnName = null, System.Collections.Generic.IEnumerable<string> requiredTables = null, System.Collections.Generic.IEnumerable<string> requiredDiagnosticSettingCategories = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), System.Collections.Generic.IDictionary<string, string> tags = null, string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null, string queryText = null, string timeGrain = null, string valueColumnName = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal LogAnalyticsSignal(string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus status = null, string queryText = null, string timeGrain = null, string valueColumnName = null, string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals LogAnalyticsSignals(string authenticationSetting = null, Azure.Core.ResourceIdentifier logAnalyticsWorkspaceResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal> signals = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties ManagedIdentityAuthenticationSettingProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string managedIdentityName = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), System.Collections.Generic.IDictionary<string, string> labels = null, string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), string queryText = null, string timeGrain = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), System.Collections.Generic.IDictionary<string, string> labels = null, string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), string metricNamespace = null, string metricName = null, string timeGrain = null, Azure.ResourceManager.CloudHealth.Models.MetricAggregationType aggregationType = default(Azure.ResourceManager.CloudHealth.Models.MetricAggregationType), string dimension = null, string dimensionFilter = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals MonitorWorkspaceSignals(string authenticationSetting = null, Azure.Core.ResourceIdentifier azureMonitorWorkspaceResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal> signals = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration PrometheusMetricsRecommendationConfiguration(string queryText = null, string timeGrain = null, System.Collections.Generic.IEnumerable<string> requiredMetrics = null, System.Collections.Generic.IEnumerable<string> requiredScrapeTargets = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal PrometheusMetricsSignal(string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus status = null, string queryText = null, string timeGrain = null, string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), System.Collections.Generic.IDictionary<string, string> tags = null, string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null, string queryText = null, string timeGrain = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification ResourceGraphQuerySpecification(string resourceGraphQuery = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal ResourceHealthSignal(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior? enabled = default(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior?), string signalName = null, Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus status = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus ResourceHealthSignalStatus(Azure.ResourceManager.CloudHealth.Models.EntityHealthState? healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState?), double? value = default(double?), System.DateTimeOffset? reportedOn = default(System.DateTimeOffset?), string error = null, string additionalContext = null, Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState? availabilityState = default(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState?), Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory? category = default(Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory?), string detailedStatus = null, string summary = null, Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType? reasonType = default(Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType?), Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity? reasonChronicity = default(Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity?), System.DateTimeOffset? availabilityReportedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), System.Collections.Generic.IDictionary<string, string> tags = null, string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null, string metricNamespace = null, string metricName = null, string timeGrain = null, Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType aggregationType = default(Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType), string dimensionFilter = null) { throw null; }
     }
-    public partial class AzureMonitorWorkspaceSignalGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup>
+    public partial class AzureResourceMetricRecommendationConfiguration : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration>
     {
-        public AzureMonitorWorkspaceSignalGroup(string authenticationSetting, Azure.Core.ResourceIdentifier azureMonitorWorkspaceResourceId) { }
-        public string AuthenticationSetting { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier AzureMonitorWorkspaceResourceId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment> SignalAssignments { get { throw null; } }
+        internal AzureResourceMetricRecommendationConfiguration() { }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType AggregationType { get { throw null; } }
+        public string DimensionFilter { get { throw null; } }
+        public string MetricName { get { throw null; } }
+        public string MetricNamespace { get { throw null; } }
+        public string TimeGrain { get { throw null; } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceMetricRecommendationConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntityAddDataAnnotationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>
+    {
+        public EntityAddDataAnnotationContent(System.Collections.Generic.IDictionary<string, string> annotationDetails) { }
+        public System.Collections.Generic.IDictionary<string, string> AnnotationDetails { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AzureResourceSignalGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup>
-    {
-        public AzureResourceSignalGroup(string authenticationSetting, Azure.Core.ResourceIdentifier azureResourceId) { }
-        public string AuthenticationSetting { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment> SignalAssignments { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DependenciesAggregationType : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DependenciesAggregationType(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType Thresholds { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType WorstOf { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType left, Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType left, Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DependenciesSignalGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup>
-    {
-        public DependenciesSignalGroup(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType aggregationType) { }
-        public Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType AggregationType { get { throw null; } set { } }
-        public string DegradedThreshold { get { throw null; } set { } }
-        public string UnhealthyThreshold { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DiscoveryRuleRecommendedSignalsBehavior : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DiscoveryRuleRecommendedSignalsBehavior(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior Disabled { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior left, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior left, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DiscoveryRuleRelationshipDiscoveryBehavior : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DiscoveryRuleRelationshipDiscoveryBehavior(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior Disabled { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior left, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior left, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DynamicDetectionRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule>
-    {
-        public DynamicDetectionRule(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel dynamicThresholdModel, float modelSensitivity, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection dynamicThresholdDirection) { }
-        public Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection DynamicThresholdDirection { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel DynamicThresholdModel { get { throw null; } set { } }
-        public float ModelSensitivity { get { throw null; } set { } }
-        public System.DateTimeOffset? TrainingStartOn { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DynamicThresholdDirection : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DynamicThresholdDirection(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection GreaterOrLowerThan { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection GreaterThan { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection LowerThan { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DynamicThresholdModel : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DynamicThresholdModel(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel AnomalyDetection { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel right) { throw null; }
-        public override string ToString() { throw null; }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EntityAlertConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration>
     {
@@ -521,7 +497,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ActionGroupIds { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity Severity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -533,7 +512,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public EntityAlerts() { }
         public Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration Degraded { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration Unhealthy { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityAlerts JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityAlerts PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.EntityAlerts System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAlerts>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAlerts>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.EntityAlerts System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityAlerts>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -552,26 +534,115 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity Sev3 { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity Sev4 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity left, Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity left, Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EntityCoordinates : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityCoordinates>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityCoordinates>
+    public partial class EntityDataAnnotation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation>
     {
-        public EntityCoordinates(float x, float y) { }
-        public float X { get { throw null; } set { } }
-        public float Y { get { throw null; } set { } }
+        internal EntityDataAnnotation() { }
+        public System.Collections.Generic.IDictionary<string, string> AnnotationDetails { get { throw null; } }
+        public string AnnotationId { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string Description { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.EntityCoordinates System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityCoordinates>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityCoordinates>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.EntityCoordinates System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityCoordinates>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityCoordinates>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityCoordinates>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EntityDynamicThresholdSensitivity : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EntityDynamicThresholdSensitivity(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity High { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity Low { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity Medium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity left, Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity left, Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class EntityGetDataAnnotationsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent>
+    {
+        public EntityGetDataAnnotationsContent() { }
+        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
+        public string NextMarker { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntityGetDataAnnotationsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult>
+    {
+        internal EntityGetDataAnnotationsResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation> Annotations { get { throw null; } }
+        public string EntityName { get { throw null; } }
+        public string NextMarker { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntityGetSignalRecommendationsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult>
+    {
+        internal EntityGetSignalRecommendationsResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration> RecommendedConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration> RecommendedSignals { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntityHealthReportContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent>
+    {
+        public EntityHealthReportContent(string signalName, Azure.ResourceManager.CloudHealth.Models.EntityHealthState healthState) { }
+        public string AdditionalContext { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule EvaluationRules { get { throw null; } set { } }
+        public int? ExpiresInMinutes { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.EntityHealthState HealthState { get { throw null; } }
+        public string SignalName { get { throw null; } }
+        public double? Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityHealthState : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.EntityHealthState>
@@ -580,88 +651,118 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private readonly int _dummyPrimitive;
         public EntityHealthState(string value) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityHealthState Degraded { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntityHealthState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntityHealthState Error { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntityHealthState Healthy { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityHealthState Unhealthy { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntityHealthState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntityHealthState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntityHealthState left, Azure.ResourceManager.CloudHealth.Models.EntityHealthState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityHealthState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityHealthState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.EntityHealthState left, Azure.ResourceManager.CloudHealth.Models.EntityHealthState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EntityIcon : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityIcon>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityIcon>
+    public partial class EntityHistoryContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent>
     {
-        public EntityIcon(string iconName) { }
-        public string CustomData { get { throw null; } set { } }
-        public string IconName { get { throw null; } set { } }
+        public EntityHistoryContent() { }
+        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
+        public string NextMarker { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.EntityIcon System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityIcon>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityIcon>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.EntityIcon System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityIcon>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityIcon>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityIcon>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EntityImpact : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.EntityImpact>
+    public partial class EntityHistoryResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EntityImpact(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.EntityImpact Limited { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntityImpact Standard { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntityImpact Suppressed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntityImpact other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntityImpact left, Azure.ResourceManager.CloudHealth.Models.EntityImpact right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityImpact (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.EntityImpact left, Azure.ResourceManager.CloudHealth.Models.EntityImpact right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class EntitySignalAssignment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment>
-    {
-        public EntitySignalAssignment(System.Collections.Generic.IEnumerable<string> signalDefinitions) { }
-        public System.Collections.Generic.IList<string> SignalDefinitions { get { throw null; } }
+        internal EntityHistoryResult() { }
+        public string EntityName { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition> History { get { throw null; } }
+        public string NextMarker { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EntitySignalEvaluationRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule>
     {
-        public EntitySignalEvaluationRule() { }
+        public EntitySignalEvaluationRule(Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule unhealthyRule) { }
         public Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule DegradedRule { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.DynamicDetectionRule DynamicDetectionRule { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule UnhealthyRule { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EntitySignalGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup>
+    public partial class EntitySignalGroups : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups>
     {
-        public EntitySignalGroup() { }
-        public Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup AzureLogAnalytics { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.AzureMonitorWorkspaceSignalGroup AzureMonitorWorkspace { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.AzureResourceSignalGroup AzureResource { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroup Dependencies { get { throw null; } set { } }
+        public EntitySignalGroups() { }
+        public Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals AzureLogAnalytics { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals AzureMonitorWorkspace { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals AzureResource { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup Dependencies { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal> ExternalSignals { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntitySignalHistoryContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent>
+    {
+        public EntitySignalHistoryContent(string signalName) { }
+        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
+        public string NextMarker { get { throw null; } set { } }
+        public string SignalName { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntitySignalHistoryResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult>
+    {
+        internal EntitySignalHistoryResult() { }
+        public string EntityName { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint> History { get { throw null; } }
+        public string NextMarker { get { throw null; } }
+        public string SignalName { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntitySignalOperator : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator>
@@ -669,18 +770,19 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EntitySignalOperator(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator EqualsValue { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator GreaterOrEquals { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator Dynamic { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator Equal { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator GreaterThan { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator LowerOrEquals { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator LowerThan { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator GreaterThanOrEqual { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator LessThan { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator LessThanOrEqual { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator NotEqual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator left, Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator left, Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -690,28 +792,32 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EntitySignalRefreshInterval(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT10M { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT1H { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT1M { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT2H { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT30M { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT5M { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval FifteenMinutes { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval FiveMinutes { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval OneHour { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval OneMinute { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval TenMinutes { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval ThirtyMinutes { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval TwoHours { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval left, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval left, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class EntitySignalThresholdRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule>
     {
-        public EntitySignalThresholdRule(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator @operator, string threshold) { }
-        public Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator Operator { get { throw null; } set { } }
-        public string Threshold { get { throw null; } set { } }
+        public EntitySignalThresholdRule(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator signalOperator) { }
+        public Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? Sensitivity { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator SignalOperator { get { throw null; } set { } }
+        public double? Threshold { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -720,84 +826,243 @@ namespace Azure.ResourceManager.CloudHealth.Models
     }
     public abstract partial class HealthModelAuthenticationSettingProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties>
     {
-        protected HealthModelAuthenticationSettingProperties() { }
+        internal HealthModelAuthenticationSettingProperties() { }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class HealthModelDependenciesSignalGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup>
+    {
+        public HealthModelDependenciesSignalGroup(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType aggregationType) { }
+        public Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType AggregationType { get { throw null; } set { } }
+        public double? DegradedThreshold { get { throw null; } set { } }
+        public bool? ShouldIgnoreUnknown { get { throw null; } set { } }
+        public double? UnhealthyThreshold { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit? Unit { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDependenciesSignalGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthModelDiscoveryError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError>
+    {
+        internal HealthModelDiscoveryError() { }
+        public System.Collections.Generic.IReadOnlyList<string> Context { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class HealthModelDiscoveryRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties>
     {
-        public HealthModelDiscoveryRuleProperties(string resourceGraphQuery, string authenticationSetting, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, string entityName) { }
-        public Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior AddRecommendedSignals { get { throw null; } set { } }
+        public HealthModelDiscoveryRuleProperties(string authenticationSetting, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification specification) { }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior AddRecommendedSignals { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior? AddResourceHealthSignal { get { throw null; } set { } }
         public string AuthenticationSetting { get { throw null; } set { } }
-        public System.DateTimeOffset? DeletedOn { get { throw null; } }
-        public Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior DiscoverRelationships { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior DiscoverRelationships { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string EntityName { get { throw null; } }
-        public string ErrorMessage { get { throw null; } }
-        public int? NumberOfDiscoveredEntities { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryError Error { get { throw null; } }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGraphQuery { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification Specification { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthModelDiscoveryRuleRecommendedSignalsBehavior : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthModelDiscoveryRuleRecommendedSignalsBehavior(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior Disabled { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior left, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior left, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRecommendedSignalsBehavior right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthModelDiscoveryRuleRelationshipDiscoveryBehavior : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthModelDiscoveryRuleRelationshipDiscoveryBehavior(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior Disabled { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior left, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior left, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleRelationshipDiscoveryBehavior right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class HealthModelDiscoveryRuleSpecification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification>
+    {
+        internal HealthModelDiscoveryRuleSpecification() { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthModelEntityCoordinates : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates>
+    {
+        public HealthModelEntityCoordinates(float x, float y) { }
+        public float X { get { throw null; } set { } }
+        public float Y { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthModelEntityIcon : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon>
+    {
+        public HealthModelEntityIcon(string iconName) { }
+        public string CustomData { get { throw null; } set { } }
+        public string IconName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthModelEntityImpact : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthModelEntityImpact(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact Limited { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact Standard { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact Suppressed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact left, Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact left, Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class HealthModelEntityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties>
     {
         public HealthModelEntityProperties() { }
         public Azure.ResourceManager.CloudHealth.Models.EntityAlerts Alerts { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.EntityCoordinates CanvasPosition { get { throw null; } set { } }
-        public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelEntityCoordinates CanvasPosition { get { throw null; } set { } }
         public string DiscoveredBy { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public float? HealthObjective { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntityHealthState? HealthState { get { throw null; } }
-        public Azure.ResourceManager.CloudHealth.Models.EntityIcon Icon { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.EntityImpact? Impact { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelEntityIcon Icon { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelEntityImpact? Impact { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.CloudHealth.Models.EntitySignalGroup Signals { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup> SignalAggregationGroups { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups SignalGroups { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class HealthModelExternalSignal : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal>
+    {
+        internal HealthModelExternalSignal() { }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule EvaluationRules { get { throw null; } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelExternalSignal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthModelMetricAggregationType : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthModelMetricAggregationType(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType Average { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType Count { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType Maximum { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType Minimum { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType None { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType Total { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType left, Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType left, Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class HealthModelPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelPatch>
     {
         public HealthModelPatch() { }
-        public Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings HealthModelUpdateDiscovery { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.HealthModelPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.HealthModelPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HealthModelProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelProperties>
-    {
-        public HealthModelProperties() { }
-        public string DataplaneEndpoint { get { throw null; } }
-        public Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings Discovery { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? ProvisioningState { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.HealthModelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.HealthModelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HealthModelProvisioningState : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState>
@@ -811,12 +1076,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState left, Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState left, Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -824,130 +1088,562 @@ namespace Azure.ResourceManager.CloudHealth.Models
     {
         public HealthModelRelationshipProperties(string parentEntityName, string childEntityName) { }
         public string ChildEntityName { get { throw null; } set { } }
-        public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public string DiscoveredBy { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } }
         public string ParentEntityName { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class HealthModelSignalDefinitionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties>
+    public partial class HealthModelResourceMetricSignal : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal>
     {
-        protected HealthModelSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules) { }
+        public HealthModelResourceMetricSignal(string name) { }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType? AggregationType { get { throw null; } set { } }
         public string DataUnit { get { throw null; } set { } }
-        public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        public string DimensionFilter { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule EvaluationRules { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } }
+        public string MetricName { get { throw null; } set { } }
+        public string MetricNamespace { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? RefreshInterval { get { throw null; } set { } }
+        public string TimeGrain { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthModelResourceSignals : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals>
+    {
+        public HealthModelResourceSignals(string authenticationSetting, Azure.Core.ResourceIdentifier azureResourceId) { }
+        public string AuthenticationSetting { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } set { } }
+        public string AzureResourceKind { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal ResourceHealth { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceMetricSignal> Signals { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelResourceSignals>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthModelSignalAggregationGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup>
+    {
+        public HealthModelSignalAggregationGroup(string name, System.Collections.Generic.IEnumerable<string> members) { }
+        public Azure.ResourceManager.CloudHealth.Models.EntityHealthState? AggregatedHealthState { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType? AggregationType { get { throw null; } set { } }
+        public double? DegradedThreshold { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Members { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public bool? ShouldIgnoreUnknown { get { throw null; } set { } }
+        public double? UnhealthyThreshold { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit? Unit { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> UnresolvedMembers { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalAggregationGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthModelSignalConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration>
+    {
+        internal HealthModelSignalConfiguration() { }
+        public System.Collections.Generic.IList<Azure.Core.ResourceType> ApplicableResourceTypes { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration Configuration { get { throw null; } }
+        public string DataUnit { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule EvaluationRules { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? RefreshInterval { get { throw null; } }
+        public string SignalId { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class HealthModelSignalDefinitionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties>
+    {
+        internal HealthModelSignalDefinitionProperties() { }
+        public string DataUnit { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule EvaluationRules { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? RefreshInterval { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class HealthModelSignalHistoryDataPoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint>
+    {
+        internal HealthModelSignalHistoryDataPoint() { }
+        public string AdditionalContext { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.EntityHealthState HealthState { get { throw null; } }
+        public System.DateTimeOffset OccurredOn { get { throw null; } }
+        public double? Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalHistoryDataPoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class HealthModelSignalInstanceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties>
+    {
+        internal HealthModelSignalInstanceProperties() { }
+        public string Name { get { throw null; } set { } }
+        public string SignalDefinitionName { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class HealthModelSignalRecommendationConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration>
+    {
+        internal HealthModelSignalRecommendationConfiguration() { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthModelSignalStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus>
+    {
+        internal HealthModelSignalStatus() { }
+        public string AdditionalContext { get { throw null; } }
+        public string Error { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.EntityHealthState? HealthState { get { throw null; } }
+        public System.DateTimeOffset? ReportedOn { get { throw null; } }
+        public double? Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthModelSignalStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthReportEvaluationRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule>
+    {
+        public HealthReportEvaluationRule(Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule unhealthyRule) { }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule DegradedRule { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRule UnhealthyRule { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthStateAggregationType : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthStateAggregationType(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType BestOf { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType MaxNotHealthy { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType MinHealthy { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType WorstOf { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType left, Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType left, Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthStateAggregationUnit : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthStateAggregationUnit(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit Absolute { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit Percentage { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit left, Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit left, Azure.ResourceManager.CloudHealth.Models.HealthStateAggregationUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class HealthStateTransition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition>
+    {
+        internal HealthStateTransition() { }
+        public Azure.ResourceManager.CloudHealth.Models.EntityHealthState NewState { get { throw null; } }
+        public System.DateTimeOffset OccurredOn { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.EntityHealthState PreviousState { get { throw null; } }
+        public string Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthStateTransition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.HealthStateTransition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.HealthStateTransition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.HealthStateTransition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LogAnalyticsQueryRecommendationConfiguration : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration>
+    {
+        internal LogAnalyticsQueryRecommendationConfiguration() { }
+        public string QueryText { get { throw null; } }
+        public System.Collections.Generic.IList<string> RequiredDiagnosticSettingCategories { get { throw null; } }
+        public System.Collections.Generic.IList<string> RequiredTables { get { throw null; } }
+        public string TimeGrain { get { throw null; } }
+        public string ValueColumnName { get { throw null; } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQueryRecommendationConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class LogAnalyticsQuerySignalDefinitionProperties : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties>
     {
-        public LogAnalyticsQuerySignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules, string queryText) : base (default(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule)) { }
+        public LogAnalyticsQuerySignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules, string queryText) { }
         public string QueryText { get { throw null; } set { } }
         public string TimeGrain { get { throw null; } set { } }
         public string ValueColumnName { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsQuerySignalDefinitionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LogAnalyticsSignalGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup>
+    public partial class LogAnalyticsSignal : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal>
     {
-        public LogAnalyticsSignalGroup(string authenticationSetting, Azure.Core.ResourceIdentifier logAnalyticsWorkspaceResourceId) { }
+        public LogAnalyticsSignal(string name) { }
+        public string DataUnit { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule EvaluationRules { get { throw null; } set { } }
+        public string QueryText { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? RefreshInterval { get { throw null; } set { } }
+        public string TimeGrain { get { throw null; } set { } }
+        public string ValueColumnName { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LogAnalyticsSignals : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>
+    {
+        public LogAnalyticsSignals(string authenticationSetting, Azure.Core.ResourceIdentifier logAnalyticsWorkspaceResourceId) { }
         public string AuthenticationSetting { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceResourceId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.EntitySignalAssignment> SignalAssignments { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignal> Signals { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignalGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedIdentityAuthenticationSettingProperties : Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties>
     {
         public ManagedIdentityAuthenticationSettingProperties(string managedIdentityName) { }
         public string ManagedIdentityName { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MetricAggregationType : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.MetricAggregationType>
+    public partial class MonitorWorkspaceSignals : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MetricAggregationType(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.MetricAggregationType Average { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.MetricAggregationType Count { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.MetricAggregationType Maximum { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.MetricAggregationType Minimum { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.MetricAggregationType None { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.MetricAggregationType Total { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.MetricAggregationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.MetricAggregationType left, Azure.ResourceManager.CloudHealth.Models.MetricAggregationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.MetricAggregationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.MetricAggregationType left, Azure.ResourceManager.CloudHealth.Models.MetricAggregationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ModelDiscoverySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings>
-    {
-        public ModelDiscoverySettings(string scope, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals) { }
-        public Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior AddRecommendedSignals { get { throw null; } set { } }
-        public string Identity { get { throw null; } set { } }
-        public string Scope { get { throw null; } set { } }
+        public MonitorWorkspaceSignals(string authenticationSetting, Azure.Core.ResourceIdentifier azureMonitorWorkspaceResourceId) { }
+        public string AuthenticationSetting { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AzureMonitorWorkspaceResourceId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal> Signals { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ModelDiscoverySettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PrometheusMetricsRecommendationConfiguration : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration>
+    {
+        internal PrometheusMetricsRecommendationConfiguration() { }
+        public string QueryText { get { throw null; } }
+        public System.Collections.Generic.IList<string> RequiredMetrics { get { throw null; } }
+        public System.Collections.Generic.IList<string> RequiredScrapeTargets { get { throw null; } }
+        public string TimeGrain { get { throw null; } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalRecommendationConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsRecommendationConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PrometheusMetricsSignal : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal>
+    {
+        public PrometheusMetricsSignal(string name) { }
+        public string DataUnit { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule EvaluationRules { get { throw null; } set { } }
+        public string QueryText { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? RefreshInterval { get { throw null; } set { } }
+        public string TimeGrain { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalInstanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PrometheusMetricsSignalDefinitionProperties : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties>
     {
-        public PrometheusMetricsSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules, string queryText) : base (default(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule)) { }
+        public PrometheusMetricsSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules, string queryText) { }
         public string QueryText { get { throw null; } set { } }
         public string TimeGrain { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.PrometheusMetricsSignalDefinitionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ResourceGraphQuerySpecification : Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification>
+    {
+        public ResourceGraphQuerySpecification(string resourceGraphQuery) { }
+        public string ResourceGraphQuery { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleSpecification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceGraphQuerySpecification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthAvailabilityState : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthAvailabilityState(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState Available { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState Degraded { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState Unavailable { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthAvailabilityStateSignalBehavior : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthAvailabilityStateSignalBehavior(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior Disabled { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthCategory : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthCategory(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory Planned { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory Unplanned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthReasonChronicity : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthReasonChronicity(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity Persistent { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity Transient { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceHealthReasonType : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceHealthReasonType(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType Planned { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType Unplanned { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType UserInitiated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType left, Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResourceHealthSignal : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal>
+    {
+        public ResourceHealthSignal() { }
+        public Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior? Enabled { get { throw null; } set { } }
+        public string SignalName { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResourceHealthSignalStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus>
+    {
+        internal ResourceHealthSignalStatus() { }
+        public string AdditionalContext { get { throw null; } }
+        public System.DateTimeOffset? AvailabilityReportedOn { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityState? AvailabilityState { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.ResourceHealthCategory? Category { get { throw null; } }
+        public string DetailedStatus { get { throw null; } }
+        public string Error { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.EntityHealthState? HealthState { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonChronicity? ReasonChronicity { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.ResourceHealthReasonType? ReasonType { get { throw null; } }
+        public System.DateTimeOffset? ReportedOn { get { throw null; } }
+        public string Summary { get { throw null; } }
+        public double? Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignalStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ResourceMetricSignalDefinitionProperties : Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties>
     {
-        public ResourceMetricSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules, string metricNamespace, string metricName, string timeGrain, Azure.ResourceManager.CloudHealth.Models.MetricAggregationType aggregationType) : base (default(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule)) { }
-        public Azure.ResourceManager.CloudHealth.Models.MetricAggregationType AggregationType { get { throw null; } set { } }
-        public string Dimension { get { throw null; } set { } }
+        public ResourceMetricSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules, string metricNamespace, string metricName, string timeGrain, Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType aggregationType) { }
+        public Azure.ResourceManager.CloudHealth.Models.HealthModelMetricAggregationType AggregationType { get { throw null; } set { } }
         public string DimensionFilter { get { throw null; } set { } }
         public string MetricName { get { throw null; } set { } }
         public string MetricNamespace { get { throw null; } set { } }
         public string TimeGrain { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CloudHealth.Models.HealthModelSignalDefinitionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

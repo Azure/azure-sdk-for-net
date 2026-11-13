@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the activity parameter. </summary>
     public partial class AutomationActivityParameterDefinition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterDefinition"/>. </summary>
         internal AutomationActivityParameterDefinition()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="canTakeValueValueFromRemainingArguments"> Gets or sets a Boolean value that indicates true if the cmdlet parameter accepts all the remaining command-line arguments that are associated with this parameter in the form of an array. false if the cmdlet parameter does not accept all the remaining argument values. </param>
         /// <param name="description"> Gets or sets the description of the activity parameter. </param>
         /// <param name="validationSet"> Gets or sets the validation set of activity parameter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationActivityParameterDefinition(string name, string activityParameterType, bool? isMandatory, bool? isDynamic, long? position, bool? canTakeValueFromPipeline, bool? canTakeValueFromPipelineByPropertyName, bool? canTakeValueValueFromRemainingArguments, string description, IReadOnlyList<AutomationActivityParameterValidationSet> validationSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationActivityParameterDefinition(string name, string activityParameterType, bool? isMandatory, bool? isDynamic, long? position, bool? canTakeValueFromPipeline, bool? canTakeValueFromPipelineByPropertyName, bool? canTakeValueValueFromRemainingArguments, string description, IReadOnlyList<AutomationActivityParameterValidationSet> validationSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ActivityParameterType = activityParameterType;
@@ -75,27 +47,36 @@ namespace Azure.ResourceManager.Automation.Models
             CanTakeValueValueFromRemainingArguments = canTakeValueValueFromRemainingArguments;
             Description = description;
             ValidationSet = validationSet;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the name of the activity parameter. </summary>
         public string Name { get; }
+
         /// <summary> Gets or sets the type of the activity parameter. </summary>
         public string ActivityParameterType { get; }
+
         /// <summary> Gets or sets a Boolean value that indicates true if the parameter is required. If the value is false, the parameter is optional. </summary>
         public bool? IsMandatory { get; }
+
         /// <summary> Gets or sets a Boolean value that indicates true if the parameter is dynamic. </summary>
         public bool? IsDynamic { get; }
+
         /// <summary> Gets or sets the position of the activity parameter. </summary>
         public long? Position { get; }
+
         /// <summary> Gets or sets a Boolean value that indicates true if the parameter can take values from the incoming pipeline objects. This setting is used if the cmdlet must access the complete input object. false indicates that the parameter cannot take values from the complete input object. </summary>
         public bool? CanTakeValueFromPipeline { get; }
+
         /// <summary> Gets or sets a Boolean value that indicates true if the parameter can be filled from a property of the incoming pipeline object that has the same name as this parameter. false indicates that the parameter cannot be filled from the incoming pipeline object property with the same name. </summary>
         public bool? CanTakeValueFromPipelineByPropertyName { get; }
+
         /// <summary> Gets or sets a Boolean value that indicates true if the cmdlet parameter accepts all the remaining command-line arguments that are associated with this parameter in the form of an array. false if the cmdlet parameter does not accept all the remaining argument values. </summary>
         public bool? CanTakeValueValueFromRemainingArguments { get; }
+
         /// <summary> Gets or sets the description of the activity parameter. </summary>
         public string Description { get; }
+
         /// <summary> Gets or sets the validation set of activity parameter. </summary>
         public IReadOnlyList<AutomationActivityParameterValidationSet> ValidationSet { get; }
     }

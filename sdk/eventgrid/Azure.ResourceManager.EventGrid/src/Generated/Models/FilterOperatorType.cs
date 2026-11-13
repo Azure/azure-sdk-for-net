@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,89 +15,142 @@ namespace Azure.ResourceManager.EventGrid.Models
     internal readonly partial struct FilterOperatorType : IEquatable<FilterOperatorType>
     {
         private readonly string _value;
+        /// <summary> NumberIn. </summary>
+        private const string NumberInValue = "NumberIn";
+        /// <summary> NumberNotIn. </summary>
+        private const string NumberNotInValue = "NumberNotIn";
+        /// <summary> NumberLessThan. </summary>
+        private const string NumberLessThanValue = "NumberLessThan";
+        /// <summary> NumberGreaterThan. </summary>
+        private const string NumberGreaterThanValue = "NumberGreaterThan";
+        /// <summary> NumberLessThanOrEquals. </summary>
+        private const string NumberLessThanOrEqualsValue = "NumberLessThanOrEquals";
+        /// <summary> NumberGreaterThanOrEquals. </summary>
+        private const string NumberGreaterThanOrEqualsValue = "NumberGreaterThanOrEquals";
+        /// <summary> BoolEquals. </summary>
+        private const string BoolEqualsValue = "BoolEquals";
+        /// <summary> StringIn. </summary>
+        private const string StringInValue = "StringIn";
+        /// <summary> StringNotIn. </summary>
+        private const string StringNotInValue = "StringNotIn";
+        /// <summary> StringBeginsWith. </summary>
+        private const string StringBeginsWithValue = "StringBeginsWith";
+        /// <summary> StringEndsWith. </summary>
+        private const string StringEndsWithValue = "StringEndsWith";
+        /// <summary> StringContains. </summary>
+        private const string StringContainsValue = "StringContains";
+        /// <summary> NumberInRange. </summary>
+        private const string NumberInRangeValue = "NumberInRange";
+        /// <summary> NumberNotInRange. </summary>
+        private const string NumberNotInRangeValue = "NumberNotInRange";
+        /// <summary> StringNotBeginsWith. </summary>
+        private const string StringNotBeginsWithValue = "StringNotBeginsWith";
+        /// <summary> StringNotEndsWith. </summary>
+        private const string StringNotEndsWithValue = "StringNotEndsWith";
+        /// <summary> StringNotContains. </summary>
+        private const string StringNotContainsValue = "StringNotContains";
+        /// <summary> IsNullOrUndefined. </summary>
+        private const string IsNullOrUndefinedValue = "IsNullOrUndefined";
+        /// <summary> IsNotNull. </summary>
+        private const string IsNotNullValue = "IsNotNull";
 
         /// <summary> Initializes a new instance of <see cref="FilterOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FilterOperatorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NumberInValue = "NumberIn";
-        private const string NumberNotInValue = "NumberNotIn";
-        private const string NumberLessThanValue = "NumberLessThan";
-        private const string NumberGreaterThanValue = "NumberGreaterThan";
-        private const string NumberLessThanOrEqualsValue = "NumberLessThanOrEquals";
-        private const string NumberGreaterThanOrEqualsValue = "NumberGreaterThanOrEquals";
-        private const string BoolEqualsValue = "BoolEquals";
-        private const string StringInValue = "StringIn";
-        private const string StringNotInValue = "StringNotIn";
-        private const string StringBeginsWithValue = "StringBeginsWith";
-        private const string StringEndsWithValue = "StringEndsWith";
-        private const string StringContainsValue = "StringContains";
-        private const string NumberInRangeValue = "NumberInRange";
-        private const string NumberNotInRangeValue = "NumberNotInRange";
-        private const string StringNotBeginsWithValue = "StringNotBeginsWith";
-        private const string StringNotEndsWithValue = "StringNotEndsWith";
-        private const string StringNotContainsValue = "StringNotContains";
-        private const string IsNullOrUndefinedValue = "IsNullOrUndefined";
-        private const string IsNotNullValue = "IsNotNull";
+            _value = value;
+        }
 
         /// <summary> NumberIn. </summary>
         public static FilterOperatorType NumberIn { get; } = new FilterOperatorType(NumberInValue);
+
         /// <summary> NumberNotIn. </summary>
         public static FilterOperatorType NumberNotIn { get; } = new FilterOperatorType(NumberNotInValue);
+
         /// <summary> NumberLessThan. </summary>
         public static FilterOperatorType NumberLessThan { get; } = new FilterOperatorType(NumberLessThanValue);
+
         /// <summary> NumberGreaterThan. </summary>
         public static FilterOperatorType NumberGreaterThan { get; } = new FilterOperatorType(NumberGreaterThanValue);
+
         /// <summary> NumberLessThanOrEquals. </summary>
         public static FilterOperatorType NumberLessThanOrEquals { get; } = new FilterOperatorType(NumberLessThanOrEqualsValue);
+
         /// <summary> NumberGreaterThanOrEquals. </summary>
         public static FilterOperatorType NumberGreaterThanOrEquals { get; } = new FilterOperatorType(NumberGreaterThanOrEqualsValue);
+
         /// <summary> BoolEquals. </summary>
         public static FilterOperatorType BoolEquals { get; } = new FilterOperatorType(BoolEqualsValue);
+
         /// <summary> StringIn. </summary>
         public static FilterOperatorType StringIn { get; } = new FilterOperatorType(StringInValue);
+
         /// <summary> StringNotIn. </summary>
         public static FilterOperatorType StringNotIn { get; } = new FilterOperatorType(StringNotInValue);
+
         /// <summary> StringBeginsWith. </summary>
         public static FilterOperatorType StringBeginsWith { get; } = new FilterOperatorType(StringBeginsWithValue);
+
         /// <summary> StringEndsWith. </summary>
         public static FilterOperatorType StringEndsWith { get; } = new FilterOperatorType(StringEndsWithValue);
+
         /// <summary> StringContains. </summary>
         public static FilterOperatorType StringContains { get; } = new FilterOperatorType(StringContainsValue);
+
         /// <summary> NumberInRange. </summary>
         public static FilterOperatorType NumberInRange { get; } = new FilterOperatorType(NumberInRangeValue);
+
         /// <summary> NumberNotInRange. </summary>
         public static FilterOperatorType NumberNotInRange { get; } = new FilterOperatorType(NumberNotInRangeValue);
+
         /// <summary> StringNotBeginsWith. </summary>
         public static FilterOperatorType StringNotBeginsWith { get; } = new FilterOperatorType(StringNotBeginsWithValue);
+
         /// <summary> StringNotEndsWith. </summary>
         public static FilterOperatorType StringNotEndsWith { get; } = new FilterOperatorType(StringNotEndsWithValue);
+
         /// <summary> StringNotContains. </summary>
         public static FilterOperatorType StringNotContains { get; } = new FilterOperatorType(StringNotContainsValue);
+
         /// <summary> IsNullOrUndefined. </summary>
         public static FilterOperatorType IsNullOrUndefined { get; } = new FilterOperatorType(IsNullOrUndefinedValue);
+
         /// <summary> IsNotNull. </summary>
         public static FilterOperatorType IsNotNull { get; } = new FilterOperatorType(IsNotNullValue);
+
         /// <summary> Determines if two <see cref="FilterOperatorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FilterOperatorType left, FilterOperatorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FilterOperatorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FilterOperatorType left, FilterOperatorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FilterOperatorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FilterOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FilterOperatorType(string value) => new FilterOperatorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FilterOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FilterOperatorType?(string value) => value == null ? null : new FilterOperatorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FilterOperatorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FilterOperatorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

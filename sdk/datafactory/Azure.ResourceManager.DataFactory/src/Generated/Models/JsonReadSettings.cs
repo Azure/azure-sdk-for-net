@@ -14,30 +14,20 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class JsonReadSettings : FormatReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="JsonReadSettings"/>. </summary>
-        public JsonReadSettings()
+        public JsonReadSettings() : base("JsonReadSettings")
         {
-            FormatReadSettingsType = "JsonReadSettings";
         }
 
         /// <summary> Initializes a new instance of <see cref="JsonReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="compressionProperties">
-        /// Compression settings.
-        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
-        /// </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="compressionProperties"> Compression settings. </param>
         internal JsonReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
         {
             CompressionProperties = compressionProperties;
-            FormatReadSettingsType = formatReadSettingsType ?? "JsonReadSettings";
         }
 
-        /// <summary>
-        /// Compression settings.
-        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
-        /// </summary>
+        /// <summary> Compression settings. </summary>
         public CompressionReadSettings CompressionProperties { get; set; }
     }
 }

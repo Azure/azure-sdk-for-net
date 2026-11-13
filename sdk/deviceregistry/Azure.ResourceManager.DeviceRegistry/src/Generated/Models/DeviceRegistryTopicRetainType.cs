@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public readonly partial struct DeviceRegistryTopicRetainType : IEquatable<DeviceRegistryTopicRetainType>
     {
         private readonly string _value;
+        /// <summary> Retain the messages. </summary>
+        private const string KeepValue = "Keep";
+        /// <summary> Never retain messages. </summary>
+        private const string NeverValue = "Never";
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryTopicRetainType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceRegistryTopicRetainType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string KeepValue = "Keep";
-        private const string NeverValue = "Never";
+            _value = value;
+        }
 
         /// <summary> Retain the messages. </summary>
         public static DeviceRegistryTopicRetainType Keep { get; } = new DeviceRegistryTopicRetainType(KeepValue);
+
         /// <summary> Never retain messages. </summary>
         public static DeviceRegistryTopicRetainType Never { get; } = new DeviceRegistryTopicRetainType(NeverValue);
+
         /// <summary> Determines if two <see cref="DeviceRegistryTopicRetainType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceRegistryTopicRetainType left, DeviceRegistryTopicRetainType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceRegistryTopicRetainType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceRegistryTopicRetainType left, DeviceRegistryTopicRetainType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceRegistryTopicRetainType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceRegistryTopicRetainType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceRegistryTopicRetainType(string value) => new DeviceRegistryTopicRetainType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceRegistryTopicRetainType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceRegistryTopicRetainType?(string value) => value == null ? null : new DeviceRegistryTopicRetainType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceRegistryTopicRetainType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceRegistryTopicRetainType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

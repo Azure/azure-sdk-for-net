@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Properties of the NewRelic account. </summary>
     public partial class NewRelicAccountProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicAccountProperties"/>. </summary>
         public NewRelicAccountProperties()
@@ -55,39 +27,48 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="accountInfo"> NewRelic Account Information. </param>
         /// <param name="organizationInfo"> NewRelic Organization Information. </param>
         /// <param name="singleSignOnProperties"> date when plan was applied. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicAccountProperties(string userId, NewRelicObservabilityAccountInfo accountInfo, NewRelicObservabilityOrganizationInfo organizationInfo, NewRelicSingleSignOnProperties singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicAccountProperties(string userId, NewRelicObservabilityAccountInfo accountInfo, NewRelicObservabilityOrganizationInfo organizationInfo, NewRelicSingleSignOnProperties singleSignOnProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserId = userId;
             AccountInfo = accountInfo;
             OrganizationInfo = organizationInfo;
             SingleSignOnProperties = singleSignOnProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> User id. </summary>
         [WirePath("userId")]
         public string UserId { get; set; }
+
         /// <summary> NewRelic Account Information. </summary>
         [WirePath("accountInfo")]
         public NewRelicObservabilityAccountInfo AccountInfo { get; set; }
+
         /// <summary> NewRelic Organization Information. </summary>
+        [WirePath("organizationInfo")]
         internal NewRelicObservabilityOrganizationInfo OrganizationInfo { get; set; }
-        /// <summary> Organization id. </summary>
-        [WirePath("organizationInfo.organizationId")]
-        public string OrganizationId
-        {
-            get => OrganizationInfo is null ? default : OrganizationInfo.OrganizationId;
-            set
-            {
-                if (OrganizationInfo is null)
-                    OrganizationInfo = new NewRelicObservabilityOrganizationInfo();
-                OrganizationInfo.OrganizationId = value;
-            }
-        }
 
         /// <summary> date when plan was applied. </summary>
         [WirePath("singleSignOnProperties")]
         public NewRelicSingleSignOnProperties SingleSignOnProperties { get; set; }
+
+        /// <summary> Organization id. </summary>
+        [WirePath("organizationInfo.organizationId")]
+        public string OrganizationId
+        {
+            get
+            {
+                return OrganizationInfo is null ? default : OrganizationInfo.OrganizationId;
+            }
+            set
+            {
+                if (OrganizationInfo is null)
+                {
+                    OrganizationInfo = new NewRelicObservabilityOrganizationInfo();
+                }
+                OrganizationInfo.OrganizationId = value;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct ResourceKind : IEquatable<ResourceKind>
     {
         private readonly string _value;
+        /// <summary> Azure. </summary>
+        private const string AzureValue = "Azure";
+        /// <summary> AzureArc. </summary>
+        private const string AzureArcValue = "AzureArc";
 
         /// <summary> Initializes a new instance of <see cref="ResourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureValue = "Azure";
-        private const string AzureArcValue = "AzureArc";
+            _value = value;
+        }
 
         /// <summary> Azure. </summary>
         public static ResourceKind Azure { get; } = new ResourceKind(AzureValue);
+
         /// <summary> AzureArc. </summary>
         public static ResourceKind AzureArc { get; } = new ResourceKind(AzureArcValue);
+
         /// <summary> Determines if two <see cref="ResourceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceKind left, ResourceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceKind left, ResourceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceKind(string value) => new ResourceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceKind?(string value) => value == null ? null : new ResourceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

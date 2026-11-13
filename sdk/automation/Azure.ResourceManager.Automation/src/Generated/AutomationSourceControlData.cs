@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the AutomationSourceControl data model.
-    /// Definition of the source control.
-    /// </summary>
+    /// <summary> Definition of the source control. </summary>
     public partial class AutomationSourceControlData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationSourceControlData"/>. </summary>
         public AutomationSourceControlData()
@@ -57,51 +25,172 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationSourceControlData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="repoUri"> The repo url of the source control. </param>
-        /// <param name="branch"> The repo branch of the source control. Include branch as empty string for VsoTfvc. </param>
-        /// <param name="folderPath"> The folder path of the source control. </param>
-        /// <param name="isAutoSyncEnabled"> The auto sync of the source control. Default is false. </param>
-        /// <param name="isAutoPublishRunbookEnabled"> The auto publish of the source control. Default is true. </param>
-        /// <param name="sourceType"> The source type. Must be one of VsoGit, VsoTfvc, GitHub. </param>
-        /// <param name="description"> The description. </param>
-        /// <param name="createdOn"> The creation time. </param>
-        /// <param name="lastModifiedOn"> The last modified time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, string folderPath, bool? isAutoSyncEnabled, bool? isAutoPublishRunbookEnabled, SourceControlSourceType? sourceType, string description, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the source control. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SourceControlProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            RepoUri = repoUri;
-            Branch = branch;
-            FolderPath = folderPath;
-            IsAutoSyncEnabled = isAutoSyncEnabled;
-            IsAutoPublishRunbookEnabled = isAutoPublishRunbookEnabled;
-            SourceType = sourceType;
-            Description = description;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The properties of the source control. </summary>
+        internal SourceControlProperties Properties { get; set; }
+
         /// <summary> The repo url of the source control. </summary>
-        public Uri RepoUri { get; set; }
+        public Uri RepoUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepoUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.RepoUri = value;
+            }
+        }
+
         /// <summary> The repo branch of the source control. Include branch as empty string for VsoTfvc. </summary>
-        public string Branch { get; set; }
+        public string Branch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Branch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.Branch = value;
+            }
+        }
+
         /// <summary> The folder path of the source control. </summary>
-        public string FolderPath { get; set; }
+        public string FolderPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FolderPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.FolderPath = value;
+            }
+        }
+
         /// <summary> The auto sync of the source control. Default is false. </summary>
-        public bool? IsAutoSyncEnabled { get; set; }
+        public bool? IsAutoSyncEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAutoSyncEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.IsAutoSyncEnabled = value;
+            }
+        }
+
         /// <summary> The auto publish of the source control. Default is true. </summary>
-        public bool? IsAutoPublishRunbookEnabled { get; set; }
+        public bool? IsAutoPublishRunbookEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAutoPublishRunbookEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.IsAutoPublishRunbookEnabled = value;
+            }
+        }
+
         /// <summary> The source type. Must be one of VsoGit, VsoTfvc, GitHub. </summary>
-        public SourceControlSourceType? SourceType { get; set; }
+        public SourceControlSourceType? SourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.SourceType = value;
+            }
+        }
+
         /// <summary> The description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The creation time. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.CreatedOn = value;
+            }
+        }
+
         /// <summary> The last modified time. </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.LastModifiedOn = value;
+            }
+        }
     }
 }

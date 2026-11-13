@@ -13,7 +13,7 @@ if ($null -ne $Env:AGENT_WORKFOLDER) {
 az account set --subscription $DeploymentOutputs['IDENTITY_SUBSCRIPTION_ID']
 
 # Deploy the webapp
-dotnet publish "$webappRoot/WebApp/Integration.Identity.WebApp.csproj" -o "$workingFolder/Pub" /p:EnableSourceLink=false
+dotnet publish "$webappRoot/WebApp/Integration.Identity.WebApp.csproj" -o "$workingFolder/Pub" /p:EnableSourceLink=false -f net10.0 /p:RequiredTargetFrameworks=net10.0 /p:RequiredRunnableTargetFrameworks=net10.0
 Compress-Archive -Path "$workingFolder/Pub/*" -DestinationPath "$workingFolder/Pub/package.zip" -Force
 az webapp deploy --resource-group $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] --name $DeploymentOutputs['IDENTITY_WEBAPP_NAME'] --src-path "$workingFolder/Pub/package.zip"
 
@@ -21,14 +21,14 @@ az webapp deploy --resource-group $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] 
 Remove-Item -Force -Recurse "$workingFolder/Pub"
 
 # Deploy the function app
-dotnet publish "$webappRoot/Integration.Identity.Func/Integration.Identity.Func.csproj" -o "$workingFolder/Pub" /p:EnableSourceLink=false
+dotnet publish "$webappRoot/Integration.Identity.Func/Integration.Identity.Func.csproj" -o "$workingFolder/Pub" /p:EnableSourceLink=false -f net10.0 /p:RequiredTargetFrameworks=net10.0 /p:RequiredRunnableTargetFrameworks=net10.0
 Compress-Archive -Path "$workingFolder/Pub/*" -DestinationPath "$workingFolder/Pub/package.zip" -Force
 az functionapp deployment source config-zip -g $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] -n $DeploymentOutputs['IDENTITY_FUNCTION_NAME'] --src "$workingFolder/Pub/package.zip"
 
 # clean up
 Remove-Item -Force -Recurse "$workingFolder/Pub"
 
-$containerImage = 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:4484670'
+$containerImage = 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:5404191'
 $MIClientId = $DeploymentOutputs['IDENTITY_USER_DEFINED_IDENTITY_CLIENT_ID']
 $MIName = $DeploymentOutputs['IDENTITY_USER_DEFINED_IDENTITY_NAME']
 $SaAccountName = 'workload-identity-sa'

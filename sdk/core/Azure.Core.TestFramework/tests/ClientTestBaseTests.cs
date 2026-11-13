@@ -131,14 +131,16 @@ namespace Azure.Core.TestFramework.Tests
             string exceptionPrefix = IsAsync ? "async" : "sync";
 
             // Static schema
-            try { await client.GetFailureAsync<string>(); }
+            try
+            { await client.GetFailureAsync<string>(); }
             catch (InvalidOperationException ex)
             {
                 Assert.AreEqual($"{exceptionPrefix} - static", ex.Message);
             }
 
             // Dynamic schema
-            try { await client.GetFailureAsync(); }
+            try
+            { await client.GetFailureAsync(); }
             catch (InvalidOperationException ex)
             {
                 Assert.AreEqual($"{exceptionPrefix} - dynamic", ex.Message);
@@ -157,6 +159,28 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public async Task SubClientPropertyWithoutClientSuffixIsAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            AnotherType subClient = client.SubClientProperty;
+            var result = await subClient.MethodAsync(123);
+
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
+        public async Task SubClientWithoutClientSuffixIsAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            AnotherType subClient = client.GetAnotherType();
+            var result = await subClient.MethodAsync(123);
+
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
         public async Task SubClientPropertyCallsAreAutoInstrumented()
         {
             TestClient client = InstrumentClient(new TestClient());
@@ -168,12 +192,58 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public void NonPublicSubClientPropertyCallsAreNotAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            InternalType subClient = client.GetInternalType();
+            // should not throw
+            var result = subClient.Method(123);
+            Assert.AreEqual("Sync 123 False", result);
+        }
+
+        [Test]
         public void CanGetUninstrumentedClient()
         {
             var testClient = new TestClient();
             TestClient client = InstrumentClient(testClient);
 
             Assert.AreSame(GetOriginal(client), testClient);
+        }
+
+        [Test]
+        public async Task AsyncPageableMethodsStillUseSyncCounterpart()
+        {
+            var original = new PageableTestClient();
+            PageableTestClient client = InstrumentClient(original);
+
+            List<int> values = await client.GetValuesAsync().ToEnumerableAsync();
+
+            Assert.AreEqual(new[] { 1, 2 }, values);
+            Assert.AreEqual(IsAsync, original.AsyncCalled);
+            Assert.AreEqual(!IsAsync, original.SyncCalled);
+        }
+
+        public class PageableTestClient
+        {
+            public bool AsyncCalled { get; private set; }
+
+            public bool SyncCalled { get; private set; }
+
+            public virtual AsyncPageable<int> GetValuesAsync(CancellationToken cancellationToken = default)
+            {
+                AsyncCalled = true;
+                return AsyncPageable<int>.FromPages(new[] { CreatePage() });
+            }
+
+            public virtual Pageable<int> GetValues(CancellationToken cancellationToken = default)
+            {
+                SyncCalled = true;
+                return Pageable<int>.FromPages(new[] { CreatePage() });
+            }
+
+            private static Page<int> CreatePage()
+                => Page<int>.FromValues(new[] { 1, 2 }, null, new MockResponse(200));
         }
 
         [Test]

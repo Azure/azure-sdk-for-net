@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct RehydrationPriority : IEquatable<RehydrationPriority>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RehydrationPriority"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RehydrationPriority(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardValue = "Standard";
         private const string HighValue = "High";
 
-        /// <summary> Standard. </summary>
+        /// <summary> Initializes a new instance of <see cref="RehydrationPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RehydrationPriority(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Standard. </summary>
         public static RehydrationPriority Standard { get; } = new RehydrationPriority(StandardValue);
-        /// <summary> High. </summary>
+
+        /// <summary> Gets the High. </summary>
         public static RehydrationPriority High { get; } = new RehydrationPriority(HighValue);
+
         /// <summary> Determines if two <see cref="RehydrationPriority"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RehydrationPriority left, RehydrationPriority right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RehydrationPriority"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RehydrationPriority left, RehydrationPriority right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RehydrationPriority"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RehydrationPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RehydrationPriority(string value) => new RehydrationPriority(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RehydrationPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RehydrationPriority?(string value) => value == null ? null : new RehydrationPriority(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RehydrationPriority other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RehydrationPriority other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

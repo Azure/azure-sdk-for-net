@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal static partial class ServiceBusAccessRightExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ServiceBusAccessRight value) => value switch
         {
             ServiceBusAccessRight.Manage => "Manage",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusAccessRight value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ServiceBusAccessRight ToServiceBusAccessRight(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manage")) return ServiceBusAccessRight.Manage;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Send")) return ServiceBusAccessRight.Send;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Listen")) return ServiceBusAccessRight.Listen;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manage"))
+            {
+                return ServiceBusAccessRight.Manage;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Send"))
+            {
+                return ServiceBusAccessRight.Send;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Listen"))
+            {
+                return ServiceBusAccessRight.Listen;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusAccessRight value.");
         }
     }

@@ -1,13 +1,10 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.9.34723.18
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.Conversations.Authoring", "src\Azure.AI.Language.Conversations.Authoring.csproj", "{3E361948-2D0E-AE1B-E353-3CF07505EFFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.Conversations.Authoring", "src\Azure.AI.Language.Conversations.Authoring.csproj", "{6DE0AA5F-A83F-42D4-B2E8-CE59785E2F98}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.Conversations.Authoring.Tests", "tests\Azure.AI.Language.Conversations.Authoring.Tests.csproj", "{7D7A2328-261A-42CE-88C4-46E5B3596582}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.Conversations.Authoring.Tests", "tests\Azure.AI.Language.Conversations.Authoring.Tests.csproj", "{B8E6C5B9-9519-E80B-C56E-2943F57451C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,23 +12,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ECC730C1-4AEA-420C-916A-66B19B79E4DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ECC730C1-4AEA-420C-916A-66B19B79E4DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ECC730C1-4AEA-420C-916A-66B19B79E4DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ECC730C1-4AEA-420C-916A-66B19B79E4DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DE0AA5F-A83F-42D4-B2E8-CE59785E2F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DE0AA5F-A83F-42D4-B2E8-CE59785E2F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DE0AA5F-A83F-42D4-B2E8-CE59785E2F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DE0AA5F-A83F-42D4-B2E8-CE59785E2F98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D7A2328-261A-42CE-88C4-46E5B3596582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D7A2328-261A-42CE-88C4-46E5B3596582}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D7A2328-261A-42CE-88C4-46E5B3596582}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D7A2328-261A-42CE-88C4-46E5B3596582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E361948-2D0E-AE1B-E353-3CF07505EFFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E361948-2D0E-AE1B-E353-3CF07505EFFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E361948-2D0E-AE1B-E353-3CF07505EFFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E361948-2D0E-AE1B-E353-3CF07505EFFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E6C5B9-9519-E80B-C56E-2943F57451C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E6C5B9-9519-E80B-C56E-2943F57451C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E6C5B9-9519-E80B-C56E-2943F57451C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E6C5B9-9519-E80B-C56E-2943F57451C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A97F4B90-2591-4689-B1F8-5F21FE6D6CAE}
+		SolutionGuid = {EEA7D8FC-2C58-4692-BC7E-D04DD1F8D482}
 	EndGlobalSection
 EndGlobal

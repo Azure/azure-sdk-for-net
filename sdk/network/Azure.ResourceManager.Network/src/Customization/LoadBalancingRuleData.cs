@@ -5,166 +5,198 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class LoadBalancingRuleData : NetworkResourceData
+    public partial class LoadBalancingRuleData
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void EnsureProperties()
-        {
-            Properties ??= new LoadBalancingRuleProperties(default, default);
-        }
-
-        /// <summary> Gets or sets Id. </summary>
+        // 1.15.0 retains public Properties and this hidden list facade; flattening would remove the public property bag.
+        /// <summary> Gets the backend address pools. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.BackendAddressPools"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier FrontendIPConfigurationId
-        {
-            get => Properties?.FrontendIPConfigurationId;
-            set
-            {
-                EnsureProperties();
-                Properties.FrontendIPConfigurationId = value;
-            }
-        }
-
-        /// <summary> Gets or sets Id. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier BackendAddressPoolId
-        {
-            get => Properties?.BackendAddressPoolId;
-            set
-            {
-                EnsureProperties();
-                Properties.BackendAddressPoolId = value;
-            }
-        }
-
-        /// <summary> An array of references to pool of DIPs. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.backendAddressPools")]
         public IList<WritableSubResource> BackendAddressPools
         {
             get
             {
-                EnsureProperties();
+                Properties ??= new LoadBalancingRuleProperties(default, default);
                 return Properties.BackendAddressPools;
             }
         }
 
-        /// <summary> Gets or sets Id. </summary>
+        // Preserve the 1.15.0 nullable facade over the required protocol in public Properties, including null-to-default assignment.
+        /// <summary> Gets or sets the transport protocol. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.Protocol"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier ProbeId
-        {
-            get => Properties?.ProbeId;
-            set
-            {
-                EnsureProperties();
-                Properties.ProbeId = value;
-            }
-        }
-
-        /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.protocol")]
         public LoadBalancingTransportProtocol? Protocol
         {
             get => Properties?.Protocol;
             set
             {
-                EnsureProperties();
+                Properties ??= new LoadBalancingRuleProperties(default, default);
                 Properties.Protocol = value ?? default;
             }
         }
 
-        /// <summary> The load distribution policy for this rule. </summary>
+        // Preserve the hidden 1.15.0 load-distribution facade while keeping public Properties as the canonical storage.
+        /// <summary> Gets or sets the load distribution policy. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.LoadDistribution"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.loadDistribution")]
         public LoadDistribution? LoadDistribution
         {
             get => Properties?.LoadDistribution;
             set
             {
-                EnsureProperties();
+                Properties ??= new LoadBalancingRuleProperties(default, default);
                 Properties.LoadDistribution = value;
             }
         }
 
-        /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </summary>
+        // Preserve the 1.15.0 nullable facade over the required frontend port, including null-to-default assignment.
+        /// <summary> Gets or sets the frontend port. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.FrontendPort"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.frontendPort")]
         public int? FrontendPort
         {
             get => Properties?.FrontendPort;
             set
             {
-                EnsureProperties();
+                Properties ??= new LoadBalancingRuleProperties(default, default);
                 Properties.FrontendPort = value ?? default;
             }
         }
 
-        /// <summary> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </summary>
+        // Preserve the hidden 1.15.0 backend-port facade alongside public Properties.
+        /// <summary> Gets or sets the backend port. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.BackendPort"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.backendPort")]
         public int? BackendPort
         {
             get => Properties?.BackendPort;
             set
             {
-                EnsureProperties();
+                Properties ??= new LoadBalancingRuleProperties(default, default);
                 Properties.BackendPort = value;
             }
         }
 
-        /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
+        // Preserve the hidden 1.15.0 idle-timeout facade alongside public Properties.
+        /// <summary> Gets or sets the idle timeout in minutes. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.IdleTimeoutInMinutes"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes
         {
             get => Properties?.IdleTimeoutInMinutes;
             set
             {
-                EnsureProperties();
+                Properties ??= new LoadBalancingRuleProperties(default, default);
                 Properties.IdleTimeoutInMinutes = value;
             }
         }
 
-        /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
+        // Preserve the hidden 1.15.0 floating-IP facade alongside public Properties.
+        /// <summary> Gets or sets whether floating IP is enabled. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.EnableFloatingIP"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.enableFloatingIP")]
         public bool? EnableFloatingIP
         {
             get => Properties?.EnableFloatingIP;
             set
             {
-                EnsureProperties();
+                Properties ??= new LoadBalancingRuleProperties(default, default);
                 Properties.EnableFloatingIP = value;
             }
         }
 
-        /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
+        // Preserve the hidden 1.15.0 TCP-reset facade alongside public Properties.
+        /// <summary> Gets or sets whether TCP reset is enabled. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.EnableTcpReset"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.enableTcpReset")]
         public bool? EnableTcpReset
         {
             get => Properties?.EnableTcpReset;
             set
             {
-                EnsureProperties();
+                Properties ??= new LoadBalancingRuleProperties(default, default);
                 Properties.EnableTcpReset = value;
             }
         }
 
-        /// <summary> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </summary>
+        // Preserve the hidden 1.15.0 outbound-SNAT facade alongside public Properties.
+        /// <summary> Gets or sets whether outbound SNAT is disabled. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.DisableOutboundSnat"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.disableOutboundSnat")]
         public bool? DisableOutboundSnat
         {
             get => Properties?.DisableOutboundSnat;
             set
             {
-                EnsureProperties();
+                Properties ??= new LoadBalancingRuleProperties(default, default);
                 Properties.DisableOutboundSnat = value;
             }
         }
 
-        /// <summary> The provisioning state of the load balancing rule resource. </summary>
+        // Preserve the hidden 1.15.0 provisioning-state facade over the native read-only value.
+        /// <summary> Gets the provisioning state. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.ProvisioningState"/> instead. </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState => Properties?.ProvisioningState;
+
+        // Preserve the hidden 1.15.0 frontend-ID facade without copying the public Properties object.
+        /// <summary> Gets or sets the frontend IP configuration resource ID. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.FrontendIPConfigurationId"/> instead. </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.frontendIPConfiguration.id")]
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get => Properties?.FrontendIPConfigurationId;
+            set
+            {
+                Properties ??= new LoadBalancingRuleProperties(default, default);
+                Properties.FrontendIPConfigurationId = value;
+            }
+        }
+
+        // Preserve the hidden 1.15.0 backend-pool-ID facade without copying the public Properties object.
+        /// <summary> Gets or sets the backend address pool resource ID. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.BackendAddressPoolId"/> instead. </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.backendAddressPool.id")]
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get => Properties?.BackendAddressPoolId;
+            set
+            {
+                Properties ??= new LoadBalancingRuleProperties(default, default);
+                Properties.BackendAddressPoolId = value;
+            }
+        }
+
+        // Preserve the hidden 1.15.0 probe-ID facade without copying the public Properties object.
+        /// <summary> Gets or sets the probe resource ID. </summary>
+        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancingRuleProperties.ProbeId"/> instead. </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.probe.id")]
+        public ResourceIdentifier ProbeId
+        {
+            get => Properties?.ProbeId;
+            set
+            {
+                Properties ??= new LoadBalancingRuleProperties(default, default);
+                Properties.ProbeId = value;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DevCenter.Models
     public readonly partial struct DevCenterCatalogSyncState : IEquatable<DevCenterCatalogSyncState>
     {
         private readonly string _value;
+        /// <summary> Succeeded synchronization state. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> In progress synchronization state. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Failed synchronization state. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled synchronization state. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalogSyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevCenterCatalogSyncState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> Succeeded synchronization state. </summary>
         public static DevCenterCatalogSyncState Succeeded { get; } = new DevCenterCatalogSyncState(SucceededValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> In progress synchronization state. </summary>
         public static DevCenterCatalogSyncState InProgress { get; } = new DevCenterCatalogSyncState(InProgressValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Failed synchronization state. </summary>
         public static DevCenterCatalogSyncState Failed { get; } = new DevCenterCatalogSyncState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Canceled synchronization state. </summary>
         public static DevCenterCatalogSyncState Canceled { get; } = new DevCenterCatalogSyncState(CanceledValue);
+
         /// <summary> Determines if two <see cref="DevCenterCatalogSyncState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevCenterCatalogSyncState left, DevCenterCatalogSyncState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevCenterCatalogSyncState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevCenterCatalogSyncState left, DevCenterCatalogSyncState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterCatalogSyncState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevCenterCatalogSyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevCenterCatalogSyncState(string value) => new DevCenterCatalogSyncState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevCenterCatalogSyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevCenterCatalogSyncState?(string value) => value == null ? null : new DevCenterCatalogSyncState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevCenterCatalogSyncState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevCenterCatalogSyncState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

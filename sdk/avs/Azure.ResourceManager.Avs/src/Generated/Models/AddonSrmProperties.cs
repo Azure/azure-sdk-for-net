@@ -14,20 +14,18 @@ namespace Azure.ResourceManager.Avs.Models
     public partial class AddonSrmProperties : AvsPrivateCloudAddonProperties
     {
         /// <summary> Initializes a new instance of <see cref="AddonSrmProperties"/>. </summary>
-        public AddonSrmProperties()
+        public AddonSrmProperties() : base(AddonType.SRM)
         {
-            AddonType = AddonType.SRM;
         }
 
         /// <summary> Initializes a new instance of <see cref="AddonSrmProperties"/>. </summary>
         /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="licenseKey"> The Site Recovery Manager (SRM) license. </param>
-        internal AddonSrmProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, string licenseKey) : base(addonType, provisioningState, serializedAdditionalRawData)
+        internal AddonSrmProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string licenseKey) : base(addonType, provisioningState, additionalBinaryDataProperties)
         {
             LicenseKey = licenseKey;
-            AddonType = addonType;
         }
 
         /// <summary> The Site Recovery Manager (SRM) license. </summary>

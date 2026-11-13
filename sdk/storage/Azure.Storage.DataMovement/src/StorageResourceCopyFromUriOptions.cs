@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
@@ -35,5 +36,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public StorageResourceItemProperties SourceProperties { get; set; }
+
+        /// <summary>
+        /// Optional. The source Uri with a SAS.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Uri SourceUri { get; set; }
     }
 }

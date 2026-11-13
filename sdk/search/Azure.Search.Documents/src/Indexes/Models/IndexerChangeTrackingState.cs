@@ -28,9 +28,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public string AllDocumentsFinalState { get; }
 
         /// <summary> Change tracking state used when indexing starts on select, reset documents in the datasource. </summary>
-        public string ResetDocumentsInitialState  { get; }
+        public string ResetDocumentsInitialState { get; }
 
         /// <summary> Change tracking state value when indexing finishes on select, reset documents in the datasource. </summary>
-        public string ResetDocumentsFinalState  { get; }
+        public string ResetDocumentsFinalState { get; }
     }
 }

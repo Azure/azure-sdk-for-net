@@ -6,25 +6,19 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> Client options for ImageAnalysisClient. </summary>
+    /// <summary> Client options for <see cref="ImageAnalysisClient"/>. </summary>
     public partial class ImageAnalysisClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-10-01". </summary>
-            V2023_10_01 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of ImageAnalysisClientOptions. </summary>
+        /// <summary> Initializes a new instance of ImageAnalysisClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public ImageAnalysisClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -32,6 +26,37 @@ namespace Azure.AI.Vision.ImageAnalysis
                 ServiceVersion.V2023_10_01 => "2023-10-01",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of ImageAnalysisClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal ImageAnalysisClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2023-10-01";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> V2023_10_01. </summary>
+            V2023_10_01 = 1
         }
     }
 }

@@ -20,6 +20,7 @@ using System.Globalization;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal static class HeaderUtilities
     {
         private static readonly int _int64MaxStringLength = 19;

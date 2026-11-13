@@ -35,18 +35,16 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             {
                 await CreateVirtualNetworkAsync();
             }
-            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
-            {
-                Id = new ResourceIdentifier(DefaultSubnetID),
-            });
+            var outboundEndpointData = ArmDnsResolverModelFactory.DnsResolverOutboundEndpointData(
+                location: this.DefaultLocation,
+                subnet: new WritableSubResource { Id = new ResourceIdentifier(DefaultSubnetID) });
 
             //_vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
-            var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
-            {
-                Id = new ResourceIdentifier(DefaultVnetID)
-            });
+            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
+                location: this.DefaultLocation,
+                virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(DefaultVnetID) });
 
             _dnsResolver = (await resourceGroup.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
             _dnsForwardingRulesetCollection = resourceGroup.GetDnsForwardingRulesets();

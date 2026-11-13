@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct HealthErrorCategory : IEquatable<HealthErrorCategory>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Replication. </summary>
+        private const string ReplicationValue = "Replication";
+        /// <summary> TestFailover. </summary>
+        private const string TestFailoverValue = "TestFailover";
+        /// <summary> Configuration. </summary>
+        private const string ConfigurationValue = "Configuration";
+        /// <summary> FabricInfrastructure. </summary>
+        private const string FabricInfrastructureValue = "FabricInfrastructure";
+        /// <summary> VersionExpiry. </summary>
+        private const string VersionExpiryValue = "VersionExpiry";
+        /// <summary> AgentAutoUpdateInfra. </summary>
+        private const string AgentAutoUpdateInfraValue = "AgentAutoUpdateInfra";
+        /// <summary> AgentAutoUpdateArtifactDeleted. </summary>
+        private const string AgentAutoUpdateArtifactDeletedValue = "AgentAutoUpdateArtifactDeleted";
+        /// <summary> AgentAutoUpdateRunAsAccount. </summary>
+        private const string AgentAutoUpdateRunAsAccountValue = "AgentAutoUpdateRunAsAccount";
+        /// <summary> AgentAutoUpdateRunAsAccountExpiry. </summary>
+        private const string AgentAutoUpdateRunAsAccountExpiryValue = "AgentAutoUpdateRunAsAccountExpiry";
+        /// <summary> AgentAutoUpdateRunAsAccountExpired. </summary>
+        private const string AgentAutoUpdateRunAsAccountExpiredValue = "AgentAutoUpdateRunAsAccountExpired";
 
         /// <summary> Initializes a new instance of <see cref="HealthErrorCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HealthErrorCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ReplicationValue = "Replication";
-        private const string TestFailoverValue = "TestFailover";
-        private const string ConfigurationValue = "Configuration";
-        private const string FabricInfrastructureValue = "FabricInfrastructure";
-        private const string VersionExpiryValue = "VersionExpiry";
-        private const string AgentAutoUpdateInfraValue = "AgentAutoUpdateInfra";
-        private const string AgentAutoUpdateArtifactDeletedValue = "AgentAutoUpdateArtifactDeleted";
-        private const string AgentAutoUpdateRunAsAccountValue = "AgentAutoUpdateRunAsAccount";
-        private const string AgentAutoUpdateRunAsAccountExpiryValue = "AgentAutoUpdateRunAsAccountExpiry";
-        private const string AgentAutoUpdateRunAsAccountExpiredValue = "AgentAutoUpdateRunAsAccountExpired";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static HealthErrorCategory None { get; } = new HealthErrorCategory(NoneValue);
+
         /// <summary> Replication. </summary>
         public static HealthErrorCategory Replication { get; } = new HealthErrorCategory(ReplicationValue);
+
         /// <summary> TestFailover. </summary>
         public static HealthErrorCategory TestFailover { get; } = new HealthErrorCategory(TestFailoverValue);
+
         /// <summary> Configuration. </summary>
         public static HealthErrorCategory Configuration { get; } = new HealthErrorCategory(ConfigurationValue);
+
         /// <summary> FabricInfrastructure. </summary>
         public static HealthErrorCategory FabricInfrastructure { get; } = new HealthErrorCategory(FabricInfrastructureValue);
+
         /// <summary> VersionExpiry. </summary>
         public static HealthErrorCategory VersionExpiry { get; } = new HealthErrorCategory(VersionExpiryValue);
+
         /// <summary> AgentAutoUpdateInfra. </summary>
         public static HealthErrorCategory AgentAutoUpdateInfra { get; } = new HealthErrorCategory(AgentAutoUpdateInfraValue);
+
         /// <summary> AgentAutoUpdateArtifactDeleted. </summary>
         public static HealthErrorCategory AgentAutoUpdateArtifactDeleted { get; } = new HealthErrorCategory(AgentAutoUpdateArtifactDeletedValue);
+
         /// <summary> AgentAutoUpdateRunAsAccount. </summary>
         public static HealthErrorCategory AgentAutoUpdateRunAsAccount { get; } = new HealthErrorCategory(AgentAutoUpdateRunAsAccountValue);
+
         /// <summary> AgentAutoUpdateRunAsAccountExpiry. </summary>
         public static HealthErrorCategory AgentAutoUpdateRunAsAccountExpiry { get; } = new HealthErrorCategory(AgentAutoUpdateRunAsAccountExpiryValue);
+
         /// <summary> AgentAutoUpdateRunAsAccountExpired. </summary>
         public static HealthErrorCategory AgentAutoUpdateRunAsAccountExpired { get; } = new HealthErrorCategory(AgentAutoUpdateRunAsAccountExpiredValue);
+
         /// <summary> Determines if two <see cref="HealthErrorCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HealthErrorCategory left, HealthErrorCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HealthErrorCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HealthErrorCategory left, HealthErrorCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthErrorCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HealthErrorCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HealthErrorCategory(string value) => new HealthErrorCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HealthErrorCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HealthErrorCategory?(string value) => value == null ? null : new HealthErrorCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HealthErrorCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HealthErrorCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

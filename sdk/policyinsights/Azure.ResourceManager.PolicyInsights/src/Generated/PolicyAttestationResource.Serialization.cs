@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
+    /// <summary></summary>
     public partial class PolicyAttestationResource : IJsonModel<PolicyAttestationData>
     {
-        private static PolicyAttestationData s_dataDeserializationInstance;
-        private static PolicyAttestationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PolicyAttestationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PolicyAttestationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PolicyAttestationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PolicyAttestationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAttestationData>)Data).Write(writer, options);
 
-        PolicyAttestationData IJsonModel<PolicyAttestationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAttestationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicyAttestationData IJsonModel<PolicyAttestationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PolicyAttestationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicyAttestationData>(Data, options, AzureResourceManagerPolicyInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PolicyAttestationData IPersistableModel<PolicyAttestationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyAttestationData>(data, options, AzureResourceManagerPolicyInsightsContext.Default);
 
-        string IPersistableModel<PolicyAttestationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyAttestationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PolicyAttestationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

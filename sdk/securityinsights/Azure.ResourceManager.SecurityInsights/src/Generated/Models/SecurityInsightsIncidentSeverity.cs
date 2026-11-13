@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsIncidentSeverity : IEquatable<SecurityInsightsIncidentSeverity>
     {
         private readonly string _value;
+        /// <summary> High severity. </summary>
+        private const string HighValue = "High";
+        /// <summary> Medium severity. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> Low severity. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Informational severity. </summary>
+        private const string InformationalValue = "Informational";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsIncidentSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HighValue = "High";
-        private const string MediumValue = "Medium";
-        private const string LowValue = "Low";
-        private const string InformationalValue = "Informational";
+            _value = value;
+        }
 
         /// <summary> High severity. </summary>
         public static SecurityInsightsIncidentSeverity High { get; } = new SecurityInsightsIncidentSeverity(HighValue);
+
         /// <summary> Medium severity. </summary>
         public static SecurityInsightsIncidentSeverity Medium { get; } = new SecurityInsightsIncidentSeverity(MediumValue);
+
         /// <summary> Low severity. </summary>
         public static SecurityInsightsIncidentSeverity Low { get; } = new SecurityInsightsIncidentSeverity(LowValue);
+
         /// <summary> Informational severity. </summary>
         public static SecurityInsightsIncidentSeverity Informational { get; } = new SecurityInsightsIncidentSeverity(InformationalValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsIncidentSeverity left, SecurityInsightsIncidentSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsIncidentSeverity left, SecurityInsightsIncidentSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsIncidentSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsIncidentSeverity(string value) => new SecurityInsightsIncidentSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsIncidentSeverity?(string value) => value == null ? null : new SecurityInsightsIncidentSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsIncidentSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsIncidentSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

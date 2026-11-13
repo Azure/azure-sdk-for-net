@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public readonly partial struct ClusterUpgradeCadence : IEquatable<ClusterUpgradeCadence>
     {
         private readonly string _value;
+        /// <summary> Cluster upgrade starts immediately after a new version is rolled out. Recommended for Test/Dev clusters. </summary>
+        private const string Wave0Value = "Wave0";
+        /// <summary> Cluster upgrade starts 7 days after a new version is rolled out. Recommended for Pre-prod clusters. </summary>
+        private const string Wave1Value = "Wave1";
+        /// <summary> Cluster upgrade starts 14 days after a new version is rolled out. Recommended for Production clusters. </summary>
+        private const string Wave2Value = "Wave2";
 
         /// <summary> Initializes a new instance of <see cref="ClusterUpgradeCadence"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterUpgradeCadence(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Wave0Value = "Wave0";
-        private const string Wave1Value = "Wave1";
-        private const string Wave2Value = "Wave2";
+            _value = value;
+        }
 
         /// <summary> Cluster upgrade starts immediately after a new version is rolled out. Recommended for Test/Dev clusters. </summary>
         public static ClusterUpgradeCadence Wave0 { get; } = new ClusterUpgradeCadence(Wave0Value);
+
         /// <summary> Cluster upgrade starts 7 days after a new version is rolled out. Recommended for Pre-prod clusters. </summary>
         public static ClusterUpgradeCadence Wave1 { get; } = new ClusterUpgradeCadence(Wave1Value);
+
         /// <summary> Cluster upgrade starts 14 days after a new version is rolled out. Recommended for Production clusters. </summary>
         public static ClusterUpgradeCadence Wave2 { get; } = new ClusterUpgradeCadence(Wave2Value);
+
         /// <summary> Determines if two <see cref="ClusterUpgradeCadence"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterUpgradeCadence left, ClusterUpgradeCadence right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterUpgradeCadence"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterUpgradeCadence left, ClusterUpgradeCadence right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterUpgradeCadence"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterUpgradeCadence"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterUpgradeCadence(string value) => new ClusterUpgradeCadence(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterUpgradeCadence"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterUpgradeCadence?(string value) => value == null ? null : new ClusterUpgradeCadence(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterUpgradeCadence other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterUpgradeCadence other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

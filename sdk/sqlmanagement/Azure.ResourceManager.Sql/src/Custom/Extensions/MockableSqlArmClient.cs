@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -17,10 +18,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DistributedAvailabilityGroupResource"/> object. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This function is obsolete and will be removed in a future release. Use GetSqlDistributedAvailabilityGroupResource instead.", false)]
         public virtual DistributedAvailabilityGroupResource GetDistributedAvailabilityGroupResource(ResourceIdentifier id)
         {
-            DistributedAvailabilityGroupResource.ValidateResourceId(id);
-            return new DistributedAvailabilityGroupResource(Client, id);
+            throw new NotSupportedException("This function is obsolete and will be removed in a future release. Use GetSqlDistributedAvailabilityGroupResource instead.");
         }
     }
 }

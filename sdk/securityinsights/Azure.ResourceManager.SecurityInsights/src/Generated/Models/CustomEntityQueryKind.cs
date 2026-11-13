@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal readonly partial struct CustomEntityQueryKind : IEquatable<CustomEntityQueryKind>
     {
         private readonly string _value;
+        /// <summary> Activity. </summary>
+        private const string ActivityValue = "Activity";
 
         /// <summary> Initializes a new instance of <see cref="CustomEntityQueryKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CustomEntityQueryKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActivityValue = "Activity";
+            _value = value;
+        }
 
         /// <summary> Activity. </summary>
         public static CustomEntityQueryKind Activity { get; } = new CustomEntityQueryKind(ActivityValue);
+
         /// <summary> Determines if two <see cref="CustomEntityQueryKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomEntityQueryKind left, CustomEntityQueryKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CustomEntityQueryKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomEntityQueryKind left, CustomEntityQueryKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomEntityQueryKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CustomEntityQueryKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CustomEntityQueryKind(string value) => new CustomEntityQueryKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CustomEntityQueryKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomEntityQueryKind?(string value) => value == null ? null : new CustomEntityQueryKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomEntityQueryKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CustomEntityQueryKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ClientCertModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ClientCertMode value) => value switch
         {
             ClientCertMode.Required => "Required",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ClientCertMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ClientCertMode ToClientCertMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Required")) return ClientCertMode.Required;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Optional")) return ClientCertMode.Optional;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OptionalInteractiveUser")) return ClientCertMode.OptionalInteractiveUser;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Required"))
+            {
+                return ClientCertMode.Required;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Optional"))
+            {
+                return ClientCertMode.Optional;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OptionalInteractiveUser"))
+            {
+                return ClientCertMode.OptionalInteractiveUser;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ClientCertMode value.");
         }
     }

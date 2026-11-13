@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Compute.Batch;
+using Azure.Core.TestFramework;
 
 namespace Azure.Compute.Batch.Tests.Infrastructure
 {
@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         public async Task<BatchPool> FindPoolIfExistsAsync()
         {
             // reuse existing pool if it exists
-            client.GetPoolsAsync(maxresults: 100, timeOutInSeconds: TimeSpan.FromSeconds(10));
+            client.GetPoolsAsync(maxResults: 100, timeout: TimeSpan.FromSeconds(10));
             AsyncPageable<BatchPool> batchPools = client.GetPoolsAsync();
 
             await foreach (BatchPool curPool in batchPools)
@@ -66,7 +66,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             DateTime allocationWaitStartTime = DateTime.UtcNow;
             DateTime timeoutAfterThisTimeUtc = allocationWaitStartTime.Add(computeNodeSteadyTimeout);
 
-            List<BatchNode> computeNodes=  await client.GetNodesAsync(poolId).ToEnumerableAsync();
+            List<BatchNode> computeNodes = await client.GetNodesAsync(poolId).ToEnumerableAsync();
 
             while (computeNodes.Any(computeNode => computeNode.State != BatchNodeState.Idle))
             {

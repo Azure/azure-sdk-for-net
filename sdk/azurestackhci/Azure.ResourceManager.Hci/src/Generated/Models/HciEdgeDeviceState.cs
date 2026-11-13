@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct HciEdgeDeviceState : IEquatable<HciEdgeDeviceState>
     {
         private readonly string _value;
+        /// <summary> The edge device state is not specified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> The edge device state is in connected state. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> The edge device state is in disconnected state. </summary>
+        private const string DisconnectedValue = "Disconnected";
+        /// <summary> The edge device state is in repairing state. </summary>
+        private const string RepairingValue = "Repairing";
+        /// <summary> The edge device state is in draining state. </summary>
+        private const string DrainingValue = "Draining";
+        /// <summary> The edge device state is in maintenance state. </summary>
+        private const string InMaintenanceValue = "InMaintenance";
+        /// <summary> The edge device state is in resuming state. </summary>
+        private const string ResumingValue = "Resuming";
+        /// <summary> The edge device state is in processing state. </summary>
+        private const string ProcessingValue = "Processing";
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciEdgeDeviceState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string ConnectedValue = "Connected";
-        private const string DisconnectedValue = "Disconnected";
-        private const string RepairingValue = "Repairing";
-        private const string DrainingValue = "Draining";
-        private const string InMaintenanceValue = "InMaintenance";
-        private const string ResumingValue = "Resuming";
-        private const string ProcessingValue = "Processing";
+            _value = value;
+        }
 
         /// <summary> The edge device state is not specified. </summary>
         public static HciEdgeDeviceState NotSpecified { get; } = new HciEdgeDeviceState(NotSpecifiedValue);
+
         /// <summary> The edge device state is in connected state. </summary>
         public static HciEdgeDeviceState Connected { get; } = new HciEdgeDeviceState(ConnectedValue);
+
         /// <summary> The edge device state is in disconnected state. </summary>
         public static HciEdgeDeviceState Disconnected { get; } = new HciEdgeDeviceState(DisconnectedValue);
+
         /// <summary> The edge device state is in repairing state. </summary>
         public static HciEdgeDeviceState Repairing { get; } = new HciEdgeDeviceState(RepairingValue);
+
         /// <summary> The edge device state is in draining state. </summary>
         public static HciEdgeDeviceState Draining { get; } = new HciEdgeDeviceState(DrainingValue);
+
         /// <summary> The edge device state is in maintenance state. </summary>
         public static HciEdgeDeviceState InMaintenance { get; } = new HciEdgeDeviceState(InMaintenanceValue);
+
         /// <summary> The edge device state is in resuming state. </summary>
         public static HciEdgeDeviceState Resuming { get; } = new HciEdgeDeviceState(ResumingValue);
+
         /// <summary> The edge device state is in processing state. </summary>
         public static HciEdgeDeviceState Processing { get; } = new HciEdgeDeviceState(ProcessingValue);
+
         /// <summary> Determines if two <see cref="HciEdgeDeviceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciEdgeDeviceState left, HciEdgeDeviceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciEdgeDeviceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciEdgeDeviceState left, HciEdgeDeviceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciEdgeDeviceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciEdgeDeviceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciEdgeDeviceState(string value) => new HciEdgeDeviceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciEdgeDeviceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciEdgeDeviceState?(string value) => value == null ? null : new HciEdgeDeviceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciEdgeDeviceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciEdgeDeviceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

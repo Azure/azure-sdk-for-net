@@ -17,7 +17,7 @@ Install the Azure Document Translation client library for .NET with [NuGet][nuge
 dotnet add package Azure.AI.Translation.Document
 ```
 
-> Note: This version of the client library defaults to the `v1.0` version of the service.
+> Note: This version of the client library defaults to the `2026-03-01` version of the service.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].

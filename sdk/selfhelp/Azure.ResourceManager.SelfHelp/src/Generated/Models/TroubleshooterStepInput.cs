@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Details of step input. </summary>
     public partial class TroubleshooterStepInput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TroubleshooterStepInput"/>. </summary>
         internal TroubleshooterStepInput()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="selectedOptionValue"> Text of response that was selected. </param>
         /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
         /// <param name="responseOptions"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshooterStepInput(string questionId, TroubleshooterQuestionType? questionType, string questionTitle, string questionContent, TroubleshooterQuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TroubleshooterStepInput(string questionId, TroubleshooterQuestionType? questionType, string questionTitle, string questionContent, TroubleshooterQuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuestionId = questionId;
             QuestionType = questionType;
@@ -75,28 +47,37 @@ namespace Azure.ResourceManager.SelfHelp.Models
             SelectedOptionValue = selectedOptionValue;
             ResponseValidationProperties = responseValidationProperties;
             ResponseOptions = responseOptions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Use Index as QuestionId. </summary>
         public string QuestionId { get; }
+
         /// <summary> Type of Question. </summary>
         public TroubleshooterQuestionType? QuestionType { get; }
+
         /// <summary> Question title. </summary>
         public string QuestionTitle { get; }
+
         /// <summary> User question content. </summary>
         public string QuestionContent { get; }
+
         /// <summary> Default is Text. </summary>
         public TroubleshooterQuestionContentType? QuestionContentType { get; }
+
         /// <summary> Place holder text for response hints. </summary>
         public string ResponseHint { get; }
+
         /// <summary> Result of Automate step. </summary>
         public string RecommendedOption { get; }
+
         /// <summary> Text of response that was selected. </summary>
         public string SelectedOptionValue { get; }
+
         /// <summary> Troubleshooter step input response validation properties. </summary>
         public ResponseValidationProperties ResponseValidationProperties { get; }
-        /// <summary> Gets the response options. </summary>
-        public IReadOnlyList<ResponseConfig> ResponseOptions { get; }
+
+        /// <summary> Gets the ResponseOptions. </summary>
+        public IList<ResponseConfig> ResponseOptions { get; }
     }
 }

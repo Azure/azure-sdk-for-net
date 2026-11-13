@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     internal readonly partial struct SapDiscoveryDataSource : IEquatable<SapDiscoveryDataSource>
     {
         private readonly string _value;
+        /// <summary> The type of DataSource- Excel. </summary>
+        private const string ExcelValue = "Excel";
+        /// <summary> The type of DataSource- Native. </summary>
+        private const string NativeValue = "Native";
 
         /// <summary> Initializes a new instance of <see cref="SapDiscoveryDataSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapDiscoveryDataSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExcelValue = "Excel";
-        private const string NativeValue = "Native";
+            _value = value;
+        }
 
         /// <summary> The type of DataSource- Excel. </summary>
         public static SapDiscoveryDataSource Excel { get; } = new SapDiscoveryDataSource(ExcelValue);
+
         /// <summary> The type of DataSource- Native. </summary>
         public static SapDiscoveryDataSource Native { get; } = new SapDiscoveryDataSource(NativeValue);
+
         /// <summary> Determines if two <see cref="SapDiscoveryDataSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapDiscoveryDataSource left, SapDiscoveryDataSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapDiscoveryDataSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapDiscoveryDataSource left, SapDiscoveryDataSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDiscoveryDataSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapDiscoveryDataSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapDiscoveryDataSource(string value) => new SapDiscoveryDataSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapDiscoveryDataSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapDiscoveryDataSource?(string value) => value == null ? null : new SapDiscoveryDataSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapDiscoveryDataSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapDiscoveryDataSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

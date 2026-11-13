@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct CostManagementAlertType : IEquatable<CostManagementAlertType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CostManagementAlertType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CostManagementAlertType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BudgetValue = "Budget";
         private const string InvoiceValue = "Invoice";
         private const string CreditValue = "Credit";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string XCloudValue = "xCloud";
         private const string BudgetForecastValue = "BudgetForecast";
 
-        /// <summary> Budget. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CostManagementAlertType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Budget. </summary>
         public static CostManagementAlertType Budget { get; } = new CostManagementAlertType(BudgetValue);
-        /// <summary> Invoice. </summary>
+
+        /// <summary> Gets the Invoice. </summary>
         public static CostManagementAlertType Invoice { get; } = new CostManagementAlertType(InvoiceValue);
-        /// <summary> Credit. </summary>
+
+        /// <summary> Gets the Credit. </summary>
         public static CostManagementAlertType Credit { get; } = new CostManagementAlertType(CreditValue);
-        /// <summary> Quota. </summary>
+
+        /// <summary> Gets the Quota. </summary>
         public static CostManagementAlertType Quota { get; } = new CostManagementAlertType(QuotaValue);
-        /// <summary> General. </summary>
+
+        /// <summary> Gets the General. </summary>
         public static CostManagementAlertType General { get; } = new CostManagementAlertType(GeneralValue);
-        /// <summary> xCloud. </summary>
+
+        /// <summary> Gets the XCloud. </summary>
         public static CostManagementAlertType XCloud { get; } = new CostManagementAlertType(XCloudValue);
-        /// <summary> BudgetForecast. </summary>
+
+        /// <summary> Gets the BudgetForecast. </summary>
         public static CostManagementAlertType BudgetForecast { get; } = new CostManagementAlertType(BudgetForecastValue);
+
         /// <summary> Determines if two <see cref="CostManagementAlertType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CostManagementAlertType left, CostManagementAlertType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CostManagementAlertType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CostManagementAlertType left, CostManagementAlertType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CostManagementAlertType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CostManagementAlertType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CostManagementAlertType(string value) => new CostManagementAlertType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CostManagementAlertType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CostManagementAlertType?(string value) => value == null ? null : new CostManagementAlertType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CostManagementAlertType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CostManagementAlertType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

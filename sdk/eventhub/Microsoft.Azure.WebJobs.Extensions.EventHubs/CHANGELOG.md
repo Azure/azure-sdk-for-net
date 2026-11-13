@@ -10,11 +10,36 @@
 
 ### Other Changes
 
+## 6.5.5 (2026-10-27)
+
+### Bugs Fixed
+
+- Fixed an issue where stale checkpoints could prevent scale-in when `BatchCheckpointFrequency` was greater than 1. Pending processed events are now checkpointed after 10 minutes of inactivity so that the scale controller does not report backlog for events that have already been processed. ([#59801](https://github.com/Azure/azure-sdk-for-net/pull/59801))
+
+## 6.5.4 (2026-09-09)
+
+### Bugs Fixed
+
+- Fixed an issue where the checkpoint store's `BlobServiceClient` was constructed using the hard-coded `core.windows.net` suffix when `AzureWebJobsStorage__accountName` was set, even if an explicit `AzureWebJobsStorage__blobServiceUri` was also present. The explicit `__blobServiceUri` is now preferred over `__accountName`, and an optional `__endpointSuffix` setting is honored when constructing the URI from `__accountName`. This unblocks Event Hub triggers that use managed-identity storage in sovereign clouds (e.g. Azure US Government, Azure China). ([#57543](https://github.com/Azure/azure-sdk-for-net/issues/57543))
+
+### Other Changes
+
+- Replaced scaling warning/error log calls with standardized `LogFunctionScaleWarning` extension method to enable Scale Controller App Insights diagnostics.
+- Added a `net10.0` target and updated .NET runtime dependencies to the 10.x line. The package now targets `net10.0`, `net8.0`, and `netstandard2.0`.
+- Removed the direct `Microsoft.Extensions.Hosting` package reference.
+
+## 6.5.3 (2025-10-20)
+
+### Bugs Fixed
+
+- Fixed an issue where a legacy ownership record without checkpoint data was interpreted as a valid checkpoint and used to initialize a partition when no current generation checkpoint was present.
+
 ## 6.5.2 (2025-06-16)
 
 ### Bugs Fixed
 
 - Fixed a bug where the data types of broker-owned properties were being adjusted when an event was read by the client, causing the underlying AMQP data to be mutated.  This resulted in binary changes when the AMQP message was serialized and unintentionally altered the service contract.  Going forward, the original data types will be preserved on the AMQP representation of the message and type normalization only applied to the .NET `EventData` projection.
+
 ### Other Changes
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes and adds support for AOT. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_

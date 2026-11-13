@@ -7,9 +7,8 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects;
 
-namespace Azure.Core.Foundations
+namespace Azure.AI.Projects
 {
     /// <summary> Paged collection of Deployment items. </summary>
     internal partial class PagedDeployment : IJsonModel<PagedDeployment>
@@ -17,6 +16,54 @@ namespace Azure.Core.Foundations
         /// <summary> Initializes a new instance of <see cref="PagedDeployment"/> for deserialization. </summary>
         internal PagedDeployment()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PagedDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePagedDeployment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PagedDeployment)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PagedDeployment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedDeployment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedDeployment IPersistableModel<PagedDeployment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedDeployment"/> from. </param>
+        public static explicit operator PagedDeployment(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePagedDeployment(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -39,7 +86,7 @@ namespace Azure.Core.Foundations
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AssetDeployment item in Value)
+            foreach (AIProjectDeployment item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -91,7 +138,7 @@ namespace Azure.Core.Foundations
             {
                 return null;
             }
-            IList<AssetDeployment> value = default;
+            IList<AIProjectDeployment> value = default;
             Uri nextLink = default;
             string clientRequestId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -99,10 +146,10 @@ namespace Azure.Core.Foundations
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AssetDeployment> array = new List<AssetDeployment>();
+                    List<AIProjectDeployment> array = new List<AIProjectDeployment>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AssetDeployment.DeserializeAssetDeployment(item, options));
+                        array.Add(AIProjectDeployment.DeserializeAIProjectDeployment(item, options));
                     }
                     value = array;
                     continue;
@@ -113,63 +160,15 @@ namespace Azure.Core.Foundations
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedDeployment(value, nextLink, clientRequestId, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedDeployment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedDeployment>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PagedDeployment)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedDeployment IPersistableModel<PagedDeployment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedDeployment>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializePagedDeployment(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PagedDeployment)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedDeployment"/> from. </param>
-        public static explicit operator PagedDeployment(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializePagedDeployment(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PagedDeployment(value ?? new ChangeTrackingList<AIProjectDeployment>(), nextLink, clientRequestId, additionalBinaryDataProperties);
         }
     }
 }

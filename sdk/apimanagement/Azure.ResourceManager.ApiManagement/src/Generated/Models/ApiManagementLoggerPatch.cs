@@ -7,76 +7,100 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Logger update contract. </summary>
     public partial class ApiManagementLoggerPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerPatch"/>. </summary>
         public ApiManagementLoggerPatch()
         {
-            Credentials = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerPatch"/>. </summary>
-        /// <param name="loggerType"> Logger type. </param>
-        /// <param name="description"> Logger description. </param>
-        /// <param name="credentials"> Logger credentials. </param>
-        /// <param name="isBuffered"> Whether records are buffered in the logger before publishing. Default is assumed to be true. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementLoggerPatch(LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Logger entity update contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementLoggerPatch(LoggerUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LoggerType = loggerType;
-            Description = description;
-            Credentials = credentials;
-            IsBuffered = isBuffered;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Logger entity update contract properties. </summary>
+        [WirePath("properties")]
+        internal LoggerUpdateParameters Properties { get; set; }
 
         /// <summary> Logger type. </summary>
         [WirePath("properties.loggerType")]
-        public LoggerType? LoggerType { get; set; }
+        public LoggerType? LoggerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoggerType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoggerUpdateParameters();
+                }
+                Properties.LoggerType = value;
+            }
+        }
+
         /// <summary> Logger description. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoggerUpdateParameters();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Logger credentials. </summary>
         [WirePath("properties.credentials")]
-        public IDictionary<string, string> Credentials { get; }
+        public IDictionary<string, string> Credentials
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoggerUpdateParameters();
+                }
+                return Properties.Credentials;
+            }
+        }
+
         /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
         [WirePath("properties.isBuffered")]
-        public bool? IsBuffered { get; set; }
+        public bool? IsBuffered
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsBuffered;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoggerUpdateParameters();
+                }
+                Properties.IsBuffered = value;
+            }
+        }
     }
 }

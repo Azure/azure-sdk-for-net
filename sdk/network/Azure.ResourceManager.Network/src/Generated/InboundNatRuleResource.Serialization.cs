@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class InboundNatRuleResource : IJsonModel<InboundNatRuleData>
     {
-        private static InboundNatRuleData s_dataDeserializationInstance;
-        private static InboundNatRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<InboundNatRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<InboundNatRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new InboundNatRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InboundNatRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InboundNatRuleData>)Data).Write(writer, options);
 
-        InboundNatRuleData IJsonModel<InboundNatRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InboundNatRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InboundNatRuleData IJsonModel<InboundNatRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InboundNatRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InboundNatRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         InboundNatRuleData IPersistableModel<InboundNatRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InboundNatRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<InboundNatRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InboundNatRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InboundNatRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

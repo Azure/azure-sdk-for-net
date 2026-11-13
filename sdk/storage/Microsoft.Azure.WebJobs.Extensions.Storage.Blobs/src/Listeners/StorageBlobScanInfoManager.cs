@@ -43,10 +43,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _blobContainerClient = blobClient.GetBlobContainerClient(HostContainerNames.Hosts);
         }
 
-        public async Task<DateTime?> LoadLatestScanAsync(string storageAccountName, string containerName)
+        public async Task<DateTimeOffset?> LoadLatestScanAsync(string storageAccountName, string containerName)
         {
             var scanInfoBlob = GetScanInfoBlobReference(storageAccountName, containerName);
-            DateTime? latestScan = null;
+            DateTimeOffset? latestScan = null;
             try
             {
                 string scanInfoLine = await scanInfoBlob.DownloadTextAsync(CancellationToken.None).ConfigureAwait(false);
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
         }
 
-        public async Task UpdateLatestScanAsync(string storageAccountName, string containerName, DateTime latestScan)
+        public async Task UpdateLatestScanAsync(string storageAccountName, string containerName, DateTimeOffset latestScan)
         {
             string scanInfoLine;
             ScanInfo scanInfo = new ScanInfo
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         internal class ScanInfo
         {
-            public DateTime LatestScan { get; set; }
+            public DateTimeOffset LatestScan { get; set; }
         }
     }
 }

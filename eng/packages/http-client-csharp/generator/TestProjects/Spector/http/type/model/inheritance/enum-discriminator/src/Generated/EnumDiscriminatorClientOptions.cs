@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
     public partial class EnumDiscriminatorClientOptions : ClientOptions
     {
+        public EnumDiscriminatorClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal EnumDiscriminatorClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

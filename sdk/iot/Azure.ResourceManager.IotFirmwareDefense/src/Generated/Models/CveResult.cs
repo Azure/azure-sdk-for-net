@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="componentVersion"> Version of the affected SBOM component. </param>
         /// <param name="severity"> Severity of the CVE. </param>
         /// <param name="cveName"> Name of the CVE. </param>
+        /// <param name="component"> Legacy property for what is now componentName. </param>
+        /// <param name="cvssScore"> Legacy property for the effective CVE score. </param>
+        /// <param name="cvssV2Score"> Legacy property for the CVE CVSS version 2 score, if one existed. </param>
+        /// <param name="cvssV3Score"> Legacy property for the CVE CVSS version 3 score, if one existed. </param>
+        /// <param name="cvssVersion"> Legacy property for the what CVSS version score was stored in the cvssScore property. </param>
         /// <param name="effectiveCvssScore"> The most recent CVSS score of the CVE. </param>
         /// <param name="effectiveCvssVersion"> The version of the effectiveCvssScore property. </param>
         /// <param name="cvssScores"> All known CVSS scores for the CVE. </param>
@@ -72,7 +77,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="description"> The CVE description. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, float? effectiveCvssScore, int? effectiveCvssVersion, IList<CvssScore> cvssScores, IReadOnlyList<CveLink> links, string description, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, IList<CvssScore> cvssScores, IReadOnlyList<CveLink> links, string description, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CveId = cveId;
             ComponentId = componentId;
@@ -80,6 +85,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ComponentVersion = componentVersion;
             Severity = severity;
             CveName = cveName;
+            Component = component;
+            CvssScore = cvssScore;
+            CvssV2Score = cvssV2Score;
+            CvssV3Score = cvssV3Score;
+            CvssVersion = cvssVersion;
             EffectiveCvssScore = effectiveCvssScore;
             EffectiveCvssVersion = effectiveCvssVersion;
             CvssScores = cvssScores;
@@ -101,6 +111,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public string Severity { get; set; }
         /// <summary> Name of the CVE. </summary>
         public string CveName { get; set; }
+        /// <summary> Legacy property for the effective CVE score. </summary>
+        public string CvssScore { get; set; }
+        /// <summary> Legacy property for the CVE CVSS version 2 score, if one existed. </summary>
+        public string CvssV2Score { get; set; }
+        /// <summary> Legacy property for the CVE CVSS version 3 score, if one existed. </summary>
+        public string CvssV3Score { get; set; }
+        /// <summary> Legacy property for the what CVSS version score was stored in the cvssScore property. </summary>
+        public string CvssVersion { get; set; }
         /// <summary> The most recent CVSS score of the CVE. </summary>
         public float? EffectiveCvssScore { get; set; }
         /// <summary> The version of the effectiveCvssScore property. </summary>

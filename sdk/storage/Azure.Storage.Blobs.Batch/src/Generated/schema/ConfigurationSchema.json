@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "BlobBatchClient": {
+          "type": "object",
+          "description": "Configuration for BlobBatchClient.",
+          "properties": {
+            "Url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Url."
+            },
+            "Client": {
+              "type": "object"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/blobBatchClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "blobBatchClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

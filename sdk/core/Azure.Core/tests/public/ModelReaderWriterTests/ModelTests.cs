@@ -117,7 +117,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             {
                 modelType = modelType.BaseType;
             }
-            var propertyInfo = modelType.GetField("_rawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            var propertyInfo = modelType.GetField("_serializedAdditionalRawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             return propertyInfo.GetValue(model) as Dictionary<string, BinaryData>;
         }
 

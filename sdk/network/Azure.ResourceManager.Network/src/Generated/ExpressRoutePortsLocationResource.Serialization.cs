@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class ExpressRoutePortsLocationResource : IJsonModel<ExpressRoutePortsLocationData>
     {
-        private static ExpressRoutePortsLocationData s_dataDeserializationInstance;
-        private static ExpressRoutePortsLocationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ExpressRoutePortsLocationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ExpressRoutePortsLocationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExpressRoutePortsLocationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpressRoutePortsLocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortsLocationData>)Data).Write(writer, options);
 
-        ExpressRoutePortsLocationData IJsonModel<ExpressRoutePortsLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortsLocationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRoutePortsLocationData IJsonModel<ExpressRoutePortsLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExpressRoutePortsLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRoutePortsLocationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ExpressRoutePortsLocationData IPersistableModel<ExpressRoutePortsLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRoutePortsLocationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ExpressRoutePortsLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRoutePortsLocationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRoutePortsLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

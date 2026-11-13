@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,6 +16,8 @@ namespace Encode.Datetime._ResponseHeader
     public partial class ResponseHeader
     {
         protected ResponseHeader() => throw null;
+
+        internal ResponseHeader(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

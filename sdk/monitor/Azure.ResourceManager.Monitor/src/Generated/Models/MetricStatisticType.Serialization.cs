@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class MetricStatisticTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MetricStatisticType value) => value switch
         {
             MetricStatisticType.Average => "Average",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MetricStatisticType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MetricStatisticType ToMetricStatisticType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Average")) return MetricStatisticType.Average;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Min")) return MetricStatisticType.Min;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Max")) return MetricStatisticType.Max;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sum")) return MetricStatisticType.Sum;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count")) return MetricStatisticType.Count;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Average"))
+            {
+                return MetricStatisticType.Average;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Min"))
+            {
+                return MetricStatisticType.Min;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Max"))
+            {
+                return MetricStatisticType.Max;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sum"))
+            {
+                return MetricStatisticType.Sum;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count"))
+            {
+                return MetricStatisticType.Count;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MetricStatisticType value.");
         }
     }

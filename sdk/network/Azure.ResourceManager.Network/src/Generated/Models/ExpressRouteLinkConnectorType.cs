@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExpressRouteLinkConnectorType : IEquatable<ExpressRouteLinkConnectorType>
     {
         private readonly string _value;
+        /// <summary> LC. </summary>
+        private const string LCValue = "LC";
+        /// <summary> SC. </summary>
+        private const string SCValue = "SC";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkConnectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRouteLinkConnectorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LCValue = "LC";
-        private const string SCValue = "SC";
+            _value = value;
+        }
 
         /// <summary> LC. </summary>
         public static ExpressRouteLinkConnectorType LC { get; } = new ExpressRouteLinkConnectorType(LCValue);
+
         /// <summary> SC. </summary>
         public static ExpressRouteLinkConnectorType SC { get; } = new ExpressRouteLinkConnectorType(SCValue);
+
         /// <summary> Determines if two <see cref="ExpressRouteLinkConnectorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressRouteLinkConnectorType left, ExpressRouteLinkConnectorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressRouteLinkConnectorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressRouteLinkConnectorType left, ExpressRouteLinkConnectorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteLinkConnectorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressRouteLinkConnectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressRouteLinkConnectorType(string value) => new ExpressRouteLinkConnectorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressRouteLinkConnectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressRouteLinkConnectorType?(string value) => value == null ? null : new ExpressRouteLinkConnectorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressRouteLinkConnectorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressRouteLinkConnectorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.ResourceManager.Resources.Bicep.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Resources.Bicep.Tests.csproj" />
+</Solution>

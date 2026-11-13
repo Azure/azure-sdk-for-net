@@ -1,0 +1,7 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/domainservices/Azure.ResourceManager.DomainServices/**/*.cs'
+    words:
+      - ldaps
+      - ntlm

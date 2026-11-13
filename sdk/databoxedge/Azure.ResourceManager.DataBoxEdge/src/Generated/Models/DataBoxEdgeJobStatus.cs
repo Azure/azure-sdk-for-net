@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeJobStatus : IEquatable<DataBoxEdgeJobStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeJobStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string RunningValue = "Running";
         private const string SucceededValue = "Succeeded";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string PausedValue = "Paused";
         private const string ScheduledValue = "Scheduled";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeJobStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static DataBoxEdgeJobStatus Invalid { get; } = new DataBoxEdgeJobStatus(InvalidValue);
-        /// <summary> Running. </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static DataBoxEdgeJobStatus Running { get; } = new DataBoxEdgeJobStatus(RunningValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static DataBoxEdgeJobStatus Succeeded { get; } = new DataBoxEdgeJobStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static DataBoxEdgeJobStatus Failed { get; } = new DataBoxEdgeJobStatus(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static DataBoxEdgeJobStatus Canceled { get; } = new DataBoxEdgeJobStatus(CanceledValue);
-        /// <summary> Paused. </summary>
+
+        /// <summary> Gets the Paused. </summary>
         public static DataBoxEdgeJobStatus Paused { get; } = new DataBoxEdgeJobStatus(PausedValue);
-        /// <summary> Scheduled. </summary>
+
+        /// <summary> Gets the Scheduled. </summary>
         public static DataBoxEdgeJobStatus Scheduled { get; } = new DataBoxEdgeJobStatus(ScheduledValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeJobStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeJobStatus left, DataBoxEdgeJobStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeJobStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeJobStatus left, DataBoxEdgeJobStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeJobStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeJobStatus(string value) => new DataBoxEdgeJobStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeJobStatus?(string value) => value == null ? null : new DataBoxEdgeJobStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeJobStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeJobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

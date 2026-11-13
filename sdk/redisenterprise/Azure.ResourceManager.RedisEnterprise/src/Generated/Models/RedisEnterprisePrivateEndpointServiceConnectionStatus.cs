@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterprisePrivateEndpointServiceConnectionStatus : IEquatable<RedisEnterprisePrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Connection waiting for approval or rejection. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Connection approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Connection Rejected. </summary>
+        private const string RejectedValue = "Rejected";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterprisePrivateEndpointServiceConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
-
-        /// <summary> Pending. </summary>
+        /// <summary> Connection waiting for approval or rejection. </summary>
         public static RedisEnterprisePrivateEndpointServiceConnectionStatus Pending { get; } = new RedisEnterprisePrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Connection approved. </summary>
         public static RedisEnterprisePrivateEndpointServiceConnectionStatus Approved { get; } = new RedisEnterprisePrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Connection Rejected. </summary>
         public static RedisEnterprisePrivateEndpointServiceConnectionStatus Rejected { get; } = new RedisEnterprisePrivateEndpointServiceConnectionStatus(RejectedValue);
+
         /// <summary> Determines if two <see cref="RedisEnterprisePrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterprisePrivateEndpointServiceConnectionStatus left, RedisEnterprisePrivateEndpointServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterprisePrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterprisePrivateEndpointServiceConnectionStatus left, RedisEnterprisePrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterprisePrivateEndpointServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterprisePrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterprisePrivateEndpointServiceConnectionStatus(string value) => new RedisEnterprisePrivateEndpointServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterprisePrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterprisePrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new RedisEnterprisePrivateEndpointServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterprisePrivateEndpointServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterprisePrivateEndpointServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -39,12 +39,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="scripts"> Array of script blocks. Type: array. </param>
         /// <param name="logSettings"> Log settings of script activity. </param>
         /// <param name="returnMultistatementResult"> Enable to retrieve result sets from multiple SQL statements and the number of rows affected by the DML statement. Supported connector: SnowflakeV2. Type: boolean (or Expression with resultType boolean). </param>
-        internal ScriptActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object scriptBlockExecutionTimeout, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypePropertiesLogSettings logSettings, object returnMultistatementResult) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="treatDecimalAsString"> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </param>
+        internal ScriptActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object scriptBlockExecutionTimeout, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypePropertiesLogSettings logSettings, object returnMultistatementResult, object treatDecimalAsString) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptBlockExecutionTimeout = scriptBlockExecutionTimeout;
             Scripts = scripts;
             LogSettings = logSettings;
             ReturnMultistatementResult = returnMultistatementResult;
+            TreatDecimalAsString = treatDecimalAsString;
             Type = type ?? "Script";
         }
 
@@ -56,5 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public ScriptActivityTypePropertiesLogSettings LogSettings { get; set; }
         /// <summary> Enable to retrieve result sets from multiple SQL statements and the number of rows affected by the DML statement. Supported connector: SnowflakeV2. Type: boolean (or Expression with resultType boolean). </summary>
         public object ReturnMultistatementResult { get; set; }
+        /// <summary> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </summary>
+        public object TreatDecimalAsString { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"Get Operation Succeeded on id: {resourceData.Id}");
 
             TestContext.Out.WriteLine($"Entered into the Internet Gateway update");
-            NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch()
+            NetworkFabricInternetGatewayPatchContent patch = new NetworkFabricInternetGatewayPatchContent()
             {
                 InternetGatewayRuleId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/example-internetgatewayrule"),
             };

@@ -3,8 +3,8 @@
 
 using System.IO;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Storage.DataMovement.JobPlan;
+using NUnit.Framework;
 using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -27,24 +27,24 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartPlanFile file;
             using (Stream stream = new MemoryStream(data))
             {
-                 file = await JobPartPlanFile.CreateJobPartPlanFileAsync(
-                    checkpointerPath: test.DirectoryPath,
-                    id: transferId,
-                    jobPart: jobPart,
-                    header: new(
-                        DataMovementConstants.JobPartPlanFile.SchemaVersion,
-                        transferId,
-                        jobPart,
-                        System.DateTimeOffset.Now,
-                        "mock",
-                        "mock",
-                        "mock",
-                        "mock",
-                        default,
-                        default,
-                        default,
-                        default,
-                        new()));
+                file = await JobPartPlanFile.CreateJobPartPlanFileAsync(
+                   checkpointerPath: test.DirectoryPath,
+                   id: transferId,
+                   jobPart: jobPart,
+                   header: new(
+                       DataMovementConstants.JobPartPlanFile.SchemaVersion,
+                       transferId,
+                       jobPart,
+                       System.DateTimeOffset.Now,
+                       "mock",
+                       "mock",
+                       "mock",
+                       "mock",
+                       default,
+                       default,
+                       default,
+                       default,
+                       new()));
             }
 
             JobPartPlanFileName fileName = new JobPartPlanFileName(

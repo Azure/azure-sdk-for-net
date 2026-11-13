@@ -1,0 +1,210 @@
+---
+name: mitigate-breaking-changes
+description: Patterns and techniques for mitigating breaking changes in Azure management-plane SDKs. Covers SDK-side customizations (partial classes, CodeGenType, CodeGenSuppress) and TypeSpec decorator customizations (clientName, access, markAsPageable, alternateType, hierarchyBuilding).
+---
+# Skill: mitigate-breaking-changes
+
+Patterns and techniques for mitigating breaking changes when regenerating Azure management-plane .NET SDKs. Use these to preserve backward compatibility in the generated SDK surface.
+
+## When Invoked
+
+Trigger phrases: "mitigate breaking changes", "fix breaking change", "customization patterns", "how to keep backward compat", "CodeGenType", "CodeGenSuppress", "markAsPageable", "hierarchyBuilding", "base type change".
+
+## Common breaking-change workflow
+
+When invoked from `azsdk-common-sdk-breaking-change`, use the
+[.NET pattern catalog](../../../doc/dev/SDKBreakingChanges.md) and the original
+`azsdk_package_detect_breaking_change` result. Preserve the ApiCompat diagnostics,
+previous signatures, additions, and `originBreaks`; a removal/addition pair is
+not proof of a rename.
+
+- For a user-selected `mitigation: generator` change, verify the documented
+  preconditions and matching previous contract. Reuse the management generator's
+  existing conditional-header and model-factory compatibility overload support.
+  Regenerate; do not write a second synthesizer or patch generated files.
+- For `mitigation: client customization`, use `azsdk_customized_code_update`
+  with the user's selected change and permitted edit scope. `CustomCode` cannot
+  edit TypeSpec inputs or change the pinned spec commit; `SpecChangeRequired`
+  requires a spec-owner handoff, not an automatic retry with broader scope.
+- For `mitigation: manual`, missing evidence, or unsupported generator output,
+  explain the decision needed and stop automatic mitigation.
+
+This skill's ARM patterns are management-specific. Do not apply resource
+hierarchy, ARM identifier, or conditional-header transformations to data-plane
+libraries without separately verified support.
+
+After a change, regenerate and compile fresh artifacts as needed, rerun the
+standalone detector, then run ordinary builds, analyzers, and tests separately.
+Do not treat a missing GA baseline, stale artifact, or detector failure as a
+compatibility pass. Never add suppressions without explicit owner approval.
+
+## SDK-Side Customizations (in SDK repo)
+
+Use **Custom/*.cs** or **Customization/*.cs** partial classes (follow the package's existing structure) for .NET-side fixes.
+
+### Custom code file organization
+Keep custom code types split into separate files:
+- Put each custom type/partial type in its own `.cs` file.
+- Name the file after the class it contains, for example `src/Custom/Models/MyModel.cs` for `public partial class MyModel`.
+- Align the custom code folder structure with the generated code structure, such as using `Models/` for model customizations and `Extensions/` for extension customizations when those folders exist.
+- Do not group multiple compatibility types in a single broad file such as `Compatibility.cs`; split them so each file name aligns with the class name.
+
+### Partial class (add members, suppress generated members)
+```csharp
+// src/Custom/Models/MyModel.cs (or src/Customization/Models/MyModel.cs — follow the package's existing convention)
+namespace Azure.ResourceManager.<Service>.Models
+{
+    public partial class MyModel
+    {
+        // Add computed properties, rename via [CodeGenMember], etc.
+    }
+}
+```
+
+### `[CodeGenType]` — Override accessibility or rename a generated type
+When a generated type is `internal` and `@@access` in `client.tsp` doesn't work (common for nested/wrapper types), use `[CodeGenType]` in Custom code to make it public:
+
+```csharp
+// src/Custom/Models/MyPublicModel.cs
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.ResourceManager.<Service>.Models
+{
+    [CodeGenType("OriginalTypeSpecModelName")]
+    public partial class MyPublicModel
+    {
+    }
+}
+```
+
+The `[CodeGenType("...")]` attribute takes the **original TypeSpec model name** (not the C# renamed name). This links the Custom partial class to the generated internal type and overrides its accessibility to `public`.
+
+## TypeSpec Decorator Customizations (in spec repo)
+
+These decorators are added to `client.tsp` in the spec repo.
+
+```typespec
+// Rename parameter
+@@clientName(Operations.create::parameters.resource, "content");
+
+// Rename path parameter
+@@Azure.ResourceManager.Legacy.renamePathParameter(Resources.list, "fooName", "name");
+
+// Mark a non-pageable list operation as pageable (returns Pageable<T> instead of Response<ListType>)
+// Requires: using Azure.ClientGenerator.Core.Legacy;
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"
+@@markAsPageable(InterfaceName.operationName, "csharp");
+
+// Suppress warning
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"
+```
+
+### When to use `@@markAsPageable`
+When the old SDK returned `Pageable<T>` / `AsyncPageable<T>` for a list operation, but the TypeSpec spec defines the operation as non-pageable (returns a wrapper list type like `FooList`), use `@@markAsPageable` to make the generator produce pageable methods. This is **preferred over** writing custom `SinglePagePageable<T>` wrapper code because:
+- It reduces custom code that must be maintained
+- The generated pageable implementation handles diagnostics, cancellation, and error handling correctly
+- It keeps the SDK surface consistent with other generated methods
+
+**Do NOT use `@@markAsPageable` if the operation is already marked with `@list`** — the `@list` decorator already makes the operation pageable, and adding `@@markAsPageable` will cause a compile error. Check the spec's operation definition before adding the decorator.
+
+**Requirements:**
+1. Add `using Azure.ClientGenerator.Core.Legacy;` to the `client.tsp` imports
+2. Add `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"` before each `@@markAsPageable` call
+3. After adding the decorator, regenerate and remove any custom `[CodeGenSuppress]` + `SinglePagePageable` wrapper code
+
+### `@@alternateType` Decorator
+When the spec uses older common types that generate incorrect C# types (e.g., `string` instead of `ResourceIdentifier` for ID properties), use `@@alternateType`:
+```typespec
+@@alternateType(MyModel.resourceId, Azure.ResourceManager.CommonTypes.ArmResourceIdentifier, "csharp");
+```
+
+### `@@hierarchyBuilding` Decorator — Legacy base-type override
+Do **not** use `@@hierarchyBuilding` for C# base-model/base-type compatibility. First verify resource-hierarchy parity, fix structural resource hierarchy issues in the TypeSpec resource shape, and use SDK-side custom code only for C# base-model/base-type compatibility after the generated surface is stable.
+
+`@@hierarchyBuilding` is a legacy escape hatch. Use it only with explicit owner approval when no TypeSpec resource-shape fix or SDK-side customization is appropriate.
+
+**Syntax:**
+```typespec
+// Requires: using Azure.ClientGenerator.Core.Legacy;
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Change the base type back to <TargetBase> for backward compatibility"
+@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(MyResource,
+  Azure.ResourceManager.Foundations.TrackedResource,
+  "csharp"
+);
+```
+
+**Common target base types:**
+- `Azure.ResourceManager.Foundations.TrackedResource` — generates `TrackedResourceData` (for resources with location and tags)
+- `Azure.ResourceManager.Foundations.ProxyResource` — generates `ResourceData` (for proxy/child resources)
+- `Azure.ResourceManager.Foundations.Resource` — generates `ResourceData` (ARM resource base)
+
+**Legacy-only scenarios that require explicit approval:**
+- The old SDK had `MyData : ResourceData` or `MyData : TrackedResourceData`, the regenerated SDK produces `MyData : SomeOtherType` (e.g., a service-local `Resource` model), and the owner has explicitly rejected the normal resource-shape and SDK-customization fixes.
+- The `CannotRemoveBaseTypeOrInterface` API compatibility violation remains after verifying resource-hierarchy parity and attempting the normal SDK-side customization approach.
+
+**Requirements:**
+1. Add `using Azure.ClientGenerator.Core.Legacy;` to the `client.tsp` imports
+2. Add `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "..."` before each `@@hierarchyBuilding` call
+3. After adding the decorator, regenerate the SDK code
+
+**Legacy-approved example** (from Key Vault):
+```typespec
+import "@azure-tools/typespec-client-generator-core";
+using Azure.ClientGenerator.Core.Legacy;
+
+// Fix Vault resource to generate VaultData : TrackedResourceData
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Change the base type back to TrackedResource for backward compatibility"
+@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(Vault,
+  Azure.ResourceManager.Foundations.TrackedResource,
+  "csharp"
+);
+```
+
+## WirePathAttribute Breaking Changes
+
+When the previous SDK version included `WirePathAttribute` on model properties (used by Azure.Provisioning libraries), regeneration may produce ApiCompat `CannotRemoveAttribute` errors for the missing attribute because the emitter defaults to **not** generating it.
+
+### How to detect
+
+- ApiCompat `CannotRemoveAttribute` errors referencing `WirePathAttribute` on model properties
+- These errors appear during `dotnet pack --no-restore` when the previous SDK release had `WirePathAttribute` on properties but the new generation does not
+
+### Fix
+
+Add `enable-wire-path-attribute: true` to the **mgmt emitter options** in `tspconfig.yaml` (in the spec repo):
+
+```yaml
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+    namespace: "Azure.ResourceManager.<Service>"
+    enable-wire-path-attribute: true
+```
+
+Then regenerate the SDK.
+
+If the remaining ApiCompat diff is only `WirePathAttribute` removal, it is acceptable to add targeted entries to the centralized baseline file under `eng/apicompatbaselines/<Project>.xml`. Do not add SDK custom code just to restore `WirePathAttribute`; the maintenance cost is not worth it for this compatibility diff.
+
+Do not create a local `ApiCompatBaseline.txt`, do not baseline unrelated ApiCompat errors, and do not disable ApiCompat.
+
+## Extension Resources
+
+Extension resources (deployed onto parent resources from different providers) require special handling.
+
+### Parameterized Scopes
+When the same resource type can be deployed onto multiple parent types (e.g., VM, HCRP, VMSS), use `OverrideResourceName` with parameterized scopes. Each scope generates a separate SDK resource type. The generator may produce duplicate `GetXxxResource()` methods in `MockableArmClient` when multiple entries exist for the same resource — this is a known generator bug requiring deduplication.
+
+### Sub-Resource Operations: Avoid `Read<>` / `Extension.Read<>` for Non-Lifecycle Ops
+When a sub-resource operation (e.g., getting a report under an assignment) uses `Read<>` or `Extension.Read<>` templates, the ARM library treats it as a **lifecycle read** operation. This causes:
+- The resource's `resourceType` and `resourceIdPattern` to be set to the sub-resource path
+- Collections using the wrong REST client
+- Compile errors: CS1729 (wrong constructor), CS0029 (type mismatch), CS1503 (wrong argument)
+
+**Fix**: Change sub-resource Get operations from `Read<>` to `ActionSync<>` (or `Extension.ActionSync<>` for extension resources) with a `@get` decorator:
+```typespec
+// WRONG — ARM library treats this as lifecycle Read
+reportGet is Ops.Read<Resource, Response = ArmResponse<Report>, ...>;
+
+// CORRECT — ActionSync with @get avoids lifecycle misclassification
+@get reportGet is Ops.ActionSync<Resource, void, Response = ArmResponse<Report>, ...>;
+```

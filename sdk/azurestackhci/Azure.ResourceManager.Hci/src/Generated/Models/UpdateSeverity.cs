@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Severity of the result (Critical, Warning, Informational, Hidden). This answers how important the result is. Critical is the only update-blocking severity. </summary>
+    /// <summary> Indicates the importance or impact level of the result. Determines whether the result is informational, a warning, or a critical issue that may block updates. </summary>
     public readonly partial struct UpdateSeverity : IEquatable<UpdateSeverity>
     {
         private readonly string _value;
+        /// <summary> A critical issue that blocks updates and requires immediate attention. </summary>
+        private const string CriticalValue = "Critical";
+        /// <summary> A warning that may indicate a potential issue but does not block updates. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> General information that does not indicate any issue. </summary>
+        private const string InformationalValue = "Informational";
+        /// <summary> The result is hidden and not shown in the output. </summary>
+        private const string HiddenValue = "Hidden";
 
         /// <summary> Initializes a new instance of <see cref="UpdateSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpdateSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CriticalValue = "Critical";
-        private const string WarningValue = "Warning";
-        private const string InformationalValue = "Informational";
-        private const string HiddenValue = "Hidden";
-
-        /// <summary> Critical. </summary>
+        /// <summary> A critical issue that blocks updates and requires immediate attention. </summary>
         public static UpdateSeverity Critical { get; } = new UpdateSeverity(CriticalValue);
-        /// <summary> Warning. </summary>
+
+        /// <summary> A warning that may indicate a potential issue but does not block updates. </summary>
         public static UpdateSeverity Warning { get; } = new UpdateSeverity(WarningValue);
-        /// <summary> Informational. </summary>
+
+        /// <summary> General information that does not indicate any issue. </summary>
         public static UpdateSeverity Informational { get; } = new UpdateSeverity(InformationalValue);
-        /// <summary> Hidden. </summary>
+
+        /// <summary> The result is hidden and not shown in the output. </summary>
         public static UpdateSeverity Hidden { get; } = new UpdateSeverity(HiddenValue);
+
         /// <summary> Determines if two <see cref="UpdateSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UpdateSeverity left, UpdateSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UpdateSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UpdateSeverity left, UpdateSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdateSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UpdateSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UpdateSeverity(string value) => new UpdateSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UpdateSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UpdateSeverity?(string value) => value == null ? null : new UpdateSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UpdateSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UpdateSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

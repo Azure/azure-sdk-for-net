@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ControlPlaneNodeConfiguration represents the selection of virtual machines and size of the control plane for a Kubernetes cluster. </summary>
     public partial class ControlPlaneNodeConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ControlPlaneNodeConfiguration"/>. </summary>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
@@ -63,27 +35,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="availabilityZones"> The list of availability zones of the Network Cloud cluster to be used for the provisioning of nodes in the control plane. If not specified, all availability zones will be used. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="vmSkuName"> The name of the VM SKU supplied during creation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlaneNodeConfiguration(AdministratorConfiguration administratorConfiguration, IList<string> availabilityZones, long count, string vmSkuName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ControlPlaneNodeConfiguration(AdministratorConfiguration administratorConfiguration, IList<string> availabilityZones, long count, string vmSkuName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorConfiguration = administratorConfiguration;
             AvailabilityZones = availabilityZones;
             Count = count;
             VmSkuName = vmSkuName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ControlPlaneNodeConfiguration"/> for deserialization. </summary>
-        internal ControlPlaneNodeConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The administrator credentials to be used for the nodes in the control plane. </summary>
         public AdministratorConfiguration AdministratorConfiguration { get; set; }
+
         /// <summary> The list of availability zones of the Network Cloud cluster to be used for the provisioning of nodes in the control plane. If not specified, all availability zones will be used. </summary>
         public IList<string> AvailabilityZones { get; }
+
         /// <summary> The number of virtual machines that use this configuration. </summary>
         public long Count { get; set; }
+
         /// <summary> The name of the VM SKU supplied during creation. </summary>
         public string VmSkuName { get; set; }
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
+    /// <summary></summary>
     public partial class ServiceFabricManagedServiceResource : IJsonModel<ServiceFabricManagedServiceData>
     {
-        private static ServiceFabricManagedServiceData s_dataDeserializationInstance;
-        private static ServiceFabricManagedServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ServiceFabricManagedServiceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ServiceFabricManagedServiceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServiceFabricManagedServiceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceFabricManagedServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedServiceData>)Data).Write(writer, options);
 
-        ServiceFabricManagedServiceData IJsonModel<ServiceFabricManagedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedServiceData IJsonModel<ServiceFabricManagedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServiceFabricManagedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricManagedServiceData>(Data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ServiceFabricManagedServiceData IPersistableModel<ServiceFabricManagedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricManagedServiceData>(data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
 
-        string IPersistableModel<ServiceFabricManagedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricManagedServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceFabricManagedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

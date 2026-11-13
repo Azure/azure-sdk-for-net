@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     public readonly partial struct ComponentItemType : IEquatable<ComponentItemType>
     {
         private readonly string _value;
+        /// <summary> none. </summary>
+        private const string NoneValue = "none";
+        /// <summary> query. </summary>
+        private const string QueryValue = "query";
+        /// <summary> recent. </summary>
+        private const string RecentValue = "recent";
+        /// <summary> function. </summary>
+        private const string FunctionValue = "function";
 
         /// <summary> Initializes a new instance of <see cref="ComponentItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComponentItemType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string QueryValue = "query";
-        private const string RecentValue = "recent";
-        private const string FunctionValue = "function";
+            _value = value;
+        }
 
         /// <summary> none. </summary>
         public static ComponentItemType None { get; } = new ComponentItemType(NoneValue);
+
         /// <summary> query. </summary>
         public static ComponentItemType Query { get; } = new ComponentItemType(QueryValue);
+
         /// <summary> recent. </summary>
         public static ComponentItemType Recent { get; } = new ComponentItemType(RecentValue);
+
         /// <summary> function. </summary>
         public static ComponentItemType Function { get; } = new ComponentItemType(FunctionValue);
+
         /// <summary> Determines if two <see cref="ComponentItemType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComponentItemType left, ComponentItemType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComponentItemType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComponentItemType left, ComponentItemType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComponentItemType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComponentItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComponentItemType(string value) => new ComponentItemType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComponentItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComponentItemType?(string value) => value == null ? null : new ComponentItemType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComponentItemType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComponentItemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

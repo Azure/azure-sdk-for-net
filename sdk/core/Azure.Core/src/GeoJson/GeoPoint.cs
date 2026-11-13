@@ -41,7 +41,7 @@ namespace Azure.Core.GeoJson
         /// <param name="longitude">The longitude of the point.</param>
         /// <param name="latitude">The latitude of the point.</param>
         /// <param name="altitude">The altitude of the point.</param>
-        public GeoPoint(double longitude, double latitude, double? altitude): this(new GeoPosition(longitude, latitude, altitude), null, DefaultProperties)
+        public GeoPoint(double longitude, double latitude, double? altitude) : this(new GeoPosition(longitude, latitude, altitude), null, DefaultProperties)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Core.GeoJson
         /// Initializes new instance of <see cref="GeoPoint"/>.
         /// </summary>
         /// <param name="position">The position of the point.</param>
-        public GeoPoint(GeoPosition position): this(position, null, DefaultProperties)
+        public GeoPoint(GeoPosition position) : this(position, null, DefaultProperties)
         {
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Core.GeoJson
         /// <param name="position">The position of the point.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoPoint(GeoPosition position, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
+        public GeoPoint(GeoPosition position, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties) : base(boundingBox, customProperties)
         {
             Coordinates = position;
         }

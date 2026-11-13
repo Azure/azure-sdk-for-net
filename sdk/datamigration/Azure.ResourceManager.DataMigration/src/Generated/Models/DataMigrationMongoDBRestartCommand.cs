@@ -14,33 +14,37 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class DataMigrationMongoDBRestartCommand : DataMigrationCommandProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBRestartCommand"/>. </summary>
-        public DataMigrationMongoDBRestartCommand()
+        public DataMigrationMongoDBRestartCommand() : base(DataMigrationCommandType.Restart)
         {
-            CommandType = DataMigrationCommandType.Restart;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBRestartCommand"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Command input. </param>
-        internal DataMigrationMongoDBRestartCommand(DataMigrationCommandType commandType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationCommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationMongoDBCommandInput input) : base(commandType, errors, state, serializedAdditionalRawData)
+        internal DataMigrationMongoDBRestartCommand(DataMigrationCommandType commandType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationCommandState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataMigrationMongoDBCommandInput input) : base(commandType, errors, state, additionalBinaryDataProperties)
         {
             Input = input;
-            CommandType = commandType;
         }
 
         /// <summary> Command input. </summary>
         internal DataMigrationMongoDBCommandInput Input { get; set; }
+
         /// <summary> The qualified name of a database or collection to act upon, or null to act upon the entire migration. </summary>
         public string InputObjectName
         {
-            get => Input is null ? default : Input.ObjectName;
+            get
+            {
+                return Input is null ? default : Input.ObjectName;
+            }
             set
             {
                 if (Input is null)
+                {
                     Input = new DataMigrationMongoDBCommandInput();
+                }
                 Input.ObjectName = value;
             }
         }

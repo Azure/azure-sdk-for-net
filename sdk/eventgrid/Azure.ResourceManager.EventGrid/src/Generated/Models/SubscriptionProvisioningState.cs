@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct SubscriptionProvisioningState : IEquatable<SubscriptionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> AwaitingManualAction. </summary>
+        private const string AwaitingManualActionValue = "AwaitingManualAction";
+        /// <summary> Deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> DeleteFailed. </summary>
+        private const string DeleteFailedValue = "DeleteFailed";
+        /// <summary> CreateFailed. </summary>
+        private const string CreateFailedValue = "CreateFailed";
+        /// <summary> UpdatedFailed. </summary>
+        private const string UpdatedFailedValue = "UpdatedFailed";
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SubscriptionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string AwaitingManualActionValue = "AwaitingManualAction";
-        private const string DeletedValue = "Deleted";
-        private const string DeleteFailedValue = "DeleteFailed";
-        private const string CreateFailedValue = "CreateFailed";
-        private const string UpdatedFailedValue = "UpdatedFailed";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static SubscriptionProvisioningState Creating { get; } = new SubscriptionProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static SubscriptionProvisioningState Updating { get; } = new SubscriptionProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static SubscriptionProvisioningState Deleting { get; } = new SubscriptionProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static SubscriptionProvisioningState Succeeded { get; } = new SubscriptionProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static SubscriptionProvisioningState Canceled { get; } = new SubscriptionProvisioningState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static SubscriptionProvisioningState Failed { get; } = new SubscriptionProvisioningState(FailedValue);
+
         /// <summary> AwaitingManualAction. </summary>
         public static SubscriptionProvisioningState AwaitingManualAction { get; } = new SubscriptionProvisioningState(AwaitingManualActionValue);
+
         /// <summary> Deleted. </summary>
         public static SubscriptionProvisioningState Deleted { get; } = new SubscriptionProvisioningState(DeletedValue);
+
         /// <summary> DeleteFailed. </summary>
         public static SubscriptionProvisioningState DeleteFailed { get; } = new SubscriptionProvisioningState(DeleteFailedValue);
+
         /// <summary> CreateFailed. </summary>
         public static SubscriptionProvisioningState CreateFailed { get; } = new SubscriptionProvisioningState(CreateFailedValue);
+
         /// <summary> UpdatedFailed. </summary>
         public static SubscriptionProvisioningState UpdatedFailed { get; } = new SubscriptionProvisioningState(UpdatedFailedValue);
+
         /// <summary> Determines if two <see cref="SubscriptionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionProvisioningState left, SubscriptionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionProvisioningState left, SubscriptionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionProvisioningState(string value) => new SubscriptionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionProvisioningState?(string value) => value == null ? null : new SubscriptionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

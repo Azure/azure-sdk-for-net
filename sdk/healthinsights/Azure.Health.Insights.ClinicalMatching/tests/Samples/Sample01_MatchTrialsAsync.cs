@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Health.Insights.ClinicalMatching;
-using Azure.Health.Insights.ClinicalMatching.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Health.Insights.ClinicalMatching;
+using Azure.Health.Insights.ClinicalMatching.Tests.Infrastructure;
 using Microsoft.Extensions.ObjectPool;
 using NUnit.Framework;
 

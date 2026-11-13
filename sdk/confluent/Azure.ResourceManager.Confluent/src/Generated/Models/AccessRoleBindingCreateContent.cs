@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Create role binding request model. </summary>
     public partial class AccessRoleBindingCreateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AccessRoleBindingCreateContent"/>. </summary>
         public AccessRoleBindingCreateContent()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="principal"> The principal User or Group to bind the role to. </param>
         /// <param name="roleName"> The name of the role to bind to the principal. </param>
         /// <param name="crnPattern"> A CRN that specifies the scope and resource patterns necessary for the role to bind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRoleBindingCreateContent(string principal, string roleName, string crnPattern, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AccessRoleBindingCreateContent(string principal, string roleName, string crnPattern, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Principal = principal;
             RoleName = roleName;
             CrnPattern = crnPattern;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The principal User or Group to bind the role to. </summary>
         public string Principal { get; set; }
+
         /// <summary> The name of the role to bind to the principal. </summary>
         public string RoleName { get; set; }
+
         /// <summary> A CRN that specifies the scope and resource patterns necessary for the role to bind. </summary>
         public string CrnPattern { get; set; }
     }

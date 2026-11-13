@@ -14,9 +14,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public RequestData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : base(version)
         {
             string? responseCode = null;
+            string? requestName = null;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
+            // Process based on operation type
             switch (activityTagsProcessor.activityType)
             {
                 case OperationType.Http | OperationType.V2:
@@ -30,6 +32,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
+            // Check for Microsoft override attributes only if present (avoids overhead for standalone OTel usage)
+            if (activityTagsProcessor.HasOverrideAttributes)
+            {
+                var overrideUrl = activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftRequestUrl]?.ToString();
+                var overrideName = activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftRequestName]?.ToString();
+                var overrideSource = activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftRequestSource]?.ToString();
+                var overrideResultCode = activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftRequestResultCode]?.ToString();
+
+                // Apply overrides if present (these take precedence)
+                if (!string.IsNullOrEmpty(overrideUrl))
+                {
+                    Url = overrideUrl.Truncate(SchemaConstants.RequestData_Url_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideName))
+                {
+                    requestName = overrideName;
+                }
+
+                if (!string.IsNullOrEmpty(overrideSource))
+                {
+                    Source = overrideSource.Truncate(SchemaConstants.RequestData_Source_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideResultCode))
+                {
+                    responseCode = overrideResultCode;
+                }
+            }
+
+            Name = requestName?.Truncate(SchemaConstants.RequestData_Name_MaxLength);
             Id = activity.Context.SpanId.ToHexString();
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
@@ -69,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private void SetHttpRequestPropertiesAndResponseCode(Activity activity, ref AzMonList httpTagObjects, out string responseCode)
         {
             Url ??= httpTagObjects.GetRequestUrl()?.Truncate(SchemaConstants.RequestData_Url_MaxLength);
-            responseCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpStatusCode)
+            responseCode = httpTagObjects[SemanticSlot.HttpStatusCode]
                                                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                                                 ?? "0";
         }
@@ -77,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private void SetHttpV2RequestPropertiesAndResponseCode(Activity activity, ref AzMonList httpTagObjects, out string responseCode)
         {
             Url ??= httpTagObjects.GetNewSchemaRequestUrl()?.Truncate(SchemaConstants.RequestData_Url_MaxLength);
-            responseCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpResponseStatusCode)
+            responseCode = httpTagObjects[SemanticSlot.HttpResponseStatusCode]
                                     ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                                     ?? "0";
         }

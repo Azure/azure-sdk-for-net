@@ -9,7 +9,10 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// Configuration options for the attestation client.
     /// </summary>
-    public class AttestationClientOptions : ClientOptions
+    // The generated single-parameter ctor is suppressed to preserve the shipped public
+    // constructor (ServiceVersion, AttestationTokenValidationOptions) and avoid CS0121 ambiguity.
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationClientOptions", typeof(ServiceVersion))]
+    public partial class AttestationClientOptions : ClientOptions
     {
         internal string Version { get; }
 
@@ -20,7 +23,7 @@ namespace Azure.Security.Attestation
 
         /// <summary>Initializes a new instance of the <see cref="AttestationClientOptions"/>.</summary>
         public AttestationClientOptions(
-            ServiceVersion version = ServiceVersion.V2020_10_01,
+            ServiceVersion version = ServiceVersion.V2025_06_01,
             AttestationTokenValidationOptions tokenOptions = default
             )
         {
@@ -32,12 +35,13 @@ namespace Azure.Security.Attestation
             Version = version switch
             {
                 ServiceVersion.V2020_10_01 => "2020-10-01",
+                ServiceVersion.V2025_06_01 => "2025-06-01",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
 
             // If the caller specified that they have token validation options, use them, otherwise
             // use the defaults.
-            TokenOptions = tokenOptions != null ? tokenOptions.Clone() :  new AttestationTokenValidationOptions();
+            TokenOptions = tokenOptions != null ? tokenOptions.Clone() : new AttestationTokenValidationOptions();
         }
 
         /// <summary>
@@ -48,8 +52,15 @@ namespace Azure.Security.Attestation
         {
             /// <summary>
             /// Version 2020-10-01 of the Microsoft Azure Attestation Service - corresponds to the General Availability of the MAA service.
+            /// See the <see href="https://github.com/Azure/azure-rest-api-specs/blob/main/specification/attestation/data-plane/Attestation/stable/2020-10-01/attestation.json">API definition</see>.
             /// </summary>
             V2020_10_01 = 1,
+
+            /// <summary>
+            /// Version 2025-06-01 of the Microsoft Azure Attestation Service. Required for attestation types introduced after 2020-10-01, such as TdxVm.
+            /// See the <see href="https://github.com/Azure/azure-rest-api-specs/blob/main/specification/attestation/data-plane/Attestation/stable/2025-06-01/attestation.json">API definition</see>.
+            /// </summary>
+            V2025_06_01 = 2,
         };
 #pragma warning restore CA1707
     }

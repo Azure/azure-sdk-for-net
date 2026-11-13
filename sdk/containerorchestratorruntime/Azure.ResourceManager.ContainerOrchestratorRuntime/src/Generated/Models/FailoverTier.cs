@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     public readonly partial struct FailoverTier : IEquatable<FailoverTier>
     {
         private readonly string _value;
+        /// <summary> Not available Failover Tier. </summary>
+        private const string NotAvailableValue = "NotAvailable";
+        /// <summary> Slow Failover Tier. </summary>
+        private const string SlowValue = "Slow";
+        /// <summary> Fast Failover Tier. </summary>
+        private const string FastValue = "Fast";
+        /// <summary> Super Failover Tier. </summary>
+        private const string SuperValue = "Super";
 
         /// <summary> Initializes a new instance of <see cref="FailoverTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FailoverTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotAvailableValue = "NotAvailable";
-        private const string SlowValue = "Slow";
-        private const string FastValue = "Fast";
-        private const string SuperValue = "Super";
+            _value = value;
+        }
 
         /// <summary> Not available Failover Tier. </summary>
         public static FailoverTier NotAvailable { get; } = new FailoverTier(NotAvailableValue);
+
         /// <summary> Slow Failover Tier. </summary>
         public static FailoverTier Slow { get; } = new FailoverTier(SlowValue);
+
         /// <summary> Fast Failover Tier. </summary>
         public static FailoverTier Fast { get; } = new FailoverTier(FastValue);
+
         /// <summary> Super Failover Tier. </summary>
         public static FailoverTier Super { get; } = new FailoverTier(SuperValue);
+
         /// <summary> Determines if two <see cref="FailoverTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FailoverTier left, FailoverTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FailoverTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FailoverTier left, FailoverTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FailoverTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FailoverTier(string value) => new FailoverTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FailoverTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FailoverTier?(string value) => value == null ? null : new FailoverTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FailoverTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FailoverTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

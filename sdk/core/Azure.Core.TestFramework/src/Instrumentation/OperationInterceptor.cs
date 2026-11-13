@@ -63,7 +63,7 @@ namespace Azure.Core.TestFramework
                 .First(m => m.IsGenericMethodDefinition && m.Name == nameof(InvokeWaitForCompletion))
                 .MakeGenericMethod(GetOperationOfT(targetType).GetGenericArguments());
 
-            return method.Invoke(null, new[] {target, cancellationToken});
+            return method.Invoke(null, new[] { target, cancellationToken });
         }
 
         private void CheckArguments(object[] invocationArguments)

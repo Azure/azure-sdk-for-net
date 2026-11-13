@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct VirtualMachineEvictionPolicyType : IEquatable<VirtualMachineEvictionPolicyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineEvictionPolicyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VirtualMachineEvictionPolicyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DeallocateValue = "Deallocate";
         private const string DeleteValue = "Delete";
 
-        /// <summary> Deallocate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineEvictionPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VirtualMachineEvictionPolicyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Deallocate. </summary>
         public static VirtualMachineEvictionPolicyType Deallocate { get; } = new VirtualMachineEvictionPolicyType(DeallocateValue);
-        /// <summary> Delete. </summary>
+
+        /// <summary> Gets the Delete. </summary>
         public static VirtualMachineEvictionPolicyType Delete { get; } = new VirtualMachineEvictionPolicyType(DeleteValue);
+
         /// <summary> Determines if two <see cref="VirtualMachineEvictionPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineEvictionPolicyType left, VirtualMachineEvictionPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachineEvictionPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineEvictionPolicyType left, VirtualMachineEvictionPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineEvictionPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachineEvictionPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachineEvictionPolicyType(string value) => new VirtualMachineEvictionPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachineEvictionPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachineEvictionPolicyType?(string value) => value == null ? null : new VirtualMachineEvictionPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineEvictionPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachineEvictionPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

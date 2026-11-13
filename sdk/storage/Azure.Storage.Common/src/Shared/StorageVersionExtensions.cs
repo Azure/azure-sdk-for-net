@@ -46,7 +46,7 @@ namespace Azure.Storage
         /// </summary>
         public const ServiceVersion LatestVersion =
 #if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK || BlobDataMovementSDK || ShareDataMovementSDK
-            ServiceVersion.V2025_11_05;
+            ServiceVersion.V2027_03_07;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
@@ -56,7 +56,7 @@ namespace Azure.Storage
         /// </summary>
         internal const ServiceVersion MaxVersion =
 #if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK || BlobDataMovementSDK || ShareDataMovementSDK
-            ServiceVersion.V2025_11_05;
+            ServiceVersion.V2027_03_07;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
@@ -98,6 +98,12 @@ namespace Azure.Storage
                 ServiceVersion.V2025_05_05 => "2025-05-05",
                 ServiceVersion.V2025_07_05 => "2025-07-05",
                 ServiceVersion.V2025_11_05 => "2025-11-05",
+                ServiceVersion.V2026_02_06 => "2026-02-06",
+                ServiceVersion.V2026_04_06 => "2026-04-06",
+                ServiceVersion.V2026_06_06 => "2026-06-06",
+                ServiceVersion.V2026_10_06 => "2026-10-06",
+                ServiceVersion.V2026_12_06 => "2026-12-06",
+                ServiceVersion.V2027_03_07 => "2027-03-07",
 #endif
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };
@@ -167,6 +173,18 @@ namespace Azure.Storage
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2025_07_05,
                 Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2025_11_05 =>
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2025_11_05,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_02_06 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_02_06,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_04_06 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_04_06,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_06_06 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_06_06,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_10_06 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_10_06,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_12_06 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_12_06,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2027_03_07 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2027_03_07,
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };
 #endif

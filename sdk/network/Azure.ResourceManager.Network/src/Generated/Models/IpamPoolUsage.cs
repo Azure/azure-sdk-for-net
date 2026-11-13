@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IpamPool usage information. </summary>
     public partial class IpamPoolUsage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IpamPoolUsage"/>. </summary>
         internal IpamPoolUsage()
@@ -65,8 +37,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="numberOfAllocatedIPAddresses"> Total number of assigned IP addresses in the IpamPool. </param>
         /// <param name="numberOfReservedIPAddresses"> Total number of reserved IP addresses in the IpamPool. </param>
         /// <param name="numberOfAvailableIPAddresses"> Total number of available IP addresses in the IpamPool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IpamPoolUsage(IReadOnlyList<string> addressPrefixes, IReadOnlyList<IpamResourceBasics> childPools, IReadOnlyList<string> allocatedAddressPrefixes, IReadOnlyList<string> reservedAddressPrefixes, IReadOnlyList<string> availableAddressPrefixes, string totalNumberOfIPAddresses, string numberOfAllocatedIPAddresses, string numberOfReservedIPAddresses, string numberOfAvailableIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IpamPoolUsage(IReadOnlyList<string> addressPrefixes, IReadOnlyList<IpamResourceBasics> childPools, IReadOnlyList<string> allocatedAddressPrefixes, IReadOnlyList<string> reservedAddressPrefixes, IReadOnlyList<string> availableAddressPrefixes, string totalNumberOfIPAddresses, string numberOfAllocatedIPAddresses, string numberOfReservedIPAddresses, string numberOfAvailableIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefixes = addressPrefixes;
             ChildPools = childPools;
@@ -77,33 +49,41 @@ namespace Azure.ResourceManager.Network.Models
             NumberOfAllocatedIPAddresses = numberOfAllocatedIPAddresses;
             NumberOfReservedIPAddresses = numberOfReservedIPAddresses;
             NumberOfAvailableIPAddresses = numberOfAvailableIPAddresses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of IP address prefixes of the resource. </summary>
         [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
+
         /// <summary> List of IpamPool that are children of this IpamPool. </summary>
         [WirePath("childPools")]
         public IReadOnlyList<IpamResourceBasics> ChildPools { get; }
+
         /// <summary> List of assigned IP address prefixes. </summary>
         [WirePath("allocatedAddressPrefixes")]
         public IReadOnlyList<string> AllocatedAddressPrefixes { get; }
+
         /// <summary> List of reserved IP address prefixes. These IP addresses could be reclaimed if not assigned in the given time. </summary>
         [WirePath("reservedAddressPrefixes")]
         public IReadOnlyList<string> ReservedAddressPrefixes { get; }
+
         /// <summary> List of available IP address prefixes. </summary>
         [WirePath("availableAddressPrefixes")]
         public IReadOnlyList<string> AvailableAddressPrefixes { get; }
+
         /// <summary> Total number of IP addresses managed in the IpamPool. </summary>
         [WirePath("totalNumberOfIPAddresses")]
         public string TotalNumberOfIPAddresses { get; }
+
         /// <summary> Total number of assigned IP addresses in the IpamPool. </summary>
         [WirePath("numberOfAllocatedIPAddresses")]
         public string NumberOfAllocatedIPAddresses { get; }
+
         /// <summary> Total number of reserved IP addresses in the IpamPool. </summary>
         [WirePath("numberOfReservedIPAddresses")]
         public string NumberOfReservedIPAddresses { get; }
+
         /// <summary> Total number of available IP addresses in the IpamPool. </summary>
         [WirePath("numberOfAvailableIPAddresses")]
         public string NumberOfAvailableIPAddresses { get; }

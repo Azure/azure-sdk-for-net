@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor
 {
+    /// <summary></summary>
     public partial class VmInsightsOnboardingStatusResource : IJsonModel<VmInsightsOnboardingStatusData>
     {
-        private static VmInsightsOnboardingStatusData s_dataDeserializationInstance;
-        private static VmInsightsOnboardingStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VmInsightsOnboardingStatusData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VmInsightsOnboardingStatusData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VmInsightsOnboardingStatusData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VmInsightsOnboardingStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VmInsightsOnboardingStatusData>)Data).Write(writer, options);
 
-        VmInsightsOnboardingStatusData IJsonModel<VmInsightsOnboardingStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VmInsightsOnboardingStatusData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VmInsightsOnboardingStatusData IJsonModel<VmInsightsOnboardingStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VmInsightsOnboardingStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VmInsightsOnboardingStatusData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VmInsightsOnboardingStatusData IPersistableModel<VmInsightsOnboardingStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VmInsightsOnboardingStatusData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<VmInsightsOnboardingStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VmInsightsOnboardingStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VmInsightsOnboardingStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

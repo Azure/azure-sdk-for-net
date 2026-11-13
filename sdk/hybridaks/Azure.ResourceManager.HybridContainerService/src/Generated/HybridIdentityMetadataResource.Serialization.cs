@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
+    /// <summary></summary>
     public partial class HybridIdentityMetadataResource : IJsonModel<HybridIdentityMetadataData>
     {
-        private static HybridIdentityMetadataData s_dataDeserializationInstance;
-        private static HybridIdentityMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HybridIdentityMetadataData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HybridIdentityMetadataData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HybridIdentityMetadataData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridIdentityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridIdentityMetadataData>)Data).Write(writer, options);
 
-        HybridIdentityMetadataData IJsonModel<HybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridIdentityMetadataData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridIdentityMetadataData IJsonModel<HybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridIdentityMetadataData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HybridIdentityMetadataData IPersistableModel<HybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridIdentityMetadataData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<HybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridIdentityMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

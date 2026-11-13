@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> AAD based security principal with associated Ledger RoleName. </summary>
     public partial class AadBasedSecurityPrincipal
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AadBasedSecurityPrincipal"/>. </summary>
         public AadBasedSecurityPrincipal()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="principalId"> UUID/GUID based Principal Id of the Security Principal. </param>
         /// <param name="tenantId"> UUID/GUID based Tenant Id of the Security Principal. </param>
         /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AadBasedSecurityPrincipal(Guid? principalId, Guid? tenantId, ConfidentialLedgerRoleName? ledgerRoleName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AadBasedSecurityPrincipal(Guid? principalId, Guid? tenantId, ConfidentialLedgerRoleName? ledgerRoleName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             LedgerRoleName = ledgerRoleName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> UUID/GUID based Principal Id of the Security Principal. </summary>
         public Guid? PrincipalId { get; set; }
+
         /// <summary> UUID/GUID based Tenant Id of the Security Principal. </summary>
         public Guid? TenantId { get; set; }
+
         /// <summary> LedgerRole associated with the Security Principal of Ledger. </summary>
         public ConfidentialLedgerRoleName? LedgerRoleName { get; set; }
     }

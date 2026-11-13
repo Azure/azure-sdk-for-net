@@ -7,43 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The parameters to provide for the Direct Line channel. </summary>
     public partial class TelephonyChannelProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _cognitiveServiceSubscriptionKey;
+        private bool _cognitiveServiceSubscriptionKeyIsDefined;
+        private string _cognitiveServiceRegion;
+        private bool _cognitiveServiceRegionIsDefined;
+        private string _defaultLocale;
+        private bool _defaultLocaleIsDefined;
+        private string _premiumSku;
+        private bool _premiumSkuIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TelephonyChannelProperties"/>. </summary>
         public TelephonyChannelProperties()
@@ -60,31 +40,81 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="defaultLocale"> The default locale of the channel. </param>
         /// <param name="premiumSku"> The premium SKU applied to the channel. </param>
         /// <param name="isEnabled"> Whether the channel is enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyChannelProperties(IList<TelephonyPhoneNumbers> phoneNumbers, IList<TelephonyChannelResourceApiConfiguration> apiConfigurations, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, string defaultLocale, string premiumSku, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TelephonyChannelProperties(IList<TelephonyPhoneNumbers> phoneNumbers, IList<TelephonyChannelResourceApiConfiguration> apiConfigurations, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, string defaultLocale, string premiumSku, bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PhoneNumbers = phoneNumbers;
             ApiConfigurations = apiConfigurations;
-            CognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
-            CognitiveServiceRegion = cognitiveServiceRegion;
-            DefaultLocale = defaultLocale;
-            PremiumSku = premiumSku;
+            _cognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
+            _cognitiveServiceRegion = cognitiveServiceRegion;
+            _defaultLocale = defaultLocale;
+            _premiumSku = premiumSku;
             IsEnabled = isEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of Telephony phone numbers. </summary>
         public IList<TelephonyPhoneNumbers> PhoneNumbers { get; }
+
         /// <summary> The list of Telephony api configuration. </summary>
         public IList<TelephonyChannelResourceApiConfiguration> ApiConfigurations { get; }
+
         /// <summary> The extensionKey1. </summary>
-        public string CognitiveServiceSubscriptionKey { get; set; }
+        public string CognitiveServiceSubscriptionKey
+        {
+            get
+            {
+                return _cognitiveServiceSubscriptionKey;
+            }
+            set
+            {
+                _cognitiveServiceSubscriptionKey = value;
+                _cognitiveServiceSubscriptionKeyIsDefined = true;
+            }
+        }
+
         /// <summary> The extensionKey2. </summary>
-        public string CognitiveServiceRegion { get; set; }
+        public string CognitiveServiceRegion
+        {
+            get
+            {
+                return _cognitiveServiceRegion;
+            }
+            set
+            {
+                _cognitiveServiceRegion = value;
+                _cognitiveServiceRegionIsDefined = true;
+            }
+        }
+
         /// <summary> The default locale of the channel. </summary>
-        public string DefaultLocale { get; set; }
+        public string DefaultLocale
+        {
+            get
+            {
+                return _defaultLocale;
+            }
+            set
+            {
+                _defaultLocale = value;
+                _defaultLocaleIsDefined = true;
+            }
+        }
+
         /// <summary> The premium SKU applied to the channel. </summary>
-        public string PremiumSku { get; set; }
+        public string PremiumSku
+        {
+            get
+            {
+                return _premiumSku;
+            }
+            set
+            {
+                _premiumSku = value;
+                _premiumSkuIsDefined = true;
+            }
+        }
+
         /// <summary> Whether the channel is enabled. </summary>
         public bool? IsEnabled { get; set; }
     }

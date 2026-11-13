@@ -1457,7 +1457,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) } )
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) })
                 {
                     DisplayName = options.DisplayName,
                 };

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ApiManagementResourceSkuCapacityScaleType : IEquatable<ApiManagementResourceSkuCapacityScaleType>
     {
         private readonly string _value;
+        /// <summary> Supported scale type automatic. </summary>
+        private const string AutomaticValue = "automatic";
+        /// <summary> Supported scale type manual. </summary>
+        private const string ManualValue = "manual";
+        /// <summary> Scaling not supported. </summary>
+        private const string NoneValue = "none";
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementResourceSkuCapacityScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiManagementResourceSkuCapacityScaleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutomaticValue = "automatic";
-        private const string ManualValue = "manual";
-        private const string NoneValue = "none";
+            _value = value;
+        }
 
         /// <summary> Supported scale type automatic. </summary>
         public static ApiManagementResourceSkuCapacityScaleType Automatic { get; } = new ApiManagementResourceSkuCapacityScaleType(AutomaticValue);
+
         /// <summary> Supported scale type manual. </summary>
         public static ApiManagementResourceSkuCapacityScaleType Manual { get; } = new ApiManagementResourceSkuCapacityScaleType(ManualValue);
+
         /// <summary> Scaling not supported. </summary>
         public static ApiManagementResourceSkuCapacityScaleType None { get; } = new ApiManagementResourceSkuCapacityScaleType(NoneValue);
+
         /// <summary> Determines if two <see cref="ApiManagementResourceSkuCapacityScaleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiManagementResourceSkuCapacityScaleType left, ApiManagementResourceSkuCapacityScaleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiManagementResourceSkuCapacityScaleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiManagementResourceSkuCapacityScaleType left, ApiManagementResourceSkuCapacityScaleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiManagementResourceSkuCapacityScaleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiManagementResourceSkuCapacityScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiManagementResourceSkuCapacityScaleType(string value) => new ApiManagementResourceSkuCapacityScaleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiManagementResourceSkuCapacityScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiManagementResourceSkuCapacityScaleType?(string value) => value == null ? null : new ApiManagementResourceSkuCapacityScaleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiManagementResourceSkuCapacityScaleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiManagementResourceSkuCapacityScaleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

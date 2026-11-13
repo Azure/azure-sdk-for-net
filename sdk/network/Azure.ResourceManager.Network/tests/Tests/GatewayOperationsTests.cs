@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Sku = new VirtualNetworkGatewaySku()
                 {
-                    Name = VirtualNetworkGatewaySkuName.Basic,
                     Tier = VirtualNetworkGatewaySkuTier.Basic
                 },
                 Tags = { { "key", "value" } },
@@ -81,23 +80,15 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource()
-                        {
-                            Id = nic1publicIp.Id
-                        },
-                        Subnet = new WritableSubResource()
-                        {
-                            Id = getSubnetResponse.Value.Id
-                        }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 }
             };
 
             var virtualNetworkGatewayCollection = resourceGroup.GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<VirtualNetworkGatewayResource> getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
@@ -108,12 +99,12 @@ namespace Azure.ResourceManager.Network.Tests
             // Update
             virtualNetworkGateway.Tags.Add(new KeyValuePair<string, string>("tag2", "value"));
             virtualNetworkGateway.Tags.Add(new KeyValuePair<string, string>("tag3", "value"));
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual(3, putVirtualNetworkGatewayResponse.Value.Data.Tags.Count);
 
             // Delete VirtualNetworkGateway
-            await getVirtualNetworkGatewayResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getVirtualNetworkGatewayResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -148,7 +139,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var localNetworkGatewayCollection = resourceGroup.GetLocalNetworkGateways();
-            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway);
+            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway, System.Threading.CancellationToken.None);
             Response<LocalNetworkGatewayResource> putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<LocalNetworkGatewayResource> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
@@ -168,38 +159,25 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                GatewayDefaultSite = new WritableSubResource()
-                {
-                    Id = getLocalNetworkGatewayResponse.Value.Id
-                },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource()
-                        {
-                            Id = nic1publicIp.Id
-                        },
-                        Subnet = new WritableSubResource()
-                        {
-                            Id = getSubnetResponse.Value.Id
-                        }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 }
             };
 
             var virtualNetworkGatewayCollection = resourceGroup.GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<VirtualNetworkGatewayResource> getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
             Assert.NotNull(getVirtualNetworkGatewayResponse.Value.Data);
             Assert.AreEqual(virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data.Name);
-            Assert.AreEqual(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite.Id, getLocalNetworkGatewayResponse.Value.Id.ToString());
 
             // Test: site-to-site connection
             string VirtualNetworkGatewayConnectionName = Recording.GenerateAssetName("azsmnet");
@@ -212,7 +190,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkGatewayConnectionCollection = resourceGroup.GetVirtualNetworkGatewayConnections();
-            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
+            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayConnectionResource> putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
 
@@ -221,21 +199,13 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(3, getVirtualNetworkGatewayConnectionResponse.Value.Data.RoutingWeight);
             Assert.AreEqual("abc", getVirtualNetworkGatewayConnectionResponse.Value.Data.SharedKey);
 
-            // Remove Default local network site
-            getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite = null;
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
-            putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
-            getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
-            Assert.Null(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
-
             // Update SharedKeyAsync
             //await virtualNetworkGatewayConnectionCollection.Get(VirtualNetworkGatewayConnectionName).Value.SetSharedKeyAsync(new ConnectionSharedKey("xyz"));
             //Assert.AreEqual("xyz", getVirtualNetworkGatewayConnectionResponse.Value.Data.SharedKey);
 
             // Update RoutingWeight
             virtualNetworkGatewayConneciton.RoutingWeight = 4;
-            putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
+            putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
 
@@ -278,10 +248,10 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.54.0.0/16", }
                 },
-                Subnets = { new SubnetData() { Name = subnetName1, AddressPrefix = "10.54.0.0/24" } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.54.0.0/24" } }
             };
             var virtualNetworkCollection = resourceGroup1.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName1, vnetData1);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName1, vnetData1, System.Threading.CancellationToken.None);
             Response<SubnetResource> getSubnetResponse1 = await (await resourceGroup1.GetVirtualNetworks().GetAsync(vnetName1)).Value.GetSubnets().GetAsync(subnetName1);
 
             // Create PublicIpAddress
@@ -302,23 +272,15 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName1,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource()
-                        {
-                            Id = nic1publicIp1.Id
-                        },
-                        Subnet = new WritableSubResource()
-                        {
-                            Id = getSubnetResponse1.Value.Id
-                        }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp1.Id,
+                        SubnetId = getSubnetResponse1.Value.Id
                     }
                 }
             };
 
             var virtualNetworkGatewayCollection1 = resourceGroup1.GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation1 = await virtualNetworkGatewayCollection1.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName1, virtualNetworkGateway1);
+            var putVirtualNetworkGatewayResponseOperation1 = await virtualNetworkGatewayCollection1.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName1, virtualNetworkGateway1, System.Threading.CancellationToken.None);
             await putVirtualNetworkGatewayResponseOperation1.WaitForCompletionAsync();
 
             // 2.Create second Virtual Network Gateway.
@@ -336,10 +298,10 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.55.0.0/16", }
                 },
-                Subnets = { new SubnetData() { Name = subnetName2, AddressPrefix = "10.55.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.55.0.0/24", } }
             };
             var virtualNetworkCollection2 = resourceGroup2.GetVirtualNetworks();
-            var putVnetResponseOperation2 = await virtualNetworkCollection2.CreateOrUpdateAsync(WaitUntil.Completed, vnetName2, vnetData2);
+            var putVnetResponseOperation2 = await virtualNetworkCollection2.CreateOrUpdateAsync(WaitUntil.Completed, vnetName2, vnetData2, System.Threading.CancellationToken.None);
             Response<SubnetResource> getSubnetResponse2 = await (await resourceGroup2.GetVirtualNetworks().GetAsync(vnetName2)).Value.GetSubnets().GetAsync(subnetName2);
 
             // Create PublicIpAddress
@@ -360,23 +322,15 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName2,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource()
-                        {
-                            Id = nic2publicIp2.Id
-                        },
-                        Subnet = new WritableSubResource()
-                        {
-                            Id = getSubnetResponse2.Value.Id
-                        }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic2publicIp2.Id,
+                        SubnetId = getSubnetResponse2.Value.Id
                     }
                 }
             };
 
             var virtualNetworkGatewayCollection2 = resourceGroup2.GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation2 = await virtualNetworkGatewayCollection2.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName2, virtualNetworkGateway2);
+            var putVirtualNetworkGatewayResponseOperation2 = await virtualNetworkGatewayCollection2.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName2, virtualNetworkGateway2, System.Threading.CancellationToken.None);
             await putVirtualNetworkGatewayResponseOperation2.WaitForCompletionAsync();
 
             // 3.Test: Vnet-to-Vnet Connections
@@ -394,7 +348,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkGatewayConnectionCollection1 = resourceGroup1.GetVirtualNetworkGatewayConnections();
-            var putVirtualNetworkGatewayConnectionResponseOperation1 = await virtualNetworkGatewayConnectionCollection1.CreateOrUpdateAsync(WaitUntil.Completed, ConnectionName1, virtualNetworkGatewayConneciton1);
+            var putVirtualNetworkGatewayConnectionResponseOperation1 = await virtualNetworkGatewayConnectionCollection1.CreateOrUpdateAsync(WaitUntil.Completed, ConnectionName1, virtualNetworkGatewayConneciton1, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayConnectionResource> putVirtualNetworkGatewayConnectionResponse1 = await putVirtualNetworkGatewayConnectionResponseOperation1.WaitForCompletionAsync();
             Response<VirtualNetworkGatewayConnectionResource> getVirtualNetworkGatewayConnectionResponse1 = await virtualNetworkGatewayConnectionCollection1.GetAsync(ConnectionName1);
             Assert.AreEqual(ConnectionName1, getVirtualNetworkGatewayConnectionResponse1.Value.Data.Name);
@@ -413,7 +367,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkGatewayConnectionCollection2 = resourceGroup2.GetVirtualNetworkGatewayConnections();
-            var putVirtualNetworkGatewayConnectionResponseOperation2 = await virtualNetworkGatewayConnectionCollection2.CreateOrUpdateAsync(WaitUntil.Completed, ConnectionName2, virtualNetworkGatewayConneciton2);
+            var putVirtualNetworkGatewayConnectionResponseOperation2 = await virtualNetworkGatewayConnectionCollection2.CreateOrUpdateAsync(WaitUntil.Completed, ConnectionName2, virtualNetworkGatewayConneciton2, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayConnectionResource> putVirtualNetworkGatewayConnectionResponse2 = await putVirtualNetworkGatewayConnectionResponseOperation2.WaitForCompletionAsync();
             Response<VirtualNetworkGatewayConnectionResource> getVirtualNetworkGatewayConnectionResponse2 = await virtualNetworkGatewayConnectionCollection2.GetAsync(ConnectionName2);
             Assert.AreEqual(ConnectionName2, getVirtualNetworkGatewayConnectionResponse2.Value.Data.Name);
@@ -458,34 +412,25 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                GatewayDefaultSite = null,
+                GatewayDefaultSiteId = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource()
-                        {
-                            Id = nic1publicIp.Id
-                        },
-                        Subnet = new WritableSubResource()
-                        {
-                            Id = getSubnetResponse.Value.Id
-                        }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
                 {
-                    Name = VirtualNetworkGatewaySkuName.Basic,
                     Tier = VirtualNetworkGatewaySkuTier.Basic
                 }
             };
 
             var virtualNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -503,10 +448,9 @@ namespace Azure.ResourceManager.Network.Tests
             // 3. ResizeVirtualNetworkGateway API
             getVirtualNetworkGatewayResponse.Value.Data.Sku = new VirtualNetworkGatewaySku()
             {
-                Name = VirtualNetworkGatewaySkuName.Standard,
                 Tier = VirtualNetworkGatewaySkuTier.Standard
             };
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -514,7 +458,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(VirtualNetworkGatewaySkuTier.Standard, getVirtualNetworkGatewayResponse.Value.Data.Sku.Tier);
 
             // 4A. ResetVirtualNetworkGateway API
-            var resetVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.ResetAsync(WaitUntil.Completed);
+            var resetVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.ResetAsync(WaitUntil.Completed, null, System.Threading.CancellationToken.None);
             await resetVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
 
             // 4B. GetVirtualNetworkgateway API after ResetVirtualNetworkGateway API was called
@@ -534,7 +478,7 @@ namespace Azure.ResourceManager.Network.Tests
             // 6A. DeleteVirtualNetworkGateway API
             // TODO: restore to specific type
             //VirtualNetworkGatewaysDeleteOperation deleteOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.DeleteAsync(true);
-            var deleteOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // 6B. ListVitualNetworkGateways API after deleting VirtualNetworkGateway
@@ -572,7 +516,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var localNetworkGatewayCollection = resourceGroup.GetLocalNetworkGateways();
-            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway);
+            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway, System.Threading.CancellationToken.None);
             Response<LocalNetworkGatewayResource> putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -588,7 +532,7 @@ namespace Azure.ResourceManager.Network.Tests
             // 3A. UpdateLocalNetworkgateway API :- LocalNetworkGatewayResource LocalNetworkAddressSpace from "192.168.0.0/16" => "200.168.0.0/16"
             getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { newAddressPrefixes, } };
 
-            putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, getLocalNetworkGatewayResponse.Value.Data);
+            putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, getLocalNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -608,7 +552,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 5A. DeleteLocalNetworkGateway API
             // TODO: restore to specific delete
-            var deleteOperation = await getLocalNetworkGatewayResponse.Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await getLocalNetworkGatewayResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             //var deleteOperation = await localNetworkGatewayCollection.Get(localNetworkGatewayName).Value.DeleteAsync(true);
             await deleteOperation.WaitForCompletionResponseAsync();
 
@@ -650,7 +594,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var localNetworkGatewayCollection = resourceGroup.GetLocalNetworkGateways();
-            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway);
+            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway, System.Threading.CancellationToken.None);
             Response<LocalNetworkGatewayResource> putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<LocalNetworkGatewayResource> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
@@ -685,22 +629,13 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource()
-                        {
-                            Id = nic1publicIp.Id
-                        },
-                        Subnet = new WritableSubResource()
-                        {
-                            Id = getSubnetResponse.Value.Id
-                        }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
                 {
-                    Name = "Standard",
                     Tier = "Standard"
                 },
                 BgpSettings = new BgpSettings()
@@ -712,7 +647,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkGatewayCollection = resourceGroup.GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Console.WriteLine("Virtual Network Gateway is deployed successfully.");
@@ -733,7 +668,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkGatewayConnectionCollection = resourceGroup.GetVirtualNetworkGatewayConnections();
-            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
+            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayConnectionResource> putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
             Assert.True(putVirtualNetworkGatewayConnectionResponse.Value.Data.EnableBgp, "Enabling BGP for this connection must succeed");
@@ -762,7 +697,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 5A. DeleteVirtualNetworkGatewayConnection API
             // TODO: use specific delete
-            var deleteOperation = await getVirtualNetworkGatewayConnectionResponse.Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await getVirtualNetworkGatewayConnectionResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             //VirtualNetworkGatewayConnectionsDeleteOperation deleteOperation = await virtualNetworkGatewayConnectionCollection.DeleteAsync(VirtualNetworkGatewayConnectionName);
             await deleteOperation.WaitForCompletionResponseAsync();
 
@@ -801,7 +736,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var localNetworkGatewayCollection = resourceGroup.GetLocalNetworkGateways();
-            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway);
+            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway, System.Threading.CancellationToken.None);
             Response<LocalNetworkGatewayResource> putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<LocalNetworkGatewayResource> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
@@ -836,28 +771,19 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource()
-                        {
-                            Id = nic1publicIp.Id
-                        },
-                        Subnet = new WritableSubResource()
-                        {
-                            Id = getSubnetResponse.Value.Id
-                        }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
                 {
-                    Name = VirtualNetworkGatewaySkuName.Standard,
                     Tier = VirtualNetworkGatewaySkuTier.Standard
                 }
             };
 
             var virtualNetworkGatewayCollection = resourceGroup.GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Console.WriteLine("Virtual Network Gateway is deployed successfully.");
@@ -880,7 +806,7 @@ namespace Azure.ResourceManager.Network.Tests
             virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors = true;
 
             var virtualNetworkGatewayConnectionCollection = resourceGroup.GetVirtualNetworkGatewayConnections();
-            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
+            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayConnectionResource> putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
 
@@ -911,7 +837,7 @@ namespace Azure.ResourceManager.Network.Tests
             virtualNetworkGatewayConnection.IPsecPolicies.Clear();
             virtualNetworkGatewayConnection.IPsecPolicies.Add(new IPsecPolicy(600, 2048, IPsecEncryption.GcmAes256, IPsecIntegrity.GcmAes256, IkeEncryption.Aes256, IkeIntegrity.Sha384, DHGroup.DHGroup2048, PfsGroup.Ecp384));
 
-            putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
+            putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
 
@@ -939,7 +865,7 @@ namespace Azure.ResourceManager.Network.Tests
             // 4A. UpdateVirtualNetworkGatewayConnection API : remove IPsec policies
             (virtualNetworkGatewayConnection.IPsecPolicies as ChangeTrackingList<IPsecPolicy>).Reset();
 
-            putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
+            putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
 
@@ -965,7 +891,7 @@ namespace Azure.ResourceManager.Network.Tests
             // 5A. DeleteVirtualNetworkGatewayConnection API
             // TOOD
             //var deleteOperation = await virtualNetworkGatewayConnectionCollection.DeleteAsync(VirtualNetworkGatewayConnectionName);
-            var deleteOperation = await putVirtualNetworkGatewayConnectionResponse.Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await putVirtualNetworkGatewayConnectionResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // 5B. ListVitualNetworkGatewayConnections API after DeleteVirtualNetworkGatewayConnection API called
@@ -1003,7 +929,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var localNetworkGatewayCollection = resourceGroup.GetLocalNetworkGateways();
-            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway);
+            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway, System.Threading.CancellationToken.None);
             Response<LocalNetworkGatewayResource> putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<LocalNetworkGatewayResource> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
@@ -1034,39 +960,28 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                GatewayDefaultSite = new WritableSubResource()
-                {
-                    Id = getLocalNetworkGatewayResponse.Value.Id
-                },
+                GatewayDefaultSiteId = getLocalNetworkGatewayResponse.Value.Id,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource()
-                        {
-                            Id = nic1publicIp.Id
-                        },
-                        Subnet = new WritableSubResource()
-                        {
-                            Id = getSubnetResponse.Value.Id
-                        }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 }
             };
 
             var virtualNetworkGatewayCollection = resourceGroup.GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Console.WriteLine("Virtual Network Gateway is deployed successfully.");
             Response<VirtualNetworkGatewayResource> getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
-            Assert.NotNull(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
-            Console.WriteLine("Default site :{0} set at Virtual network gateway.", getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
-            Assert.AreEqual(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite.Id, getLocalNetworkGatewayResponse.Value.Id.ToString());
+            Assert.NotNull(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
+            Console.WriteLine("Default site :{0} set at Virtual network gateway.", getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
+            Assert.AreEqual(getLocalNetworkGatewayResponse.Value.Id, getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
 
             // C. CreaetVirtualNetworkGatewayConnection API
             string VirtualNetworkGatewayConnectionName = Recording.GenerateAssetName("azsmnet");
@@ -1079,7 +994,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkGatewayConnectionCollection = resourceGroup.GetVirtualNetworkGatewayConnections();
-            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
+            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayConnectionResource> putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1100,19 +1015,19 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("abc", getVirtualNetworkGatewayConnectionResponse.Value.Data.SharedKey);
 
             // 2A. Remove Default local network site
-            getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite = null;
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+            getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId = null;
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
-            Assert.Null(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
-            Console.WriteLine("Default site removal from Virtual network gateway is successful.", getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
+            Assert.Null(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
+            Console.WriteLine("Default site removal from Virtual network gateway is successful.", getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
 
             // 3A. UpdateVirtualNetworkGatewayConnection API :- RoutingWeight = 3 => 4, SharedKey length => 64
             await getVirtualNetworkGatewayConnectionResponse.Value.ResetSharedKey(WaitUntil.Completed, new ConnectionResetSharedKey(64)).WaitForCompletionAsync();
             virtualNetworkGatewayConneciton.RoutingWeight = 4;
 
-            putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
+            putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1192,29 +1107,21 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                GatewayDefaultSite = null,
+                GatewayDefaultSiteId = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource()
-                        {
-                            Id = nic1publicIp.Id
-                        },
-                        Subnet = new WritableSubResource()
-                        {
-                            Id = getSubnetResponse.Value.Id
-                        }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 }
             };
 
             var virtualNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<VirtualNetworkGatewayResource> getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
@@ -1234,7 +1141,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var localNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetLocalNetworkGateways();
-            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway);
+            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway, System.Threading.CancellationToken.None);
             Response<LocalNetworkGatewayResource> putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<LocalNetworkGatewayResource> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
@@ -1251,7 +1158,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkGatewayConnectionCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworkGatewayConnections();
-            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
+            var putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayConnectionResource> putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1262,7 +1169,7 @@ namespace Azure.ResourceManager.Network.Tests
             // 2A. VirtualNetworkGatewayConnectionResetSharedKey API
             string connectionSharedKeyName = VirtualNetworkGatewayConnectionName;
             ConnectionResetSharedKey connectionResetSharedKey = new ConnectionResetSharedKey(50);
-            var resetConnectionResetSharedKeyResponseOperation = await getVirtualNetworkGatewayConnectionResponse.Value.ResetSharedKeyAsync(WaitUntil.Completed, new ConnectionResetSharedKey(connectionResetSharedKey.KeyLength));
+            var resetConnectionResetSharedKeyResponseOperation = await getVirtualNetworkGatewayConnectionResponse.Value.ResetSharedKeyAsync(WaitUntil.Completed, new ConnectionResetSharedKey(connectionResetSharedKey.KeyLength), System.Threading.CancellationToken.None);
             await resetConnectionResetSharedKeyResponseOperation.WaitForCompletionAsync();
 
             // 2B. GetVirtualNetworkGatewayConnectionSharedKey API after VirtualNetworkGatewayConnectionResetSharedKey API was called
@@ -1272,7 +1179,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 3A.SetVirtualNetworkGatewayConnectionSharedKey API on created connection above:- virtualNetworkGatewayConneciton
             ConnectionSharedKey connectionSharedKey = new ConnectionSharedKey("TestSharedKeyValue");
-            var setSharedKeyOperation = await getVirtualNetworkGatewayConnectionResponse.Value.SetSharedKeyAsync(WaitUntil.Completed, connectionSharedKey);
+            var setSharedKeyOperation = await getVirtualNetworkGatewayConnectionResponse.Value.SetSharedKeyAsync(WaitUntil.Completed, connectionSharedKey, System.Threading.CancellationToken.None);
             await setSharedKeyOperation.WaitForCompletionAsync();
             ;
 
@@ -1306,7 +1213,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var localNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetLocalNetworkGateways();
-            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway);
+            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway, System.Threading.CancellationToken.None);
             Response<LocalNetworkGatewayResource> putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<LocalNetworkGatewayResource> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
@@ -1341,20 +1248,17 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableBgp = false,
                 Sku = new VirtualNetworkGatewaySku
                 {
-                    Name = VirtualNetworkGatewaySkuName.Basic,
                     Tier = VirtualNetworkGatewaySkuTier.Basic,
                 },
-                GatewayDefaultSite = new WritableSubResource() { Id = getLocalNetworkGatewayResponse.Value.Id },
+                GatewayDefaultSiteId = getLocalNetworkGatewayResponse.Value.Id,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id },
-                        Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 },
                 VpnClientConfiguration = new VpnClientConfiguration()
@@ -1364,7 +1268,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1389,7 +1293,7 @@ namespace Azure.ResourceManager.Network.Tests
                 VpnClientAddressPool = new VirtualNetworkAddressSpace() { AddressPrefixes = { newAddressPrefixes } }
             };
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes.Add(newAddressPrefixes);
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1404,12 +1308,10 @@ namespace Azure.ResourceManager.Network.Tests
             string clientRootCertName = "ClientRootCertName";// this._testEnvironment.ConnectionString.KeyValuePairs[TestEnvironmentSettings.ClientRootCertName.ToString()];
             string samplePublicCertData = "SamplePublicCertData";// this._testEnvironment.ConnectionString.KeyValuePairs[TestEnvironmentSettings.SamplePublicCertData.ToString()];
             VpnClientRootCertificate clientRootCert = new VpnClientRootCertificate(BinaryData.FromString(samplePublicCertData))
-            {
-                Name = clientRootCertName,
-            };
+            { };
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientRootCertificates.Add(clientRootCert);
 
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1424,7 +1326,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 ProcessorArchitecture = ProcessorArchitecture.Amd64
             };
-            var packageUrlOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.GenerateVpnClientPackageAsync(WaitUntil.Completed, content);
+            var packageUrlOperation = await virtualNetworkGatewayCollection.Get(virtualNetworkGatewayName).Value.GenerateVpnClientPackageAsync(WaitUntil.Completed, content, System.Threading.CancellationToken.None);
             await packageUrlOperation.WaitForCompletionAsync();
             //Assert.NotNull(packageUrl);
             //Assert.NotEmpty(packageUrl);
@@ -1432,7 +1334,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 6.Delete client Root certificate
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientRootCertificates.Clear();
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1447,12 +1349,11 @@ namespace Azure.ResourceManager.Network.Tests
             string sampleCertThumpprint = "SampleCertThumbprint";//this._testEnvironment.ConnectionString.KeyValue.DataPairs[TestEnvironmentSettings.SampleCertThumbprint.ToString()];
             VpnClientRevokedCertificate sampleClientCert = new VpnClientRevokedCertificate()
             {
-                Name = "sampleClientCert.cer",
                 Thumbprint = sampleCertThumpprint
             };
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientRevokedCertificates.Add(sampleClientCert);
 
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
@@ -1461,7 +1362,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 9. Unrevoke previously revoked Vpn client certificate
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientRevokedCertificates.Clear();
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
@@ -1508,19 +1409,17 @@ namespace Azure.ResourceManager.Network.Tests
             string ipConfigName1 = Recording.GenerateAssetName("azsmnet");
             VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
             {
-                Name = ipConfigName1,
                 PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                PublicIPAddress = new WritableSubResource() { Id = nic1publicIp1.Id },
-                Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
+                PublicIPAddressId = nic1publicIp1.Id,
+                SubnetId = getSubnetResponse.Value.Id
             };
 
             string ipConfigName2 = Recording.GenerateAssetName("azsmnet");
             VirtualNetworkGatewayIPConfiguration ipconfig2 = new VirtualNetworkGatewayIPConfiguration()
             {
-                Name = ipConfigName2,
                 PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                PublicIPAddress = new WritableSubResource() { Id = nic1publicIp2.Id },
-                Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
+                PublicIPAddressId = nic1publicIp2.Id,
+                SubnetId = getSubnetResponse.Value.Id
             };
 
             var virtualNetworkGateway = new VirtualNetworkGatewayData()
@@ -1528,16 +1427,16 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                Active = true,
-                GatewayDefaultSite = null,
+                IsActive = true,
+                GatewayDefaultSiteId = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations = { ipconfig1, ipconfig2 },
-                Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.HighPerformance, Tier = VirtualNetworkGatewaySkuTier.HighPerformance }
+                Sku = new VirtualNetworkGatewaySku() { Tier = VirtualNetworkGatewaySkuTier.HighPerformance }
             };
 
             var virtualNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
-            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+            var putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1548,33 +1447,33 @@ namespace Azure.ResourceManager.Network.Tests
                 getVirtualNetworkGatewayResponse.Value.Id, getVirtualNetworkGatewayResponse.Value.Data.Name,
                 getVirtualNetworkGatewayResponse.Value.Data.GatewayType, getVirtualNetworkGatewayResponse.Value.Data.VpnType,
                 getVirtualNetworkGatewayResponse.Value.Data.Sku.Name, getVirtualNetworkGatewayResponse.Value.Data.Sku.Tier,
-                getVirtualNetworkGatewayResponse.Value.Data.Active);
+                getVirtualNetworkGatewayResponse.Value.Data.IsActive);
             Assert.AreEqual(VirtualNetworkGatewayType.Vpn, getVirtualNetworkGatewayResponse.Value.Data.GatewayType);
             Assert.AreEqual(VpnType.RouteBased, getVirtualNetworkGatewayResponse.Value.Data.VpnType);
             Assert.AreEqual(VirtualNetworkGatewaySkuTier.HighPerformance, getVirtualNetworkGatewayResponse.Value.Data.Sku.Tier);
             Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
-            Assert.True(getVirtualNetworkGatewayResponse.Value.Data.Active);
+            Assert.True(getVirtualNetworkGatewayResponse.Value.Data.IsActive);
 
             // 3. Update ActiveActive VirtualNetworkGatewayResource to ActiveStandby
-            getVirtualNetworkGatewayResponse.Value.Data.Active = false;
+            getVirtualNetworkGatewayResponse.Value.Data.IsActive = false;
             getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Remove(getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.First(config => config.Name.Equals(ipconfig2.Name)));
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
-            Assert.False(getVirtualNetworkGatewayResponse.Value.Data.Active);
+            Assert.False(getVirtualNetworkGatewayResponse.Value.Data.IsActive);
             Assert.AreEqual(1, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
 
             // 4. Update ActiveStandby VirtualNetworkGatewayResource to ActiveActive again
-            getVirtualNetworkGatewayResponse.Value.Data.Active = true;
+            getVirtualNetworkGatewayResponse.Value.Data.IsActive = true;
             getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Add(ipconfig2);
-            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+            putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
-            Assert.True(getVirtualNetworkGatewayResponse.Value.Data.Active);
+            Assert.True(getVirtualNetworkGatewayResponse.Value.Data.IsActive);
             Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
         }
 
@@ -1606,19 +1505,18 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.1.0.0/16" } },
-                Subnets = { new SubnetData() { Name = gatewaySubnetName, AddressPrefix = "10.1.1.0/24" } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.1.1.0/24" } }
             };
             PublicIPAddressResource publicIPAddress = await CreateDefaultPublicIpAddress(gw1IpName, resourceGroupName, gw1IpDomainNameLabel, location);
             var virtualNetworkCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
-            var virtualNetworksCreateOrUpdateOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnet1Name, vnet1);
+            var virtualNetworksCreateOrUpdateOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnet1Name, vnet1, System.Threading.CancellationToken.None);
             Response<VirtualNetworkResource> vnet1Response = await virtualNetworksCreateOrUpdateOperation.WaitForCompletionAsync();
             Response<SubnetResource> gw1Subnet = await virtualNetworkCollection.Get(vnet1Name).Value.GetSubnets().GetAsync(gatewaySubnetName);
             VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
             {
-                Name = gw1IpConfigName,
                 PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                PublicIPAddress = new WritableSubResource() { Id = publicIPAddress.Id },
-                Subnet = new WritableSubResource() { Id = gw1Subnet.Value.Id }
+                PublicIPAddressId = publicIPAddress.Id,
+                SubnetId = gw1Subnet.Value.Id
             };
             var gw1 = new VirtualNetworkGatewayData()
             {
@@ -1626,7 +1524,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations = { ipconfig1 },
-                Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Standard, Tier = VirtualNetworkGatewaySkuTier.Standard },
+                Sku = new VirtualNetworkGatewaySku() { Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 1337, BgpPeeringAddress = null, PeerWeight = 5 }
             };
 
@@ -1635,17 +1533,16 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.2.0.0/16" } },
-                Subnets = { new SubnetData() { Name = gatewaySubnetName, AddressPrefix = "10.2.1.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.2.1.0/24", } }
             };
-            var vnet2Operation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnet2Name, vnet2);
+            var vnet2Operation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnet2Name, vnet2, System.Threading.CancellationToken.None);
             VirtualNetworkResource vnet2Response = await vnet2Operation.WaitForCompletionAsync();
             Response<SubnetResource> gw2Subnet = await virtualNetworkCollection.Get(vnet2Name).Value.GetSubnets().GetAsync(gatewaySubnetName);
             VirtualNetworkGatewayIPConfiguration ipconfig2 = new VirtualNetworkGatewayIPConfiguration()
             {
-                Name = gw2IpConfigName,
                 PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                PublicIPAddress = new WritableSubResource() { Id = gw2Ip.Id },
-                Subnet = new WritableSubResource() { Id = gw2Subnet.Value.Id }
+                PublicIPAddressId = gw2Ip.Id,
+                SubnetId = gw2Subnet.Value.Id
             };
             var gw2 = new VirtualNetworkGatewayData()
             {
@@ -1653,7 +1550,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations = { ipconfig2 },
-                Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Standard, Tier = VirtualNetworkGatewaySkuTier.Standard },
+                Sku = new VirtualNetworkGatewaySku() { Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 9001, BgpPeeringAddress = null, PeerWeight = 5 }
             };
 
@@ -1662,13 +1559,13 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 await Task.Factory.StartNew(async () =>
                 {
-                    var virtualNetworkGatewaysOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, gw1Name, gw1);
+                    var virtualNetworkGatewaysOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, gw1Name, gw1, System.Threading.CancellationToken.None);
                     await virtualNetworkGatewaysOperation.WaitForCompletionAsync();;
                 }),
 
                 await Task.Factory.StartNew(async() =>
                 {
-                    var virtualNetworkGatewaysOperation= await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, gw2Name, gw2);
+                    var virtualNetworkGatewaysOperation= await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, gw2Name, gw2, System.Threading.CancellationToken.None);
                     await virtualNetworkGatewaysOperation.WaitForCompletionAsync();;
                 })
             };
@@ -1707,12 +1604,12 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 await Task.Factory.StartNew(async() =>
                 {
-                    var op = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, conn1Name, gw1ToGw2Conn);
+                    var op = await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, conn1Name, gw1ToGw2Conn, System.Threading.CancellationToken.None);
                     await op.WaitForCompletionAsync();;
                 }),
                 await Task.Factory.StartNew(async() =>
                 {
-                    var op =  await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, conn2Name, gw2ToGw1Conn);
+                    var op =  await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, conn2Name, gw2ToGw1Conn, System.Threading.CancellationToken.None);
                     await op.WaitForCompletionAsync();;
                 })
             };
@@ -1720,13 +1617,13 @@ namespace Azure.ResourceManager.Network.Tests
             Task.WaitAll(gatewayConnectionTasks.ToArray());
 
             // get bgp info from gw1
-            var learnedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetLearnedRoutesAsync(WaitUntil.Completed);
+            var learnedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetLearnedRoutesAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             Response<GatewayRouteListResult> learnedRoutes = await learnedRoutesOperation.WaitForCompletionAsync();
             Assert.True(learnedRoutes.Value.Value.Count() > 0, "At least one route should be learned from gw2");
-            var advertisedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetAdvertisedRoutesAsync(WaitUntil.Completed, gw2IpResponse.Value.Data.IPAddress);
+            var advertisedRoutesOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetAdvertisedRoutesAsync(WaitUntil.Completed, gw2IpResponse.Value.Data.IPAddress, System.Threading.CancellationToken.None);
             Response<GatewayRouteListResult> advertisedRoutes = await advertisedRoutesOperation.WaitForCompletionAsync();
             Assert.True(learnedRoutes.Value.Value.Count() > 0, "At least one route should be advertised to gw2");
-            var gw1PeersOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetBgpPeerStatusAsync(WaitUntil.Completed);
+            var gw1PeersOperation = await virtualNetworkGatewayCollection.Get(gw1Name).Value.GetBgpPeerStatusAsync(WaitUntil.Completed, null, System.Threading.CancellationToken.None);
             Response<BgpPeerStatusListResult> gw1Peers = await gw1PeersOperation.WaitForCompletionAsync();
             Assert.True(gw1Peers.Value.Value.Count() > 0, "At least one peer should be connected");
         }
@@ -1775,11 +1672,9 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id },
-                        Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 },
                 VpnClientConfiguration = new VpnClientConfiguration()
@@ -1791,14 +1686,13 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 Sku = new VirtualNetworkGatewaySku()
                 {
-                    Name = VirtualNetworkGatewaySkuName.VpnGw2,
                     Tier = VirtualNetworkGatewaySkuTier.VpnGw2
                 }
             };
 
             var virtualNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
             var putVirtualNetworkGatewayResponseOperation =
-                await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+                await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1835,7 +1729,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes.Add(newAddressPrefixes);
             putVirtualNetworkGatewayResponseOperation =
-                await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
+                await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
@@ -1888,7 +1782,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var localNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetLocalNetworkGateways();
-            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway);
+            var putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, localNetworkGateway, System.Threading.CancellationToken.None);
             Response<LocalNetworkGatewayResource> putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putLocalNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Response<LocalNetworkGatewayResource> getLocalNetworkGatewayResponse = await localNetworkGatewayCollection.GetAsync(localNetworkGatewayName);
@@ -1923,23 +1817,20 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id },
-                        Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        PublicIPAddressId = nic1publicIp.Id,
+                        SubnetId = getSubnetResponse.Value.Id
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
                 {
-                    Name = VirtualNetworkGatewaySkuName.Standard,
                     Tier = VirtualNetworkGatewaySkuTier.Standard
                 }
             };
 
             var virtualNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
             var putVirtualNetworkGatewayResponseOperation =
-                await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway);
+                await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, virtualNetworkGateway, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayResource> putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Console.WriteLine("Virtual Network Gateway is deployed successfully.");
@@ -1963,7 +1854,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var virtualNetworkGatewayConnectionCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworkGatewayConnections();
             var putVirtualNetworkGatewayConnectionResponseOperation =
-                await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
+                await virtualNetworkGatewayConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection, System.Threading.CancellationToken.None);
             Response<VirtualNetworkGatewayConnectionResource> putVirtualNetworkGatewayConnectionResponse = await putVirtualNetworkGatewayConnectionResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayConnectionResponse.Value.Data.ProvisioningState.ToString());
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachinePlacementHintType : IEquatable<VirtualMachinePlacementHintType>
     {
         private readonly string _value;
+        /// <summary> The virtual machine has affinity with the referenced resources. </summary>
+        private const string AffinityValue = "Affinity";
+        /// <summary> The virtual machine has anti-affinity with the referenced resources. </summary>
+        private const string AntiAffinityValue = "AntiAffinity";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePlacementHintType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachinePlacementHintType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AffinityValue = "Affinity";
-        private const string AntiAffinityValue = "AntiAffinity";
-
-        /// <summary> Affinity. </summary>
+        /// <summary> The virtual machine has affinity with the referenced resources. </summary>
         public static VirtualMachinePlacementHintType Affinity { get; } = new VirtualMachinePlacementHintType(AffinityValue);
-        /// <summary> AntiAffinity. </summary>
+
+        /// <summary> The virtual machine has anti-affinity with the referenced resources. </summary>
         public static VirtualMachinePlacementHintType AntiAffinity { get; } = new VirtualMachinePlacementHintType(AntiAffinityValue);
+
         /// <summary> Determines if two <see cref="VirtualMachinePlacementHintType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachinePlacementHintType left, VirtualMachinePlacementHintType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachinePlacementHintType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachinePlacementHintType left, VirtualMachinePlacementHintType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachinePlacementHintType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachinePlacementHintType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachinePlacementHintType(string value) => new VirtualMachinePlacementHintType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachinePlacementHintType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachinePlacementHintType?(string value) => value == null ? null : new VirtualMachinePlacementHintType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachinePlacementHintType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachinePlacementHintType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

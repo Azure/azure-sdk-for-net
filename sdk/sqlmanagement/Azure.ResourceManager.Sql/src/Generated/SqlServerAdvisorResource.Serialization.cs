@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerAdvisorResource : IJsonModel<SqlAdvisorData>
     {
-        private static SqlAdvisorData s_dataDeserializationInstance;
-        private static SqlAdvisorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlAdvisorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlAdvisorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlAdvisorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlAdvisorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlAdvisorData>)Data).Write(writer, options);
 
-        SqlAdvisorData IJsonModel<SqlAdvisorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlAdvisorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlAdvisorData IJsonModel<SqlAdvisorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlAdvisorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlAdvisorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlAdvisorData IPersistableModel<SqlAdvisorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlAdvisorData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlAdvisorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlAdvisorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlAdvisorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

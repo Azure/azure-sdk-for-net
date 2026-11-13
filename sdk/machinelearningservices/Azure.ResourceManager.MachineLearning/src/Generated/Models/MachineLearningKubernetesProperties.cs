@@ -7,43 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Kubernetes properties. </summary>
     public partial class MachineLearningKubernetesProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _relayConnectionString;
+        private bool _relayConnectionStringIsDefined;
+        private string _serviceBusConnectionString;
+        private bool _serviceBusConnectionStringIsDefined;
+        private string _extensionPrincipalId;
+        private bool _extensionPrincipalIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesProperties"/>. </summary>
         public MachineLearningKubernetesProperties()
@@ -60,41 +38,81 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="namespace"> Compute namespace. </param>
         /// <param name="defaultInstanceType"> Default instance type. </param>
         /// <param name="instanceTypes"> Instance Type Schema. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningKubernetesProperties(string relayConnectionString, string serviceBusConnectionString, string extensionPrincipalId, string extensionInstanceReleaseTrain, string vcName, string @namespace, string defaultInstanceType, IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningKubernetesProperties(string relayConnectionString, string serviceBusConnectionString, string extensionPrincipalId, string extensionInstanceReleaseTrain, string vcName, string @namespace, string defaultInstanceType, IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RelayConnectionString = relayConnectionString;
-            ServiceBusConnectionString = serviceBusConnectionString;
-            ExtensionPrincipalId = extensionPrincipalId;
+            _relayConnectionString = relayConnectionString;
+            _serviceBusConnectionString = serviceBusConnectionString;
+            _extensionPrincipalId = extensionPrincipalId;
             ExtensionInstanceReleaseTrain = extensionInstanceReleaseTrain;
             VcName = vcName;
             Namespace = @namespace;
             DefaultInstanceType = defaultInstanceType;
             InstanceTypes = instanceTypes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Relay connection string. </summary>
         [WirePath("relayConnectionString")]
-        public string RelayConnectionString { get; set; }
+        public string RelayConnectionString
+        {
+            get
+            {
+                return _relayConnectionString;
+            }
+            set
+            {
+                _relayConnectionString = value;
+                _relayConnectionStringIsDefined = true;
+            }
+        }
+
         /// <summary> ServiceBus connection string. </summary>
         [WirePath("serviceBusConnectionString")]
-        public string ServiceBusConnectionString { get; set; }
+        public string ServiceBusConnectionString
+        {
+            get
+            {
+                return _serviceBusConnectionString;
+            }
+            set
+            {
+                _serviceBusConnectionString = value;
+                _serviceBusConnectionStringIsDefined = true;
+            }
+        }
+
         /// <summary> Extension principal-id. </summary>
         [WirePath("extensionPrincipalId")]
-        public string ExtensionPrincipalId { get; set; }
+        public string ExtensionPrincipalId
+        {
+            get
+            {
+                return _extensionPrincipalId;
+            }
+            set
+            {
+                _extensionPrincipalId = value;
+                _extensionPrincipalIdIsDefined = true;
+            }
+        }
+
         /// <summary> Extension instance release train. </summary>
         [WirePath("extensionInstanceReleaseTrain")]
         public string ExtensionInstanceReleaseTrain { get; set; }
+
         /// <summary> VC name. </summary>
         [WirePath("vcName")]
         public string VcName { get; set; }
+
         /// <summary> Compute namespace. </summary>
         [WirePath("namespace")]
         public string Namespace { get; set; }
+
         /// <summary> Default instance type. </summary>
         [WirePath("defaultInstanceType")]
         public string DefaultInstanceType { get; set; }
+
         /// <summary> Instance Type Schema. </summary>
         [WirePath("instanceTypes")]
         public IDictionary<string, MachineLearningInstanceTypeSchema> InstanceTypes { get; }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class RoutingIntentResource : IJsonModel<RoutingIntentData>
     {
-        private static RoutingIntentData s_dataDeserializationInstance;
-        private static RoutingIntentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RoutingIntentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RoutingIntentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RoutingIntentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RoutingIntentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RoutingIntentData>)Data).Write(writer, options);
 
-        RoutingIntentData IJsonModel<RoutingIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoutingIntentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoutingIntentData IJsonModel<RoutingIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RoutingIntentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoutingIntentData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RoutingIntentData IPersistableModel<RoutingIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoutingIntentData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<RoutingIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoutingIntentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RoutingIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

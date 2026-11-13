@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.AzureTerraform": "2025-09-01-preview"
+  }
+}

@@ -7,54 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
-    /// Serialized Name: EnabledState
-    /// </summary>
+    /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct EnabledState : IEquatable<EnabledState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EnabledState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EnabledState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: EnabledState.Enabled
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EnabledState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static EnabledState Enabled { get; } = new EnabledState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: EnabledState.Disabled
-        /// </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static EnabledState Disabled { get; } = new EnabledState(DisabledValue);
+
         /// <summary> Determines if two <see cref="EnabledState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnabledState left, EnabledState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnabledState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnabledState left, EnabledState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnabledState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnabledState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnabledState(string value) => new EnabledState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnabledState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnabledState?(string value) => value == null ? null : new EnabledState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnabledState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnabledState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -15,27 +15,18 @@ namespace Azure.AI.Language.Conversations.Models
     {
         /// <summary> Initializes a new instance of <see cref="ConversationActionResult"/>. </summary>
         /// <param name="result"> Represents a conversation analysis response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
-        internal ConversationActionResult(AnalyzeConversationResult result)
+        internal ConversationActionResult(AnalyzeConversationResult result) : base(AnalyzeConversationResultKind.ConversationResult)
         {
-            Argument.AssertNotNull(result, nameof(result));
-
-            Kind = AnalyzeConversationResultKind.ConversationResult;
             Result = result;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationActionResult"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task result. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> Represents a conversation analysis response. </param>
-        internal ConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeConversationResult result) : base(kind, serializedAdditionalRawData)
+        internal ConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AnalyzeConversationResult result) : base(kind, additionalBinaryDataProperties)
         {
             Result = result;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationActionResult"/> for deserialization. </summary>
-        internal ConversationActionResult()
-        {
         }
 
         /// <summary> Represents a conversation analysis response. </summary>

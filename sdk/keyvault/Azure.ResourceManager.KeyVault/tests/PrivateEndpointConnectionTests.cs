@@ -22,11 +22,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [SetUp]
         public async Task ClearChallengeCacheforRecord()
         {
-                await Initialize().ConfigureAwait(false);
+            await Initialize().ConfigureAwait(false);
         }
 
         [RecordedTest]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/37421")]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task PrivateEndpointConnectionCreateAndUpdate()
         {
             IgnoreTestInLiveMode();

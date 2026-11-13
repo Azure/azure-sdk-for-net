@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Describes AML Resource Usage. </summary>
     public partial class MachineLearningUsage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningUsage"/>. </summary>
         internal MachineLearningUsage()
@@ -53,42 +25,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningUsage"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
-        /// <param name="usageType"> Specifies the resource type. </param>
+        /// <param name="type"> Specifies the resource type. </param>
         /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningUsage(string id, string amlWorkspaceLocation, string usageType, MachineLearningUsageUnit? unit, long? currentValue, long? limit, MachineLearningUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningUsage(string id, string amlWorkspaceLocation, string @type, MachineLearningUsageUnit? unit, long? currentValue, long? limit, MachineLearningUsageName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;
-            UsageType = usageType;
+            Type = @type;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the resource ID. </summary>
         [WirePath("id")]
         public string Id { get; }
+
         /// <summary> Region of the AML workspace in the id. </summary>
         [WirePath("amlWorkspaceLocation")]
         public string AmlWorkspaceLocation { get; }
+
         /// <summary> Specifies the resource type. </summary>
         [WirePath("type")]
-        public string UsageType { get; }
+        public string Type { get; }
+
         /// <summary> An enum describing the unit of usage measurement. </summary>
         [WirePath("unit")]
         public MachineLearningUsageUnit? Unit { get; }
+
         /// <summary> The current usage of the resource. </summary>
         [WirePath("currentValue")]
         public long? CurrentValue { get; }
+
         /// <summary> The maximum permitted usage of the resource. </summary>
         [WirePath("limit")]
         public long? Limit { get; }
+
         /// <summary> The name of the type of usage. </summary>
         [WirePath("name")]
         public MachineLearningUsageName Name { get; }

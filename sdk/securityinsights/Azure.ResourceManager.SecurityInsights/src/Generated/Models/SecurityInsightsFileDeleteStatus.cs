@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsFileDeleteStatus : IEquatable<SecurityInsightsFileDeleteStatus>
     {
         private readonly string _value;
+        /// <summary> The file was deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> The file was not deleted. </summary>
+        private const string NotDeletedValue = "NotDeleted";
+        /// <summary> Unspecified. </summary>
+        private const string UnspecifiedValue = "Unspecified";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileDeleteStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsFileDeleteStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeletedValue = "Deleted";
-        private const string NotDeletedValue = "NotDeleted";
-        private const string UnspecifiedValue = "Unspecified";
+            _value = value;
+        }
 
         /// <summary> The file was deleted. </summary>
         public static SecurityInsightsFileDeleteStatus Deleted { get; } = new SecurityInsightsFileDeleteStatus(DeletedValue);
+
         /// <summary> The file was not deleted. </summary>
         public static SecurityInsightsFileDeleteStatus NotDeleted { get; } = new SecurityInsightsFileDeleteStatus(NotDeletedValue);
+
         /// <summary> Unspecified. </summary>
         public static SecurityInsightsFileDeleteStatus Unspecified { get; } = new SecurityInsightsFileDeleteStatus(UnspecifiedValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileDeleteStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsFileDeleteStatus left, SecurityInsightsFileDeleteStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileDeleteStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsFileDeleteStatus left, SecurityInsightsFileDeleteStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsFileDeleteStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileDeleteStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsFileDeleteStatus(string value) => new SecurityInsightsFileDeleteStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileDeleteStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsFileDeleteStatus?(string value) => value == null ? null : new SecurityInsightsFileDeleteStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsFileDeleteStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsFileDeleteStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

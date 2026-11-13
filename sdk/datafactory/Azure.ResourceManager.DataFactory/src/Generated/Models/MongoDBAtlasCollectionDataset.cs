@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,13 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collection"> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
-        public MongoDBAtlasCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base(linkedServiceName)
+        public MongoDBAtlasCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base("MongoDbAtlasCollection", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(collection, nameof(collection));
 
-            Collection = collection;
-            DatasetType = "MongoDbAtlasCollection";
+            TypeProperties = new MongoDBAtlasCollectionDatasetTypeProperties(collection);
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDataset"/>. </summary>
@@ -36,20 +36,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="collection"> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </param>
-        internal MongoDBAtlasCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> MongoDB Atlas database dataset properties. </param>
+        internal MongoDBAtlasCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, MongoDBAtlasCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            Collection = collection;
-            DatasetType = datasetType ?? "MongoDbAtlasCollection";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDataset"/> for deserialization. </summary>
-        internal MongoDBAtlasCollectionDataset()
-        {
-        }
+        /// <summary> MongoDB Atlas database dataset properties. </summary>
+        internal MongoDBAtlasCollectionDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Collection { get; set; }
+        public DataFactoryElement<string> Collection
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Collection;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MongoDBAtlasCollectionDatasetTypeProperties();
+                }
+                TypeProperties.Collection = value;
+            }
+        }
     }
 }

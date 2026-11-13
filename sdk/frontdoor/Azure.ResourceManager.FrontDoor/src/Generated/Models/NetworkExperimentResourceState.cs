@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct NetworkExperimentResourceState : IEquatable<NetworkExperimentResourceState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Enabling. </summary>
+        private const string EnablingValue = "Enabling";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="NetworkExperimentResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkExperimentResourceState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string EnablingValue = "Enabling";
-        private const string EnabledValue = "Enabled";
-        private const string DisablingValue = "Disabling";
-        private const string DisabledValue = "Disabled";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static NetworkExperimentResourceState Creating { get; } = new NetworkExperimentResourceState(CreatingValue);
+
         /// <summary> Enabling. </summary>
         public static NetworkExperimentResourceState Enabling { get; } = new NetworkExperimentResourceState(EnablingValue);
+
         /// <summary> Enabled. </summary>
         public static NetworkExperimentResourceState Enabled { get; } = new NetworkExperimentResourceState(EnabledValue);
+
         /// <summary> Disabling. </summary>
         public static NetworkExperimentResourceState Disabling { get; } = new NetworkExperimentResourceState(DisablingValue);
+
         /// <summary> Disabled. </summary>
         public static NetworkExperimentResourceState Disabled { get; } = new NetworkExperimentResourceState(DisabledValue);
+
         /// <summary> Deleting. </summary>
         public static NetworkExperimentResourceState Deleting { get; } = new NetworkExperimentResourceState(DeletingValue);
+
         /// <summary> Determines if two <see cref="NetworkExperimentResourceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkExperimentResourceState left, NetworkExperimentResourceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkExperimentResourceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkExperimentResourceState left, NetworkExperimentResourceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkExperimentResourceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkExperimentResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkExperimentResourceState(string value) => new NetworkExperimentResourceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkExperimentResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkExperimentResourceState?(string value) => value == null ? null : new NetworkExperimentResourceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkExperimentResourceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkExperimentResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

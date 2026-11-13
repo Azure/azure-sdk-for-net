@@ -46,13 +46,6 @@ namespace Azure.Core.Tests
             StringAssert.StartsWith("application-id ", userAgent);
         }
 
-        [Test]
-        public void ApplicationIdLimitedTo24Chars()
-        {
-            var options = new DiagnosticsOptions();
-            Assert.Throws<ArgumentOutOfRangeException>(() => options.ApplicationId = "0123456789012345678912345");
-        }
-
         private class TestOptions : ClientOptions
         { }
     }

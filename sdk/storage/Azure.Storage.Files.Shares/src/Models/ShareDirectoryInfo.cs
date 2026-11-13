@@ -41,7 +41,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// Constructor.
         /// </summary>
         internal ShareDirectoryInfo() { }
-}
+    }
 
     /// <summary>
     /// FilesModelFactory provides utilities for mocking.

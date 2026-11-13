@@ -1,5 +1,7 @@
 # Interop with `WindowsAzure.ServiceBus`
 
+> **Important:** `WindowsAzure.ServiceBus` was retired for Service Bus messaging on September 30, 2026 and no longer receives official support or updates. This sample helps applications using `Azure.Messaging.ServiceBus` exchange messages with existing applications using the retired library over AMQP. See the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide_WindowsAzureServiceBus.md) to complete the migration.
+
 This sample demonstrates how to interoperate with messages that are sent or received using the `WindowsAzure.ServiceBus` library. The `WindowsAzure.ServiceBus` library uses the `DataContractSerializer` to serialize the `BrokeredMessage` body. Because of this, when attempting to interoperate with this library, there a few additional steps that are needed.
 
 ## Sending a message using `Azure.Messaging.ServiceBus` that will be received with `WindowsAzure.ServiceBus`
@@ -14,7 +16,7 @@ using var stream = new MemoryStream();
 XmlDictionaryWriter writer = XmlDictionaryWriter.CreateBinaryWriter(stream);
 
 // serialize an instance of our type into a JSON string
-string json = JsonSerializer.Serialize(new TestModel {A = "Hello world", B = 5, C = true});
+string json = JsonSerializer.Serialize(new TestModel { A = "Hello world", B = 5, C = true });
 
 // serialize our JSON string into the XML envelope using the DataContractSerializer
 serializer.WriteObject(writer, json);
@@ -39,7 +41,7 @@ XmlDictionaryReader reader =
     XmlDictionaryReader.CreateBinaryReader(received.Body.ToStream(), XmlDictionaryReaderQuotas.Max);
 
 // deserialize the XML envelope into a string
-string receivedJson = (string) deserializer.ReadObject(reader);
+string receivedJson = (string)deserializer.ReadObject(reader);
 
 // deserialize the JSON string into TestModel
 TestModel output = JsonSerializer.Deserialize<TestModel>(receivedJson);

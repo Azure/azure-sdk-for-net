@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
+using Microsoft.TypeSpec.Generator.Customizations;
+using static Azure.Storage.Files.Shares.ShareExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -25,7 +28,23 @@ namespace Azure.Storage.Files.Shares
     /// The <see cref="ShareClient"/> allows you to manipulate Azure
     /// Storage shares and their directories and files.
     /// </summary>
-    public class ShareClient
+    // CUSTOM:
+    // - Suppress unused methods, ctors, and fields.
+    [CodeGenSuppress("_endpoint", typeof(Uri))]
+    [CodeGenSuppress("_version", typeof(string))]
+    [CodeGenSuppress("_fileRequestIntent")]
+    [CodeGenSuppress("_cachedServiceRestClient", typeof(ServiceRestClient))]
+    [CodeGenSuppress("_cachedShareRestClient", typeof(ShareRestClient))]
+    [CodeGenSuppress("_cachedDirectoryRestClient", typeof(DirectoryRestClient))]
+    [CodeGenSuppress("_cachedFileRestClient", typeof(FileRestClient))]
+    [CodeGenSuppress("ShareClient", typeof(HttpPipelinePolicy), typeof(Uri), typeof(ShareClientOptions))]
+    [CodeGenSuppress("ShareClient", typeof(Uri), typeof(TokenCredential))]
+    [CodeGenSuppress("GetServiceRestClient")]
+    [CodeGenSuppress("GetShareRestClient")]
+    [CodeGenSuppress("GetDirectoryRestClient", typeof(bool?), typeof(bool?))]
+    [CodeGenSuppress("GetFileRestClient", typeof(bool?), typeof(bool?), typeof(FileRangeWriteFromUrlType))]
+    [CodeGenSuppress("Pipeline", typeof(HttpPipeline))]
+    public partial class ShareClient
     {
         /// <summary>
         /// The share's primary <see cref="Uri"/> endpoint.
@@ -103,6 +122,15 @@ namespace Azure.Storage.Files.Shares
         /// class for mocking.
         /// </summary>
         protected ShareClient()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="ShareClient"/> from a <see cref="ShareClientSettings"/>.
+        /// </summary>
+        /// <param name="settings"> The settings for ShareClient. </param>
+        [Experimental("SCME0002")]
+        public ShareClient(ShareClientSettings settings) : this(settings?.ShareUri, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
@@ -385,10 +413,30 @@ namespace Azure.Storage.Files.Shares
             return new ShareRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                uri.AbsoluteUri,
+                uri,
                 _clientConfiguration.ClientOptions.Version.ToVersionString(),
                 _clientConfiguration.ClientOptions.ShareTokenIntent);
         }
+        /// <summary>
+        /// Returns the shared key credential associated with this client so that derived
+        /// classes in other assemblies (e.g., Files Change Feed) can propagate
+        /// authentication without needing <c>InternalsVisibleTo</c>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static StorageSharedKeyCredential GetSharedKeyCredential(
+            ShareClient client)
+            => client._clientConfiguration?.SharedKeyCredential;
+
+        /// <summary>
+        /// Returns the token credential associated with this client so that derived
+        /// classes in other assemblies (e.g., Files Change Feed) can propagate
+        /// authentication without needing <c>InternalsVisibleTo</c>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static TokenCredential GetTokenCredential(
+            ShareClient client)
+            => client._clientConfiguration?.TokenCredential;
+
         #endregion ctors
 
         /// <summary>
@@ -442,6 +490,64 @@ namespace Azure.Storage.Files.Shares
         /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
         public virtual ShareDirectoryClient GetRootDirectoryClient()
             => GetDirectoryClient("");
+
+        /// <summary>
+        /// Create a new <see cref="ShareFileClient"/> object that addresses a
+        /// file by its file ID rather than by its path.  The new
+        /// <see cref="ShareFileClient"/> uses the same request policy pipeline
+        /// as the <see cref="ShareClient"/>.
+        ///
+        /// A file ID can be obtained from the
+        /// <see cref="Models.FileSmbProperties.FileId"/> returned by
+        /// Get Properties, or from a change feed event.
+        ///
+        /// Clients that address a file by its file ID only support a subset of
+        /// the file operations.  Unsupported operations throw
+        /// <see cref="InvalidOperationException"/>.
+        /// </summary>
+        /// <param name="fileId">The file ID of the file.</param>
+        /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
+        public virtual ShareFileClient GetFileClientByFileId(string fileId)
+        {
+            Argument.AssertNotNullOrWhiteSpace(fileId, nameof(fileId));
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+            {
+                DirectoryOrFilePath = null,
+                FileId = fileId
+            };
+            return new ShareFileClient(
+                shareUriBuilder.ToUri(),
+                ClientConfiguration);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="ShareDirectoryClient"/> object that addresses
+        /// a directory by its file ID rather than by its path.  The new
+        /// <see cref="ShareDirectoryClient"/> uses the same request policy
+        /// pipeline as the <see cref="ShareClient"/>.
+        ///
+        /// A file ID can be obtained from the
+        /// <see cref="Models.FileSmbProperties.FileId"/> returned by
+        /// Get Properties, or from a change feed event.
+        ///
+        /// Clients that address a directory by its file ID only support a
+        /// subset of the directory operations.  Unsupported operations throw
+        /// <see cref="InvalidOperationException"/>.
+        /// </summary>
+        /// <param name="fileId">The file ID of the directory.</param>
+        /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
+        public virtual ShareDirectoryClient GetDirectoryClientByFileId(string fileId)
+        {
+            Argument.AssertNotNullOrWhiteSpace(fileId, nameof(fileId));
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+            {
+                DirectoryOrFilePath = null,
+                FileId = fileId
+            };
+            return new ShareDirectoryClient(
+                shareUriBuilder.ToUri(),
+                ClientConfiguration);
+        }
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -498,6 +604,9 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableChangeFeed,
+                options?.ChangeFeedRetentionInDays,
+                //options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -543,6 +652,9 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableChangeFeed,
+                options?.ChangeFeedRetentionInDays,
+                //options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -593,6 +705,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
+                //enableDirectoryLease: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -643,6 +758,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
+                //enableDirectoryLease: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -694,6 +812,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="provisionedMaxBandwidthMibps">
         /// Provisioned max bandwidth MiBps.
         /// </param>
+        /// <param name="enableChangeFeed">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies whether change feed is enabled on the share.
+        /// </param>
+        /// <param name="changeFeedRetentionInDays">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies the number of days that change feed records are retained on the share.  Valid values are between 1 and 365.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -726,6 +852,9 @@ namespace Azure.Storage.Files.Shares
             long? paidBurstingMaxBandwidthMibps,
             long? provisionedMaxIops,
             long? provisionedMaxBandwidthMibps,
+            bool? enableChangeFeed,
+            int? changeFeedRetentionInDays,
+            //bool? enableDirectoryLease,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -744,7 +873,7 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ShareCreateHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -760,6 +889,9 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
+                            enableChangeFeed: enableChangeFeed,
+                            changeFeedRetentionInDays: changeFeedRetentionInDays,
+                            //enableSmbDirectoryLease: enableDirectoryLease,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -777,12 +909,15 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
+                            enableChangeFeed: enableChangeFeed,
+                            changeFeedRetentionInDays: changeFeedRetentionInDays,
+                            //enableSmbDirectoryLease: enableDirectoryLease,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToShareInfo(),
-                        response.GetRawResponse());
+                        response.ToShareInfo(ShareInfoHeaderType.Create),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -841,6 +976,9 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableChangeFeed,
+                options?.ChangeFeedRetentionInDays,
+                //options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -885,6 +1023,9 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableChangeFeed,
+                options?.ChangeFeedRetentionInDays,
+                //options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -936,6 +1077,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
+                //enableDirectoryLease: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -988,6 +1132,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
+                //enableDirectoryLease: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1038,6 +1185,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="provisionedMaxBandwidthMibps">
         /// Provisioned max bandwidth MiBps.
         /// </param>
+        /// <param name="enableChangeFeed">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies whether change feed is enabled on the share.
+        /// </param>
+        /// <param name="changeFeedRetentionInDays">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies the number of days that change feed records are retained on the share.  Valid values are between 1 and 365.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1067,6 +1222,9 @@ namespace Azure.Storage.Files.Shares
             long? paidBurstingMaxBandwidthMibps,
             long? provisionedMaxIops,
             long? provisionedMaxBandwidthMibps,
+            bool? enableChangeFeed,
+            int? changeFeedRetentionInDays,
+            //bool? enableDirectoryLease,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1092,6 +1250,9 @@ namespace Azure.Storage.Files.Shares
                         paidBurstingMaxBandwidthMibps,
                         provisionedMaxIops,
                         provisionedMaxBandwidthMibps,
+                        enableChangeFeed,
+                        changeFeedRetentionInDays,
+                        //enableDirectoryLease,
                         async,
                         cancellationToken,
                         operationName: $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")
@@ -1550,7 +1711,7 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ShareCreateSnapshotHeaders> response;
+                    Response response;
 
                     scope.Start();
 
@@ -1570,7 +1731,7 @@ namespace Azure.Storage.Files.Shares
 
                     return Response.FromValue(
                         response.ToShareSnapshotInfo(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -1797,13 +1958,13 @@ namespace Azure.Storage.Files.Shares
                         shareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.Include;
                     }
 
-                    ResponseWithHeaders<ShareDeleteHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await ShareRestClient.DeleteAsync(
                             deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1811,11 +1972,11 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.Delete(
                             deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -2024,26 +2185,26 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ShareGetPropertiesHeaders> response;
+                    Response response;
                     scope.Start();
 
                     if (async)
                     {
                         response = await ShareRestClient.GetPropertiesAsync(
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.GetProperties(
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
                         response.ToShareProperties(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -2098,6 +2259,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.ProvisionedMaxIops,
                 provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableChangeFeed: options?.EnableChangeFeed,
+                changeFeedRetentionInDays: options?.ChangeFeedRetentionInDays,
+                //enableDirectoryLease: options?.EnableDirectoryLease,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
@@ -2141,6 +2305,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.ProvisionedMaxIops,
                 provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableChangeFeed: options?.EnableChangeFeed,
+                changeFeedRetentionInDays: options?.ChangeFeedRetentionInDays,
+                //enableDirectoryLease: options?.EnableDirectoryLease,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
@@ -2191,6 +2358,14 @@ namespace Azure.Storage.Files.Shares
         /// Sets the max provisioned brandwith for a share.  For SSD, min bandwidth is 125 MiB/sec and max is 10,340 MiB/sec.
         /// For HDD, min bandwidth is 60 MiB/sec and max is 5,120 MiB/sec.
         /// </param>
+        /// <param name="enableChangeFeed">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies whether change feed is enabled on the share.
+        /// </param>
+        /// <param name="changeFeedRetentionInDays">
+        /// Optional. Supported in version 2026-06-06 and above.
+        /// Specifies the number of days that change feed records are retained on the share.  Valid values are between 1 and 365.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on setting the quota.
@@ -2225,6 +2400,9 @@ namespace Azure.Storage.Files.Shares
             long? paidBurstingMaxBandwidthMibps,
             long? provisionedMaxIops,
             long? provisionedMaxBandwidthBandwidthMibps,
+            bool? enableChangeFeed,
+            int? changeFeedRetentionInDays,
+            //bool? enableDirectoryLease,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -2243,7 +2421,7 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ShareSetPropertiesHeaders> response;
+                    Response response;
 
                     scope.Start();
 
@@ -2259,7 +2437,10 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
-                            shareFileRequestConditions: conditions,
+                            enableChangeFeed: enableChangeFeed,
+                            changeFeedRetentionInDays: changeFeedRetentionInDays,
+                            //enableSmbDirectoryLease: enableDirectoryLease,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2275,13 +2456,16 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
-                            shareFileRequestConditions: conditions,
+                            enableChangeFeed: enableChangeFeed,
+                            changeFeedRetentionInDays: changeFeedRetentionInDays,
+                            //enableSmbDirectoryLease: enableDirectoryLease,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToShareInfo(),
-                        response.GetRawResponse());
+                        response.ToShareInfo(ShareInfoHeaderType.SetProperties),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -2343,6 +2527,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
+                //enableDirectoryLease: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2393,6 +2580,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
+                //enableDirectoryLease: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -2441,6 +2631,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
+                //enableDirectoryLease: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2488,6 +2681,9 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
+                //enableDirectoryLease: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -2701,7 +2897,7 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ShareSetMetadataHeaders> response;
+                    Response response;
 
                     scope.Start();
 
@@ -2709,7 +2905,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.SetMetadataAsync(
                             metadata: metadata,
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2717,13 +2913,13 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.SetMetadata(
                             metadata: metadata,
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToShareInfo(),
-                        response.GetRawResponse());
+                        response.ToShareInfo(ShareInfoHeaderType.SetMetadata),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -2926,24 +3122,24 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders> response;
+                    Response<SignedIdentifiers> response;
                     scope.Start();
 
                     if (async)
                     {
                         response = await ShareRestClient.GetAccessPolicyAsync(
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.GetAccessPolicy(
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 
-                    IEnumerable<ShareSignedIdentifier> shareSignedIdentifiers = response.Value.ToList();
+                    IEnumerable<ShareSignedIdentifier> shareSignedIdentifiers = response.Value.Items;
 
                     return Response.FromValue(
                         shareSignedIdentifiers,
@@ -3183,28 +3379,28 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ShareSetAccessPolicyHeaders> response;
+                    Response response;
                     scope.Start();
 
                     if (async)
                     {
                         response = await ShareRestClient.SetAccessPolicyAsync(
-                            shareAcl: permissions,
-                            shareFileRequestConditions: conditions,
+                            shareAcl: permissions != null ? new(permissions) : null,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.SetAccessPolicy(
-                            shareAcl: permissions,
-                            shareFileRequestConditions: conditions,
+                            shareAcl: permissions != null ? new(permissions) : null,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToShareInfo(),
-                        response.GetRawResponse());
+                        response.ToShareInfo(ShareInfoHeaderType.SetAccessPolicy),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -3397,21 +3593,21 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders> response;
+                    Response<ShareStatistics> response;
 
                     scope.Start();
 
                     if (async)
                     {
                         response = await ShareRestClient.GetStatisticsAsync(
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.GetStatistics(
-                            shareFileRequestConditions: conditions,
+                            leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3581,9 +3777,10 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> response;
+                    Response<SharePermission> response;
 
                     scope.Start();
+                    Argument.AssertNotNull(filePermissionKey, nameof(filePermissionKey));
 
                     if (async)
                     {
@@ -3747,26 +3944,26 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ShareCreatePermissionHeaders> response;
-                    SharePermission sharePermission = new SharePermission(permission, permissionFormat);
+                    Response response;
+                    SharePermission sharePermission = new SharePermission(permission, permissionFormat, additionalBinaryDataProperties: default);
 
                     if (async)
                     {
                         response = await ShareRestClient.CreatePermissionAsync(
-                            sharePermission: sharePermission,
+                            permission: sharePermission,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.CreatePermission(
-                            sharePermission: sharePermission,
+                            permission: sharePermission,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
                         response.ToPermissionInfo(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -3824,6 +4021,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
+                filePropertySemantics: options?.PropertySemantics,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3882,6 +4080,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
+                filePropertySemantics: null,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3929,6 +4128,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
+                filePropertySemantics: options?.PropertySemantics,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3987,6 +4187,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
+                filePropertySemantics: null,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -4187,6 +4388,168 @@ namespace Azure.Storage.Files.Shares
             // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
             builder = ShareSasBuilder.DeepCopy(builder);
 
+            SetBuilderAndValidate(builder);
+
+            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString()
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        #region GenerateUserDelegationSas
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri(ShareSasPermissions, DateTimeOffset, UserDelegationKey)"/>
+        /// returns a <see cref="Uri"/> representing a Share Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed. The SAS is signed by the user delegation key
+        /// that is passed in.
+        ///
+        /// For more information, see
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Creating an user delegation SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="ShareSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <param name="userDelegationKey">
+        /// Required. A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Uri GenerateUserDelegationSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey) =>
+            GenerateUserDelegationSasUri(permissions, expiresOn, userDelegationKey, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri(ShareSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
+        /// returns a <see cref="Uri"/> representing a Share Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed. The SAS is signed by the user delegation key
+        /// that is passed in.
+        ///
+        /// For more information, see
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Creating an user delegation SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="ShareSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <param name="userDelegationKey">
+        /// Required. A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Uri GenerateUserDelegationSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
+            GenerateUserDelegationSasUri(new ShareSasBuilder(permissions, expiresOn) { ShareName = Name }, userDelegationKey, out stringToSign);
+
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri(ShareSasBuilder, UserDelegationKey)"/>
+        /// returns a <see cref="Uri"/> representing a Share Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and builder passed. The SAS is signed by the user delegation key
+        /// that is passed in.
+        ///
+        /// For more information, see
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Creating an user delegation SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Required. Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="userDelegationKey">
+        /// Required. A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Uri GenerateUserDelegationSasUri(ShareSasBuilder builder, UserDelegationKey userDelegationKey) =>
+            GenerateUserDelegationSasUri(builder, userDelegationKey, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri(ShareSasBuilder, UserDelegationKey, out string)"/>
+        /// returns a <see cref="Uri"/> representing a Share Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and builder passed. The SAS is signed by the user delegation key
+        /// that is passed in.
+        ///
+        /// For more information, see
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Creating an user delegation SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Required. Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="userDelegationKey">
+        /// Required. A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Uri GenerateUserDelegationSasUri(ShareSasBuilder builder, UserDelegationKey userDelegationKey, out string stringToSign)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
+
+            // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
+            builder = ShareSasBuilder.DeepCopy(builder);
+
+            SetBuilderAndValidate(builder);
+            if (string.IsNullOrEmpty(AccountName))
+            {
+                throw Errors.SasClientMissingData(nameof(AccountName));
+            }
+
+            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
+            {
+                Sas = builder.ToSasQueryParameters(userDelegationKey, AccountName, out stringToSign)
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        private void SetBuilderAndValidate(ShareSasBuilder builder)
+        {
             // Assign builder's ShareName and Path, if they are null.
             builder.ShareName ??= Name;
 
@@ -4204,13 +4567,7 @@ namespace Azure.Storage.Files.Shares
                     nameof(builder.FilePath),
                     nameof(Constants.File.Share.Name));
             }
-            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
-            {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString()
-            };
-            return sasUri.ToUri();
         }
-        #endregion
 
         #region GetParentClientCore
 

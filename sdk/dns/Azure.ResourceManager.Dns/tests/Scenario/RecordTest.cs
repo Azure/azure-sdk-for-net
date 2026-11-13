@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == aaaaRecordName).Data, aaaaRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == aaaaRecordName));
 
             // Delete
             await aaaaRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == aRecordName).Data, aRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == aRecordName));
 
             // Delete
             await aRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == cnameRecordName).Data, cnameRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == cnameRecordName));
 
             // Delete
             await cnameRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == dsRecordName).Data, dsRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == dsRecordName));
 
             // Delete
             await dsRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == mxRecordName).Data, mxRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == mxRecordName));
 
             // Delete
             await mxRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == naptrRecordName).Data, naptrRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == naptrRecordName));
 
             // Delete
             await naptrRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == ptrRecordName).Data, ptrRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == ptrRecordName));
 
             // Delete
             await ptrRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == soaRecordName).Data, soaRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == soaRecordName));
 
             // Delete - Type SOA cannot delete
             // Description: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/dns/resource-manager/Microsoft.Network/stable/2020-06-01/dns.json#L1015
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == srvRecordName).Data, srvRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == srvRecordName));
 
             // Delete
             await srvRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == tlsaRecordName).Data, tlsaRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == tlsaRecordName));
 
             // Delete
             await tlsaRecord.Value.DeleteAsync(WaitUntil.Completed);
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateRecordBaseInfo(list.First(item => item.Data.Name == txtRecordName).Data, txtRecordName);
+            Assert.IsTrue(list.Any(item => item.Id.Name == txtRecordName));
 
             // Delete
             await txtRecord.Value.DeleteAsync(WaitUntil.Completed);

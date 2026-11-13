@@ -1,0 +1,18 @@
+id: owners-remove-pkg-label-001
+name: Remove Label from Package
+description: |
+  Test that the skill removes a label from a package.
+tags:
+  - basic
+inputs:
+  prompt: "Remove the %Storage label from azure-storage-blob in azure-sdk-for-java"
+expected:
+  output_contains:
+    - "Storage"
+    - "azure-storage-blob"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_engsys_codeowner_remove_package_label
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

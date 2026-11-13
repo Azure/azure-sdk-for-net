@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Reservations.Models
     public readonly partial struct AppliedScopeType : IEquatable<AppliedScopeType>
     {
         private readonly string _value;
+        /// <summary> Single. </summary>
+        private const string SingleValue = "Single";
+        /// <summary> Shared. </summary>
+        private const string SharedValue = "Shared";
+        /// <summary> ManagementGroup. </summary>
+        private const string ManagementGroupValue = "ManagementGroup";
 
         /// <summary> Initializes a new instance of <see cref="AppliedScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppliedScopeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleValue = "Single";
-        private const string SharedValue = "Shared";
-        private const string ManagementGroupValue = "ManagementGroup";
+            _value = value;
+        }
 
         /// <summary> Single. </summary>
         public static AppliedScopeType Single { get; } = new AppliedScopeType(SingleValue);
+
         /// <summary> Shared. </summary>
         public static AppliedScopeType Shared { get; } = new AppliedScopeType(SharedValue);
+
         /// <summary> ManagementGroup. </summary>
         public static AppliedScopeType ManagementGroup { get; } = new AppliedScopeType(ManagementGroupValue);
+
         /// <summary> Determines if two <see cref="AppliedScopeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppliedScopeType left, AppliedScopeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppliedScopeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppliedScopeType left, AppliedScopeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppliedScopeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppliedScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppliedScopeType(string value) => new AppliedScopeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppliedScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppliedScopeType?(string value) => value == null ? null : new AppliedScopeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppliedScopeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppliedScopeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

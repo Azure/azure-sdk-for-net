@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class DirectLineSpeechChannelProperties : IUtf8JsonSerializable, IJsonModel<DirectLineSpeechChannelProperties>
+    /// <summary> The parameters to provide for the DirectLine Speech channel. </summary>
+    public partial class DirectLineSpeechChannelProperties : IJsonModel<DirectLineSpeechChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectLineSpeechChannelProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DirectLineSpeechChannelProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDirectLineSpeechChannelProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DirectLineSpeechChannelProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DirectLineSpeechChannelProperties IPersistableModel<DirectLineSpeechChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DirectLineSpeechChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DirectLineSpeechChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +70,17 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(CognitiveServiceResourceId))
             {
                 writer.WritePropertyName("cognitiveServiceResourceId"u8);
                 writer.WriteStringValue(CognitiveServiceResourceId);
             }
-            if (Optional.IsDefined(CognitiveServiceRegion))
+            if (Optional.IsDefined(CognitiveServiceRegion, _cognitiveServiceRegionIsDefined))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -48,10 +89,10 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 else
                 {
-                    writer.WriteNull("cognitiveServiceRegion");
+                    writer.WriteNull("cognitiveServiceRegion"u8);
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey, _cognitiveServiceSubscriptionKeyIsDefined))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -60,7 +101,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 else
                 {
-                    writer.WriteNull("cognitiveServiceSubscriptionKey");
+                    writer.WriteNull("cognitiveServiceSubscriptionKey"u8);
                 }
             }
             if (Optional.IsDefined(IsEnabled))
@@ -83,15 +124,15 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("isDefaultBotForCogSvcAccount"u8);
                 writer.WriteBooleanValue(IsDefaultBotForCogSvcAccount.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -100,100 +141,107 @@ namespace Azure.ResourceManager.BotService.Models
             }
         }
 
-        DirectLineSpeechChannelProperties IJsonModel<DirectLineSpeechChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DirectLineSpeechChannelProperties IJsonModel<DirectLineSpeechChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DirectLineSpeechChannelProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDirectLineSpeechChannelProperties(document.RootElement, options);
         }
 
-        internal static DirectLineSpeechChannelProperties DeserializeDirectLineSpeechChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DirectLineSpeechChannelProperties DeserializeDirectLineSpeechChannelProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier cognitiveServiceResourceId = default;
+            bool cognitiveServiceRegionIsDefined = false;
             string cognitiveServiceRegion = default;
+            bool cognitiveServiceSubscriptionKeyIsDefined = false;
             string cognitiveServiceSubscriptionKey = default;
             bool? isEnabled = default;
             string customVoiceDeploymentId = default;
             string customSpeechModelId = default;
             bool? isDefaultBotForCogSvcAccount = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("cognitiveServiceResourceId"u8))
+                if (prop.NameEquals("cognitiveServiceResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cognitiveServiceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    cognitiveServiceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cognitiveServiceRegion"u8))
+                if (prop.NameEquals("cognitiveServiceRegion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    cognitiveServiceRegionIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceRegion = null;
                         continue;
                     }
-                    cognitiveServiceRegion = property.Value.GetString();
+                    cognitiveServiceRegion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cognitiveServiceSubscriptionKey"u8))
+                if (prop.NameEquals("cognitiveServiceSubscriptionKey"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    cognitiveServiceSubscriptionKeyIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceSubscriptionKey = null;
                         continue;
                     }
-                    cognitiveServiceSubscriptionKey = property.Value.GetString();
+                    cognitiveServiceSubscriptionKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"u8))
+                if (prop.NameEquals("isEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEnabled = property.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("customVoiceDeploymentId"u8))
+                if (prop.NameEquals("customVoiceDeploymentId"u8))
                 {
-                    customVoiceDeploymentId = property.Value.GetString();
+                    customVoiceDeploymentId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customSpeechModelId"u8))
+                if (prop.NameEquals("customSpeechModelId"u8))
                 {
-                    customSpeechModelId = property.Value.GetString();
+                    customSpeechModelId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDefaultBotForCogSvcAccount"u8))
+                if (prop.NameEquals("isDefaultBotForCogSvcAccount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDefaultBotForCogSvcAccount = property.Value.GetBoolean();
+                    isDefaultBotForCogSvcAccount = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DirectLineSpeechChannelProperties(
                 cognitiveServiceResourceId,
                 cognitiveServiceRegion,
@@ -202,38 +250,11 @@ namespace Azure.ResourceManager.BotService.Models
                 customVoiceDeploymentId,
                 customSpeechModelId,
                 isDefaultBotForCogSvcAccount,
-                serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<DirectLineSpeechChannelProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
+                additionalBinaryDataProperties)
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support writing '{options.Format}' format.");
-            }
+                _cognitiveServiceRegionIsDefined = cognitiveServiceRegionIsDefined,
+                _cognitiveServiceSubscriptionKeyIsDefined = cognitiveServiceSubscriptionKeyIsDefined
+            };
         }
-
-        DirectLineSpeechChannelProperties IPersistableModel<DirectLineSpeechChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDirectLineSpeechChannelProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DirectLineSpeechChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

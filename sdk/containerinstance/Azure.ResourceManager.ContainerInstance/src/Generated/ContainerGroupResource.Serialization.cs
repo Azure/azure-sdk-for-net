@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
+    /// <summary></summary>
     public partial class ContainerGroupResource : IJsonModel<ContainerGroupData>
     {
-        private static ContainerGroupData s_dataDeserializationInstance;
-        private static ContainerGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ContainerGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ContainerGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerGroupData>)Data).Write(writer, options);
 
-        ContainerGroupData IJsonModel<ContainerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupData IJsonModel<ContainerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerGroupData>(Data, options, AzureResourceManagerContainerInstanceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerGroupData IPersistableModel<ContainerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerGroupData>(data, options, AzureResourceManagerContainerInstanceContext.Default);
 
-        string IPersistableModel<ContainerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

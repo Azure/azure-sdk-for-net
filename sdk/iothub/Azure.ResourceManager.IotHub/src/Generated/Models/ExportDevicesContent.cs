@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Use to provide parameters when requesting an export of all devices in the IoT hub. </summary>
     public partial class ExportDevicesContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExportDevicesContent"/>. </summary>
         /// <param name="exportBlobContainerUri"> The export blob container URI. </param>
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="identity"> Managed identity properties of storage endpoint for export devices. </param>
         /// <param name="includeConfigurations"> The value indicating whether configurations should be exported. </param>
         /// <param name="configurationsBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported configurations for the Iot Hub. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDevicesContent(Uri exportBlobContainerUri, bool excludeKeys, string exportBlobName, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, bool? includeConfigurations, string configurationsBlobName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExportDevicesContent(Uri exportBlobContainerUri, bool excludeKeys, string exportBlobName, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, bool? includeConfigurations, string configurationsBlobName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExportBlobContainerUri = exportBlobContainerUri;
             ExcludeKeys = excludeKeys;
@@ -76,39 +48,45 @@ namespace Azure.ResourceManager.IotHub.Models
             Identity = identity;
             IncludeConfigurations = includeConfigurations;
             ConfigurationsBlobName = configurationsBlobName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExportDevicesContent"/> for deserialization. </summary>
-        internal ExportDevicesContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The export blob container URI. </summary>
         public Uri ExportBlobContainerUri { get; }
+
         /// <summary> The value indicating whether keys should be excluded during export. </summary>
         public bool ExcludeKeys { get; }
+
         /// <summary> The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub. </summary>
         public string ExportBlobName { get; set; }
+
         /// <summary> Specifies authentication type being used for connecting to the storage account. </summary>
         public IotHubAuthenticationType? AuthenticationType { get; set; }
+
         /// <summary> Managed identity properties of storage endpoint for export devices. </summary>
         internal ManagedIdentity Identity { get; set; }
-        /// <summary> The user assigned identity. </summary>
-        public ResourceIdentifier UserAssignedIdentity
-        {
-            get => Identity is null ? default : Identity.UserAssignedIdentity;
-            set
-            {
-                if (Identity is null)
-                    Identity = new ManagedIdentity();
-                Identity.UserAssignedIdentity = value;
-            }
-        }
 
         /// <summary> The value indicating whether configurations should be exported. </summary>
         public bool? IncludeConfigurations { get; set; }
+
         /// <summary> The name of the blob that will be created in the provided output blob container. This blob will contain the exported configurations for the Iot Hub. </summary>
         public string ConfigurationsBlobName { get; set; }
+
+        /// <summary> The user assigned identity. </summary>
+        public ResourceIdentifier UserAssignedIdentity
+        {
+            get
+            {
+                return Identity is null ? default : Identity.UserAssignedIdentity;
+            }
+            set
+            {
+                if (Identity is null)
+                {
+                    Identity = new ManagedIdentity();
+                }
+                Identity.UserAssignedIdentity = value;
+            }
+        }
     }
 }

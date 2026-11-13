@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of MonitoringSignalBase. </summary>
     internal partial class UnknownMonitoringSignalBase : MonitoringSignalBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMonitoringSignalBase"/>. </summary>
-        /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="notificationTypes"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMonitoringSignalBase(MonitoringSignalType signalType, IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(signalType, notificationTypes, properties, serializedAdditionalRawData)
-        {
-            SignalType = signalType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownMonitoringSignalBase"/> for deserialization. </summary>
-        internal UnknownMonitoringSignalBase()
+        /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMonitoringSignalBase(IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(notificationTypes, properties, signalType != default ? signalType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class AdvancedThreatProtectionStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AdvancedThreatProtectionState value) => value switch
         {
             AdvancedThreatProtectionState.New => "New",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AdvancedThreatProtectionState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AdvancedThreatProtectionState ToAdvancedThreatProtectionState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "New")) return AdvancedThreatProtectionState.New;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return AdvancedThreatProtectionState.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return AdvancedThreatProtectionState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "New"))
+            {
+                return AdvancedThreatProtectionState.New;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return AdvancedThreatProtectionState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return AdvancedThreatProtectionState.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AdvancedThreatProtectionState value.");
         }
     }

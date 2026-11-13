@@ -15,8 +15,10 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
+
+    <!-- Needed to override the bundled version in Microsoft.Azure.WebJobs -->
+    <PackageReference Include="Microsoft.Extensions.Hosting"/>
   </ItemGroup>
 
   <ItemGroup>

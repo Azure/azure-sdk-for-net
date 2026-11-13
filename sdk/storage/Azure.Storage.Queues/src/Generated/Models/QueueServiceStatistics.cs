@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> Stats for the storage service. </summary>
+    /// <summary> Statistics for the storage queue service. </summary>
     public partial class QueueServiceStatistics
     {
         /// <summary> Initializes a new instance of <see cref="QueueServiceStatistics"/>. </summary>
@@ -16,7 +16,7 @@ namespace Azure.Storage.Queues.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QueueServiceStatistics"/>. </summary>
-        /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
+        /// <param name="geoReplication"> The geo replication stats. </param>
         internal QueueServiceStatistics(QueueGeoReplication geoReplication)
         {
             GeoReplication = geoReplication;

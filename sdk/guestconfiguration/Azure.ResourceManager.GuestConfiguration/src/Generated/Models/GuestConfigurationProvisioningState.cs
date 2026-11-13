@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     public readonly partial struct GuestConfigurationProvisioningState : IEquatable<GuestConfigurationProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="GuestConfigurationProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GuestConfigurationProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
         private const string CreatedValue = "Created";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GuestConfigurationProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static GuestConfigurationProvisioningState Succeeded { get; } = new GuestConfigurationProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static GuestConfigurationProvisioningState Failed { get; } = new GuestConfigurationProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static GuestConfigurationProvisioningState Canceled { get; } = new GuestConfigurationProvisioningState(CanceledValue);
-        /// <summary> Created. </summary>
+
+        /// <summary> Gets the Created. </summary>
         public static GuestConfigurationProvisioningState Created { get; } = new GuestConfigurationProvisioningState(CreatedValue);
+
         /// <summary> Determines if two <see cref="GuestConfigurationProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GuestConfigurationProvisioningState left, GuestConfigurationProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GuestConfigurationProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GuestConfigurationProvisioningState left, GuestConfigurationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GuestConfigurationProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GuestConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GuestConfigurationProvisioningState(string value) => new GuestConfigurationProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GuestConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GuestConfigurationProvisioningState?(string value) => value == null ? null : new GuestConfigurationProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GuestConfigurationProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GuestConfigurationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

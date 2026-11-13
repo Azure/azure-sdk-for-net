@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct IntegrationRuntimeState : IEquatable<IntegrationRuntimeState>
     {
         private readonly string _value;
+        /// <summary> Initial. </summary>
+        private const string InitialValue = "Initial";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Started. </summary>
+        private const string StartedValue = "Started";
+        /// <summary> Starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> NeedRegistration. </summary>
+        private const string NeedRegistrationValue = "NeedRegistration";
+        /// <summary> Online. </summary>
+        private const string OnlineValue = "Online";
+        /// <summary> Limited. </summary>
+        private const string LimitedValue = "Limited";
+        /// <summary> Offline. </summary>
+        private const string OfflineValue = "Offline";
+        /// <summary> AccessDenied. </summary>
+        private const string AccessDeniedValue = "AccessDenied";
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IntegrationRuntimeState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InitialValue = "Initial";
-        private const string StoppedValue = "Stopped";
-        private const string StartedValue = "Started";
-        private const string StartingValue = "Starting";
-        private const string StoppingValue = "Stopping";
-        private const string NeedRegistrationValue = "NeedRegistration";
-        private const string OnlineValue = "Online";
-        private const string LimitedValue = "Limited";
-        private const string OfflineValue = "Offline";
-        private const string AccessDeniedValue = "AccessDenied";
+            _value = value;
+        }
 
         /// <summary> Initial. </summary>
         public static IntegrationRuntimeState Initial { get; } = new IntegrationRuntimeState(InitialValue);
+
         /// <summary> Stopped. </summary>
         public static IntegrationRuntimeState Stopped { get; } = new IntegrationRuntimeState(StoppedValue);
+
         /// <summary> Started. </summary>
         public static IntegrationRuntimeState Started { get; } = new IntegrationRuntimeState(StartedValue);
+
         /// <summary> Starting. </summary>
         public static IntegrationRuntimeState Starting { get; } = new IntegrationRuntimeState(StartingValue);
+
         /// <summary> Stopping. </summary>
         public static IntegrationRuntimeState Stopping { get; } = new IntegrationRuntimeState(StoppingValue);
+
         /// <summary> NeedRegistration. </summary>
         public static IntegrationRuntimeState NeedRegistration { get; } = new IntegrationRuntimeState(NeedRegistrationValue);
+
         /// <summary> Online. </summary>
         public static IntegrationRuntimeState Online { get; } = new IntegrationRuntimeState(OnlineValue);
+
         /// <summary> Limited. </summary>
         public static IntegrationRuntimeState Limited { get; } = new IntegrationRuntimeState(LimitedValue);
+
         /// <summary> Offline. </summary>
         public static IntegrationRuntimeState Offline { get; } = new IntegrationRuntimeState(OfflineValue);
+
         /// <summary> AccessDenied. </summary>
         public static IntegrationRuntimeState AccessDenied { get; } = new IntegrationRuntimeState(AccessDeniedValue);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IntegrationRuntimeState left, IntegrationRuntimeState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IntegrationRuntimeState left, IntegrationRuntimeState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IntegrationRuntimeState(string value) => new IntegrationRuntimeState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IntegrationRuntimeState?(string value) => value == null ? null : new IntegrationRuntimeState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IntegrationRuntimeState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IntegrationRuntimeState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

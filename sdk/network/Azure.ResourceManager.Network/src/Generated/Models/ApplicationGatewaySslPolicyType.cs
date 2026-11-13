@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewaySslPolicyType : IEquatable<ApplicationGatewaySslPolicyType>
     {
         private readonly string _value;
+        /// <summary> Predefined. </summary>
+        private const string PredefinedValue = "Predefined";
+        /// <summary> Custom. </summary>
+        private const string CustomValue = "Custom";
+        /// <summary> CustomV2. </summary>
+        private const string CustomV2Value = "CustomV2";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewaySslPolicyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PredefinedValue = "Predefined";
-        private const string CustomValue = "Custom";
-        private const string CustomV2Value = "CustomV2";
+            _value = value;
+        }
 
         /// <summary> Predefined. </summary>
         public static ApplicationGatewaySslPolicyType Predefined { get; } = new ApplicationGatewaySslPolicyType(PredefinedValue);
+
         /// <summary> Custom. </summary>
         public static ApplicationGatewaySslPolicyType Custom { get; } = new ApplicationGatewaySslPolicyType(CustomValue);
+
         /// <summary> CustomV2. </summary>
         public static ApplicationGatewaySslPolicyType CustomV2 { get; } = new ApplicationGatewaySslPolicyType(CustomV2Value);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewaySslPolicyType left, ApplicationGatewaySslPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewaySslPolicyType left, ApplicationGatewaySslPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewaySslPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewaySslPolicyType(string value) => new ApplicationGatewaySslPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewaySslPolicyType?(string value) => value == null ? null : new ApplicationGatewaySslPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewaySslPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewaySslPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

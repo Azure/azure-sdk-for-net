@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
+    /// <summary></summary>
     public partial class ResourceGuardProxyResource : IJsonModel<ResourceGuardProxyData>
     {
-        private static ResourceGuardProxyData s_dataDeserializationInstance;
-        private static ResourceGuardProxyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ResourceGuardProxyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ResourceGuardProxyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ResourceGuardProxyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceGuardProxyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGuardProxyData>)Data).Write(writer, options);
 
-        ResourceGuardProxyData IJsonModel<ResourceGuardProxyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGuardProxyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceGuardProxyData IJsonModel<ResourceGuardProxyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResourceGuardProxyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceGuardProxyData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ResourceGuardProxyData IPersistableModel<ResourceGuardProxyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGuardProxyData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<ResourceGuardProxyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGuardProxyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceGuardProxyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsMetadataFlag : IEquatable<SecurityInsightsMetadataFlag>
     {
         private readonly string _value;
+        /// <summary> true. </summary>
+        private const string TrueValue = "true";
+        /// <summary> false. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsMetadataFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsMetadataFlag(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrueValue = "true";
-        private const string FalseValue = "false";
+            _value = value;
+        }
 
         /// <summary> true. </summary>
         public static SecurityInsightsMetadataFlag True { get; } = new SecurityInsightsMetadataFlag(TrueValue);
+
         /// <summary> false. </summary>
         public static SecurityInsightsMetadataFlag False { get; } = new SecurityInsightsMetadataFlag(FalseValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsMetadataFlag"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsMetadataFlag left, SecurityInsightsMetadataFlag right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsMetadataFlag"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsMetadataFlag left, SecurityInsightsMetadataFlag right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsMetadataFlag"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsMetadataFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsMetadataFlag(string value) => new SecurityInsightsMetadataFlag(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsMetadataFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsMetadataFlag?(string value) => value == null ? null : new SecurityInsightsMetadataFlag(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsMetadataFlag other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsMetadataFlag other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -10,6 +10,37 @@
 
 ### Other Changes
 
+## 5.3.10 (2026-10-09)
+
+### Bugs Fixed
+- Fixed a regression from 5.3.8 where a complete (single-page) container scan could skip blobs whose `LastModified` was after `PollingStartTime`, then advance the stored scan watermark past those blobs so listing never notified them (#62763).
+- Fixed container scan not starting a new cycle when the listing API returns an empty continuation marker instead of null, which left `PollingStartTime` stuck and hid blobs uploaded after the first sweep (#61660).
+
+## 5.3.9 (2026-09-08)
+
+### Other Changes
+- This release contains bug fixes to improve quality.
+
+## 5.3.8 (2026-03-19)
+
+### Bugs Fixed
+- Fixed a bug where polling for new blobs could permanently miss blobs that were created or modified while a multi-request blob listing scan was in progress (#51030).
+- Bug fix ensuring that BlobTrigger log scan targets the correct storage account in multi-account scenarios.
+
+## 5.3.7 (2025-10-29)
+
+### Other Changes
+- The following optimizations were added to Blob Trigger processing:
+  - Exclude containers that are not intended for monitoring.
+  - Do not perform unnecessary scanning for container(s) detected during the initial write log.
+  - Cache recently found write entry to avoid analyzing log blobs again.
+  - Migrate ScaleMonitor to TargetScaler.
+
+## 5.3.6 (2025-09-09)
+
+### Bugs Fixed
+- Reverted change where the scan will continue scanning AzureWebJobsStorage even when configuring a target storage account
+
 ## 5.3.5 (2025-07-21)
 
 ### Bugs Fixed

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct EnvironmentVariableType : IEquatable<EnvironmentVariableType>
     {
         private readonly string _value;
+        private const string LocalValue = "local";
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentVariableType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnvironmentVariableType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string LocalValue = "local";
-
-        /// <summary> local. </summary>
+        /// <summary> Gets the Local. </summary>
         public static EnvironmentVariableType Local { get; } = new EnvironmentVariableType(LocalValue);
+
         /// <summary> Determines if two <see cref="EnvironmentVariableType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnvironmentVariableType left, EnvironmentVariableType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnvironmentVariableType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnvironmentVariableType left, EnvironmentVariableType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnvironmentVariableType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnvironmentVariableType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnvironmentVariableType(string value) => new EnvironmentVariableType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnvironmentVariableType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnvironmentVariableType?(string value) => value == null ? null : new EnvironmentVariableType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnvironmentVariableType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnvironmentVariableType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

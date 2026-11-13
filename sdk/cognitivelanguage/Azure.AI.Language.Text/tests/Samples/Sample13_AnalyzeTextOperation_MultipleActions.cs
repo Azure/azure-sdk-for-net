@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -65,15 +65,15 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextJobState = response.Value;
+            AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextOperationResult AnalyzeTextOperationResult in analyzeTextJobState.Actions.Items)
+            foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
             {
-                if (AnalyzeTextOperationResult is EntityRecognitionOperationResult)
+                if (taskResult is EntityRecognitionOperationResult)
                 {
-                    EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)AnalyzeTextOperationResult;
+                    EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)taskResult;
 
                     // View the classifications recognized in the input documents.
                     foreach (EntityActionResultWithMetadata nerResult in EntityRecognitionOperationResult.Results.Documents)
@@ -109,9 +109,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     }
                 }
                 Console.WriteLine();
-                if (AnalyzeTextOperationResult is KeyPhraseExtractionOperationResult)
+                if (taskResult is KeyPhraseExtractionOperationResult)
                 {
-                    KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)AnalyzeTextOperationResult;
+                    KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)taskResult;
 
                     // View the classifications recognized in the input documents.
                     foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)

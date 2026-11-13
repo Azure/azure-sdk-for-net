@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gateway Resiliency based Recommendations. </summary>
     public partial class ResiliencyRecommendationComponents
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResiliencyRecommendationComponents"/>. </summary>
         internal ResiliencyRecommendationComponents()
@@ -56,25 +28,28 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="currentScore"> Current Score of the gateway. </param>
         /// <param name="maxScore"> Max score that the gateway can achieve if the specified recommendation is applied. </param>
         /// <param name="recommendations"> List of Gateway Resiliency based Recommendations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResiliencyRecommendationComponents(string name, string currentScore, string maxScore, IReadOnlyList<GatewayResiliencyRecommendation> recommendations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResiliencyRecommendationComponents(string name, string currentScore, string maxScore, IReadOnlyList<GatewayResiliencyRecommendation> recommendations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             CurrentScore = currentScore;
             MaxScore = maxScore;
             Recommendations = recommendations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Resiliency based Recommendation Component. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> Current Score of the gateway. </summary>
         [WirePath("currentScore")]
         public string CurrentScore { get; }
+
         /// <summary> Max score that the gateway can achieve if the specified recommendation is applied. </summary>
         [WirePath("maxScore")]
         public string MaxScore { get; }
+
         /// <summary> List of Gateway Resiliency based Recommendations. </summary>
         [WirePath("recommendations")]
         public IReadOnlyList<GatewayResiliencyRecommendation> Recommendations { get; }

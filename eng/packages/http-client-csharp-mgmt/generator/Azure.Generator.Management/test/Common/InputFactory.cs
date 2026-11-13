@@ -390,6 +390,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="discriminatedModels"></param>
         /// <param name="derivedModels"></param>
         /// <param name="decorators"></param>
+        /// <param name="isDynamicModel"></param>
         /// <returns></returns>
         public static InputModelType Model(
             string name,
@@ -403,7 +404,8 @@ namespace Azure.Generator.Management.Tests.Common
             InputType? additionalProperties = null,
             IDictionary<string, InputModelType>? discriminatedModels = null,
             IEnumerable<InputModelType>? derivedModels = null,
-            IReadOnlyList<InputDecoratorInfo>? decorators = null)
+            IReadOnlyList<InputDecoratorInfo>? decorators = null,
+            bool isDynamicModel = false)
         {
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
             var model = new InputModelType(
@@ -423,7 +425,8 @@ namespace Azure.Generator.Management.Tests.Common
                 discriminatedModels is null ? new Dictionary<string, InputModelType>() : discriminatedModels.AsReadOnly(),
                 additionalProperties,
                 modelAsStruct,
-                new());
+                new(),
+                isDynamicModel);
             if (decorators is not null)
             {
                 var decoratorProperty = typeof(InputModelType).GetProperty(nameof(InputModelType.Decorators));
@@ -466,7 +469,7 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                crossLanguageDefinitionId ?? string.Empty);
+                crossLanguageDefinitionId ?? Guid.NewGuid().ToString());
         }
 
         /// <summary>
@@ -513,7 +516,7 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                string.Empty,
+                Guid.NewGuid().ToString(),
                 pagingMetadata ?? PagingMetadata([], null, null));
         }
 
@@ -539,6 +542,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="response"></param>
         /// <param name="exception"></param>
         /// <param name="longRunningServiceMetadata"></param>
+        /// <param name="crossLanguageDefinitionId"></param>
         /// <returns></returns>
         public static InputLongRunningServiceMethod LongRunningServiceMethod(
             string name,
@@ -547,7 +551,8 @@ namespace Azure.Generator.Management.Tests.Common
             IReadOnlyList<InputMethodParameter>? parameters = null,
             InputServiceMethodResponse? response = null,
             InputServiceMethodResponse? exception = null,
-            InputLongRunningServiceMetadata? longRunningServiceMetadata = null)
+            InputLongRunningServiceMetadata? longRunningServiceMetadata = null,
+            string? crossLanguageDefinitionId = null)
         {
             return new InputLongRunningServiceMethod(
                 name,
@@ -562,7 +567,7 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                string.Empty,
+                crossLanguageDefinitionId ?? Guid.NewGuid().ToString(),
                 longRunningServiceMetadata ?? LongRunningServiceMetadata(1, OperationResponse(), null));
         }
 
@@ -588,6 +593,8 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="requestMediaTypes"></param>
         /// <param name="path"></param>
         /// <param name="decorators"></param>
+        /// <param name="ns"></param>
+        /// <param name="httpMethod"></param>
         /// <returns></returns>
         public static InputOperation Operation(
             string name,
@@ -596,18 +603,19 @@ namespace Azure.Generator.Management.Tests.Common
             IEnumerable<InputOperationResponse>? responses = null,
             IEnumerable<string>? requestMediaTypes = null,
             string? path = null,
-            IReadOnlyList<InputDecoratorInfo>? decorators = null)
+            IReadOnlyList<InputDecoratorInfo>? decorators = null,
+            string? ns = null,
+            string httpMethod = "GET")
         {
             var operation = new InputOperation(
                 name,
-                null,
                 "",
                 $"{name} description",
                 null,
                 access,
                 parameters is null ? [] : [.. parameters],
                 responses is null ? [OperationResponse()] : [.. responses],
-                "GET",
+                httpMethod,
                 string.Empty,
                 path ?? string.Empty,
                 null,
@@ -615,7 +623,8 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                name);
+                name,
+                ns);
             if (decorators is not null)
             {
                 var decoratorProperty = typeof(InputOperation).GetProperty(nameof(InputOperation.Decorators));
@@ -653,8 +662,9 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="parent"></param>
         /// <param name="decorators"></param>
         /// <param name="crossLanguageDefinitionId"></param>
+        /// <param name="apiVersions"></param>
         /// <returns></returns>
-        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null, IReadOnlyList<string>? apiVersions = null)
         {
             // when this client has parent, we add the constructed client into the `children` list of the parent
             var clientChildren = new List<InputClient>();
@@ -664,11 +674,12 @@ namespace Azure.Generator.Management.Tests.Common
                 crossLanguageDefinitionId ?? $"{clientNamespace}.{name}",
                 string.Empty,
                 doc ?? $"{name} description",
+                isMultiServiceClient: false,
                 methods is null ? [] : [.. methods],
                 parameters is null ? [] : [.. parameters],
                 parent,
                 clientChildren,
-                []
+                apiVersions ?? ["2023-01-01"]
                 );
             _childClientsCache[client] = clientChildren;
             // when we have a parent, we need to find the children list of this parent client and update accordingly.

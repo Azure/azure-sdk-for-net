@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The configuration of connected storage. </summary>
     public partial class HealthcareApisServiceStorageConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceStorageConfiguration"/>. </summary>
         public HealthcareApisServiceStorageConfiguration()
@@ -54,17 +25,40 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceStorageConfiguration"/>. </summary>
         /// <param name="storageResourceId"> The resource id of connected storage account. </param>
         /// <param name="fileSystemName"> The filesystem name of connected storage account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareApisServiceStorageConfiguration(ResourceIdentifier storageResourceId, string fileSystemName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="storageIndexingConfiguration"> The configuration for indexing the connected storage. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisServiceStorageConfiguration(ResourceIdentifier storageResourceId, string fileSystemName, StorageIndexingConfiguration storageIndexingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageResourceId = storageResourceId;
             FileSystemName = fileSystemName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            StorageIndexingConfiguration = storageIndexingConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource id of connected storage account. </summary>
         public ResourceIdentifier StorageResourceId { get; set; }
+
         /// <summary> The filesystem name of connected storage account. </summary>
         public string FileSystemName { get; set; }
+
+        /// <summary> The configuration for indexing the connected storage. </summary>
+        internal StorageIndexingConfiguration StorageIndexingConfiguration { get; set; }
+
+        /// <summary> The name of the queue that contains storage cloud events. </summary>
+        public string StorageEventQueueName
+        {
+            get
+            {
+                return StorageIndexingConfiguration is null ? default : StorageIndexingConfiguration.StorageEventQueueName;
+            }
+            set
+            {
+                if (StorageIndexingConfiguration is null)
+                {
+                    StorageIndexingConfiguration = new StorageIndexingConfiguration();
+                }
+                StorageIndexingConfiguration.StorageEventQueueName = value;
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure Playwright management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.Playwright --prerelease
+dotnet add package Azure.ResourceManager.Playwright
 ```
 
 ### Prerequisites

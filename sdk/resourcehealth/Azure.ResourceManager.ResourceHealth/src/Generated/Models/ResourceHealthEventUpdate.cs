@@ -7,63 +7,50 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Update for service health event. </summary>
     public partial class ResourceHealthEventUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthEventUpdate"/>. </summary>
         internal ResourceHealthEventUpdate()
         {
+            EventTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthEventUpdate"/>. </summary>
         /// <param name="summary"> Summary text for the given update for the service health event. </param>
         /// <param name="updatedOn"> It provides the Timestamp for the given update for the service health event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthEventUpdate(string summary, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="eventTags">
+        /// A list of metadata tags associated with the event. Possible values include:
+        /// -Action Recommended: Action may be required by you to avoid possible disruptions or mitigate risks for your services. It is recommended to evaluate these actions and the potential impact on your services.
+        /// <list type="bullet"><item><description>False Positive: After investigation, we've determined your service is healthy and service issues did not impact your services as originally communicated.</description></item><item><description>Preliminary PIR: For our largest, most impactful service issues a Preliminary Post Incident Review (PIR) is published generally within 72 hours of mitigation, to summarize what we have learned so far from the still-in-progress investigation.</description></item><item><description>Final PIR: For service issues, a Final Post Incident Review (PIR) may be published to provide additional details or learnings. Sometimes this requires us to complete an internal retrospective, generally within 14 days of mitigation.</description></item></list>
+        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventUpdate(string summary, DateTimeOffset? updatedOn, IList<string> eventTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Summary = summary;
             UpdatedOn = updatedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            EventTags = eventTags;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Summary text for the given update for the service health event. </summary>
         public string Summary { get; }
+
         /// <summary> It provides the Timestamp for the given update for the service health event. </summary>
         public DateTimeOffset? UpdatedOn { get; }
+
+        /// <summary>
+        /// A list of metadata tags associated with the event. Possible values include:
+        /// -Action Recommended: Action may be required by you to avoid possible disruptions or mitigate risks for your services. It is recommended to evaluate these actions and the potential impact on your services.
+        /// <list type="bullet"><item><description>False Positive: After investigation, we've determined your service is healthy and service issues did not impact your services as originally communicated.</description></item><item><description>Preliminary PIR: For our largest, most impactful service issues a Preliminary Post Incident Review (PIR) is published generally within 72 hours of mitigation, to summarize what we have learned so far from the still-in-progress investigation.</description></item><item><description>Final PIR: For service issues, a Final Post Incident Review (PIR) may be published to provide additional details or learnings. Sometimes this requires us to complete an internal retrospective, generally within 14 days of mitigation.</description></item></list>
+        /// </summary>
+        public IList<string> EventTags { get; }
     }
 }

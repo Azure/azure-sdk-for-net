@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct SourceControlProvisioningState : IEquatable<SourceControlProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CompletedValue = "Completed";
-        private const string FailedValue = "Failed";
-        private const string RunningValue = "Running";
+            _value = value;
+        }
 
         /// <summary> Completed. </summary>
         public static SourceControlProvisioningState Completed { get; } = new SourceControlProvisioningState(CompletedValue);
+
         /// <summary> Failed. </summary>
         public static SourceControlProvisioningState Failed { get; } = new SourceControlProvisioningState(FailedValue);
+
         /// <summary> Running. </summary>
         public static SourceControlProvisioningState Running { get; } = new SourceControlProvisioningState(RunningValue);
+
         /// <summary> Determines if two <see cref="SourceControlProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlProvisioningState left, SourceControlProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlProvisioningState left, SourceControlProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlProvisioningState(string value) => new SourceControlProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlProvisioningState?(string value) => value == null ? null : new SourceControlProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

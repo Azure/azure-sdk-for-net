@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct PartnerRegistrationProvisioningState : IEquatable<PartnerRegistrationProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="PartnerRegistrationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartnerRegistrationProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static PartnerRegistrationProvisioningState Creating { get; } = new PartnerRegistrationProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static PartnerRegistrationProvisioningState Updating { get; } = new PartnerRegistrationProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static PartnerRegistrationProvisioningState Deleting { get; } = new PartnerRegistrationProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static PartnerRegistrationProvisioningState Succeeded { get; } = new PartnerRegistrationProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static PartnerRegistrationProvisioningState Canceled { get; } = new PartnerRegistrationProvisioningState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static PartnerRegistrationProvisioningState Failed { get; } = new PartnerRegistrationProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="PartnerRegistrationProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PartnerRegistrationProvisioningState left, PartnerRegistrationProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PartnerRegistrationProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PartnerRegistrationProvisioningState left, PartnerRegistrationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerRegistrationProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PartnerRegistrationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PartnerRegistrationProvisioningState(string value) => new PartnerRegistrationProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PartnerRegistrationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PartnerRegistrationProvisioningState?(string value) => value == null ? null : new PartnerRegistrationProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PartnerRegistrationProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PartnerRegistrationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

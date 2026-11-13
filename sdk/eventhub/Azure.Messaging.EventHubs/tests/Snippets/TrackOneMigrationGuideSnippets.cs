@@ -85,7 +85,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
                 };
 
             EventHubClient client = EventHubClient.CreateWithAzureActiveDirectory(
-                new Uri($"sb://{ fullyQualifiedNamespace }"),
+                new Uri($"sb://{fullyQualifiedNamespace}"),
                 eventHubName,
                 authCallback,
                 authority);
@@ -149,11 +149,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData(Encoding.UTF8.GetBytes($"Event #{ index }"));
+                    var eventData = new EventData(Encoding.UTF8.GetBytes($"Event #{index}"));
 
                     if (!eventBatch.TryAdd(eventData))
                     {
-                        throw new Exception($"The event at { index } could not be added");
+                        throw new Exception($"The event at {index} could not be added");
                     }
                 }
 
@@ -201,11 +201,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData(Encoding.UTF8.GetBytes($"Event #{ index }"));
+                    var eventData = new EventData(Encoding.UTF8.GetBytes($"Event #{index}"));
 
                     if (!eventBatch.TryAdd(eventData))
                     {
-                        throw new Exception($"The event at { index } could not be added");
+                        throw new Exception($"The event at {index} could not be added");
                     }
                 }
 
@@ -249,11 +249,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData(Encoding.UTF8.GetBytes($"Event #{ index }"));
+                    var eventData = new EventData(Encoding.UTF8.GetBytes($"Event #{index}"));
 
                     if (!eventBatch.TryAdd(eventData))
                     {
-                        throw new Exception($"The event at { index } could not be added");
+                        throw new Exception($"The event at {index} could not be added");
                     }
                 }
 
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
                 {
                     foreach (var eventData in events)
                     {
-                       Debug.WriteLine($"Read event of length { eventData.Body.Count } from { firstPartition }");
+                        Debug.WriteLine($"Read event of length {eventData.Body.Count} from {firstPartition}");
                     }
                 }
             }

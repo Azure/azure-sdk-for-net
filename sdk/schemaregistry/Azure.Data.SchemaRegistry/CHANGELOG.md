@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `SchemaRegistryClientBuilderExtensions` to support dependency injection.
+- Added `SchemaRegistryClientSettings` to support creating a `SchemaRegistryClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ## 1.4.0 (2024-09-17)
 

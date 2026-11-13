@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ClusterManagerConnectionStatus : IEquatable<ClusterManagerConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> The latest connectivity status is healthy. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> Connectivity could not be established. </summary>
+        private const string UnreachableValue = "Unreachable";
 
         /// <summary> Initializes a new instance of <see cref="ClusterManagerConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterManagerConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ConnectedValue = "Connected";
-        private const string UnreachableValue = "Unreachable";
-
-        /// <summary> Connected. </summary>
+        /// <summary> The latest connectivity status is healthy. </summary>
         public static ClusterManagerConnectionStatus Connected { get; } = new ClusterManagerConnectionStatus(ConnectedValue);
-        /// <summary> Unreachable. </summary>
+
+        /// <summary> Connectivity could not be established. </summary>
         public static ClusterManagerConnectionStatus Unreachable { get; } = new ClusterManagerConnectionStatus(UnreachableValue);
+
         /// <summary> Determines if two <see cref="ClusterManagerConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterManagerConnectionStatus left, ClusterManagerConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterManagerConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterManagerConnectionStatus left, ClusterManagerConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterManagerConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterManagerConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterManagerConnectionStatus(string value) => new ClusterManagerConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterManagerConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterManagerConnectionStatus?(string value) => value == null ? null : new ClusterManagerConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterManagerConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterManagerConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityInsightsProductPackageResource : IJsonModel<SecurityInsightsProductPackageData>
     {
-        private static SecurityInsightsProductPackageData s_dataDeserializationInstance;
-        private static SecurityInsightsProductPackageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsProductPackageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityInsightsProductPackageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsightsProductPackageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsProductPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsProductPackageData>)Data).Write(writer, options);
 
-        SecurityInsightsProductPackageData IJsonModel<SecurityInsightsProductPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsProductPackageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsProductPackageData IJsonModel<SecurityInsightsProductPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityInsightsProductPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsProductPackageData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityInsightsProductPackageData IPersistableModel<SecurityInsightsProductPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsProductPackageData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsProductPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsProductPackageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsProductPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

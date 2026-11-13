@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct TestMigrationState : IEquatable<TestMigrationState>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> TestMigrationInProgress. </summary>
+        private const string TestMigrationInProgressValue = "TestMigrationInProgress";
+        /// <summary> TestMigrationSucceeded. </summary>
+        private const string TestMigrationSucceededValue = "TestMigrationSucceeded";
+        /// <summary> TestMigrationFailed. </summary>
+        private const string TestMigrationFailedValue = "TestMigrationFailed";
+        /// <summary> TestMigrationCleanupInProgress. </summary>
+        private const string TestMigrationCleanupInProgressValue = "TestMigrationCleanupInProgress";
+        /// <summary> TestMigrationCompletedWithInformation. </summary>
+        private const string TestMigrationCompletedWithInformationValue = "TestMigrationCompletedWithInformation";
+        /// <summary> TestMigrationPartiallySucceeded. </summary>
+        private const string TestMigrationPartiallySucceededValue = "TestMigrationPartiallySucceeded";
 
         /// <summary> Initializes a new instance of <see cref="TestMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TestMigrationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string TestMigrationInProgressValue = "TestMigrationInProgress";
-        private const string TestMigrationSucceededValue = "TestMigrationSucceeded";
-        private const string TestMigrationFailedValue = "TestMigrationFailed";
-        private const string TestMigrationCleanupInProgressValue = "TestMigrationCleanupInProgress";
-        private const string TestMigrationCompletedWithInformationValue = "TestMigrationCompletedWithInformation";
-        private const string TestMigrationPartiallySucceededValue = "TestMigrationPartiallySucceeded";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static TestMigrationState None { get; } = new TestMigrationState(NoneValue);
+
         /// <summary> TestMigrationInProgress. </summary>
         public static TestMigrationState TestMigrationInProgress { get; } = new TestMigrationState(TestMigrationInProgressValue);
+
         /// <summary> TestMigrationSucceeded. </summary>
         public static TestMigrationState TestMigrationSucceeded { get; } = new TestMigrationState(TestMigrationSucceededValue);
+
         /// <summary> TestMigrationFailed. </summary>
         public static TestMigrationState TestMigrationFailed { get; } = new TestMigrationState(TestMigrationFailedValue);
+
         /// <summary> TestMigrationCleanupInProgress. </summary>
         public static TestMigrationState TestMigrationCleanupInProgress { get; } = new TestMigrationState(TestMigrationCleanupInProgressValue);
+
         /// <summary> TestMigrationCompletedWithInformation. </summary>
         public static TestMigrationState TestMigrationCompletedWithInformation { get; } = new TestMigrationState(TestMigrationCompletedWithInformationValue);
+
         /// <summary> TestMigrationPartiallySucceeded. </summary>
         public static TestMigrationState TestMigrationPartiallySucceeded { get; } = new TestMigrationState(TestMigrationPartiallySucceededValue);
+
         /// <summary> Determines if two <see cref="TestMigrationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TestMigrationState left, TestMigrationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TestMigrationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TestMigrationState left, TestMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TestMigrationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TestMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TestMigrationState(string value) => new TestMigrationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TestMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TestMigrationState?(string value) => value == null ? null : new TestMigrationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TestMigrationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TestMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

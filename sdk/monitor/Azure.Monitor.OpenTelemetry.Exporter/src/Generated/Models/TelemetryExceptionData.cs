@@ -8,20 +8,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    /// <summary> An instance of Exception represents a handled or unhandled exception that occurred during execution of the monitored application. </summary>
     internal partial class TelemetryExceptionData : MonitorDomain
     {
         /// <summary> Initializes a new instance of <see cref="TelemetryExceptionData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="exceptions"> Exception chain - list of inner exceptions. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exceptions"/> is null. </exception>
         public TelemetryExceptionData(int version, IEnumerable<TelemetryExceptionDetails> exceptions) : base(version)
         {
-            Argument.AssertNotNull(exceptions, nameof(exceptions));
-
             Exceptions = exceptions.ToList();
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
@@ -29,13 +26,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <summary> Initializes a new instance of <see cref="TelemetryExceptionData"/>. </summary>
         /// <param name="version"> Schema version. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="exceptions"> Exception chain - list of inner exceptions. </param>
-        /// <param name="severityLevel"> Severity level. Mostly used to indicate exception severity level when it is reported by logging library. </param>
-        /// <param name="problemId"> Identifier of where the exception was thrown in code. Used for exceptions grouping. Typically a combination of exception type and a function from the call stack. </param>
+        /// <param name="severityLevel">
+        /// Severity level. Mostly used to indicate exception severity level when it is
+        /// reported by logging library.
+        /// </param>
+        /// <param name="problemId">
+        /// Identifier of where the exception was thrown in code. Used for exceptions
+        /// grouping. Typically a combination of exception type and a function from the
+        /// call stack.
+        /// </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal TelemetryExceptionData(int version, IDictionary<string, object> additionalProperties, IList<TelemetryExceptionDetails> exceptions, SeverityLevel? severityLevel, string problemId, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        internal TelemetryExceptionData(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties, IList<TelemetryExceptionDetails> exceptions, SeverityLevel? severityLevel, string problemId, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
         {
             Exceptions = exceptions;
             SeverityLevel = severityLevel;
@@ -46,12 +51,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <summary> Exception chain - list of inner exceptions. </summary>
         public IList<TelemetryExceptionDetails> Exceptions { get; }
-        /// <summary> Severity level. Mostly used to indicate exception severity level when it is reported by logging library. </summary>
+
+        /// <summary>
+        /// Severity level. Mostly used to indicate exception severity level when it is
+        /// reported by logging library.
+        /// </summary>
         public SeverityLevel? SeverityLevel { get; set; }
-        /// <summary> Identifier of where the exception was thrown in code. Used for exceptions grouping. Typically a combination of exception type and a function from the call stack. </summary>
+
+        /// <summary>
+        /// Identifier of where the exception was thrown in code. Used for exceptions
+        /// grouping. Typically a combination of exception type and a function from the
+        /// call stack.
+        /// </summary>
         public string ProblemId { get; set; }
+
         /// <summary> Collection of custom properties. </summary>
         public IDictionary<string, string> Properties { get; }
+
         /// <summary> Collection of custom measurements. </summary>
         public IDictionary<string, double> Measurements { get; }
     }

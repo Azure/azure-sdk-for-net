@@ -7,50 +7,69 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// Configuration of PR Annotations on default branch.
-    ///
     /// Enabled - PR Annotations are enabled on the resource's default branch.
     /// Disabled - PR Annotations are disabled on the resource's default branch.
     /// </summary>
     public readonly partial struct AnnotateDefaultBranchState : IEquatable<AnnotateDefaultBranchState>
     {
         private readonly string _value;
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="AnnotateDefaultBranchState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnnotateDefaultBranchState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Disabled. </summary>
         public static AnnotateDefaultBranchState Disabled { get; } = new AnnotateDefaultBranchState(DisabledValue);
+
         /// <summary> Enabled. </summary>
         public static AnnotateDefaultBranchState Enabled { get; } = new AnnotateDefaultBranchState(EnabledValue);
+
         /// <summary> Determines if two <see cref="AnnotateDefaultBranchState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AnnotateDefaultBranchState left, AnnotateDefaultBranchState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AnnotateDefaultBranchState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AnnotateDefaultBranchState left, AnnotateDefaultBranchState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AnnotateDefaultBranchState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AnnotateDefaultBranchState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AnnotateDefaultBranchState(string value) => new AnnotateDefaultBranchState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AnnotateDefaultBranchState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AnnotateDefaultBranchState?(string value) => value == null ? null : new AnnotateDefaultBranchState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AnnotateDefaultBranchState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AnnotateDefaultBranchState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

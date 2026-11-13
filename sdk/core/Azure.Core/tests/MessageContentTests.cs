@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
             };
 
             // we can cast to base type to use the ContentType struct property
-            ((MessageContent) messageContent).ContentType = ContentType.ApplicationJson;
+            ((MessageContent)messageContent).ContentType = ContentType.ApplicationJson;
 
             Assert.AreEqual(ContentType.ApplicationJson, messageContent.ContentType);
             Assert.AreEqual("data", messageContent.Data.ToString());

@@ -1,17 +1,16 @@
-# Submission of a signature envelope to the service
+# Submit a signed statement to the service
 
 <!-- cspell:ignore cose -->
 
-This sample demonstrates how to submit your signature envelope (`COSE_Sign1`) to the service.
+This sample demonstrates how to submit your signed statement (`COSE_Sign1`) to the service.
 
-To get started, you'll need a url of the service.
+To get started, you'll need the service URL.
 
-Then, you will also need to have a valid `COSE_Sign1` envelope file. There are many ways you can obtain such an envelope, the assumption is that you have it already.
+You will also need a valid `COSE_Sign1` file. There are many ways to obtain one; this sample assumes you already have one.
 
 ## Create a client
 
-To create a new `CodeTransparencyClient` that will interact with the service, without explicit credentials if the service allows it or if you 
-want to get the publicly accessible data only. Then use a subclient to work with entries:
+Create a new `CodeTransparencyClient` that interacts with the service without explicit credentials (if the service allows it or if you only need publicly accessible data). Then use a subclient to work with entries:
 
 ```C# Snippet:CodeTransparencySample_CreateClient
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
@@ -19,37 +18,39 @@ CodeTransparencyClient client = new(new Uri("https://<< service name >>.confiden
 
 ## Submit the file
 
-The most basic usage is to submit a valid signature file to the service. Acceptance of the submission is a long running operation which is why the response will contain the operation id.
+The most basic usage submits a valid signature file to the service. The response will contain the receipt bytes.
 
-```C# Snippet:CodeTransparencySubmission
+```C# Snippet:CodeTransparencySubmissionSyncReceipt
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
+bool waitForCommit = true;
+NullableResponse<BinaryData> receiptResponse = await client.CreateEntryAsync(content, waitForCommit);
 ```
 
-## Verify if operation was successful
+## Transparent statement
 
-If you want to be sure that the submission completed successfully it is necessary to check the status of the operation. The successful operation means that the signature was accepted by the service and it was countersigned, which in turn means you can get the cryptographic receipt afterwards.
+Once you have the receipt it can be added to the unprotected header of the signed statement to create a transparent statement. The embedded-receipts header value is a CBOR array of receipts. The transparent statement can be distributed to verify this registration.
 
-Another important part of the operation check is that it will contain an identifier (entry ID) to be used to get the transaction receipt.
+```C# Snippet:CodeTransparencySample1_CreateStatement
+BinaryData receipt = receiptResponse.Value;
+// Add the receipt to the embedded-receipts unprotected header of the signed statement to create a transparent statement.
+CoseSign1Message signedStatement = CoseMessage.DecodeSign1(content.ToArray());
+CborWriter cborWriter = new CborWriter();
+cborWriter.WriteStartArray(1);
+cborWriter.WriteByteString(receipt.ToArray());
+cborWriter.WriteEndArray();
+signedStatement.UnprotectedHeaders[new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts)] =
+    CoseHeaderValue.FromEncodedValue(cborWriter.Encode());
+byte[] transparentStatement = signedStatement.Encode();
+```
 
-```C# Snippet:CodeTransparencySample1_WaitForResult
-Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
+Alternatively you can use the entry ID to retrieve the transparent statement from the service. The entry ID (registration transaction id) can be extracted directly from the receipt, which works regardless of whether the service committed the entry inline or via a `303 See Other` redirect.
 
-string entryId = string.Empty;
-CborReader cborReader = new CborReader(operationResult.Value);
-cborReader.ReadStartMap();
-while (cborReader.PeekState() != CborReaderState.EndMap)
-{
-    string key = cborReader.ReadTextString();
-    if (key == "EntryId")
-    {
-        entryId = cborReader.ReadTextString();
-    }
-    else
-        cborReader.SkipValue();
-}
+```C# Snippet:CodeTransparencySample1_ExtractEntryId
+string entryId = CcfReceipt.GetRegistrationTransactionId(receipt.ToArray());
+```
 
-Console.WriteLine($"The entry id to use to get the receipt and Transparent Statement is {{{entryId}}}");
+```C# Snippet:CodeTransparencySample1_DownloadStatement
+Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
 ```

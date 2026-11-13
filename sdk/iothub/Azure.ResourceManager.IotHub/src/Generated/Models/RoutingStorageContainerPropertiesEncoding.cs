@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct RoutingStorageContainerPropertiesEncoding : IEquatable<RoutingStorageContainerPropertiesEncoding>
     {
         private readonly string _value;
+        /// <summary> Avro. </summary>
+        private const string AvroValue = "Avro";
+        /// <summary> AvroDeflate. </summary>
+        private const string AvroDeflateValue = "AvroDeflate";
+        /// <summary> JSON. </summary>
+        private const string JsonValue = "JSON";
 
         /// <summary> Initializes a new instance of <see cref="RoutingStorageContainerPropertiesEncoding"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoutingStorageContainerPropertiesEncoding(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvroValue = "Avro";
-        private const string AvroDeflateValue = "AvroDeflate";
-        private const string JsonValue = "JSON";
+            _value = value;
+        }
 
         /// <summary> Avro. </summary>
         public static RoutingStorageContainerPropertiesEncoding Avro { get; } = new RoutingStorageContainerPropertiesEncoding(AvroValue);
+
         /// <summary> AvroDeflate. </summary>
         public static RoutingStorageContainerPropertiesEncoding AvroDeflate { get; } = new RoutingStorageContainerPropertiesEncoding(AvroDeflateValue);
+
         /// <summary> JSON. </summary>
         public static RoutingStorageContainerPropertiesEncoding Json { get; } = new RoutingStorageContainerPropertiesEncoding(JsonValue);
+
         /// <summary> Determines if two <see cref="RoutingStorageContainerPropertiesEncoding"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoutingStorageContainerPropertiesEncoding left, RoutingStorageContainerPropertiesEncoding right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoutingStorageContainerPropertiesEncoding"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoutingStorageContainerPropertiesEncoding left, RoutingStorageContainerPropertiesEncoding right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingStorageContainerPropertiesEncoding"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoutingStorageContainerPropertiesEncoding"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoutingStorageContainerPropertiesEncoding(string value) => new RoutingStorageContainerPropertiesEncoding(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoutingStorageContainerPropertiesEncoding"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoutingStorageContainerPropertiesEncoding?(string value) => value == null ? null : new RoutingStorageContainerPropertiesEncoding(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoutingStorageContainerPropertiesEncoding other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoutingStorageContainerPropertiesEncoding other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

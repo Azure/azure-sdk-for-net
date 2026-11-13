@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ScheduleFrequency : IEquatable<ScheduleFrequency>
     {
         private readonly string _value;
+        /// <summary> Cost analysis data will be emailed every day. </summary>
+        private const string DailyValue = "Daily";
+        /// <summary> Cost analysis data will be emailed every week. </summary>
+        private const string WeeklyValue = "Weekly";
+        /// <summary> Cost analysis data will be emailed every month. </summary>
+        private const string MonthlyValue = "Monthly";
 
         /// <summary> Initializes a new instance of <see cref="ScheduleFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduleFrequency(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DailyValue = "Daily";
-        private const string WeeklyValue = "Weekly";
-        private const string MonthlyValue = "Monthly";
+            _value = value;
+        }
 
         /// <summary> Cost analysis data will be emailed every day. </summary>
         public static ScheduleFrequency Daily { get; } = new ScheduleFrequency(DailyValue);
+
         /// <summary> Cost analysis data will be emailed every week. </summary>
         public static ScheduleFrequency Weekly { get; } = new ScheduleFrequency(WeeklyValue);
+
         /// <summary> Cost analysis data will be emailed every month. </summary>
         public static ScheduleFrequency Monthly { get; } = new ScheduleFrequency(MonthlyValue);
+
         /// <summary> Determines if two <see cref="ScheduleFrequency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduleFrequency left, ScheduleFrequency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduleFrequency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduleFrequency left, ScheduleFrequency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduleFrequency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduleFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduleFrequency(string value) => new ScheduleFrequency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduleFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduleFrequency?(string value) => value == null ? null : new ScheduleFrequency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduleFrequency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduleFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

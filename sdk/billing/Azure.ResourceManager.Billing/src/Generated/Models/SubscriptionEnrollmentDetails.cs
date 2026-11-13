@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The enrollment details for the subscription. Available for billing accounts with agreement type Enterprise Agreement. </summary>
     public partial class SubscriptionEnrollmentDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionEnrollmentDetails"/>. </summary>
         public SubscriptionEnrollmentDetails()
@@ -56,29 +28,33 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="enrollmentAccountStatus"> The status of the enrollment account. </param>
         /// <param name="enrollmentAccountDisplayName"> The name of the enrollment account. </param>
         /// <param name="enrollmentAccountId"> The ID that uniquely identifies an enrollment account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionEnrollmentDetails(string departmentDisplayName, string departmentId, string enrollmentAccountStatus, string enrollmentAccountDisplayName, string enrollmentAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionEnrollmentDetails(string departmentDisplayName, string departmentId, string enrollmentAccountStatus, string enrollmentAccountDisplayName, string enrollmentAccountId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DepartmentDisplayName = departmentDisplayName;
             DepartmentId = departmentId;
             EnrollmentAccountStatus = enrollmentAccountStatus;
             EnrollmentAccountDisplayName = enrollmentAccountDisplayName;
             EnrollmentAccountId = enrollmentAccountId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the department. </summary>
         [WirePath("departmentDisplayName")]
         public string DepartmentDisplayName { get; set; }
+
         /// <summary> The ID that uniquely identifies the department. </summary>
         [WirePath("departmentId")]
         public string DepartmentId { get; set; }
+
         /// <summary> The status of the enrollment account. </summary>
         [WirePath("enrollmentAccountStatus")]
         public string EnrollmentAccountStatus { get; set; }
+
         /// <summary> The name of the enrollment account. </summary>
         [WirePath("enrollmentAccountDisplayName")]
         public string EnrollmentAccountDisplayName { get; set; }
+
         /// <summary> The ID that uniquely identifies an enrollment account. </summary>
         [WirePath("enrollmentAccountId")]
         public string EnrollmentAccountId { get; set; }

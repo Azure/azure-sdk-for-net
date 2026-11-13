@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ManagedRuleSensitivityType : IEquatable<ManagedRuleSensitivityType>
     {
         private readonly string _value;
+        /// <summary> Low. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Medium. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> High. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSensitivityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedRuleSensitivityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string LowValue = "Low";
-        private const string MediumValue = "Medium";
-        private const string HighValue = "High";
-
-        /// <summary> None. </summary>
-        public static ManagedRuleSensitivityType None { get; } = new ManagedRuleSensitivityType(NoneValue);
         /// <summary> Low. </summary>
         public static ManagedRuleSensitivityType Low { get; } = new ManagedRuleSensitivityType(LowValue);
+
         /// <summary> Medium. </summary>
         public static ManagedRuleSensitivityType Medium { get; } = new ManagedRuleSensitivityType(MediumValue);
+
         /// <summary> High. </summary>
         public static ManagedRuleSensitivityType High { get; } = new ManagedRuleSensitivityType(HighValue);
+
         /// <summary> Determines if two <see cref="ManagedRuleSensitivityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedRuleSensitivityType left, ManagedRuleSensitivityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedRuleSensitivityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedRuleSensitivityType left, ManagedRuleSensitivityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedRuleSensitivityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedRuleSensitivityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedRuleSensitivityType(string value) => new ManagedRuleSensitivityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedRuleSensitivityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedRuleSensitivityType?(string value) => value == null ? null : new ManagedRuleSensitivityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedRuleSensitivityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedRuleSensitivityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

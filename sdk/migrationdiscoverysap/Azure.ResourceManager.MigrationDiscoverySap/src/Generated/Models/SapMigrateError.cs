@@ -13,66 +13,60 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     /// <summary> An error response from the SAP migrate resources. </summary>
     public partial class SapMigrateError
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapMigrateError"/>. </summary>
         internal SapMigrateError()
         {
-            Details = new ChangeTrackingList<SapDiscoveryErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SapMigrateError"/>. </summary>
-        /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
-        /// <param name="message"> Description of the error. </param>
-        /// <param name="recommendation"> Description of the recommendation. </param>
-        /// <param name="details"> Internal error details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapMigrateError(string code, string message, string recommendation, IReadOnlyList<SapDiscoveryErrorDetail> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The SAP Discovery site resource error body. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapMigrateError(SapDiscoveryErrorDetail properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Code = code;
-            Message = message;
-            Recommendation = recommendation;
-            Details = details;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The SAP Discovery site resource error body. </summary>
+        internal SapDiscoveryErrorDetail Properties { get; }
+
         /// <summary> Service specific error code which serves as the substatus for the HTTP error code. </summary>
-        public string Code { get; }
+        public string Code
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Code;
+            }
+        }
+
         /// <summary> Description of the error. </summary>
-        public string Message { get; }
+        public string Message
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Message;
+            }
+        }
+
         /// <summary> Description of the recommendation. </summary>
-        public string Recommendation { get; }
+        public string Recommendation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Recommendation;
+            }
+        }
+
         /// <summary> Internal error details. </summary>
-        public IReadOnlyList<SapDiscoveryErrorDetail> Details { get; }
+        public IReadOnlyList<SapDiscoveryErrorDetail> Details
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Details;
+            }
+        }
     }
 }

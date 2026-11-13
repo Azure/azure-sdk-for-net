@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class FirewallPolicyDraftResource : IJsonModel<FirewallPolicyDraftData>
     {
-        private static FirewallPolicyDraftData s_dataDeserializationInstance;
-        private static FirewallPolicyDraftData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FirewallPolicyDraftData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FirewallPolicyDraftData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FirewallPolicyDraftData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FirewallPolicyDraftData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FirewallPolicyDraftData>)Data).Write(writer, options);
 
-        FirewallPolicyDraftData IJsonModel<FirewallPolicyDraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirewallPolicyDraftData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallPolicyDraftData IJsonModel<FirewallPolicyDraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FirewallPolicyDraftData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FirewallPolicyDraftData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FirewallPolicyDraftData IPersistableModel<FirewallPolicyDraftData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirewallPolicyDraftData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<FirewallPolicyDraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirewallPolicyDraftData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FirewallPolicyDraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

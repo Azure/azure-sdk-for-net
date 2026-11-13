@@ -42,7 +42,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
-           tools: [ bingGroundingTool ]);
+           tools: [bingGroundingTool]);
         #endregion
         // Create thread for communication
         #region Snippet:AgentsBingGroundingAsync_CreateThreadMessage

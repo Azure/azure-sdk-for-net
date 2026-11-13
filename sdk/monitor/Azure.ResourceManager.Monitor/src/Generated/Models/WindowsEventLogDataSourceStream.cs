@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The WindowsEventLogDataSourceStream. </summary>
+    /// <summary></summary>
     public readonly partial struct WindowsEventLogDataSourceStream : IEquatable<WindowsEventLogDataSourceStream>
     {
         private readonly string _value;
+        /// <summary> Microsoft-WindowsEvent. </summary>
+        private const string MicrosoftWindowsEventValue = "Microsoft-WindowsEvent";
+        /// <summary> Microsoft-Event. </summary>
+        private const string MicrosoftEventValue = "Microsoft-Event";
 
         /// <summary> Initializes a new instance of <see cref="WindowsEventLogDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WindowsEventLogDataSourceStream(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftWindowsEventValue = "Microsoft-WindowsEvent";
-        private const string MicrosoftEventValue = "Microsoft-Event";
+            _value = value;
+        }
 
         /// <summary> Microsoft-WindowsEvent. </summary>
         public static WindowsEventLogDataSourceStream MicrosoftWindowsEvent { get; } = new WindowsEventLogDataSourceStream(MicrosoftWindowsEventValue);
+
         /// <summary> Microsoft-Event. </summary>
         public static WindowsEventLogDataSourceStream MicrosoftEvent { get; } = new WindowsEventLogDataSourceStream(MicrosoftEventValue);
+
         /// <summary> Determines if two <see cref="WindowsEventLogDataSourceStream"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WindowsEventLogDataSourceStream left, WindowsEventLogDataSourceStream right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WindowsEventLogDataSourceStream"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WindowsEventLogDataSourceStream left, WindowsEventLogDataSourceStream right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsEventLogDataSourceStream"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WindowsEventLogDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WindowsEventLogDataSourceStream(string value) => new WindowsEventLogDataSourceStream(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WindowsEventLogDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WindowsEventLogDataSourceStream?(string value) => value == null ? null : new WindowsEventLogDataSourceStream(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WindowsEventLogDataSourceStream other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WindowsEventLogDataSourceStream other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

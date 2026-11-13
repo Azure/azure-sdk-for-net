@@ -18,7 +18,7 @@ public enum StreamingUpdateReason
     /// Indicates that an update was generated as part of a <c>thread.created</c> event.
     /// </summary>
     /// <remarks> This reason is typically only associated with calls to
-    /// <see cref="PersistentAgentsAdministrationClient.CreateThreadAndRun(string, PersistentAgentThreadCreationOptions, string, string, System.Collections.Generic.IEnumerable{ToolDefinition}, ToolResources, bool?, float?, float?, int?, int?, Truncation, System.BinaryData, System.BinaryData, bool?, System.Collections.Generic.IReadOnlyDictionary{string, string}, System.Threading.CancellationToken)"/>,
+    /// <see cref="PersistentAgentsAdministrationClient.CreateThreadAndRun(string, PersistentAgentThreadCreationOptions, string, string, System.Collections.Generic.IEnumerable{ToolDefinition}, ToolResources, bool?, float?, float?, int?, int?, Truncation, System.BinaryData, System.BinaryData, bool?, System.Collections.Generic.IDictionary{string, string}, System.Threading.CancellationToken)"/>,
     /// as other run-related methods operate on a thread that has previously been created.
     /// </remarks>
     ThreadCreated,
@@ -127,4 +127,8 @@ public enum StreamingUpdateReason
     /// Indicates the end of streaming update events. This value should never be typically observed.
     /// </summary>
     Done,
+    /// <summary>
+    /// Indicates that a keep-alive message was received, signifying that the connection is still active.
+    /// </summary>
+    KeepAlive,
 }

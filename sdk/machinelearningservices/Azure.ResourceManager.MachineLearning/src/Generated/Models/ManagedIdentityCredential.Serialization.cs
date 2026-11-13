@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ManagedIdentityCredential : IUtf8JsonSerializable, IJsonModel<ManagedIdentityCredential>
+    /// <summary> Credential for user managed identity. </summary>
+    public partial class ManagedIdentityCredential : DataReferenceCredential, IJsonModel<ManagedIdentityCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIdentityCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReferenceCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedIdentityCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedIdentityCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedIdentityCredential IPersistableModel<ManagedIdentityCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedIdentityCredential)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedIdentityCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedIdentityCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,14 +69,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ManagedIdentityType))
+            if (Optional.IsDefined(ManagedIdentityType, _managedIdentityTypeIsDefined))
             {
                 if (ManagedIdentityType != null)
                 {
@@ -45,22 +84,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("managedIdentityType");
+                    writer.WriteNull("managedIdentityType"u8);
                 }
             }
-            if (Optional.IsDefined(UserManagedIdentityResourceId))
-            {
-                if (UserManagedIdentityResourceId != null)
-                {
-                    writer.WritePropertyName("userManagedIdentityResourceId"u8);
-                    writer.WriteStringValue(UserManagedIdentityResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("userManagedIdentityResourceId");
-                }
-            }
-            if (Optional.IsDefined(UserManagedIdentityClientId))
+            if (Optional.IsDefined(UserManagedIdentityClientId, _userManagedIdentityClientIdIsDefined))
             {
                 if (UserManagedIdentityClientId != null)
                 {
@@ -69,10 +96,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("userManagedIdentityClientId");
+                    writer.WriteNull("userManagedIdentityClientId"u8);
                 }
             }
-            if (Optional.IsDefined(UserManagedIdentityPrincipalId))
+            if (Optional.IsDefined(UserManagedIdentityPrincipalId, _userManagedIdentityPrincipalIdIsDefined))
             {
                 if (UserManagedIdentityPrincipalId != null)
                 {
@@ -81,10 +108,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("userManagedIdentityPrincipalId");
+                    writer.WriteNull("userManagedIdentityPrincipalId"u8);
                 }
             }
-            if (Optional.IsDefined(UserManagedIdentityTenantId))
+            if (Optional.IsDefined(UserManagedIdentityResourceId, _userManagedIdentityResourceIdIsDefined))
+            {
+                if (UserManagedIdentityResourceId != null)
+                {
+                    writer.WritePropertyName("userManagedIdentityResourceId"u8);
+                    writer.WriteStringValue(UserManagedIdentityResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("userManagedIdentityResourceId"u8);
+                }
+            }
+            if (Optional.IsDefined(UserManagedIdentityTenantId, _userManagedIdentityTenantIdIsDefined))
             {
                 if (UserManagedIdentityTenantId != null)
                 {
@@ -93,285 +132,130 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("userManagedIdentityTenantId");
+                    writer.WriteNull("userManagedIdentityTenantId"u8);
                 }
             }
         }
 
-        ManagedIdentityCredential IJsonModel<ManagedIdentityCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedIdentityCredential IJsonModel<ManagedIdentityCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedIdentityCredential)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReferenceCredential JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedIdentityCredential(document.RootElement, options);
         }
 
-        internal static ManagedIdentityCredential DeserializeManagedIdentityCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedIdentityCredential DeserializeManagedIdentityCredential(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string managedIdentityType = default;
-            string userManagedIdentityResourceId = default;
-            string userManagedIdentityClientId = default;
-            string userManagedIdentityPrincipalId = default;
-            string userManagedIdentityTenantId = default;
             DataReferenceCredentialType credentialType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool managedIdentityTypeIsDefined = false;
+            string managedIdentityType = default;
+            bool userManagedIdentityClientIdIsDefined = false;
+            string userManagedIdentityClientId = default;
+            bool userManagedIdentityPrincipalIdIsDefined = false;
+            string userManagedIdentityPrincipalId = default;
+            bool userManagedIdentityResourceIdIsDefined = false;
+            string userManagedIdentityResourceId = default;
+            bool userManagedIdentityTenantIdIsDefined = false;
+            string userManagedIdentityTenantId = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("managedIdentityType"u8))
+                if (prop.NameEquals("credentialType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    credentialType = new DataReferenceCredentialType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("managedIdentityType"u8))
+                {
+                    managedIdentityTypeIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         managedIdentityType = null;
                         continue;
                     }
-                    managedIdentityType = property.Value.GetString();
+                    managedIdentityType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userManagedIdentityResourceId"u8))
+                if (prop.NameEquals("userManagedIdentityClientId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        userManagedIdentityResourceId = null;
-                        continue;
-                    }
-                    userManagedIdentityResourceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userManagedIdentityClientId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    userManagedIdentityClientIdIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userManagedIdentityClientId = null;
                         continue;
                     }
-                    userManagedIdentityClientId = property.Value.GetString();
+                    userManagedIdentityClientId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userManagedIdentityPrincipalId"u8))
+                if (prop.NameEquals("userManagedIdentityPrincipalId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    userManagedIdentityPrincipalIdIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userManagedIdentityPrincipalId = null;
                         continue;
                     }
-                    userManagedIdentityPrincipalId = property.Value.GetString();
+                    userManagedIdentityPrincipalId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userManagedIdentityTenantId"u8))
+                if (prop.NameEquals("userManagedIdentityResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    userManagedIdentityResourceIdIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        userManagedIdentityResourceId = null;
+                        continue;
+                    }
+                    userManagedIdentityResourceId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("userManagedIdentityTenantId"u8))
+                {
+                    userManagedIdentityTenantIdIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userManagedIdentityTenantId = null;
                         continue;
                     }
-                    userManagedIdentityTenantId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("credentialType"u8))
-                {
-                    credentialType = new DataReferenceCredentialType(property.Value.GetString());
+                    userManagedIdentityTenantId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedIdentityCredential(
                 credentialType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 managedIdentityType,
-                userManagedIdentityResourceId,
                 userManagedIdentityClientId,
                 userManagedIdentityPrincipalId,
-                userManagedIdentityTenantId);
+                userManagedIdentityResourceId,
+                userManagedIdentityTenantId)
+            {
+                _managedIdentityTypeIsDefined = managedIdentityTypeIsDefined,
+                _userManagedIdentityClientIdIsDefined = userManagedIdentityClientIdIsDefined,
+                _userManagedIdentityPrincipalIdIsDefined = userManagedIdentityPrincipalIdIsDefined,
+                _userManagedIdentityResourceIdIsDefined = userManagedIdentityResourceIdIsDefined,
+                _userManagedIdentityTenantIdIsDefined = userManagedIdentityTenantIdIsDefined
+            };
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentityType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  managedIdentityType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ManagedIdentityType))
-                {
-                    builder.Append("  managedIdentityType: ");
-                    if (ManagedIdentityType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ManagedIdentityType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ManagedIdentityType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserManagedIdentityResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userManagedIdentityResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserManagedIdentityResourceId))
-                {
-                    builder.Append("  userManagedIdentityResourceId: ");
-                    if (UserManagedIdentityResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserManagedIdentityResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserManagedIdentityResourceId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserManagedIdentityClientId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userManagedIdentityClientId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserManagedIdentityClientId))
-                {
-                    builder.Append("  userManagedIdentityClientId: ");
-                    if (UserManagedIdentityClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserManagedIdentityClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserManagedIdentityClientId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserManagedIdentityPrincipalId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userManagedIdentityPrincipalId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserManagedIdentityPrincipalId))
-                {
-                    builder.Append("  userManagedIdentityPrincipalId: ");
-                    if (UserManagedIdentityPrincipalId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserManagedIdentityPrincipalId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserManagedIdentityPrincipalId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserManagedIdentityTenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userManagedIdentityTenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserManagedIdentityTenantId))
-                {
-                    builder.Append("  userManagedIdentityTenantId: ");
-                    if (UserManagedIdentityTenantId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserManagedIdentityTenantId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserManagedIdentityTenantId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CredentialType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  credentialType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  credentialType: ");
-                builder.AppendLine($"'{CredentialType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ManagedIdentityCredential>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ManagedIdentityCredential IPersistableModel<ManagedIdentityCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedIdentityCredential(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ManagedIdentityCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

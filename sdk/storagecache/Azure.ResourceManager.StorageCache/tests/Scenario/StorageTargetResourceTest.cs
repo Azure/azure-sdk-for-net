@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Delete()
         {
             await AzureResourceTestHelper.TestDelete(
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Update()
         {
             int newVerificationDelayInSeconds = 20;
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task OtherOperations()
         {
             StorageTargetResource str = await this.CreateOrUpdateStorageTarget(this.DefaultStorageCache);

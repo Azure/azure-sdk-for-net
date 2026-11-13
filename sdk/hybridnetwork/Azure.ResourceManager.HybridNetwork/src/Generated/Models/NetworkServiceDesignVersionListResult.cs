@@ -7,64 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> A list of network service design versions. </summary>
+    /// <summary> The response of a networkServiceDesignVersion list operation. </summary>
     internal partial class NetworkServiceDesignVersionListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionListResult"/>. </summary>
-        internal NetworkServiceDesignVersionListResult()
+        /// <param name="value"> The networkServiceDesignVersion items on this page. </param>
+        internal NetworkServiceDesignVersionListResult(IEnumerable<NetworkServiceDesignVersionData> value)
         {
-            Value = new ChangeTrackingList<NetworkServiceDesignVersionData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionListResult"/>. </summary>
-        /// <param name="value"> A list of network service design versions. </param>
-        /// <param name="nextLink"> The URI to get the next set of results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkServiceDesignVersionListResult(IReadOnlyList<NetworkServiceDesignVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The networkServiceDesignVersion items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkServiceDesignVersionListResult(IList<NetworkServiceDesignVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A list of network service design versions. </summary>
-        public IReadOnlyList<NetworkServiceDesignVersionData> Value { get; }
-        /// <summary> The URI to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The networkServiceDesignVersion items on this page. </summary>
+        public IList<NetworkServiceDesignVersionData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

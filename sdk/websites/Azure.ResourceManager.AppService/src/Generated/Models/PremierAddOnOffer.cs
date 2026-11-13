@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Premier add-on offer. </summary>
     public partial class PremierAddOnOffer : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnOffer"/>. </summary>
         public PremierAddOnOffer()
@@ -53,70 +25,206 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnOffer"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku"> Premier add on SKU. </param>
-        /// <param name="product"> Premier add on offer Product. </param>
-        /// <param name="vendor"> Premier add on offer Vendor. </param>
-        /// <param name="isPromoCodeRequired"> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="quota"> Premier add on offer Quota. </param>
-        /// <param name="webHostingPlanRestrictions"> App Service plans this offer is restricted to. </param>
-        /// <param name="privacyPolicyUri"> Privacy policy URL. </param>
-        /// <param name="legalTermsUri"> Legal terms URL. </param>
-        /// <param name="marketplacePublisher"> Marketplace publisher. </param>
-        /// <param name="marketplaceOffer"> Marketplace offer. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> PremierAddOnOffer resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sku, string product, string vendor, bool? isPromoCodeRequired, int? quota, AppServicePlanRestriction? webHostingPlanRestrictions, Uri privacyPolicyUri, Uri legalTermsUri, string marketplacePublisher, string marketplaceOffer, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PremierAddOnOfferProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Sku = sku;
-            Product = product;
-            Vendor = vendor;
-            IsPromoCodeRequired = isPromoCodeRequired;
-            Quota = quota;
-            WebHostingPlanRestrictions = webHostingPlanRestrictions;
-            PrivacyPolicyUri = privacyPolicyUri;
-            LegalTermsUri = legalTermsUri;
-            MarketplacePublisher = marketplacePublisher;
-            MarketplaceOffer = marketplaceOffer;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Premier add on SKU. </summary>
-        [WirePath("properties.sku")]
-        public string Sku { get; set; }
-        /// <summary> Premier add on offer Product. </summary>
-        [WirePath("properties.product")]
-        public string Product { get; set; }
-        /// <summary> Premier add on offer Vendor. </summary>
-        [WirePath("properties.vendor")]
-        public string Vendor { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        [WirePath("properties.promoCodeRequired")]
-        public bool? IsPromoCodeRequired { get; set; }
-        /// <summary> Premier add on offer Quota. </summary>
-        [WirePath("properties.quota")]
-        public int? Quota { get; set; }
-        /// <summary> App Service plans this offer is restricted to. </summary>
-        [WirePath("properties.webHostingPlanRestrictions")]
-        public AppServicePlanRestriction? WebHostingPlanRestrictions { get; set; }
-        /// <summary> Privacy policy URL. </summary>
-        [WirePath("properties.privacyPolicyUrl")]
-        public Uri PrivacyPolicyUri { get; set; }
-        /// <summary> Legal terms URL. </summary>
-        [WirePath("properties.legalTermsUrl")]
-        public Uri LegalTermsUri { get; set; }
-        /// <summary> Marketplace publisher. </summary>
-        [WirePath("properties.marketplacePublisher")]
-        public string MarketplacePublisher { get; set; }
-        /// <summary> Marketplace offer. </summary>
-        [WirePath("properties.marketplaceOffer")]
-        public string MarketplaceOffer { get; set; }
+        /// <summary> PremierAddOnOffer resource specific properties. </summary>
+        [WirePath("properties")]
+        internal PremierAddOnOfferProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Premier add on SKU. </summary>
+        [WirePath("properties.sku")]
+        public string Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
+        /// <summary> Premier add on offer Product. </summary>
+        [WirePath("properties.product")]
+        public string Product
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Product;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.Product = value;
+            }
+        }
+
+        /// <summary> Premier add on offer Vendor. </summary>
+        [WirePath("properties.vendor")]
+        public string Vendor
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Vendor;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.Vendor = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.promoCodeRequired")]
+        public bool? IsPromoCodeRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPromoCodeRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.IsPromoCodeRequired = value;
+            }
+        }
+
+        /// <summary> Premier add on offer Quota. </summary>
+        [WirePath("properties.quota")]
+        public int? Quota
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Quota;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.Quota = value;
+            }
+        }
+
+        /// <summary> App Service plans this offer is restricted to. </summary>
+        [WirePath("properties.webHostingPlanRestrictions")]
+        public AppServicePlanRestriction? WebHostingPlanRestrictions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WebHostingPlanRestrictions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.WebHostingPlanRestrictions = value;
+            }
+        }
+
+        /// <summary> Privacy policy URL. </summary>
+        [WirePath("properties.privacyPolicyUrl")]
+        public Uri PrivacyPolicyUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivacyPolicyUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.PrivacyPolicyUri = value;
+            }
+        }
+
+        /// <summary> Legal terms URL. </summary>
+        [WirePath("properties.legalTermsUrl")]
+        public Uri LegalTermsUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LegalTermsUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.LegalTermsUri = value;
+            }
+        }
+
+        /// <summary> Marketplace publisher. </summary>
+        [WirePath("properties.marketplacePublisher")]
+        public string MarketplacePublisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplacePublisher;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.MarketplacePublisher = value;
+            }
+        }
+
+        /// <summary> Marketplace offer. </summary>
+        [WirePath("properties.marketplaceOffer")]
+        public string MarketplaceOffer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplaceOffer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.MarketplaceOffer = value;
+            }
+        }
     }
 }

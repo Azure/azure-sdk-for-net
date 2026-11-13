@@ -71,6 +71,26 @@ namespace TestProjects.Spector.Tests.Http.Routes
         });
 
         [SpectorTest]
+        public Task SimpleExpansionPrimitive() => Test(async (host) =>
+        {
+            var response = await new RoutesClient(host, null).GetPathParametersClient()
+                .GetPathParametersSimpleExpansionClient()
+                .GetPathParametersSimpleExpansionStandardClient()
+                .PrimitiveAsync("a");
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task SimpleExpansionExplodePrimitive() => Test(async (host) =>
+        {
+            var response = await new RoutesClient(host, null).GetPathParametersClient()
+                .GetPathParametersSimpleExpansionClient()
+                .GetPathParametersSimpleExpansionExplodeClient()
+                .PrimitiveAsync("a");
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
         [Ignore("https://github.com/microsoft/typespec/issues/5561")]
         public Task LabelExpansionExplodeArray() => Test(async (host) =>
         {

@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> Access profile for the Fleet hub API server. </summary>
     public partial class ContainerServiceFleetAPIServerAccessProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetAPIServerAccessProfile"/>. </summary>
         public ContainerServiceFleetAPIServerAccessProfile()
@@ -55,19 +26,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="enablePrivateCluster"> Whether to create the Fleet hub as a private cluster or not. </param>
         /// <param name="enableVnetIntegration"> Whether to enable apiserver vnet integration for the Fleet hub or not. </param>
         /// <param name="subnetId"> The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new Fleet with BYO vnet. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetAPIServerAccessProfile(bool? enablePrivateCluster, bool? enableVnetIntegration, ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetAPIServerAccessProfile(bool? enablePrivateCluster, bool? enableVnetIntegration, ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnablePrivateCluster = enablePrivateCluster;
             EnableVnetIntegration = enableVnetIntegration;
             SubnetId = subnetId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to create the Fleet hub as a private cluster or not. </summary>
         public bool? EnablePrivateCluster { get; set; }
+
         /// <summary> Whether to enable apiserver vnet integration for the Fleet hub or not. </summary>
         public bool? EnableVnetIntegration { get; set; }
+
         /// <summary> The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new Fleet with BYO vnet. </summary>
         public ResourceIdentifier SubnetId { get; set; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DataFactoryGlobalParameterType : IEquatable<DataFactoryGlobalParameterType>
     {
         private readonly string _value;
+        /// <summary> Object. </summary>
+        private const string ObjectValue = "Object";
+        /// <summary> String. </summary>
+        private const string StringValue = "String";
+        /// <summary> Int. </summary>
+        private const string IntValue = "Int";
+        /// <summary> Float. </summary>
+        private const string FloatValue = "Float";
+        /// <summary> Bool. </summary>
+        private const string BoolValue = "Bool";
+        /// <summary> Array. </summary>
+        private const string ArrayValue = "Array";
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFactoryGlobalParameterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ObjectValue = "Object";
-        private const string StringValue = "String";
-        private const string IntValue = "Int";
-        private const string FloatValue = "Float";
-        private const string BoolValue = "Bool";
-        private const string ArrayValue = "Array";
+            _value = value;
+        }
 
         /// <summary> Object. </summary>
         public static DataFactoryGlobalParameterType Object { get; } = new DataFactoryGlobalParameterType(ObjectValue);
+
         /// <summary> String. </summary>
         public static DataFactoryGlobalParameterType String { get; } = new DataFactoryGlobalParameterType(StringValue);
+
         /// <summary> Int. </summary>
         public static DataFactoryGlobalParameterType Int { get; } = new DataFactoryGlobalParameterType(IntValue);
+
         /// <summary> Float. </summary>
         public static DataFactoryGlobalParameterType Float { get; } = new DataFactoryGlobalParameterType(FloatValue);
+
         /// <summary> Bool. </summary>
         public static DataFactoryGlobalParameterType Bool { get; } = new DataFactoryGlobalParameterType(BoolValue);
+
         /// <summary> Array. </summary>
         public static DataFactoryGlobalParameterType Array { get; } = new DataFactoryGlobalParameterType(ArrayValue);
+
         /// <summary> Determines if two <see cref="DataFactoryGlobalParameterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFactoryGlobalParameterType left, DataFactoryGlobalParameterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFactoryGlobalParameterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFactoryGlobalParameterType left, DataFactoryGlobalParameterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryGlobalParameterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFactoryGlobalParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFactoryGlobalParameterType(string value) => new DataFactoryGlobalParameterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFactoryGlobalParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFactoryGlobalParameterType?(string value) => value == null ? null : new DataFactoryGlobalParameterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFactoryGlobalParameterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFactoryGlobalParameterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

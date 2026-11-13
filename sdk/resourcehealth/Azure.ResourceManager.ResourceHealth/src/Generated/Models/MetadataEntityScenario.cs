@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    /// <summary> The MetadataEntityScenario. </summary>
+    /// <summary></summary>
     public readonly partial struct MetadataEntityScenario : IEquatable<MetadataEntityScenario>
     {
         private readonly string _value;
+        /// <summary> Alerts. </summary>
+        private const string AlertsValue = "Alerts";
 
         /// <summary> Initializes a new instance of <see cref="MetadataEntityScenario"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetadataEntityScenario(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlertsValue = "Alerts";
+            _value = value;
+        }
 
         /// <summary> Alerts. </summary>
         public static MetadataEntityScenario Alerts { get; } = new MetadataEntityScenario(AlertsValue);
+
         /// <summary> Determines if two <see cref="MetadataEntityScenario"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MetadataEntityScenario left, MetadataEntityScenario right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MetadataEntityScenario"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MetadataEntityScenario left, MetadataEntityScenario right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MetadataEntityScenario"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MetadataEntityScenario"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MetadataEntityScenario(string value) => new MetadataEntityScenario(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MetadataEntityScenario"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MetadataEntityScenario?(string value) => value == null ? null : new MetadataEntityScenario(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MetadataEntityScenario other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MetadataEntityScenario other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

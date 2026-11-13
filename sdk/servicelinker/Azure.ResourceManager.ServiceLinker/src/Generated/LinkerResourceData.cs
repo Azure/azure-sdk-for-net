@@ -13,127 +13,211 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    /// <summary>
-    /// A class representing the LinkerResource data model.
-    /// Linker of source and target resource
-    /// </summary>
+    /// <summary> Linker of source and target resource. </summary>
     public partial class LinkerResourceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LinkerResourceData"/>. </summary>
         public LinkerResourceData()
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkerResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetService">
-        /// The target service properties
-        /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
-        /// </param>
-        /// <param name="authInfo">
-        /// The authentication type.
-        /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
-        /// </param>
-        /// <param name="clientType"> The application client type. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="vnetSolution"> The VNet solution. </param>
-        /// <param name="secretStore"> An option to store secret value in secure place. </param>
-        /// <param name="scope"> connection scope in source service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the Linker. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LinkerProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            TargetService = targetService;
-            AuthInfo = authInfo;
-            ClientType = clientType;
-            ProvisioningState = provisioningState;
-            VnetSolution = vnetSolution;
-            SecretStore = secretStore;
-            Scope = scope;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The target service properties
-        /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
-        /// </summary>
-        public TargetServiceBaseInfo TargetService { get; set; }
-        /// <summary>
-        /// The authentication type.
-        /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
-        /// </summary>
-        public AuthBaseInfo AuthInfo { get; set; }
-        /// <summary> The application client type. </summary>
-        public LinkerClientType? ClientType { get; set; }
-        /// <summary> The provisioning state. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> The VNet solution. </summary>
-        internal VnetSolution VnetSolution { get; set; }
-        /// <summary> Type of VNet solution. </summary>
-        public VnetSolutionType? SolutionType
+        /// <summary> The properties of the Linker. </summary>
+        internal LinkerProperties Properties { get; set; }
+
+        /// <summary> The target service properties. </summary>
+        public TargetServiceBaseInfo TargetService
         {
-            get => VnetSolution is null ? default : VnetSolution.SolutionType;
+            get
+            {
+                return Properties is null ? default : Properties.TargetService;
+            }
             set
             {
-                if (VnetSolution is null)
-                    VnetSolution = new VnetSolution();
-                VnetSolution.SolutionType = value;
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.TargetService = value;
             }
         }
 
-        /// <summary> An option to store secret value in secure place. </summary>
-        internal LinkerSecretStore SecretStore { get; set; }
-        /// <summary> The key vault id to store secret. </summary>
-        public ResourceIdentifier SecretStoreKeyVaultId
+        /// <summary> The authentication type. </summary>
+        public AuthBaseInfo AuthInfo
         {
-            get => SecretStore is null ? default : SecretStore.KeyVaultId;
+            get
+            {
+                return Properties is null ? default : Properties.AuthInfo;
+            }
             set
             {
-                if (SecretStore is null)
-                    SecretStore = new LinkerSecretStore();
-                SecretStore.KeyVaultId = value;
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.AuthInfo = value;
+            }
+        }
+
+        /// <summary> The application client type. </summary>
+        public LinkerClientType? ClientType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.ClientType = value;
+            }
+        }
+
+        /// <summary> The provisioning state. </summary>
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
         /// <summary> connection scope in source service. </summary>
-        public string Scope { get; set; }
+        public string Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.Scope = value;
+            }
+        }
+
+        /// <summary> The network solution. </summary>
+        public LinkerPublicNetworkSolution PublicNetworkSolution
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkSolution;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.PublicNetworkSolution = value;
+            }
+        }
+
+        /// <summary> The connection information consumed by applications, including secrets, connection strings. </summary>
+        public LinkerConfigurationInfo ConfigurationInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.ConfigurationInfo = value;
+            }
+        }
+
+        /// <summary> Type of VNet solution. </summary>
+        public VnetSolutionType? SolutionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SolutionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.SolutionType = value;
+            }
+        }
+
+        /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
+        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeleteOrUpdateBehavior;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.DeleteOrUpdateBehavior = value;
+            }
+        }
+
+        /// <summary> The key vault id to store secret. </summary>
+        public ResourceIdentifier SecretStoreKeyVaultId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecretStoreKeyVaultId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.SecretStoreKeyVaultId = value;
+            }
+        }
+
+        /// <summary> The key vault secret name to store secret, only valid when storing one secret. </summary>
+        public string KeyVaultSecretName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultSecretName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LinkerProperties();
+                }
+                Properties.KeyVaultSecretName = value;
+            }
+        }
     }
 }

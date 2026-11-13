@@ -36,8 +36,9 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             }
         }
 
-        private async Task<SubscriptionAssessmentMetadataResource> CreateSubscriptionAssessmentMetadata(string assessmentMetadataName)
+        private async Task<SubscriptionAssessmentMetadataResource> CreateSubscriptionAssessmentMetadata(string assessmentMetadataName, SubscriptionAssessmentMetadataCollection collection = null)
         {
+            collection ??= _subAssessmentMetadataCollection;
             var data = new SecurityAssessmentMetadataData()
             {
                 DisplayName = "JustForTest",
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 },
                 AssessmentType = SecurityAssessmentType.CustomerManaged
             };
-            var subAssessmentMetadata = await _subAssessmentMetadataCollection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentMetadataName, data);
+            var subAssessmentMetadata = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentMetadataName, data);
             return subAssessmentMetadata.Value;
         }
 
@@ -103,13 +104,16 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             bool flag = await _subAssessmentMetadataCollection.ExistsAsync(assessmentMetadataName);
             Assert.IsTrue(flag);
 
-            await subAssessmentMetadata.DeleteAsync(WaitUntil.Completed);
-            if (TestEnvironment.Mode == RecordedTestMode.Record)
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
             {
-                Thread.Sleep(20000);
+                await subAssessmentMetadata.DeleteAsync(WaitUntil.Completed);
+                if (TestEnvironment.Mode == RecordedTestMode.Record)
+                {
+                    Thread.Sleep(20000);
+                }
+                flag = await _subAssessmentMetadataCollection.ExistsAsync(assessmentMetadataName);
+                Assert.IsFalse(flag);
             }
-            flag = await _subAssessmentMetadataCollection.ExistsAsync(assessmentMetadataName);
-            Assert.IsFalse(flag);
         }
 
         private void ValidateSubscriptionAssessmentMetadata(SubscriptionAssessmentMetadataResource subAssessmentMetadata, string assessmentMetadataName)

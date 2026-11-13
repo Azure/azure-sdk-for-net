@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningRemoteLoginPortPublicAccess : IEquatable<MachineLearningRemoteLoginPortPublicAccess>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningRemoteLoginPortPublicAccess"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningRemoteLoginPortPublicAccess(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
         private const string NotSpecifiedValue = "NotSpecified";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRemoteLoginPortPublicAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningRemoteLoginPortPublicAccess(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static MachineLearningRemoteLoginPortPublicAccess Enabled { get; } = new MachineLearningRemoteLoginPortPublicAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static MachineLearningRemoteLoginPortPublicAccess Disabled { get; } = new MachineLearningRemoteLoginPortPublicAccess(DisabledValue);
-        /// <summary> NotSpecified. </summary>
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static MachineLearningRemoteLoginPortPublicAccess NotSpecified { get; } = new MachineLearningRemoteLoginPortPublicAccess(NotSpecifiedValue);
+
         /// <summary> Determines if two <see cref="MachineLearningRemoteLoginPortPublicAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningRemoteLoginPortPublicAccess left, MachineLearningRemoteLoginPortPublicAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningRemoteLoginPortPublicAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningRemoteLoginPortPublicAccess left, MachineLearningRemoteLoginPortPublicAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningRemoteLoginPortPublicAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningRemoteLoginPortPublicAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningRemoteLoginPortPublicAccess(string value) => new MachineLearningRemoteLoginPortPublicAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningRemoteLoginPortPublicAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningRemoteLoginPortPublicAccess?(string value) => value == null ? null : new MachineLearningRemoteLoginPortPublicAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningRemoteLoginPortPublicAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningRemoteLoginPortPublicAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

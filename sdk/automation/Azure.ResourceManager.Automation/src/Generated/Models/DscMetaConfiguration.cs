@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the DSC Meta Configuration. </summary>
     public partial class DscMetaConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DscMetaConfiguration"/>. </summary>
         internal DscMetaConfiguration()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="certificateId"> Gets or sets the CertificateId value of the meta configuration. </param>
         /// <param name="refreshFrequencyMins"> Gets or sets the RefreshFrequencyMins value of the meta configuration. </param>
         /// <param name="allowModuleOverwrite"> Gets or sets the AllowModuleOverwrite value of the meta configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscMetaConfiguration(int? configurationModeFrequencyMins, bool? rebootNodeIfNeeded, string configurationMode, string actionAfterReboot, string certificateId, int? refreshFrequencyMins, bool? allowModuleOverwrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DscMetaConfiguration(int? configurationModeFrequencyMins, bool? rebootNodeIfNeeded, string configurationMode, string actionAfterReboot, string certificateId, int? refreshFrequencyMins, bool? allowModuleOverwrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationModeFrequencyMins = configurationModeFrequencyMins;
             RebootNodeIfNeeded = rebootNodeIfNeeded;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.Automation.Models
             CertificateId = certificateId;
             RefreshFrequencyMins = refreshFrequencyMins;
             AllowModuleOverwrite = allowModuleOverwrite;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the ConfigurationModeFrequencyMins value of the meta configuration. </summary>
         public int? ConfigurationModeFrequencyMins { get; }
+
         /// <summary> Gets or sets the RebootNodeIfNeeded value of the meta configuration. </summary>
         public bool? RebootNodeIfNeeded { get; }
+
         /// <summary> Gets or sets the ConfigurationMode value of the meta configuration. </summary>
         public string ConfigurationMode { get; }
+
         /// <summary> Gets or sets the ActionAfterReboot value of the meta configuration. </summary>
         public string ActionAfterReboot { get; }
+
         /// <summary> Gets or sets the CertificateId value of the meta configuration. </summary>
         public string CertificateId { get; }
+
         /// <summary> Gets or sets the RefreshFrequencyMins value of the meta configuration. </summary>
         public int? RefreshFrequencyMins { get; }
+
         /// <summary> Gets or sets the AllowModuleOverwrite value of the meta configuration. </summary>
         public bool? AllowModuleOverwrite { get; }
     }

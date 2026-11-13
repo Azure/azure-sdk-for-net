@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> A priming job instance. </summary>
     public partial class PrimingJob
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrimingJob"/>. </summary>
         /// <param name="primingJobName"> The priming job name. </param>
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="primingJobStatus"> The status code of the priming job. </param>
         /// <param name="primingJobDetails"> The job details or error information if any. </param>
         /// <param name="primingJobPercentComplete"> The current progress of the priming job, as a percentage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrimingJob(string primingJobName, Uri primingManifestUri, string primingJobId, PrimingJobState? primingJobState, string primingJobStatus, string primingJobDetails, double? primingJobPercentComplete, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PrimingJob(string primingJobName, Uri primingManifestUri, string primingJobId, PrimingJobState? primingJobState, string primingJobStatus, string primingJobDetails, double? primingJobPercentComplete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimingJobName = primingJobName;
             PrimingManifestUri = primingManifestUri;
@@ -76,26 +48,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             PrimingJobStatus = primingJobStatus;
             PrimingJobDetails = primingJobDetails;
             PrimingJobPercentComplete = primingJobPercentComplete;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PrimingJob"/> for deserialization. </summary>
-        internal PrimingJob()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The priming job name. </summary>
         public string PrimingJobName { get; set; }
+
         /// <summary> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </summary>
         public Uri PrimingManifestUri { get; set; }
+
         /// <summary> The unique identifier of the priming job. </summary>
         public string PrimingJobId { get; }
+
         /// <summary> The state of the priming operation. </summary>
         public PrimingJobState? PrimingJobState { get; }
+
         /// <summary> The status code of the priming job. </summary>
         public string PrimingJobStatus { get; }
+
         /// <summary> The job details or error information if any. </summary>
         public string PrimingJobDetails { get; }
+
         /// <summary> The current progress of the priming job, as a percentage. </summary>
         public double? PrimingJobPercentComplete { get; }
     }

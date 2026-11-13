@@ -82,6 +82,11 @@ function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$va
         "SERVICE_MANAGEMENT_URL",
         "ENDPOINT_SUFFIX",
         "SERVICE_DIRECTORY",
+        "RUST_TEST_THREADS",
+        "RUST_BACKTRACE",
+        "COSMOS_RUSTFLAGS",
+        "DATABASE_NAME",
+        "ACCOUNT_HOST",
         # This is used in many places and is harder to extract from the base subscription config, so hardcode it for now.
         "STORAGE_ENDPOINT_SUFFIX",
         # Parameters

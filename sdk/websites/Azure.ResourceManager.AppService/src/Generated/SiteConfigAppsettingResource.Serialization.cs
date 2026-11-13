@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class SiteConfigAppsettingResource : IJsonModel<ApiKeyVaultReferenceData>
     {
-        private static ApiKeyVaultReferenceData s_dataDeserializationInstance;
-        private static ApiKeyVaultReferenceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiKeyVaultReferenceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiKeyVaultReferenceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiKeyVaultReferenceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiKeyVaultReferenceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiKeyVaultReferenceData>)Data).Write(writer, options);
 
-        ApiKeyVaultReferenceData IJsonModel<ApiKeyVaultReferenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiKeyVaultReferenceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiKeyVaultReferenceData IJsonModel<ApiKeyVaultReferenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiKeyVaultReferenceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiKeyVaultReferenceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiKeyVaultReferenceData IPersistableModel<ApiKeyVaultReferenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiKeyVaultReferenceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<ApiKeyVaultReferenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiKeyVaultReferenceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiKeyVaultReferenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

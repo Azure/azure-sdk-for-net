@@ -143,7 +143,7 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
             Assert.That(boolResponse.Value, Is.True);
         }
 
-        Func<IReadOnlyDictionary<string,string>> GetMetadata = response switch
+        Func<IReadOnlyDictionary<string, string>> GetMetadata = response switch
         {
             Response<Assistant> assistantResponse => () => assistantResponse.Value.Metadata,
             Response<AssistantThread> threadResponse => () => threadResponse.Value.Metadata,

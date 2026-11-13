@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,14 +15,15 @@ namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentData))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentList))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentPropertiesUser))]
+    [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentProvisioningError))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(AzureCacheForRedisMigrationProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterPropertiesEncryption))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(ExportRedisEnterpriseDatabaseContent))]
     [ModelReaderWriterBuildable(typeof(FlushRedisEnterpriseDatabaseContent))]
     [ModelReaderWriterBuildable(typeof(ForceLinkContent))]
@@ -41,7 +43,18 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseDatabaseList))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseDatabasePatch))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseDatabaseResource))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseFirewallRule))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseLinkedDatabase))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMaintenanceWindow))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationData))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationProperties))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationResource))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationUndoContent))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationDisparity))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationError))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationRequestContent))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationResponseResult))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationWarning))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseModule))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseOperationStatus))]
     [ModelReaderWriterBuildable(typeof(RedisEnterprisePrivateEndpointConnectionData))]
@@ -52,6 +65,8 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(RedisEnterprisePrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseRegenerateKeyContent))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseSku))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetails))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetailsList))]
     [ModelReaderWriterBuildable(typeof(RedisPersistenceSettings))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]

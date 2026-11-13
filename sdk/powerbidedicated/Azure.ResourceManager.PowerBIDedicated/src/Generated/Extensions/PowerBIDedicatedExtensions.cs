@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.PowerBIDedicated.Mocking;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 using Azure.ResourceManager.Resources;
@@ -18,30 +20,32 @@ namespace Azure.ResourceManager.PowerBIDedicated
     /// <summary> A class to add extension methods to Azure.ResourceManager.PowerBIDedicated. </summary>
     public static partial class PowerBIDedicatedExtensions
     {
+        /// <param name="client"></param>
         private static MockablePowerBIDedicatedArmClient GetMockablePowerBIDedicatedArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockablePowerBIDedicatedArmClient(client0));
+            return client.GetCachedClient(client0 => new MockablePowerBIDedicatedArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockablePowerBIDedicatedResourceGroupResource GetMockablePowerBIDedicatedResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockablePowerBIDedicatedResourceGroupResource GetMockablePowerBIDedicatedResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockablePowerBIDedicatedResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockablePowerBIDedicatedResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockablePowerBIDedicatedSubscriptionResource GetMockablePowerBIDedicatedSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockablePowerBIDedicatedSubscriptionResource GetMockablePowerBIDedicatedSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockablePowerBIDedicatedSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockablePowerBIDedicatedSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DedicatedCapacityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DedicatedCapacityResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedCapacityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DedicatedCapacityResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedArmClient.GetDedicatedCapacityResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedArmClient.GetDedicatedCapacityResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DedicatedCapacityResource"/> object. </returns>
@@ -53,14 +57,13 @@ namespace Azure.ResourceManager.PowerBIDedicated
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutoScaleVCoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutoScaleVCoreResource.CreateResourceIdentifier" /> to create an <see cref="AutoScaleVCoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="AutoScaleVCoreResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedArmClient.GetAutoScaleVCoreResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedArmClient.GetAutoScaleVCoreResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="AutoScaleVCoreResource"/> object. </returns>
@@ -72,15 +75,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
         }
 
         /// <summary>
-        /// Gets a collection of DedicatedCapacityResources in the ResourceGroupResource.
+        /// Gets a collection of DedicatedCapacities in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetDedicatedCapacities()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetDedicatedCapacities()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DedicatedCapacityResources and their operations over a DedicatedCapacityResource. </returns>
+        /// <returns> An object representing collection of DedicatedCapacities and their operations over a DedicatedCapacityResource. </returns>
         public static DedicatedCapacityCollection GetDedicatedCapacities(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -90,34 +93,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Gets details about the specified dedicated capacity.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_GetDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetDedicatedCapacityAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetDedicatedCapacityAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="dedicatedCapacityName"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="dedicatedCapacityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DedicatedCapacityResource>> GetDedicatedCapacityAsync(this ResourceGroupResource resourceGroupResource, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
@@ -128,34 +112,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Gets details about the specified dedicated capacity.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_GetDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetDedicatedCapacity(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetDedicatedCapacity(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="dedicatedCapacityName"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="dedicatedCapacityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<DedicatedCapacityResource> GetDedicatedCapacity(this ResourceGroupResource resourceGroupResource, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
@@ -165,15 +130,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
         }
 
         /// <summary>
-        /// Gets a collection of AutoScaleVCoreResources in the ResourceGroupResource.
+        /// Gets a collection of AutoScaleVCores in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetAutoScaleVCores()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetAutoScaleVCores()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AutoScaleVCoreResources and their operations over a AutoScaleVCoreResource. </returns>
+        /// <returns> An object representing collection of AutoScaleVCores and their operations over a AutoScaleVCoreResource. </returns>
         public static AutoScaleVCoreCollection GetAutoScaleVCores(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -183,34 +148,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Gets details about the specified auto scale v-core.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoScaleVCores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoScaleVCoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetAutoScaleVCoreAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetAutoScaleVCoreAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="vcoreName"> The name of the auto scale v-core. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vcoreName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vcoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AutoScaleVCoreResource>> GetAutoScaleVCoreAsync(this ResourceGroupResource resourceGroupResource, string vcoreName, CancellationToken cancellationToken = default)
         {
@@ -221,34 +167,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Gets details about the specified auto scale v-core.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoScaleVCores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoScaleVCoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetAutoScaleVCore(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedResourceGroupResource.GetAutoScaleVCore(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="vcoreName"> The name of the auto scale v-core. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vcoreName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vcoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<AutoScaleVCoreResource> GetAutoScaleVCore(this ResourceGroupResource resourceGroupResource, string vcoreName, CancellationToken cancellationToken = default)
         {
@@ -259,33 +186,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Lists all the Dedicated capacities for the given subscription.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacitiesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DedicatedCapacityResource> GetDedicatedCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -295,30 +204,12 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Lists all the Dedicated capacities for the given subscription.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacities(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
@@ -330,34 +221,52 @@ namespace Azure.ResourceManager.PowerBIDedicated
         }
 
         /// <summary>
-        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
-        /// <list type="bullet">
+        /// Lists all the auto scale v-cores for the given subscription.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCoresAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutoScaleVCoreResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutoScaleVCoreResource> GetAutoScaleVCoresAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetAutoScaleVCoresAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the auto scale v-cores for the given subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCores(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AutoScaleVCoreResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutoScaleVCoreResource> GetAutoScaleVCores(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetAutoScaleVCores(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacitiesAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -367,30 +276,12 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Lists eligible SKUs for PowerBI Dedicated resource provider.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
@@ -403,34 +294,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Check the name availability in the target location.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity(AzureLocation,CheckCapacityNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacityAsync(AzureLocation, CheckCapacityNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="content"> The name of the capacity. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -440,111 +313,21 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Check the name availability in the target location.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity(AzureLocation,CheckCapacityNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity(AzureLocation, CheckCapacityNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="content"> The name of the capacity. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).CheckNameAvailabilityCapacity(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the auto scale v-cores for the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoScaleVCores_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoScaleVCoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCores(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AutoScaleVCoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AutoScaleVCoreResource> GetAutoScaleVCoresAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetAutoScaleVCoresAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the auto scale v-cores for the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoScaleVCores_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoScaleVCoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCores(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AutoScaleVCoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AutoScaleVCoreResource> GetAutoScaleVCores(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetAutoScaleVCores(cancellationToken);
         }
     }
 }

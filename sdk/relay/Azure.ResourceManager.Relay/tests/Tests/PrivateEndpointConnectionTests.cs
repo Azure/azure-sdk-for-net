@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using NUnit.Framework;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Relay.Tests.Helpers;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.Core;
 using Azure.ResourceManager.Relay.Models;
+using Azure.ResourceManager.Relay.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Tests
 {
-    public class PrivateEndpointConnectionTests: RelayTestBase
+    public class PrivateEndpointConnectionTests : RelayTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private RelayNamespaceResource _relayNamespace;

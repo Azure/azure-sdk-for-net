@@ -5,16 +5,19 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Override
+namespace Specs.Azure.ClientGenerator.Core.Override
 {
     public partial class ReorderParameters
     {
         protected ReorderParameters() => throw null;
+
+        internal ReorderParameters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

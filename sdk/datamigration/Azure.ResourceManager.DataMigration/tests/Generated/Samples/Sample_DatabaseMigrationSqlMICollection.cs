@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceFromAzureBlobUsingManagedIdentity()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiCreateOrUpdateDatabaseMigrationBlobManagedIdentity.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiCreateOrUpdateDatabaseMigrationBlobManagedIdentity.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,14 +34,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string managedInstanceName = "managedInstance1";
 
             // get the collection of this DatabaseMigrationSqlMIResource
-            DatabaseMigrationSqlMICollection collection = resourceGroupResource.GetDatabaseMigrationSqlMIs();
+            DatabaseMigrationSqlMICollection collection = client.GetDatabaseMigrationSqlMIs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
             // invoke the operation
-            string managedInstanceName = "managedInstance1";
             string targetDBName = "db1";
             DatabaseMigrationSqlMIData data = new DatabaseMigrationSqlMIData
             {
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                     MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
-            ArmOperation<DatabaseMigrationSqlMIResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, targetDBName, data);
+            ArmOperation<DatabaseMigrationSqlMIResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, targetDBName, data);
             DatabaseMigrationSqlMIResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMaximumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiCreateOrUpdateDatabaseMigrationMAX.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiCreateOrUpdateDatabaseMigrationMAX.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,14 +101,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string managedInstanceName = "managedInstance1";
 
             // get the collection of this DatabaseMigrationSqlMIResource
-            DatabaseMigrationSqlMICollection collection = resourceGroupResource.GetDatabaseMigrationSqlMIs();
+            DatabaseMigrationSqlMICollection collection = client.GetDatabaseMigrationSqlMIs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
             // invoke the operation
-            string managedInstanceName = "managedInstance1";
             string targetDBName = "db1";
             DatabaseMigrationSqlMIData data = new DatabaseMigrationSqlMIData
             {
@@ -151,7 +149,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                     MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
-            ArmOperation<DatabaseMigrationSqlMIResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, targetDBName, data);
+            ArmOperation<DatabaseMigrationSqlMIResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, targetDBName, data);
             DatabaseMigrationSqlMIResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -165,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiCreateOrUpdateDatabaseMigrationMIN.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiCreateOrUpdateDatabaseMigrationMIN.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -177,14 +175,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string managedInstanceName = "managedInstance1";
 
             // get the collection of this DatabaseMigrationSqlMIResource
-            DatabaseMigrationSqlMICollection collection = resourceGroupResource.GetDatabaseMigrationSqlMIs();
+            DatabaseMigrationSqlMICollection collection = client.GetDatabaseMigrationSqlMIs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
             // invoke the operation
-            string managedInstanceName = "managedInstance1";
             string targetDBName = "db1";
             DatabaseMigrationSqlMIData data = new DatabaseMigrationSqlMIData
             {
@@ -221,7 +218,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                     MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
-            ArmOperation<DatabaseMigrationSqlMIResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, targetDBName, data);
+            ArmOperation<DatabaseMigrationSqlMIResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, targetDBName, data);
             DatabaseMigrationSqlMIResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -235,7 +232,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlMIDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,17 +244,16 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string managedInstanceName = "managedInstance1";
 
             // get the collection of this DatabaseMigrationSqlMIResource
-            DatabaseMigrationSqlMICollection collection = resourceGroupResource.GetDatabaseMigrationSqlMIs();
+            DatabaseMigrationSqlMICollection collection = client.GetDatabaseMigrationSqlMIs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
             // invoke the operation
-            string managedInstanceName = "managedInstance1";
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
-            DatabaseMigrationSqlMIResource result = await collection.GetAsync(managedInstanceName, targetDBName, expand: expand);
+            DatabaseMigrationSqlMIResource result = await collection.GetAsync(targetDBName, expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -270,7 +266,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlMIDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -282,16 +278,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string managedInstanceName = "managedInstance1";
 
             // get the collection of this DatabaseMigrationSqlMIResource
-            DatabaseMigrationSqlMICollection collection = resourceGroupResource.GetDatabaseMigrationSqlMIs();
+            DatabaseMigrationSqlMICollection collection = client.GetDatabaseMigrationSqlMIs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
             // invoke the operation
-            string managedInstanceName = "managedInstance1";
             string targetDBName = "db1";
-            DatabaseMigrationSqlMIResource result = await collection.GetAsync(managedInstanceName, targetDBName);
+            DatabaseMigrationSqlMIResource result = await collection.GetAsync(targetDBName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -304,7 +299,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSqlMIDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -316,17 +311,16 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string managedInstanceName = "managedInstance1";
 
             // get the collection of this DatabaseMigrationSqlMIResource
-            DatabaseMigrationSqlMICollection collection = resourceGroupResource.GetDatabaseMigrationSqlMIs();
+            DatabaseMigrationSqlMICollection collection = client.GetDatabaseMigrationSqlMIs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
             // invoke the operation
-            string managedInstanceName = "managedInstance1";
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
-            bool result = await collection.ExistsAsync(managedInstanceName, targetDBName, expand: expand);
+            bool result = await collection.ExistsAsync(targetDBName, expand: expand);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -335,7 +329,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSqlMIDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -347,16 +341,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string managedInstanceName = "managedInstance1";
 
             // get the collection of this DatabaseMigrationSqlMIResource
-            DatabaseMigrationSqlMICollection collection = resourceGroupResource.GetDatabaseMigrationSqlMIs();
+            DatabaseMigrationSqlMICollection collection = client.GetDatabaseMigrationSqlMIs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
             // invoke the operation
-            string managedInstanceName = "managedInstance1";
             string targetDBName = "db1";
-            bool result = await collection.ExistsAsync(managedInstanceName, targetDBName);
+            bool result = await collection.ExistsAsync(targetDBName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -365,7 +358,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSqlMIDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -377,17 +370,16 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string managedInstanceName = "managedInstance1";
 
             // get the collection of this DatabaseMigrationSqlMIResource
-            DatabaseMigrationSqlMICollection collection = resourceGroupResource.GetDatabaseMigrationSqlMIs();
+            DatabaseMigrationSqlMICollection collection = client.GetDatabaseMigrationSqlMIs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
             // invoke the operation
-            string managedInstanceName = "managedInstance1";
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
-            NullableResponse<DatabaseMigrationSqlMIResource> response = await collection.GetIfExistsAsync(managedInstanceName, targetDBName, expand: expand);
+            NullableResponse<DatabaseMigrationSqlMIResource> response = await collection.GetIfExistsAsync(targetDBName, expand: expand);
             DatabaseMigrationSqlMIResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
@@ -408,7 +400,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSqlMIDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -420,16 +412,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string managedInstanceName = "managedInstance1";
 
             // get the collection of this DatabaseMigrationSqlMIResource
-            DatabaseMigrationSqlMICollection collection = resourceGroupResource.GetDatabaseMigrationSqlMIs();
+            DatabaseMigrationSqlMICollection collection = client.GetDatabaseMigrationSqlMIs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
             // invoke the operation
-            string managedInstanceName = "managedInstance1";
             string targetDBName = "db1";
-            NullableResponse<DatabaseMigrationSqlMIResource> response = await collection.GetIfExistsAsync(managedInstanceName, targetDBName);
+            NullableResponse<DatabaseMigrationSqlMIResource> response = await collection.GetIfExistsAsync(targetDBName);
             DatabaseMigrationSqlMIResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

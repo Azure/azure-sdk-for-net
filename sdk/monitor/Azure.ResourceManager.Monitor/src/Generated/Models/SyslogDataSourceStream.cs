@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The SyslogDataSourceStream. </summary>
+    /// <summary></summary>
     public readonly partial struct SyslogDataSourceStream : IEquatable<SyslogDataSourceStream>
     {
         private readonly string _value;
+        /// <summary> Microsoft-Syslog. </summary>
+        private const string MicrosoftSyslogValue = "Microsoft-Syslog";
 
         /// <summary> Initializes a new instance of <see cref="SyslogDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyslogDataSourceStream(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftSyslogValue = "Microsoft-Syslog";
+            _value = value;
+        }
 
         /// <summary> Microsoft-Syslog. </summary>
         public static SyslogDataSourceStream MicrosoftSyslog { get; } = new SyslogDataSourceStream(MicrosoftSyslogValue);
+
         /// <summary> Determines if two <see cref="SyslogDataSourceStream"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyslogDataSourceStream left, SyslogDataSourceStream right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyslogDataSourceStream"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyslogDataSourceStream left, SyslogDataSourceStream right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyslogDataSourceStream"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyslogDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyslogDataSourceStream(string value) => new SyslogDataSourceStream(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyslogDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyslogDataSourceStream?(string value) => value == null ? null : new SyslogDataSourceStream(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyslogDataSourceStream other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyslogDataSourceStream other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

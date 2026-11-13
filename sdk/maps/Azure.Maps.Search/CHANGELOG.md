@@ -4,7 +4,11 @@
 
 ### Features Added
 
+- Added a `SearchBoundary` model factory method to `MapsSearchModelFactory` to support mocking.
+
 ### Breaking Changes
+
+- Renamed `Address` to `SearchAddress`, `Intersection` to `SearchIntersection`, and `Boundary` to `SearchBoundary` to comply with .NET type-naming guidelines.
 
 ### Bugs Fixed
 

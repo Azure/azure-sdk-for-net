@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,11 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="BinaryDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public BinaryDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public BinaryDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("Binary", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
-            DatasetType = "Binary";
         }
 
         /// <summary> Initializes a new instance of <see cref="BinaryDataset"/>. </summary>
@@ -33,32 +33,48 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="dataLocation">
-        /// The location of the Binary storage.
-        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="LakeHouseLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
-        /// </param>
-        /// <param name="compression"> The data compression method used for the binary dataset. </param>
-        internal BinaryDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Binary dataset properties. </param>
+        internal BinaryDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            DataLocation = dataLocation;
-            Compression = compression;
-            DatasetType = datasetType ?? "Binary";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BinaryDataset"/> for deserialization. </summary>
-        internal BinaryDataset()
+        /// <summary> Binary dataset properties. </summary>
+        internal BinaryDatasetTypeProperties TypeProperties { get; set; }
+
+        /// <summary> The location of the Binary storage. </summary>
+        public DatasetLocation DataLocation
         {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.DataLocation;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new BinaryDatasetTypeProperties();
+                }
+                TypeProperties.DataLocation = value;
+            }
         }
 
-        /// <summary>
-        /// The location of the Binary storage.
-        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="LakeHouseLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
-        /// </summary>
-        public DatasetLocation DataLocation { get; set; }
         /// <summary> The data compression method used for the binary dataset. </summary>
-        public DatasetCompression Compression { get; set; }
+        public DatasetCompression Compression
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Compression;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new BinaryDatasetTypeProperties();
+                }
+                TypeProperties.Compression = value;
+            }
+        }
     }
 }

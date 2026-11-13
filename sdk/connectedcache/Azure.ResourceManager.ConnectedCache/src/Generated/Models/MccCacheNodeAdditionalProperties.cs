@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
     /// <summary> Model representing cache node for connected cache resource. </summary>
     public partial class MccCacheNodeAdditionalProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeAdditionalProperties"/>. </summary>
         public MccCacheNodeAdditionalProperties()
@@ -84,13 +56,25 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="autoUpdateLastTriggeredOn"> Auto update last triggered date time of mcc install. </param>
         /// <param name="creationMethod"> Resource creation method of mcc cache node resource, cli or portal. </param>
         /// <param name="tlsStatus"> Cache node tls certificate status. </param>
+        /// <param name="hostOSEdition"> Operating system edition of the cache node host machine. </param>
+        /// <param name="hostOSVersion"> Operating system version of the cache node host machine. </param>
+        /// <param name="hostOSBuild"> Operating system build of the cache node host machine. </param>
+        /// <param name="distroOSEditionWsl"> Operating system edition of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="distroOSVersionWsl"> Operating system version of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="distroOSBuildWsl"> Operating system build of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="containerOSEdition"> Operating system edition of container used to run the cache node. </param>
+        /// <param name="containerOSVersion"> Operating system version of the container used to run the cache node. </param>
+        /// <param name="containerOSBuild"> Operating system build of the container used to run the cache node. </param>
+        /// <param name="installVersionMsix"> Version of the Windows deployment application used to deploy the cache node. </param>
+        /// <param name="installVersionScript"> Version of the installation scripts used to deploy the cache node. </param>
+        /// <param name="appVersionWsl"> Version of the Windows Subsystem for Linux application version used to run the cache node on the Windows host machine. </param>
         /// <param name="optionalProperty1"> Optional property #1 of Mcc response object. </param>
         /// <param name="optionalProperty2"> Optional property #2 of Mcc response object. </param>
         /// <param name="optionalProperty3"> Optional property #3 of Mcc response object. </param>
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeAdditionalProperties(IList<string> cacheNodePropertiesDetailsIssuesList, IReadOnlyList<string> issuesList, int? issuesCount, MccCacheNodeTlsCertificate currentTlsCertificate, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo, string aggregatedStatusDetails, string aggregatedStatusText, int? aggregatedStatusCode, string productVersion, bool? isProvisioned, string cacheNodeStateDetailedText, string cacheNodeStateShortText, int? cacheNodeState, IList<CacheNodeDriveConfiguration> driveConfiguration, MccCacheNodeBgpConfiguration bgpConfiguration, MccCacheNodeProxyUriConfiguration proxyUrlConfiguration, MccCacheNodeProxyRequired? isProxyRequired, MccCacheNodeOSType? osType, string autoUpdateVersion, string updateInfoDetails, DateTimeOffset? updateRequestedOn, string autoUpdateNextAvailableVersion, DateTimeOffset? autoUpdateNextAvailableOn, string autoUpdateAppliedVersion, string autoUpdateLastAppliedDetails, string autoUpdateLastAppliedState, DateTimeOffset? autoUpdateLastAppliedOn, DateTimeOffset? autoUpdateLastTriggeredOn, int? creationMethod, string tlsStatus, string optionalProperty1, string optionalProperty2, string optionalProperty3, string optionalProperty4, string optionalProperty5, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MccCacheNodeAdditionalProperties(IList<string> cacheNodePropertiesDetailsIssuesList, IReadOnlyList<string> issuesList, int? issuesCount, MccCacheNodeTlsCertificate currentTlsCertificate, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo, string aggregatedStatusDetails, string aggregatedStatusText, int? aggregatedStatusCode, string productVersion, bool? isProvisioned, string cacheNodeStateDetailedText, string cacheNodeStateShortText, int? cacheNodeState, IList<CacheNodeDriveConfiguration> driveConfiguration, MccCacheNodeBgpConfiguration bgpConfiguration, MccCacheNodeProxyUriConfiguration proxyUrlConfiguration, MccCacheNodeProxyRequired? isProxyRequired, MccCacheNodeOSType? osType, string autoUpdateVersion, string updateInfoDetails, DateTimeOffset? updateRequestedOn, string autoUpdateNextAvailableVersion, DateTimeOffset? autoUpdateNextAvailableOn, string autoUpdateAppliedVersion, string autoUpdateLastAppliedDetails, string autoUpdateLastAppliedState, DateTimeOffset? autoUpdateLastAppliedOn, DateTimeOffset? autoUpdateLastTriggeredOn, int? creationMethod, string tlsStatus, string hostOSEdition, string hostOSVersion, string hostOSBuild, string distroOSEditionWsl, string distroOSVersionWsl, string distroOSBuildWsl, string containerOSEdition, string containerOSVersion, string containerOSBuild, string installVersionMsix, string installVersionScript, string appVersionWsl, string optionalProperty1, string optionalProperty2, string optionalProperty3, string optionalProperty4, string optionalProperty5, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CacheNodePropertiesDetailsIssuesList = cacheNodePropertiesDetailsIssuesList;
             IssuesList = issuesList;
@@ -122,107 +106,199 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             AutoUpdateLastTriggeredOn = autoUpdateLastTriggeredOn;
             CreationMethod = creationMethod;
             TlsStatus = tlsStatus;
+            HostOSEdition = hostOSEdition;
+            HostOSVersion = hostOSVersion;
+            HostOSBuild = hostOSBuild;
+            DistroOSEditionWsl = distroOSEditionWsl;
+            DistroOSVersionWsl = distroOSVersionWsl;
+            DistroOSBuildWsl = distroOSBuildWsl;
+            ContainerOSEdition = containerOSEdition;
+            ContainerOSVersion = containerOSVersion;
+            ContainerOSBuild = containerOSBuild;
+            InstallVersionMsix = installVersionMsix;
+            InstallVersionScript = installVersionScript;
+            AppVersionWsl = appVersionWsl;
             OptionalProperty1 = optionalProperty1;
             OptionalProperty2 = optionalProperty2;
             OptionalProperty3 = optionalProperty3;
             OptionalProperty4 = optionalProperty4;
             OptionalProperty5 = optionalProperty5;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> issues list to return the issues as part of the additional cache node properties. </summary>
         public IList<string> CacheNodePropertiesDetailsIssuesList { get; }
+
         /// <summary> current cache node issue list. </summary>
         public IReadOnlyList<string> IssuesList { get; }
+
         /// <summary> Number of cache node issues. </summary>
         public int? IssuesCount { get; }
+
         /// <summary> cache node current tls certificate. </summary>
         public MccCacheNodeTlsCertificate CurrentTlsCertificate { get; }
+
         /// <summary> cache node last auto update information. </summary>
         public MccCacheNodeAutoUpdateInfo LastAutoUpdateInfo { get; }
+
         /// <summary> Cache node resource aggregated status details. </summary>
         public string AggregatedStatusDetails { get; }
+
         /// <summary> Cache node resource aggregated status text. </summary>
         public string AggregatedStatusText { get; }
+
         /// <summary> Cache node resource aggregated status code. </summary>
         public int? AggregatedStatusCode { get; }
+
         /// <summary> Cache node resource Mcc product version. </summary>
         public string ProductVersion { get; }
+
         /// <summary> Cache node resource flag indicating if cache node has been physically installed or provisioned on their physical lab. </summary>
         public bool? IsProvisioned { get; }
+
         /// <summary> Cache node resource detailed state text. </summary>
         public string CacheNodeStateDetailedText { get; }
+
         /// <summary> Cache node resource short state text. </summary>
         public string CacheNodeStateShortText { get; }
+
         /// <summary> Cache node resource state as integer. </summary>
         public int? CacheNodeState { get; }
+
         /// <summary> Cache node resource drive configurations. </summary>
         public IList<CacheNodeDriveConfiguration> DriveConfiguration { get; }
+
         /// <summary> Cache node resource Bgp configuration. </summary>
         internal MccCacheNodeBgpConfiguration BgpConfiguration { get; set; }
+
+        /// <summary> proxyUrl configuration of the cache node. </summary>
+        internal MccCacheNodeProxyUriConfiguration ProxyUrlConfiguration { get; set; }
+
+        /// <summary> Cache node resource requires a proxy. </summary>
+        public MccCacheNodeProxyRequired? IsProxyRequired { get; set; }
+
+        /// <summary> Operating system of the cache node. </summary>
+        public MccCacheNodeOSType? OSType { get; set; }
+
+        /// <summary> Auto update or fast update version. </summary>
+        public string AutoUpdateVersion { get; set; }
+
+        /// <summary> Update related information details. </summary>
+        public string UpdateInfoDetails { get; set; }
+
+        /// <summary> customer requested date time for mcc install of update cycle. </summary>
+        public DateTimeOffset? UpdateRequestedOn { get; set; }
+
+        /// <summary> Auto update version that is the Next available version to update on mcc cache node. </summary>
+        public string AutoUpdateNextAvailableVersion { get; }
+
+        /// <summary> Auto update last applied date time of mcc install. </summary>
+        public DateTimeOffset? AutoUpdateNextAvailableOn { get; }
+
+        /// <summary> Auto update version that is the applied to update on mcc cache node. </summary>
+        public string AutoUpdateAppliedVersion { get; }
+
+        /// <summary> Auto Update status details from the backend after applying the new version details. </summary>
+        public string AutoUpdateLastAppliedDetails { get; }
+
+        /// <summary> Last applied auto update state for mcc install of auto update cycle. </summary>
+        public string AutoUpdateLastAppliedState { get; }
+
+        /// <summary> Auto update last applied date time of mcc install. </summary>
+        public DateTimeOffset? AutoUpdateLastAppliedOn { get; }
+
+        /// <summary> Auto update last triggered date time of mcc install. </summary>
+        public DateTimeOffset? AutoUpdateLastTriggeredOn { get; }
+
+        /// <summary> Resource creation method of mcc cache node resource, cli or portal. </summary>
+        public int? CreationMethod { get; set; }
+
+        /// <summary> Cache node tls certificate status. </summary>
+        public string TlsStatus { get; }
+
+        /// <summary> Operating system edition of the cache node host machine. </summary>
+        public string HostOSEdition { get; }
+
+        /// <summary> Operating system version of the cache node host machine. </summary>
+        public string HostOSVersion { get; }
+
+        /// <summary> Operating system build of the cache node host machine. </summary>
+        public string HostOSBuild { get; }
+
+        /// <summary> Operating system edition of the WSL Linux distribution used to run the cache node on Windows host machines. </summary>
+        public string DistroOSEditionWsl { get; }
+
+        /// <summary> Operating system version of the WSL Linux distribution used to run the cache node on Windows host machines. </summary>
+        public string DistroOSVersionWsl { get; }
+
+        /// <summary> Operating system build of the WSL Linux distribution used to run the cache node on Windows host machines. </summary>
+        public string DistroOSBuildWsl { get; }
+
+        /// <summary> Operating system edition of container used to run the cache node. </summary>
+        public string ContainerOSEdition { get; }
+
+        /// <summary> Operating system version of the container used to run the cache node. </summary>
+        public string ContainerOSVersion { get; }
+
+        /// <summary> Operating system build of the container used to run the cache node. </summary>
+        public string ContainerOSBuild { get; }
+
+        /// <summary> Version of the Windows deployment application used to deploy the cache node. </summary>
+        public string InstallVersionMsix { get; }
+
+        /// <summary> Version of the installation scripts used to deploy the cache node. </summary>
+        public string InstallVersionScript { get; }
+
+        /// <summary> Version of the Windows Subsystem for Linux application version used to run the cache node on the Windows host machine. </summary>
+        public string AppVersionWsl { get; }
+
+        /// <summary> Optional property #1 of Mcc response object. </summary>
+        public string OptionalProperty1 { get; set; }
+
+        /// <summary> Optional property #2 of Mcc response object. </summary>
+        public string OptionalProperty2 { get; set; }
+
+        /// <summary> Optional property #3 of Mcc response object. </summary>
+        public string OptionalProperty3 { get; set; }
+
+        /// <summary> Optional property #4 of Mcc response object. </summary>
+        public string OptionalProperty4 { get; set; }
+
+        /// <summary> Optional property #5 of Mcc response object. </summary>
+        public string OptionalProperty5 { get; set; }
+
         /// <summary> Asn to ip address mapping. </summary>
         public string BgpAsnToIPAddressMapping
         {
-            get => BgpConfiguration is null ? default : BgpConfiguration.AsnToIPAddressMapping;
+            get
+            {
+                return BgpConfiguration is null ? default : BgpConfiguration.AsnToIPAddressMapping;
+            }
             set
             {
                 if (BgpConfiguration is null)
+                {
                     BgpConfiguration = new MccCacheNodeBgpConfiguration();
+                }
                 BgpConfiguration.AsnToIPAddressMapping = value;
             }
         }
 
-        /// <summary> proxyUrl configuration of the cache node. </summary>
-        internal MccCacheNodeProxyUriConfiguration ProxyUrlConfiguration { get; set; }
         /// <summary> Host Proxy Address configuration along with port number. This can be a proxy or ip address. ex: xx.xx.xx.xxxx:80 or host name http://exampleproxy.com:80. </summary>
         public Uri ProxyUri
         {
-            get => ProxyUrlConfiguration is null ? default : ProxyUrlConfiguration.ProxyUri;
+            get
+            {
+                return ProxyUrlConfiguration is null ? default : ProxyUrlConfiguration.ProxyUri;
+            }
             set
             {
                 if (ProxyUrlConfiguration is null)
+                {
                     ProxyUrlConfiguration = new MccCacheNodeProxyUriConfiguration();
+                }
                 ProxyUrlConfiguration.ProxyUri = value;
             }
         }
-
-        /// <summary> Cache node resource requires a proxy. </summary>
-        public MccCacheNodeProxyRequired? IsProxyRequired { get; set; }
-        /// <summary> Operating system of the cache node. </summary>
-        public MccCacheNodeOSType? OSType { get; set; }
-        /// <summary> Auto update or fast update version. </summary>
-        public string AutoUpdateVersion { get; set; }
-        /// <summary> Update related information details. </summary>
-        public string UpdateInfoDetails { get; set; }
-        /// <summary> customer requested date time for mcc install of update cycle. </summary>
-        public DateTimeOffset? UpdateRequestedOn { get; set; }
-        /// <summary> Auto update version that is the Next available version to update on mcc cache node. </summary>
-        public string AutoUpdateNextAvailableVersion { get; }
-        /// <summary> Auto update last applied date time of mcc install. </summary>
-        public DateTimeOffset? AutoUpdateNextAvailableOn { get; }
-        /// <summary> Auto update version that is the applied to update on mcc cache node. </summary>
-        public string AutoUpdateAppliedVersion { get; }
-        /// <summary> Auto Update status details from the backend after applying the new version details. </summary>
-        public string AutoUpdateLastAppliedDetails { get; }
-        /// <summary> Last applied auto update state for mcc install of auto update cycle. </summary>
-        public string AutoUpdateLastAppliedState { get; }
-        /// <summary> Auto update last applied date time of mcc install. </summary>
-        public DateTimeOffset? AutoUpdateLastAppliedOn { get; }
-        /// <summary> Auto update last triggered date time of mcc install. </summary>
-        public DateTimeOffset? AutoUpdateLastTriggeredOn { get; }
-        /// <summary> Resource creation method of mcc cache node resource, cli or portal. </summary>
-        public int? CreationMethod { get; set; }
-        /// <summary> Cache node tls certificate status. </summary>
-        public string TlsStatus { get; }
-        /// <summary> Optional property #1 of Mcc response object. </summary>
-        public string OptionalProperty1 { get; set; }
-        /// <summary> Optional property #2 of Mcc response object. </summary>
-        public string OptionalProperty2 { get; set; }
-        /// <summary> Optional property #3 of Mcc response object. </summary>
-        public string OptionalProperty3 { get; set; }
-        /// <summary> Optional property #4 of Mcc response object. </summary>
-        public string OptionalProperty4 { get; set; }
-        /// <summary> Optional property #5 of Mcc response object. </summary>
-        public string OptionalProperty5 { get; set; }
     }
 }

@@ -3,8 +3,6 @@
 
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
@@ -18,13 +16,21 @@ namespace Azure.Provisioning.Generator.Specifications;
 public class ArmSpecification : Specification
 {
     public ArmSpecification() :
-        base("Arm", typeof(ArmClient))
+        base("Arm", typeof(ArmClient), serviceDirectory: "provisioning")
     {
         Namespace = "Azure.Provisioning.Resources";
     }
 
     protected override void Customize()
     {
+        // Rename models first so downstream specs always resolve the correct
+        // provisioning names even when later customizations fail.
+        CustomizeModel<GenericResource>(m => m.Name = "GenericResource");
+        CustomizeModel<TagResource>(m => m.Name = "TagResource");
+        CustomizeModel<WritableSubResource>(m => m.Name = "WritableSubResource");
+        CustomizeModel<ExtendedLocation>(m => m.Name = "ExtendedAzureLocation");
+        CustomizeModel<UserAssignedIdentity>(m => m.Name = "UserAssignedIdentityDetails");
+
         // Remove misfires
         RemoveProperty<ManagementGroupResource>("CacheControl");
         RemoveProperty<ManagementGroupResource>("GroupId");
@@ -37,13 +43,9 @@ public class ArmSpecification : Specification
 
         // Patch models
         CustomizeResource<ResourceGroupResource>(r => r.FromExpression = true);
-        CustomizeModel<GenericResource>(m => m.Name = "GenericResource");
-        CustomizeModel<TagResource>(m => m.Name = "TagResource");
-        CustomizeModel<WritableSubResource>(m => m.Name = "WritableSubResource");
-        CustomizeModel<ExtendedLocation>(m => m.Name = "ExtendedAzureLocation");
-        CustomizeModel<UserAssignedIdentity>(m => m.Name = "UserAssignedIdentityDetails");
         CustomizeResource<SubscriptionResource>(r => r.FromExpression = true);
         CustomizeResource<TenantResource>(r => r.FromExpression = true);
+        CustomizeResource<ManagementLockResource>(r => r.HasScope = true);
         CustomizeProperty<ManagedServiceIdentity>("PrincipalId", p => p.Path = ["principalId"]);
         CustomizeProperty<ManagedServiceIdentity>("TenantId", p => p.Path = ["tenantId"]);
         CustomizeProperty<ManagedServiceIdentity>("ManagedServiceIdentityType", p => p.Path = ["type"]);

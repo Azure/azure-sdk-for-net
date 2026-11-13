@@ -128,17 +128,17 @@ namespace Azure.Messaging.EventHubs.Tests
                                     EventProcessorOptions actual,
                                     string constructorDescription)
             {
-                Assert.That(actual, Is.Not.Null, $"The processor options should have been created for the { constructorDescription } constructor.");
-                Assert.That(actual.ConnectionOptions.TransportType, Is.EqualTo(expected.ConnectionOptions.TransportType), $"The connection options are incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.RetryOptions.MaximumRetries, Is.EqualTo(expected.RetryOptions.MaximumRetries), $"The retry options are incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.Identifier, Is.EqualTo(expected.Identifier), $"The identifier is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.MaximumWaitTime, Is.EqualTo(expected.MaximumWaitTime), $"The maximum wait time is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.TrackLastEnqueuedEventProperties, Is.EqualTo(expected.TrackLastEnqueuedEventProperties), $"The last event tracking flag is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.DefaultStartingPosition, Is.EqualTo(expected.DefaultStartingPosition), $"The default starting position is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.LoadBalancingUpdateInterval, Is.EqualTo(expected.LoadBalancingUpdateInterval), $"The load balancing interval is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PartitionOwnershipExpirationInterval, Is.EqualTo(expected.PartitionOwnershipExpirationInterval), $"The ownership expiration interval incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PrefetchCount, Is.EqualTo(expected.PrefetchCount), $"The prefetch count is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PrefetchSizeInBytes, Is.EqualTo(expected.PrefetchSizeInBytes), $"The prefetch byte size is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual, Is.Not.Null, $"The processor options should have been created for the {constructorDescription} constructor.");
+                Assert.That(actual.ConnectionOptions.TransportType, Is.EqualTo(expected.ConnectionOptions.TransportType), $"The connection options are incorrect for the {constructorDescription} constructor.");
+                Assert.That(actual.RetryOptions.MaximumRetries, Is.EqualTo(expected.RetryOptions.MaximumRetries), $"The retry options are incorrect for the {constructorDescription} constructor.");
+                Assert.That(actual.Identifier, Is.EqualTo(expected.Identifier), $"The identifier is incorrect for the {constructorDescription} constructor.");
+                Assert.That(actual.MaximumWaitTime, Is.EqualTo(expected.MaximumWaitTime), $"The maximum wait time is incorrect for the {constructorDescription} constructor.");
+                Assert.That(actual.TrackLastEnqueuedEventProperties, Is.EqualTo(expected.TrackLastEnqueuedEventProperties), $"The last event tracking flag is incorrect for the {constructorDescription} constructor.");
+                Assert.That(actual.DefaultStartingPosition, Is.EqualTo(expected.DefaultStartingPosition), $"The default starting position is incorrect for the {constructorDescription} constructor.");
+                Assert.That(actual.LoadBalancingUpdateInterval, Is.EqualTo(expected.LoadBalancingUpdateInterval), $"The load balancing interval is incorrect for the {constructorDescription} constructor.");
+                Assert.That(actual.PartitionOwnershipExpirationInterval, Is.EqualTo(expected.PartitionOwnershipExpirationInterval), $"The ownership expiration interval incorrect for the {constructorDescription} constructor.");
+                Assert.That(actual.PrefetchCount, Is.EqualTo(expected.PrefetchCount), $"The prefetch count is incorrect for the {constructorDescription} constructor.");
+                Assert.That(actual.PrefetchSizeInBytes, Is.EqualTo(expected.PrefetchSizeInBytes), $"The prefetch byte size is incorrect for the {constructorDescription} constructor.");
             }
 
             var clientOptions = new EventProcessorClientOptions
@@ -272,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = Mock.Of<TokenCredential>();
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, namespaceUri, "dummy", credential);
 
             Assert.That(eventProcessor.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
@@ -957,14 +957,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventBatch.Length; ++index)
             {
-                Assert.That(capturedEventArgs[index].HasEvent, Is.True, $"The event arguments should contain an event at index { index }.");
+                Assert.That(capturedEventArgs[index].HasEvent, Is.True, $"The event arguments should contain an event at index {index}.");
                 Assert.That(capturedEventArgs[index].Partition.FullyQualifiedNamespace, Is.EqualTo(processorClient.FullyQualifiedNamespace), "The fully qualified namespace should have been propagated.");
                 Assert.That(capturedEventArgs[index].Partition.EventHubName, Is.EqualTo(processorClient.EventHubName), "The event hub name should have been propagated.");
                 Assert.That(capturedEventArgs[index].Partition.ConsumerGroup, Is.EqualTo(processorClient.ConsumerGroup), "The consumer group should have been propagated.");
-                Assert.That(capturedEventArgs[index].Partition.PartitionId, Is.EqualTo(partitionId), $"The partition identifier should have been propagated at index { index }.");
-                Assert.That(capturedEventArgs[index].Data.IsEquivalentTo(eventBatch[index]), Is.True, $"The event should have been propagated and order preserved at index { index }.");
-                Assert.That(capturedEventArgs[index].CancellationToken, Is.EqualTo(cancellationSource.Token), $"The cancellation token should have been propagated at index { index }.");
-                Assert.That(async () => await capturedEventArgs[index].UpdateCheckpointAsync(), Throws.Nothing, $"A checkpoint should be allowed for the event at index { index }.");
+                Assert.That(capturedEventArgs[index].Partition.PartitionId, Is.EqualTo(partitionId), $"The partition identifier should have been propagated at index {index}.");
+                Assert.That(capturedEventArgs[index].Data.IsEquivalentTo(eventBatch[index]), Is.True, $"The event should have been propagated and order preserved at index {index}.");
+                Assert.That(capturedEventArgs[index].CancellationToken, Is.EqualTo(cancellationSource.Token), $"The cancellation token should have been propagated at index {index}.");
+                Assert.That(async () => await capturedEventArgs[index].UpdateCheckpointAsync(), Throws.Nothing, $"A checkpoint should be allowed for the event at index {index}.");
 
                 mockCheckpointStore
                     .Verify(storage => storage.UpdateCheckpointAsync(
@@ -977,7 +977,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             csp.SequenceNumber == capturedEventArgs[index].Data.SequenceNumber),
                         It.IsAny<CancellationToken>()),
                     Times.Once,
-                    $"Creating a checkpoint for index { index } should have invoked the storage manager correctly.");
+                    $"Creating a checkpoint for index {index} should have invoked the storage manager correctly.");
             }
 
             cancellationSource.Cancel();

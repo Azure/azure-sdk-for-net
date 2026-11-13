@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update source control operation. </summary>
     public partial class AutomationSourceControlPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationSourceControlPatch"/>. </summary>
         public AutomationSourceControlPatch()
@@ -51,35 +22,117 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationSourceControlPatch"/>. </summary>
-        /// <param name="branch"> The repo branch of the source control. </param>
-        /// <param name="folderPath"> The folder path of the source control. Path must be relative. </param>
-        /// <param name="isAutoSyncEnabled"> The auto sync of the source control. Default is false. </param>
-        /// <param name="isAutoPublishRunbookEnabled"> The auto publish of the source control. Default is true. </param>
-        /// <param name="securityToken"> The authorization token for the repo of the source control. </param>
-        /// <param name="description"> The user description of the source control. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationSourceControlPatch(string branch, string folderPath, bool? isAutoSyncEnabled, bool? isAutoPublishRunbookEnabled, SourceControlSecurityTokenProperties securityToken, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The value of the source control. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationSourceControlPatch(SourceControlUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Branch = branch;
-            FolderPath = folderPath;
-            IsAutoSyncEnabled = isAutoSyncEnabled;
-            IsAutoPublishRunbookEnabled = isAutoPublishRunbookEnabled;
-            SecurityToken = securityToken;
-            Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The value of the source control. </summary>
+        internal SourceControlUpdateProperties Properties { get; set; }
+
         /// <summary> The repo branch of the source control. </summary>
-        public string Branch { get; set; }
+        public string Branch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Branch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlUpdateProperties();
+                }
+                Properties.Branch = value;
+            }
+        }
+
         /// <summary> The folder path of the source control. Path must be relative. </summary>
-        public string FolderPath { get; set; }
+        public string FolderPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FolderPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlUpdateProperties();
+                }
+                Properties.FolderPath = value;
+            }
+        }
+
         /// <summary> The auto sync of the source control. Default is false. </summary>
-        public bool? IsAutoSyncEnabled { get; set; }
+        public bool? IsAutoSyncEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAutoSyncEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlUpdateProperties();
+                }
+                Properties.IsAutoSyncEnabled = value;
+            }
+        }
+
         /// <summary> The auto publish of the source control. Default is true. </summary>
-        public bool? IsAutoPublishRunbookEnabled { get; set; }
+        public bool? IsAutoPublishRunbookEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAutoPublishRunbookEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlUpdateProperties();
+                }
+                Properties.IsAutoPublishRunbookEnabled = value;
+            }
+        }
+
         /// <summary> The authorization token for the repo of the source control. </summary>
-        public SourceControlSecurityTokenProperties SecurityToken { get; set; }
+        public SourceControlSecurityTokenProperties SecurityToken
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityToken;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlUpdateProperties();
+                }
+                Properties.SecurityToken = value;
+            }
+        }
+
         /// <summary> The user description of the source control. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlUpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
     }
 }

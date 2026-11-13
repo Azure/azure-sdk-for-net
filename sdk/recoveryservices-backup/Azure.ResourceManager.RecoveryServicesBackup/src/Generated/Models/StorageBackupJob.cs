@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,11 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class StorageBackupJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of <see cref="StorageBackupJob"/>. </summary>
-        public StorageBackupJob()
+        public StorageBackupJob() : base("AzureStorageJob")
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
             ErrorDetails = new ChangeTrackingList<StorageErrorInfo>();
-            JobType = "AzureStorageJob";
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageBackupJob"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="endOn"> The end time. </param>
         /// <param name="activityId"> ActivityId of job. </param>
         /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="duration"> Time elapsed during the execution of this job. </param>
         /// <param name="actionsInfo"> Gets or sets the state/actions applicable on this job like cancel/retry. </param>
         /// <param name="errorDetails"> Error details on execution of this job. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="storageAccountVersion"> Specifies whether the Storage account is a Classic or an Azure Resource Manager Storage account. </param>
         /// <param name="extendedInfo"> Additional information about the job. </param>
         /// <param name="isUserTriggered"> Indicated that whether the job is adhoc(true) or scheduled(false). </param>
-        internal StorageBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, IList<StorageErrorInfo> errorDetails, string storageAccountName, string storageAccountVersion, StorageBackupJobExtendedInfo extendedInfo, bool? isUserTriggered) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, serializedAdditionalRawData)
+        internal StorageBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, IList<StorageErrorInfo> errorDetails, string storageAccountName, string storageAccountVersion, StorageBackupJobExtendedInfo extendedInfo, bool? isUserTriggered) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, additionalBinaryDataProperties)
         {
             Duration = duration;
             ActionsInfo = actionsInfo;
@@ -47,21 +47,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             StorageAccountVersion = storageAccountVersion;
             ExtendedInfo = extendedInfo;
             IsUserTriggered = isUserTriggered;
-            JobType = jobType ?? "AzureStorageJob";
         }
 
         /// <summary> Time elapsed during the execution of this job. </summary>
         public TimeSpan? Duration { get; set; }
+
         /// <summary> Gets or sets the state/actions applicable on this job like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
+
         /// <summary> Error details on execution of this job. </summary>
         public IList<StorageErrorInfo> ErrorDetails { get; }
+
         /// <summary> Specifies friendly name of the storage account. </summary>
         public string StorageAccountName { get; set; }
+
         /// <summary> Specifies whether the Storage account is a Classic or an Azure Resource Manager Storage account. </summary>
         public string StorageAccountVersion { get; set; }
+
         /// <summary> Additional information about the job. </summary>
         public StorageBackupJobExtendedInfo ExtendedInfo { get; set; }
+
         /// <summary> Indicated that whether the job is adhoc(true) or scheduled(false). </summary>
         public bool? IsUserTriggered { get; set; }
     }

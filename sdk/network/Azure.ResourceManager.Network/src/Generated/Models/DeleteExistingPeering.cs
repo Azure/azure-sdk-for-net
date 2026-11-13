@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct DeleteExistingPeering : IEquatable<DeleteExistingPeering>
     {
         private readonly string _value;
+        /// <summary> False. </summary>
+        private const string FalseValue = "False";
+        /// <summary> True. </summary>
+        private const string TrueValue = "True";
 
         /// <summary> Initializes a new instance of <see cref="DeleteExistingPeering"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeleteExistingPeering(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FalseValue = "False";
-        private const string TrueValue = "True";
+            _value = value;
+        }
 
         /// <summary> False. </summary>
         public static DeleteExistingPeering False { get; } = new DeleteExistingPeering(FalseValue);
+
         /// <summary> True. </summary>
         public static DeleteExistingPeering True { get; } = new DeleteExistingPeering(TrueValue);
+
         /// <summary> Determines if two <see cref="DeleteExistingPeering"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeleteExistingPeering left, DeleteExistingPeering right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeleteExistingPeering"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeleteExistingPeering left, DeleteExistingPeering right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeleteExistingPeering"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeleteExistingPeering"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeleteExistingPeering(string value) => new DeleteExistingPeering(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeleteExistingPeering"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeleteExistingPeering?(string value) => value == null ? null : new DeleteExistingPeering(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeleteExistingPeering other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeleteExistingPeering other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

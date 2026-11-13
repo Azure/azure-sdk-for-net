@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub GcmCredential. </summary>
     public partial class NotificationHubGcmCredential
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubGcmCredential"/>. </summary>
         /// <param name="gcmApiKey"> Gets or sets the Google API key. </param>
@@ -52,23 +24,53 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
             Argument.AssertNotNull(gcmApiKey, nameof(gcmApiKey));
 
-            GcmApiKey = gcmApiKey;
+            Properties = new GcmCredentialProperties(gcmApiKey);
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubGcmCredential"/>. </summary>
-        /// <param name="gcmEndpoint"> Gets or sets the GCM endpoint. </param>
-        /// <param name="gcmApiKey"> Gets or sets the Google API key. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubGcmCredential(Uri gcmEndpoint, string gcmApiKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Description of a NotificationHub GcmCredential. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubGcmCredential(GcmCredentialProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            GcmEndpoint = gcmEndpoint;
-            GcmApiKey = gcmApiKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Description of a NotificationHub GcmCredential. </summary>
+        internal GcmCredentialProperties Properties { get; set; }
+
         /// <summary> Gets or sets the GCM endpoint. </summary>
-        public Uri GcmEndpoint { get; set; }
+        public Uri GcmEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GcmEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GcmCredentialProperties();
+                }
+                Properties.GcmEndpoint = value;
+            }
+        }
+
         /// <summary> Gets or sets the Google API key. </summary>
-        public string GcmApiKey { get; set; }
+        public string GcmApiKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GcmApiKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GcmCredentialProperties();
+                }
+                Properties.GcmApiKey = value;
+            }
+        }
     }
 }

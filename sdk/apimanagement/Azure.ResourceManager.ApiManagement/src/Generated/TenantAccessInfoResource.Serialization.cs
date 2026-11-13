@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class TenantAccessInfoResource : IJsonModel<TenantAccessInfoData>
     {
-        private static TenantAccessInfoData s_dataDeserializationInstance;
-        private static TenantAccessInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TenantAccessInfoData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TenantAccessInfoData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TenantAccessInfoData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TenantAccessInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TenantAccessInfoData>)Data).Write(writer, options);
 
-        TenantAccessInfoData IJsonModel<TenantAccessInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TenantAccessInfoData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TenantAccessInfoData IJsonModel<TenantAccessInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TenantAccessInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TenantAccessInfoData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TenantAccessInfoData IPersistableModel<TenantAccessInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantAccessInfoData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<TenantAccessInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TenantAccessInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TenantAccessInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

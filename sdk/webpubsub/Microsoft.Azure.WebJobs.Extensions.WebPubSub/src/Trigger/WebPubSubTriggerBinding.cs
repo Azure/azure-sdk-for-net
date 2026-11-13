@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -13,6 +14,7 @@ using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Azure.WebPubSub.Common;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -22,14 +24,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private readonly ParameterInfo _parameterInfo;
         private readonly WebPubSubTriggerAttribute _attribute;
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
-        private readonly WebPubSubFunctionsOptions _options;
+        private readonly WebPubSubServiceAccessOptions _options;
+        private readonly WebPubSubServiceAccessFactory _accessFactory;
+        private readonly ILogger _logger;
 
-        public WebPubSubTriggerBinding(ParameterInfo parameterInfo, WebPubSubTriggerAttribute attribute, WebPubSubFunctionsOptions options, IWebPubSubTriggerDispatcher dispatcher)
+        public WebPubSubTriggerBinding(ParameterInfo parameterInfo, WebPubSubTriggerAttribute attribute, WebPubSubServiceAccessOptions options, IWebPubSubTriggerDispatcher dispatcher, WebPubSubServiceAccessFactory accessFactory, ILogger logger)
         {
             _parameterInfo = parameterInfo ?? throw new ArgumentNullException(nameof(parameterInfo));
             _attribute = attribute ?? throw new ArgumentNullException(nameof(attribute));
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             _options = options ?? throw new ArgumentNullException(nameof(options));
+            _accessFactory = accessFactory ?? throw new ArgumentNullException(nameof(accessFactory));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             BindingDataContract = CreateBindingContract(parameterInfo);
         }
@@ -71,11 +77,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             var attributeName = Utilities.GetFunctionKey(hub, _attribute.EventType, _attribute.EventName, _attribute.ClientProtocols);
             var listernerKey = attributeName;
 
-            var validationOptions = _attribute.Connections != null ?
-                new WebPubSubValidationOptions(_attribute.Connections) :
-                new WebPubSubValidationOptions(_options.ConnectionString);
+            _logger.LogInformation(
+                "[WebPubSubTriggerBinding] hub='{Hub}' eventType='{EventType}' eventName='{EventName}' Connections={Connections}",
+                hub,
+                _attribute.EventType,
+                _attribute.EventName,
+                _attribute.Connections == null ? "<null>" : "[" + string.Join(",", _attribute.Connections.Select(c => c ?? "<null>")) + "]");
 
-            return Task.FromResult<IListener>(new WebPubSubListener(context.Executor, listernerKey, _dispatcher, validationOptions));
+            var accesses = _accessFactory.ResolveAccessesOrDefault(_attribute.Connections, _options.WebPubSubAccess);
+            var validator = new RequestValidator(accesses, _logger);
+
+            return Task.FromResult<IListener>(new WebPubSubListener(context.Executor, listernerKey, _dispatcher, validator));
         }
 
         public ParameterDescriptor ToParameterDescriptor()

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataBoxShippingAddressTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataBoxShippingAddressType value) => value switch
         {
             DataBoxShippingAddressType.None => "None",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxShippingAddressType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataBoxShippingAddressType ToDataBoxShippingAddressType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return DataBoxShippingAddressType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Residential")) return DataBoxShippingAddressType.Residential;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commercial")) return DataBoxShippingAddressType.Commercial;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return DataBoxShippingAddressType.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Residential"))
+            {
+                return DataBoxShippingAddressType.Residential;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commercial"))
+            {
+                return DataBoxShippingAddressType.Commercial;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxShippingAddressType value.");
         }
     }

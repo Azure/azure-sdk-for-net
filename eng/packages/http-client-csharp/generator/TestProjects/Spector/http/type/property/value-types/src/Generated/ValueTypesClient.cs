@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace _Type.Property.ValueTypes
@@ -14,7 +15,12 @@ namespace _Type.Property.ValueTypes
     {
         public ValueTypesClient() : this(new Uri("http://localhost:3000"), new ValueTypesClientOptions()) => throw null;
 
-        public ValueTypesClient(Uri endpoint, ValueTypesClientOptions options) => throw null;
+        internal ValueTypesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ValueTypesClientOptions options) => throw null;
+
+        public ValueTypesClient(Uri endpoint, ValueTypesClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public ValueTypesClient(ValueTypesClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedInstanceServerTrustCertificateResource : IJsonModel<ServerTrustCertificateData>
     {
-        private static ServerTrustCertificateData s_dataDeserializationInstance;
-        private static ServerTrustCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ServerTrustCertificateData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ServerTrustCertificateData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServerTrustCertificateData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerTrustCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServerTrustCertificateData>)Data).Write(writer, options);
 
-        ServerTrustCertificateData IJsonModel<ServerTrustCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServerTrustCertificateData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerTrustCertificateData IJsonModel<ServerTrustCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServerTrustCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServerTrustCertificateData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ServerTrustCertificateData IPersistableModel<ServerTrustCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServerTrustCertificateData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ServerTrustCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServerTrustCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServerTrustCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

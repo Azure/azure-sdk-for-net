@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SignalR.Models;
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ManagedIdentitySettings))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
@@ -22,15 +23,17 @@ namespace Azure.ResourceManager.SignalR
     [ModelReaderWriterBuildable(typeof(ServerlessUpstreamSettings))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkResourceType))]
+    [ModelReaderWriterBuildable(typeof(SignalRApplicationFirewallSettings))]
+    [ModelReaderWriterBuildable(typeof(SignalRClientConnectionCountRule))]
+    [ModelReaderWriterBuildable(typeof(SignalRClientTrafficControlRule))]
     [ModelReaderWriterBuildable(typeof(SignalRCorsSettings))]
     [ModelReaderWriterBuildable(typeof(SignalRCustomCertificateData))]
-    [ModelReaderWriterBuildable(typeof(SignalRCustomCertificateListResult))]
     [ModelReaderWriterBuildable(typeof(SignalRCustomCertificateResource))]
     [ModelReaderWriterBuildable(typeof(SignalRCustomDomainData))]
-    [ModelReaderWriterBuildable(typeof(SignalRCustomDomainListResult))]
     [ModelReaderWriterBuildable(typeof(SignalRCustomDomainResource))]
     [ModelReaderWriterBuildable(typeof(SignalRData))]
     [ModelReaderWriterBuildable(typeof(SignalRFeature))]
+    [ModelReaderWriterBuildable(typeof(SignalRIPRule))]
     [ModelReaderWriterBuildable(typeof(SignalRKeys))]
     [ModelReaderWriterBuildable(typeof(SignalRLiveTraceCategory))]
     [ModelReaderWriterBuildable(typeof(SignalRLiveTraceConfiguration))]
@@ -46,18 +49,28 @@ namespace Azure.ResourceManager.SignalR
     [ModelReaderWriterBuildable(typeof(SignalRPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SignalRPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(SignalRRegenerateKeyContent))]
+    [ModelReaderWriterBuildable(typeof(SignalRReplicaData))]
+    [ModelReaderWriterBuildable(typeof(SignalRReplicaResource))]
+    [ModelReaderWriterBuildable(typeof(SignalRReplicaSharedPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(SignalRResource))]
     [ModelReaderWriterBuildable(typeof(SignalRResourceList))]
     [ModelReaderWriterBuildable(typeof(SignalRResourceLogCategory))]
-    [ModelReaderWriterBuildable(typeof(SignalRResourceLogCategoryListResult))]
     [ModelReaderWriterBuildable(typeof(SignalRResourceSku))]
+    [ModelReaderWriterBuildable(typeof(SignalRRouteSettings))]
+    [ModelReaderWriterBuildable(typeof(SignalRServerlessSettings))]
     [ModelReaderWriterBuildable(typeof(SignalRSharedPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(SignalRSharedPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(SignalRSharedPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SignalRSku))]
     [ModelReaderWriterBuildable(typeof(SignalRSkuCapacity))]
     [ModelReaderWriterBuildable(typeof(SignalRSkuListResult))]
+    [ModelReaderWriterBuildable(typeof(SignalRThrottleByJwtCustomClaimRule))]
+    [ModelReaderWriterBuildable(typeof(SignalRThrottleByJwtSignatureRule))]
+    [ModelReaderWriterBuildable(typeof(SignalRThrottleByUserIdRule))]
     [ModelReaderWriterBuildable(typeof(SignalRTlsSettings))]
+    [ModelReaderWriterBuildable(typeof(SignalRTrafficThrottleByJwtCustomClaimRule))]
+    [ModelReaderWriterBuildable(typeof(SignalRTrafficThrottleByJwtSignatureRule))]
+    [ModelReaderWriterBuildable(typeof(SignalRTrafficThrottleByUserIdRule))]
     [ModelReaderWriterBuildable(typeof(SignalRUpstreamAuthSettings))]
     [ModelReaderWriterBuildable(typeof(SignalRUpstreamTemplate))]
     [ModelReaderWriterBuildable(typeof(SignalRUsage))]

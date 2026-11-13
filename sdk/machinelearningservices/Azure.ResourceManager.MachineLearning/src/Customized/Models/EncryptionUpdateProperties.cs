@@ -17,5 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             KeyVaultProperties = new EncryptionKeyVaultUpdateProperties(keyIdentifier);
         }
+
+        // The generated constructor follows the current TypeSpec shape, but GA exposed this keyVaultProperties-only overload.
+        // TypeSpec decorators cannot create constructor overloads, so keep the compatibility overload in SDK custom code.
+        /// <summary> Initializes a new instance of <see cref="EncryptionUpdateProperties"/>. </summary>
+        public EncryptionUpdateProperties(EncryptionKeyVaultUpdateProperties keyVaultProperties) : this(keyVaultProperties, null)
+        {
+        }
     }
 }

@@ -544,9 +544,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType Standby { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType left, Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType (string value) { throw null; }
@@ -636,9 +634,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.CentralServerVirtualMachineType Standby { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.CentralServerVirtualMachineType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.CentralServerVirtualMachineType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.CentralServerVirtualMachineType left, Azure.ResourceManager.Workloads.Models.CentralServerVirtualMachineType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.CentralServerVirtualMachineType (string value) { throw null; }
@@ -796,9 +792,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName StandardSsdZrs { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName UltraSsdLrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName left, Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName (string value) { throw null; }
@@ -844,9 +838,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.EnqueueReplicationServerType EnqueueReplicator1 { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.EnqueueReplicationServerType EnqueueReplicator2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.EnqueueReplicationServerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.EnqueueReplicationServerType left, Azure.ResourceManager.Workloads.Models.EnqueueReplicationServerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.EnqueueReplicationServerType (string value) { throw null; }
@@ -967,9 +959,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType None { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType (string value) { throw null; }
@@ -1173,9 +1163,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public SapDatabaseScaleMethod(string value) { throw null; }
         public static Azure.ResourceManager.Workloads.Models.SapDatabaseScaleMethod ScaleUp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapDatabaseScaleMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapDatabaseScaleMethod left, Azure.ResourceManager.Workloads.Models.SapDatabaseScaleMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapDatabaseScaleMethod (string value) { throw null; }
@@ -1191,9 +1179,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapDatabaseType DB2 { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapDatabaseType Hana { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapDatabaseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapDatabaseType left, Azure.ResourceManager.Workloads.Models.SapDatabaseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapDatabaseType (string value) { throw null; }
@@ -1209,9 +1195,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapDeploymentType SingleServer { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapDeploymentType ThreeTier { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapDeploymentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapDeploymentType left, Azure.ResourceManager.Workloads.Models.SapDeploymentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapDeploymentType (string value) { throw null; }
@@ -1266,9 +1250,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapEnvironmentType NonProd { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapEnvironmentType Prod { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapEnvironmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapEnvironmentType left, Azure.ResourceManager.Workloads.Models.SapEnvironmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapEnvironmentType (string value) { throw null; }
@@ -1286,9 +1268,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapHealthState Unhealthy { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapHealthState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapHealthState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapHealthState left, Azure.ResourceManager.Workloads.Models.SapHealthState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapHealthState (string value) { throw null; }
@@ -1304,9 +1284,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType AvailabilitySet { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType AvailabilityZone { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType left, Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType (string value) { throw null; }
@@ -1379,9 +1357,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState left, Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState (string value) { throw null; }
@@ -1479,9 +1455,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapProductType Other { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapProductType S4Hana { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapProductType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapProductType left, Azure.ResourceManager.Workloads.Models.SapProductType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapProductType (string value) { throw null; }
@@ -1497,9 +1471,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapRoutingPreference Default { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapRoutingPreference RouteAll { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapRoutingPreference other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapRoutingPreference left, Azure.ResourceManager.Workloads.Models.SapRoutingPreference right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapRoutingPreference (string value) { throw null; }
@@ -1578,9 +1550,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapSslPreference RootCertificate { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapSslPreference ServerCertificate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapSslPreference other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapSslPreference left, Azure.ResourceManager.Workloads.Models.SapSslPreference right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapSslPreference (string value) { throw null; }
@@ -1675,9 +1645,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState left, Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState (string value) { throw null; }
@@ -1703,9 +1671,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareInstallationInProgress { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareInstallationPending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState left, Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState (string value) { throw null; }
@@ -1726,9 +1692,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus Stopping { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus left, Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus (string value) { throw null; }
@@ -1959,9 +1923,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState left, Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState (string value) { throw null; }

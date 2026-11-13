@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the asset status properties. </summary>
     public partial class DeviceRegistryAssetStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetStatus"/>. </summary>
         internal DeviceRegistryAssetStatus()
@@ -58,22 +30,25 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="version"> A read only incremental counter indicating the number of times the configuration has been modified from the perspective of the current actual (Edge) state of the Asset. Edge would be the only writer of this value and would sync back up to the cloud. In steady state, this should equal version. </param>
         /// <param name="datasets"> Array of dataset statuses that describe the status of each dataset. </param>
         /// <param name="events"> Array of event statuses that describe the status of each event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryAssetStatus(IReadOnlyList<DeviceRegistryAssetStatusError> errors, long? version, IReadOnlyList<DeviceRegistryAssetStatusDataset> datasets, IReadOnlyList<DeviceRegistryAssetStatusEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceRegistryAssetStatus(IReadOnlyList<DeviceRegistryAssetStatusError> errors, long? version, IReadOnlyList<DeviceRegistryAssetStatusDataset> datasets, IReadOnlyList<DeviceRegistryAssetStatusEvent> events, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             Version = version;
             Datasets = datasets;
             Events = events;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array object to transfer and persist errors that originate from the Edge. </summary>
         public IReadOnlyList<DeviceRegistryAssetStatusError> Errors { get; }
+
         /// <summary> A read only incremental counter indicating the number of times the configuration has been modified from the perspective of the current actual (Edge) state of the Asset. Edge would be the only writer of this value and would sync back up to the cloud. In steady state, this should equal version. </summary>
         public long? Version { get; }
+
         /// <summary> Array of dataset statuses that describe the status of each dataset. </summary>
         public IReadOnlyList<DeviceRegistryAssetStatusDataset> Datasets { get; }
+
         /// <summary> Array of event statuses that describe the status of each event. </summary>
         public IReadOnlyList<DeviceRegistryAssetStatusEvent> Events { get; }
     }

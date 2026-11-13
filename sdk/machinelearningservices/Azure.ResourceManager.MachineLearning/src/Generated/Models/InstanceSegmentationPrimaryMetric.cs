@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct InstanceSegmentationPrimaryMetric : IEquatable<InstanceSegmentationPrimaryMetric>
     {
         private readonly string _value;
+        /// <summary>
+        /// Mean Average Precision (MAP) is the average of AP (Average Precision).
+        /// AP is calculated for each class and averaged to get the MAP.
+        /// </summary>
+        private const string MeanAveragePrecisionValue = "MeanAveragePrecision";
 
         /// <summary> Initializes a new instance of <see cref="InstanceSegmentationPrimaryMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InstanceSegmentationPrimaryMetric(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MeanAveragePrecisionValue = "MeanAveragePrecision";
+            _value = value;
+        }
 
         /// <summary>
         /// Mean Average Precision (MAP) is the average of AP (Average Precision).
         /// AP is calculated for each class and averaged to get the MAP.
         /// </summary>
         public static InstanceSegmentationPrimaryMetric MeanAveragePrecision { get; } = new InstanceSegmentationPrimaryMetric(MeanAveragePrecisionValue);
+
         /// <summary> Determines if two <see cref="InstanceSegmentationPrimaryMetric"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InstanceSegmentationPrimaryMetric left, InstanceSegmentationPrimaryMetric right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InstanceSegmentationPrimaryMetric"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InstanceSegmentationPrimaryMetric left, InstanceSegmentationPrimaryMetric right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InstanceSegmentationPrimaryMetric"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InstanceSegmentationPrimaryMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InstanceSegmentationPrimaryMetric(string value) => new InstanceSegmentationPrimaryMetric(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InstanceSegmentationPrimaryMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InstanceSegmentationPrimaryMetric?(string value) => value == null ? null : new InstanceSegmentationPrimaryMetric(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InstanceSegmentationPrimaryMetric other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InstanceSegmentationPrimaryMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

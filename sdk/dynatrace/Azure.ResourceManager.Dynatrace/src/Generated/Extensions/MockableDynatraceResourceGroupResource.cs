@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Dynatrace;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dynatrace.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDynatraceResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDynatraceResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDynatraceResourceGroupResource for mocking. </summary>
         protected MockableDynatraceResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDynatraceResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDynatraceResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDynatraceResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DynatraceMonitorResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DynatraceMonitorResources and their operations over a DynatraceMonitorResource. </returns>
+        /// <summary> Gets a collection of DynatraceMonitors in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DynatraceMonitors and their operations over a DynatraceMonitorResource. </returns>
         public virtual DynatraceMonitorCollection GetDynatraceMonitors()
         {
             return GetCachedClient(client => new DynatraceMonitorCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// Get a MonitorResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DynatraceMonitorResource>> GetDynatraceMonitorAsync(string monitorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
             return await GetDynatraceMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// Get a MonitorResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-24. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         [ForwardsClientCalls]
         public virtual Response<DynatraceMonitorResource> GetDynatraceMonitor(string monitorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
             return GetDynatraceMonitors().Get(monitorName, cancellationToken);
         }
     }

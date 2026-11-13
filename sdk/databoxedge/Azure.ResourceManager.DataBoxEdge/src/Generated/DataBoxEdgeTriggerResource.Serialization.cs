@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
+    /// <summary></summary>
     public partial class DataBoxEdgeTriggerResource : IJsonModel<DataBoxEdgeTriggerData>
     {
-        private static DataBoxEdgeTriggerData s_dataDeserializationInstance;
-        private static DataBoxEdgeTriggerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataBoxEdgeTriggerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataBoxEdgeTriggerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataBoxEdgeTriggerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeTriggerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeTriggerData>)Data).Write(writer, options);
 
-        DataBoxEdgeTriggerData IJsonModel<DataBoxEdgeTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeTriggerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeTriggerData IJsonModel<DataBoxEdgeTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataBoxEdgeTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeTriggerData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataBoxEdgeTriggerData IPersistableModel<DataBoxEdgeTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeTriggerData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DataBoxEdgeTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeTriggerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxEdgeTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ExportScheduleRecurrenceType : IEquatable<ExportScheduleRecurrenceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ExportScheduleRecurrenceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExportScheduleRecurrenceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DailyValue = "Daily";
         private const string WeeklyValue = "Weekly";
         private const string MonthlyValue = "Monthly";
         private const string AnnuallyValue = "Annually";
 
-        /// <summary> Daily. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportScheduleRecurrenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExportScheduleRecurrenceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Daily. </summary>
         public static ExportScheduleRecurrenceType Daily { get; } = new ExportScheduleRecurrenceType(DailyValue);
-        /// <summary> Weekly. </summary>
+
+        /// <summary> Gets the Weekly. </summary>
         public static ExportScheduleRecurrenceType Weekly { get; } = new ExportScheduleRecurrenceType(WeeklyValue);
-        /// <summary> Monthly. </summary>
+
+        /// <summary> Gets the Monthly. </summary>
         public static ExportScheduleRecurrenceType Monthly { get; } = new ExportScheduleRecurrenceType(MonthlyValue);
-        /// <summary> Annually. </summary>
+
+        /// <summary> Gets the Annually. </summary>
         public static ExportScheduleRecurrenceType Annually { get; } = new ExportScheduleRecurrenceType(AnnuallyValue);
+
         /// <summary> Determines if two <see cref="ExportScheduleRecurrenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExportScheduleRecurrenceType left, ExportScheduleRecurrenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExportScheduleRecurrenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExportScheduleRecurrenceType left, ExportScheduleRecurrenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportScheduleRecurrenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExportScheduleRecurrenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExportScheduleRecurrenceType(string value) => new ExportScheduleRecurrenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExportScheduleRecurrenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExportScheduleRecurrenceType?(string value) => value == null ? null : new ExportScheduleRecurrenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExportScheduleRecurrenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExportScheduleRecurrenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

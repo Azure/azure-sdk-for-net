@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableSphereResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableSphereResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSphereResourceGroupResource for mocking. </summary>
         protected MockableSphereResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSphereResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSphereResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSphereResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of SphereCatalogResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SphereCatalogResources and their operations over a SphereCatalogResource. </returns>
+        /// <summary> Gets a collection of SphereCatalogs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SphereCatalogs and their operations over a SphereCatalogResource. </returns>
         public virtual SphereCatalogCollection GetSphereCatalogs()
         {
             return GetCachedClient(client => new SphereCatalogCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// Get a Catalog
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Catalogs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Sphere.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SphereCatalogResource>> GetSphereCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
             return await GetSphereCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// Get a Catalog
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Catalogs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Sphere.Mocking
         [ForwardsClientCalls]
         public virtual Response<SphereCatalogResource> GetSphereCatalog(string catalogName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
             return GetSphereCatalogs().Get(catalogName, cancellationToken);
         }
     }

@@ -1,0 +1,305 @@
+# Configuration and Dependency Injection
+
+This document demonstrates how to use the configuration and dependency injection
+features in `System.ClientModel`.
+
+> [!NOTE]
+> For each of the examples using environment variable configuration the name is derived from the convention defined [here](https://learn.microsoft.com/dotnet/core/extensions/configuration-providers#environment-variable-configuration-provider).
+
+## Table of Contents
+
+- [Simple Configuration Example](#simple-configuration-example)
+- [Advanced Configuration Example](#advanced-configuration-example)
+- [Simple Dependency Injection Example](#simple-dependency-injection-example)
+- [Keyed Services Example](#keyed-services-example)
+- [Overriding Credential Configuration](#overriding-credential-configuration)
+- [Custom Credential Resolver Example](#custom-credential-resolver-example)
+- [Dependency Injection with a Credential Resolver](#dependency-injection-with-a-credential-resolver)
+- [Configuration Reference Syntax](#configuration-reference-syntax)
+
+## Simple Configuration Example
+
+The simplest way to configure a client is to use the `GetClientSettings<T>` extension
+method with your application's configuration.  The sample here will load a configuration
+file named `appsettings.json` and also load the API key from an environment variable.
+
+**appsettings.json:**
+```json
+{
+  "MyClient": {
+    "Endpoint": "https://api.example.com",
+    "Credential": {
+      "CredentialSource": "ApiKey",
+      // "Key" is loaded from environment variable MyClient__Credential__Key
+    }
+  }
+}
+```
+
+```C# Snippet:SimpleConfigurationExample
+ConfigurationManager configuration = new();
+configuration.AddJsonFile("appsettings.json");
+
+MyClientSettings settings = configuration.GetClientSettings<MyClientSettings>("MyClient");
+MyClient client = new(settings);
+```
+
+## Advanced Configuration Example
+
+This example shows more advanced configuration options including pipeline options,
+retry settings, and logging.  Any public properties on the settings class can be set
+via configuration as long as the name and location match.
+
+**appsettings.json:**
+```json
+{
+  "MyClient": {
+    "Endpoint": "https://api.example.com",
+    "Credential": {
+      "CredentialSource": "ApiKey"
+      // "Key" is loaded from environment variable MyClient__Credential__Key
+    },
+    "Options": {
+      "NetworkTimeout": "00:00:30",
+      "EnableDistributedTracing": true",
+      "ClientLoggingOptions": {
+        "EnableLogging": true,
+        "MessageContentSizeLimit": 2048
+      }
+    }
+  }
+}
+```
+
+```C# Snippet:AdvancedConfigurationExample
+ConfigurationManager configuration = new();
+configuration.AddJsonFile("appsettings.json");
+configuration.AddEnvironmentVariables();
+
+MyClientSettings settings = configuration.GetClientSettings<MyClientSettings>("MyClient");
+MyClient client = new(settings);
+```
+
+## Simple Dependency Injection Example
+
+Use the `AddClient` extension method to register your client with the dependency injection container.
+
+**appsettings.json:**
+```json
+{
+  "MyClient": {
+    "Endpoint": "https://api.example.com",
+    "Credential": {
+      "CredentialSource": "ApiKey"
+      // "Key" is loaded from environment variable MyClient__Credential__Key
+    }
+  }
+}
+```
+
+```C# Snippet:SimpleDependencyInjectionExample
+HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+builder.AddClient<MyClient, MyClientSettings>("MyClient");
+
+IServiceProvider provider = builder.Services.BuildServiceProvider();
+
+MyClient client = provider.GetRequiredService<MyClient>();
+```
+
+## Keyed Services Example
+
+Register multiple instances of the same client type with different configurations using keyed services.
+
+**appsettings.json:**
+```json
+{
+  "Client1": {
+    "Endpoint": "https://api1.example.com",
+    "Credential": {
+      "CredentialSource": "ApiKey"
+      // "Key" is loaded from environment variable Client1__Credential__Key
+    }
+  },
+  "Client2": {
+    "Endpoint": "https://api2.example.com",
+    "Credential": {
+      "CredentialSource": "ApiKey"
+      // "Key" is loaded from environment variable Client2__Credential__Key
+    }
+  }
+}
+```
+
+```C# Snippet:KeyedServicesExample
+HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+builder.AddKeyedClient<MyClient, MyClientSettings>("client1", "Client1");
+builder.AddKeyedClient<MyClient, MyClientSettings>("client2", "Client2");
+
+IServiceProvider provider = builder.Services.BuildServiceProvider();
+
+MyClient client1 = provider.GetRequiredKeyedService<MyClient>("client1");
+MyClient client2 = provider.GetRequiredKeyedService<MyClient>("client2");
+```
+
+## Overriding Credential Configuration
+
+Override individual values on the credential section at registration time
+with `ConfigureCredential`. The supplied callback receives a writable view
+of the credential section before it is handed to the registered
+`CredentialResolver` chain — useful for pulling values such as the API
+`Key` from a secret store or environment variable rather than committing
+them to your `appsettings.json`.
+
+**appsettings.json:**
+```json
+{
+  "MyClient": {
+    "Endpoint": "https://api.example.com",
+    "Credential": {
+      "CredentialSource": "ApiKey"
+      // Key is injected at registration time from an environment variable
+    }
+  }
+}
+```
+
+```C# Snippet:OverridingCredentialsExample
+HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+builder.AddClient<MyClient, MyClientSettings>("MyClient")
+    .ConfigureCredential(credential =>
+        credential["Key"] = Environment.GetEnvironmentVariable("MY_API_KEY"));
+
+IServiceProvider provider = builder.Services.BuildServiceProvider();
+
+MyClient client = provider.GetRequiredService<MyClient>();
+```
+
+## Custom Credential Resolver Example
+
+`CredentialResolver` is the extensibility point for plugging new credential
+sources into the configuration pipeline. A resolver inspects a credential
+section (typically dispatching on `CredentialSource`) and returns an
+`AuthenticationTokenProvider` it knows how to construct, or returns `false`
+to defer to the next resolver in the chain.
+
+**MyCredentialResolver.cs:**
+```csharp
+public class MyCredentialResolver : CredentialResolver
+{
+    public override bool TryResolve(
+        IConfigurationSection credentialSection,
+        out AuthenticationTokenProvider? provider)
+    {
+        if (string.Equals(credentialSection["CredentialSource"], "MyCredential", StringComparison.OrdinalIgnoreCase))
+        {
+            provider = new MyTokenProvider();
+            return true;
+        }
+
+        provider = null;
+        return false;
+    }
+}
+```
+
+**appsettings.json:**
+```json
+{
+  "MyClient": {
+    "Endpoint": "https://api.example.com",
+    "Credential": {
+      "CredentialSource": "MyCredential"
+    }
+  }
+}
+```
+
+Use `IConfiguration.GetCredentialSettings` to walk a chain of resolvers against the
+named section. The first resolver whose `TryResolve` returns `true` wins. The
+returned `CredentialSettings` exposes the resolved provider via
+`TokenProvider` and the inline ApiKey via `Key`.
+
+```C# Snippet:CustomCredentialResolverExample
+ConfigurationManager configuration = new();
+configuration.AddJsonFile("appsettings.json");
+
+// Resolve the credential by walking a chain of CredentialResolver
+// instances against the named section. The first resolver whose
+// TryResolve returns true wins. The returned CredentialSettings
+// exposes the resolved provider via Credential.TokenProvider
+// and the inline ApiKey via Credential.Key.
+CredentialSettings? credential = configuration.GetCredentialSettings(
+    "MyClient:Credential",
+    new MyCredentialResolver());
+```
+
+## Dependency Injection with a Credential Resolver
+
+When using DI, register the resolver once with `AddCredentialResolver<T>`.
+`AddClient` and `AddKeyedClient` then auto-resolve credentials from the
+registered resolver chain.
+
+`AddCredentialResolver<T>` is idempotent by implementation type: calling it
+twice with the same `T` registers a single instance.
+
+**appsettings.json:**
+```json
+{
+  "MyClient": {
+    "Endpoint": "https://api.example.com",
+    "Credential": {
+      "CredentialSource": "MyCredential"
+    }
+  }
+}
+```
+
+```C# Snippet:DependencyInjectionWithCredentialResolverExample
+HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+
+// Register the resolver once. AddClient/AddKeyedClient will then
+// auto-resolve credentials from the registered resolver chain.
+builder.AddCredentialResolver<MyCredentialResolver>();
+builder.AddClient<MyClient, MyClientSettings>("MyClient");
+
+IServiceProvider provider = builder.Services.BuildServiceProvider();
+
+MyClient client = provider.GetRequiredService<MyClient>();
+```
+
+## Configuration Reference Syntax
+
+Use reference syntax to avoid duplicating configuration values across multiple sections.
+Reference another configuration value using a `$` followed by the path to the section
+you want to reference.  This makes it easier to maintain and update shared settings in one place.
+
+**appsettings.json:**
+```json
+{
+  "Shared": {
+    "Credential": {
+      "CredentialSource": "ApiKey"
+      // "Key" is loaded from environment variable Shared__Credential__Key
+    }
+  },
+  "Client1": {
+    "Endpoint": "https://api1.example.com",
+    "Credential": "$Shared:Credential"
+  },
+  "Client2": {
+    "Endpoint": "https://api2.example.com",
+    "Credential": "$Shared:Credential"
+  }
+}
+```
+
+```C# Snippet:ReferenceSyntaxExample
+HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+builder.AddKeyedClient<MyClient, MyClientSettings>("client1", "Client1");
+builder.AddKeyedClient<MyClient, MyClientSettings>("client2", "Client2");
+
+IServiceProvider provider = builder.Services.BuildServiceProvider();
+
+MyClient client1 = provider.GetRequiredKeyedService<MyClient>("client1");
+MyClient client2 = provider.GetRequiredKeyedService<MyClient>("client2");
+```

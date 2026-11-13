@@ -51,8 +51,8 @@ namespace Azure.Core.Tests
             Assert.NotNull(warningInvocation.Item2);
 
             Assert.AreEqual(2, verboseInvocations.Count);
-            Assert.True(verboseInvocations.Any(c=>c.Item1.EventName == "ErrorResponse"));
-            Assert.True(verboseInvocations.Any(c=>c.Item1.EventName == "Request"));
+            Assert.True(verboseInvocations.Any(c => c.Item1.EventName == "ErrorResponse"));
+            Assert.True(verboseInvocations.Any(c => c.Item1.EventName == "Request"));
         }
 
         [Test]

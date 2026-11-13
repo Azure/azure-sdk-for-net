@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationMongoDBShardKeyOrder : IEquatable<DataMigrationMongoDBShardKeyOrder>
     {
         private readonly string _value;
+        /// <summary> Forward. </summary>
+        private const string ForwardValue = "Forward";
+        /// <summary> Reverse. </summary>
+        private const string ReverseValue = "Reverse";
+        /// <summary> Hashed. </summary>
+        private const string HashedValue = "Hashed";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBShardKeyOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationMongoDBShardKeyOrder(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ForwardValue = "Forward";
-        private const string ReverseValue = "Reverse";
-        private const string HashedValue = "Hashed";
+            _value = value;
+        }
 
         /// <summary> Forward. </summary>
         public static DataMigrationMongoDBShardKeyOrder Forward { get; } = new DataMigrationMongoDBShardKeyOrder(ForwardValue);
+
         /// <summary> Reverse. </summary>
         public static DataMigrationMongoDBShardKeyOrder Reverse { get; } = new DataMigrationMongoDBShardKeyOrder(ReverseValue);
+
         /// <summary> Hashed. </summary>
         public static DataMigrationMongoDBShardKeyOrder Hashed { get; } = new DataMigrationMongoDBShardKeyOrder(HashedValue);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBShardKeyOrder"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationMongoDBShardKeyOrder left, DataMigrationMongoDBShardKeyOrder right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBShardKeyOrder"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationMongoDBShardKeyOrder left, DataMigrationMongoDBShardKeyOrder right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationMongoDBShardKeyOrder"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBShardKeyOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationMongoDBShardKeyOrder(string value) => new DataMigrationMongoDBShardKeyOrder(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBShardKeyOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationMongoDBShardKeyOrder?(string value) => value == null ? null : new DataMigrationMongoDBShardKeyOrder(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationMongoDBShardKeyOrder other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationMongoDBShardKeyOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="maxChunkSize">The maximum size of chunk to transfer in a single request.</param>
         public DownloadBlobToOptions(int maxChunkSize)
         {
-            _maxChunkSize= maxChunkSize;
+            _maxChunkSize = maxChunkSize;
         }
 
         /// <summary>

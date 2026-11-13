@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public readonly partial struct MetadataAssignmentEntity : IEquatable<MetadataAssignmentEntity>
     {
         private readonly string _value;
+        /// <summary> Assigned to API. </summary>
+        private const string ApiValue = "api";
+        /// <summary> Assigned to Environment. </summary>
+        private const string EnvironmentValue = "environment";
+        /// <summary> Assigned to Deployment. </summary>
+        private const string DeploymentValue = "deployment";
 
         /// <summary> Initializes a new instance of <see cref="MetadataAssignmentEntity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetadataAssignmentEntity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ApiValue = "api";
-        private const string EnvironmentValue = "environment";
-        private const string DeploymentValue = "deployment";
+            _value = value;
+        }
 
         /// <summary> Assigned to API. </summary>
         public static MetadataAssignmentEntity Api { get; } = new MetadataAssignmentEntity(ApiValue);
+
         /// <summary> Assigned to Environment. </summary>
         public static MetadataAssignmentEntity Environment { get; } = new MetadataAssignmentEntity(EnvironmentValue);
+
         /// <summary> Assigned to Deployment. </summary>
         public static MetadataAssignmentEntity Deployment { get; } = new MetadataAssignmentEntity(DeploymentValue);
+
         /// <summary> Determines if two <see cref="MetadataAssignmentEntity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MetadataAssignmentEntity left, MetadataAssignmentEntity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MetadataAssignmentEntity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MetadataAssignmentEntity left, MetadataAssignmentEntity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MetadataAssignmentEntity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MetadataAssignmentEntity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MetadataAssignmentEntity(string value) => new MetadataAssignmentEntity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MetadataAssignmentEntity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MetadataAssignmentEntity?(string value) => value == null ? null : new MetadataAssignmentEntity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MetadataAssignmentEntity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MetadataAssignmentEntity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

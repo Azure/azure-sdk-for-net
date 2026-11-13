@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlReplicaSynchronizationHealth : IEquatable<SqlReplicaSynchronizationHealth>
     {
         private readonly string _value;
+        /// <summary> NOT_HEALTHY. </summary>
+        private const string NotHealthyValue = "NOT_HEALTHY";
+        /// <summary> PARTIALLY_HEALTHY. </summary>
+        private const string PartiallyHealthyValue = "PARTIALLY_HEALTHY";
+        /// <summary> HEALTHY. </summary>
+        private const string HealthyValue = "HEALTHY";
 
         /// <summary> Initializes a new instance of <see cref="SqlReplicaSynchronizationHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlReplicaSynchronizationHealth(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotHealthyValue = "NOT_HEALTHY";
-        private const string PartiallyHealthyValue = "PARTIALLY_HEALTHY";
-        private const string HealthyValue = "HEALTHY";
+            _value = value;
+        }
 
         /// <summary> NOT_HEALTHY. </summary>
         public static SqlReplicaSynchronizationHealth NotHealthy { get; } = new SqlReplicaSynchronizationHealth(NotHealthyValue);
+
         /// <summary> PARTIALLY_HEALTHY. </summary>
         public static SqlReplicaSynchronizationHealth PartiallyHealthy { get; } = new SqlReplicaSynchronizationHealth(PartiallyHealthyValue);
+
         /// <summary> HEALTHY. </summary>
         public static SqlReplicaSynchronizationHealth Healthy { get; } = new SqlReplicaSynchronizationHealth(HealthyValue);
+
         /// <summary> Determines if two <see cref="SqlReplicaSynchronizationHealth"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlReplicaSynchronizationHealth left, SqlReplicaSynchronizationHealth right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlReplicaSynchronizationHealth"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlReplicaSynchronizationHealth left, SqlReplicaSynchronizationHealth right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlReplicaSynchronizationHealth"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlReplicaSynchronizationHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlReplicaSynchronizationHealth(string value) => new SqlReplicaSynchronizationHealth(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlReplicaSynchronizationHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlReplicaSynchronizationHealth?(string value) => value == null ? null : new SqlReplicaSynchronizationHealth(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlReplicaSynchronizationHealth other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlReplicaSynchronizationHealth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

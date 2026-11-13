@@ -1,0 +1,18 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/connectedvmwarevsphere/**/*'
+    words:
+      - cpus
+      - ctlr
+      - lsilogic
+      - lsilogicsas
+      - nic
+      - pcnet
+      - pmem
+      - pvscsi
+      - sesparse
+      - vcenter
+      - vm
+      - vmware
+      - vsphere

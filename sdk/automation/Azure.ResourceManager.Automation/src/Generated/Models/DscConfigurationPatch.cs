@@ -7,85 +7,106 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the create or update configuration operation. </summary>
     public partial class DscConfigurationPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DscConfigurationPatch"/>. </summary>
         public DscConfigurationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DscConfigurationPatch"/>. </summary>
+        /// <param name="properties"> Gets or sets configuration create or update properties. </param>
         /// <param name="name"> Gets or sets name of the resource. </param>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
-        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
-        /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
-        /// <param name="source"> Gets or sets the source. </param>
-        /// <param name="parameters"> Gets or sets the configuration parameters. </param>
-        /// <param name="description"> Gets or sets the description of the configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscConfigurationPatch(string name, IDictionary<string, string> tags, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, AutomationContentSource source, IDictionary<string, DscConfigurationParameterDefinition> parameters, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DscConfigurationPatch(DscConfigurationCreateOrUpdateProperties properties, string name, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Name = name;
             Tags = tags;
-            IsLogVerboseEnabled = isLogVerboseEnabled;
-            IsLogProgressEnabled = isLogProgressEnabled;
-            Source = source;
-            Parameters = parameters;
-            Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets or sets configuration create or update properties. </summary>
+        internal DscConfigurationCreateOrUpdateProperties Properties { get; set; }
 
         /// <summary> Gets or sets name of the resource. </summary>
         public string Name { get; set; }
+
         /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Gets or sets verbose log option. </summary>
-        public bool? IsLogVerboseEnabled { get; set; }
+        public bool? IsLogVerboseEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLogVerboseEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscConfigurationCreateOrUpdateProperties();
+                }
+                Properties.IsLogVerboseEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets progress log option. </summary>
-        public bool? IsLogProgressEnabled { get; set; }
-        /// <summary> Gets or sets the source. </summary>
-        public AutomationContentSource Source { get; set; }
+        public bool? IsLogProgressEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLogProgressEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscConfigurationCreateOrUpdateProperties();
+                }
+                Properties.IsLogProgressEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets the configuration parameters. </summary>
-        public IDictionary<string, DscConfigurationParameterDefinition> Parameters { get; }
+        public IDictionary<string, DscConfigurationParameterDefinition> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscConfigurationCreateOrUpdateProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
+
         /// <summary> Gets or sets the description of the configuration. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscConfigurationCreateOrUpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
     }
 }

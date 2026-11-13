@@ -255,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             SendBufferSizeInBytes = sendBufferSizeBytes;
             ReceiveBufferSizeInBytes = receiveBufferSizeBytes;
             CertificateValidationCallback = certificateValidationCallback;
-            Id = identifier ?? $"{ eventHubName }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
+            Id = identifier ?? $"{eventHubName}-{Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8)}";
             TokenProvider = new CbsTokenProvider(new EventHubTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
 
             Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, ConnectionEndpoint, Transport, Proxy, SendBufferSizeInBytes, ReceiveBufferSizeInBytes, CertificateValidationCallback, Id, timeout);
@@ -584,7 +584,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                         TimeSpan linkTimeout,
                                                                                         CancellationToken cancellationToken)
         {
-            Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));;
+            Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
 
             var session = default(AmqpSession);
             var link = default(RequestResponseAmqpLink);
@@ -715,7 +715,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 }
 
                 link = new ReceivingAmqpLink(linkSettings);
-                linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
+                linkSettings.LinkName = $"{Id};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
                 link.AttachTo(session);
 
                 // Configure refresh for authorization of the link.
@@ -833,7 +833,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 }
 
                 link = new SendingAmqpLink(linkSettings);
-                linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
+                linkSettings.LinkName = $"{Id};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
                 link.AttachTo(session);
 
                 // Configure refresh for authorization of the link.

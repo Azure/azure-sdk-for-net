@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.OnlineExperimentation;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Models
 {
     /// <summary> The properties of an online experimentation workspace. </summary>
     public partial class OnlineExperimentationWorkspaceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceProperties"/>. </summary>
         /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </param>
@@ -60,6 +32,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             LogAnalyticsWorkspaceResourceId = logAnalyticsWorkspaceResourceId;
             LogsExporterStorageAccountResourceId = logsExporterStorageAccountResourceId;
             AppConfigurationResourceId = appConfigurationResourceId;
+            PrivateEndpointConnections = new ChangeTrackingList<OnlineExperimentationPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceProperties"/>. </summary>
@@ -70,8 +43,13 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <param name="appConfigurationResourceId"> The resource identifier of App Configuration with which this online experimentation workspace is tied for experimentation. This is a required field for creating an online experimentation workspace. </param>
         /// <param name="encryption"> The encryption configuration for the online experimentation workspace resource. </param>
         /// <param name="endpoint"> The data plane endpoint for the online experimentation workspace resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineExperimentationWorkspaceProperties(Guid? workspaceId, OnlineExperimentationProvisioningState? provisioningState, ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId, ResourceEncryptionConfiguration encryption, Uri endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="publicNetworkAccess">
+        /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if not set.
+        /// <list type="bullet"><item><description>Enabled: The resource can be accessed from the public internet.</description></item><item><description>Disabled: The resource can only be accessed from a private endpoint.</description></item></list>
+        /// </param>
+        /// <param name="privateEndpointConnections"> The private endpoint connections associated with the online experimentation workspace resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OnlineExperimentationWorkspaceProperties(Guid? workspaceId, OnlineExperimentationProvisioningState? provisioningState, ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId, ResourceEncryptionConfiguration encryption, Uri endpoint, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<OnlineExperimentationPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             ProvisioningState = provisioningState;
@@ -80,39 +58,56 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             AppConfigurationResourceId = appConfigurationResourceId;
             Encryption = encryption;
             Endpoint = endpoint;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceProperties"/> for deserialization. </summary>
-        internal OnlineExperimentationWorkspaceProperties()
-        {
+            PublicNetworkAccess = publicNetworkAccess;
+            PrivateEndpointConnections = privateEndpointConnections;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Id of the workspace. </summary>
         public Guid? WorkspaceId { get; }
+
         /// <summary> The provisioning state for the resource. </summary>
         public OnlineExperimentationProvisioningState? ProvisioningState { get; }
+
         /// <summary> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </summary>
         public ResourceIdentifier LogAnalyticsWorkspaceResourceId { get; set; }
+
         /// <summary> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </summary>
         public ResourceIdentifier LogsExporterStorageAccountResourceId { get; set; }
+
         /// <summary> The resource identifier of App Configuration with which this online experimentation workspace is tied for experimentation. This is a required field for creating an online experimentation workspace. </summary>
         public ResourceIdentifier AppConfigurationResourceId { get; set; }
+
         /// <summary> The encryption configuration for the online experimentation workspace resource. </summary>
         internal ResourceEncryptionConfiguration Encryption { get; set; }
-        /// <summary> All Customer-managed key encryption properties for the resource. </summary>
-        public CustomerManagedKeyEncryption CustomerManagedKeyEncryption
-        {
-            get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
-            set
-            {
-                if (Encryption is null)
-                    Encryption = new ResourceEncryptionConfiguration();
-                Encryption.CustomerManagedKeyEncryption = value;
-            }
-        }
 
         /// <summary> The data plane endpoint for the online experimentation workspace resource. </summary>
         public Uri Endpoint { get; }
+
+        /// <summary>
+        /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if not set.
+        /// <list type="bullet"><item><description>Enabled: The resource can be accessed from the public internet.</description></item><item><description>Disabled: The resource can only be accessed from a private endpoint.</description></item></list>
+        /// </summary>
+        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+
+        /// <summary> The private endpoint connections associated with the online experimentation workspace resource. </summary>
+        public IReadOnlyList<OnlineExperimentationPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+
+        /// <summary> All Customer-managed key encryption properties for the resource. </summary>
+        public CustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get
+            {
+                return Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
+            }
+            set
+            {
+                if (Encryption is null)
+                {
+                    Encryption = new ResourceEncryptionConfiguration();
+                }
+                Encryption.CustomerManagedKeyEncryption = value;
+            }
+        }
     }
 }

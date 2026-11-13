@@ -3,6 +3,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Net;
+using Azure.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
@@ -17,11 +19,25 @@ namespace Azure.Provisioning;
 /// <typeparam name="T">The type of the value.</typeparam>
 public class BicepValue<T> : BicepValue
 {
+    private T? _value;
+    private Func<T?>? _valueFactory;
     /// <summary>
     /// Gets or sets the literal value.  You can also rely on implicit
     /// conversions most of the time.
     /// </summary>
-    public T? Value { get; private protected set; }
+    public T? Value
+    {
+        get => _valueFactory is not null ? _valueFactory() : _value;
+        private set
+        {
+            if (_valueFactory is not null)
+            {
+                throw new InvalidOperationException($"Cannot assign value for {_self?.GetReference(false)} because its value is invalid");
+            }
+            _value = value;
+        }
+    }
+
     private protected override object? GetLiteralValue() => Value;
 
     // Get the closest primitive to T
@@ -40,9 +56,42 @@ public class BicepValue<T> : BicepValue
     /// <param name="expression">An expression that evaluates to the value.</param>
     public BicepValue(BicepExpression expression) : this(self: null, expression) { }
 
-    internal BicepValue(BicepValueReference? self) : base(self) { }
-    private protected BicepValue(BicepValueReference? self, T literal) : base(self, (object)literal!) { Value = literal; }
-    private protected BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression) { }
+    /// <summary>
+    /// Initialize a new instance without a literal value or expression (unset state).
+    /// </summary>
+    /// <param name="self"></param>
+    internal BicepValue(BicepValueReference? self) : base(self)
+    {
+    }
+
+    /// <summary>
+    /// Initialize a new instance of a literal value, but the literal value will be lazily evaluated by the value factory.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="valueFactory"></param>
+    internal BicepValue(BicepValueReference? self, Func<T?> valueFactory) : base(self)
+    {
+        _kind = BicepValueKind.Literal;
+        _valueFactory = valueFactory;
+    }
+
+    /// <summary>
+    /// Initialize a new instance from a literal value.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="literal"></param>
+    private BicepValue(BicepValueReference? self, T literal) : base(self, literal!)
+    {
+        _value = literal;
+    }
+
+    /// <summary>
+    /// Initialize a new instance from a bicep expression.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="expression"></param>
+    private BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression)
+    { }
 
     /// <summary>
     /// Clears a previously assigned literal or expression value.
@@ -50,12 +99,16 @@ public class BicepValue<T> : BicepValue
     public void ClearValue()
     {
         _kind = BicepValueKind.Unset;
-        Value = default;
+        _valueFactory = null;
+        _value = default;
         _expression = null;
         _source = null;
     }
 
-    // Move strongly typed literal values when assigning
+    /// <summary>
+    /// Assigns a source value to this instance, copying its literal or expression state.
+    /// </summary>
+    /// <param name="source">The source value to assign from.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Assign(BicepValue<T> source) => Assign((BicepValue)source);
     internal override void Assign(IBicepValue source)
@@ -69,7 +122,10 @@ public class BicepValue<T> : BicepValue
         base.Assign(source);
     }
 
-    // Convert literals, raw expressions, and vars/params/outputs
+    /// <summary>
+    /// Implicitly converts a literal value of type <typeparamref name="T"/> to a <see cref="BicepValue{T}"/>.
+    /// </summary>
+    /// <param name="value">The literal value.</param>
     public static implicit operator BicepValue<T>(T value)
     {
         if (value is IBicepValue e)
@@ -100,11 +156,22 @@ public class BicepValue<T> : BicepValue
         // Otherwise just wrap the literal
         return new(value);
     }
+    /// <summary>
+    /// Implicitly converts a <see cref="BicepExpression"/> to a <see cref="BicepValue{T}"/>.
+    /// </summary>
+    /// <param name="expression">The Bicep expression.</param>
     public static implicit operator BicepValue<T>(BicepExpression? expression) => new(expression ?? BicepSyntax.Null());
+    /// <summary>
+    /// Implicitly converts a <see cref="ProvisioningVariable"/> to a <see cref="BicepValue{T}"/>.
+    /// </summary>
+    /// <param name="reference">The provisioning variable or parameter.</param>
     public static implicit operator BicepValue<T>(ProvisioningVariable reference) =>
         new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.BicepIdentifier)) { _isSecure = reference is ProvisioningParameter p && p.IsSecure };
 
-    // Special case conversions to string for things like Uri, AzureLocation, etc.
+    /// <summary>
+    /// Implicitly converts a <see cref="BicepValue{T}"/> to a <see cref="BicepValue{String}"/> using the value's string representation.
+    /// </summary>
+    /// <param name="value">The typed Bicep value to convert.</param>
     public static implicit operator BicepValue<string>(BicepValue<T> value) =>
         value._kind switch
         {
@@ -113,4 +180,12 @@ public class BicepValue<T> : BicepValue
             BicepValueKind.Literal => new(value._self, BicepTypeMapping.ToLiteralString(value.Value!, value.Format)),
             _ => throw new InvalidOperationException($"Unknown {nameof(BicepValueKind)}!")
         };
+
+    private protected override BicepExpression CompileLiteralValue(string? format) => Value switch
+    {
+        null => BicepSyntax.Null(),
+        BicepValue v => v.Compile(format),
+        IBicepValue v => v.Compile(),
+        _ => BicepTypeMapping.ToLiteralExpression(Value, format)
+    };
 }

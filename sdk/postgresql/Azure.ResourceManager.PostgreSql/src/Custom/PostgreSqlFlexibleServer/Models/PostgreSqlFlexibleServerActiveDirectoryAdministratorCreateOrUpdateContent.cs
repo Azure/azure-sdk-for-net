@@ -1,0 +1,77 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
+{
+    /// <summary> Represents an Active Directory administrator. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This class is deprecated. Please use the new 'PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent ' class instead.")]
+    public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent
+    {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent"/>. </summary>
+        public PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent"/>. </summary>
+        /// <param name="principalType"> The principal type used to represent the type of Active Directory Administrator. </param>
+        /// <param name="principalName"> Active Directory administrator principal name. </param>
+        /// <param name="tenantId"> The tenantId of the Active Directory administrator. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent(PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PrincipalType = principalType;
+            PrincipalName = principalName;
+            TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> The principal type used to represent the type of Active Directory Administrator. </summary>
+        [WirePath("properties.principalType")]
+        public PostgreSqlFlexibleServerPrincipalType? PrincipalType { get; set; }
+        /// <summary> Active Directory administrator principal name. </summary>
+        [WirePath("properties.principalName")]
+        public string PrincipalName { get; set; }
+        /// <summary> The tenantId of the Active Directory administrator. </summary>
+        [WirePath("properties.tenantId")]
+        public Guid? TenantId { get; set; }
+    }
+}

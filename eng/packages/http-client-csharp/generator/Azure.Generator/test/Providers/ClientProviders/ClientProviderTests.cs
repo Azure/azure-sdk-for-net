@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -13,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Tests.Providers.ClientProviders
 {
@@ -22,10 +22,10 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
         private const string KeyAuthCategory = "WithKeyAuth";
         private const string OAuth2Category = "WithOAuth2";
         private const string TestClientName = "TestClient";
-        private static readonly InputClient _testClient = new(TestClientName, "Samples", "", "TestClient description", null, [], [], _testClient, [], []);
-        private static readonly InputClient _animalClient = new("animal", "Samples", "", "AnimalClient description", null, [], [], _testClient, [], []);
-        private static readonly InputClient _dogClient = new("dog", "Samples", "", "DogClient description", null, [], [], _animalClient, [], []);
-        private static readonly InputClient _huskyClient = new("husky", "Samples", "", "HuskyClient description", null, [], [], _dogClient, [], []);
+        private static readonly InputClient _testClient = InputFactory.Client(TestClientName, "Samples", "TestClient description");
+        private static readonly InputClient _animalClient = InputFactory.Client("animal", "Samples", "AnimalClient description", parent: _testClient);
+        private static readonly InputClient _dogClient = InputFactory.Client("dog", "Samples", "DogClient description", parent: _testClient);
+        private static readonly InputClient _huskyClient = InputFactory.Client("husky", "Samples", "HuskyClient description", parent: _testClient);
 
         private bool _containsSubClients;
         private bool _hasKeyAuth;
@@ -64,21 +64,23 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
 
             if (_hasKeyAuth)
             {
-                // key auth should have the following fields: AuthorizationHeader, _keyCredential
+                // key auth should have the AuthorizationHeader const field; _keyCredential is no longer stored
                 AssertHasFields(clientProvider, new List<ExpectedFieldProvider>
                 {
                     new(FieldModifiers.Private | FieldModifiers.Const, new CSharpType(typeof(string)), "AuthorizationHeader"),
-                    new(FieldModifiers.Private | FieldModifiers.ReadOnly, new CSharpType(typeof(AzureKeyCredential)), "_keyCredential")
                 });
+                // _keyCredential field is no longer on the client (auth handled via AuthenticationPolicy parameter)
+                Assert.IsFalse(clientProvider.Fields.Any(f => f.Name == "_keyCredential"));
             }
             if (_hasOAuth2)
             {
-                // oauth2 auth should have the following fields: AuthorizationScopes, _tokenCredential
+                // oauth2 auth should have the AuthorizationScopes field; _tokenCredential is no longer stored
                 AssertHasFields(clientProvider, new List<ExpectedFieldProvider>
                 {
                     new(FieldModifiers.Private | FieldModifiers.Static | FieldModifiers.ReadOnly, new CSharpType(typeof(string[])), "AuthorizationScopes"),
-                    new(FieldModifiers.Private | FieldModifiers.ReadOnly, new CSharpType(typeof(TokenCredential)), "_tokenCredential"),
                 });
+                // _tokenCredential field is no longer on the client (auth handled via AuthenticationPolicy parameter)
+                Assert.IsFalse(clientProvider.Fields.Any(f => f.Name == "_tokenCredential"));
             }
         }
 
@@ -144,6 +146,88 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             {
                 ValidatePrimaryConstructor(primaryPublicConstructors[i], inputParameters, i);
             }
+        }
+
+        [Test]
+        public void PagingOperationsHandleContinuationToken(
+            [Values] bool hasNextLink,
+            [Values] bool isHeader,
+            [Values] bool isContinuationToken,
+            [Values] bool emptyTokenSegments)
+        {
+            var (inputClient, item, page, method) = CreateContinuationTokenPagingClient(
+                hasNextLink, isHeader, isContinuationToken, emptyTokenSegments);
+            MockHelpers.LoadMockGenerator(inputModels: () => [item, page], clients: () => [inputClient]);
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            var methods = new ScmMethodProviderCollection(method, client);
+
+            Assert.AreEqual(4, methods.Count);
+            client.Update(methods: methods, constructors: [], properties: [], fields: [], nestedTypes: []);
+            var file = new TypeProviderWriter(client).Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile((hasNextLink && isContinuationToken).ToString()), file.Content);
+        }
+
+        [Test]
+        public async Task BackCompatibility_NextLinkContinuationToken()
+        {
+            var (inputClient, item, page, _) = CreateContinuationTokenPagingClient();
+            await MockHelpers.LoadMockGeneratorAsync(
+                inputModels: () => [item, page],
+                clients: () => [inputClient],
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectoryAsync());
+            var client = new TestClientProvider(inputClient);
+            client.ApplyBackCompatibility();
+
+            var methods = client.Methods.Where(m => m.Signature.Name is "GetItems" or "GetItemsAsync").ToArray();
+            Assert.AreEqual(8, methods.Length);
+            Assert.AreEqual(4, methods.Count(m => m.Signature.Parameters.All(p => p.Name != "token")));
+            Assert.AreEqual(4, methods.Count(m => m.Signature.Parameters.Any(p => p.Name == "token")));
+
+            client.Update(methods: methods, constructors: [], properties: [], fields: [], nestedTypes: []);
+            var file = new TypeProviderWriter(client).Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        private static (InputClient Client, InputModelType Item, InputModelType Page, InputPagingServiceMethod Method)
+            CreateContinuationTokenPagingClient(
+                bool hasNextLink = true,
+                bool isHeader = false,
+                bool isContinuationToken = true,
+                bool emptyTokenSegments = false)
+        {
+            InputParameter token = isHeader
+                ? InputFactory.HeaderParameter("token", InputPrimitiveType.String)
+                : InputFactory.QueryParameter("token", InputPrimitiveType.String);
+            var methodToken = InputFactory.MethodParameter("token", InputPrimitiveType.String,
+                location: isHeader ? InputRequestLocation.Header : InputRequestLocation.Query);
+            token.Update(isContinuationToken: isContinuationToken,
+                methodParameterSegments: emptyTokenSegments ? [] : [methodToken]);
+            if (emptyTokenSegments)
+            {
+                methodToken.Update(isContinuationToken: isContinuationToken);
+            }
+
+            var item = InputFactory.Model("Item");
+            var page = InputFactory.Model("Page", properties:
+            [
+                InputFactory.Property("items", InputFactory.Array(item)),
+                InputFactory.Property("nextLink", InputPrimitiveType.Url),
+                InputFactory.Property("nextToken", InputPrimitiveType.String)
+            ]);
+            var operation = InputFactory.Operation("GetItems", parameters:
+            [
+                token,
+                InputFactory.QueryParameter("filter", InputPrimitiveType.String)
+            ], responses: [InputFactory.OperationResponse([200], page)]);
+            var method = InputFactory.PagingServiceMethod("GetItems", operation, parameters:
+            [
+                methodToken,
+                InputFactory.MethodParameter("filter", InputPrimitiveType.String, location: InputRequestLocation.Query)
+            ], pagingMetadata: InputFactory.PagingMetadata(
+                ["items"],
+                hasNextLink ? new InputNextLink(null, ["nextLink"], InputResponseLocation.Body, null) : null,
+                hasNextLink ? null : new InputContinuationToken(token, ["nextToken"], InputResponseLocation.Body)));
+            return (InputFactory.Client(TestClientName, methods: [method]), item, page, method);
         }
 
         private void ValidatePrimaryConstructor(
@@ -299,6 +383,16 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
         }
 
         public record ExpectedFieldProvider(FieldModifiers Modifiers, ExpectedCSharpType Type, string Name);
+
+        private sealed class TestClientProvider : ClientProvider
+        {
+            public TestClientProvider(InputClient client) : base(client)
+            {
+            }
+
+            public void ApplyBackCompatibility()
+                => Update(methods: base.BuildMethodsForBackCompatibility(Methods));
+        }
 
         private static void AssertCSharpTypeAreEqual(ExpectedCSharpType expected, CSharpType type)
         {

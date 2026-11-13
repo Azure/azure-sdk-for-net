@@ -6,43 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ScVmm
 {
     /// <summary>
-    /// A Class representing a ScVmmHybridIdentityMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmHybridIdentityMetadataResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetScVmmHybridIdentityMetadataResource method.
+    /// A class representing a ScVmmHybridIdentityMetadata along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmHybridIdentityMetadataResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ScVmmVirtualMachineInstanceResource"/> using the GetScVmmHybridIdentityMetadata method.
     /// </summary>
     public partial class ScVmmHybridIdentityMetadataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ScVmmHybridIdentityMetadataResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataClientDiagnostics;
-        private readonly VirtualMachineInstanceHybridIdentityMetadataRestOperations _scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataRestClient;
+        private readonly ClientDiagnostics _vmInstanceHybridIdentityMetadatasClientDiagnostics;
+        private readonly VmInstanceHybridIdentityMetadatas _vmInstanceHybridIdentityMetadatasRestClient;
         private readonly ScVmmHybridIdentityMetadataData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualMachineInstances/hybridIdentityMetadata";
 
-        /// <summary> Initializes a new instance of the <see cref="ScVmmHybridIdentityMetadataResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ScVmmHybridIdentityMetadataResource for mocking. </summary>
         protected ScVmmHybridIdentityMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScVmmHybridIdentityMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmHybridIdentityMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScVmmHybridIdentityMetadataResource(ArmClient client, ScVmmHybridIdentityMetadataData data) : this(client, data.Id)
@@ -51,71 +43,90 @@ namespace Azure.ResourceManager.ScVmm
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScVmmHybridIdentityMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmHybridIdentityMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScVmmHybridIdentityMetadataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataApiVersion);
-            _scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataRestClient = new VirtualMachineInstanceHybridIdentityMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string scVmmHybridIdentityMetadataApiVersion);
+            _vmInstanceHybridIdentityMetadatasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ResourceType.Namespace, Diagnostics);
+            _vmInstanceHybridIdentityMetadatasRestClient = new VmInstanceHybridIdentityMetadatas(_vmInstanceHybridIdentityMetadatasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmHybridIdentityMetadataApiVersion ?? "2025-03-13");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ScVmmHybridIdentityMetadataData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Implements HybridIdentityMetadata GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstanceHybridIdentityMetadata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VmInstanceHybridIdentityMetadatas_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmHybridIdentityMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScVmmHybridIdentityMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ScVmmHybridIdentityMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataClientDiagnostics.CreateScope("ScVmmHybridIdentityMetadataResource.Get");
+            using DiagnosticScope scope = _vmInstanceHybridIdentityMetadatasClientDiagnostics.CreateScope("ScVmmHybridIdentityMetadataResource.Get");
             scope.Start();
             try
             {
-                var response = await _scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataRestClient.GetAsync(Id.Parent.Parent, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vmInstanceHybridIdentityMetadatasRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScVmmHybridIdentityMetadataData> response = Response.FromValue(ScVmmHybridIdentityMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScVmmHybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -129,33 +140,41 @@ namespace Azure.ResourceManager.ScVmm
         /// Implements HybridIdentityMetadata GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstanceHybridIdentityMetadata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VmInstanceHybridIdentityMetadatas_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmHybridIdentityMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScVmmHybridIdentityMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScVmmHybridIdentityMetadataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataClientDiagnostics.CreateScope("ScVmmHybridIdentityMetadataResource.Get");
+            using DiagnosticScope scope = _vmInstanceHybridIdentityMetadatasClientDiagnostics.CreateScope("ScVmmHybridIdentityMetadataResource.Get");
             scope.Start();
             try
             {
-                var response = _scVmmHybridIdentityMetadataVirtualMachineInstanceHybridIdentityMetadataRestClient.Get(Id.Parent.Parent, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vmInstanceHybridIdentityMetadatasRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScVmmHybridIdentityMetadataData> response = Response.FromValue(ScVmmHybridIdentityMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScVmmHybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

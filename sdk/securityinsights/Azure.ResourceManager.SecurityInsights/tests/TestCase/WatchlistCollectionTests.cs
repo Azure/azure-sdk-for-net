@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         }
         #endregion
         #region Onboard
-        private async Task<SecurityInsightsSentinelOnboardingStateResource> GetSentinelOnboardingStateResourceAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
+        private async Task<SecurityInsightsSentinelOnboardingStateResource> GetSentinelOnboardingStateResourceAsync(ResourceIdentifier operationalInsights)
         {
-            var onboardCollection = operationalInsights.GetSecurityInsightsSentinelOnboardingStates();
+            var onboardCollection = Client.GetSecurityInsightsSentinelOnboardingStates(operationalInsights);
             var onboardName = "default";
             var onboardInput = ResourceDataHelpers.GetSentinelOnboardingStateData();
             var lroo = await onboardCollection.CreateOrUpdateAsync(WaitUntil.Completed, onboardName, onboardInput);
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         }
         #endregion
 
-        private SecurityInsightsWatchlistCollection GetWatchlistCollectionAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
+        private SecurityInsightsWatchlistCollection GetWatchlistCollectionAsync(ResourceIdentifier operationalInsights)
         {
-            return operationalInsights.GetSecurityInsightsWatchlists();
+            return Client.GetSecurityInsightsWatchlists(operationalInsights);
         }
 
         [TestCase]
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var resourceGroup = await GetResourceGroupAsync();
             var workspaceName = groupName + "-ws";
             var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
-            var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
+            var operationalInsights = ResourceID;
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.CreateOrUpdate
             var collection = GetWatchlistCollectionAsync(operationalInsights);
-            var name = Recording.GenerateAssetName("Watchlists-");
-            var name2 = Recording.GenerateAssetName("Watchlists-");
-            var name3 = Recording.GenerateAssetName("Watchlists-");
+            var name = GenerateAssetNameFromRecording("Watchlists-", "watchlists");
+            var name2 = GenerateAssetNameFromRecording("Watchlists-", "watchlists");
+            var name3 = GenerateAssetNameFromRecording("Watchlists-", "watchlists");
             var input = ResourceDataHelpers.GetWatchlistData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             SecurityInsightsWatchlistResource watch1 = lro.Value;

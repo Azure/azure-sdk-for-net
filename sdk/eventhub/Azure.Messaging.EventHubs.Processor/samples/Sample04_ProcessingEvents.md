@@ -106,7 +106,7 @@ Task processEventHandler(ProcessEventArgs args)
 
         string partition = args.Partition.PartitionId;
         byte[] eventBody = args.Data.EventBody.ToArray();
-        Debug.WriteLine($"Event from partition { partition } with length { eventBody.Length }.");
+        Debug.WriteLine($"Event from partition {partition} with length {eventBody.Length}.");
     }
     catch
     {
@@ -127,8 +127,8 @@ Task processErrorHandler(ProcessErrorEventArgs args)
     try
     {
         Debug.WriteLine("Error in the EventProcessorClient");
-        Debug.WriteLine($"\tOperation: { args.Operation }");
-        Debug.WriteLine($"\tException: { args.Exception }");
+        Debug.WriteLine($"\tOperation: {args.Operation}");
+        Debug.WriteLine($"\tException: {args.Exception}");
         Debug.WriteLine("");
     }
     catch (Exception ex)

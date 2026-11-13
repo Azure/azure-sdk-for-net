@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task CassandraKeyspaceCreateAndUpdate()
         {
@@ -101,7 +100,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyCassandraKeyspaces(keyspace, keyspace2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CassandraKeyspaceList()
         {
@@ -114,7 +112,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyCassandraKeyspaces(keyspaces[0], keyspace);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CassandraKeyspaceThroughput()
         {
@@ -132,9 +129,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task CassandraKeyspaceMigrateToAutoscale()
         {
             var keyspace = await CreateCassandraKeyspace(null);
@@ -146,9 +143,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertAutoscale(throughputData);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task CassandraKeyspaceMigrateToManual()
         {
             var keyspace = await CreateCassandraKeyspace(new AutoscaleSettings()
@@ -163,7 +160,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertManualThroughput(throughputData);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CassandraKeyspaceDelete()
         {

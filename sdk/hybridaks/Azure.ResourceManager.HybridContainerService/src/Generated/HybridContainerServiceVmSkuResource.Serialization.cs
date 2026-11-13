@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
+    /// <summary></summary>
     public partial class HybridContainerServiceVmSkuResource : IJsonModel<HybridContainerServiceVmSkuData>
     {
-        private static HybridContainerServiceVmSkuData s_dataDeserializationInstance;
-        private static HybridContainerServiceVmSkuData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HybridContainerServiceVmSkuData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HybridContainerServiceVmSkuData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HybridContainerServiceVmSkuData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridContainerServiceVmSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceVmSkuData>)Data).Write(writer, options);
 
-        HybridContainerServiceVmSkuData IJsonModel<HybridContainerServiceVmSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceVmSkuData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridContainerServiceVmSkuData IJsonModel<HybridContainerServiceVmSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HybridContainerServiceVmSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridContainerServiceVmSkuData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HybridContainerServiceVmSkuData IPersistableModel<HybridContainerServiceVmSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridContainerServiceVmSkuData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<HybridContainerServiceVmSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridContainerServiceVmSkuData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridContainerServiceVmSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -82,10 +82,14 @@ foreach ($specFile in Get-Sorted-Specs) {
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
     }
-    $command = "git restore $outputDir"
-    Invoke $command
-    # exit if the restore failed
-    if ($LASTEXITCODE -ne 0) {
-        exit $LASTEXITCODE
+    # Only restore if git tracks files in this directory (new specs won't have tracked files)
+    $trackedFiles = & git ls-files $outputDir
+    if ($trackedFiles) {
+        $command = "git restore $outputDir"
+        Invoke $command
+        # exit if the restore failed
+        if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+        }
     }
 }

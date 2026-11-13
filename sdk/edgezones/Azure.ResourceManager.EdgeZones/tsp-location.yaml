@@ -1,0 +1,6 @@
+directory: specification/edgezones/resource-manager/Microsoft.EdgeZones/EdgeZones
+commit: e3d848eb1635fe15a89663daa425dd1619df1f37
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

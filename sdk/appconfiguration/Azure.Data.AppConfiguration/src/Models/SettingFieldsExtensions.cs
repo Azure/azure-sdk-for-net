@@ -19,7 +19,8 @@ namespace Azure.Data.AppConfiguration
             { SettingFields.ETag        , "etag"          },
             { SettingFields.LastModified, "last_modified" },
             { SettingFields.IsReadOnly  , "locked"        },
-            { SettingFields.Tags        , "tags"          }
+            { SettingFields.Tags        , "tags"          },
+            { SettingFields.Description , "description"   }
         };
 
         /// <summary>

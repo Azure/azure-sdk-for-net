@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Transcript content response that the service generates, with all necessary personally identifiable information redacted. </summary>
     public partial class RedactedTranscriptContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedactedTranscriptContent"/>. </summary>
         internal RedactedTranscriptContent()
@@ -57,26 +29,30 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="text"> Redacted output for input in text (Microsoft's speech-to-text 'display') format. </param>
         /// <param name="lexical"> Redacted output for input in lexical format. </param>
         /// <param name="audioTimings"> List of redacted audio segments. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedactedTranscriptContent(string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IReadOnlyList<AudioTiming> audioTimings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RedactedTranscriptContent(string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IList<AudioTiming> audioTimings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InverseTextNormalized = inverseTextNormalized;
             MaskedInverseTextNormalized = maskedInverseTextNormalized;
             Text = text;
             Lexical = lexical;
             AudioTimings = audioTimings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Redacted output for input in inverse-text-normalized format. </summary>
         public string InverseTextNormalized { get; }
+
         /// <summary> Redacted output for input in masked inverse-text-normalized format. </summary>
         public string MaskedInverseTextNormalized { get; }
+
         /// <summary> Redacted output for input in text (Microsoft's speech-to-text 'display') format. </summary>
         public string Text { get; }
+
         /// <summary> Redacted output for input in lexical format. </summary>
         public string Lexical { get; }
+
         /// <summary> List of redacted audio segments. </summary>
-        public IReadOnlyList<AudioTiming> AudioTimings { get; }
+        public IList<AudioTiming> AudioTimings { get; }
     }
 }

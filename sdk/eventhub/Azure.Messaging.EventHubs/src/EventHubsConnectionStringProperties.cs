@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs
         private const string EventHubsEndpointSchemeName = "sb";
 
         /// <summary>The formatted protocol used by an Event Hubs endpoint. </summary>
-        private static readonly string EventHubsEndpointScheme = $"{ EventHubsEndpointSchemeName }{ Uri.SchemeDelimiter }";
+        private static readonly string EventHubsEndpointScheme = $"{EventHubsEndpointSchemeName}{Uri.SchemeDelimiter}";
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the consumer is associated with.  This is likely

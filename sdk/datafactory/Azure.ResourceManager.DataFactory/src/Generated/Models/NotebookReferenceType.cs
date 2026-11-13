@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct NotebookReferenceType : IEquatable<NotebookReferenceType>
     {
         private readonly string _value;
+        /// <summary> NotebookReference. </summary>
+        private const string NotebookReferenceValue = "NotebookReference";
 
         /// <summary> Initializes a new instance of <see cref="NotebookReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotebookReferenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotebookReferenceValue = "NotebookReference";
+            _value = value;
+        }
 
         /// <summary> NotebookReference. </summary>
         public static NotebookReferenceType NotebookReference { get; } = new NotebookReferenceType(NotebookReferenceValue);
+
         /// <summary> Determines if two <see cref="NotebookReferenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotebookReferenceType left, NotebookReferenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotebookReferenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotebookReferenceType left, NotebookReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotebookReferenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotebookReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotebookReferenceType(string value) => new NotebookReferenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotebookReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotebookReferenceType?(string value) => value == null ? null : new NotebookReferenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotebookReferenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotebookReferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

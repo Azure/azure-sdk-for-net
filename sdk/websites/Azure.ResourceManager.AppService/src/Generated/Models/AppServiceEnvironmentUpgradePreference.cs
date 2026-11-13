@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct AppServiceEnvironmentUpgradePreference : IEquatable<AppServiceEnvironmentUpgradePreference>
     {
         private readonly string _value;
+        /// <summary> No preference on when this App Service Environment will be upgraded. </summary>
+        private const string NoneValue = "None";
+        /// <summary> This App Service Environment will be upgraded before others in the same region that have Upgrade Preference 'Late'. </summary>
+        private const string EarlyValue = "Early";
+        /// <summary> This App Service Environment will be upgraded after others in the same region that have Upgrade Preference 'Early'. </summary>
+        private const string LateValue = "Late";
+        /// <summary> ASEv3 only. Once an upgrade is available, this App Service Environment will wait 10 days for the upgrade to be manually initiated. After 10 days the upgrade will begin automatically. </summary>
+        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentUpgradePreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppServiceEnvironmentUpgradePreference(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string EarlyValue = "Early";
-        private const string LateValue = "Late";
-        private const string ManualValue = "Manual";
+            _value = value;
+        }
 
         /// <summary> No preference on when this App Service Environment will be upgraded. </summary>
         public static AppServiceEnvironmentUpgradePreference None { get; } = new AppServiceEnvironmentUpgradePreference(NoneValue);
+
         /// <summary> This App Service Environment will be upgraded before others in the same region that have Upgrade Preference 'Late'. </summary>
         public static AppServiceEnvironmentUpgradePreference Early { get; } = new AppServiceEnvironmentUpgradePreference(EarlyValue);
+
         /// <summary> This App Service Environment will be upgraded after others in the same region that have Upgrade Preference 'Early'. </summary>
         public static AppServiceEnvironmentUpgradePreference Late { get; } = new AppServiceEnvironmentUpgradePreference(LateValue);
+
         /// <summary> ASEv3 only. Once an upgrade is available, this App Service Environment will wait 10 days for the upgrade to be manually initiated. After 10 days the upgrade will begin automatically. </summary>
         public static AppServiceEnvironmentUpgradePreference Manual { get; } = new AppServiceEnvironmentUpgradePreference(ManualValue);
+
         /// <summary> Determines if two <see cref="AppServiceEnvironmentUpgradePreference"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceEnvironmentUpgradePreference left, AppServiceEnvironmentUpgradePreference right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceEnvironmentUpgradePreference"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceEnvironmentUpgradePreference left, AppServiceEnvironmentUpgradePreference right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceEnvironmentUpgradePreference"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceEnvironmentUpgradePreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceEnvironmentUpgradePreference(string value) => new AppServiceEnvironmentUpgradePreference(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceEnvironmentUpgradePreference"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceEnvironmentUpgradePreference?(string value) => value == null ? null : new AppServiceEnvironmentUpgradePreference(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceEnvironmentUpgradePreference other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceEnvironmentUpgradePreference other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

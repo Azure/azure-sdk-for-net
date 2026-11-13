@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The text modality of an input conversation. </summary>
     public partial class TextConversationItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TextConversationItem"/>. </summary>
         /// <param name="id"> The ID of a conversation item. </param>
@@ -68,8 +40,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="modality"> Enumeration of supported conversational modalities. </param>
         /// <param name="role"> Role of the participant. </param>
         /// <param name="text"> The text input. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TextConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TextConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ParticipantId = participantId;
@@ -77,24 +49,24 @@ namespace Azure.AI.Language.Conversations.Models
             Modality = modality;
             Role = role;
             Text = text;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TextConversationItem"/> for deserialization. </summary>
-        internal TextConversationItem()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of a conversation item. </summary>
         public string Id { get; }
+
         /// <summary> The participant ID of a conversation item. </summary>
         public string ParticipantId { get; }
+
         /// <summary> The override language of a conversation item in BCP 47 language representation. </summary>
         public string Language { get; set; }
+
         /// <summary> Enumeration of supported conversational modalities. </summary>
         public InputModality? Modality { get; set; }
+
         /// <summary> Role of the participant. </summary>
         public ParticipantRole? Role { get; set; }
+
         /// <summary> The text input. </summary>
         public string Text { get; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,18 +15,17 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class EntitySubtype : ConversationEntityExtraInformation
     {
         /// <summary> Initializes a new instance of <see cref="EntitySubtype"/>. </summary>
-        internal EntitySubtype()
+        internal EntitySubtype() : base(ExtraInformationKind.EntitySubtype)
         {
-            ExtraInformationKind = ExtraInformationKind.EntitySubtype;
             Tags = new ChangeTrackingList<EntityTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EntitySubtype"/>. </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The Subtype of an extracted entity type. </param>
         /// <param name="tags"> List of entity tags. Tags express similarities between entity categories for the extracted entity type. </param>
-        internal EntitySubtype(ExtraInformationKind extraInformationKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string value, IReadOnlyList<EntityTag> tags) : base(extraInformationKind, serializedAdditionalRawData)
+        internal EntitySubtype(ExtraInformationKind extraInformationKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string value, IList<EntityTag> tags) : base(extraInformationKind, additionalBinaryDataProperties)
         {
             Value = value;
             Tags = tags;
@@ -33,7 +33,8 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> The Subtype of an extracted entity type. </summary>
         public string Value { get; }
+
         /// <summary> List of entity tags. Tags express similarities between entity categories for the extracted entity type. </summary>
-        public IReadOnlyList<EntityTag> Tags { get; }
+        public IList<EntityTag> Tags { get; }
     }
 }

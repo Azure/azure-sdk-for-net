@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityInsightsHuntCommentResource : IJsonModel<SecurityInsightsHuntCommentData>
     {
-        private static SecurityInsightsHuntCommentData s_dataDeserializationInstance;
-        private static SecurityInsightsHuntCommentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsHuntCommentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityInsightsHuntCommentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsightsHuntCommentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsHuntCommentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsHuntCommentData>)Data).Write(writer, options);
 
-        SecurityInsightsHuntCommentData IJsonModel<SecurityInsightsHuntCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsHuntCommentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsHuntCommentData IJsonModel<SecurityInsightsHuntCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityInsightsHuntCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsHuntCommentData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityInsightsHuntCommentData IPersistableModel<SecurityInsightsHuntCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsHuntCommentData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsHuntCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsHuntCommentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsHuntCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

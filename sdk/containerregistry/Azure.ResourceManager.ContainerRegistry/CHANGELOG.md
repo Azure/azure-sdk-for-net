@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,52 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0-beta.4 (2026-09-17)
+
+### Features Added
+
+- Updated API version to 2026-09-01-preview.
+- Added `Identity` to `ConnectedRegistryData` and `ConnectedRegistryPatch` for user-assigned managed identity synchronization using `AuthType.ManagedIdentity`.
+- Added `AuthType` to `ConnectedRegistrySyncProperties` and `ConnectedRegistrySyncUpdateProperties`, supporting `SyncToken` and `ManagedIdentity`.
+- Added read-only `TotalGib` and `AvailableGib` properties to `ConnectedRegistryStatusDetail` for disk space in gibibytes.
+- Added `ArmContainerRegistryModelFactory` parameters for mocking the new properties.
+
+### Breaking Changes
+
+- Made `ConnectedRegistrySyncProperties.TokenId` optional and added a constructor accepting only `messageTtl`. Existing constructor calls remain compatible, but null `tokenId` values no longer throw `ArgumentNullException`, and unset `TokenId` values are omitted from requests.
+- Changed `ArmContainerRegistryModelFactory` signatures for `ConnectedRegistryData` (the `registrySyncResult` overload), `ConnectedRegistryPatch`, and `ConnectedRegistrySyncUpdateProperties`. Recompile callers and update method-group delegates matching the previous signatures.
+
+## 1.5.0-beta.3 (2026-08-07)
+
+### Features Added
+
+- Updated API version to 2026-03-01-preview.
+
+### Other Changes
+
+- Migrated from AutoRest/Swagger to TypeSpec-based generation.
+- Added support for Archive and ArchiveVersion resources.
+- Added support for ExportPipeline, ImportPipeline and PipelineRun resources.
+- Added missing `[Obsolete]` attribute to `ContainerRegistryAgentPoolPatch` for consistency with other deprecated RegistryTasks types.
+
+## 1.5.0-beta.2 (2026-03-19)
+
+### Features Added
+
+- Upgraded Registry api-version to 2026-01-01-preview.
+
+## 1.5.0-beta.1 (2025-12-10)
+
+### Features Added
+
+- Upgraded RegistryTasks api-version to 2025-03-01-preview.
+
+## 1.4.0 (2025-11-05)
+
+### Features Added
+
+- Upgraded api-version to 2025-11-01.
 
 ## 1.3.1 (2025-08-11)
 

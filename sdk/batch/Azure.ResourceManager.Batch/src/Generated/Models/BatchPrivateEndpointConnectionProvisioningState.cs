@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct BatchPrivateEndpointConnectionProvisioningState : IEquatable<BatchPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The connection is creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The user has requested that the connection status be updated, but the update operation has not yet completed. You may not reference the connection when connecting the Batch account. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The connection is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The connection status is final and is ready for use if Status is Approved. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The user requested that the connection be updated and it failed. You may retry the update operation. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The user has cancelled the connection creation. </summary>
+        private const string CancelledValue = "Cancelled";
 
         /// <summary> Initializes a new instance of <see cref="BatchPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchPrivateEndpointConnectionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
+            _value = value;
+        }
 
         /// <summary> The connection is creating. </summary>
         public static BatchPrivateEndpointConnectionProvisioningState Creating { get; } = new BatchPrivateEndpointConnectionProvisioningState(CreatingValue);
+
         /// <summary> The user has requested that the connection status be updated, but the update operation has not yet completed. You may not reference the connection when connecting the Batch account. </summary>
         public static BatchPrivateEndpointConnectionProvisioningState Updating { get; } = new BatchPrivateEndpointConnectionProvisioningState(UpdatingValue);
+
         /// <summary> The connection is deleting. </summary>
         public static BatchPrivateEndpointConnectionProvisioningState Deleting { get; } = new BatchPrivateEndpointConnectionProvisioningState(DeletingValue);
+
         /// <summary> The connection status is final and is ready for use if Status is Approved. </summary>
         public static BatchPrivateEndpointConnectionProvisioningState Succeeded { get; } = new BatchPrivateEndpointConnectionProvisioningState(SucceededValue);
+
         /// <summary> The user requested that the connection be updated and it failed. You may retry the update operation. </summary>
         public static BatchPrivateEndpointConnectionProvisioningState Failed { get; } = new BatchPrivateEndpointConnectionProvisioningState(FailedValue);
+
         /// <summary> The user has cancelled the connection creation. </summary>
         public static BatchPrivateEndpointConnectionProvisioningState Cancelled { get; } = new BatchPrivateEndpointConnectionProvisioningState(CancelledValue);
+
         /// <summary> Determines if two <see cref="BatchPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchPrivateEndpointConnectionProvisioningState left, BatchPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchPrivateEndpointConnectionProvisioningState left, BatchPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchPrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchPrivateEndpointConnectionProvisioningState(string value) => new BatchPrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new BatchPrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchPrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     internal readonly partial struct LinkerSecretType : IEquatable<LinkerSecretType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LinkerSecretType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LinkerSecretType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RawValueValue = "rawValue";
         private const string KeyVaultSecretUriValue = "keyVaultSecretUri";
         private const string KeyVaultSecretReferenceValue = "keyVaultSecretReference";
 
-        /// <summary> rawValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerSecretType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LinkerSecretType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the RawValue. </summary>
         public static LinkerSecretType RawValue { get; } = new LinkerSecretType(RawValueValue);
-        /// <summary> keyVaultSecretUri. </summary>
+
+        /// <summary> Gets the KeyVaultSecretUri. </summary>
         public static LinkerSecretType KeyVaultSecretUri { get; } = new LinkerSecretType(KeyVaultSecretUriValue);
-        /// <summary> keyVaultSecretReference. </summary>
+
+        /// <summary> Gets the KeyVaultSecretReference. </summary>
         public static LinkerSecretType KeyVaultSecretReference { get; } = new LinkerSecretType(KeyVaultSecretReferenceValue);
+
         /// <summary> Determines if two <see cref="LinkerSecretType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LinkerSecretType left, LinkerSecretType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LinkerSecretType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LinkerSecretType left, LinkerSecretType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkerSecretType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LinkerSecretType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LinkerSecretType(string value) => new LinkerSecretType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LinkerSecretType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LinkerSecretType?(string value) => value == null ? null : new LinkerSecretType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LinkerSecretType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LinkerSecretType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

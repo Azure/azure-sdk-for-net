@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         public static bool EqualsDouble(this double? x, double? y) =>
             (x == null) ? y == null :
-            double.IsNaN(x.Value) ?  y != null && double.IsNaN(y.Value) :
+            double.IsNaN(x.Value) ? y != null && double.IsNaN(y.Value) :
             x == y;
 
         /// <summary>

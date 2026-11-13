@@ -5,33 +5,35 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Template.Models;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
-    public partial class TemplateSamples: SamplesBase<TemplateClientTestEnvironment>
+    public partial class WidgetAnalyticsSamples : SamplesBase<TemplateClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]
-        public async Task GettingASecretAsync()
+        [Ignore("Widget Analytics service not available for live testing")]
+        public async Task GetWidgetsAsync()
         {
-            #region Snippet:Azure_Template_GetSecretAsync
+            #region Snippet:Azure_Template_GetWidgetsAsync
 #if SNIPPET
-            string endpoint = "https://myvault.vault.azure.net";
+            string endpoint = "https://your-service-endpoint";
             var credential = new DefaultAzureCredential();
 #else
-            string endpoint = TestEnvironment.KeyVaultUri;
+            string endpoint = TestEnvironment.Endpoint;
             var credential = TestEnvironment.Credential;
 #endif
-            var client = new TemplateClient(endpoint, credential);
+            var client = new WidgetAnalyticsClient(new Uri(endpoint), credential);
+            AzureWidgets widgetsClient = client.GetAzureWidgetsClient();
 
-            SecretBundle secret = await client.GetSecretValueAsync("TestSecret");
-
-            Console.WriteLine(secret.Value);
+            // List all widgets asynchronously
+            await foreach (WidgetSuite widget in widgetsClient.GetWidgetsAsync())
+            {
+                Console.WriteLine($"Widget: {widget.ManufacturerId}");
+            }
             #endregion
-
-            Assert.NotNull(secret.Value);
         }
     }
 }

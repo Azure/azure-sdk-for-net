@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -15,109 +16,241 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Identity Provider details. </summary>
     public partial class ApiManagementIdentityProviderCreateOrUpdateContent : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderCreateOrUpdateContent"/>. </summary>
         public ApiManagementIdentityProviderCreateOrUpdateContent()
         {
-            AllowedTenants = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identityProviderType"> Identity Provider Type identifier. </param>
-        /// <param name="signInTenant"> The TenantId to use instead of Common when logging into Active Directory. </param>
-        /// <param name="allowedTenants"> List of Allowed Tenants when configuring Azure Active Directory login. </param>
-        /// <param name="authority"> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </param>
-        /// <param name="signUpPolicyName"> Signup Policy Name. Only applies to AAD B2C Identity Provider. </param>
-        /// <param name="signInPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
-        /// <param name="profileEditingPolicyName"> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </param>
-        /// <param name="passwordResetPolicyName"> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </param>
-        /// <param name="clientLibrary"> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </param>
-        /// <param name="clientId"> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </param>
-        /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IList<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Identity Provider contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderCreateContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            IdentityProviderType = identityProviderType;
-            SignInTenant = signInTenant;
-            AllowedTenants = allowedTenants;
-            Authority = authority;
-            SignUpPolicyName = signUpPolicyName;
-            SignInPolicyName = signInPolicyName;
-            ProfileEditingPolicyName = profileEditingPolicyName;
-            PasswordResetPolicyName = passwordResetPolicyName;
-            ClientLibrary = clientLibrary;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Identity Provider contract properties. </summary>
+        [WirePath("properties")]
+        internal IdentityProviderCreateContractProperties Properties { get; set; }
 
         /// <summary> Identity Provider Type identifier. </summary>
         [WirePath("properties.type")]
-        public IdentityProviderType? IdentityProviderType { get; set; }
+        public IdentityProviderType? IdentityProviderType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdentityProviderType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.IdentityProviderType = value;
+            }
+        }
+
         /// <summary> The TenantId to use instead of Common when logging into Active Directory. </summary>
         [WirePath("properties.signinTenant")]
-        public string SignInTenant { get; set; }
+        public string SignInTenant
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SignInTenant;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.SignInTenant = value;
+            }
+        }
+
         /// <summary> List of Allowed Tenants when configuring Azure Active Directory login. </summary>
         [WirePath("properties.allowedTenants")]
-        public IList<string> AllowedTenants { get; }
+        public IList<string> AllowedTenants
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                return Properties.AllowedTenants;
+            }
+        }
+
         /// <summary> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </summary>
         [WirePath("properties.authority")]
-        public string Authority { get; set; }
+        public string Authority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Authority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.Authority = value;
+            }
+        }
+
         /// <summary> Signup Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.signupPolicyName")]
-        public string SignUpPolicyName { get; set; }
+        public string SignUpPolicyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SignUpPolicyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.SignUpPolicyName = value;
+            }
+        }
+
         /// <summary> Signin Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.signinPolicyName")]
-        public string SignInPolicyName { get; set; }
+        public string SignInPolicyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SignInPolicyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.SignInPolicyName = value;
+            }
+        }
+
         /// <summary> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.profileEditingPolicyName")]
-        public string ProfileEditingPolicyName { get; set; }
+        public string ProfileEditingPolicyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProfileEditingPolicyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.ProfileEditingPolicyName = value;
+            }
+        }
+
         /// <summary> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.passwordResetPolicyName")]
-        public string PasswordResetPolicyName { get; set; }
+        public string PasswordResetPolicyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PasswordResetPolicyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.PasswordResetPolicyName = value;
+            }
+        }
+
         /// <summary> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </summary>
         [WirePath("properties.clientLibrary")]
-        public string ClientLibrary { get; set; }
+        public string ClientLibrary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientLibrary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.ClientLibrary = value;
+            }
+        }
+
         /// <summary> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </summary>
         [WirePath("properties.clientId")]
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.ClientId = value;
+            }
+        }
+
         /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("properties.clientSecret")]
-        public string ClientSecret { get; set; }
+        public string ClientSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.ClientSecret = value;
+            }
+        }
+
+        /// <summary> Certificate full resource ID used in external Identity Provider. </summary>
+        [WirePath("properties.certificateId")]
+        public ResourceIdentifier CertificateId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderCreateContractProperties();
+                }
+                Properties.CertificateId = value;
+            }
+        }
     }
 }

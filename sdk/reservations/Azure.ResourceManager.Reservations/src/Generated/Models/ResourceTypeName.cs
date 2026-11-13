@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Reservations.Models
     public readonly partial struct ResourceTypeName : IEquatable<ResourceTypeName>
     {
         private readonly string _value;
+        /// <summary> standard. </summary>
+        private const string StandardValue = "standard";
+        /// <summary> dedicated. </summary>
+        private const string DedicatedValue = "dedicated";
+        /// <summary> lowPriority. </summary>
+        private const string LowPriorityValue = "lowPriority";
+        /// <summary> shared. </summary>
+        private const string SharedValue = "shared";
+        /// <summary> serviceSpecific. </summary>
+        private const string ServiceSpecificValue = "serviceSpecific";
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceTypeName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "standard";
-        private const string DedicatedValue = "dedicated";
-        private const string LowPriorityValue = "lowPriority";
-        private const string SharedValue = "shared";
-        private const string ServiceSpecificValue = "serviceSpecific";
+            _value = value;
+        }
 
         /// <summary> standard. </summary>
         public static ResourceTypeName Standard { get; } = new ResourceTypeName(StandardValue);
+
         /// <summary> dedicated. </summary>
         public static ResourceTypeName Dedicated { get; } = new ResourceTypeName(DedicatedValue);
+
         /// <summary> lowPriority. </summary>
         public static ResourceTypeName LowPriority { get; } = new ResourceTypeName(LowPriorityValue);
+
         /// <summary> shared. </summary>
         public static ResourceTypeName Shared { get; } = new ResourceTypeName(SharedValue);
+
         /// <summary> serviceSpecific. </summary>
         public static ResourceTypeName ServiceSpecific { get; } = new ResourceTypeName(ServiceSpecificValue);
+
         /// <summary> Determines if two <see cref="ResourceTypeName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceTypeName left, ResourceTypeName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceTypeName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceTypeName left, ResourceTypeName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceTypeName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceTypeName(string value) => new ResourceTypeName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceTypeName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceTypeName?(string value) => value == null ? null : new ResourceTypeName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceTypeName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceTypeName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

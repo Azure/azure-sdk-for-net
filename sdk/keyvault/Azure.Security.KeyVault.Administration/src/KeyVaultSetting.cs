@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Security.KeyVault.Administration.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -75,7 +76,7 @@ namespace Azure.Security.KeyVault.Administration
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(new UpdateSettingRequest(this.Value.ToString()));
+            content.JsonWriter.WriteObjectValue(new UpdateSettingContent(this.Value.ToString()));
             return content;
         }
     }

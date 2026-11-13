@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class SecuritySettingResource : IJsonModel<SecuritySettingData>
     {
-        private static SecuritySettingData s_dataDeserializationInstance;
-        private static SecuritySettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecuritySettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecuritySettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecuritySettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecuritySettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecuritySettingData>)Data).Write(writer, options);
 
-        SecuritySettingData IJsonModel<SecuritySettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecuritySettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecuritySettingData IJsonModel<SecuritySettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecuritySettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecuritySettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecuritySettingData IPersistableModel<SecuritySettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecuritySettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecuritySettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecuritySettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecuritySettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

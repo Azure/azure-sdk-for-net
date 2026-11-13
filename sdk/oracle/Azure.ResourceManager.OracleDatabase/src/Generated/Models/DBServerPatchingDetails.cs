@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> DbServer Patching Properties. </summary>
     public partial class DBServerPatchingDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DBServerPatchingDetails"/>. </summary>
         internal DBServerPatchingDetails()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="patchingStatus"> Patching Status. </param>
         /// <param name="patchingEndedOn"> Time Patching Ended. </param>
         /// <param name="patchingStartedOn"> Time Patching Started. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DBServerPatchingDetails(int? estimatedPatchDuration, DBServerPatchingStatus? patchingStatus, DateTimeOffset? patchingEndedOn, DateTimeOffset? patchingStartedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DBServerPatchingDetails(int? estimatedPatchDuration, DBServerPatchingStatus? patchingStatus, DateTimeOffset? patchingEndedOn, DateTimeOffset? patchingStartedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EstimatedPatchDuration = estimatedPatchDuration;
             PatchingStatus = patchingStatus;
             PatchingEndedOn = patchingEndedOn;
             PatchingStartedOn = patchingStartedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Estimated Patch Duration. </summary>
         public int? EstimatedPatchDuration { get; }
+
         /// <summary> Patching Status. </summary>
         public DBServerPatchingStatus? PatchingStatus { get; }
+
         /// <summary> Time Patching Ended. </summary>
         public DateTimeOffset? PatchingEndedOn { get; }
+
         /// <summary> Time Patching Started. </summary>
         public DateTimeOffset? PatchingStartedOn { get; }
     }

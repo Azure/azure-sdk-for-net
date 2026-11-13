@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 "Azure.ResourceManager.Network.Models.PeerRouteList",
                 "Azure.ResourceManager.Network.Models.ProtocolCustomSettings",
+                "Azure.ResourceManager.Network.Models.SubscriptionId",
                 "Azure.ResourceManager.Network.Models.VpnClientParameters",
                 "Azure.ResourceManager.Network.Models.VpnPacketCaptureStartParameters",
                 "Azure.ResourceManager.Network.Models.VpnPacketCaptureStopParameters"

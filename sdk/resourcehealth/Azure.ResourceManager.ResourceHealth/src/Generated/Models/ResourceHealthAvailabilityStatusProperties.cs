@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Properties of availability state. </summary>
     public partial class ResourceHealthAvailabilityStatusProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusProperties"/>. </summary>
         internal ResourceHealthAvailabilityStatusProperties()
@@ -73,8 +45,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="recentlyResolved"> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </param>
         /// <param name="recommendedActions"> Lists actions the user can take based on the current availabilityState of the resource. </param>
         /// <param name="serviceImpactingEvents"> Lists the service impacting events that may be affecting the health of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AvailabilityState = availabilityState;
             Title = title;
@@ -96,47 +68,66 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             RecentlyResolved = recentlyResolved;
             RecommendedActions = recommendedActions;
             ServiceImpactingEvents = serviceImpactingEvents;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Availability status of the resource. When it is null, this availabilityStatus object represents an availability impacting event. </summary>
         public ResourceHealthAvailabilityStateValue? AvailabilityState { get; }
+
         /// <summary> Title description of the availability status. </summary>
         public string Title { get; }
+
         /// <summary> Summary description of the availability status. </summary>
         public string Summary { get; }
+
         /// <summary> Details of the availability status. </summary>
         public string DetailedStatus { get; }
+
         /// <summary> When the resource's availabilityState is Unavailable, it describes where the health impacting event was originated. Examples are planned, unplanned, user initiated or an outage etc. </summary>
         public string ReasonType { get; }
+
         /// <summary> When an event is created, it can either be triggered by a customer or the platform of the resource and this field will illustrate that. This field is connected to the category field in this object. </summary>
         public string Context { get; }
+
         /// <summary> When a context field is set to Platform, this field will reflect if the event was planned or unplanned. If the context field does not have a value of Platform, then this field will be ignored. </summary>
         public string Category { get; }
+
         /// <summary> The Article Id. </summary>
         public string ArticleId { get; }
+
         /// <summary> When the resource's availabilityState is Unavailable, it provides the Timestamp for when the health impacting event was received. </summary>
         public DateTimeOffset? RootCauseAttributionOn { get; }
+
         /// <summary> In case of an availability impacting event, it describes when the health impacting event was originated. Examples are Lifecycle, Downtime, Fault Analysis etc. </summary>
         public string HealthEventType { get; }
+
         /// <summary> In case of an availability impacting event, it describes where the health impacting event was originated. Examples are PlatformInitiated, UserInitiated etc. </summary>
         public string HealthEventCause { get; }
+
         /// <summary> In case of an availability impacting event, it describes the category of a PlatformInitiated health impacting event. Examples are Planned, Unplanned etc. </summary>
         public string HealthEventCategory { get; }
+
         /// <summary> It is a unique Id that identifies the event. </summary>
         public string HealthEventId { get; }
+
         /// <summary> When the resource's availabilityState is Unavailable and the reasonType is not User Initiated, it provides the date and time for when the issue is expected to be resolved. </summary>
         public DateTimeOffset? ResolutionEta { get; }
+
         /// <summary> Timestamp for when last change in health status occurred. </summary>
         public DateTimeOffset? OccuredOn { get; }
+
         /// <summary> Chronicity of the availability transition. </summary>
         public ReasonChronicityType? ReasonChronicity { get; }
+
         /// <summary> Timestamp for when the health was last checked. </summary>
         public DateTimeOffset? ReportedOn { get; }
+
         /// <summary> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </summary>
         public ResourceHealthAvailabilityStateRecentlyResolved RecentlyResolved { get; }
+
         /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
         public IReadOnlyList<ResourceHealthRecommendedAction> RecommendedActions { get; }
+
         /// <summary> Lists the service impacting events that may be affecting the health of the resource. </summary>
         public IReadOnlyList<ServiceImpactingEvent> ServiceImpactingEvents { get; }
     }

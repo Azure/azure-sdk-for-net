@@ -53,9 +53,16 @@ parameters:
 - name: PRMatrixKey
   type: string
   default: 'ArtifactName'
+# Default number of PackageInfo entries assigned to each PR job.
+# Used when a pool-specific override is absent or its runtime variable is unset.
 - name: PRJobBatchSize
   type: number
   default: 10
+# Optional map of pool names to per-job batch-size overrides.
+# Values may be numbers or runtime variables populated by PreGenerationSteps.
+- name: PRJobBatchSizeByPool
+  type: object
+  default: {}
 - name: PRMatrixIndirectFilters
   type: object
   default: []
@@ -142,6 +149,28 @@ jobs:
         - pwsh: |
             '${{ convertToJson(parameters.MatrixConfigs) }}' | Set-Content matrix.json
 
+            $batchSize = ${{ parameters.PRJobBatchSize }}
+            $overrides = '${{ convertToJson(parameters.PRJobBatchSizeByPool) }}' | ConvertFrom-Json
+            $poolOverride = $overrides.PSObject.Properties |
+              Where-Object { $_.Name -eq '${{ pool.name }}' } |
+              Select-Object -First 1
+            # An unset runtime macro remains in $(Name) form; retain the default in that case.
+            if ($poolOverride) {
+              $overrideValue = [string]$poolOverride.Value
+              if (-not [string]::IsNullOrWhiteSpace($overrideValue) -and $overrideValue -notmatch '^\$\(.+\)$') {
+                try {
+                  $batchSize = [int]$overrideValue
+                }
+                catch {
+                  throw "PR job batch size override for ${{ pool.name }} must be an integer, got '$overrideValue'."
+                }
+                Write-Host "Using batch size override for ${{ pool.name }}: $batchSize"
+              }
+            }
+            if ($batchSize -le 0) {
+              throw "PR job batch size for ${{ pool.name }} must be greater than zero."
+            }
+
             ./eng/common/scripts/job-matrix/Create-PrJobMatrix.ps1 `
               -PackagePropertiesFolder $(Build.ArtifactStagingDirectory)/PackageInfo `
               -PRMatrixFile matrix.json `
@@ -151,7 +180,7 @@ jobs:
               -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}' `
               -IndirectFilters '${{ join(''',''', parameters.PRMatrixIndirectFilters) }}' `
               -Replace '${{ join(''',''', parameters.MatrixReplace) }}' `
-              -PackagesPerPRJob ${{ parameters.PRJobBatchSize }} `
+              -PackagesPerPRJob $batchSize `
               -SparseIndirect $${{ parameters.PRMatrixSparseIndirect }}
           displayName: Create ${{ pool.name }} PR Matrix
           name: vm_job_matrix_pr_${{ pool.name }}

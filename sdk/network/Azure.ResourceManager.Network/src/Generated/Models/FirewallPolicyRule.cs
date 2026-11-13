@@ -7,73 +7,49 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary>
     /// Properties of a rule.
-    /// Please note <see cref="FirewallPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/> and <see cref="NetworkRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApplicationRule"/>, <see cref="NatRule"/>, and <see cref="NetworkRule"/>.
     /// </summary>
     public abstract partial class FirewallPolicyRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRule"/>. </summary>
-        protected FirewallPolicyRule()
+        /// <param name="ruleType"> Rule Type. </param>
+        private protected FirewallPolicyRule(FirewallPolicyRuleType ruleType)
         {
+            RuleType = ruleType;
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPolicyRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             RuleType = ruleType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the rule. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Description of the rule. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> Rule Type. </summary>
+        [WirePath("ruleType")]
         internal FirewallPolicyRuleType RuleType { get; set; }
     }
 }

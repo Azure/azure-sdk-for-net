@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AgriculturePlatformSku))]
     [ModelReaderWriterBuildable(typeof(AgricultureServiceConfig))]
@@ -24,16 +24,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
     [ModelReaderWriterBuildable(typeof(AgricultureServiceProperties))]
     [ModelReaderWriterBuildable(typeof(AgricultureServiceResource))]
     [ModelReaderWriterBuildable(typeof(AgricultureSolution))]
-    [ModelReaderWriterBuildable(typeof(AgriServiceResourceListResult))]
     [ModelReaderWriterBuildable(typeof(AvailableAgriSolutionListResult))]
     [ModelReaderWriterBuildable(typeof(DataConnectorCredentialMap))]
     [ModelReaderWriterBuildable(typeof(DataConnectorCredentials))]
     [ModelReaderWriterBuildable(typeof(DataManagerForAgricultureSolution))]
     [ModelReaderWriterBuildable(typeof(InstalledSolutionMap))]
-    [ModelReaderWriterBuildable(typeof(ManagedOnBehalfOfConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketPlaceOfferDetails))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

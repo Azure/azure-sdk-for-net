@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.ResourceManager.DataLakeStore.Models;
 using System.Threading;
+using Azure.ResourceManager.DataLakeStore.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {

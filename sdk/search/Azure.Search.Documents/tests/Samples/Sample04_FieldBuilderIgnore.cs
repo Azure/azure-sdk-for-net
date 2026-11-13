@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Tests.Samples
 {
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1649 // File name should match first type name
-    public class FieldBuilderIgnore :  SearchTestBase
+    public class FieldBuilderIgnore : SearchTestBase
     {
         public FieldBuilderIgnore(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, SearchClientOptions.LatestVersion, null /* RecordedTestMode.Record /* to re-record */)

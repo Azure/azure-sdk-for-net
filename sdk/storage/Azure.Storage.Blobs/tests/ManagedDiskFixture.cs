@@ -11,6 +11,7 @@ using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.Storage.Test;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests.ManagedDisk
 {
@@ -20,6 +21,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
     /// Deleting snapshots at test class level was not viable as it led to race conditions related to access rights,
     /// i.e. if one of the middle (or first) snapshots is deleted it seems that service revokes read access while it squashes data.
     /// </summary>
+    [SetUpFixture]
     public class ManagedDiskFixture : SetUpFixtureBase<BlobTestEnvironment>
     {
         public ManagedDiskFixture()

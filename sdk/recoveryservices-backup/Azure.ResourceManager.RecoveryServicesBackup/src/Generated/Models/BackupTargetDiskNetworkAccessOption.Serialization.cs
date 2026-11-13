@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     internal static partial class BackupTargetDiskNetworkAccessOptionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BackupTargetDiskNetworkAccessOption value) => value switch
         {
             BackupTargetDiskNetworkAccessOption.SameAsOnSourceDisks => "SameAsOnSourceDisks",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupTargetDiskNetworkAccessOption value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BackupTargetDiskNetworkAccessOption ToBackupTargetDiskNetworkAccessOption(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SameAsOnSourceDisks")) return BackupTargetDiskNetworkAccessOption.SameAsOnSourceDisks;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EnablePrivateAccessForAllDisks")) return BackupTargetDiskNetworkAccessOption.EnablePrivateAccessForAllDisks;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EnablePublicAccessForAllDisks")) return BackupTargetDiskNetworkAccessOption.EnablePublicAccessForAllDisks;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SameAsOnSourceDisks"))
+            {
+                return BackupTargetDiskNetworkAccessOption.SameAsOnSourceDisks;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EnablePrivateAccessForAllDisks"))
+            {
+                return BackupTargetDiskNetworkAccessOption.EnablePrivateAccessForAllDisks;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EnablePublicAccessForAllDisks"))
+            {
+                return BackupTargetDiskNetworkAccessOption.EnablePublicAccessForAllDisks;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupTargetDiskNetworkAccessOption value.");
         }
     }

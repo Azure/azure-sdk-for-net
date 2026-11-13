@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,83 +17,93 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsDnsEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsDnsEntity"/>. </summary>
-        public SecurityInsightsDnsEntity()
+        public SecurityInsightsDnsEntity() : base(SecurityInsightsEntityKind.DnsResolution)
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            IPAddressEntityIds = new ChangeTrackingList<string>();
-            Kind = SecurityInsightsEntityKind.DnsResolution;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsDnsEntity"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="dnsServerIPEntityId"> An ip entity id for the dns server resolving the request. </param>
-        /// <param name="domainName"> The name of the dns record associated with the alert. </param>
-        /// <param name="hostIPAddressEntityId"> An ip entity id for the dns request client. </param>
-        /// <param name="ipAddressEntityIds"> Ip entity identifiers for the resolved ip address. </param>
-        internal SecurityInsightsDnsEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string dnsServerIPEntityId, string domainName, string hostIPAddressEntityId, IReadOnlyList<string> ipAddressEntityIds) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Dns entity properties. </param>
+        internal SecurityInsightsDnsEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, DnsEntityProperties properties) : base(id, name, resourceType, systemData, kind, additionalBinaryDataProperties)
         {
-            AdditionalData = additionalData;
-            FriendlyName = friendlyName;
-            DnsServerIPEntityId = dnsServerIPEntityId;
-            DomainName = domainName;
-            HostIPAddressEntityId = hostIPAddressEntityId;
-            IPAddressEntityIds = ipAddressEntityIds;
-            Kind = kind;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        /// <summary> Dns entity properties. </summary>
+        [WirePath("properties")]
+        internal DnsEntityProperties Properties { get; set; }
+
+        /// <summary> A bag of custom fields that should be part of the entity and will be presented to the user. </summary>
         [WirePath("properties.additionalData")]
-        public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalData
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsEntityProperties();
+                }
+                return Properties.AdditionalData;
+            }
+        }
+
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
         [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+        }
+
         /// <summary> An ip entity id for the dns server resolving the request. </summary>
         [WirePath("properties.dnsServerIpEntityId")]
-        public string DnsServerIPEntityId { get; }
+        public string DnsServerIPEntityId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsServerIPEntityId;
+            }
+        }
+
         /// <summary> The name of the dns record associated with the alert. </summary>
         [WirePath("properties.domainName")]
-        public string DomainName { get; }
+        public string DomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DomainName;
+            }
+        }
+
         /// <summary> An ip entity id for the dns request client. </summary>
         [WirePath("properties.hostIpAddressEntityId")]
-        public string HostIPAddressEntityId { get; }
+        public string HostIPAddressEntityId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostIPAddressEntityId;
+            }
+        }
+
         /// <summary> Ip entity identifiers for the resolved ip address. </summary>
         [WirePath("properties.ipAddressEntityIds")]
-        public IReadOnlyList<string> IPAddressEntityIds { get; }
+        public IReadOnlyList<string> IPAddressEntityIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsEntityProperties();
+                }
+                return Properties.IPAddressEntityIds;
+            }
+        }
     }
 }

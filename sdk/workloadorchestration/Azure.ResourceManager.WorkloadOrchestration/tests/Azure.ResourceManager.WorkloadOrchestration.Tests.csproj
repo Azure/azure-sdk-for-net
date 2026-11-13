@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.WorkloadOrchestration.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Resources" />
+  </ItemGroup>
+</Project>

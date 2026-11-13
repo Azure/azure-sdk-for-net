@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct QuerySpellerType : IEquatable<QuerySpellerType>
     {
         private readonly string _value;
+        /// <summary> Speller not enabled. </summary>
+        private const string NoneValue = "none";
+        /// <summary> Speller corrects individual query terms using a static lexicon for the language specified by the queryLanguage parameter. </summary>
+        private const string LexiconValue = "lexicon";
 
         /// <summary> Initializes a new instance of <see cref="QuerySpellerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QuerySpellerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string LexiconValue = "lexicon";
+            _value = value;
+        }
 
         /// <summary> Speller not enabled. </summary>
         public static QuerySpellerType None { get; } = new QuerySpellerType(NoneValue);
+
         /// <summary> Speller corrects individual query terms using a static lexicon for the language specified by the queryLanguage parameter. </summary>
         public static QuerySpellerType Lexicon { get; } = new QuerySpellerType(LexiconValue);
+
         /// <summary> Determines if two <see cref="QuerySpellerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QuerySpellerType left, QuerySpellerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QuerySpellerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QuerySpellerType left, QuerySpellerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QuerySpellerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QuerySpellerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QuerySpellerType(string value) => new QuerySpellerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QuerySpellerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QuerySpellerType?(string value) => value == null ? null : new QuerySpellerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QuerySpellerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QuerySpellerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

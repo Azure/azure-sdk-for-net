@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
@@ -12,7 +11,7 @@ namespace Azure.Provisioning.Generator.Specifications;
 public class AuthorizationSpecification : Specification
 {
     public AuthorizationSpecification() :
-        base("Authorization", typeof(AuthorizationExtensions))
+        base("Authorization", typeof(AuthorizationExtensions), serviceDirectory: "provisioning")
     {
         SkipCleaning = true;
     }

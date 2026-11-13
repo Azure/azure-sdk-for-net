@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_IntegrationFabricsGet()
         {
-            // Generated from example definition: 2024-11-01-preview/IntegrationFabrics_Get.json
+            // Generated from example definition: 2025-08-01/IntegrationFabrics_Get.json
             // this example is just showing the usage of "IntegrationFabric_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_IntegrationFabricsDelete()
         {
-            // Generated from example definition: 2024-11-01-preview/IntegrationFabrics_Delete.json
+            // Generated from example definition: 2025-08-01/IntegrationFabrics_Delete.json
             // this example is just showing the usage of "IntegrationFabric_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_IntegrationFabricsUpdate()
         {
-            // Generated from example definition: 2024-11-01-preview/IntegrationFabrics_Update.json
+            // Generated from example definition: 2025-08-01/IntegrationFabrics_Update.json
             // this example is just showing the usage of "IntegrationFabric_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

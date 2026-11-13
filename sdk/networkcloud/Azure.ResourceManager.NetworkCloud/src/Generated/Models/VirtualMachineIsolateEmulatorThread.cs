@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachineIsolateEmulatorThread : IEquatable<VirtualMachineIsolateEmulatorThread>
     {
         private readonly string _value;
+        /// <summary> Do not isolate the emulator thread. </summary>
+        private const string FalseValue = "False";
+        /// <summary> Isolate the emulator thread. </summary>
+        private const string TrueValue = "True";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineIsolateEmulatorThread"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineIsolateEmulatorThread(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
-        public static VirtualMachineIsolateEmulatorThread True { get; } = new VirtualMachineIsolateEmulatorThread(TrueValue);
-        /// <summary> False. </summary>
+        /// <summary> Do not isolate the emulator thread. </summary>
         public static VirtualMachineIsolateEmulatorThread False { get; } = new VirtualMachineIsolateEmulatorThread(FalseValue);
+
+        /// <summary> Isolate the emulator thread. </summary>
+        public static VirtualMachineIsolateEmulatorThread True { get; } = new VirtualMachineIsolateEmulatorThread(TrueValue);
+
         /// <summary> Determines if two <see cref="VirtualMachineIsolateEmulatorThread"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineIsolateEmulatorThread left, VirtualMachineIsolateEmulatorThread right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachineIsolateEmulatorThread"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineIsolateEmulatorThread left, VirtualMachineIsolateEmulatorThread right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineIsolateEmulatorThread"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachineIsolateEmulatorThread"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachineIsolateEmulatorThread(string value) => new VirtualMachineIsolateEmulatorThread(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachineIsolateEmulatorThread"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachineIsolateEmulatorThread?(string value) => value == null ? null : new VirtualMachineIsolateEmulatorThread(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineIsolateEmulatorThread other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachineIsolateEmulatorThread other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

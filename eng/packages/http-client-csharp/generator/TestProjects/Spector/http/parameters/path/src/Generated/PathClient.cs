@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +18,12 @@ namespace Parameters.Path
     {
         public PathClient() : this(new Uri("http://localhost:3000"), new PathClientOptions()) => throw null;
 
-        public PathClient(Uri endpoint, PathClientOptions options) => throw null;
+        internal PathClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PathClientOptions options) => throw null;
+
+        public PathClient(Uri endpoint, PathClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public PathClient(PathClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

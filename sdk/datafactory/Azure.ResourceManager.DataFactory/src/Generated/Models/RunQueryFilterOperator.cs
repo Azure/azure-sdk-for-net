@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct RunQueryFilterOperator : IEquatable<RunQueryFilterOperator>
     {
         private readonly string _value;
+        /// <summary> Equals. </summary>
+        private const string EqualsValueValue = "Equals";
+        /// <summary> NotEquals. </summary>
+        private const string NotEqualsValue = "NotEquals";
+        /// <summary> In. </summary>
+        private const string InValue = "In";
+        /// <summary> NotIn. </summary>
+        private const string NotInValue = "NotIn";
 
         /// <summary> Initializes a new instance of <see cref="RunQueryFilterOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RunQueryFilterOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualsValueValue = "Equals";
-        private const string NotEqualsValue = "NotEquals";
-        private const string InValue = "In";
-        private const string NotInValue = "NotIn";
+            _value = value;
+        }
 
         /// <summary> Equals. </summary>
         public static RunQueryFilterOperator EqualsValue { get; } = new RunQueryFilterOperator(EqualsValueValue);
+
         /// <summary> NotEquals. </summary>
         public static RunQueryFilterOperator NotEquals { get; } = new RunQueryFilterOperator(NotEqualsValue);
+
         /// <summary> In. </summary>
         public static RunQueryFilterOperator In { get; } = new RunQueryFilterOperator(InValue);
+
         /// <summary> NotIn. </summary>
         public static RunQueryFilterOperator NotIn { get; } = new RunQueryFilterOperator(NotInValue);
+
         /// <summary> Determines if two <see cref="RunQueryFilterOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RunQueryFilterOperator left, RunQueryFilterOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RunQueryFilterOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RunQueryFilterOperator left, RunQueryFilterOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RunQueryFilterOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RunQueryFilterOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RunQueryFilterOperator(string value) => new RunQueryFilterOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RunQueryFilterOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RunQueryFilterOperator?(string value) => value == null ? null : new RunQueryFilterOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RunQueryFilterOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RunQueryFilterOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 State = AdministrativeEnableState.Enable,
             };
-            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            await l3IsolationDomainForPostAction.SetAdministrativeStateAsync(WaitUntil.Completed, content);
 
             content = new UpdateAdministrativeStateContent()
             {
                 State = AdministrativeEnableState.Disable,
             };
-            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            await l3IsolationDomainForPostAction.SetAdministrativeStateAsync(WaitUntil.Completed, content);
         }
     }
 }

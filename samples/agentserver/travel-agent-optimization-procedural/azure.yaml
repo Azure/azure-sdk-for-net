@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: travel-agent-sample
+metadata:
+    template: azure-ai-agentserver-optimization-configuration-samples@1.0.0
+services:
+    travel-agent-sample:
+        project: .
+        host: azure.ai.agent
+        language: docker
+        docker:
+            remoteBuild: true
+        config:
+            container:
+                resources:
+                    cpu: "0.5"
+                    memory: 1Gi
+hooks:
+    postdeploy:
+        windows:
+            name: postdeploy
+            kind: pwsh
+            shell: pwsh
+            run: ./scripts/deploy-foundry-agent.ps1
+            interactive: true
+        posix:
+            shell: pwsh
+            run: ./scripts/deploy-foundry-agent.ps1
+            interactive: true
+    postup:
+        windows:
+            name: postup
+            kind: pwsh
+            shell: pwsh
+            run: ./scripts/deploy-foundry-agent.ps1
+            interactive: true
+        posix:
+            shell: pwsh
+            run: ./scripts/deploy-foundry-agent.ps1
+            interactive: true

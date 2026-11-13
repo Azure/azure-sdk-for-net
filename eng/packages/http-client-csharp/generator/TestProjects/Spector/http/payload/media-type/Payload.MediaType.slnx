@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Payload.MediaType.csproj" />
+  <Project Path="tests/Payload.MediaType.Tests.csproj" />
+</Solution>

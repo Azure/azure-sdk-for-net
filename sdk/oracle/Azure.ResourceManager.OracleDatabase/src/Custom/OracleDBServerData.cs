@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public OracleDBServerProperties Properties { get; set;  }
+        public OracleDBServerProperties Properties { get; set; }
     }
 }

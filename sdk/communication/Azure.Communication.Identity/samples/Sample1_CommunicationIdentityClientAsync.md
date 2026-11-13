@@ -23,6 +23,8 @@ Or alternatively using the endpoint and access key acquired from an Azure Commun
 ```C# Snippet:CreateCommunicationIdentityFromAccessKey
 var endpoint = new Uri("https://my-resource.communication.azure.com");
 var accessKey = "<access_key>";
+endpoint = TestEnvironment.LiveTestDynamicEndpoint;
+accessKey = TestEnvironment.LiveTestDynamicAccessKey;
 var client = new CommunicationIdentityClient(endpoint, new AzureKeyCredential(accessKey));
 ```
 
@@ -30,6 +32,7 @@ Clients also have the option to authenticate using a valid Active Directory toke
 
 ```C# Snippet:CreateCommunicationIdentityFromToken
 var endpoint = new Uri("https://my-resource.communication.azure.com");
+endpoint = TestEnvironment.LiveTestDynamicEndpoint;
 TokenCredential tokenCredential = TestEnvironment.Credential;
 var client = new CommunicationIdentityClient(endpoint, tokenCredential);
 ```
@@ -45,31 +48,6 @@ Console.WriteLine($"User id: {user.Id}");
 ```
 
 You will need to store the `identity` that is returned by Azure Communication Services. This is necessary for creating tokens or refreshing them in the future and to map your user identities with Azure Communication Services identities. The `identity` value should be treated as a secret.
-
-## Create a user with an associated customId
-
-The `CommunicationIdentityClient` allows you to create users with an associated customId. This customId can be used to map your application's user identities with Azure Communication Services identities.
-
-```C# Snippet:CreateCommunicationUserWithCustomIdAsync
-Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
-CommunicationUserIdentifier user = userResponse.Value;
-Console.WriteLine($"User id: {user.Id}");
-```
-
-If you call the CreateUser method again with the same customId, it will return the same user.Id. Therefore, you do not need to store this mapping yourself.
-
-## Get user detail
-
-The CommunicationIdentityClient can be used to retrieve details about a user. This includes the user's ID, customId ID, and the last time a token was issued for the user.
-
-```C# Snippet:GetUserDetailAsync
-Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
-CommunicationUserIdentifier user = userResponse.Value;
-var userDetails = await client.GetUserDetailAsync(user);
-Console.WriteLine($"User id: {userDetails.Value.User.Id}");
-Console.WriteLine($"Custom id: {userDetails.Value.CustomId}");
-Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
-```
 
 ## Generate a user token
 

@@ -8,43 +8,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The SystemCreatedAcrAccount. </summary>
     public partial class SystemCreatedAcrAccount
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _acrAccountName;
+        private bool _acrAccountNameIsDefined;
+        private string _acrAccountSku;
+        private bool _acrAccountSkuIsDefined;
+        private ArmResourceId _armResourceIdentifier;
+        private bool _armResourceIdentifierIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SystemCreatedAcrAccount"/>. </summary>
         public SystemCreatedAcrAccount()
@@ -55,23 +33,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="acrAccountName"> Name of the ACR account. </param>
         /// <param name="acrAccountSku"> SKU of the ACR account. </param>
         /// <param name="armResourceIdentifier"> This is populated once the ACR account is created. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SystemCreatedAcrAccount(string acrAccountName, string acrAccountSku, ArmResourceId armResourceIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SystemCreatedAcrAccount(string acrAccountName, string acrAccountSku, ArmResourceId armResourceIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AcrAccountName = acrAccountName;
-            AcrAccountSku = acrAccountSku;
-            ArmResourceIdentifier = armResourceIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _acrAccountName = acrAccountName;
+            _acrAccountSku = acrAccountSku;
+            _armResourceIdentifier = armResourceIdentifier;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the ACR account. </summary>
         [WirePath("acrAccountName")]
-        public string AcrAccountName { get; set; }
+        public string AcrAccountName
+        {
+            get
+            {
+                return _acrAccountName;
+            }
+            set
+            {
+                _acrAccountName = value;
+                _acrAccountNameIsDefined = true;
+            }
+        }
+
         /// <summary> SKU of the ACR account. </summary>
         [WirePath("acrAccountSku")]
-        public string AcrAccountSku { get; set; }
+        public string AcrAccountSku
+        {
+            get
+            {
+                return _acrAccountSku;
+            }
+            set
+            {
+                _acrAccountSku = value;
+                _acrAccountSkuIsDefined = true;
+            }
+        }
+
         /// <summary> This is populated once the ACR account is created. </summary>
-        internal ArmResourceId ArmResourceIdentifier { get; set; }
+        [WirePath("armResourceId")]
+        internal ArmResourceId ArmResourceIdentifier
+        {
+            get
+            {
+                return _armResourceIdentifier;
+            }
+            set
+            {
+                _armResourceIdentifier = value;
+                _armResourceIdentifierIsDefined = true;
+            }
+        }
+
         /// <summary>
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"
         /// or "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{AcrName}"
@@ -79,11 +94,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("armResourceId.resourceId")]
         public ResourceIdentifier ArmResourceId
         {
-            get => ArmResourceIdentifier is null ? default : ArmResourceIdentifier.ResourceId;
+            get
+            {
+                return ArmResourceIdentifier is null ? default : ArmResourceIdentifier.ResourceId;
+            }
             set
             {
                 if (ArmResourceIdentifier is null)
+                {
                     ArmResourceIdentifier = new ArmResourceId();
+                }
                 ArmResourceIdentifier.ResourceId = value;
             }
         }

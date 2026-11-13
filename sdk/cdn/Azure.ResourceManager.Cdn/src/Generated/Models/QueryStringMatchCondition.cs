@@ -7,80 +7,51 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for QueryString match conditions
-    /// Serialized Name: QueryStringMatchConditionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for QueryString match conditions. </summary>
     public partial class QueryStringMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/>. </summary>
-        /// <param name="queryStringOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: QueryStringMatchConditionParameters.operator
-        /// </param>
-        public QueryStringMatchCondition(QueryStringOperator queryStringOperator)
+        /// <param name="queryStringOperator"> Describes operator to be matched. </param>
+        public QueryStringMatchCondition(QueryStringOperator queryStringOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleQueryStringConditionParameters)
         {
             QueryStringOperator = queryStringOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleQueryStringConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="queryStringOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: QueryStringMatchConditionParameters.operator
-        /// </param>
-        /// <param name="negateCondition">
-        /// Describes if this is negate condition or not
-        /// Serialized Name: QueryStringMatchConditionParameters.negateCondition
-        /// </param>
-        /// <param name="matchValues">
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: QueryStringMatchConditionParameters.matchValues
-        /// </param>
-        /// <param name="transforms">
-        /// List of transforms
-        /// Serialized Name: QueryStringMatchConditionParameters.transforms
-        /// </param>
-        internal QueryStringMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, QueryStringOperator queryStringOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        /// <param name="typeName"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="queryStringOperator"> Describes operator to be matched. </param>
+        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
+        /// <param name="transforms"> List of transforms. </param>
+        internal QueryStringMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, QueryStringOperator queryStringOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
             QueryStringOperator = queryStringOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
-            TypeName = typeName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/> for deserialization. </summary>
-        internal QueryStringMatchCondition()
-        {
-        }
-
-        /// <summary>
-        /// Describes operator to be matched
-        /// Serialized Name: QueryStringMatchConditionParameters.operator
-        /// </summary>
+        /// <summary> Describes operator to be matched. </summary>
+        [WirePath("operator")]
         public QueryStringOperator QueryStringOperator { get; set; }
-        /// <summary>
-        /// Describes if this is negate condition or not
-        /// Serialized Name: QueryStringMatchConditionParameters.negateCondition
-        /// </summary>
+
+        /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
-        /// <summary>
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: QueryStringMatchConditionParameters.matchValues
-        /// </summary>
+
+        /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
-        /// <summary>
-        /// List of transforms
-        /// Serialized Name: QueryStringMatchConditionParameters.transforms
-        /// </summary>
+
+        /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

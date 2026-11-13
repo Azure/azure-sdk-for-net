@@ -204,7 +204,7 @@ namespace Azure.Storage.DataMovement
                 offset: 0,
                 length: 0,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-           return JobPartPlanHeader.Deserialize(stream);
+            return JobPartPlanHeader.Deserialize(stream);
         }
 
         Task ITransferCheckpointer.SetJobStatusAsync(string transferId, TransferStatus status, CancellationToken cancellationToken)

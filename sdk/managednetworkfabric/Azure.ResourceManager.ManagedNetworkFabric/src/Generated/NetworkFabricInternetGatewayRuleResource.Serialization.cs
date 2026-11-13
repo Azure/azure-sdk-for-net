@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    /// <summary></summary>
     public partial class NetworkFabricInternetGatewayRuleResource : IJsonModel<NetworkFabricInternetGatewayRuleData>
     {
-        private static NetworkFabricInternetGatewayRuleData s_dataDeserializationInstance;
-        private static NetworkFabricInternetGatewayRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkFabricInternetGatewayRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkFabricInternetGatewayRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFabricInternetGatewayRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricInternetGatewayRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricInternetGatewayRuleData>)Data).Write(writer, options);
 
-        NetworkFabricInternetGatewayRuleData IJsonModel<NetworkFabricInternetGatewayRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricInternetGatewayRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricInternetGatewayRuleData IJsonModel<NetworkFabricInternetGatewayRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkFabricInternetGatewayRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricInternetGatewayRuleData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFabricInternetGatewayRuleData IPersistableModel<NetworkFabricInternetGatewayRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricInternetGatewayRuleData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricInternetGatewayRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricInternetGatewayRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricInternetGatewayRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

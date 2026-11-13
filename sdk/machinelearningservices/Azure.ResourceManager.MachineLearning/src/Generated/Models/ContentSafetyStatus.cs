@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct ContentSafetyStatus : IEquatable<ContentSafetyStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ContentSafetyStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContentSafetyStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentSafetyStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContentSafetyStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static ContentSafetyStatus Enabled { get; } = new ContentSafetyStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static ContentSafetyStatus Disabled { get; } = new ContentSafetyStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="ContentSafetyStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContentSafetyStatus left, ContentSafetyStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContentSafetyStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContentSafetyStatus left, ContentSafetyStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentSafetyStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContentSafetyStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContentSafetyStatus(string value) => new ContentSafetyStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContentSafetyStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContentSafetyStatus?(string value) => value == null ? null : new ContentSafetyStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContentSafetyStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContentSafetyStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -72,7 +72,7 @@ string jobId = "job-id-2";
 Response<RouterJob> job = await routerClient.CreateJobAsync(
     options: new CreateJobOptions(jobId: jobId, channelId: channelId, queueId: jobQueueId)
     {
-        RequestedWorkerSelectors = { new RouterWorkerSelector("IT_Support", LabelOperator.Equal, new RouterValue(true))},
+        RequestedWorkerSelectors = { new RouterWorkerSelector("IT_Support", LabelOperator.Equal, new RouterValue(true)) },
         Priority = 100,
     });
 

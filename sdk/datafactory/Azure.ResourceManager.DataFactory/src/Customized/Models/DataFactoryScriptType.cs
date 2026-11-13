@@ -8,6 +8,9 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    // Back-compat: the GA package shipped this SDK-only extensible enum, but the current spec models
+    // the script type as a plain string, so it has no spec representation. Kept (with
+    // [EditorBrowsable(Never)]) for source compatibility with existing callers.
     /// <summary> The type of the query. Type: string. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct DataFactoryScriptType : IEquatable<DataFactoryScriptType>

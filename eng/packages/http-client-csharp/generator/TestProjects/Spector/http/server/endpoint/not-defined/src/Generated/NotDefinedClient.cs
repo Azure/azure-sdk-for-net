@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,7 +20,12 @@ namespace Server.Endpoint.NotDefined
 
         public NotDefinedClient(Uri endpoint) : this(endpoint, new NotDefinedClientOptions()) => throw null;
 
-        public NotDefinedClient(Uri endpoint, NotDefinedClientOptions options) => throw null;
+        internal NotDefinedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NotDefinedClientOptions options) => throw null;
+
+        public NotDefinedClient(Uri endpoint, NotDefinedClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public NotDefinedClient(NotDefinedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

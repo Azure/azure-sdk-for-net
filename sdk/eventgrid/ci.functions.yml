@@ -13,19 +13,6 @@ trigger:
       - sdk/eventgrid/service.projects
       - sdk/eventgrid/ci.functions.yml
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-      - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid
-      - sdk/eventgrid/service.projects
-      - sdk/eventgrid/ci.functions.yml
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

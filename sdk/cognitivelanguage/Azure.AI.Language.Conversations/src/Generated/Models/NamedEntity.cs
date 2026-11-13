@@ -13,37 +13,8 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Text that has been categorized into pre-defined classes or types such as: person, location, event, product, and organization. </summary>
     public partial class NamedEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NamedEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
@@ -51,12 +22,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
         internal NamedEntity(string text, string category, int offset, int length, double confidenceScore)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(category, nameof(category));
-
             Text = text;
             Category = category;
             Offset = offset;
@@ -74,8 +41,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="mask"> Exact mask text to mask the PII entity. </param>
         /// <param name="maskOffset"> Offset of the mask text. </param>
         /// <param name="maskLength"> Length of the mask text. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamedEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, string mask, int? maskOffset, int? maskLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NamedEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, string mask, int? maskOffset, int? maskLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Category = category;
@@ -86,30 +53,33 @@ namespace Azure.AI.Language.Conversations.Models
             Mask = mask;
             MaskOffset = maskOffset;
             MaskLength = maskLength;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NamedEntity"/> for deserialization. </summary>
-        internal NamedEntity()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Entity text as appears in the request. </summary>
         public string Text { get; }
+
         /// <summary> Entity type. </summary>
         public string Category { get; }
+
         /// <summary> (Optional) Entity sub type. </summary>
         public string Subcategory { get; }
+
         /// <summary> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </summary>
         public int Offset { get; }
+
         /// <summary> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </summary>
         public int Length { get; }
+
         /// <summary> Confidence score between 0 and 1 of the extracted entity. </summary>
         public double ConfidenceScore { get; }
+
         /// <summary> Exact mask text to mask the PII entity. </summary>
         public string Mask { get; }
+
         /// <summary> Offset of the mask text. </summary>
         public int? MaskOffset { get; }
+
         /// <summary> Length of the mask text. </summary>
         public int? MaskLength { get; }
     }

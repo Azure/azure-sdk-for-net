@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
+    /// <summary></summary>
     public partial class SqlVmGroupResource : IJsonModel<SqlVmGroupData>
     {
-        private static SqlVmGroupData s_dataDeserializationInstance;
-        private static SqlVmGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlVmGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlVmGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlVmGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlVmGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlVmGroupData>)Data).Write(writer, options);
 
-        SqlVmGroupData IJsonModel<SqlVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlVmGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlVmGroupData IJsonModel<SqlVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlVmGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlVmGroupData>(Data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlVmGroupData IPersistableModel<SqlVmGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlVmGroupData>(data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
-        string IPersistableModel<SqlVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlVmGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

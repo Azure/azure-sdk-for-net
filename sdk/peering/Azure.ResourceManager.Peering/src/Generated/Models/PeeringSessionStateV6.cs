@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Peering.Models
     public readonly partial struct PeeringSessionStateV6 : IEquatable<PeeringSessionStateV6>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PeeringSessionStateV6"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PeeringSessionStateV6(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string IdleValue = "Idle";
         private const string ConnectValue = "Connect";
@@ -34,45 +27,79 @@ namespace Azure.ResourceManager.Peering.Models
         private const string PendingUpdateValue = "PendingUpdate";
         private const string PendingRemoveValue = "PendingRemove";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringSessionStateV6"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PeeringSessionStateV6(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static PeeringSessionStateV6 None { get; } = new PeeringSessionStateV6(NoneValue);
-        /// <summary> Idle. </summary>
+
+        /// <summary> Gets the Idle. </summary>
         public static PeeringSessionStateV6 Idle { get; } = new PeeringSessionStateV6(IdleValue);
-        /// <summary> Connect. </summary>
+
+        /// <summary> Gets the Connect. </summary>
         public static PeeringSessionStateV6 Connect { get; } = new PeeringSessionStateV6(ConnectValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static PeeringSessionStateV6 Active { get; } = new PeeringSessionStateV6(ActiveValue);
-        /// <summary> OpenSent. </summary>
+
+        /// <summary> Gets the OpenSent. </summary>
         public static PeeringSessionStateV6 OpenSent { get; } = new PeeringSessionStateV6(OpenSentValue);
-        /// <summary> OpenConfirm. </summary>
+
+        /// <summary> Gets the OpenConfirm. </summary>
         public static PeeringSessionStateV6 OpenConfirm { get; } = new PeeringSessionStateV6(OpenConfirmValue);
-        /// <summary> OpenReceived. </summary>
+
+        /// <summary> Gets the OpenReceived. </summary>
         public static PeeringSessionStateV6 OpenReceived { get; } = new PeeringSessionStateV6(OpenReceivedValue);
-        /// <summary> Established. </summary>
+
+        /// <summary> Gets the Established. </summary>
         public static PeeringSessionStateV6 Established { get; } = new PeeringSessionStateV6(EstablishedValue);
-        /// <summary> PendingAdd. </summary>
+
+        /// <summary> Gets the PendingAdd. </summary>
         public static PeeringSessionStateV6 PendingAdd { get; } = new PeeringSessionStateV6(PendingAddValue);
-        /// <summary> PendingUpdate. </summary>
+
+        /// <summary> Gets the PendingUpdate. </summary>
         public static PeeringSessionStateV6 PendingUpdate { get; } = new PeeringSessionStateV6(PendingUpdateValue);
-        /// <summary> PendingRemove. </summary>
+
+        /// <summary> Gets the PendingRemove. </summary>
         public static PeeringSessionStateV6 PendingRemove { get; } = new PeeringSessionStateV6(PendingRemoveValue);
+
         /// <summary> Determines if two <see cref="PeeringSessionStateV6"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeeringSessionStateV6 left, PeeringSessionStateV6 right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PeeringSessionStateV6"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeeringSessionStateV6 left, PeeringSessionStateV6 right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringSessionStateV6"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PeeringSessionStateV6"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PeeringSessionStateV6(string value) => new PeeringSessionStateV6(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PeeringSessionStateV6"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PeeringSessionStateV6?(string value) => value == null ? null : new PeeringSessionStateV6(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeeringSessionStateV6 other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PeeringSessionStateV6 other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,0 +1,1 @@
+Azure AI Search is a cloud search service that gives developers APIs and tools for building a rich search experience over private, heterogeneous content.

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Consumption.Models
     public readonly partial struct ConsumptionEventType : IEquatable<ConsumptionEventType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConsumptionEventType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConsumptionEventType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SettledChargesValue = "SettledCharges";
         private const string PendingChargesValue = "PendingCharges";
         private const string PendingAdjustmentsValue = "PendingAdjustments";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string NewCreditValue = "NewCredit";
         private const string CreditExpiredValue = "CreditExpired";
 
-        /// <summary> SettledCharges. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConsumptionEventType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SettledCharges. </summary>
         public static ConsumptionEventType SettledCharges { get; } = new ConsumptionEventType(SettledChargesValue);
-        /// <summary> PendingCharges. </summary>
+
+        /// <summary> Gets the PendingCharges. </summary>
         public static ConsumptionEventType PendingCharges { get; } = new ConsumptionEventType(PendingChargesValue);
-        /// <summary> PendingAdjustments. </summary>
+
+        /// <summary> Gets the PendingAdjustments. </summary>
         public static ConsumptionEventType PendingAdjustments { get; } = new ConsumptionEventType(PendingAdjustmentsValue);
-        /// <summary> PendingNewCredit. </summary>
+
+        /// <summary> Gets the PendingNewCredit. </summary>
         public static ConsumptionEventType PendingNewCredit { get; } = new ConsumptionEventType(PendingNewCreditValue);
-        /// <summary> PendingExpiredCredit. </summary>
+
+        /// <summary> Gets the PendingExpiredCredit. </summary>
         public static ConsumptionEventType PendingExpiredCredit { get; } = new ConsumptionEventType(PendingExpiredCreditValue);
-        /// <summary> UnKnown. </summary>
+
+        /// <summary> Gets the UnKnown. </summary>
         public static ConsumptionEventType UnKnown { get; } = new ConsumptionEventType(UnKnownValue);
-        /// <summary> NewCredit. </summary>
+
+        /// <summary> Gets the NewCredit. </summary>
         public static ConsumptionEventType NewCredit { get; } = new ConsumptionEventType(NewCreditValue);
-        /// <summary> CreditExpired. </summary>
+
+        /// <summary> Gets the CreditExpired. </summary>
         public static ConsumptionEventType CreditExpired { get; } = new ConsumptionEventType(CreditExpiredValue);
+
         /// <summary> Determines if two <see cref="ConsumptionEventType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConsumptionEventType left, ConsumptionEventType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConsumptionEventType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConsumptionEventType left, ConsumptionEventType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsumptionEventType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConsumptionEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConsumptionEventType(string value) => new ConsumptionEventType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConsumptionEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConsumptionEventType?(string value) => value == null ? null : new ConsumptionEventType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConsumptionEventType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConsumptionEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

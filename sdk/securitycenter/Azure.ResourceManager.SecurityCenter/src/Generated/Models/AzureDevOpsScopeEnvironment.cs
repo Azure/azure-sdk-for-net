@@ -14,17 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class AzureDevOpsScopeEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsScopeEnvironment"/>. </summary>
-        public AzureDevOpsScopeEnvironment()
-        {
-            EnvironmentType = EnvironmentType.AzureDevOpsScope;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureDevOpsScopeEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureDevOpsScopeEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(environmentType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsScopeEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(environmentType, additionalBinaryDataProperties)
         {
-            EnvironmentType = environmentType;
         }
     }
 }

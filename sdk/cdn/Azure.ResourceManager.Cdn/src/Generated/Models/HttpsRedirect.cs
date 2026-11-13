@@ -7,54 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
-    /// Serialized Name: HttpsRedirect
-    /// </summary>
+    /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
     public readonly partial struct HttpsRedirect : IEquatable<HttpsRedirect>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="HttpsRedirect"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HttpsRedirect(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: HttpsRedirect.Enabled
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpsRedirect"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HttpsRedirect(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static HttpsRedirect Enabled { get; } = new HttpsRedirect(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: HttpsRedirect.Disabled
-        /// </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static HttpsRedirect Disabled { get; } = new HttpsRedirect(DisabledValue);
+
         /// <summary> Determines if two <see cref="HttpsRedirect"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HttpsRedirect left, HttpsRedirect right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HttpsRedirect"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HttpsRedirect left, HttpsRedirect right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HttpsRedirect"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HttpsRedirect"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HttpsRedirect(string value) => new HttpsRedirect(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HttpsRedirect"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HttpsRedirect?(string value) => value == null ? null : new HttpsRedirect(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HttpsRedirect other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HttpsRedirect other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

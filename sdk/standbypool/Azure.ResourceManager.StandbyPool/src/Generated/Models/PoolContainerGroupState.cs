@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StandbyPool;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.StandbyPool.Models
     public readonly partial struct PoolContainerGroupState : IEquatable<PoolContainerGroupState>
     {
         private readonly string _value;
+        /// <summary> The container group is up and running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> The container group is creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The container group is deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="PoolContainerGroupState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PoolContainerGroupState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RunningValue = "Running";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> The container group is up and running. </summary>
         public static PoolContainerGroupState Running { get; } = new PoolContainerGroupState(RunningValue);
+
         /// <summary> The container group is creating. </summary>
         public static PoolContainerGroupState Creating { get; } = new PoolContainerGroupState(CreatingValue);
+
         /// <summary> The container group is deleting. </summary>
         public static PoolContainerGroupState Deleting { get; } = new PoolContainerGroupState(DeletingValue);
+
         /// <summary> Determines if two <see cref="PoolContainerGroupState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PoolContainerGroupState left, PoolContainerGroupState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PoolContainerGroupState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PoolContainerGroupState left, PoolContainerGroupState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PoolContainerGroupState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PoolContainerGroupState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PoolContainerGroupState(string value) => new PoolContainerGroupState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PoolContainerGroupState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PoolContainerGroupState?(string value) => value == null ? null : new PoolContainerGroupState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PoolContainerGroupState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PoolContainerGroupState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

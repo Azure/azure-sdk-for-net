@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerKeyResource : IJsonModel<SqlServerKeyData>
     {
-        private static SqlServerKeyData s_dataDeserializationInstance;
-        private static SqlServerKeyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerKeyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerKeyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerKeyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerKeyData>)Data).Write(writer, options);
 
-        SqlServerKeyData IJsonModel<SqlServerKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerKeyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerKeyData IJsonModel<SqlServerKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerKeyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerKeyData IPersistableModel<SqlServerKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerKeyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerKeyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

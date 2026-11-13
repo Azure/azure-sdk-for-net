@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             Assert.GreaterOrEqual(count, 1);
             //4.Exists
             Assert.IsTrue(await nodeCollection.ExistsAsync("SampleConfiguration.localhost"));
-            Assert.IsFalse(await nodeCollection.ExistsAsync("SampleConfiguration.localhost"+"1"));
+            Assert.IsFalse(await nodeCollection.ExistsAsync("SampleConfiguration.localhost" + "1"));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await nodeCollection.ExistsAsync(null));
             //Resource

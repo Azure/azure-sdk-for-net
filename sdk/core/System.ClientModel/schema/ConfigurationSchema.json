@@ -1,0 +1,115 @@
+{
+  "definitions": {
+    "credential": {
+      "type": "object",
+      "description": "Credential configuration for System.ClientModel clients.",
+      "properties": {
+        "CredentialSource": {
+          "type": "string",
+          "description": "The credential type to use for authentication.",
+          "enum": ["ApiKeyCredential"]
+        }
+      },
+      "required": ["CredentialSource"],
+      "allOf": [
+        {
+          "if": {
+            "required": ["Key"]
+          },
+          "then": {
+            "title": "⚠️ Do NOT put API keys in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put API keys in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "properties": {
+              "Key": {
+                "not": {},
+                "description": "⚠️ Do NOT put API keys in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "options": {
+      "type": "object",
+      "description": "Client pipeline options.",
+      "properties": {
+        "NetworkTimeout": {
+          "type": "string",
+          "description": "Timeout for network operations (TimeSpan format, e.g. '00:01:40')."
+        },
+        "EnableDistributedTracing": {
+          "type": "boolean",
+          "description": "Enable distributed tracing."
+        },
+        "ClientLoggingOptions": {
+          "$ref": "#/definitions/clientLoggingOptions"
+        }
+      },
+      "additionalProperties": true
+    },
+    "clientLoggingOptions": {
+      "type": "object",
+      "description": "Logging configuration for the client pipeline.",
+      "properties": {
+        "EnableLogging": {
+          "type": "boolean",
+          "description": "Enable logging."
+        },
+        "EnableMessageLogging": {
+          "type": "boolean",
+          "description": "Enable HTTP message logging."
+        },
+        "EnableMessageContentLogging": {
+          "type": "boolean",
+          "description": "Enable logging of request and response body content."
+        },
+        "MessageContentSizeLimit": {
+          "type": "integer",
+          "description": "Maximum size of logged message content in bytes.",
+          "minimum": 0
+        },
+        "AdditionalAllowedHeaderNames": {
+          "type": "array",
+          "description": "Additional header names to log (appended to defaults). ⚠️ Avoid adding headers that may contain secrets (e.g., Authorization, Cookie, X-Api-Key) — these could leak sensitive data in logs.",
+          "not": {
+            "contains": {
+              "enum": ["Authorization", "Proxy-Authorization", "Cookie", "Set-Cookie", "X-Api-Key"]
+            }
+          },
+          "items": {
+            "type": "string",
+            "not": {
+              "enum": ["Authorization", "Proxy-Authorization", "Cookie", "Set-Cookie", "X-Api-Key"]
+            }
+          }
+        },
+        "AdditionalAllowedQueryParameters":{
+          "type": "array",
+          "description": "Additional query parameter names to log (appended to defaults: api-version).",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Clients": {
+      "type": "object",
+      "description": "Configuration for System.ClientModel-based clients.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "Credential": {
+            "$ref": "#/definitions/credential"
+          },
+          "Options": {
+            "$ref": "#/definitions/options"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

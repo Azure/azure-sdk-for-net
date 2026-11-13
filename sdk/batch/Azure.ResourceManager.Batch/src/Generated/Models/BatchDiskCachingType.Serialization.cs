@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchDiskCachingTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchDiskCachingType value) => value switch
         {
             BatchDiskCachingType.None => "None",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchDiskCachingType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchDiskCachingType ToBatchDiskCachingType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return BatchDiskCachingType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly")) return BatchDiskCachingType.ReadOnly;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadWrite")) return BatchDiskCachingType.ReadWrite;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return BatchDiskCachingType.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly"))
+            {
+                return BatchDiskCachingType.ReadOnly;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadWrite"))
+            {
+                return BatchDiskCachingType.ReadWrite;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchDiskCachingType value.");
         }
     }

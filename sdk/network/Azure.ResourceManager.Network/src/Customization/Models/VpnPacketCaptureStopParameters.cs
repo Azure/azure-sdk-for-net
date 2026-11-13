@@ -8,10 +8,14 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Start packet capture parameters on virtual network gateway. </summary>
-    [Obsolete("This class is obsolete and will be removed in a future release", false)]
+    /// <summary> Compatibility alias for VPN packet capture stop parameters. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class VpnPacketCaptureStopParameters : VpnPacketCaptureStopContent
+    [Obsolete("This class is obsolete and will be removed in a future release", false)]
+    public partial class VpnPacketCaptureStopParameters : VpnPacketCaptureStopContent
     {
+        /// <summary> Initializes a new instance of <see cref="VpnPacketCaptureStopParameters"/>. </summary>
+        public VpnPacketCaptureStopParameters()
+        {
+        }
     }
 }

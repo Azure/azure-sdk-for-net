@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingEnrollmentSupportLevel : IEquatable<BillingEnrollmentSupportLevel>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Pro-Direct. </summary>
+        private const string ProDirectValue = "Pro-Direct";
+        /// <summary> Developer. </summary>
+        private const string DeveloperValue = "Developer";
 
         /// <summary> Initializes a new instance of <see cref="BillingEnrollmentSupportLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingEnrollmentSupportLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string StandardValue = "Standard";
-        private const string ProDirectValue = "Pro-Direct";
-        private const string DeveloperValue = "Developer";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingEnrollmentSupportLevel Other { get; } = new BillingEnrollmentSupportLevel(OtherValue);
+
         /// <summary> Standard. </summary>
         public static BillingEnrollmentSupportLevel Standard { get; } = new BillingEnrollmentSupportLevel(StandardValue);
+
         /// <summary> Pro-Direct. </summary>
         public static BillingEnrollmentSupportLevel ProDirect { get; } = new BillingEnrollmentSupportLevel(ProDirectValue);
+
         /// <summary> Developer. </summary>
         public static BillingEnrollmentSupportLevel Developer { get; } = new BillingEnrollmentSupportLevel(DeveloperValue);
+
         /// <summary> Determines if two <see cref="BillingEnrollmentSupportLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingEnrollmentSupportLevel left, BillingEnrollmentSupportLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingEnrollmentSupportLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingEnrollmentSupportLevel left, BillingEnrollmentSupportLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingEnrollmentSupportLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingEnrollmentSupportLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingEnrollmentSupportLevel(string value) => new BillingEnrollmentSupportLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingEnrollmentSupportLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingEnrollmentSupportLevel?(string value) => value == null ? null : new BillingEnrollmentSupportLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingEnrollmentSupportLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingEnrollmentSupportLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

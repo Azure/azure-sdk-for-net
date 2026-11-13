@@ -39,7 +39,7 @@ PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
    instructions: "You are a helpful agent.",
-   tools: [ bingGroundingTool ]);
+   tools: [bingGroundingTool]);
 ```
 
 4. To display output we will create a helper method `ParseStreamingUpdate`. In this method we will

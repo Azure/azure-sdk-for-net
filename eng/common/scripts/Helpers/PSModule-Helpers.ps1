@@ -46,23 +46,6 @@ function Update-PSModulePathForCI() {
   }
 }
 
-function Get-ModuleRepositories([string]$moduleName) {
-  $DefaultPSRepositoryUrl = "https://www.powershellgallery.com/api/v2"
-  # List of modules+versions we want to replace with internal feed sources for reliability, security, etc.
-  $packageFeedOverrides = @{
-    'powershell-yaml' = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2'
-  }
-
-  $repoUrls = if ($packageFeedOverrides.Contains("${moduleName}")) {
-    @($packageFeedOverrides["${moduleName}"], $DefaultPSRepositoryUrl)
-  }
-  else {
-    @($DefaultPSRepositoryUrl)
-  }
-
-  return $repoUrls
-}
-
 function moduleIsInstalled([string]$moduleName, [string]$version) {
   if (-not (Test-Path variable:script:InstalledModules)) {
     $script:InstalledModules = @{}
@@ -100,13 +83,13 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
     Set-PSRepository -Name $repo.Name -InstallationPolicy "Trusted" | Out-Null
   }
 
-  Write-Verbose "Installing module $moduleName with min version $version from $repoUrl"
+  Write-Verbose "Installing module $moduleName with version $version from $repoUrl"
   # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
-  Install-Module $moduleName -MinimumVersion $version -Repository $repo.Name -Scope CurrentUser -Force -WhatIf:$false
+  Install-Module $moduleName -RequiredVersion $version -Repository $repo.Name -Scope CurrentUser -Force -WhatIf:$false
   # Ensure module installed
   $modules = (Get-Module -ListAvailable $moduleName)
   if ($version -as [Version]) {
-    $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
+    $modules = $modules.Where({ [Version]$_.Version -eq [Version]$version })
   }
   if ($modules.Count -eq 0) {
     throw "Failed to install module $moduleName with version $version"
@@ -151,26 +134,11 @@ function Install-ModuleIfNotInstalled() {
     $module = moduleIsInstalled -moduleName $moduleName -version $version
     if ($module) { return $module }
 
-    $repoUrls = Get-ModuleRepositories $moduleName
+    # Use internal Azure Artifacts feed only.
+    $repoUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
+    Write-Host "Module '$moduleName' with version '$version' is not installed. Attempting to install from $repoUrl."
 
-    foreach ($url in $repoUrls) {
-      try {
-        $module = installModule -moduleName $moduleName -version $version -repoUrl $url
-      }
-      catch {
-        if ($url -ne $repoUrls[-1]) {
-          Write-Warning "Failed to install powershell module from '$url'. Retrying with fallback repository"
-          Write-Warning $_
-          continue
-        }
-        else {
-          Write-Warning "Failed to install powershell module from $url"
-          throw
-        }
-      }
-      break
-    }
-
+    $module = installModule -moduleName $moduleName -version $version -repoUrl $repoUrl
     Write-Verbose "Using module '$($module.Name)' with version '$($module.Version)'."
   }
   finally {

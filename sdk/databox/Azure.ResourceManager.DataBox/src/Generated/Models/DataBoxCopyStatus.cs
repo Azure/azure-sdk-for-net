@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -14,86 +15,137 @@ namespace Azure.ResourceManager.DataBox.Models
     public readonly partial struct DataBoxCopyStatus : IEquatable<DataBoxCopyStatus>
     {
         private readonly string _value;
+        /// <summary> Data copy hasn't started yet. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> Data copy is in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Data copy completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Data copy completed with errors. </summary>
+        private const string CompletedWithErrorsValue = "CompletedWithErrors";
+        /// <summary> Data copy failed. No data was copied. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> No copy triggered as device was not returned. </summary>
+        private const string NotReturnedValue = "NotReturned";
+        /// <summary> The Device has hit hardware issues. </summary>
+        private const string HardwareErrorValue = "HardwareError";
+        /// <summary> Data copy failed. The Device was formatted by user. </summary>
+        private const string DeviceFormattedValue = "DeviceFormatted";
+        /// <summary> Data copy failed. Device metadata was modified by user. </summary>
+        private const string DeviceMetadataModifiedValue = "DeviceMetadataModified";
+        /// <summary> Data copy failed. Storage Account was not accessible during copy. </summary>
+        private const string StorageAccountNotAccessibleValue = "StorageAccountNotAccessible";
+        /// <summary> Data copy failed. The Device data content is not supported. </summary>
+        private const string UnsupportedDataValue = "UnsupportedData";
+        /// <summary> No copy triggered as device was not received. </summary>
+        private const string DriveNotReceivedValue = "DriveNotReceived";
+        /// <summary> No copy triggered as device type is not supported. </summary>
+        private const string UnsupportedDriveValue = "UnsupportedDrive";
+        /// <summary> Copy failed due to service error. </summary>
+        private const string OtherServiceErrorValue = "OtherServiceError";
+        /// <summary> Copy failed due to user error. </summary>
+        private const string OtherUserErrorValue = "OtherUserError";
+        /// <summary> Copy failed due to disk detection error. </summary>
+        private const string DriveNotDetectedValue = "DriveNotDetected";
+        /// <summary> Copy failed due to corrupted drive. </summary>
+        private const string DriveCorruptedValue = "DriveCorrupted";
+        /// <summary> Copy failed due to modified or removed metadata files. </summary>
+        private const string MetadataFilesModifiedOrRemovedValue = "MetadataFilesModifiedOrRemoved";
 
         /// <summary> Initializes a new instance of <see cref="DataBoxCopyStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataBoxCopyStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string InProgressValue = "InProgress";
-        private const string CompletedValue = "Completed";
-        private const string CompletedWithErrorsValue = "CompletedWithErrors";
-        private const string FailedValue = "Failed";
-        private const string NotReturnedValue = "NotReturned";
-        private const string HardwareErrorValue = "HardwareError";
-        private const string DeviceFormattedValue = "DeviceFormatted";
-        private const string DeviceMetadataModifiedValue = "DeviceMetadataModified";
-        private const string StorageAccountNotAccessibleValue = "StorageAccountNotAccessible";
-        private const string UnsupportedDataValue = "UnsupportedData";
-        private const string DriveNotReceivedValue = "DriveNotReceived";
-        private const string UnsupportedDriveValue = "UnsupportedDrive";
-        private const string OtherServiceErrorValue = "OtherServiceError";
-        private const string OtherUserErrorValue = "OtherUserError";
-        private const string DriveNotDetectedValue = "DriveNotDetected";
-        private const string DriveCorruptedValue = "DriveCorrupted";
-        private const string MetadataFilesModifiedOrRemovedValue = "MetadataFilesModifiedOrRemoved";
+            _value = value;
+        }
 
         /// <summary> Data copy hasn't started yet. </summary>
         public static DataBoxCopyStatus NotStarted { get; } = new DataBoxCopyStatus(NotStartedValue);
+
         /// <summary> Data copy is in progress. </summary>
         public static DataBoxCopyStatus InProgress { get; } = new DataBoxCopyStatus(InProgressValue);
+
         /// <summary> Data copy completed. </summary>
         public static DataBoxCopyStatus Completed { get; } = new DataBoxCopyStatus(CompletedValue);
+
         /// <summary> Data copy completed with errors. </summary>
         public static DataBoxCopyStatus CompletedWithErrors { get; } = new DataBoxCopyStatus(CompletedWithErrorsValue);
+
         /// <summary> Data copy failed. No data was copied. </summary>
         public static DataBoxCopyStatus Failed { get; } = new DataBoxCopyStatus(FailedValue);
+
         /// <summary> No copy triggered as device was not returned. </summary>
         public static DataBoxCopyStatus NotReturned { get; } = new DataBoxCopyStatus(NotReturnedValue);
+
         /// <summary> The Device has hit hardware issues. </summary>
         public static DataBoxCopyStatus HardwareError { get; } = new DataBoxCopyStatus(HardwareErrorValue);
+
         /// <summary> Data copy failed. The Device was formatted by user. </summary>
         public static DataBoxCopyStatus DeviceFormatted { get; } = new DataBoxCopyStatus(DeviceFormattedValue);
+
         /// <summary> Data copy failed. Device metadata was modified by user. </summary>
         public static DataBoxCopyStatus DeviceMetadataModified { get; } = new DataBoxCopyStatus(DeviceMetadataModifiedValue);
+
         /// <summary> Data copy failed. Storage Account was not accessible during copy. </summary>
         public static DataBoxCopyStatus StorageAccountNotAccessible { get; } = new DataBoxCopyStatus(StorageAccountNotAccessibleValue);
+
         /// <summary> Data copy failed. The Device data content is not supported. </summary>
         public static DataBoxCopyStatus UnsupportedData { get; } = new DataBoxCopyStatus(UnsupportedDataValue);
+
         /// <summary> No copy triggered as device was not received. </summary>
         public static DataBoxCopyStatus DriveNotReceived { get; } = new DataBoxCopyStatus(DriveNotReceivedValue);
+
         /// <summary> No copy triggered as device type is not supported. </summary>
         public static DataBoxCopyStatus UnsupportedDrive { get; } = new DataBoxCopyStatus(UnsupportedDriveValue);
+
         /// <summary> Copy failed due to service error. </summary>
         public static DataBoxCopyStatus OtherServiceError { get; } = new DataBoxCopyStatus(OtherServiceErrorValue);
+
         /// <summary> Copy failed due to user error. </summary>
         public static DataBoxCopyStatus OtherUserError { get; } = new DataBoxCopyStatus(OtherUserErrorValue);
+
         /// <summary> Copy failed due to disk detection error. </summary>
         public static DataBoxCopyStatus DriveNotDetected { get; } = new DataBoxCopyStatus(DriveNotDetectedValue);
+
         /// <summary> Copy failed due to corrupted drive. </summary>
         public static DataBoxCopyStatus DriveCorrupted { get; } = new DataBoxCopyStatus(DriveCorruptedValue);
+
         /// <summary> Copy failed due to modified or removed metadata files. </summary>
         public static DataBoxCopyStatus MetadataFilesModifiedOrRemoved { get; } = new DataBoxCopyStatus(MetadataFilesModifiedOrRemovedValue);
+
         /// <summary> Determines if two <see cref="DataBoxCopyStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxCopyStatus left, DataBoxCopyStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxCopyStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxCopyStatus left, DataBoxCopyStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxCopyStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxCopyStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxCopyStatus(string value) => new DataBoxCopyStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxCopyStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxCopyStatus?(string value) => value == null ? null : new DataBoxCopyStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxCopyStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxCopyStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

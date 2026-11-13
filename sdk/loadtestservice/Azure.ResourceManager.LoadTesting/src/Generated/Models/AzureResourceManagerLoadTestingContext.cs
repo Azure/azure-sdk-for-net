@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,9 +14,10 @@ namespace Azure.ResourceManager.LoadTesting
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(LoadTestingCmkEncryptionProperties))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingCmkIdentity))]
     [ModelReaderWriterBuildable(typeof(LoadTestingEndpointDependency))]
     [ModelReaderWriterBuildable(typeof(LoadTestingEndpointDetail))]
     [ModelReaderWriterBuildable(typeof(LoadTestingOutboundEnvironmentEndpoint))]
@@ -23,14 +25,25 @@ namespace Azure.ResourceManager.LoadTesting
     [ModelReaderWriterBuildable(typeof(LoadTestingQuotaBucketContent))]
     [ModelReaderWriterBuildable(typeof(LoadTestingQuotaBucketDimensions))]
     [ModelReaderWriterBuildable(typeof(LoadTestingQuotaData))]
-    [ModelReaderWriterBuildable(typeof(LoadTestingQuotaListResult))]
     [ModelReaderWriterBuildable(typeof(LoadTestingQuotaResource))]
     [ModelReaderWriterBuildable(typeof(LoadTestingResource))]
     [ModelReaderWriterBuildable(typeof(LoadTestingResourceData))]
     [ModelReaderWriterBuildable(typeof(LoadTestingResourcePatch))]
-    [ModelReaderWriterBuildable(typeof(LoadTestResourcePageList))]
+    [ModelReaderWriterBuildable(typeof(LoadTestMappingData))]
+    [ModelReaderWriterBuildable(typeof(LoadTestMappingPatch))]
+    [ModelReaderWriterBuildable(typeof(LoadTestMappingProperties))]
+    [ModelReaderWriterBuildable(typeof(LoadTestMappingResource))]
+    [ModelReaderWriterBuildable(typeof(LoadTestMappingUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(LoadTestProfileMappingData))]
+    [ModelReaderWriterBuildable(typeof(LoadTestProfileMappingPatch))]
+    [ModelReaderWriterBuildable(typeof(LoadTestProfileMappingProperties))]
+    [ModelReaderWriterBuildable(typeof(LoadTestProfileMappingResource))]
+    [ModelReaderWriterBuildable(typeof(LoadTestProfileMappingUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursData))]
+    [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursLimitContent))]
+    [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursProperties))]
+    [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

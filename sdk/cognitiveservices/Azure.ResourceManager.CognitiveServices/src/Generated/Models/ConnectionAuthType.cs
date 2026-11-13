@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     internal readonly partial struct ConnectionAuthType : IEquatable<ConnectionAuthType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConnectionAuthType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectionAuthType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PATValue = "PAT";
         private const string ManagedIdentityValue = "ManagedIdentity";
         private const string UsernamePasswordValue = "UsernamePassword";
@@ -34,48 +27,111 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string CustomKeysValue = "CustomKeys";
         private const string OAuth2Value = "OAuth2";
         private const string AADValue = "AAD";
+        private const string DelegatedSASValue = "DelegatedSAS";
+        private const string ProjectManagedIdentityValue = "ProjectManagedIdentity";
+        private const string AccountManagedIdentityValue = "AccountManagedIdentity";
+        private const string UserEntraTokenValue = "UserEntraToken";
+        private const string AgentUserImpersonationValue = "AgentUserImpersonation";
+        private const string AgenticIdentityTokenValue = "AgenticIdentityToken";
+        private const string AgenticUserValue = "AgenticUser";
 
-        /// <summary> PAT. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConnectionAuthType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the PAT. </summary>
         public static ConnectionAuthType PAT { get; } = new ConnectionAuthType(PATValue);
-        /// <summary> ManagedIdentity. </summary>
+
+        /// <summary> Gets the ManagedIdentity. </summary>
         public static ConnectionAuthType ManagedIdentity { get; } = new ConnectionAuthType(ManagedIdentityValue);
-        /// <summary> UsernamePassword. </summary>
+
+        /// <summary> Gets the UsernamePassword. </summary>
         public static ConnectionAuthType UsernamePassword { get; } = new ConnectionAuthType(UsernamePasswordValue);
-        /// <summary> None. </summary>
+
+        /// <summary> Gets the None. </summary>
         public static ConnectionAuthType None { get; } = new ConnectionAuthType(NoneValue);
-        /// <summary> SAS. </summary>
+
+        /// <summary> Gets the SAS. </summary>
         public static ConnectionAuthType SAS { get; } = new ConnectionAuthType(SASValue);
-        /// <summary> AccountKey. </summary>
+
+        /// <summary> Gets the AccountKey. </summary>
         public static ConnectionAuthType AccountKey { get; } = new ConnectionAuthType(AccountKeyValue);
-        /// <summary> ServicePrincipal. </summary>
+
+        /// <summary> Gets the ServicePrincipal. </summary>
         public static ConnectionAuthType ServicePrincipal { get; } = new ConnectionAuthType(ServicePrincipalValue);
-        /// <summary> AccessKey. </summary>
+
+        /// <summary> Gets the AccessKey. </summary>
         public static ConnectionAuthType AccessKey { get; } = new ConnectionAuthType(AccessKeyValue);
-        /// <summary> ApiKey. </summary>
+
+        /// <summary> Gets the ApiKey. </summary>
         public static ConnectionAuthType ApiKey { get; } = new ConnectionAuthType(ApiKeyValue);
-        /// <summary> CustomKeys. </summary>
+
+        /// <summary> Gets the CustomKeys. </summary>
         public static ConnectionAuthType CustomKeys { get; } = new ConnectionAuthType(CustomKeysValue);
-        /// <summary> OAuth2. </summary>
+
+        /// <summary> Gets the OAuth2. </summary>
         public static ConnectionAuthType OAuth2 { get; } = new ConnectionAuthType(OAuth2Value);
-        /// <summary> AAD. </summary>
+
+        /// <summary> Gets the AAD. </summary>
         public static ConnectionAuthType AAD { get; } = new ConnectionAuthType(AADValue);
+
+        /// <summary> Gets the DelegatedSAS. </summary>
+        public static ConnectionAuthType DelegatedSAS { get; } = new ConnectionAuthType(DelegatedSASValue);
+
+        /// <summary> Gets the ProjectManagedIdentity. </summary>
+        public static ConnectionAuthType ProjectManagedIdentity { get; } = new ConnectionAuthType(ProjectManagedIdentityValue);
+
+        /// <summary> Gets the AccountManagedIdentity. </summary>
+        public static ConnectionAuthType AccountManagedIdentity { get; } = new ConnectionAuthType(AccountManagedIdentityValue);
+
+        /// <summary> Gets the UserEntraToken. </summary>
+        public static ConnectionAuthType UserEntraToken { get; } = new ConnectionAuthType(UserEntraTokenValue);
+
+        /// <summary> Gets the AgentUserImpersonation. </summary>
+        public static ConnectionAuthType AgentUserImpersonation { get; } = new ConnectionAuthType(AgentUserImpersonationValue);
+
+        /// <summary> Gets the AgenticIdentityToken. </summary>
+        public static ConnectionAuthType AgenticIdentityToken { get; } = new ConnectionAuthType(AgenticIdentityTokenValue);
+
+        /// <summary> Gets the AgenticUser. </summary>
+        public static ConnectionAuthType AgenticUser { get; } = new ConnectionAuthType(AgenticUserValue);
+
         /// <summary> Determines if two <see cref="ConnectionAuthType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionAuthType left, ConnectionAuthType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionAuthType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionAuthType left, ConnectionAuthType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionAuthType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionAuthType(string value) => new ConnectionAuthType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionAuthType?(string value) => value == null ? null : new ConnectionAuthType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionAuthType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionAuthType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -38,7 +38,7 @@ PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
    instructions: "You are a helpful agent.",
-   tools: [ bingCustomSearchTool ]);
+   tools: [bingCustomSearchTool]);
 ```
 
 4. Now we will create the thread, add the message containing a question for agent and start the run.

@@ -9,245 +9,431 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An update request for an Azure SQL Database managed instance. </summary>
     public partial class ManagedInstancePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstancePatch"/>. </summary>
         public ManagedInstancePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new ChangeTrackingList<ManagedInstancePecProperty>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstancePatch"/>. </summary>
         /// <param name="sku"> Managed instance sku. </param>
         /// <param name="identity"> Managed instance identity. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="provisioningState"> Provisioning state of managed instance. </param>
-        /// <param name="managedInstanceCreateMode">
-        /// Specifies the mode of database creation.
-        ///
-        /// Default: Regular instance creation.
-        ///
-        /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
-        /// </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the managed instance. </param>
-        /// <param name="isGeneralPurposeV2"> Whether or not this is a GPv2 variant of General Purpose edition. </param>
-        /// <param name="administratorLogin"> Administrator username for the managed instance. Can only be specified when the managed instance is being created (and is required for creation). </param>
-        /// <param name="administratorLoginPassword"> The administrator login password (required for managed instance creation). </param>
-        /// <param name="subnetId"> Subnet resource ID for the managed instance. </param>
-        /// <param name="state"> The state of the managed instance. </param>
-        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
-        /// <param name="hybridSecondaryUsage"> Hybrid secondary usage. Possible values are 'Active' (default value) and 'Passive' (customer uses the secondary as Passive DR). </param>
-        /// <param name="hybridSecondaryUsageDetected"> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </param>
-        /// <param name="vCores"> The number of vCores. Allowed values: 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80, 96, 128. Supported vCores depends on the selected hardware family and service tier. </param>
-        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 32768. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
-        /// <param name="storageIOps"> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
-        /// <param name="storageThroughputMBps"> Storage throughput MBps parameter is not supported in the instance create/update operation. </param>
-        /// <param name="memorySizeInGB"> Memory size in GB. Minimum value: 28. Maximum value: 870. Minimum and maximum value depend on the number of vCores and service tier. Read more about resource limits: https://aka.ms/mi-resource-limits-api. </param>
-        /// <param name="collation"> Collation of the managed instance. </param>
-        /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
-        /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
-        /// <param name="isPublicDataEndpointEnabled"> Whether or not the public data endpoint is enabled. </param>
-        /// <param name="sourceManagedInstanceId"> The resource identifier of the source managed instance associated with create operation of this instance. </param>
-        /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="proxyOverride"> Connection type used for connecting to the instance. </param>
-        /// <param name="timezoneId">
-        /// Id of the timezone. Allowed values are timezones supported by Windows.
-        /// Windows keeps details on supported timezones, including the id, in registry under
-        /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
-        /// You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
-        /// List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
-        /// An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
-        /// </param>
-        /// <param name="instancePoolId"> The Id of the instance pool this managed server belongs to. </param>
-        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections on a managed instance. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
-        /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="isZoneRedundant"> Whether or not the zone-redundancy is enabled. </param>
-        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
-        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator can be utilized during instance creation and for instance updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </param>
-        /// <param name="servicePrincipal"> The managed instance's service principal. </param>
-        /// <param name="virtualClusterId"> Virtual cluster resource id for the Managed Instance. </param>
-        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        /// <param name="pricingModel"> Pricing model of Managed Instance. </param>
-        /// <param name="createOn"> Specifies the point in time (ISO8601 format) of the Managed Instance creation. </param>
-        /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
-        /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
-        /// <param name="requestedLogicalAvailabilityZone"> Specifies the logical availability zone Managed Instance is pinned to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstancePatch(SqlSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? memorySizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstancePatch(SqlSku sku, ManagedServiceIdentity identity, ManagedInstanceProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Identity = identity;
+            Properties = properties;
             Tags = tags;
-            ProvisioningState = provisioningState;
-            ManagedInstanceCreateMode = managedInstanceCreateMode;
-            FullyQualifiedDomainName = fullyQualifiedDomainName;
-            IsGeneralPurposeV2 = isGeneralPurposeV2;
-            AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
-            SubnetId = subnetId;
-            State = state;
-            LicenseType = licenseType;
-            HybridSecondaryUsage = hybridSecondaryUsage;
-            HybridSecondaryUsageDetected = hybridSecondaryUsageDetected;
-            VCores = vCores;
-            StorageSizeInGB = storageSizeInGB;
-            StorageIOps = storageIOps;
-            StorageThroughputMBps = storageThroughputMBps;
-            MemorySizeInGB = memorySizeInGB;
-            Collation = collation;
-            DnsZone = dnsZone;
-            ManagedDnsZonePartner = managedDnsZonePartner;
-            IsPublicDataEndpointEnabled = isPublicDataEndpointEnabled;
-            SourceManagedInstanceId = sourceManagedInstanceId;
-            RestorePointInTime = restorePointInTime;
-            ProxyOverride = proxyOverride;
-            TimezoneId = timezoneId;
-            InstancePoolId = instancePoolId;
-            MaintenanceConfigurationId = maintenanceConfigurationId;
-            PrivateEndpointConnections = privateEndpointConnections;
-            MinimalTlsVersion = minimalTlsVersion;
-            CurrentBackupStorageRedundancy = currentBackupStorageRedundancy;
-            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
-            IsZoneRedundant = isZoneRedundant;
-            PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
-            KeyId = keyId;
-            Administrators = administrators;
-            ServicePrincipal = servicePrincipal;
-            VirtualClusterId = virtualClusterId;
-            ExternalGovernanceStatus = externalGovernanceStatus;
-            PricingModel = pricingModel;
-            CreateOn = createOn;
-            AuthenticationMetadata = authenticationMetadata;
-            DatabaseFormat = databaseFormat;
-            RequestedLogicalAvailabilityZone = requestedLogicalAvailabilityZone;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Managed instance sku. </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; set; }
+
         /// <summary> Managed instance identity. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ManagedInstanceProperties Properties { get; set; }
+
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Provisioning state of managed instance. </summary>
         [WirePath("properties.provisioningState")]
-        public ManagedInstancePropertiesProvisioningState? ProvisioningState { get; }
+        public ManagedInstancePropertiesProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary>
         /// Specifies the mode of database creation.
-        ///
         /// Default: Regular instance creation.
-        ///
         /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
         /// </summary>
         [WirePath("properties.managedInstanceCreateMode")]
-        public ManagedServerCreateMode? ManagedInstanceCreateMode { get; set; }
+        public ManagedServerCreateMode? ManagedInstanceCreateMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedInstanceCreateMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.ManagedInstanceCreateMode = value;
+            }
+        }
+
         /// <summary> The fully qualified domain name of the managed instance. </summary>
         [WirePath("properties.fullyQualifiedDomainName")]
-        public string FullyQualifiedDomainName { get; }
+        public string FullyQualifiedDomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FullyQualifiedDomainName;
+            }
+        }
+
         /// <summary> Whether or not this is a GPv2 variant of General Purpose edition. </summary>
         [WirePath("properties.isGeneralPurposeV2")]
-        public bool? IsGeneralPurposeV2 { get; set; }
+        public bool? IsGeneralPurposeV2
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsGeneralPurposeV2;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.IsGeneralPurposeV2 = value;
+            }
+        }
+
         /// <summary> Administrator username for the managed instance. Can only be specified when the managed instance is being created (and is required for creation). </summary>
         [WirePath("properties.administratorLogin")]
-        public string AdministratorLogin { get; set; }
+        public string AdministratorLogin
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLogin;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.AdministratorLogin = value;
+            }
+        }
+
         /// <summary> The administrator login password (required for managed instance creation). </summary>
         [WirePath("properties.administratorLoginPassword")]
-        public string AdministratorLoginPassword { get; set; }
+        public string AdministratorLoginPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLoginPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.AdministratorLoginPassword = value;
+            }
+        }
+
         /// <summary> Subnet resource ID for the managed instance. </summary>
         [WirePath("properties.subnetId")]
-        public ResourceIdentifier SubnetId { get; set; }
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
+
         /// <summary> The state of the managed instance. </summary>
         [WirePath("properties.state")]
-        public string State { get; }
+        public string State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </summary>
         [WirePath("properties.licenseType")]
-        public ManagedInstanceLicenseType? LicenseType { get; set; }
+        public ManagedInstanceLicenseType? LicenseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LicenseType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.LicenseType = value;
+            }
+        }
+
         /// <summary> Hybrid secondary usage. Possible values are 'Active' (default value) and 'Passive' (customer uses the secondary as Passive DR). </summary>
         [WirePath("properties.hybridSecondaryUsage")]
-        public HybridSecondaryUsage? HybridSecondaryUsage { get; set; }
+        public HybridSecondaryUsage? HybridSecondaryUsage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HybridSecondaryUsage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.HybridSecondaryUsage = value;
+            }
+        }
+
         /// <summary> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </summary>
         [WirePath("properties.hybridSecondaryUsageDetected")]
-        public HybridSecondaryUsageDetected? HybridSecondaryUsageDetected { get; }
+        public HybridSecondaryUsageDetected? HybridSecondaryUsageDetected
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HybridSecondaryUsageDetected;
+            }
+        }
+
         /// <summary> The number of vCores. Allowed values: 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80, 96, 128. Supported vCores depends on the selected hardware family and service tier. </summary>
         [WirePath("properties.vCores")]
-        public int? VCores { get; set; }
+        public int? VCores
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VCores;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.VCores = value;
+            }
+        }
+
         /// <summary> Storage size in GB. Minimum value: 32. Maximum value: 32768. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
         [WirePath("properties.storageSizeInGB")]
-        public int? StorageSizeInGB { get; set; }
+        public int? StorageSizeInGB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageSizeInGB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.StorageSizeInGB = value;
+            }
+        }
+
         /// <summary> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
         [WirePath("properties.storageIOps")]
-        public int? StorageIOps { get; set; }
+        public int? StorageIOps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageIOps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.StorageIOps = value;
+            }
+        }
+
         /// <summary> Storage throughput MBps parameter is not supported in the instance create/update operation. </summary>
         [WirePath("properties.storageThroughputMBps")]
-        public int? StorageThroughputMBps { get; set; }
+        public int? StorageThroughputMBps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageThroughputMBps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.StorageThroughputMBps = value;
+            }
+        }
+
         /// <summary> Memory size in GB. Minimum value: 28. Maximum value: 870. Minimum and maximum value depend on the number of vCores and service tier. Read more about resource limits: https://aka.ms/mi-resource-limits-api. </summary>
         [WirePath("properties.memorySizeInGB")]
-        public int? MemorySizeInGB { get; set; }
+        public int? MemorySizeInGB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MemorySizeInGB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.MemorySizeInGB = value;
+            }
+        }
+
         /// <summary> Collation of the managed instance. </summary>
         [WirePath("properties.collation")]
-        public string Collation { get; set; }
+        public string Collation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Collation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.Collation = value;
+            }
+        }
+
         /// <summary> The Dns Zone that the managed instance is in. </summary>
         [WirePath("properties.dnsZone")]
-        public string DnsZone { get; }
+        public string DnsZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsZone;
+            }
+        }
+
         /// <summary> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </summary>
         [WirePath("properties.dnsZonePartner")]
-        public ResourceIdentifier ManagedDnsZonePartner { get; set; }
+        public ResourceIdentifier ManagedDnsZonePartner
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedDnsZonePartner;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.ManagedDnsZonePartner = value;
+            }
+        }
+
         /// <summary> Whether or not the public data endpoint is enabled. </summary>
         [WirePath("properties.publicDataEndpointEnabled")]
-        public bool? IsPublicDataEndpointEnabled { get; set; }
+        public bool? IsPublicDataEndpointEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPublicDataEndpointEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.IsPublicDataEndpointEnabled = value;
+            }
+        }
+
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>
         [WirePath("properties.sourceManagedInstanceId")]
-        public ResourceIdentifier SourceManagedInstanceId { get; set; }
+        public ResourceIdentifier SourceManagedInstanceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceManagedInstanceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.SourceManagedInstanceId = value;
+            }
+        }
+
         /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
         [WirePath("properties.restorePointInTime")]
-        public DateTimeOffset? RestorePointInTime { get; set; }
+        public DateTimeOffset? RestorePointInTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestorePointInTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.RestorePointInTime = value;
+            }
+        }
+
         /// <summary> Connection type used for connecting to the instance. </summary>
         [WirePath("properties.proxyOverride")]
-        public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
+        public ManagedInstanceProxyOverride? ProxyOverride
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProxyOverride;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.ProxyOverride = value;
+            }
+        }
+
         /// <summary>
         /// Id of the timezone. Allowed values are timezones supported by Windows.
         /// Windows keeps details on supported timezones, including the id, in registry under
@@ -257,60 +443,308 @@ namespace Azure.ResourceManager.Sql.Models
         /// An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
         /// </summary>
         [WirePath("properties.timezoneId")]
-        public string TimezoneId { get; set; }
+        public string TimezoneId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimezoneId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.TimezoneId = value;
+            }
+        }
+
         /// <summary> The Id of the instance pool this managed server belongs to. </summary>
         [WirePath("properties.instancePoolId")]
-        public ResourceIdentifier InstancePoolId { get; set; }
+        public ResourceIdentifier InstancePoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstancePoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.InstancePoolId = value;
+            }
+        }
+
         /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
         [WirePath("properties.maintenanceConfigurationId")]
-        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.MaintenanceConfigurationId = value;
+            }
+        }
+
         /// <summary> List of private endpoint connections on a managed instance. </summary>
         [WirePath("properties.privateEndpointConnections")]
-        public IReadOnlyList<ManagedInstancePecProperty> PrivateEndpointConnections { get; }
+        public IReadOnlyList<ManagedInstancePecProperty> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </summary>
         [WirePath("properties.minimalTlsVersion")]
-        public string MinimalTlsVersion { get; set; }
+        public string MinimalTlsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimalTlsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.MinimalTlsVersion = value;
+            }
+        }
+
         /// <summary> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
         [WirePath("properties.currentBackupStorageRedundancy")]
-        public SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentBackupStorageRedundancy;
+            }
+        }
+
         /// <summary> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
         [WirePath("properties.requestedBackupStorageRedundancy")]
-        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestedBackupStorageRedundancy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.RequestedBackupStorageRedundancy = value;
+            }
+        }
+
         /// <summary> Whether or not the zone-redundancy is enabled. </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? IsZoneRedundant { get; set; }
+        public bool? IsZoneRedundant
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsZoneRedundant;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.IsZoneRedundant = value;
+            }
+        }
+
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
         [WirePath("properties.primaryUserAssignedIdentityId")]
-        public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
+        public ResourceIdentifier PrimaryUserAssignedIdentityId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryUserAssignedIdentityId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.PrimaryUserAssignedIdentityId = value;
+            }
+        }
+
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         [WirePath("properties.keyId")]
-        public Uri KeyId { get; set; }
+        public Uri KeyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.KeyId = value;
+            }
+        }
+
         /// <summary> The Azure Active Directory administrator can be utilized during instance creation and for instance updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </summary>
         [WirePath("properties.administrators")]
-        public ManagedInstanceExternalAdministrator Administrators { get; set; }
+        public ManagedInstanceExternalAdministrator Administrators
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Administrators;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.Administrators = value;
+            }
+        }
+
         /// <summary> The managed instance's service principal. </summary>
         [WirePath("properties.servicePrincipal")]
-        public SqlServicePrincipal ServicePrincipal { get; set; }
+        public SqlServicePrincipal ServicePrincipal
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServicePrincipal;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.ServicePrincipal = value;
+            }
+        }
+
         /// <summary> Virtual cluster resource id for the Managed Instance. </summary>
         [WirePath("properties.virtualClusterId")]
-        public ResourceIdentifier VirtualClusterId { get; }
+        public ResourceIdentifier VirtualClusterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualClusterId;
+            }
+        }
+
         /// <summary> Status of external governance. </summary>
         [WirePath("properties.externalGovernanceStatus")]
-        public ExternalGovernanceStatus? ExternalGovernanceStatus { get; }
+        public ExternalGovernanceStatus? ExternalGovernanceStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalGovernanceStatus;
+            }
+        }
+
         /// <summary> Pricing model of Managed Instance. </summary>
         [WirePath("properties.pricingModel")]
-        public SqlManagedInstancePricingModel? PricingModel { get; set; }
+        public SqlManagedInstancePricingModel? PricingModel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PricingModel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.PricingModel = value;
+            }
+        }
+
         /// <summary> Specifies the point in time (ISO8601 format) of the Managed Instance creation. </summary>
         [WirePath("properties.createTime")]
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreateOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateOn;
+            }
+        }
+
         /// <summary> The managed instance's authentication metadata lookup mode. </summary>
         [WirePath("properties.authenticationMetadata")]
-        public AuthMetadataLookupMode? AuthenticationMetadata { get; set; }
+        public AuthMetadataLookupMode? AuthenticationMetadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthenticationMetadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.AuthenticationMetadata = value;
+            }
+        }
+
         /// <summary> Specifies the internal format of instance databases specific to the SQL engine version. </summary>
         [WirePath("properties.databaseFormat")]
-        public ManagedInstanceDatabaseFormat? DatabaseFormat { get; set; }
+        public ManagedInstanceDatabaseFormat? DatabaseFormat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseFormat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.DatabaseFormat = value;
+            }
+        }
+
         /// <summary> Specifies the logical availability zone Managed Instance is pinned to. </summary>
         [WirePath("properties.requestedLogicalAvailabilityZone")]
-        public SqlAvailabilityZoneType? RequestedLogicalAvailabilityZone { get; set; }
+        public SqlAvailabilityZoneType? RequestedLogicalAvailabilityZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestedLogicalAvailabilityZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceProperties();
+                }
+                Properties.RequestedLogicalAvailabilityZone = value;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     internal readonly partial struct ApplicationServiceKind : IEquatable<ApplicationServiceKind>
     {
         private readonly string _value;
+        /// <summary> Indicates the service kind is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Does not use Service Fabric to make its state highly available or reliable. The value is 1. </summary>
+        private const string StatelessValue = "Stateless";
+        /// <summary> Uses Service Fabric to make its state or part of its state highly available and reliable. The value is 2. </summary>
+        private const string StatefulValue = "Stateful";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationServiceKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string StatelessValue = "Stateless";
-        private const string StatefulValue = "Stateful";
+            _value = value;
+        }
 
         /// <summary> Indicates the service kind is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>
         public static ApplicationServiceKind Invalid { get; } = new ApplicationServiceKind(InvalidValue);
+
         /// <summary> Does not use Service Fabric to make its state highly available or reliable. The value is 1. </summary>
         public static ApplicationServiceKind Stateless { get; } = new ApplicationServiceKind(StatelessValue);
+
         /// <summary> Uses Service Fabric to make its state or part of its state highly available and reliable. The value is 2. </summary>
         public static ApplicationServiceKind Stateful { get; } = new ApplicationServiceKind(StatefulValue);
+
         /// <summary> Determines if two <see cref="ApplicationServiceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationServiceKind left, ApplicationServiceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationServiceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationServiceKind left, ApplicationServiceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationServiceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationServiceKind(string value) => new ApplicationServiceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationServiceKind?(string value) => value == null ? null : new ApplicationServiceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationServiceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationServiceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

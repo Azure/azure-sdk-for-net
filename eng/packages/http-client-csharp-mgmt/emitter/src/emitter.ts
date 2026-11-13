@@ -3,28 +3,97 @@
 
 import { EmitContext } from "@typespec/compiler";
 
-import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
-
+import { emitAzureCodeModel } from "@azure-typespec/http-client-csharp";
 import {
-  $onEmit as $onAzureEmit,
-  AzureEmitterOptions
-} from "@azure-typespec/http-client-csharp";
-import { azureSDKContextOptions } from "./sdk-context-options.js";
+  azureSDKContextOptions,
+  flattenPropertyDecorator,
+  setHasClientNameOverride
+} from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
+import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
+import {
+  AzureMgmtEmitterOptions,
+  filterSuppressedDiagnostics
+} from "./options.js";
+import { transformSubscriptionIdParameters } from "./subscription-id-transformer.js";
+import {
+  deduplicateApiVersionEnums,
+  fixClientApiVersions
+} from "./api-version-fixer.js";
+import type {
+  CodeModel,
+  CodeModelMutator,
+  CSharpEmitterContext
+} from "./code-model-types.js";
+import { ArmProviderSchema } from "./resource-metadata.js";
+import { removeReferenceIdsFromUnknownValues } from "./reference-metadata-sanitizer.js";
+import { markApiVersionOverrides } from "./api-version-override.js";
 
-export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
+export type ManagementCodeModelTransformer = (
+  codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext,
+  armProviderSchema: ArmProviderSchema
+) => CodeModel;
+
+export async function emitManagementCodeModel(
+  context: EmitContext<AzureMgmtEmitterOptions>,
+  transform?: ManagementCodeModelTransformer
+) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
-  context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
-  await $onAzureEmit(context);
+  const [, diagnostics] = await emitAzureCodeModel(context, updateCodeModel);
+  context.program.reportDiagnostics(filterSuppressedDiagnostics(diagnostics));
 
   function updateCodeModel(
     codeModel: CodeModel,
     sdkContext: CSharpEmitterContext
-  ): CodeModel {
-    updateClients(codeModel, sdkContext);
-    return codeModel;
+  ): ReturnType<CodeModelMutator> {
+    // Transform subscriptionId parameters from client scope to method scope
+    // This must happen before other transformations that may depend on method parameters
+    transformSubscriptionIdParameters(codeModel);
+
+    // Deduplicate ApiVersionEnum enums to work around base generator crash
+    // when multiple services share the same namespace.
+    // https://github.com/microsoft/typespec/issues/10055
+    deduplicateApiVersionEnums(codeModel);
+
+    // Fix clients with empty apiVersions by inferring from their methods.
+    // In TCGC's hierarchical client model, parent clients don't carry apiVersions — child clients
+    // inherit from parents. In mgmt SDK we flatten the hierarchy, so we infer from methods instead.
+    fixClientApiVersions(codeModel, sdkContext);
+
+    const armProviderSchema = updateClients(
+      codeModel,
+      sdkContext,
+      context.options
+    );
+    markApiVersionOverrides(codeModel, sdkContext);
+    setFlattenProperty(codeModel, sdkContext);
+    setHasClientNameOverride(codeModel, sdkContext);
+    removeReferenceIdsFromUnknownValues(codeModel);
+    return transform?.(codeModel, sdkContext, armProviderSchema) ?? codeModel;
+  }
+}
+
+export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
+  return emitManagementCodeModel(context);
+}
+
+function setFlattenProperty(
+  codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext
+): void {
+  for (const model of sdkContext.sdkPackage.models) {
+    for (const property of model.properties) {
+      if (property.flatten) {
+        const flattenPropertyMetadataDecorator: DecoratorInfo = {
+          name: flattenPropertyDecorator,
+          arguments: {}
+        };
+        property.decorators.push(flattenPropertyMetadataDecorator);
+      }
+    }
   }
 }

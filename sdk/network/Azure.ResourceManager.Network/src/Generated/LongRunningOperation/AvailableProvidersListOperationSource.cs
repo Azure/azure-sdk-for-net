@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class AvailableProvidersListOperationSource : IOperationSource<AvailableProvidersList>
+    /// <summary></summary>
+    internal partial class AvailableProvidersListOperationSource : IOperationSource<AvailableProvidersList>
     {
-        AvailableProvidersList IOperationSource<AvailableProvidersList>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal AvailableProvidersListOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return AvailableProvidersList.DeserializeAvailableProvidersList(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        AvailableProvidersList IOperationSource<AvailableProvidersList>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return AvailableProvidersList.DeserializeAvailableProvidersList(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AvailableProvidersList> IOperationSource<AvailableProvidersList>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return AvailableProvidersList.DeserializeAvailableProvidersList(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return AvailableProvidersList.DeserializeAvailableProvidersList(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

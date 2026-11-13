@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,12 +18,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/>. </summary>
         /// <param name="uri"> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public HttpLinkedService(DataFactoryElement<string> uri)
+        public HttpLinkedService(DataFactoryElement<string> uri) : base("HttpServer")
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            Uri = uri;
-            LinkedServiceType = "HttpServer";
+            TypeProperties = new HttpLinkedServiceTypeProperties(uri);
         }
 
         /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/>. </summary>
@@ -32,52 +32,152 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="uri"> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> The authentication type to be used to connect to the HTTP server. </param>
-        /// <param name="userName"> User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication. </param>
-        /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </param>
-        /// <param name="embeddedCertData"> Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </param>
-        /// <param name="certThumbprint"> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="enableServerCertificateValidation"> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal HttpLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, HttpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<IDictionary<string, string>> authHeaders, DataFactoryElement<string> embeddedCertData, DataFactoryElement<string> certThumbprint, string encryptedCredential, DataFactoryElement<bool> enableServerCertificateValidation) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Properties specific to this linked service type. </param>
+        /// <param name="password"></param>
+        internal HttpLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, HttpLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Uri = uri;
-            AuthenticationType = authenticationType;
-            UserName = userName;
+            TypeProperties = typeProperties;
             Password = password;
-            AuthHeaders = authHeaders;
-            EmbeddedCertData = embeddedCertData;
-            CertThumbprint = certThumbprint;
-            EncryptedCredential = encryptedCredential;
-            EnableServerCertificateValidation = enableServerCertificateValidation;
-            LinkedServiceType = linkedServiceType ?? "HttpServer";
         }
 
-        /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/> for deserialization. </summary>
-        internal HttpLinkedService()
-        {
-        }
+        /// <summary> Properties specific to this linked service type. </summary>
+        internal HttpLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Uri { get; set; }
+        public DataFactoryElement<string> Uri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Uri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HttpLinkedServiceTypeProperties();
+                }
+                TypeProperties.Uri = value;
+            }
+        }
+
         /// <summary> The authentication type to be used to connect to the HTTP server. </summary>
-        public HttpAuthenticationType? AuthenticationType { get; set; }
+        public HttpAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HttpLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HttpLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
+
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </summary>
-        public DataFactoryElement<IDictionary<string, string>> AuthHeaders { get; set; }
+        public DataFactoryElement<IDictionary<string, string>> AuthHeaders
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthHeaders;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HttpLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthHeaders = value;
+            }
+        }
+
         /// <summary> Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> EmbeddedCertData { get; set; }
+        public DataFactoryElement<string> EmbeddedCertData
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EmbeddedCertData;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HttpLinkedServiceTypeProperties();
+                }
+                TypeProperties.EmbeddedCertData = value;
+            }
+        }
+
         /// <summary> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> CertThumbprint { get; set; }
+        public DataFactoryElement<string> CertThumbprint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CertThumbprint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HttpLinkedServiceTypeProperties();
+                }
+                TypeProperties.CertThumbprint = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HttpLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
+        public DataFactoryElement<bool> EnableServerCertificateValidation
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnableServerCertificateValidation;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HttpLinkedServiceTypeProperties();
+                }
+                TypeProperties.EnableServerCertificateValidation = value;
+            }
+        }
     }
 }

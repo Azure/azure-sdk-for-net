@@ -125,20 +125,20 @@ namespace Azure.Core.Tests
         [TestCase("1$S#@$%^", "1$S#@$%^", null)]
         [TestCase("", "", null)]
         [TestCase(" ", "", " ")]
-        [TestCase(null, null, null)]
         public void CanCastLocationToString(string name, string expectedName, string expectedDisplayName)
         {
-            if (name == null)
-            {
-                Assert.Throws<ArgumentNullException>(()=> { AzureLocation location = name; });
-            }
-            else
-            {
-                AzureLocation location = name;
-                string strLocation = location;
-                Assert.AreEqual(expectedName, strLocation);
-                Assert.AreEqual(expectedDisplayName, location.DisplayName);
-            }
+            AzureLocation location = name;
+            string strLocation = location;
+            Assert.AreEqual(expectedName, strLocation);
+            Assert.AreEqual(expectedDisplayName, location.DisplayName);
+        }
+
+        [Test]
+        public void NullLocationImplicitConversionReturnsDefault()
+        {
+            string name = null!;
+            AzureLocation location = name;
+            Assert.AreEqual(default(AzureLocation), location);
         }
 
         [TestCase(false, "WESTUS2", "EASTUS2")]
@@ -159,6 +159,23 @@ namespace Azure.Core.Tests
             AzureLocation loc1 = string1;
             AzureLocation loc2 = string2;
             Assert.AreEqual(expected, loc1 != loc2);
+        }
+
+        [Test]
+        public void GetHashCodeDefault()
+        {
+            AzureLocation defaultLocation = default;
+            Assert.AreEqual(0, defaultLocation.GetHashCode());
+        }
+
+        [Test]
+        public void DefaultLocationsAreEquivalent()
+        {
+            AzureLocation defaultLocation1 = default;
+            AzureLocation defaultLocation2 = default;
+
+            Assert.IsTrue(defaultLocation1.Equals(defaultLocation2));
+            Assert.AreEqual(defaultLocation1.GetHashCode(), defaultLocation2.GetHashCode());
         }
     }
 }

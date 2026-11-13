@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct ConnectionSessionModeType : IEquatable<ConnectionSessionModeType>
     {
         private readonly string _value;
+        /// <summary> Direct session mode. </summary>
+        private const string DirectValue = "Direct";
+        /// <summary> Redirect session mode. </summary>
+        private const string RedirectValue = "Redirect";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionSessionModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionSessionModeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DirectValue = "Direct";
-        private const string RedirectValue = "Redirect";
+            _value = value;
+        }
 
         /// <summary> Direct session mode. </summary>
         public static ConnectionSessionModeType Direct { get; } = new ConnectionSessionModeType(DirectValue);
+
         /// <summary> Redirect session mode. </summary>
         public static ConnectionSessionModeType Redirect { get; } = new ConnectionSessionModeType(RedirectValue);
+
         /// <summary> Determines if two <see cref="ConnectionSessionModeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionSessionModeType left, ConnectionSessionModeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionSessionModeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionSessionModeType left, ConnectionSessionModeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionSessionModeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionSessionModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionSessionModeType(string value) => new ConnectionSessionModeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionSessionModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionSessionModeType?(string value) => value == null ? null : new ConnectionSessionModeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionSessionModeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionSessionModeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

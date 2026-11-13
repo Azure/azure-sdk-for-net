@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The arm template RE. </summary>
     public partial class ArmResourceDefinitionResourceElementTemplate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArmResourceDefinitionResourceElementTemplate"/>. </summary>
         public ArmResourceDefinitionResourceElementTemplate()
@@ -54,20 +25,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="templateType"> The template type. </param>
         /// <param name="parameterValues"> Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string. </param>
         /// <param name="artifactProfile"> Artifact profile properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmResourceDefinitionResourceElementTemplate(TemplateType? templateType, string parameterValues, NSDArtifactProfile artifactProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArmResourceDefinitionResourceElementTemplate(TemplateType? templateType, string parameterValues, NsdArtifactProfile artifactProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TemplateType = templateType;
             ParameterValues = parameterValues;
             ArtifactProfile = artifactProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The template type. </summary>
         public TemplateType? TemplateType { get; set; }
+
         /// <summary> Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string. </summary>
         public string ParameterValues { get; set; }
+
         /// <summary> Artifact profile properties. </summary>
-        public NSDArtifactProfile ArtifactProfile { get; set; }
+        public NsdArtifactProfile ArtifactProfile { get; set; }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    /// <summary></summary>
     public partial class MachineLearningBatchEndpointResource : IJsonModel<MachineLearningBatchEndpointData>
     {
-        private static MachineLearningBatchEndpointData s_dataDeserializationInstance;
-        private static MachineLearningBatchEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MachineLearningBatchEndpointData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MachineLearningBatchEndpointData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MachineLearningBatchEndpointData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningBatchEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningBatchEndpointData>)Data).Write(writer, options);
 
-        MachineLearningBatchEndpointData IJsonModel<MachineLearningBatchEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningBatchEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningBatchEndpointData IJsonModel<MachineLearningBatchEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MachineLearningBatchEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningBatchEndpointData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MachineLearningBatchEndpointData IPersistableModel<MachineLearningBatchEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningBatchEndpointData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningBatchEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningBatchEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningBatchEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

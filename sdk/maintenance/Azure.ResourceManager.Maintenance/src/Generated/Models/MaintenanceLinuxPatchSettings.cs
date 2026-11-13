@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Input properties for patching a Linux machine. </summary>
     public partial class MaintenanceLinuxPatchSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceLinuxPatchSettings"/>. </summary>
         public MaintenanceLinuxPatchSettings()
@@ -56,21 +28,23 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceLinuxPatchSettings"/>. </summary>
         /// <param name="packageNameMasksToExclude"> Package names to be excluded for patching. </param>
         /// <param name="packageNameMasksToInclude"> Package names to be included for patching. </param>
-        /// <param name="classificationsToInclude"> Classification category of patches to be patched. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceLinuxPatchSettings(IList<string> packageNameMasksToExclude, IList<string> packageNameMasksToInclude, IList<string> classificationsToInclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', and 'Other'. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceLinuxPatchSettings(IList<string> packageNameMasksToExclude, IList<string> packageNameMasksToInclude, IList<string> classificationsToInclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PackageNameMasksToExclude = packageNameMasksToExclude;
             PackageNameMasksToInclude = packageNameMasksToInclude;
             ClassificationsToInclude = classificationsToInclude;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Package names to be excluded for patching. </summary>
         public IList<string> PackageNameMasksToExclude { get; }
+
         /// <summary> Package names to be included for patching. </summary>
         public IList<string> PackageNameMasksToInclude { get; }
-        /// <summary> Classification category of patches to be patched. </summary>
+
+        /// <summary> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', and 'Other'. </summary>
         public IList<string> ClassificationsToInclude { get; }
     }
 }

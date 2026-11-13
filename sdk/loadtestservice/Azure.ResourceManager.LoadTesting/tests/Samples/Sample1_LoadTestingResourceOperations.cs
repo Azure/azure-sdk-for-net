@@ -82,7 +82,8 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
             LoadTestingResource resource = loadTestingResponse.Value;
 
             ResourceIdentifier identityId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/sample-rg/providers/microsoft.managedidentity/userassignedidentities/identity1");
-            LoadTestingResourcePatch resourcePatchPayload = new LoadTestingResourcePatch {
+            LoadTestingResourcePatch resourcePatchPayload = new LoadTestingResourcePatch
+            {
                 Encryption = new LoadTestingCmkEncryptionProperties
                 {
                     Identity = new LoadTestingCmkIdentity

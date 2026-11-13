@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="deviceVendor"></param>
         /// <param name="deviceType"></param>
         /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="lastEventReceived"></param>
-        internal AtaSolutionProperties(string deviceVendor, string deviceType, WritableSubResource workspace, IDictionary<string, BinaryData> additionalProperties, string lastEventReceived) : base(deviceVendor, deviceType, workspace, additionalProperties)
+        internal AtaSolutionProperties(string deviceVendor, string deviceType, ConnectedWorkspace workspace, IDictionary<string, BinaryData> additionalProperties, string lastEventReceived) : base(deviceVendor, deviceType, workspace, additionalProperties)
         {
             LastEventReceived = lastEventReceived;
         }
 
-        /// <summary> Gets or sets the last event received. </summary>
+        /// <summary> Gets or sets the LastEventReceived. </summary>
         public string LastEventReceived { get; set; }
     }
 }

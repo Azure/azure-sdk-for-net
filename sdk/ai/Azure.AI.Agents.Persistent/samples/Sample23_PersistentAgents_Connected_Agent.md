@@ -60,7 +60,7 @@ PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "main-agent",
    instructions: "You are a helpful assistant. When users ask mathematical questions, use the MathHelper tool to get specialized mathematical assistance.",
-   tools: [ connectedAgentTool ]);
+   tools: [connectedAgentTool]);
 ```
 
 5. Now we will create the thread, add the message containing a question for agent and start the run.

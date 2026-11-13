@@ -3,14 +3,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Nfv version of the list of RouteTables to advertise the routes to. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsoleted and will be removed in a future version. Please use PropagatedRouteTable instead.")]
     public partial class PropagatedRouteTableNfv
     {
         /// <summary> Initializes a new instance of PropagatedRouteTableNfv. </summary>
@@ -20,9 +22,6 @@ namespace Azure.ResourceManager.Network.Models
             Ids = new ChangeTrackingList<RoutingConfigurationNfvSubResource>();
         }
 
-        /// <summary> Initializes a new instance of PropagatedRouteTableNfv. </summary>
-        /// <param name="labels"> The list of labels. </param>
-        /// <param name="ids"> The list of resource ids of all the RouteTables. </param>
         internal PropagatedRouteTableNfv(IList<string> labels, IList<RoutingConfigurationNfvSubResource> ids)
         {
             Labels = labels;

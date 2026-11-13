@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsBillingType : IEquatable<OperationalInsightsBillingType>
     {
         private readonly string _value;
+        /// <summary> Cluster. </summary>
+        private const string ClusterValue = "Cluster";
+        /// <summary> Workspaces. </summary>
+        private const string WorkspacesValue = "Workspaces";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsBillingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsBillingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ClusterValue = "Cluster";
-        private const string WorkspacesValue = "Workspaces";
+            _value = value;
+        }
 
         /// <summary> Cluster. </summary>
         public static OperationalInsightsBillingType Cluster { get; } = new OperationalInsightsBillingType(ClusterValue);
+
         /// <summary> Workspaces. </summary>
         public static OperationalInsightsBillingType Workspaces { get; } = new OperationalInsightsBillingType(WorkspacesValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsBillingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsBillingType left, OperationalInsightsBillingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsBillingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsBillingType left, OperationalInsightsBillingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsBillingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsBillingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsBillingType(string value) => new OperationalInsightsBillingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsBillingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsBillingType?(string value) => value == null ? null : new OperationalInsightsBillingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsBillingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsBillingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

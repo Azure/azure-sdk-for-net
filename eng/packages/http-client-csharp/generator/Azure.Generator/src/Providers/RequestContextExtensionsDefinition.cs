@@ -12,10 +12,8 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
 {
-    internal class RequestContextExtensionsDefinition : TypeProvider
+    internal class RequestContextExtensionsDefinition : InternalHelperProvider
     {
-        protected override TypeSignatureModifiers BuildDeclarationModifiers() => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Static;
-
         protected override string BuildName() => "RequestContextExtensions";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Internal", $"{Name}.cs");

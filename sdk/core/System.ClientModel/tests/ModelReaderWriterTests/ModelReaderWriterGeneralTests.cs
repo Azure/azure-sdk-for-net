@@ -136,7 +136,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.Empty, typeof(DoesNotImplementInterface)));
             Assert.IsTrue(ex?.Message.Contains("does not implement"));
             ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(new DoesNotImplementInterface()));
-            Assert.AreEqual("DoesNotImplementInterface does not implement IPersistableModel", ex!.Message);
+            Assert.AreEqual("DoesNotImplementInterface must implement IEnumerable or IPersistableModel", ex!.Message);
         }
 
         [Test]
@@ -284,24 +284,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 Assert.IsTrue(ex.Message.StartsWith("'{' is an invalid start of a property name."));
             }
             Assert.IsTrue(foundException, "Expected an exception but none was thrown");
-        }
-
-        [Test]
-        public void ReadListNonGeneric()
-        {
-            var json = "[{},{}]";
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<SubType>)));
-            Assert.IsNotNull(ex);
-            Assert.IsTrue(ex!.Message.EndsWith("does not implement IPersistableModel"));
-        }
-
-        [Test]
-        public void ReadListOfListNonGeneric()
-        {
-            var json = "[{},{}]";
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<List<SubType>>)));
-            Assert.IsNotNull(ex);
-            Assert.IsTrue(ex!.Message.EndsWith("does not implement IPersistableModel"));
         }
 
         [Test]

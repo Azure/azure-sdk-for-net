@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,35 +15,57 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct ScalingHostPoolType : IEquatable<ScalingHostPoolType>
     {
         private readonly string _value;
+        /// <summary> Users get a new (random) SessionHost every time it connects to the HostPool. </summary>
+        private const string PooledValue = "Pooled";
+        /// <summary> Users will be assigned a SessionHost either by administrators (PersonalDesktopAssignmentType = Direct) or upon connecting to the pool (PersonalDesktopAssignmentType = Automatic). They will always be redirected to their assigned SessionHost. </summary>
+        private const string PersonalValue = "Personal";
 
         /// <summary> Initializes a new instance of <see cref="ScalingHostPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScalingHostPoolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PooledValue = "Pooled";
+            _value = value;
+        }
 
         /// <summary> Users get a new (random) SessionHost every time it connects to the HostPool. </summary>
         public static ScalingHostPoolType Pooled { get; } = new ScalingHostPoolType(PooledValue);
+
+        /// <summary> Users will be assigned a SessionHost either by administrators (PersonalDesktopAssignmentType = Direct) or upon connecting to the pool (PersonalDesktopAssignmentType = Automatic). They will always be redirected to their assigned SessionHost. </summary>
+        public static ScalingHostPoolType Personal { get; } = new ScalingHostPoolType(PersonalValue);
+
         /// <summary> Determines if two <see cref="ScalingHostPoolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScalingHostPoolType left, ScalingHostPoolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScalingHostPoolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScalingHostPoolType left, ScalingHostPoolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScalingHostPoolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScalingHostPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScalingHostPoolType(string value) => new ScalingHostPoolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScalingHostPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScalingHostPoolType?(string value) => value == null ? null : new ScalingHostPoolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScalingHostPoolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScalingHostPoolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

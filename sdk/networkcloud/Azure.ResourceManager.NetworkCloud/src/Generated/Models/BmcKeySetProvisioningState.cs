@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BmcKeySetProvisioningState : IEquatable<BmcKeySetProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The Succeeded status. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The Failed status. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The Canceled status. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The Accepted status. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The Provisioning status. </summary>
+        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> Initializes a new instance of <see cref="BmcKeySetProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BmcKeySetProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string AcceptedValue = "Accepted";
-        private const string ProvisioningValue = "Provisioning";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> The Succeeded status. </summary>
         public static BmcKeySetProvisioningState Succeeded { get; } = new BmcKeySetProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The Failed status. </summary>
         public static BmcKeySetProvisioningState Failed { get; } = new BmcKeySetProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The Canceled status. </summary>
         public static BmcKeySetProvisioningState Canceled { get; } = new BmcKeySetProvisioningState(CanceledValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> The Accepted status. </summary>
         public static BmcKeySetProvisioningState Accepted { get; } = new BmcKeySetProvisioningState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> The Provisioning status. </summary>
         public static BmcKeySetProvisioningState Provisioning { get; } = new BmcKeySetProvisioningState(ProvisioningValue);
+
         /// <summary> Determines if two <see cref="BmcKeySetProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BmcKeySetProvisioningState left, BmcKeySetProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BmcKeySetProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BmcKeySetProvisioningState left, BmcKeySetProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BmcKeySetProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BmcKeySetProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BmcKeySetProvisioningState(string value) => new BmcKeySetProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BmcKeySetProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BmcKeySetProvisioningState?(string value) => value == null ? null : new BmcKeySetProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BmcKeySetProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BmcKeySetProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

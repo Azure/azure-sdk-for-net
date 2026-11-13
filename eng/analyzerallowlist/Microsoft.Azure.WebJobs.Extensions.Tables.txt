@@ -1,0 +1,25 @@
+# Microsoft.Azure.WebJobs.Extensions.Tables approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# SA1636 (file header copyright text should match) cannot be satisfied by this project.
+# It compiles source of two different provenances: WebJobs SDK derived code carrying the
+# ".NET Foundation" header (including read-only content files supplied by the external
+# Microsoft.Azure.WebJobs.Sources package, which this repo cannot edit) and
+# Microsoft-copyright files owned by this repo. StyleCop supports only a single
+# copyrightText per project, so no configuration can satisfy both sets and the
+# suppression must be project-level.
+nowarn:SA1636
+
+# SA1402 (file may only contain a single type) fires only on DictionaryExtensions.cs,
+# which is delivered as a read-only content file by the external
+# Microsoft.Azure.WebJobs.Sources package. The file is not part of this repo and cannot
+# be split, so the suppression must be project-level.
+nowarn:SA1402
+
+# The WebJobs SDK marks IResolutionPolicy as "Not ready for public consumption" and
+# FluentBindingRule<T>.SetPostResolveHook as "Will be removed in a future version", but
+# both remain the only supported way for a binding extension to plug in custom template
+# resolution and post-resolve parameter descriptors. There is no replacement API, so
+# CS0618 is suppressed for the two types that consume them and stays live everywhere else.
+nowarn:CS0618 T:Microsoft.Azure.WebJobs.Extensions.Tables.ODataFilterResolutionPolicy
+nowarn:CS0618 T:Microsoft.Azure.WebJobs.Extensions.Tables.TablesExtensionConfigProvider

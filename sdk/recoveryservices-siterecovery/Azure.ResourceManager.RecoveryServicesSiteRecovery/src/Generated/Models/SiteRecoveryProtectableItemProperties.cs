@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Replication protected item custom data details. </summary>
     public partial class SiteRecoveryProtectableItemProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectableItemProperties"/>. </summary>
         internal SiteRecoveryProtectableItemProperties()
@@ -60,13 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryServicesProviderId"> The recovery provider ARM Id. </param>
         /// <param name="protectionReadinessErrors"> The Current protection readiness errors. </param>
         /// <param name="supportedReplicationProviders"> The list of replication providers supported for the protectable item. </param>
-        /// <param name="customDetails">
-        /// The Replication provider custom settings.
-        /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VmmVmDetails"/> and <see cref="VMwareVmDetails"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryProtectableItemProperties(string friendlyName, string protectionStatus, ResourceIdentifier replicationProtectedItemId, ResourceIdentifier recoveryServicesProviderId, IReadOnlyList<string> protectionReadinessErrors, IReadOnlyList<string> supportedReplicationProviders, SiteRecoveryReplicationProviderSettings customDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="customDetails"> The Replication provider custom settings. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProtectableItemProperties(string friendlyName, string protectionStatus, ResourceIdentifier replicationProtectedItemId, ResourceIdentifier recoveryServicesProviderId, IReadOnlyList<string> protectionReadinessErrors, IReadOnlyList<string> supportedReplicationProviders, SiteRecoveryReplicationProviderSettings customDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             ProtectionStatus = protectionStatus;
@@ -75,26 +43,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProtectionReadinessErrors = protectionReadinessErrors;
             SupportedReplicationProviders = supportedReplicationProviders;
             CustomDetails = customDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name. </summary>
         public string FriendlyName { get; }
+
         /// <summary> The protection status. </summary>
         public string ProtectionStatus { get; }
+
         /// <summary> The ARM resource of protected items. </summary>
         public ResourceIdentifier ReplicationProtectedItemId { get; }
+
         /// <summary> The recovery provider ARM Id. </summary>
         public ResourceIdentifier RecoveryServicesProviderId { get; }
+
         /// <summary> The Current protection readiness errors. </summary>
         public IReadOnlyList<string> ProtectionReadinessErrors { get; }
+
         /// <summary> The list of replication providers supported for the protectable item. </summary>
         public IReadOnlyList<string> SupportedReplicationProviders { get; }
-        /// <summary>
-        /// The Replication provider custom settings.
-        /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VmmVmDetails"/> and <see cref="VMwareVmDetails"/>.
-        /// </summary>
+
+        /// <summary> The Replication provider custom settings. </summary>
         public SiteRecoveryReplicationProviderSettings CustomDetails { get; }
     }
 }

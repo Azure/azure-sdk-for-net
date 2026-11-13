@@ -1,0 +1,519 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
+
+namespace Azure.ResourceManager.AppService
+{
+    public partial class AppServiceCertificateOrderData : IUtf8JsonSerializable, IJsonModel<AppServiceCertificateOrderData>
+    {
+        private static void DeserializeTypeValue(JsonProperty property, ref ResourceType type)
+        {
+            var propVal = property.Value.GetString();
+            type = propVal == "certificateOrders" ? new ResourceType("Microsoft.CertificateRegistration/certificateOrders") : new ResourceType(propVal);
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceCertificateOrderData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppServiceCertificateOrderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateOrderData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateOrderData)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Certificates))
+            {
+                writer.WritePropertyName("certificates"u8);
+                writer.WriteStartObject();
+                foreach (var item in Certificates)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(DistinguishedName))
+            {
+                writer.WritePropertyName("distinguishedName"u8);
+                writer.WriteStringValue(DistinguishedName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DomainVerificationToken))
+            {
+                writer.WritePropertyName("domainVerificationToken"u8);
+                writer.WriteStringValue(DomainVerificationToken);
+            }
+            if (Optional.IsDefined(ValidityInYears))
+            {
+                writer.WritePropertyName("validityInYears"u8);
+                writer.WriteNumberValue(ValidityInYears.Value);
+            }
+            if (Optional.IsDefined(KeySize))
+            {
+                writer.WritePropertyName("keySize"u8);
+                writer.WriteNumberValue(KeySize.Value);
+            }
+            if (Optional.IsDefined(ProductType))
+            {
+                writer.WritePropertyName("productType"u8);
+                writer.WriteStringValue(ProductType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(IsAutoRenew))
+            {
+                writer.WritePropertyName("autoRenew"u8);
+                writer.WriteBooleanValue(IsAutoRenew.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SignedCertificate))
+            {
+                writer.WritePropertyName("signedCertificate"u8);
+                writer.WriteObjectValue(SignedCertificate, options);
+            }
+            if (Optional.IsDefined(Csr))
+            {
+                writer.WritePropertyName("csr"u8);
+                writer.WriteStringValue(Csr);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Intermediate))
+            {
+                writer.WritePropertyName("intermediate"u8);
+                writer.WriteObjectValue(Intermediate, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Root))
+            {
+                writer.WritePropertyName("root"u8);
+                writer.WriteObjectValue(Root, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastCertificateIssuedOn))
+            {
+                writer.WritePropertyName("lastCertificateIssuanceTime"u8);
+                writer.WriteStringValue(LastCertificateIssuedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expirationTime"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsPrivateKeyExternal))
+            {
+                writer.WritePropertyName("isPrivateKeyExternal"u8);
+                writer.WriteBooleanValue(IsPrivateKeyExternal.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AppServiceCertificateNotRenewableReasons))
+            {
+                writer.WritePropertyName("appServiceCertificateNotRenewableReasons"u8);
+                writer.WriteStartArray();
+                foreach (var item in AppServiceCertificateNotRenewableReasons)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextAutoRenewTimeStamp))
+            {
+                writer.WritePropertyName("nextAutoRenewalTimeStamp"u8);
+                writer.WriteStringValue(NextAutoRenewTimeStamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Contact))
+            {
+                writer.WritePropertyName("contact"u8);
+                writer.WriteObjectValue(Contact, options);
+            }
+            writer.WriteEndObject();
+        }
+
+        AppServiceCertificateOrderData IJsonModel<AppServiceCertificateOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateOrderData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateOrderData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceCertificateOrderData(document.RootElement, options);
+        }
+
+        internal static AppServiceCertificateOrderData DeserializeAppServiceCertificateOrderData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string kind = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Azure.ResourceManager.Models.SystemData systemData = default;
+            IDictionary<string, AppServiceCertificateProperties> certificates = default;
+            string distinguishedName = default;
+            string domainVerificationToken = default;
+            int? validityInYears = default;
+            int? keySize = default;
+            CertificateProductType? productType = default;
+            bool? autoRenew = default;
+            ProvisioningState? provisioningState = default;
+            CertificateOrderStatus? status = default;
+            AppServiceCertificateDetails signedCertificate = default;
+            string csr = default;
+            AppServiceCertificateDetails intermediate = default;
+            AppServiceCertificateDetails root = default;
+            string serialNumber = default;
+            DateTimeOffset? lastCertificateIssuanceTime = default;
+            DateTimeOffset? expirationTime = default;
+            bool? isPrivateKeyExternal = default;
+            IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
+            DateTimeOffset? nextAutoRenewalTimeStamp = default;
+            CertificateOrderContact contact = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    DeserializeTypeValue(property, ref type);
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<Azure.ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("certificates"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, AppServiceCertificateProperties> dictionary = new Dictionary<string, AppServiceCertificateProperties>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value, options));
+                            }
+                            certificates = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("distinguishedName"u8))
+                        {
+                            distinguishedName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("domainVerificationToken"u8))
+                        {
+                            domainVerificationToken = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("validityInYears"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            validityInYears = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("keySize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keySize = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("productType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            productType = property0.Value.GetString().ToCertificateProductType();
+                            continue;
+                        }
+                        if (property0.NameEquals("autoRenew"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoRenew = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = property0.Value.GetString().ToCertificateOrderStatus();
+                            continue;
+                        }
+                        if (property0.NameEquals("signedCertificate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            signedCertificate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("csr"u8))
+                        {
+                            csr = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("intermediate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            intermediate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("root"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            root = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("serialNumber"u8))
+                        {
+                            serialNumber = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastCertificateIssuanceTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastCertificateIssuanceTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("expirationTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            expirationTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("isPrivateKeyExternal"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isPrivateKeyExternal = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("appServiceCertificateNotRenewableReasons"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AppServiceCertificateNotRenewableReason> array = new List<AppServiceCertificateNotRenewableReason>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new AppServiceCertificateNotRenewableReason(item.GetString()));
+                            }
+                            appServiceCertificateNotRenewableReasons = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("nextAutoRenewalTimeStamp"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nextAutoRenewalTimeStamp = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("contact"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value, options);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppServiceCertificateOrderData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
+                distinguishedName,
+                domainVerificationToken,
+                validityInYears,
+                keySize,
+                productType,
+                autoRenew,
+                provisioningState,
+                status,
+                signedCertificate,
+                csr,
+                intermediate,
+                root,
+                serialNumber,
+                lastCertificateIssuanceTime,
+                expirationTime,
+                isPrivateKeyExternal,
+                appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
+                nextAutoRenewalTimeStamp,
+                contact,
+                kind,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AppServiceCertificateOrderData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateOrderData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceCertificateOrderData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppServiceCertificateOrderData IPersistableModel<AppServiceCertificateOrderData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateOrderData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAppServiceCertificateOrderData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceCertificateOrderData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceCertificateOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+    }
+}

@@ -14,37 +14,9 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Base information about the community gallery resource in azure compute gallery. </summary>
     public partial class PirCommunityGalleryResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected string _name;
 
         /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResourceData"/>. </summary>
         internal PirCommunityGalleryResourceData()
@@ -55,24 +27,36 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="galleryIdentifier"> The identifier information of community gallery. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, CommunityGalleryIdentifier galleryIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
             ResourceType = resourceType;
-            UniqueId = uniqueId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            GalleryIdentifier = galleryIdentifier;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource name. </summary>
         public string Name { get; }
+
         /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; }
+
         /// <summary> Resource type. </summary>
         public ResourceType? ResourceType { get; }
+
+        /// <summary> The identifier information of community gallery. </summary>
+        internal CommunityGalleryIdentifier GalleryIdentifier { get; }
+
         /// <summary> The unique id of this community gallery. </summary>
-        public string UniqueId { get; }
+        public string UniqueId
+        {
+            get
+            {
+                return GalleryIdentifier is null ? default : GalleryIdentifier.UniqueId;
+            }
+        }
     }
 }

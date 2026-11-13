@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct ReportResult : IEquatable<ReportResult>
     {
         private readonly string _value;
+        /// <summary> The result is succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The result is failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="ReportResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReportResult(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> The result is succeeded. </summary>
         public static ReportResult Succeeded { get; } = new ReportResult(SucceededValue);
+
         /// <summary> The result is failed. </summary>
         public static ReportResult Failed { get; } = new ReportResult(FailedValue);
+
         /// <summary> Determines if two <see cref="ReportResult"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReportResult left, ReportResult right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReportResult"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReportResult left, ReportResult right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportResult"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReportResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReportResult(string value) => new ReportResult(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReportResult"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReportResult?(string value) => value == null ? null : new ReportResult(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReportResult other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReportResult other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

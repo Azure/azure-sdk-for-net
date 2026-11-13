@@ -1,0 +1,74 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
+            "metadata": {
+                "description": "The client OID to grant access to test resources."
+            }
+        },
+        "tagValues": {
+            "type": "object",
+            "defaultValue": {}
+        }
+    },
+    "variables": {
+        "speechServicesName": "[concat(parameters('baseName'), '-speech')]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2023-05-01",
+            "name": "[variables('speechServicesName')]",
+            "location": "[parameters('location')]",
+            "type": "Microsoft.CognitiveServices/accounts",
+            "kind": "SpeechServices",
+            "sku": {
+                "name": "S0"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "tags": "[if(contains(parameters('tagValues'), 'Microsoft.CognitiveServices/accounts'), parameters('tagValues')['Microsoft.CognitiveServices/accounts'], json('{}'))]",
+            "properties": {
+                "publicNetworkAccess": "Enabled"
+            }
+        }
+    ],
+    "outputs": {
+        "TRANSCRIPTION_ENDPOINT": {
+            "type": "string",
+            "value": "[concat('https://', parameters('location'), '.api.cognitive.microsoft.com/')]"
+        },
+        "TRANSCRIPTION_REGION": {
+            "type": "string",
+            "value": "[parameters('location')]"
+        },
+        "TRANSCRIPTION_API_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('speechServicesName')), '2023-05-01').key1]"
+        }
+    }
+}

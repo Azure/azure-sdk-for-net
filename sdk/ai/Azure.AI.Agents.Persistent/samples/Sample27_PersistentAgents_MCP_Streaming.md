@@ -7,15 +7,18 @@ To enable your Agent to use Model Context Protocol (MCP) tools, you use `MCPTool
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
+var mcpServerUrl2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL2");
 var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
+var mcpServerLabel2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL2");
 PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
-2. We will create the MCP tool definition and configure allowed tools.
+2. We will create the MCP tool definitions and configure allowed tools.
 
 ```C# Snippet:AgentsMCPStreamingAsync_CreateMCPTool
-// Create MCP tool definition
+// Create MCP tool definitions
 MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
+MCPToolDefinition mcpTool2 = new(mcpServerLabel2, mcpServerUrl2);
 
 // Configure allowed tools (optional)
 string searchApiCode = "search_azure_rest_api_code";
@@ -30,7 +33,7 @@ PersistentAgent agent = agentClient.Administration.CreateAgent(
    model: modelDeploymentName,
    name: "my-mcp-agent",
    instructions: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
-   tools: [mcpTool]);
+   tools: [mcpTool, mcpTool2]);
 ```
 
 Asynchronous sample:
@@ -39,7 +42,7 @@ PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-mcp-agent",
    instructions: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
-   tools: [mcpTool]
+   tools: [mcpTool, mcpTool2]
    );
 ```
 
@@ -54,11 +57,12 @@ PersistentAgentThread thread = agentClient.Threads.CreateThread();
 PersistentThreadMessage message = agentClient.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
-    "Please summarize the Azure REST API specifications Readme");
+    "Please summarize the Azure REST API specifications Readme and give the basic information on TypeSpec.");
 
 MCPToolResource mcpToolResource = new(mcpServerLabel);
 mcpToolResource.UpdateHeader("SuperSecret", "123456");
 ToolResources toolResources = mcpToolResource.ToToolResources();
+toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
 CreateRunStreamingOptions options = new()
 {
     ToolResources = toolResources
@@ -73,11 +77,12 @@ PersistentAgentThread thread = await agentClient.Threads.CreateThreadAsync();
 PersistentThreadMessage message = await agentClient.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
-    "Please summarize the Azure REST API specifications Readme");
+    "Please summarize the Azure REST API specifications Readme and give the basic information on TypeSpec.");
 
 MCPToolResource mcpToolResource = new(mcpServerLabel);
 mcpToolResource.UpdateHeader("SuperSecret", "123456");
 ToolResources toolResources = mcpToolResource.ToToolResources();
+toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
 CreateRunStreamingOptions options = new()
 {
     ToolResources = toolResources

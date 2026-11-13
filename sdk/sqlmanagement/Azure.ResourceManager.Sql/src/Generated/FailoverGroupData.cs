@@ -13,107 +13,147 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the FailoverGroup data model.
-    /// A failover group.
-    /// </summary>
+    /// <summary> A failover group. </summary>
     public partial class FailoverGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FailoverGroupData"/>. </summary>
         public FailoverGroupData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            PartnerServers = new ChangeTrackingList<PartnerServerInfo>();
-            FailoverDatabases = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FailoverGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
-        /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
-        /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
-        /// <param name="replicationState"> Replication state of the failover group instance. </param>
-        /// <param name="partnerServers"> List of partner server information for the failover group. </param>
-        /// <param name="failoverDatabases"> List of databases in the failover group. </param>
-        /// <param name="secondaryType"> Databases secondary type on partner server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<ResourceIdentifier> failoverDatabases, FailoverGroupDatabasesSecondaryType? secondaryType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="location"> Resource location. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FailoverGroupProperties properties, IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Location = location;
+            Properties = properties;
             Tags = tags;
-            ReadWriteEndpoint = readWriteEndpoint;
-            ReadOnlyEndpoint = readOnlyEndpoint;
-            ReplicationRole = replicationRole;
-            ReplicationState = replicationState;
-            PartnerServers = partnerServers;
-            FailoverDatabases = failoverDatabases;
-            SecondaryType = secondaryType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Location = location;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal FailoverGroupProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
+
         /// <summary> Read-write endpoint of the failover group instance. </summary>
         [WirePath("properties.readWriteEndpoint")]
-        public FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
+        public FailoverGroupReadWriteEndpoint ReadWriteEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReadWriteEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FailoverGroupProperties();
+                }
+                Properties.ReadWriteEndpoint = value;
+            }
+        }
+
         /// <summary> Read-only endpoint of the failover group instance. </summary>
         [WirePath("properties.readOnlyEndpoint")]
-        public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
+        public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReadOnlyEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FailoverGroupProperties();
+                }
+                Properties.ReadOnlyEndpoint = value;
+            }
+        }
+
         /// <summary> Local replication role of the failover group instance. </summary>
         [WirePath("properties.replicationRole")]
-        public FailoverGroupReplicationRole? ReplicationRole { get; }
+        public FailoverGroupReplicationRole? ReplicationRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationRole;
+            }
+        }
+
         /// <summary> Replication state of the failover group instance. </summary>
         [WirePath("properties.replicationState")]
-        public string ReplicationState { get; }
+        public string ReplicationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationState;
+            }
+        }
+
         /// <summary> List of partner server information for the failover group. </summary>
         [WirePath("properties.partnerServers")]
-        public IList<PartnerServerInfo> PartnerServers { get; }
+        public IList<PartnerServerInfo> PartnerServers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FailoverGroupProperties();
+                }
+                return Properties.PartnerServers;
+            }
+        }
+
         /// <summary> List of databases in the failover group. </summary>
         [WirePath("properties.databases")]
-        public IList<ResourceIdentifier> FailoverDatabases { get; }
+        public IList<ResourceIdentifier> FailoverDatabases
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FailoverGroupProperties();
+                }
+                return Properties.FailoverDatabases;
+            }
+        }
+
         /// <summary> Databases secondary type on partner server. </summary>
         [WirePath("properties.secondaryType")]
-        public FailoverGroupDatabasesSecondaryType? SecondaryType { get; set; }
+        public FailoverGroupDatabasesSecondaryType? SecondaryType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FailoverGroupProperties();
+                }
+                Properties.SecondaryType = value;
+            }
+        }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class CassandraKeyspaceResource : IJsonModel<CassandraKeyspaceData>
     {
-        private static CassandraKeyspaceData s_dataDeserializationInstance;
-        private static CassandraKeyspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CassandraKeyspaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CassandraKeyspaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CassandraKeyspaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CassandraKeyspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CassandraKeyspaceData>)Data).Write(writer, options);
 
-        CassandraKeyspaceData IJsonModel<CassandraKeyspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraKeyspaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CassandraKeyspaceData IJsonModel<CassandraKeyspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CassandraKeyspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraKeyspaceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CassandraKeyspaceData IPersistableModel<CassandraKeyspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraKeyspaceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CassandraKeyspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraKeyspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CassandraKeyspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
+        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task Get()
         {
             ApiManagementServiceCollection collection;
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
+        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetAll()
         {
             ApiManagementServiceCollection collection;
@@ -100,6 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
+        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task Exists()
         {
             ApiManagementServiceCollection collection;

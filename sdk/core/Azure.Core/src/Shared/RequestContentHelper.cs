@@ -11,7 +11,7 @@ namespace Azure.Core
 {
     internal static class RequestContentHelper
     {
-        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable) where T: notnull
+        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable) where T : notnull
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();

@@ -15,27 +15,26 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GoogleCloudStorageLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of <see cref="GoogleCloudStorageLocation"/>. </summary>
-        public GoogleCloudStorageLocation()
+        public GoogleCloudStorageLocation() : base("GoogleCloudStorageLocation")
         {
-            DatasetLocationType = "GoogleCloudStorageLocation";
         }
 
         /// <summary> Initializes a new instance of <see cref="GoogleCloudStorageLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="bucketName"> Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string). </param>
         internal GoogleCloudStorageLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
             Version = version;
-            DatasetLocationType = datasetLocationType ?? "GoogleCloudStorageLocation";
         }
 
         /// <summary> Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> BucketName { get; set; }
+
         /// <summary> Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Version { get; set; }
     }

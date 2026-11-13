@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct EdgeKeyVaultSyncStatus : IEquatable<EdgeKeyVaultSyncStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EdgeKeyVaultSyncStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EdgeKeyVaultSyncStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string KeyVaultSyncedValue = "KeyVaultSynced";
         private const string KeyVaultSyncFailedValue = "KeyVaultSyncFailed";
         private const string KeyVaultNotConfiguredValue = "KeyVaultNotConfigured";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string KeyVaultSyncingValue = "KeyVaultSyncing";
         private const string KeyVaultNotSyncedValue = "KeyVaultNotSynced";
 
-        /// <summary> KeyVaultSynced. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKeyVaultSyncStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EdgeKeyVaultSyncStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the KeyVaultSynced. </summary>
         public static EdgeKeyVaultSyncStatus KeyVaultSynced { get; } = new EdgeKeyVaultSyncStatus(KeyVaultSyncedValue);
-        /// <summary> KeyVaultSyncFailed. </summary>
+
+        /// <summary> Gets the KeyVaultSyncFailed. </summary>
         public static EdgeKeyVaultSyncStatus KeyVaultSyncFailed { get; } = new EdgeKeyVaultSyncStatus(KeyVaultSyncFailedValue);
-        /// <summary> KeyVaultNotConfigured. </summary>
+
+        /// <summary> Gets the KeyVaultNotConfigured. </summary>
         public static EdgeKeyVaultSyncStatus KeyVaultNotConfigured { get; } = new EdgeKeyVaultSyncStatus(KeyVaultNotConfiguredValue);
-        /// <summary> KeyVaultSyncPending. </summary>
+
+        /// <summary> Gets the KeyVaultSyncPending. </summary>
         public static EdgeKeyVaultSyncStatus KeyVaultSyncPending { get; } = new EdgeKeyVaultSyncStatus(KeyVaultSyncPendingValue);
-        /// <summary> KeyVaultSyncing. </summary>
+
+        /// <summary> Gets the KeyVaultSyncing. </summary>
         public static EdgeKeyVaultSyncStatus KeyVaultSyncing { get; } = new EdgeKeyVaultSyncStatus(KeyVaultSyncingValue);
-        /// <summary> KeyVaultNotSynced. </summary>
+
+        /// <summary> Gets the KeyVaultNotSynced. </summary>
         public static EdgeKeyVaultSyncStatus KeyVaultNotSynced { get; } = new EdgeKeyVaultSyncStatus(KeyVaultNotSyncedValue);
+
         /// <summary> Determines if two <see cref="EdgeKeyVaultSyncStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeKeyVaultSyncStatus left, EdgeKeyVaultSyncStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeKeyVaultSyncStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeKeyVaultSyncStatus left, EdgeKeyVaultSyncStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeKeyVaultSyncStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeKeyVaultSyncStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeKeyVaultSyncStatus(string value) => new EdgeKeyVaultSyncStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeKeyVaultSyncStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeKeyVaultSyncStatus?(string value) => value == null ? null : new EdgeKeyVaultSyncStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeKeyVaultSyncStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeKeyVaultSyncStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

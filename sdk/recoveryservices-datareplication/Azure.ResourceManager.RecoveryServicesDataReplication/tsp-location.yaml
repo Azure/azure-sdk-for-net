@@ -1,3 +1,4 @@
-directory: specification/recoveryservicesdatareplication/DataReplication.Management
-commit: 11ca9a0f133d5047d4ee822ac81b6ef1d0ca397c
+directory: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/DataReplication
+commit: e782db5443148ef1b6c190731fd1ba788555e96b
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

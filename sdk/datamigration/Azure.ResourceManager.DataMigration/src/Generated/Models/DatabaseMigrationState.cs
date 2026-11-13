@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DatabaseMigrationState : IEquatable<DatabaseMigrationState>
     {
         private readonly string _value;
+        /// <summary> UNDEFINED. </summary>
+        private const string UndefinedValue = "UNDEFINED";
+        /// <summary> INITIAL. </summary>
+        private const string InitialValue = "INITIAL";
+        /// <summary> FULL_BACKUP_UPLOAD_START. </summary>
+        private const string FullBackupUploadStartValue = "FULL_BACKUP_UPLOAD_START";
+        /// <summary> LOG_SHIPPING_START. </summary>
+        private const string LOGShippingStartValue = "LOG_SHIPPING_START";
+        /// <summary> UPLOAD_LOG_FILES_START. </summary>
+        private const string UploadLOGFilesStartValue = "UPLOAD_LOG_FILES_START";
+        /// <summary> CUTOVER_START. </summary>
+        private const string CutoverStartValue = "CUTOVER_START";
+        /// <summary> POST_CUTOVER_COMPLETE. </summary>
+        private const string PostCutoverCompleteValue = "POST_CUTOVER_COMPLETE";
+        /// <summary> COMPLETED. </summary>
+        private const string CompletedValue = "COMPLETED";
+        /// <summary> CANCELLED. </summary>
+        private const string CancelledValue = "CANCELLED";
+        /// <summary> FAILED. </summary>
+        private const string FailedValue = "FAILED";
 
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatabaseMigrationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UndefinedValue = "UNDEFINED";
-        private const string InitialValue = "INITIAL";
-        private const string FullBackupUploadStartValue = "FULL_BACKUP_UPLOAD_START";
-        private const string LOGShippingStartValue = "LOG_SHIPPING_START";
-        private const string UploadLOGFilesStartValue = "UPLOAD_LOG_FILES_START";
-        private const string CutoverStartValue = "CUTOVER_START";
-        private const string PostCutoverCompleteValue = "POST_CUTOVER_COMPLETE";
-        private const string CompletedValue = "COMPLETED";
-        private const string CancelledValue = "CANCELLED";
-        private const string FailedValue = "FAILED";
+            _value = value;
+        }
 
         /// <summary> UNDEFINED. </summary>
         public static DatabaseMigrationState Undefined { get; } = new DatabaseMigrationState(UndefinedValue);
+
         /// <summary> INITIAL. </summary>
         public static DatabaseMigrationState Initial { get; } = new DatabaseMigrationState(InitialValue);
+
         /// <summary> FULL_BACKUP_UPLOAD_START. </summary>
         public static DatabaseMigrationState FullBackupUploadStart { get; } = new DatabaseMigrationState(FullBackupUploadStartValue);
+
         /// <summary> LOG_SHIPPING_START. </summary>
         public static DatabaseMigrationState LOGShippingStart { get; } = new DatabaseMigrationState(LOGShippingStartValue);
+
         /// <summary> UPLOAD_LOG_FILES_START. </summary>
         public static DatabaseMigrationState UploadLOGFilesStart { get; } = new DatabaseMigrationState(UploadLOGFilesStartValue);
+
         /// <summary> CUTOVER_START. </summary>
         public static DatabaseMigrationState CutoverStart { get; } = new DatabaseMigrationState(CutoverStartValue);
+
         /// <summary> POST_CUTOVER_COMPLETE. </summary>
         public static DatabaseMigrationState PostCutoverComplete { get; } = new DatabaseMigrationState(PostCutoverCompleteValue);
+
         /// <summary> COMPLETED. </summary>
         public static DatabaseMigrationState Completed { get; } = new DatabaseMigrationState(CompletedValue);
+
         /// <summary> CANCELLED. </summary>
         public static DatabaseMigrationState Cancelled { get; } = new DatabaseMigrationState(CancelledValue);
+
         /// <summary> FAILED. </summary>
         public static DatabaseMigrationState Failed { get; } = new DatabaseMigrationState(FailedValue);
+
         /// <summary> Determines if two <see cref="DatabaseMigrationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatabaseMigrationState left, DatabaseMigrationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatabaseMigrationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatabaseMigrationState left, DatabaseMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseMigrationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatabaseMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatabaseMigrationState(string value) => new DatabaseMigrationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatabaseMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatabaseMigrationState?(string value) => value == null ? null : new DatabaseMigrationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatabaseMigrationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatabaseMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

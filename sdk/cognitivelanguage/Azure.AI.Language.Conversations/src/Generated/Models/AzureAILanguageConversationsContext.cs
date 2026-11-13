@@ -12,10 +12,9 @@ namespace Azure.AI.Language.Conversations
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AgeResolution))]
-    [ModelReaderWriterBuildable(typeof(AIConversation))]
     [ModelReaderWriterBuildable(typeof(AIConversationLanguageUnderstandingActionContent))]
     [ModelReaderWriterBuildable(typeof(AnalysisConfig))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationActionResult))]
@@ -38,7 +37,6 @@ namespace Azure.AI.Language.Conversations
     [ModelReaderWriterBuildable(typeof(ConversationalAIAnalysisInput))]
     [ModelReaderWriterBuildable(typeof(ConversationalAIEntity))]
     [ModelReaderWriterBuildable(typeof(ConversationalAIIntent))]
-    [ModelReaderWriterBuildable(typeof(ConversationalAIItem))]
     [ModelReaderWriterBuildable(typeof(ConversationalAIResult))]
     [ModelReaderWriterBuildable(typeof(ConversationalAITask))]
     [ModelReaderWriterBuildable(typeof(ConversationalAITaskResult))]
@@ -123,17 +121,6 @@ namespace Azure.AI.Language.Conversations
     [ModelReaderWriterBuildable(typeof(TextConversationItem))]
     [ModelReaderWriterBuildable(typeof(TranscriptConversation))]
     [ModelReaderWriterBuildable(typeof(TranscriptConversationItem))]
-    [ModelReaderWriterBuildable(typeof(UnknownAnalysisConfig))]
-    [ModelReaderWriterBuildable(typeof(UnknownAnalyzeConversationActionResult))]
-    [ModelReaderWriterBuildable(typeof(UnknownAnalyzeConversationInput))]
-    [ModelReaderWriterBuildable(typeof(UnknownAnalyzeConversationOperationAction))]
-    [ModelReaderWriterBuildable(typeof(UnknownAnalyzeConversationOperationResult))]
-    [ModelReaderWriterBuildable(typeof(UnknownBaseRedactionPolicy))]
-    [ModelReaderWriterBuildable(typeof(UnknownConversationEntityExtraInformation))]
-    [ModelReaderWriterBuildable(typeof(UnknownConversationInput))]
-    [ModelReaderWriterBuildable(typeof(UnknownPredictionBase))]
-    [ModelReaderWriterBuildable(typeof(UnknownResolutionBase))]
-    [ModelReaderWriterBuildable(typeof(UnknownTargetIntentResult))]
     [ModelReaderWriterBuildable(typeof(VolumeResolution))]
     [ModelReaderWriterBuildable(typeof(WeightResolution))]
     [ModelReaderWriterBuildable(typeof(WordLevelTiming))]

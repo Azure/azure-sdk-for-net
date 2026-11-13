@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Cdn.Tests.Helper;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests

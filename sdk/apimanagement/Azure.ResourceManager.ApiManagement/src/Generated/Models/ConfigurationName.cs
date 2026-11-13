@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The ConfigurationName. </summary>
+    /// <summary></summary>
     public readonly partial struct ConfigurationName : IEquatable<ConfigurationName>
     {
         private readonly string _value;
+        private const string ConfigurationValue = "configuration";
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConfigurationName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ConfigurationValue = "configuration";
-
-        /// <summary> configuration. </summary>
+        /// <summary> Gets the Configuration. </summary>
         public static ConfigurationName Configuration { get; } = new ConfigurationName(ConfigurationValue);
+
         /// <summary> Determines if two <see cref="ConfigurationName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfigurationName left, ConfigurationName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConfigurationName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfigurationName left, ConfigurationName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfigurationName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConfigurationName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConfigurationName(string value) => new ConfigurationName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConfigurationName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConfigurationName?(string value) => value == null ? null : new ConfigurationName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfigurationName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConfigurationName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

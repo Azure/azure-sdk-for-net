@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ResourceConnector
 {
+    /// <summary></summary>
     public partial class ResourceConnectorApplianceResource : IJsonModel<ResourceConnectorApplianceData>
     {
-        private static ResourceConnectorApplianceData s_dataDeserializationInstance;
-        private static ResourceConnectorApplianceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ResourceConnectorApplianceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ResourceConnectorApplianceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ResourceConnectorApplianceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceConnectorApplianceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceConnectorApplianceData>)Data).Write(writer, options);
 
-        ResourceConnectorApplianceData IJsonModel<ResourceConnectorApplianceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceConnectorApplianceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceConnectorApplianceData IJsonModel<ResourceConnectorApplianceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResourceConnectorApplianceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceConnectorApplianceData>(Data, options, AzureResourceManagerResourceConnectorContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ResourceConnectorApplianceData IPersistableModel<ResourceConnectorApplianceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceConnectorApplianceData>(data, options, AzureResourceManagerResourceConnectorContext.Default);
 
-        string IPersistableModel<ResourceConnectorApplianceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceConnectorApplianceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceConnectorApplianceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

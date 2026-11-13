@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct SummaryAspect : IEquatable<SummaryAspect>
     {
         private readonly string _value;
+        /// <summary> Summary of issues in transcripts of web chats and service calls between customer-service agents and customers. </summary>
+        private const string IssueValue = "issue";
+        /// <summary> Summary of resolutions in transcripts of web chats and service calls between customer-service agents and customers. </summary>
+        private const string ResolutionValue = "resolution";
+        /// <summary> Chapter title of any conversation. It's usually one phrase or several phrases naturally combined. Long conversations tend to have more chapters. You can find the chapter boundary from the summary context. </summary>
+        private const string ChapterTitleValue = "chapterTitle";
+        /// <summary> Generic narrative summary of any conversation. It generally converts the conversational language into formal written language, compresses the text length, and keeps the salient information. </summary>
+        private const string NarrativeValue = "narrative";
+        /// <summary> A concise one-paragraph summary to provide a quick overview. </summary>
+        private const string RecapValue = "recap";
+        /// <summary> Action items and tasks that arose during a meeting. </summary>
+        private const string FollowUpTasksValue = "follow-up tasks";
 
         /// <summary> Initializes a new instance of <see cref="SummaryAspect"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SummaryAspect(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IssueValue = "issue";
-        private const string ResolutionValue = "resolution";
-        private const string ChapterTitleValue = "chapterTitle";
-        private const string NarrativeValue = "narrative";
-        private const string RecapValue = "recap";
-        private const string FollowUpTasksValue = "follow-up tasks";
+            _value = value;
+        }
 
         /// <summary> Summary of issues in transcripts of web chats and service calls between customer-service agents and customers. </summary>
         public static SummaryAspect Issue { get; } = new SummaryAspect(IssueValue);
+
         /// <summary> Summary of resolutions in transcripts of web chats and service calls between customer-service agents and customers. </summary>
         public static SummaryAspect Resolution { get; } = new SummaryAspect(ResolutionValue);
+
         /// <summary> Chapter title of any conversation. It's usually one phrase or several phrases naturally combined. Long conversations tend to have more chapters. You can find the chapter boundary from the summary context. </summary>
         public static SummaryAspect ChapterTitle { get; } = new SummaryAspect(ChapterTitleValue);
+
         /// <summary> Generic narrative summary of any conversation. It generally converts the conversational language into formal written language, compresses the text length, and keeps the salient information. </summary>
         public static SummaryAspect Narrative { get; } = new SummaryAspect(NarrativeValue);
+
         /// <summary> A concise one-paragraph summary to provide a quick overview. </summary>
         public static SummaryAspect Recap { get; } = new SummaryAspect(RecapValue);
+
         /// <summary> Action items and tasks that arose during a meeting. </summary>
         public static SummaryAspect FollowUpTasks { get; } = new SummaryAspect(FollowUpTasksValue);
+
         /// <summary> Determines if two <see cref="SummaryAspect"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SummaryAspect left, SummaryAspect right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SummaryAspect"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SummaryAspect left, SummaryAspect right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SummaryAspect"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SummaryAspect"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SummaryAspect(string value) => new SummaryAspect(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SummaryAspect"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SummaryAspect?(string value) => value == null ? null : new SummaryAspect(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SummaryAspect other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SummaryAspect other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

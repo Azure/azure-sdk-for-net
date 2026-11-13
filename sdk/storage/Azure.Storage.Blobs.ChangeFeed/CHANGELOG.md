@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.57 (Unreleased)
+## 12.0.0-preview.68 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,64 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.67 (2026-11-05)
+
+### Other Changes
+- Upgraded `Azure.Storage.Blobs` package dependency to 12.31.0-beta.1
+
+## 12.0.0-preview.66 (2026-10-05)
+
+### Other Changes
+- Upgraded `Azure.Storage.Blobs` package dependency to 12.30.1
+
+## 12.0.0-preview.65 (2026-09-28)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.64 (2026-07-22)
+
+### Features Added
+- Added support for service version 2026-10-06.
+
+## 12.0.0-preview.63 (2026-06-04)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+### Bugs Fixed
+- Added validation for length-prefixed fields when parsing Avro responses to prevent excessive memory allocation from malformed or untrusted payloads.
+
+## 12.0.0-preview.62 (2026-05-12)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.61 (2026-03-24)
+
+### Features Added
+- Added support for service version 2026-06-06.
+
+## 12.0.0-preview.60 (2026-01-20)
+
+### Features Added
+- Added support for service version 2026-04-06.
+
+## 12.0.0-preview.59 (2026-01-08)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.58 (2025-11-17)
+
+### Features Added
+- Added support for service version 2026-02-06.
+
+## 12.0.0-preview.57 (2025-10-13)
+
+### Features Added
+- This release contains bug fixes to improve quality.
 
 ## 12.0.0-preview.56 (2025-06-09)
 

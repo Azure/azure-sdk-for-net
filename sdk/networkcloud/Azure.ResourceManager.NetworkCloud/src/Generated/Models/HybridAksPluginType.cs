@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct HybridAksPluginType : IEquatable<HybridAksPluginType>
     {
         private readonly string _value;
+        /// <summary> The DPDK plugin type. </summary>
+        private const string DpdkValue = "DPDK";
+        /// <summary> The SRIOV plugin type. </summary>
+        private const string SriovValue = "SRIOV";
+        /// <summary> The OSDevice plugin type. </summary>
+        private const string OSDeviceValue = "OSDevice";
 
         /// <summary> Initializes a new instance of <see cref="HybridAksPluginType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridAksPluginType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DpdkValue = "DPDK";
-        private const string SriovValue = "SRIOV";
-        private const string OSDeviceValue = "OSDevice";
-
-        /// <summary> DPDK. </summary>
+        /// <summary> The DPDK plugin type. </summary>
         public static HybridAksPluginType Dpdk { get; } = new HybridAksPluginType(DpdkValue);
-        /// <summary> SRIOV. </summary>
+
+        /// <summary> The SRIOV plugin type. </summary>
         public static HybridAksPluginType Sriov { get; } = new HybridAksPluginType(SriovValue);
-        /// <summary> OSDevice. </summary>
+
+        /// <summary> The OSDevice plugin type. </summary>
         public static HybridAksPluginType OSDevice { get; } = new HybridAksPluginType(OSDeviceValue);
+
         /// <summary> Determines if two <see cref="HybridAksPluginType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridAksPluginType left, HybridAksPluginType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridAksPluginType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridAksPluginType left, HybridAksPluginType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridAksPluginType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridAksPluginType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridAksPluginType(string value) => new HybridAksPluginType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridAksPluginType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridAksPluginType?(string value) => value == null ? null : new HybridAksPluginType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridAksPluginType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridAksPluginType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

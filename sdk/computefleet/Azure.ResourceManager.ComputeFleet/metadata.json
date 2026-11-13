@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.AzureFleet": "2026-08-01"
+  }
+}

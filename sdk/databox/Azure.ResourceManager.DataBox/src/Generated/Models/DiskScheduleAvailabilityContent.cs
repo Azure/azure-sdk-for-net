@@ -17,10 +17,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="DiskScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
-        public DiskScheduleAvailabilityContent(AzureLocation storageLocation, int expectedDataSizeInTerabytes) : base(storageLocation)
+        public DiskScheduleAvailabilityContent(AzureLocation storageLocation, int expectedDataSizeInTerabytes) : base(storageLocation, DataBoxSkuName.DataBoxDisk)
         {
             ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
-            SkuName = DataBoxSkuName.DataBoxDisk;
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskScheduleAvailabilityContent"/>. </summary>
@@ -28,17 +27,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
-        internal DiskScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, DeviceModelName? model, IDictionary<string, BinaryData> serializedAdditionalRawData, int expectedDataSizeInTerabytes) : base(storageLocation, skuName, country, model, serializedAdditionalRawData)
+        internal DiskScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, DeviceModelName? model, IDictionary<string, BinaryData> additionalBinaryDataProperties, int expectedDataSizeInTerabytes) : base(storageLocation, skuName, country, model, additionalBinaryDataProperties)
         {
             ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
-            SkuName = skuName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DiskScheduleAvailabilityContent"/> for deserialization. </summary>
-        internal DiskScheduleAvailabilityContent()
-        {
         }
 
         /// <summary> The expected size of the data, which needs to be transferred in this job, in terabytes. </summary>

@@ -7,48 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Autoscale notification. </summary>
     public partial class AutoscaleNotification
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutoscaleNotification"/>. </summary>
-        public AutoscaleNotification()
+        /// <param name="operation"> the operation associated with the notification and its value must be "scale". </param>
+        public AutoscaleNotification(MonitorOperationType operation)
         {
-            Operation = MonitorOperationType.Scale;
+            Operation = operation;
             Webhooks = new ChangeTrackingList<WebhookNotification>();
         }
 
@@ -56,16 +29,21 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operation"> the operation associated with the notification and its value must be "scale". </param>
         /// <param name="email"> the email notification. </param>
         /// <param name="webhooks"> the collection of webhook notifications. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoscaleNotification(MonitorOperationType operation, EmailNotification email, IList<WebhookNotification> webhooks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleNotification(MonitorOperationType operation, EmailNotification email, IList<WebhookNotification> webhooks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Operation = operation;
             Email = email;
             Webhooks = webhooks;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> the operation associated with the notification and its value must be "scale". </summary>
+        public MonitorOperationType Operation { get; set; }
+
         /// <summary> the email notification. </summary>
         public EmailNotification Email { get; set; }
+
         /// <summary> the collection of webhook notifications. </summary>
         public IList<WebhookNotification> Webhooks { get; }
     }

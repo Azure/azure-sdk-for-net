@@ -7,60 +7,90 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The MonitorDayOfWeek. </summary>
+    /// <summary> Days of the week accepted by Monitor recurring schedules. </summary>
     public readonly partial struct MonitorDayOfWeek : IEquatable<MonitorDayOfWeek>
     {
         private readonly string _value;
+        /// <summary> Sunday. </summary>
+        private const string SundayValue = "Sunday";
+        /// <summary> Monday. </summary>
+        private const string MondayValue = "Monday";
+        /// <summary> Tuesday. </summary>
+        private const string TuesdayValue = "Tuesday";
+        /// <summary> Wednesday. </summary>
+        private const string WednesdayValue = "Wednesday";
+        /// <summary> Thursday. </summary>
+        private const string ThursdayValue = "Thursday";
+        /// <summary> Friday. </summary>
+        private const string FridayValue = "Friday";
+        /// <summary> Saturday. </summary>
+        private const string SaturdayValue = "Saturday";
 
         /// <summary> Initializes a new instance of <see cref="MonitorDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorDayOfWeek(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SundayValue = "Sunday";
-        private const string MondayValue = "Monday";
-        private const string TuesdayValue = "Tuesday";
-        private const string WednesdayValue = "Wednesday";
-        private const string ThursdayValue = "Thursday";
-        private const string FridayValue = "Friday";
-        private const string SaturdayValue = "Saturday";
+            _value = value;
+        }
 
         /// <summary> Sunday. </summary>
         public static MonitorDayOfWeek Sunday { get; } = new MonitorDayOfWeek(SundayValue);
+
         /// <summary> Monday. </summary>
         public static MonitorDayOfWeek Monday { get; } = new MonitorDayOfWeek(MondayValue);
+
         /// <summary> Tuesday. </summary>
         public static MonitorDayOfWeek Tuesday { get; } = new MonitorDayOfWeek(TuesdayValue);
+
         /// <summary> Wednesday. </summary>
         public static MonitorDayOfWeek Wednesday { get; } = new MonitorDayOfWeek(WednesdayValue);
+
         /// <summary> Thursday. </summary>
         public static MonitorDayOfWeek Thursday { get; } = new MonitorDayOfWeek(ThursdayValue);
+
         /// <summary> Friday. </summary>
         public static MonitorDayOfWeek Friday { get; } = new MonitorDayOfWeek(FridayValue);
+
         /// <summary> Saturday. </summary>
         public static MonitorDayOfWeek Saturday { get; } = new MonitorDayOfWeek(SaturdayValue);
+
         /// <summary> Determines if two <see cref="MonitorDayOfWeek"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorDayOfWeek left, MonitorDayOfWeek right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorDayOfWeek"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorDayOfWeek left, MonitorDayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorDayOfWeek"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorDayOfWeek(string value) => new MonitorDayOfWeek(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorDayOfWeek?(string value) => value == null ? null : new MonitorDayOfWeek(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorDayOfWeek other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

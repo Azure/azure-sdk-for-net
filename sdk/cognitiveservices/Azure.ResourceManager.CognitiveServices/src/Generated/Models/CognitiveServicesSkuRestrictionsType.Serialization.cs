@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     internal static partial class CognitiveServicesSkuRestrictionsTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CognitiveServicesSkuRestrictionsType value) => value switch
         {
             CognitiveServicesSkuRestrictionsType.Location => "Location",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CognitiveServicesSkuRestrictionsType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static CognitiveServicesSkuRestrictionsType ToCognitiveServicesSkuRestrictionsType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location")) return CognitiveServicesSkuRestrictionsType.Location;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone")) return CognitiveServicesSkuRestrictionsType.Zone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location"))
+            {
+                return CognitiveServicesSkuRestrictionsType.Location;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone"))
+            {
+                return CognitiveServicesSkuRestrictionsType.Zone;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CognitiveServicesSkuRestrictionsType value.");
         }
     }

@@ -453,6 +453,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("Enabling static website is not allowed on Network Security Perimeter enabled accounts.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
         [NonParallelizable]
         public async Task ListContainersSegmentAsync_System()
@@ -621,6 +622,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("Enabling static website is not allowed on Network Security Perimeter enabled accounts.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         [NonParallelizable]
         public async Task SetPropertiesAsync_StaticWebsite()
@@ -698,7 +700,9 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_OAuth();
 
             // Act
-            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(
+                options: options);
 
             // Assert
             Assert.IsNotNull(response.Value);
@@ -711,8 +715,9 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_SharedKey();
 
             // Act
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1)),
+                service.GetUserDelegationKeyAsync(options: options),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
@@ -723,14 +728,15 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_OAuth();
 
             // Act
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(
+                // ensure the time used is not UTC, as DateTimeOffset.Now could actually be UTC based on OS settings
+                // Use a custom time zone so we aren't dependent on OS having specific standard time zone.
+                expiresOn: TimeZoneInfo.ConvertTime(
+                        Recording.Now.AddHours(1),
+                        TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ")));
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 service.GetUserDelegationKeyAsync(
-                    startsOn: null,
-                    // ensure the time used is not UTC, as DateTimeOffset.Now could actually be UTC based on OS settings
-                    // Use a custom time zone so we aren't dependent on OS having specific standard time zone.
-                    expiresOn: TimeZoneInfo.ConvertTime(
-                        Recording.Now.AddHours(1),
-                        TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ"))),
+                    options: options),
                 e => Assert.AreEqual("expiresOn must be UTC", e.Message));
             ;
         }

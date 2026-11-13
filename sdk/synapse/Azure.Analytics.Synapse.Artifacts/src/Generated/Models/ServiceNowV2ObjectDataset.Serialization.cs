@@ -76,6 +76,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteObjectValue<object>(TableName);
             }
+            if (Optional.IsDefined(ValueType))
+            {
+                writer.WritePropertyName("valueType"u8);
+                writer.WriteStringValue(ValueType.Value.ToString());
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -100,6 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IList<object> annotations = default;
             DatasetFolder folder = default;
             object tableName = default;
+            ValueType? valueType = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -199,6 +205,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             tableName = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("valueType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            valueType = new ValueType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -215,7 +230,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 annotations ?? new ChangeTrackingList<object>(),
                 folder,
                 additionalProperties,
-                tableName);
+                tableName,
+                valueType);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

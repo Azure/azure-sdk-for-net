@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Authorization
 {
+    /// <summary></summary>
     public partial class AuthorizationRoleDefinitionResource : IJsonModel<AuthorizationRoleDefinitionData>
     {
-        private static AuthorizationRoleDefinitionData s_dataDeserializationInstance;
-        private static AuthorizationRoleDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AuthorizationRoleDefinitionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AuthorizationRoleDefinitionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AuthorizationRoleDefinitionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AuthorizationRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationRoleDefinitionData>)Data).Write(writer, options);
 
-        AuthorizationRoleDefinitionData IJsonModel<AuthorizationRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationRoleDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AuthorizationRoleDefinitionData IJsonModel<AuthorizationRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AuthorizationRoleDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AuthorizationRoleDefinitionData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AuthorizationRoleDefinitionData IPersistableModel<AuthorizationRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationRoleDefinitionData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        string IPersistableModel<AuthorizationRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationRoleDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AuthorizationRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

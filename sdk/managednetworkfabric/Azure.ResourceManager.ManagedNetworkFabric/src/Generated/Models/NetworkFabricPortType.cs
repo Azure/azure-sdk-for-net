@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricPortType : IEquatable<NetworkFabricPortType>
     {
         private readonly string _value;
+        /// <summary> PortType SourcePort. </summary>
+        private const string SourcePortValue = "SourcePort";
+        /// <summary> PortType DestinationPort. </summary>
+        private const string DestinationPortValue = "DestinationPort";
+        /// <summary> PortType Bidirectional. </summary>
+        private const string BidirectionalValue = "Bidirectional";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPortType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricPortType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SourcePortValue = "SourcePort";
-        private const string DestinationPortValue = "DestinationPort";
-
-        /// <summary> SourcePort. </summary>
+        /// <summary> PortType SourcePort. </summary>
         public static NetworkFabricPortType SourcePort { get; } = new NetworkFabricPortType(SourcePortValue);
-        /// <summary> DestinationPort. </summary>
+
+        /// <summary> PortType DestinationPort. </summary>
         public static NetworkFabricPortType DestinationPort { get; } = new NetworkFabricPortType(DestinationPortValue);
+
+        /// <summary> PortType Bidirectional. </summary>
+        public static NetworkFabricPortType Bidirectional { get; } = new NetworkFabricPortType(BidirectionalValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricPortType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricPortType left, NetworkFabricPortType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricPortType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricPortType left, NetworkFabricPortType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricPortType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricPortType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricPortType(string value) => new NetworkFabricPortType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricPortType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricPortType?(string value) => value == null ? null : new NetworkFabricPortType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricPortType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricPortType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The PolicyScopeContract. </summary>
+    /// <summary></summary>
     public enum PolicyScopeContract
     {
         /// <summary> Tenant. </summary>

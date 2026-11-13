@@ -6,9 +6,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    internal class DefaultClientOptions: ClientOptions
+    internal class DefaultClientOptions : ClientOptions
     {
-        public DefaultClientOptions(): base(null, null)
+        public DefaultClientOptions()
+            : base((ClientOptions?)null, null)
         {
             Diagnostics.IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             Diagnostics.IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;

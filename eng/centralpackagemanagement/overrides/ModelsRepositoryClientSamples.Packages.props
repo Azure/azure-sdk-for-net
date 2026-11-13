@@ -1,0 +1,9 @@
+<Project>
+  <!--
+    Microsoft.Azure.DigitalTwins.Parser is used by the ModelsRepository sample
+    for DTDL model parsing demonstrations.
+  -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Azure.DigitalTwins.Parser" Version="3.12.5" />
+  </ItemGroup>
+</Project>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsNspAccessRuleDirection : IEquatable<EventHubsNspAccessRuleDirection>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRuleDirection"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsNspAccessRuleDirection(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InboundValue = "Inbound";
         private const string OutboundValue = "Outbound";
 
-        /// <summary> Inbound. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsNspAccessRuleDirection(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Inbound. </summary>
         public static EventHubsNspAccessRuleDirection Inbound { get; } = new EventHubsNspAccessRuleDirection(InboundValue);
-        /// <summary> Outbound. </summary>
+
+        /// <summary> Gets the Outbound. </summary>
         public static EventHubsNspAccessRuleDirection Outbound { get; } = new EventHubsNspAccessRuleDirection(OutboundValue);
+
         /// <summary> Determines if two <see cref="EventHubsNspAccessRuleDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsNspAccessRuleDirection left, EventHubsNspAccessRuleDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubsNspAccessRuleDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsNspAccessRuleDirection left, EventHubsNspAccessRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsNspAccessRuleDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubsNspAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubsNspAccessRuleDirection(string value) => new EventHubsNspAccessRuleDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubsNspAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubsNspAccessRuleDirection?(string value) => value == null ? null : new EventHubsNspAccessRuleDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsNspAccessRuleDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubsNspAccessRuleDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceBus
 {
+    /// <summary></summary>
     public partial class MigrationConfigurationResource : IJsonModel<MigrationConfigurationData>
     {
-        private static MigrationConfigurationData s_dataDeserializationInstance;
-        private static MigrationConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MigrationConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MigrationConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MigrationConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrationConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationConfigurationData>)Data).Write(writer, options);
 
-        MigrationConfigurationData IJsonModel<MigrationConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrationConfigurationData IJsonModel<MigrationConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MigrationConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationConfigurationData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MigrationConfigurationData IPersistableModel<MigrationConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationConfigurationData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
-        string IPersistableModel<MigrationConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrationConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

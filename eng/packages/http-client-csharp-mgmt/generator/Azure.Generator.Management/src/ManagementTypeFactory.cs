@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.InputTransformation;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
 using Azure.Generator.Management.Snippets;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -19,6 +19,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -28,7 +29,27 @@ namespace Azure.Generator.Management
     /// <inheritdoc/>
     public class ManagementTypeFactory : AzureTypeFactory
     {
+        private static readonly CSharpType _managedServiceIdentityCSharpType = typeof(ManagedServiceIdentity);
+        private bool? _useManagedServiceIdentityV3;
         private string? _resourceProviderName;
+
+        /// <summary>
+        /// Indicates whether the ManagedServiceIdentityType enum uses v3 format
+        /// (no space in "SystemAssigned,UserAssigned"), which requires appending "|v3"
+        /// to the format for correct serialization of ManagedServiceIdentity.
+        /// </summary>
+        internal bool UseManagedServiceIdentityV3 => _useManagedServiceIdentityV3 ??= DetectManagedServiceIdentityV3();
+
+        private bool DetectManagedServiceIdentityV3()
+        {
+            var inputEnums = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Enums;
+            var identityTypeEnum = inputEnums.FirstOrDefault(e =>
+                e.CrossLanguageDefinitionId == "Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType");
+            if (identityTypeEnum == null)
+                return false;
+            return identityTypeEnum.Values.Any(v =>
+                v.Value?.ToString() == "SystemAssigned,UserAssigned");
+        }
 
         /// <summary>
         /// The name for this resource provider.
@@ -36,7 +57,11 @@ namespace Azure.Generator.Management
         /// </summary>
         public string ResourceProviderName => _resourceProviderName ??= BuildResourceProviderName();
 
-        private string BuildResourceProviderName()
+        /// <summary>
+        /// Builds the resource provider name from the primary namespace.
+        /// Override this method to customize the prefix used for known type renaming.
+        /// </summary>
+        protected virtual string BuildResourceProviderName()
         {
             const string armNamespacePrefix = "Azure.ResourceManager.";
             if (PrimaryNamespace.StartsWith(armNamespacePrefix))
@@ -49,35 +74,136 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override IClientPipelineApi ClientPipelineApi => ManagementHttpPipelineProvider.Instance;
 
+        private IClientResponseApi? _clientResponseApi;
+        /// <inheritdoc/>
+        public override IClientResponseApi ClientResponseApi => _clientResponseApi ??= new ManagementClientResponseProvider(base.ClientResponseApi);
+
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
-            [
-                new("Azure.Core"),
-                new("Azure.ResourceManager"),
-                new("System.ClientModel"),
-                new("System.Text.Json")
-            ];
+            [];
+
+        /// <inheritdoc/>
+        protected override Type? CreateFrameworkType(string fullyQualifiedTypeName)
+        {
+            if (KnownManagementTypes.TryGetFrameworkType(fullyQualifiedTypeName, out var frameworkType))
+            {
+                return frameworkType;
+            }
+
+            return base.CreateFrameworkType(fullyQualifiedTypeName);
+        }
+
+        /// <inheritdoc/>
+        protected override CSharpType? CreateLastContractModelBaseCore(CSharpType previousBase, InputModelType currentModel)
+        {
+            if (!KnownManagementTypes.TryGetInheritableSystemType(previousBase, out var knownBase))
+            {
+                return null;
+            }
+
+            if (currentModel.BaseModel is null)
+            {
+                // Historical CLR properties may not expose wire names. Check MPG aliases with
+                // the same effective-shape policy before MTG treats them as model-local.
+                var systemBase = new SystemObjectModelProvider(knownBase, currentModel);
+                foreach (var property in currentModel.Properties)
+                {
+                    if (!ArmResourcePropertyProjection.TryGetAliasedName(property, out var propertyName))
+                    {
+                        continue;
+                    }
+
+                    var frameworkProperty = knownBase.FrameworkType.GetProperty(propertyName);
+                    if (frameworkProperty is null ||
+                        !IsLastContractModelBasePropertyCompatibleCore(knownBase, property, new PropertyProvider(
+                            null, MethodSignatureModifiers.Public, new CSharpType(frameworkProperty.PropertyType),
+                            propertyName, new AutoPropertyBody(frameworkProperty.SetMethod?.IsPublic == true), systemBase)))
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return knownBase;
+        }
+
+        /// <inheritdoc/>
+        protected override bool IsLastContractModelBasePropertyCompatibleCore(
+            CSharpType mappedBase,
+            InputModelProperty currentProperty,
+            PropertyProvider lastContractProperty)
+        {
+            if (!KnownManagementTypes.TryGetInheritableSystemType(mappedBase, out _) ||
+                CreateCSharpType(currentProperty.Type) is not { } currentType)
+            {
+                return base.IsLastContractModelBasePropertyCompatibleCore(mappedBase, currentProperty, lastContractProperty);
+            }
+
+            var hasSetter = !currentProperty.IsReadOnly;
+            string? expectedName;
+            if (ArmResourcePropertyProjection.TryGetHistoricalShape(currentProperty, currentType, out expectedName, out var historicalType))
+            {
+                currentType = historicalType;
+            }
+            else if (!ArmResourcePropertyProjection.TryGetName(currentProperty, currentType, out expectedName))
+            {
+                // The base check requires a CLR setter for writable input, but mutable lists and
+                // dictionaries can be modified through a getter. Check their accessors below instead
+                // of falling back; ReadOnlyMemory<T> still uses the normal base setter validation.
+                if (currentType is not { IsCollection: true, IsReadOnlyMemory: false })
+                {
+                    return base.IsLastContractModelBasePropertyCompatibleCore(mappedBase, currentProperty, lastContractProperty);
+                }
+
+                // Read-only input cannot reuse a mutable collection contract.
+                if (currentProperty.IsReadOnly)
+                {
+                    return false;
+                }
+                expectedName = currentProperty.IsExactName ? currentProperty.Name : currentProperty.Name.ToIdentifierName();
+                // Nullable collections need a setter so callers can assign null.
+                hasSetter = currentType.IsNullable;
+            }
+
+            return lastContractProperty.Name == expectedName &&
+                lastContractProperty.Type.WithNullable(false).Equals(currentType.WithNullable(false)) &&
+                (!currentType.IsValueType || lastContractProperty.Type.IsNullable == currentType.IsNullable) &&
+                lastContractProperty.Body.HasSetter == hasSetter;
+        }
 
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
-            return transformedClient is null ? null : base.CreateClientCore(transformedClient);
+            return new ManagementClientProvider(inputClient);
         }
 
-        // TODO: right now, we are missing the connection between CsharpType and TypeProvider, that's why we need both CreateCSharpTypeCore and CreateModelCore
-        // Once we have the mapping between CsharpType and TypeProvider, we should only keep CreateModelCore
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
-            if (inputType is InputModelType model && (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType) || KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out replacedType)))
+            if (inputType is InputModelType model)
+            {
+                if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var inheritableType))
+                {
+                    return inheritableType;
+                }
+                if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out var systemType))
+                {
+                    return systemType;
+                }
+                if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+                {
+                    return CreateModel(model)?.Type;
+                }
+            }
+
+            if (inputType is InputEnumType enumType && KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out var replacedType))
             {
                 return replacedType;
             }
 
-            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var csharpType))
+            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var primitiveReplacedType))
             {
-                return csharpType;
+                return primitiveReplacedType;
             }
             return base.CreateCSharpTypeCore(inputType);
         }
@@ -85,29 +211,62 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
+            // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
-                return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
+                return new SystemObjectModelProvider(replacedType, model);
+            }
+            if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
+            {
+                return null;
             }
 
-            if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out replacedType))
+            // For custom Azure resource models (root, intermediate, and resource data models),
+            // let the base implementation create regular ModelProviders.
+            // This preserves the full custom resource hierarchy without replacing intermediate
+            // models with system types (e.g., TrafficResource → TrafficProxyResource → TrafficEndpointData).
+            // For the leaf resource data model itself, use ResourceDataModelProvider so that
+            // BuildName returns the "Data"-suffixed name from the very first Type access. Otherwise
+            // a user's resource-client customization partial matching the original input model name
+            // would pollute CustomCodeView.BaseType (captured into the immutable CSharpType._baseType),
+            // and a later visitor-driven rename could not undo it.
+            if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
             {
-                return new SystemObjectModelProvider(replacedType.FrameworkType, model);
+                return new ResourceDataModelProvider(model);
             }
-            return base.CreateModelCore(model);
+            return new ManagementModelProvider(model);
         }
 
         /// <inheritdoc/>
-        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        protected override EnumProvider? CreateEnumCore(InputEnumType enumType, TypeProvider? declaringType)
         {
-            if (KnownManagementTypes.IsKnownManagementType(valueType))
+            if (KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out _))
             {
-                return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [utf8JsonWriter, mrwOptionsParameter]).Terminate();
+                return null;
             }
+            return base.CreateEnumCore(enumType, declaringType);
+        }
 
+        /// <inheritdoc/>
+        public override MethodBodyStatement SerializeJsonValue(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        {
             if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
             {
-                return serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
+                return serializationExpression(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
+            }
+
+            if (KnownManagementTypes.IsKnownManagementType(valueType))
+            {
+                // For ManagedServiceIdentity with v3 format, select pre-allocated v3 options
+                // based on the caller's format: WireV3Options for "W", JsonV3Options for "J".
+                // This preserves the base format semantics (principalId/tenantId included in "J").
+                ValueExpression optionsArg = valueType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
+                    ? new TernaryConditionalExpression(
+                        mrwOptionsParameter.Property("Format").Equal(Literal("W")),
+                        ModelSerializationExtensionsSnippets.WireV3,
+                        ModelSerializationExtensionsSnippets.JsonV3)
+                    : mrwOptionsParameter;
+                return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [utf8JsonWriter, optionsArg]).Terminate();
             }
 
             return base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
@@ -115,11 +274,30 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+        public override ValueExpression DeserializeJsonValue(
+            CSharpType valueType,
+            ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
+            SerializationFormat format)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
+            if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
+            {
+                return deserializationExpression(valueType, element, format);
+            }
+
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
+                // For ManagedServiceIdentity with v3 format, select pre-allocated v3 options
+                // based on the caller's format: WireV3Options for "W", JsonV3Options for "J".
+                ValueExpression wireOptions = valueType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
+                    ? new TernaryConditionalExpression(
+                        mrwOptionsParameter.Property("Format").Equal(Literal("W")),
+                        ModelSerializationExtensionsSnippets.WireV3,
+                        ModelSerializationExtensionsSnippets.JsonV3)
+                    : ModelSerializationExtensionsSnippets.Wire;
+
                 IReadOnlyList<ValueExpression> readBody =
                 [
                     New.Instance(
@@ -130,7 +308,7 @@ namespace Azure.Generator.Management
                                 element.GetRawText()
                             ])
                     ]),
-                    ModelSerializationExtensionsSnippets.Wire
+                    wireOptions
                 ];
 
                 return Static(typeof(ModelReaderWriter)).Invoke(
@@ -139,12 +317,7 @@ namespace Azure.Generator.Management
                     typeArgs: [valueType]);
             }
 
-            if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
-            {
-                return deserializationExpression(valueType, element, format);
-            }
-
-            return base.DeserializeJsonValue(valueType, element, format);
+            return base.DeserializeJsonValue(valueType, element, data, mrwOptionsParameter, format);
         }
 
         /// <inheritdoc/>

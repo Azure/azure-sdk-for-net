@@ -4,10 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Strategies for attacks. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct AttackStrategy : IEquatable<AttackStrategy>
     {
         private readonly string _value;
@@ -34,7 +37,7 @@ namespace Azure.AI.Projects
         /// <summary> Injects specially crafted prompts to bypass AI safeguards, known as User Injected Prompt Attacks (UPIA). </summary>
         private const string JailbreakValue = "jailbreak";
         /// <summary> Utilizes ANSI escape sequences to manipulate text appearance and behavior. </summary>
-        private const string AnsiiAttackValue = "ansii_attack";
+        private const string AnsiAttackValue = "ansi_attack";
         /// <summary> Swaps characters within text to create variations or obfuscate the original content. </summary>
         private const string CharacterSwapValue = "character_swap";
         /// <summary> Appends an adversarial suffix to the prompt. </summary>
@@ -52,13 +55,21 @@ namespace Azure.AI.Projects
         /// <summary> Transforms text into Leetspeak, a form of encoding that replaces letters with similar-looking numbers or symbols. </summary>
         private const string LeetspeakValue = "leetspeak";
         /// <summary> Applies the ROT13 cipher, a simple substitution cipher that shifts characters by 13 positions. </summary>
-        private const string ROT13Value = "rot13";
+        private const string Rot13Value = "rot13";
         /// <summary> Encodes text into Morse code, using dots and dashes to represent characters. </summary>
         private const string MorseValue = "morse";
         /// <summary> Encodes text into URL format. </summary>
         private const string UrlValue = "url";
         /// <summary> Represents the baseline direct adversarial probing, which is used by attack strategies as the attack objective. </summary>
         private const string BaselineValue = "baseline";
+        /// <summary> Represents indirect jailbreak attacks that use complex methods to bypass AI safeguards. </summary>
+        private const string IndirectJailbreakValue = "indirect_jailbreak";
+        /// <summary> Alters the tense of the text, changing its temporal context. </summary>
+        private const string TenseValue = "tense";
+        /// <summary> Creates multi-turn conversations to simulate extended interactions. </summary>
+        private const string MultiTurnValue = "multi_turn";
+        /// <summary> Gradually increases the intensity or complexity of the attack over time. </summary>
+        private const string CrescendoValue = "crescendo";
 
         /// <summary> Initializes a new instance of <see cref="AttackStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -104,7 +115,7 @@ namespace Azure.AI.Projects
         public static AttackStrategy Jailbreak { get; } = new AttackStrategy(JailbreakValue);
 
         /// <summary> Utilizes ANSI escape sequences to manipulate text appearance and behavior. </summary>
-        public static AttackStrategy AnsiiAttack { get; } = new AttackStrategy(AnsiiAttackValue);
+        public static AttackStrategy AnsiAttack { get; } = new AttackStrategy(AnsiAttackValue);
 
         /// <summary> Swaps characters within text to create variations or obfuscate the original content. </summary>
         public static AttackStrategy CharacterSwap { get; } = new AttackStrategy(CharacterSwapValue);
@@ -131,7 +142,7 @@ namespace Azure.AI.Projects
         public static AttackStrategy Leetspeak { get; } = new AttackStrategy(LeetspeakValue);
 
         /// <summary> Applies the ROT13 cipher, a simple substitution cipher that shifts characters by 13 positions. </summary>
-        public static AttackStrategy ROT13 { get; } = new AttackStrategy(ROT13Value);
+        public static AttackStrategy Rot13 { get; } = new AttackStrategy(Rot13Value);
 
         /// <summary> Encodes text into Morse code, using dots and dashes to represent characters. </summary>
         public static AttackStrategy Morse { get; } = new AttackStrategy(MorseValue);
@@ -141,6 +152,18 @@ namespace Azure.AI.Projects
 
         /// <summary> Represents the baseline direct adversarial probing, which is used by attack strategies as the attack objective. </summary>
         public static AttackStrategy Baseline { get; } = new AttackStrategy(BaselineValue);
+
+        /// <summary> Represents indirect jailbreak attacks that use complex methods to bypass AI safeguards. </summary>
+        public static AttackStrategy IndirectJailbreak { get; } = new AttackStrategy(IndirectJailbreakValue);
+
+        /// <summary> Alters the tense of the text, changing its temporal context. </summary>
+        public static AttackStrategy Tense { get; } = new AttackStrategy(TenseValue);
+
+        /// <summary> Creates multi-turn conversations to simulate extended interactions. </summary>
+        public static AttackStrategy MultiTurn { get; } = new AttackStrategy(MultiTurnValue);
+
+        /// <summary> Gradually increases the intensity or complexity of the attack over time. </summary>
+        public static AttackStrategy Crescendo { get; } = new AttackStrategy(CrescendoValue);
 
         /// <summary> Determines if two <see cref="AttackStrategy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

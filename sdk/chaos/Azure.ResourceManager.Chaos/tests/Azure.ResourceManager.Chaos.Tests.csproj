@@ -8,7 +8,7 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.Chaos.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Linq.Async" />
+    <PackageReference Include="System.Linq.AsyncEnumerable" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />

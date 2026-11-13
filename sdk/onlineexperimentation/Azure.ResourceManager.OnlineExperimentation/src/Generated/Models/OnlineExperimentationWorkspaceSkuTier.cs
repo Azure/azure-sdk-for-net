@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OnlineExperimentation;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
     public readonly partial struct OnlineExperimentationWorkspaceSkuTier : IEquatable<OnlineExperimentationWorkspaceSkuTier>
     {
         private readonly string _value;
+        /// <summary> The Free service tier. </summary>
+        private const string FreeValue = "Free";
+        /// <summary> The Standard service tier. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> The Premium service tier. </summary>
+        private const string PremiumValue = "Premium";
+        /// <summary> The Developer service tier. </summary>
+        private const string DeveloperValue = "Developer";
 
         /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OnlineExperimentationWorkspaceSkuTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FreeValue = "Free";
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
-        private const string DeveloperValue = "Developer";
+            _value = value;
+        }
 
         /// <summary> The Free service tier. </summary>
         public static OnlineExperimentationWorkspaceSkuTier Free { get; } = new OnlineExperimentationWorkspaceSkuTier(FreeValue);
+
         /// <summary> The Standard service tier. </summary>
         public static OnlineExperimentationWorkspaceSkuTier Standard { get; } = new OnlineExperimentationWorkspaceSkuTier(StandardValue);
+
         /// <summary> The Premium service tier. </summary>
         public static OnlineExperimentationWorkspaceSkuTier Premium { get; } = new OnlineExperimentationWorkspaceSkuTier(PremiumValue);
+
         /// <summary> The Developer service tier. </summary>
         public static OnlineExperimentationWorkspaceSkuTier Developer { get; } = new OnlineExperimentationWorkspaceSkuTier(DeveloperValue);
+
         /// <summary> Determines if two <see cref="OnlineExperimentationWorkspaceSkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OnlineExperimentationWorkspaceSkuTier left, OnlineExperimentationWorkspaceSkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OnlineExperimentationWorkspaceSkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OnlineExperimentationWorkspaceSkuTier left, OnlineExperimentationWorkspaceSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OnlineExperimentationWorkspaceSkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OnlineExperimentationWorkspaceSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OnlineExperimentationWorkspaceSkuTier(string value) => new OnlineExperimentationWorkspaceSkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OnlineExperimentationWorkspaceSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OnlineExperimentationWorkspaceSkuTier?(string value) => value == null ? null : new OnlineExperimentationWorkspaceSkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OnlineExperimentationWorkspaceSkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OnlineExperimentationWorkspaceSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

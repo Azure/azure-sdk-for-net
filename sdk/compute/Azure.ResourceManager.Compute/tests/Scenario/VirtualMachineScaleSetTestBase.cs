@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Tests
 {

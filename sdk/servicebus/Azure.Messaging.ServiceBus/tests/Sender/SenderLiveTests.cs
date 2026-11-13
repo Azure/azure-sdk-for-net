@@ -18,7 +18,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
             }
         }
@@ -32,7 +33,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
                 var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
 
-                await using var sender = new ServiceBusClient(connectionString, options).CreateSender(scope.QueueName);
+                await using var client = new ServiceBusClient(connectionString, options);
+                await using var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
             }
         }
@@ -187,7 +189,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential).CreateSender(scope.QueueName);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                await using var sender = client.CreateSender(scope.QueueName);
                 Assert.AreEqual(scope.QueueName, sender.EntityPath);
                 Assert.AreEqual(TestEnvironment.FullyQualifiedNamespace, sender.FullyQualifiedNamespace);
             }
@@ -353,7 +356,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential).CreateSender(scope.QueueName);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                await using var sender = client.CreateSender(scope.QueueName);
                 for (int i = 0; i < 10; i++)
                 {
                     await Task.Delay(1000);
@@ -383,7 +387,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential).CreateSender(scope.QueueName);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                await using var sender = client.CreateSender(scope.QueueName);
                 Assert.That(
                     async () => await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage()),
                     Throws.InstanceOf<InvalidOperationException>());
@@ -395,10 +400,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(
+                await using var client = new ServiceBusClient(
                     TestEnvironment.FullyQualifiedNamespace,
                     TestEnvironment.Credential);
-                await using var sender = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential).CreateSender(scope.QueueName);
+                await using var client2 = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                await using var sender = client2.CreateSender(scope.QueueName);
                 var messageCt = 10;
                 IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.GetMessages(messageCt);
                 await sender.SendMessagesAsync(messages);
@@ -564,7 +570,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     Identifier = "testIdent-abcdefg"
                 };
 
-                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName, options);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName, options);
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
             }
         }
@@ -579,7 +586,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     Identifier = "testIdent-abcdefg"
                 };
 
-                await using var sender = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential).CreateSender(scope.QueueName, options);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                await using var sender = client.CreateSender(scope.QueueName, options);
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
             }
         }

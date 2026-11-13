@@ -51,7 +51,9 @@ namespace System.ClientModel.Tests.Internal.Perf
         public string Write_JsonSerializer_SourceGenerated()
         {
 #if NET6_0_OR_GREATER
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             return JsonSerializer.Serialize(_model, _model.GetType(), SourceGenerationContext.Default);
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #else
             return Write_JsonSerializer();
 #endif
@@ -125,7 +127,9 @@ namespace System.ClientModel.Tests.Internal.Perf
         {
 #if NET6_0_OR_GREATER
             using var stream = new MemoryStream();
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             return JsonSerializer.Deserialize(_jsonSerializerResult, _model.GetType(), SourceGenerationContext.Default);
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #else
             return Read_JsonSerializer();
 #endif

@@ -4,23 +4,16 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Ssl protocol enums. </summary>
-    public readonly partial struct ApplicationGatewaySslProtocol : IEquatable<ApplicationGatewaySslProtocol>
+    public readonly partial struct ApplicationGatewaySslProtocol
     {
-#pragma warning disable CA1707
-        /// <summary> TLS 1.0. </summary>
-        [CodeGenMember("TLSv10")]
-        public static ApplicationGatewaySslProtocol Tls1_0 { get; } = new ApplicationGatewaySslProtocol(Tls1_0Value);
-        /// <summary> TLS 1.1. </summary>
-        [CodeGenMember("TLSv11")]
-        public static ApplicationGatewaySslProtocol Tls1_1 { get; } = new ApplicationGatewaySslProtocol(Tls1_1Value);
-        /// <summary> TLS 1.2. </summary>
-        [CodeGenMember("TLSv12")]
-        public static ApplicationGatewaySslProtocol Tls1_2 { get; } = new ApplicationGatewaySslProtocol(Tls1_2Value);
-#pragma warning restore CA1707
+        // Preserve the explicit obsolete compatibility alias metadata that native generation omits.
+        /// <inheritdoc cref="Tls1_3"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use Tls1_3 instead.")]
+        public static ApplicationGatewaySslProtocol TLSv13 => Tls1_3;
     }
 }

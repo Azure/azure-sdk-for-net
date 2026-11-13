@@ -1,0 +1,452 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
+using Azure.Core.Tests.Identity.Mock;
+using Azure.Identity;
+using Microsoft.Identity.Client;
+using NUnit.Framework;
+namespace Azure.Core.Tests.Identity
+{
+    public class ClientCertificateCredentialTests : CredentialTestBase<ClientCertificateCredentialOptions>
+    {
+        public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
+        { }
+
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            var mockCert = new X509Certificate2(certificatePath);
+#endif
+
+            return InstrumentClient(
+                new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
+            );
+        }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new ClientCertificateCredentialOptions
+            {
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
+            };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            var mockCert = new X509Certificate2(certificatePath);
+#endif
+
+            return InstrumentClient(
+                new ClientCertificateCredential(config.TenantId, ClientId, mockCert, options, pipeline, config.MockConfidentialMsalClient)
+            );
+        }
+
+        [Test]
+        public void VerifyCtorParametersValidation()
+        {
+            var tenantId = Guid.NewGuid().ToString();
+            var clientId = Guid.NewGuid().ToString();
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            var mockCert = new X509Certificate2(certificatePath);
+#endif
+
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(null, clientId, mockCert));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(null, clientId, certificatePath));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, null, mockCert));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, null, certificatePath));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, clientId, (X509Certificate2)null));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, clientId, (string)null));
+        }
+
+        [Test]
+        public void VerifyBadCertificateFileBehavior()
+        {
+            var tenantId = Guid.NewGuid().ToString();
+            var clientId = Guid.NewGuid().ToString();
+
+            TokenRequestContext tokenContext = new(MockScopes.Default);
+
+            ClientCertificateCredential missingFileCredential = new(
+                tenantId,
+                clientId,
+                Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "notfound.pem"));
+            ClientCertificateCredential invalidPemCredential = new(
+                tenantId,
+                clientId,
+                Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-invalid-data.pem"));
+            ClientCertificateCredential unknownFormatCredential = new(
+                tenantId,
+                clientId,
+                Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.unknown"));
+            ClientCertificateCredential encryptedCredential = new(
+                tenantId,
+                clientId,
+                Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-password-protected.pfx"));
+            ClientCertificateCredential unsupportedCertCredential = new(
+                tenantId,
+                clientId,
+                Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "ec-cert.pem"));
+
+            Assert.Throws<CredentialUnavailableException>(() => missingFileCredential.GetToken(tokenContext));
+            Assert.Throws<CredentialUnavailableException>(() => invalidPemCredential.GetToken(tokenContext));
+            Assert.Throws<CredentialUnavailableException>(() => unknownFormatCredential.GetToken(tokenContext));
+            Assert.Throws<CredentialUnavailableException>(() => encryptedCredential.GetToken(tokenContext));
+            Assert.Throws<CredentialUnavailableException>(() => unsupportedCertCredential.GetToken(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await missingFileCredential.GetTokenAsync(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await invalidPemCredential.GetTokenAsync(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await unknownFormatCredential.GetTokenAsync(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await encryptedCredential.GetTokenAsync(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await unsupportedCertCredential.GetTokenAsync(tokenContext));
+        }
+
+        public async Task ExceptionContainsTroubleshootingLink()
+        {
+            var response = new MockResponse(400);
+            response.SetContent($"{{ \"error_code\": \"InvalidSecret\", \"message\": \"The specified client_secret is incorrect\" }}");
+            var mockTransport = new MockTransport(response);
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            var expectedTenantId = Guid.NewGuid().ToString();
+            var expectedClientId = Guid.NewGuid().ToString();
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            var mockCert = new X509Certificate2(certificatePath);
+#endif
+
+            ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options));
+
+            var exception = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(exception.Message, Does.Contain(ClientCertificateCredential.Troubleshooting));
+            await Task.CompletedTask;
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task VerifyClientCertificateRequestFailedAsync(bool usePemFile)
+        {
+            var response = new MockResponse(400);
+
+            response.SetContent($"{{ \"error_code\": \"InvalidSecret\", \"message\": \"The specified client_secret is incorrect\" }}");
+
+            var mockTransport = new MockTransport(response);
+
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+
+            var expectedTenantId = Guid.NewGuid().ToString();
+
+            var expectedClientId = Guid.NewGuid().ToString();
+
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            var mockCert = new X509Certificate2(certificatePath);
+#endif
+
+            ClientCertificateCredential credential = InstrumentClient(
+                usePemFile
+                    ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, options)
+                    : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options)
+            );
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            await Task.CompletedTask;
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void VerifyClientCertificateCredentialException(bool usePemFile)
+        {
+            string expectedInnerExMessage = Guid.NewGuid().ToString();
+
+            var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expectedInnerExMessage));
+
+            var expectedTenantId = Guid.NewGuid().ToString();
+
+            var expectedClientId = Guid.NewGuid().ToString();
+
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            var mockCert = new X509Certificate2(certificatePath);
+#endif
+
+            ClientCertificateCredential credential = InstrumentClient(
+                usePemFile
+                    ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, default, default, default, mockMsalClient)
+                    : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, default, default, mockMsalClient)
+            );
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.IsNotNull(ex.InnerException);
+
+            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+
+            Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
+        }
+
+        [Test]
+        public async Task UsesTenantIdHint(
+            [Values(true, false)] bool usePemFile,
+            [Values(null, TenantIdHint)] string tenantId,
+            [Values(true)] bool allowMultiTenantAuthentication)
+        {
+            TestSetup();
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            var options = new ClientCertificateCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            var mockCert = new X509Certificate2(certificatePath);
+#endif
+
+            ClientCertificateCredential credential = InstrumentClient(
+                usePemFile
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, default, options, default, mockConfidentialMsalClient)
+                    : new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
+            );
+
+            var token = await credential.GetTokenAsync(context);
+
+            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [Test]
+        public async Task SendCertificateChain([Values(true, false)] bool usePemFile, [Values(true)] bool sendCertChain)
+        {
+            TestSetup();
+            var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            var mockCert = new X509Certificate2(certificatePath);
+#endif
+            options = new ClientCertificateCredentialOptions
+            {
+                AuthorityHost = new Uri("https://localhost")
+            };
+            ((ClientCertificateCredentialOptions)options).SendCertificateChain = sendCertChain;
+
+            ClientCertificateCredential credential = InstrumentClient(
+                usePemFile
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, default, options,
+                        new CredentialPipeline(_pipeline, new ClientDiagnostics(options)), null)
+                    : new ClientCertificateCredential(TenantId, ClientId, mockCert, options,
+                        new CredentialPipeline(_pipeline, new ClientDiagnostics(options)), null)
+            );
+
+            var token = await credential.GetTokenAsync(context);
+
+            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        [NonParallelizable]
+        public async Task EnableSwitchSelectsClientBasedOnProofOfPossession(bool isProofOfPossessionEnabled)
+        {
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            using var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            using var mockCert = new X509Certificate2(certificatePath);
+#endif
+            var bearerClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create("bearer-token"));
+            AuthenticationResult popResult = AuthenticationResultFactory.Create("pop-token");
+            popResult.BindingCertificate = mockCert;
+            var popClient = new MockMsalConfidentialClient(popResult);
+            var options = new ClientCertificateCredentialOptions { SendCertificateChain = true };
+            var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, bearerClient, popClient);
+            var requestContext = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: isProofOfPossessionEnabled);
+
+            using (new TestAppContextSwitch(AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionSwitchName, "true"))
+            {
+                AccessToken token = IsAsync
+                    ? await credential.GetTokenAsync(requestContext)
+                    : credential.GetToken(requestContext);
+
+                Assert.AreEqual(isProofOfPossessionEnabled ? "pop-token" : "bearer-token", token.Token);
+                Assert.AreSame(isProofOfPossessionEnabled ? mockCert : null, token.BindingCertificate);
+            }
+        }
+
+        [Test]
+        public void MtlsProofOfPossessionSwitchUsesExpectedNames()
+        {
+            Assert.AreEqual(
+                "Azure.Identity.EnableClientCertificateMtlsProofOfPossession",
+                AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionSwitchName);
+            Assert.AreEqual(
+                "AZURE_IDENTITY_ENABLE_CLIENT_CERTIFICATE_MTLS_POP",
+                AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionEnvVar);
+        }
+
+        [TestCase("false", null)]
+        [TestCase(null, "false")]
+        [TestCase(null, "0")]
+        [NonParallelizable]
+        public async Task OptOutForcesBearerTokenWhenProofOfPossessionRequested(string switchValue, string environmentValue)
+        {
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            using var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            using var mockCert = new X509Certificate2(certificatePath);
+#endif
+            var bearerClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create("bearer-token"));
+            AuthenticationResult popResult = AuthenticationResultFactory.Create("pop-token");
+            popResult.BindingCertificate = mockCert;
+            var popClient = new MockMsalConfidentialClient(popResult);
+            var options = new ClientCertificateCredentialOptions { SendCertificateChain = true };
+            var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, bearerClient, popClient);
+            var requestContext = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            using var enableSwitch = switchValue is null
+                ? null
+                : new TestAppContextSwitch(AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionSwitchName, switchValue);
+            using var environment = new TestEnvVar(
+                AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionEnvVar,
+                environmentValue);
+            AccessToken token = IsAsync
+                ? await credential.GetTokenAsync(requestContext)
+                : credential.GetToken(requestContext);
+
+            Assert.AreEqual("bearer-token", token.Token);
+            Assert.IsNull(token.BindingCertificate);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task UsesPopByDefaultWhenProofOfPossessionRequested()
+        {
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            using var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            using var mockCert = new X509Certificate2(certificatePath);
+#endif
+            var bearerClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create("bearer-token"));
+            AuthenticationResult popResult = AuthenticationResultFactory.Create("pop-token");
+            popResult.BindingCertificate = mockCert;
+            var popClient = new MockMsalConfidentialClient(popResult);
+            var options = new ClientCertificateCredentialOptions { SendCertificateChain = true };
+            var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, bearerClient, popClient);
+            var requestContext = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            // mTLS proof-of-possession is on by default, so a PoP request selects the PoP client without any switch.
+            AccessToken token = IsAsync
+                ? await credential.GetTokenAsync(requestContext)
+                : credential.GetToken(requestContext);
+
+            Assert.AreEqual("pop-token", token.Token);
+            Assert.AreSame(mockCert, token.BindingCertificate);
+        }
+
+        [Test]
+        public void CreatesSeparateMtlsClientForSniAuthentication()
+        {
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            using var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            using var mockCert = new X509Certificate2(certificatePath);
+#endif
+            var options = new ClientCertificateCredentialOptions { SendCertificateChain = true };
+
+            var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options);
+
+            Assert.AreNotSame(credential.Client, credential.PopClient);
+            Assert.True(credential.Client._includeX5CClaimHeader);
+            Assert.True(credential.PopClient._includeX5CClaimHeader);
+            Assert.False(credential.Client._enableMtlsProofOfPossession);
+            Assert.True(credential.PopClient._enableMtlsProofOfPossession);
+            Assert.AreSame(credential.ClientCertificateProvider, credential.Client._certificateProvider);
+            Assert.AreSame(credential.ClientCertificateProvider, credential.PopClient._certificateProvider);
+        }
+
+        [Test]
+        public void DoesNotEnableMtlsProofOfPossessionWhenSendCertificateChainDisabled()
+        {
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            using var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            using var mockCert = new X509Certificate2(certificatePath);
+#endif
+            var options = new ClientCertificateCredentialOptions { SendCertificateChain = false };
+
+            var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options);
+
+            // Without SendCertificateChain the mTLS PoP path is not enabled, so the PoP client is the
+            // standard client and proof-of-possession requests fall back to a regular bearer token.
+            Assert.AreSame(credential.Client, credential.PopClient);
+            Assert.False(credential.Client._enableMtlsProofOfPossession);
+            Assert.False(credential.PopClient._enableMtlsProofOfPossession);
+        }
+
+        [Test]
+        public void VerifyMsalClientRegionalAuthority()
+        {
+            string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
+
+            foreach (string regionalAuthority in authorities)
+            {
+                using (new TestEnvVar("AZURE_REGIONAL_AUTHORITY_NAME", regionalAuthority))
+                {
+                    var expectedTenantId = Guid.NewGuid().ToString();
+                    var expectedClientId = Guid.NewGuid().ToString();
+                    var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+                    var cred = new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePath);
+                    Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                }
+            }
+        }
+    }
+}

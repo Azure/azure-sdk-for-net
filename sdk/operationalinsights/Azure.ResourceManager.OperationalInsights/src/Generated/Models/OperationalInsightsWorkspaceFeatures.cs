@@ -8,16 +8,33 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Workspace features. </summary>
     public partial class OperationalInsightsWorkspaceFeatures
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _isDataExportEnabled;
+        private bool _isDataExportEnabledIsDefined;
+        private bool? _immediatePurgeDataOn30Days;
+        private bool _immediatePurgeDataOn30DaysIsDefined;
+        private bool? _isLogAccessUsingOnlyResourcePermissionsEnabled;
+        private bool _isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined;
+        private bool? _isLocalAuthDisabled;
+        private bool _isLocalAuthDisabledIsDefined;
+        private bool? _isUnifiedSentinelBillingOnly;
+        private bool _isUnifiedSentinelBillingOnlyIsDefined;
+        private bool? _isDataAuthorizationMode;
+        private bool _isDataAuthorizationModeIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceFeatures"/>. </summary>
         public OperationalInsightsWorkspaceFeatures()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Associations = new ChangeTrackingList<string>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceFeatures"/>. </summary>
@@ -27,67 +44,116 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="clusterResourceId"> Dedicated LA cluster resourceId that is linked to the workspaces. </param>
         /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
         /// <param name="isUnifiedSentinelBillingOnly"> An indication if the specify workspace is limited to sentinel's unified billing model only. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="associations"> List of associations for the workspace. Indicates if the workspace is associated with any of the following experiences: MDC, Sentinel, SentinelGraph, etc. </param>
+        /// <param name="isDataAuthorizationMode"> Enable Data authorization mode for the workspace. </param>
+        /// <param name="additionalProperties"></param>
+        internal OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IReadOnlyList<string> associations, bool? isDataAuthorizationMode, IDictionary<string, BinaryData> additionalProperties)
         {
-            IsDataExportEnabled = isDataExportEnabled;
-            ImmediatePurgeDataOn30Days = immediatePurgeDataOn30Days;
-            IsLogAccessUsingOnlyResourcePermissionsEnabled = isLogAccessUsingOnlyResourcePermissionsEnabled;
+            _isDataExportEnabled = isDataExportEnabled;
+            _immediatePurgeDataOn30Days = immediatePurgeDataOn30Days;
+            _isLogAccessUsingOnlyResourcePermissionsEnabled = isLogAccessUsingOnlyResourcePermissionsEnabled;
             ClusterResourceId = clusterResourceId;
-            IsLocalAuthDisabled = isLocalAuthDisabled;
-            IsUnifiedSentinelBillingOnly = isUnifiedSentinelBillingOnly;
-            AdditionalProperties = additionalProperties;
+            _isLocalAuthDisabled = isLocalAuthDisabled;
+            _isUnifiedSentinelBillingOnly = isUnifiedSentinelBillingOnly;
+            Associations = associations;
+            _isDataAuthorizationMode = isDataAuthorizationMode;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Flag that indicate if data should be exported. </summary>
         [WirePath("enableDataExport")]
-        public bool? IsDataExportEnabled { get; set; }
+        public bool? IsDataExportEnabled
+        {
+            get
+            {
+                return _isDataExportEnabled;
+            }
+            set
+            {
+                _isDataExportEnabled = value;
+                _isDataExportEnabledIsDefined = true;
+            }
+        }
+
         /// <summary> Flag that describes if we want to remove the data after 30 days. </summary>
         [WirePath("immediatePurgeDataOn30Days")]
-        public bool? ImmediatePurgeDataOn30Days { get; set; }
+        public bool? ImmediatePurgeDataOn30Days
+        {
+            get
+            {
+                return _immediatePurgeDataOn30Days;
+            }
+            set
+            {
+                _immediatePurgeDataOn30Days = value;
+                _immediatePurgeDataOn30DaysIsDefined = true;
+            }
+        }
+
         /// <summary> Flag that indicate which permission to use - resource or workspace or both. </summary>
         [WirePath("enableLogAccessUsingOnlyResourcePermissions")]
-        public bool? IsLogAccessUsingOnlyResourcePermissionsEnabled { get; set; }
+        public bool? IsLogAccessUsingOnlyResourcePermissionsEnabled
+        {
+            get
+            {
+                return _isLogAccessUsingOnlyResourcePermissionsEnabled;
+            }
+            set
+            {
+                _isLogAccessUsingOnlyResourcePermissionsEnabled = value;
+                _isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined = true;
+            }
+        }
+
         /// <summary> Dedicated LA cluster resourceId that is linked to the workspaces. </summary>
         [WirePath("clusterResourceId")]
         public ResourceIdentifier ClusterResourceId { get; set; }
+
         /// <summary> Disable Non-AAD based Auth. </summary>
         [WirePath("disableLocalAuth")]
-        public bool? IsLocalAuthDisabled { get; set; }
+        public bool? IsLocalAuthDisabled
+        {
+            get
+            {
+                return _isLocalAuthDisabled;
+            }
+            set
+            {
+                _isLocalAuthDisabled = value;
+                _isLocalAuthDisabledIsDefined = true;
+            }
+        }
+
         /// <summary> An indication if the specify workspace is limited to sentinel's unified billing model only. </summary>
         [WirePath("unifiedSentinelBillingOnly")]
-        public bool? IsUnifiedSentinelBillingOnly { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("AdditionalProperties")]
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+        public bool? IsUnifiedSentinelBillingOnly
+        {
+            get
+            {
+                return _isUnifiedSentinelBillingOnly;
+            }
+        }
+
+        /// <summary> List of associations for the workspace. Indicates if the workspace is associated with any of the following experiences: MDC, Sentinel, SentinelGraph, etc. </summary>
+        [WirePath("associations")]
+        public IReadOnlyList<string> Associations { get; }
+
+        /// <summary> Enable Data authorization mode for the workspace. </summary>
+        [WirePath("dataAuthorizationMode")]
+        public bool? IsDataAuthorizationMode
+        {
+            get
+            {
+                return _isDataAuthorizationMode;
+            }
+            set
+            {
+                _isDataAuthorizationMode = value;
+                _isDataAuthorizationModeIsDefined = true;
+            }
+        }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

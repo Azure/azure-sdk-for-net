@@ -232,7 +232,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
             // returns a TimeSpan in the range [0.8, 1.0) * ConflictBackoffPeriod
             // not used for crypto purposes
             var multiplier = 0.8 + (_random.NextDouble() * 0.2);
-            return (int) (multiplier * ConflictBackoffPeriod.TotalMilliseconds);
+            return (int)(multiplier * ConflictBackoffPeriod.TotalMilliseconds);
         }
 
         private sealed class BlobData

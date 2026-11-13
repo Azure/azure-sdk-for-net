@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
+    /// <summary></summary>
     public partial class AppComplianceReportWebhookResource : IJsonModel<AppComplianceReportWebhookData>
     {
-        private static AppComplianceReportWebhookData s_dataDeserializationInstance;
-        private static AppComplianceReportWebhookData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AppComplianceReportWebhookData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AppComplianceReportWebhookData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AppComplianceReportWebhookData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppComplianceReportWebhookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportWebhookData>)Data).Write(writer, options);
 
-        AppComplianceReportWebhookData IJsonModel<AppComplianceReportWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportWebhookData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceReportWebhookData IJsonModel<AppComplianceReportWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AppComplianceReportWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppComplianceReportWebhookData>(Data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AppComplianceReportWebhookData IPersistableModel<AppComplianceReportWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportWebhookData>(data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
-        string IPersistableModel<AppComplianceReportWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppComplianceReportWebhookData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppComplianceReportWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

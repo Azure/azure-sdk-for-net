@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageRoutingChoice : IEquatable<StorageRoutingChoice>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageRoutingChoice"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageRoutingChoice(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MicrosoftRoutingValue = "MicrosoftRouting";
         private const string InternetRoutingValue = "InternetRouting";
 
-        /// <summary> MicrosoftRouting. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageRoutingChoice"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageRoutingChoice(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the MicrosoftRouting. </summary>
         public static StorageRoutingChoice MicrosoftRouting { get; } = new StorageRoutingChoice(MicrosoftRoutingValue);
-        /// <summary> InternetRouting. </summary>
+
+        /// <summary> Gets the InternetRouting. </summary>
         public static StorageRoutingChoice InternetRouting { get; } = new StorageRoutingChoice(InternetRoutingValue);
+
         /// <summary> Determines if two <see cref="StorageRoutingChoice"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageRoutingChoice left, StorageRoutingChoice right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageRoutingChoice"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageRoutingChoice left, StorageRoutingChoice right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageRoutingChoice"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageRoutingChoice"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageRoutingChoice(string value) => new StorageRoutingChoice(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageRoutingChoice"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageRoutingChoice?(string value) => value == null ? null : new StorageRoutingChoice(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageRoutingChoice other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageRoutingChoice other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

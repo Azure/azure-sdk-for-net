@@ -92,6 +92,16 @@ namespace TestProjects.Spector.Tests.Http.Routes
         });
 
         [SpectorTest]
+        public Task QueryExpansionExplodeModel() => Test(async (host) =>
+        {
+            var response = await new RoutesClient(host, null).GetQueryParametersClient()
+                .GetQueryParametersQueryExpansionClient()
+                .GetQueryParametersQueryExpansionExplodeClient()
+                .ModelAsync(new ExpandParameters("status", "active"));
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
         [Ignore("https://github.com/microsoft/typespec/issues/5561")]
         public Task QueryContinuationPrimitive() => Test(async (host) =>
         {

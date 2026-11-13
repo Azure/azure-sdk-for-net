@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.StorageActions.Models
         }
 
         /// <summary> List of operations to execute in the else block. </summary>
-        public IList<StorageTaskOperationInfo> Operations { get; }
+        public IList<StorageTaskOperationInfo> Operations { get; } = new ChangeTrackingList<StorageTaskOperationInfo>();
     }
 }

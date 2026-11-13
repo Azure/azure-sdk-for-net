@@ -18,7 +18,7 @@ using File = System.IO.File;
 
 namespace Azure.AI.Inference.Tests
 {
-    public class ChatCompletionsClientTest: RecordedTestBase<InferenceClientTestEnvironment>
+    public class ChatCompletionsClientTest : RecordedTestBase<InferenceClientTestEnvironment>
     {
         public enum TargetModel
         {

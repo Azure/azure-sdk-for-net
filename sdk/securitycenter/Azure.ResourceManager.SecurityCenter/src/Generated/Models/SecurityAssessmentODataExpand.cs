@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecurityAssessmentODataExpand. </summary>
+    /// <summary></summary>
     public readonly partial struct SecurityAssessmentODataExpand : IEquatable<SecurityAssessmentODataExpand>
     {
         private readonly string _value;
+        /// <summary> All links associated with an assessment. </summary>
+        private const string LinksValue = "links";
+        /// <summary> Assessment metadata. </summary>
+        private const string MetadataValue = "metadata";
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentODataExpand"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAssessmentODataExpand(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LinksValue = "links";
-        private const string MetadataValue = "metadata";
+            _value = value;
+        }
 
         /// <summary> All links associated with an assessment. </summary>
         public static SecurityAssessmentODataExpand Links { get; } = new SecurityAssessmentODataExpand(LinksValue);
+
         /// <summary> Assessment metadata. </summary>
         public static SecurityAssessmentODataExpand Metadata { get; } = new SecurityAssessmentODataExpand(MetadataValue);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentODataExpand"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityAssessmentODataExpand left, SecurityAssessmentODataExpand right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentODataExpand"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityAssessmentODataExpand left, SecurityAssessmentODataExpand right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAssessmentODataExpand"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentODataExpand"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityAssessmentODataExpand(string value) => new SecurityAssessmentODataExpand(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentODataExpand"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityAssessmentODataExpand?(string value) => value == null ? null : new SecurityAssessmentODataExpand(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityAssessmentODataExpand other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityAssessmentODataExpand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

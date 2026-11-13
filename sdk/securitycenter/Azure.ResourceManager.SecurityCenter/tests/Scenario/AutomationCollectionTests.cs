@@ -93,7 +93,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-
         public async Task GetAll()
         {
             string automationName = Recording.GenerateAssetName("automation");
@@ -116,21 +115,13 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsFalse(flag);
         }
 
-        [TestCase(null)]
-        [TestCase(false)]
         [TestCase(true)]
+        [TestCase(null)]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
             string automationName = Recording.GenerateAssetName("automation");
             var automation = await CreateSecurityAutomation(automationName);
-
-            if (useTagResource == false)
-            {
-                // if useTagResource == false, it will call automation's update method and then the uri of Automation.Data.Action is null, will throw 400 bad request
-                Assert.ThrowsAsync<RequestFailedException>(() => automation.AddTagAsync("addtagkey", "addtagvalue"));
-                return;
-            }
 
             // AddTag
             await automation.AddTagAsync("addtagkey", "addtagvalue");

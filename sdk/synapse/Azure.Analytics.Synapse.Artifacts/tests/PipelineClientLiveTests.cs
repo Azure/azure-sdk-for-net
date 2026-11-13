@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -37,17 +37,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [RecordedTest]
         public async Task TestGetPipeline()
         {
-            PipelineClient client = CreateClient ();
-            await using DisposablePipeline pipeline = await DisposablePipeline.Create (client, this.Recording);
+            PipelineClient client = CreateClient();
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create(client, this.Recording);
 
             IList<PipelineResource> pipelines = await client.GetPipelinesByWorkspaceAsync().ToListAsync();
-            Assert.GreaterOrEqual(pipelines.Count, 1);
+            Assert.That(pipelines.Count, Is.GreaterThanOrEqualTo(1));
 
             foreach (var expectedPipeline in pipelines)
             {
                 PipelineResource actualPipeline = await client.GetPipelineAsync(expectedPipeline.Name);
-                Assert.AreEqual(expectedPipeline.Name, actualPipeline.Name);
-                Assert.AreEqual(expectedPipeline.Id, actualPipeline.Id);
+                Assert.That(actualPipeline.Name, Is.EqualTo(expectedPipeline.Name));
+                Assert.That(actualPipeline.Id, Is.EqualTo(expectedPipeline.Id));
             }
         }
 
@@ -56,9 +56,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             PipelineClient client = CreateClient();
 
-            PipelineResource resource = await DisposablePipeline.CreateResource (client, this.Recording);
+            PipelineResource resource = await DisposablePipeline.CreateResource(client, this.Recording);
 
-            PipelineDeletePipelineOperation operation = await client.StartDeletePipelineAsync (resource.Name);
+            PipelineDeletePipelineOperation operation = await client.StartDeletePipelineAsync(resource.Name);
             await operation.WaitAndAssertSuccessfulCompletion();
         }
 
@@ -67,17 +67,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             PipelineClient client = CreateClient();
 
-            PipelineResource resource = await DisposablePipeline.CreateResource (client, Recording);
+            PipelineResource resource = await DisposablePipeline.CreateResource(client, Recording);
 
             string newPipelineName = Recording.GenerateId("Pipeline2", 16);
 
-            PipelineRenamePipelineOperation renameOperation = await client.StartRenamePipelineAsync (resource.Name, new ArtifactRenameRequest () { NewName = newPipelineName } );
+            PipelineRenamePipelineOperation renameOperation = await client.StartRenamePipelineAsync(resource.Name, new ArtifactRenameRequest() { NewName = newPipelineName });
             await renameOperation.WaitForCompletionResponseAsync();
 
-            PipelineResource pipeline = await client.GetPipelineAsync (newPipelineName);
-            Assert.AreEqual (newPipelineName, pipeline.Name);
+            PipelineResource pipeline = await client.GetPipelineAsync(newPipelineName);
+            Assert.That(pipeline.Name, Is.EqualTo(newPipelineName));
 
-            PipelineDeletePipelineOperation operation = await client.StartDeletePipelineAsync (newPipelineName);
+            PipelineDeletePipelineOperation operation = await client.StartDeletePipelineAsync(newPipelineName);
             await operation.WaitForCompletionResponseAsync();
         }
 
@@ -86,10 +86,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             PipelineClient client = CreateClient();
 
-            await using DisposablePipeline pipeline = await DisposablePipeline.Create (client, this.Recording);
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create(client, this.Recording);
 
-            CreateRunResponse runResponse = await client.CreatePipelineRunAsync (pipeline.Name);
-            Assert.NotNull(runResponse.RunId);
+            CreateRunResponse runResponse = await client.CreatePipelineRunAsync(pipeline.Name);
+            Assert.That(runResponse.RunId, Is.Not.Null);
         }
     }
 }

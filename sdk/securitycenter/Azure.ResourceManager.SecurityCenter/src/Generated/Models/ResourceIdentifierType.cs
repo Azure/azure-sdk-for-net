@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     internal readonly partial struct ResourceIdentifierType : IEquatable<ResourceIdentifierType>
     {
         private readonly string _value;
+        /// <summary> AzureResource. </summary>
+        private const string AzureResourceValue = "AzureResource";
+        /// <summary> LogAnalytics. </summary>
+        private const string LogAnalyticsValue = "LogAnalytics";
 
         /// <summary> Initializes a new instance of <see cref="ResourceIdentifierType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceIdentifierType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureResourceValue = "AzureResource";
-        private const string LogAnalyticsValue = "LogAnalytics";
+            _value = value;
+        }
 
         /// <summary> AzureResource. </summary>
         public static ResourceIdentifierType AzureResource { get; } = new ResourceIdentifierType(AzureResourceValue);
+
         /// <summary> LogAnalytics. </summary>
         public static ResourceIdentifierType LogAnalytics { get; } = new ResourceIdentifierType(LogAnalyticsValue);
+
         /// <summary> Determines if two <see cref="ResourceIdentifierType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceIdentifierType left, ResourceIdentifierType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceIdentifierType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceIdentifierType left, ResourceIdentifierType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceIdentifierType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceIdentifierType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceIdentifierType(string value) => new ResourceIdentifierType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceIdentifierType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceIdentifierType?(string value) => value == null ? null : new ResourceIdentifierType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceIdentifierType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceIdentifierType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

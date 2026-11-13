@@ -126,9 +126,9 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 var table = field.Value.AsList();
                                 //columns
-                                for (int i=0; i< table.Count; i++)
+                                for (int i = 0; i < table.Count; i++)
                                 {
-                                    Console.WriteLine($"Row {i+1}:");
+                                    Console.WriteLine($"Row {i + 1}:");
                                     var row = table[i].Value.AsDictionary();
                                     foreach (var colValues in row)
                                     {

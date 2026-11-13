@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of ReplicationProviderSpecificContainerCreationInput. </summary>
     internal partial class UnknownReplicationProviderSpecificContainerCreationContent : ReplicationProviderSpecificContainerCreationContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownReplicationProviderSpecificContainerCreationContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownReplicationProviderSpecificContainerCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownReplicationProviderSpecificContainerCreationContent"/> for deserialization. </summary>
-        internal UnknownReplicationProviderSpecificContainerCreationContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownReplicationProviderSpecificContainerCreationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

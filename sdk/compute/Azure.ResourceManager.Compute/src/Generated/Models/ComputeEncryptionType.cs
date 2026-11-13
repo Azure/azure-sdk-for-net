@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ComputeEncryptionType : IEquatable<ComputeEncryptionType>
     {
         private readonly string _value;
+        /// <summary> Disk is encrypted at rest with Platform managed key. It is the default encryption type. This is not a valid encryption type for disk encryption sets. </summary>
+        private const string EncryptionAtRestWithPlatformKeyValue = "EncryptionAtRestWithPlatformKey";
+        /// <summary> Disk is encrypted at rest with Customer managed key that can be changed and revoked by a customer. </summary>
+        private const string EncryptionAtRestWithCustomerKeyValue = "EncryptionAtRestWithCustomerKey";
+        /// <summary> Disk is encrypted at rest with 2 layers of encryption. One of the keys is Customer managed and the other key is Platform managed. </summary>
+        private const string EncryptionAtRestWithPlatformAndCustomerKeysValue = "EncryptionAtRestWithPlatformAndCustomerKeys";
 
         /// <summary> Initializes a new instance of <see cref="ComputeEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeEncryptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EncryptionAtRestWithPlatformKeyValue = "EncryptionAtRestWithPlatformKey";
-        private const string EncryptionAtRestWithCustomerKeyValue = "EncryptionAtRestWithCustomerKey";
-        private const string EncryptionAtRestWithPlatformAndCustomerKeysValue = "EncryptionAtRestWithPlatformAndCustomerKeys";
+            _value = value;
+        }
 
         /// <summary> Disk is encrypted at rest with Platform managed key. It is the default encryption type. This is not a valid encryption type for disk encryption sets. </summary>
         public static ComputeEncryptionType EncryptionAtRestWithPlatformKey { get; } = new ComputeEncryptionType(EncryptionAtRestWithPlatformKeyValue);
+
         /// <summary> Disk is encrypted at rest with Customer managed key that can be changed and revoked by a customer. </summary>
         public static ComputeEncryptionType EncryptionAtRestWithCustomerKey { get; } = new ComputeEncryptionType(EncryptionAtRestWithCustomerKeyValue);
+
         /// <summary> Disk is encrypted at rest with 2 layers of encryption. One of the keys is Customer managed and the other key is Platform managed. </summary>
         public static ComputeEncryptionType EncryptionAtRestWithPlatformAndCustomerKeys { get; } = new ComputeEncryptionType(EncryptionAtRestWithPlatformAndCustomerKeysValue);
+
         /// <summary> Determines if two <see cref="ComputeEncryptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeEncryptionType left, ComputeEncryptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeEncryptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeEncryptionType left, ComputeEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeEncryptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeEncryptionType(string value) => new ComputeEncryptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeEncryptionType?(string value) => value == null ? null : new ComputeEncryptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeEncryptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

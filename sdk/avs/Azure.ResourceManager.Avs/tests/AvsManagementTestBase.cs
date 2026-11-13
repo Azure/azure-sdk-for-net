@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Security;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using System.Net.Http;
-using Azure.Identity;
-using System.Threading;
-using System.Net.Security;
-using System.Net;
 
 namespace Azure.ResourceManager.Avs.Tests
 {

@@ -1,0 +1,24 @@
+<Project>
+    <!--
+    Microsoft.Azure.Batch walks the line between T1 and T2, using some updated references
+    but is still considered a legacy package.  Treat the modern dependencies as special
+    cases and use a frozen versioning strategy as the package is not actively developed.
+  -->
+  <ItemGroup>
+    <PackageVersion Update="Azure.Storage.Blobs" Version="12.26.0" />
+  </ItemGroup>
+  <!--
+    xunit and BouncyCastle are only approved for legacy use. Azure SDK test projects should use NUnit.
+
+    Legacy Batch tests require ADAL and specific MSAL versions
+  -->
+  <ItemGroup Condition="
+      ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')
+      and $(MSBuildProjectName.StartsWith('Microsoft.Azure.Batch'))">
+    <PackageVersion Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="$(MicrosoftIdentityModelClientsActiveDirectoryVersion)" />
+    <PackageVersion Update="Microsoft.Identity.Client" Version="$(MicrosoftIdentityClientPinnedVersion)" />
+    <PackageVersion Include="Portable.BouncyCastle" Version="$(PortableBouncyCastleVersion)" />
+    <PackageVersion Include="xunit" Version="$(XunitVersion)" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="$(XunitRunnerVersion)" />
+  </ItemGroup>
+</Project>

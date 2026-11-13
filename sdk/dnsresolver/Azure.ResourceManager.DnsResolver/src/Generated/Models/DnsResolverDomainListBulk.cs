@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> Describes a DNS resolver domain list for bulk UPLOAD or DOWNLOAD operations. </summary>
     public partial class DnsResolverDomainListBulk
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListBulk"/>. </summary>
         /// <param name="storageUri"> The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list. </param>
@@ -53,29 +25,37 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             Argument.AssertNotNull(storageUri, nameof(storageUri));
 
-            StorageUri = storageUri;
-            Action = action;
+            Properties = new DnsResolverDomainListBulkProperties(storageUri, action);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListBulk"/>. </summary>
-        /// <param name="storageUri"> The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list. </param>
-        /// <param name="action"> The action to take in the request, Upload or Download. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResolverDomainListBulk(Uri storageUri, DnsResolverDomainListBulkAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the DNS resolver domain list upload or download request. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DnsResolverDomainListBulk(DnsResolverDomainListBulkProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StorageUri = storageUri;
-            Action = action;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListBulk"/> for deserialization. </summary>
-        internal DnsResolverDomainListBulk()
-        {
-        }
+        /// <summary> Properties of the DNS resolver domain list upload or download request. </summary>
+        internal DnsResolverDomainListBulkProperties Properties { get; }
 
         /// <summary> The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list. </summary>
-        public Uri StorageUri { get; }
+        public Uri StorageUri
+        {
+            get
+            {
+                return Properties.StorageUri;
+            }
+        }
+
         /// <summary> The action to take in the request, Upload or Download. </summary>
-        public DnsResolverDomainListBulkAction Action { get; }
+        public DnsResolverDomainListBulkAction Action
+        {
+            get
+            {
+                return Properties.Action;
+            }
+        }
     }
 }

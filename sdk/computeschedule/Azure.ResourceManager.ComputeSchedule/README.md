@@ -4,13 +4,17 @@ Microsoft Azure ComputeSchedule allows customers to schedule one off operations 
 - Start
 - Deallocate
 - Hibernate
+- Delete
+- Create (including Flex provisioning via `VirtualMachinesExecuteCreateFlex`)
 
 There are 2 groups of schedule type operations that customers can perform on their virtual machines
 
 - `Submit Type Operations`: These type of operations can be scheduled at a later date in the future, up to 14 days ahead.
 - `Execute Type Operations`: These type of operations allow clients to perform operations on their virtual machines immediately.
 
-Other operations include endpoints to get operation status on virtual machines, cancel operations scheduled on virtual machines and get errors that might have occured during operations.
+The `VirtualMachinesExecuteCreateFlex` operation (added in API version `2026-03-01-preview`) enables on-demand flexible VM provisioning with Spot or regular priority, configurable VM size profiles, OS type, and allocation strategy.
+
+Other operations include endpoints to get operation status on virtual machines, cancel operations scheduled on virtual machines and get errors that might have occurred during operations.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

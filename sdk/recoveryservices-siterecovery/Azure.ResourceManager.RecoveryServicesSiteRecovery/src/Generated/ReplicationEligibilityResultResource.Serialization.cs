@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
+    /// <summary></summary>
     public partial class ReplicationEligibilityResultResource : IJsonModel<ReplicationEligibilityResultData>
     {
-        private static ReplicationEligibilityResultData s_dataDeserializationInstance;
-        private static ReplicationEligibilityResultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ReplicationEligibilityResultData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ReplicationEligibilityResultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ReplicationEligibilityResultData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReplicationEligibilityResultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationEligibilityResultData>)Data).Write(writer, options);
 
-        ReplicationEligibilityResultData IJsonModel<ReplicationEligibilityResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationEligibilityResultData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReplicationEligibilityResultData IJsonModel<ReplicationEligibilityResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ReplicationEligibilityResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReplicationEligibilityResultData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ReplicationEligibilityResultData IPersistableModel<ReplicationEligibilityResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReplicationEligibilityResultData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<ReplicationEligibilityResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReplicationEligibilityResultData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReplicationEligibilityResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

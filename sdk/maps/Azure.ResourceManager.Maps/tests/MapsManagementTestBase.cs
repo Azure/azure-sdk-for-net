@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Maps.Tests
 
         protected MapsAccountData GetDefaultMapsAccountData()
         {
-            var account = new MapsAccountData(DefaultLocation, new MapsSku(MapsSkuName.S0))
+            var account = new MapsAccountData(DefaultLocation, new MapsSku(MapsSkuName.G2))
             {
                 Tags = { { "key1", "value1" }, { "key2", "value2" } }
             };
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Maps.Tests
             if (useDefaults)
             {
                 Assert.AreEqual("East US", account.Location.DisplayName);
-                Assert.AreEqual(MapsSkuName.S0, account.Sku.Name);
+                Assert.AreEqual(MapsSkuName.G2, account.Sku.Name);
 
                 Assert.NotNull(account.Tags);
                 Assert.NotNull(account.Properties.UniqueId);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maps.Tests
             var accountName = Recording.GenerateAssetName("maps");
             var parameters = GetDefaultMapsAccountData();
             var newAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
-            VerifyAccountProperties(newAccount.Data, true, MapsSkuName.S0);
+            VerifyAccountProperties(newAccount.Data, true, MapsSkuName.G2);
             return newAccount;
         }
     }

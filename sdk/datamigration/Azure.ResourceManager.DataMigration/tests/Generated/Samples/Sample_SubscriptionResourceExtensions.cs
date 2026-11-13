@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSqlMigrationServices_GetServicesInTheSubscriptions()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/ListBySubscriptionSqlMigrationService.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/ListBySubscriptionSqlMigrationService.json
             // this example is just showing the usage of "SqlMigrationServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSkusResourceSkus_ListSkus()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/ResourceSkus_ListSkus.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/ResourceSkus_ListSkus.json
             // this example is just showing the usage of "ResourceSkus_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDataMigrationServices_ServicesList()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/Services_List.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/Services_List.json
             // this example is just showing the usage of "Services_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckDataMigrationNameAvailability_ServicesCheckNameAvailability()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/Services_CheckNameAvailability.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/Services_CheckNameAvailability.json
             // this example is just showing the usage of "Services_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUsages_ServicesUsages()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/Usages_List.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/Usages_List.json
             // this example is just showing the usage of "Usages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

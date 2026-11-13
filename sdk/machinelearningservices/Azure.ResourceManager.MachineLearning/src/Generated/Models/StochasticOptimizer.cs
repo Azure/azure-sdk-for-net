@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct StochasticOptimizer : IEquatable<StochasticOptimizer>
     {
         private readonly string _value;
+        /// <summary> No optimizer selected. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Stochastic Gradient Descent optimizer. </summary>
+        private const string SgdValue = "Sgd";
+        /// <summary> Adam is algorithm the optimizes stochastic objective functions based on adaptive estimates of moments. </summary>
+        private const string AdamValue = "Adam";
+        /// <summary> AdamW is a variant of the optimizer Adam that has an improved implementation of weight decay. </summary>
+        private const string AdamwValue = "Adamw";
 
         /// <summary> Initializes a new instance of <see cref="StochasticOptimizer"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StochasticOptimizer(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string SgdValue = "Sgd";
-        private const string AdamValue = "Adam";
-        private const string AdamwValue = "Adamw";
+            _value = value;
+        }
 
         /// <summary> No optimizer selected. </summary>
         public static StochasticOptimizer None { get; } = new StochasticOptimizer(NoneValue);
+
         /// <summary> Stochastic Gradient Descent optimizer. </summary>
         public static StochasticOptimizer Sgd { get; } = new StochasticOptimizer(SgdValue);
+
         /// <summary> Adam is algorithm the optimizes stochastic objective functions based on adaptive estimates of moments. </summary>
         public static StochasticOptimizer Adam { get; } = new StochasticOptimizer(AdamValue);
+
         /// <summary> AdamW is a variant of the optimizer Adam that has an improved implementation of weight decay. </summary>
         public static StochasticOptimizer Adamw { get; } = new StochasticOptimizer(AdamwValue);
+
         /// <summary> Determines if two <see cref="StochasticOptimizer"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StochasticOptimizer left, StochasticOptimizer right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StochasticOptimizer"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StochasticOptimizer left, StochasticOptimizer right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StochasticOptimizer"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StochasticOptimizer"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StochasticOptimizer(string value) => new StochasticOptimizer(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StochasticOptimizer"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StochasticOptimizer?(string value) => value == null ? null : new StochasticOptimizer(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StochasticOptimizer other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StochasticOptimizer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

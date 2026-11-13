@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Peering.Tests
             Assert.IsNotNull(list.First(item => item.Name == "westus"));
         }
 
-        private void ValidatePeeringService(PeeringServiceResource peeringService,string peeringServiceName)
+        private void ValidatePeeringService(PeeringServiceResource peeringService, string peeringServiceName)
         {
             Assert.IsNotNull(peeringService);
             Assert.AreEqual(peeringServiceName, peeringService.Data.Name);

@@ -15,20 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ClusterSwitchProtectionJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of <see cref="ClusterSwitchProtectionJobDetails"/>. </summary>
-        internal ClusterSwitchProtectionJobDetails()
+        internal ClusterSwitchProtectionJobDetails() : base("ClusterSwitchProtectionJobDetails")
         {
-            InstanceType = "ClusterSwitchProtectionJobDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterSwitchProtectionJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="newReplicationProtectionClusterId"> ARM Id of the new replication protection cluster. </param>
-        internal ClusterSwitchProtectionJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier newReplicationProtectionClusterId) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
+        internal ClusterSwitchProtectionJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier newReplicationProtectionClusterId) : base(instanceType, affectedObjectDetails, additionalBinaryDataProperties)
         {
             NewReplicationProtectionClusterId = newReplicationProtectionClusterId;
-            InstanceType = instanceType ?? "ClusterSwitchProtectionJobDetails";
         }
 
         /// <summary> ARM Id of the new replication protection cluster. </summary>

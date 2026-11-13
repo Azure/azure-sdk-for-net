@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
@@ -151,7 +152,7 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 if (searchClient != null)
                 {
-                    await resources.GetIndexClient().DeleteIndexAsync(searchClient.IndexName);
+                    await resources.GetIndexClient().DeleteIndexAsync(searchClient.IndexName, cancellationToken: CancellationToken.None);
                 }
             }
         }
@@ -192,7 +193,7 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 if (searchClient != null)
                 {
-                    await resources.GetIndexClient().DeleteIndexAsync(searchClient.IndexName);
+                    await resources.GetIndexClient().DeleteIndexAsync(searchClient.IndexName, cancellationToken: CancellationToken.None);
                 }
             }
         }

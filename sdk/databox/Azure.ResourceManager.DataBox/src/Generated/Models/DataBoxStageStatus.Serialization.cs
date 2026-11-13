@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataBoxStageStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataBoxStageStatus value) => value switch
         {
             DataBoxStageStatus.None => "None",
@@ -29,21 +30,61 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxStageStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataBoxStageStatus ToDataBoxStageStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return DataBoxStageStatus.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return DataBoxStageStatus.InProgress;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return DataBoxStageStatus.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return DataBoxStageStatus.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return DataBoxStageStatus.Cancelled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelling")) return DataBoxStageStatus.Cancelling;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SucceededWithErrors")) return DataBoxStageStatus.SucceededWithErrors;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WaitingForCustomerAction")) return DataBoxStageStatus.WaitingForCustomerAction;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SucceededWithWarnings")) return DataBoxStageStatus.SucceededWithWarnings;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WaitingForCustomerActionForKek")) return DataBoxStageStatus.WaitingForCustomerActionForKek;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WaitingForCustomerActionForCleanUp")) return DataBoxStageStatus.WaitingForCustomerActionForCleanUp;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerActionPerformedForCleanUp")) return DataBoxStageStatus.CustomerActionPerformedForCleanUp;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerActionPerformed")) return DataBoxStageStatus.CustomerActionPerformed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return DataBoxStageStatus.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress"))
+            {
+                return DataBoxStageStatus.InProgress;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return DataBoxStageStatus.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return DataBoxStageStatus.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled"))
+            {
+                return DataBoxStageStatus.Cancelled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelling"))
+            {
+                return DataBoxStageStatus.Cancelling;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SucceededWithErrors"))
+            {
+                return DataBoxStageStatus.SucceededWithErrors;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WaitingForCustomerAction"))
+            {
+                return DataBoxStageStatus.WaitingForCustomerAction;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SucceededWithWarnings"))
+            {
+                return DataBoxStageStatus.SucceededWithWarnings;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WaitingForCustomerActionForKek"))
+            {
+                return DataBoxStageStatus.WaitingForCustomerActionForKek;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WaitingForCustomerActionForCleanUp"))
+            {
+                return DataBoxStageStatus.WaitingForCustomerActionForCleanUp;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerActionPerformedForCleanUp"))
+            {
+                return DataBoxStageStatus.CustomerActionPerformedForCleanUp;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerActionPerformed"))
+            {
+                return DataBoxStageStatus.CustomerActionPerformed;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxStageStatus value.");
         }
     }

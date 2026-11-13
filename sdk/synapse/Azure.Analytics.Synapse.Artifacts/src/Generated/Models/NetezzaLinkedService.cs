@@ -27,11 +27,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="server"> Server name for connection. Type: string. </param>
+        /// <param name="port"> The port for the connection. Type: integer. </param>
+        /// <param name="uid"> Username for authentication. Type: string. </param>
+        /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="securityLevel"> Specifies the security level for the driver connection to the data store. PreferredUnSecured : prefer unsecured, allow fallback to secured connection if required. OnlyUnSecured : strictly unsecured, no fallback. </param>
         /// <param name="pwd"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal NetezzaLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference pwd, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
+        internal NetezzaLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object server, object port, object uid, object database, NetezzaSecurityLevelType? securityLevel, AzureKeyVaultSecretReference pwd, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
+            Server = server;
+            Port = port;
+            Uid = uid;
+            Database = database;
+            SecurityLevel = securityLevel;
             Pwd = pwd;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "Netezza";
@@ -39,6 +49,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
+        /// <summary> Server name for connection. Type: string. </summary>
+        public object Server { get; set; }
+        /// <summary> The port for the connection. Type: integer. </summary>
+        public object Port { get; set; }
+        /// <summary> Username for authentication. Type: string. </summary>
+        public object Uid { get; set; }
+        /// <summary> Database name for connection. Type: string. </summary>
+        public object Database { get; set; }
+        /// <summary> Specifies the security level for the driver connection to the data store. PreferredUnSecured : prefer unsecured, allow fallback to secured connection if required. OnlyUnSecured : strictly unsecured, no fallback. </summary>
+        public NetezzaSecurityLevelType? SecurityLevel { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
         public AzureKeyVaultSecretReference Pwd { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>

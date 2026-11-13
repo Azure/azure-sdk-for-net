@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> The RecoveryServicesEnhancedSecurityState. </summary>
+    /// <summary></summary>
     public readonly partial struct RecoveryServicesEnhancedSecurityState : IEquatable<RecoveryServicesEnhancedSecurityState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesEnhancedSecurityState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RecoveryServicesEnhancedSecurityState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
         private const string AlwaysONValue = "AlwaysON";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesEnhancedSecurityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryServicesEnhancedSecurityState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static RecoveryServicesEnhancedSecurityState Invalid { get; } = new RecoveryServicesEnhancedSecurityState(InvalidValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static RecoveryServicesEnhancedSecurityState Enabled { get; } = new RecoveryServicesEnhancedSecurityState(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static RecoveryServicesEnhancedSecurityState Disabled { get; } = new RecoveryServicesEnhancedSecurityState(DisabledValue);
-        /// <summary> AlwaysON. </summary>
+
+        /// <summary> Gets the AlwaysON. </summary>
         public static RecoveryServicesEnhancedSecurityState AlwaysON { get; } = new RecoveryServicesEnhancedSecurityState(AlwaysONValue);
+
         /// <summary> Determines if two <see cref="RecoveryServicesEnhancedSecurityState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryServicesEnhancedSecurityState left, RecoveryServicesEnhancedSecurityState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecoveryServicesEnhancedSecurityState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryServicesEnhancedSecurityState left, RecoveryServicesEnhancedSecurityState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesEnhancedSecurityState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecoveryServicesEnhancedSecurityState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecoveryServicesEnhancedSecurityState(string value) => new RecoveryServicesEnhancedSecurityState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecoveryServicesEnhancedSecurityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryServicesEnhancedSecurityState?(string value) => value == null ? null : new RecoveryServicesEnhancedSecurityState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryServicesEnhancedSecurityState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecoveryServicesEnhancedSecurityState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

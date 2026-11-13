@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayFirewallUserSessionVariable : IEquatable<ApplicationGatewayFirewallUserSessionVariable>
     {
         private readonly string _value;
+        /// <summary> ClientAddr. </summary>
+        private const string ClientAddrValue = "ClientAddr";
+        /// <summary> GeoLocation. </summary>
+        private const string GeoLocationValue = "GeoLocation";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> ClientAddrXFFHeader. </summary>
+        private const string ClientAddrXFFHeaderValue = "ClientAddrXFFHeader";
+        /// <summary> GeoLocationXFFHeader. </summary>
+        private const string GeoLocationXFFHeaderValue = "GeoLocationXFFHeader";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallUserSessionVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayFirewallUserSessionVariable(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ClientAddrValue = "ClientAddr";
-        private const string GeoLocationValue = "GeoLocation";
-        private const string NoneValue = "None";
-        private const string ClientAddrXFFHeaderValue = "ClientAddrXFFHeader";
-        private const string GeoLocationXFFHeaderValue = "GeoLocationXFFHeader";
+            _value = value;
+        }
 
         /// <summary> ClientAddr. </summary>
         public static ApplicationGatewayFirewallUserSessionVariable ClientAddr { get; } = new ApplicationGatewayFirewallUserSessionVariable(ClientAddrValue);
+
         /// <summary> GeoLocation. </summary>
         public static ApplicationGatewayFirewallUserSessionVariable GeoLocation { get; } = new ApplicationGatewayFirewallUserSessionVariable(GeoLocationValue);
+
         /// <summary> None. </summary>
         public static ApplicationGatewayFirewallUserSessionVariable None { get; } = new ApplicationGatewayFirewallUserSessionVariable(NoneValue);
+
         /// <summary> ClientAddrXFFHeader. </summary>
         public static ApplicationGatewayFirewallUserSessionVariable ClientAddrXFFHeader { get; } = new ApplicationGatewayFirewallUserSessionVariable(ClientAddrXFFHeaderValue);
+
         /// <summary> GeoLocationXFFHeader. </summary>
         public static ApplicationGatewayFirewallUserSessionVariable GeoLocationXFFHeader { get; } = new ApplicationGatewayFirewallUserSessionVariable(GeoLocationXFFHeaderValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallUserSessionVariable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayFirewallUserSessionVariable left, ApplicationGatewayFirewallUserSessionVariable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallUserSessionVariable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayFirewallUserSessionVariable left, ApplicationGatewayFirewallUserSessionVariable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayFirewallUserSessionVariable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallUserSessionVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayFirewallUserSessionVariable(string value) => new ApplicationGatewayFirewallUserSessionVariable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallUserSessionVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayFirewallUserSessionVariable?(string value) => value == null ? null : new ApplicationGatewayFirewallUserSessionVariable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayFirewallUserSessionVariable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayFirewallUserSessionVariable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

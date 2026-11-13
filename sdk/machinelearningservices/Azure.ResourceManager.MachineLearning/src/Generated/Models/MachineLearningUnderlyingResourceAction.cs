@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningUnderlyingResourceAction. </summary>
+    /// <summary></summary>
     public readonly partial struct MachineLearningUnderlyingResourceAction : IEquatable<MachineLearningUnderlyingResourceAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningUnderlyingResourceAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningUnderlyingResourceAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DeleteValue = "Delete";
         private const string DetachValue = "Detach";
 
-        /// <summary> Delete. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUnderlyingResourceAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningUnderlyingResourceAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Delete. </summary>
         public static MachineLearningUnderlyingResourceAction Delete { get; } = new MachineLearningUnderlyingResourceAction(DeleteValue);
-        /// <summary> Detach. </summary>
+
+        /// <summary> Gets the Detach. </summary>
         public static MachineLearningUnderlyingResourceAction Detach { get; } = new MachineLearningUnderlyingResourceAction(DetachValue);
+
         /// <summary> Determines if two <see cref="MachineLearningUnderlyingResourceAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningUnderlyingResourceAction left, MachineLearningUnderlyingResourceAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningUnderlyingResourceAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningUnderlyingResourceAction left, MachineLearningUnderlyingResourceAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningUnderlyingResourceAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningUnderlyingResourceAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningUnderlyingResourceAction(string value) => new MachineLearningUnderlyingResourceAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningUnderlyingResourceAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningUnderlyingResourceAction?(string value) => value == null ? null : new MachineLearningUnderlyingResourceAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningUnderlyingResourceAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningUnderlyingResourceAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

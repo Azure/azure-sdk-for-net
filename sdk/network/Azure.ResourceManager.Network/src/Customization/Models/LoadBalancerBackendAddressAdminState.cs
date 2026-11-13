@@ -8,14 +8,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </summary>
-    public readonly partial struct LoadBalancerBackendAddressAdminState : IEquatable<LoadBalancerBackendAddressAdminState>
+    public readonly partial struct LoadBalancerBackendAddressAdminState
     {
-        private const string DrainValue = "Drain";
-
+        // Shipped in 1.15.0, but not a value in the current service schema.
         /// <summary> Drain. </summary>
-        [Obsolete("This state is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadBalancerBackendAddressAdminState Drain { get; } = new LoadBalancerBackendAddressAdminState(DrainValue);
+        [Obsolete("This state is obsolete and will be removed in a future release", false)]
+        public static LoadBalancerBackendAddressAdminState Drain { get; } = new LoadBalancerBackendAddressAdminState("Drain");
     }
 }

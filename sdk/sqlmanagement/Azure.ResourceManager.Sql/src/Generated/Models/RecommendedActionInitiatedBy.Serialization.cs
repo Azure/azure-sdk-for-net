@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class RecommendedActionInitiatedByExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RecommendedActionInitiatedBy value) => value switch
         {
             RecommendedActionInitiatedBy.User => "User",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecommendedActionInitiatedBy value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RecommendedActionInitiatedBy ToRecommendedActionInitiatedBy(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "User")) return RecommendedActionInitiatedBy.User;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "System")) return RecommendedActionInitiatedBy.System;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "User"))
+            {
+                return RecommendedActionInitiatedBy.User;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "System"))
+            {
+                return RecommendedActionInitiatedBy.System;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecommendedActionInitiatedBy value.");
         }
     }

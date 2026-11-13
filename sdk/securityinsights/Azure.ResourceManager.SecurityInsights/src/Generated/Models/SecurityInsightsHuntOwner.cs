@@ -7,43 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describes a user that the hunt is assigned to. </summary>
     public partial class SecurityInsightsHuntOwner
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Guid? _objectId;
+        private bool _objectIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntOwner"/>. </summary>
         public SecurityInsightsHuntOwner()
@@ -56,29 +30,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="objectId"> The object id of the user the hunt is assigned to. </param>
         /// <param name="userPrincipalName"> The user principal name of the user the hunt is assigned to. </param>
         /// <param name="ownerType"> The type of the owner the hunt is assigned to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsHuntOwner(string email, string assignedTo, Guid? objectId, string userPrincipalName, SecurityInsightsIncidentOwnerType? ownerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsHuntOwner(string email, string assignedTo, Guid? objectId, string userPrincipalName, SecurityInsightsIncidentOwnerType? ownerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Email = email;
             AssignedTo = assignedTo;
-            ObjectId = objectId;
+            _objectId = objectId;
             UserPrincipalName = userPrincipalName;
             OwnerType = ownerType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The email of the user the hunt is assigned to. </summary>
         [WirePath("email")]
         public string Email { get; set; }
+
         /// <summary> The name of the user the hunt is assigned to. </summary>
         [WirePath("assignedTo")]
         public string AssignedTo { get; set; }
+
         /// <summary> The object id of the user the hunt is assigned to. </summary>
         [WirePath("objectId")]
-        public Guid? ObjectId { get; set; }
+        public Guid? ObjectId
+        {
+            get
+            {
+                return _objectId;
+            }
+            set
+            {
+                _objectId = value;
+                _objectIdIsDefined = true;
+            }
+        }
+
         /// <summary> The user principal name of the user the hunt is assigned to. </summary>
         [WirePath("userPrincipalName")]
         public string UserPrincipalName { get; set; }
+
         /// <summary> The type of the owner the hunt is assigned to. </summary>
         [WirePath("ownerType")]
         public SecurityInsightsIncidentOwnerType? OwnerType { get; set; }

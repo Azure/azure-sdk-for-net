@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document
     /// The source document(s) are translated and written to the location provided
     /// in the <see cref="TranslationTarget"/>.
     /// </summary>
-    [CodeGenModel("BatchRequest")]
+    [CodeGenType("BatchRequest")]
     public partial class DocumentTranslationInput
     {
         /// <summary>
@@ -27,8 +27,8 @@ namespace Azure.AI.Translation.Document
         /// target storage containers/blobs: <a href="https://aka.ms/azsdk/documenttranslation/sas-permissions"/>.</param>
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
-        /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see
-        /// <see cref="DocumentTranslationClient.GetSupportedFormatsAsync(FileFormatType?, System.Threading.CancellationToken)"/>.</param>
+        /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types use
+        /// <see cref="DocumentTranslationClient"/>'s <c>GetSupportedFormatsAsync</c> method.</param>
         public DocumentTranslationInput(Uri sourceUri, Uri targetUri, string targetLanguageCode, TranslationGlossary glossary = default)
         {
             Source = new TranslationSource(sourceUri);
@@ -48,8 +48,8 @@ namespace Azure.AI.Translation.Document
         /// target storage containers/blobs: <a href="https://aka.ms/azsdk/documenttranslation/sas-permissions"/>.</param>
         /// <param name="languageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
-        /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see
-        /// <see cref="DocumentTranslationClient.GetSupportedFormatsAsync(FileFormatType?, System.Threading.CancellationToken)"/>.</param>
+        /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types use
+        /// <see cref="DocumentTranslationClient"/>'s <c>GetSupportedFormatsAsync</c> method.</param>
         /// <param name="categoryId">Category/custom model ID for using custom translation.</param>
         public void AddTarget(Uri targetUri, string languageCode, TranslationGlossary glossary = default, string categoryId = default)
         {

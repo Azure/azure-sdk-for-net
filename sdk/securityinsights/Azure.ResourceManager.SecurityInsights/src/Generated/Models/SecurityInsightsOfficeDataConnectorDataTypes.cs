@@ -7,110 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The available data types for office data connector. </summary>
     public partial class SecurityInsightsOfficeDataConnectorDataTypes
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/>. </summary>
         /// <param name="exchange"> Exchange data type connection. </param>
         /// <param name="sharePoint"> SharePoint data type connection. </param>
         /// <param name="teams"> Teams data type connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exchange"/>, <paramref name="sharePoint"/> or <paramref name="teams"/> is null. </exception>
-        public SecurityInsightsOfficeDataConnectorDataTypes(DataConnectorDataTypeCommon exchange, DataConnectorDataTypeCommon sharePoint, DataConnectorDataTypeCommon teams)
-        {
-            Argument.AssertNotNull(exchange, nameof(exchange));
-            Argument.AssertNotNull(sharePoint, nameof(sharePoint));
-            Argument.AssertNotNull(teams, nameof(teams));
-
-            Exchange = exchange;
-            SharePoint = sharePoint;
-            Teams = teams;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/>. </summary>
-        /// <param name="exchange"> Exchange data type connection. </param>
-        /// <param name="sharePoint"> SharePoint data type connection. </param>
-        /// <param name="teams"> Teams data type connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsOfficeDataConnectorDataTypes(DataConnectorDataTypeCommon exchange, DataConnectorDataTypeCommon sharePoint, DataConnectorDataTypeCommon teams, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsOfficeDataConnectorDataTypes(DataConnectorDataTypeCommon exchange, DataConnectorDataTypeCommon sharePoint, DataConnectorDataTypeCommon teams, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Exchange = exchange;
             SharePoint = sharePoint;
             Teams = teams;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Exchange data type connection. </summary>
+        [WirePath("exchange")]
         internal DataConnectorDataTypeCommon Exchange { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        [WirePath("exchange.state")]
-        public SecurityInsightsDataTypeConnectionState? ExchangeState
-        {
-            get => Exchange is null ? default(SecurityInsightsDataTypeConnectionState?) : Exchange.State;
-            set
-            {
-                Exchange = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
-            }
-        }
 
         /// <summary> SharePoint data type connection. </summary>
+        [WirePath("sharePoint")]
         internal DataConnectorDataTypeCommon SharePoint { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        [WirePath("sharePoint.state")]
-        public SecurityInsightsDataTypeConnectionState? SharePointState
-        {
-            get => SharePoint is null ? default(SecurityInsightsDataTypeConnectionState?) : SharePoint.State;
-            set
-            {
-                SharePoint = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
-            }
-        }
 
         /// <summary> Teams data type connection. </summary>
+        [WirePath("teams")]
         internal DataConnectorDataTypeCommon Teams { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        [WirePath("teams.state")]
-        public SecurityInsightsDataTypeConnectionState? TeamsState
-        {
-            get => Teams is null ? default(SecurityInsightsDataTypeConnectionState?) : Teams.State;
-            set
-            {
-                Teams = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
-            }
-        }
     }
 }

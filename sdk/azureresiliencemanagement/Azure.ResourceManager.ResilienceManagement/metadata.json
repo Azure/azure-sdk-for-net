@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.AzureResilienceManagement": "2026-10-01"
+  }
+}

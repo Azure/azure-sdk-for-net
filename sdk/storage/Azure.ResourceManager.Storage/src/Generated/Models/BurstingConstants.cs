@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Constants used for calculating included burst IOPS and maximum burst credits for IOPS for a file share in the storage account. </summary>
     public partial class BurstingConstants
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BurstingConstants"/>. </summary>
         internal BurstingConstants()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="burstFloorIops"> The guaranteed floor of burst IOPS for small file shares. </param>
         /// <param name="burstIOScalar"> The scalar against provisioned IOPS in the file share included burst IOPS formula. </param>
         /// <param name="burstTimeframeSeconds"> The time frame for bursting in seconds in the file share maximum burst credits for IOPS formula. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BurstingConstants(int? burstFloorIops, double? burstIOScalar, int? burstTimeframeSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BurstingConstants(int? burstFloorIops, double? burstIOScalar, int? burstTimeframeSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BurstFloorIops = burstFloorIops;
             BurstIOScalar = burstIOScalar;
             BurstTimeframeSeconds = burstTimeframeSeconds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The guaranteed floor of burst IOPS for small file shares. </summary>
         [WirePath("burstFloorIOPS")]
         public int? BurstFloorIops { get; }
+
         /// <summary> The scalar against provisioned IOPS in the file share included burst IOPS formula. </summary>
         [WirePath("burstIOScalar")]
         public double? BurstIOScalar { get; }
+
         /// <summary> The time frame for bursting in seconds in the file share maximum burst credits for IOPS formula. </summary>
         [WirePath("burstTimeframeSeconds")]
         public int? BurstTimeframeSeconds { get; }

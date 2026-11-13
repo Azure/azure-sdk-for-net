@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableQuantumArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableQuantumArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableQuantumArmClient for mocking. </summary>
         protected MockableQuantumArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableQuantumArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableQuantumArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableQuantumArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableQuantumArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="QuantumWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuantumWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="QuantumWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="QuantumWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="QuantumWorkspaceResource"/> object. </returns>
         public virtual QuantumWorkspaceResource GetQuantumWorkspaceResource(ResourceIdentifier id)

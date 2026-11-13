@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class RouteResource : IJsonModel<RouteData>
     {
-        private static RouteData s_dataDeserializationInstance;
-        private static RouteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RouteData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RouteData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RouteData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RouteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RouteData>)Data).Write(writer, options);
 
-        RouteData IJsonModel<RouteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RouteData IJsonModel<RouteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RouteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RouteData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RouteData IPersistableModel<RouteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<RouteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RouteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct SapVirtualInstanceIdentityType : IEquatable<SapVirtualInstanceIdentityType>
     {
         private readonly string _value;
+        /// <summary> No managed identity. </summary>
+        private const string NoneValue = "None";
+        /// <summary> User assigned managed identity. </summary>
+        private const string UserAssignedValue = "UserAssigned";
 
         /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapVirtualInstanceIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string UserAssignedValue = "UserAssigned";
+            _value = value;
+        }
 
         /// <summary> No managed identity. </summary>
         public static SapVirtualInstanceIdentityType None { get; } = new SapVirtualInstanceIdentityType(NoneValue);
+
         /// <summary> User assigned managed identity. </summary>
         public static SapVirtualInstanceIdentityType UserAssigned { get; } = new SapVirtualInstanceIdentityType(UserAssignedValue);
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapVirtualInstanceIdentityType left, SapVirtualInstanceIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapVirtualInstanceIdentityType left, SapVirtualInstanceIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapVirtualInstanceIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapVirtualInstanceIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapVirtualInstanceIdentityType(string value) => new SapVirtualInstanceIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapVirtualInstanceIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapVirtualInstanceIdentityType?(string value) => value == null ? null : new SapVirtualInstanceIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapVirtualInstanceIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapVirtualInstanceIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

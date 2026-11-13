@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedInstanceDtcResource : IJsonModel<ManagedInstanceDtcData>
     {
-        private static ManagedInstanceDtcData s_dataDeserializationInstance;
-        private static ManagedInstanceDtcData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedInstanceDtcData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedInstanceDtcData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedInstanceDtcData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstanceDtcData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceDtcData>)Data).Write(writer, options);
 
-        ManagedInstanceDtcData IJsonModel<ManagedInstanceDtcData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceDtcData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstanceDtcData IJsonModel<ManagedInstanceDtcData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedInstanceDtcData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceDtcData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedInstanceDtcData IPersistableModel<ManagedInstanceDtcData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceDtcData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceDtcData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceDtcData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstanceDtcData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

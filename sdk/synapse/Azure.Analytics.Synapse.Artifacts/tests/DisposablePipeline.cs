@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private readonly PipelineClient _client;
         public PipelineResource Resource;
 
-        private DisposablePipeline (PipelineClient client, PipelineResource resource)
+        private DisposablePipeline(PipelineClient client, PipelineResource resource)
         {
             _client = client;
             Resource = resource;
@@ -22,10 +22,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
         public string Name => Resource.Name;
 
-        public static async ValueTask<DisposablePipeline> Create (PipelineClient client, TestRecording recording) =>
-            new DisposablePipeline (client, await CreateResource(client, recording));
+        public static async ValueTask<DisposablePipeline> Create(PipelineClient client, TestRecording recording) =>
+            new DisposablePipeline(client, await CreateResource(client, recording));
 
-        public static async ValueTask<PipelineResource> CreateResource (PipelineClient client, TestRecording recording)
+        public static async ValueTask<PipelineResource> CreateResource(PipelineClient client, TestRecording recording)
         {
             string pipelineName = recording.GenerateId("Pipeline", 16);
             PipelineCreateOrUpdatePipelineOperation createOperation = await client.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
         public async ValueTask DisposeAsync()
         {
-            PipelineDeletePipelineOperation operation = await _client.StartDeletePipelineAsync (Name);
+            PipelineDeletePipelineOperation operation = await _client.StartDeletePipelineAsync(Name);
             await operation.WaitForCompletionResponseAsync();
         }
     }

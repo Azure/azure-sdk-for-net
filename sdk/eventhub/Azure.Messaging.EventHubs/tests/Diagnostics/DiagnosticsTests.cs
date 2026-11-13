@@ -213,7 +213,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProducer = new Mock<EventHubProducerClient>(fakeConnection, new EventHubProducerClientOptions());
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { "0"});
+                .ReturnsAsync(new[] { "0" });
             int times = 0;
             mockProducer
                 .Setup(producer => producer.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
@@ -280,7 +280,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProducer = new Mock<EventHubProducerClient>(fakeConnection, new EventHubProducerClientOptions());
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { "0"});
+                .ReturnsAsync(new[] { "0" });
             int times = 0;
             mockProducer
                 .Setup(producer => producer.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
@@ -522,7 +522,7 @@ namespace Azure.Messaging.EventHubs.Tests
             for (var index = 0; index < eventBatch.Count; ++index)
             {
                 var targetId = new ClientDiagnosticListener.ProducedLink(traceparents[index]);
-                Assert.That(scopes.SelectMany(scope => scope.Links), Has.One.EqualTo(targetId), $"There should have been a link for the diagnostic identifier: { targetId }");
+                Assert.That(scopes.SelectMany(scope => scope.Links), Has.One.EqualTo(targetId), $"There should have been a link for the diagnostic identifier: {targetId}");
             }
 
             foreach (var scope in scopes)

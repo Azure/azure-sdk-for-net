@@ -14,10 +14,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningWorkspaceConnectionProperties
     {
+        // TypeSpec generation does not emit this non-wire protected constructor, but GA allowed subclassing the base model.
+        // There is no TypeSpec decorator for adding constructors, so keep it as SDK custom code.
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionProperties"/>. </summary>
+        protected MachineLearningWorkspaceConnectionProperties()
+        {
+        }
+
         /// <summary> Value details of the workspace connection. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Value { get; set; }
-        /// <summary> format for the workspace connection value. </summary>
+        /// <summary> The format of the workspace connection value. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MachineLearningValueFormat? ValueFormat { get; set; }
     }

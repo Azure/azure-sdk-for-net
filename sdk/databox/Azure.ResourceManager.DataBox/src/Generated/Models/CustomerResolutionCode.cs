@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The CustomerResolutionCode. </summary>
+    /// <summary> Resolution code provided by customer. </summary>
     public enum CustomerResolutionCode
     {
         /// <summary> No Resolution Yet. </summary>

@@ -87,7 +87,7 @@ namespace Azure.Communication.CallAutomation
                     result = new RemoveParticipantEventResult(true, (RemoveParticipantSucceeded)returnedEvent, null, ((RemoveParticipantSucceeded)returnedEvent).Participant);
                     break;
                 case RemoveParticipantFailed:
-                    result = new RemoveParticipantEventResult(false, null, (RemoveParticipantFailed)returnedEvent,((RemoveParticipantFailed)returnedEvent).Participant);
+                    result = new RemoveParticipantEventResult(false, null, (RemoveParticipantFailed)returnedEvent, ((RemoveParticipantFailed)returnedEvent).Participant);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> DbServer resource properties. </summary>
     public partial class OracleDBServerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OracleDBServerProperties"/>. </summary>
         /// <param name="dbServerOcid"> Db server name. </param>
@@ -68,8 +39,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="createdOn"> The date and time that the Db Server was created. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDBServerProperties(string dbServerOcid, string displayName, string compartmentOcid, ResourceIdentifier exadataInfrastructureOcid, int? cpuCoreCount, DBServerPatchingDetails dbServerPatchingDetails, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, IReadOnlyList<string> vmClusterOcids, IReadOnlyList<string> dbNodeOcids, string lifecycleDetails, DBServerProvisioningState? lifecycleState, int? maxCpuCount, IReadOnlyList<string> autonomousVmClusterOcids, IReadOnlyList<string> autonomousVirtualMachineOcids, int? maxDBNodeStorageInGbs, int? memorySizeInGbs, string shape, DateTimeOffset? createdOn, OracleDatabaseResourceProvisioningState? provisioningState, OracleDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OracleDBServerProperties(string dbServerOcid, string displayName, string compartmentOcid, ResourceIdentifier exadataInfrastructureOcid, int? cpuCoreCount, DBServerPatchingDetails dbServerPatchingDetails, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, IReadOnlyList<string> vmClusterOcids, IReadOnlyList<string> dbNodeOcids, string lifecycleDetails, DBServerProvisioningState? lifecycleState, int? maxCpuCount, IReadOnlyList<string> autonomousVmClusterOcids, IReadOnlyList<string> autonomousVirtualMachineOcids, int? maxDBNodeStorageInGbs, int? memorySizeInGbs, string shape, DateTimeOffset? createdOn, OracleDatabaseResourceProvisioningState? provisioningState, OracleDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DBServerOcid = dbServerOcid;
             DisplayName = displayName;
@@ -92,49 +63,69 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             ComputeModel = computeModel;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Db server name. </summary>
         public string DBServerOcid { get; }
+
         /// <summary> The name for the Db Server. </summary>
         public string DisplayName { get; }
+
         /// <summary> The OCID of the compartment. </summary>
         public string CompartmentOcid { get; }
+
         /// <summary> The OCID of the Exadata infrastructure. </summary>
         public ResourceIdentifier ExadataInfrastructureOcid { get; }
+
         /// <summary> The number of CPU cores enabled on the Db server. </summary>
         public int? CpuCoreCount { get; }
+
         /// <summary> dbServerPatching details of the Db server. </summary>
         public DBServerPatchingDetails DBServerPatchingDetails { get; }
+
         /// <summary> The total memory available in GBs. </summary>
         public int? MaxMemoryInGbs { get; }
+
         /// <summary> The allocated local node storage in GBs on the Db server. </summary>
         public int? DBNodeStorageSizeInGbs { get; }
+
         /// <summary> The OCID of the VM Clusters associated with the Db server. </summary>
         public IReadOnlyList<string> VmClusterOcids { get; }
+
         /// <summary> The OCID of the Db nodes associated with the Db server. </summary>
         public IReadOnlyList<string> DBNodeOcids { get; }
+
         /// <summary> Lifecycle details of dbServer. </summary>
         public string LifecycleDetails { get; }
+
         /// <summary> DbServer provisioning state. </summary>
         public DBServerProvisioningState? LifecycleState { get; }
+
         /// <summary> The total number of CPU cores available. </summary>
         public int? MaxCpuCount { get; }
+
         /// <summary> The list of OCIDs of the Autonomous VM Clusters associated with the Db server. </summary>
         public IReadOnlyList<string> AutonomousVmClusterOcids { get; }
+
         /// <summary> The list of OCIDs of the Autonomous Virtual Machines associated with the Db server. </summary>
         public IReadOnlyList<string> AutonomousVirtualMachineOcids { get; }
+
         /// <summary> The total max dbNode storage in GBs. </summary>
         public int? MaxDBNodeStorageInGbs { get; }
+
         /// <summary> The total memory size in GBs. </summary>
         public int? MemorySizeInGbs { get; }
+
         /// <summary> The shape of the Db server. The shape determines the amount of CPU, storage, and memory resources available. </summary>
         public string Shape { get; }
+
         /// <summary> The date and time that the Db Server was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> Azure resource provisioning state. </summary>
         public OracleDatabaseResourceProvisioningState? ProvisioningState { get; }
+
         /// <summary> The compute model of the Exadata Infrastructure. </summary>
         public OracleDatabaseComputeModel? ComputeModel { get; }
     }

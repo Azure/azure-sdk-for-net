@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBServiceSize : IEquatable<CosmosDBServiceSize>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceSize"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBServiceSize(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CosmosD4SValue = "Cosmos.D4s";
         private const string CosmosD8SValue = "Cosmos.D8s";
         private const string CosmosD16SValue = "Cosmos.D16s";
 
-        /// <summary> Cosmos.D4s. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceSize"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBServiceSize(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the CosmosD4S. </summary>
         public static CosmosDBServiceSize CosmosD4S { get; } = new CosmosDBServiceSize(CosmosD4SValue);
-        /// <summary> Cosmos.D8s. </summary>
+
+        /// <summary> Gets the CosmosD8S. </summary>
         public static CosmosDBServiceSize CosmosD8S { get; } = new CosmosDBServiceSize(CosmosD8SValue);
-        /// <summary> Cosmos.D16s. </summary>
+
+        /// <summary> Gets the CosmosD16S. </summary>
         public static CosmosDBServiceSize CosmosD16S { get; } = new CosmosDBServiceSize(CosmosD16SValue);
+
         /// <summary> Determines if two <see cref="CosmosDBServiceSize"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBServiceSize left, CosmosDBServiceSize right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBServiceSize"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBServiceSize left, CosmosDBServiceSize right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBServiceSize"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBServiceSize"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBServiceSize(string value) => new CosmosDBServiceSize(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBServiceSize"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBServiceSize?(string value) => value == null ? null : new CosmosDBServiceSize(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBServiceSize other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBServiceSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubNetworkRuleIPAction : IEquatable<IotHubNetworkRuleIPAction>
     {
         private readonly string _value;
+        /// <summary> Allow. </summary>
+        private const string AllowValue = "Allow";
 
         /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleIPAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubNetworkRuleIPAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowValue = "Allow";
+            _value = value;
+        }
 
         /// <summary> Allow. </summary>
         public static IotHubNetworkRuleIPAction Allow { get; } = new IotHubNetworkRuleIPAction(AllowValue);
+
         /// <summary> Determines if two <see cref="IotHubNetworkRuleIPAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubNetworkRuleIPAction left, IotHubNetworkRuleIPAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubNetworkRuleIPAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubNetworkRuleIPAction left, IotHubNetworkRuleIPAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubNetworkRuleIPAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubNetworkRuleIPAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubNetworkRuleIPAction(string value) => new IotHubNetworkRuleIPAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubNetworkRuleIPAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubNetworkRuleIPAction?(string value) => value == null ? null : new IotHubNetworkRuleIPAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubNetworkRuleIPAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubNetworkRuleIPAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

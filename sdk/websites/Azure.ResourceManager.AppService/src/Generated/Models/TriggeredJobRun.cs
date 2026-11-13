@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Triggered Web Job Run Information. </summary>
     public partial class TriggeredJobRun
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TriggeredJobRun"/>. </summary>
         public TriggeredJobRun()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="uri"> Job URL. </param>
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebJobId = webJobId;
             WebJobName = webJobName;
@@ -76,39 +48,49 @@ namespace Azure.ResourceManager.AppService.Models
             Uri = uri;
             JobName = jobName;
             Trigger = trigger;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Job ID. </summary>
         [WirePath("web_job_id")]
         public string WebJobId { get; set; }
+
         /// <summary> Job name. </summary>
         [WirePath("web_job_name")]
         public string WebJobName { get; set; }
+
         /// <summary> Job status. </summary>
         [WirePath("status")]
         public TriggeredWebJobStatus? Status { get; set; }
+
         /// <summary> Start time. </summary>
         [WirePath("start_time")]
         public DateTimeOffset? StartOn { get; set; }
+
         /// <summary> End time. </summary>
         [WirePath("end_time")]
         public DateTimeOffset? EndOn { get; set; }
+
         /// <summary> Job duration. </summary>
         [WirePath("duration")]
         public TimeSpan? Duration { get; set; }
+
         /// <summary> Output URL. </summary>
         [WirePath("output_url")]
         public Uri OutputUri { get; set; }
+
         /// <summary> Error URL. </summary>
         [WirePath("error_url")]
         public Uri ErrorUri { get; set; }
+
         /// <summary> Job URL. </summary>
         [WirePath("url")]
         public Uri Uri { get; set; }
+
         /// <summary> Job name. </summary>
         [WirePath("job_name")]
         public string JobName { get; set; }
+
         /// <summary> Job trigger. </summary>
         [WirePath("trigger")]
         public string Trigger { get; set; }

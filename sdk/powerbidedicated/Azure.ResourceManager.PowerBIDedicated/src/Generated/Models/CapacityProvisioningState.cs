@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     public readonly partial struct CapacityProvisioningState : IEquatable<CapacityProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CapacityProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CapacityProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DeletingValue = "Deleting";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
@@ -35,47 +28,82 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         private const string PreparingValue = "Preparing";
         private const string ScalingValue = "Scaling";
 
-        /// <summary> Deleting. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CapacityProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Deleting. </summary>
         public static CapacityProvisioningState Deleting { get; } = new CapacityProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static CapacityProvisioningState Succeeded { get; } = new CapacityProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static CapacityProvisioningState Failed { get; } = new CapacityProvisioningState(FailedValue);
-        /// <summary> Paused. </summary>
+
+        /// <summary> Gets the Paused. </summary>
         public static CapacityProvisioningState Paused { get; } = new CapacityProvisioningState(PausedValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static CapacityProvisioningState Suspended { get; } = new CapacityProvisioningState(SuspendedValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> Gets the Provisioning. </summary>
         public static CapacityProvisioningState Provisioning { get; } = new CapacityProvisioningState(ProvisioningValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static CapacityProvisioningState Updating { get; } = new CapacityProvisioningState(UpdatingValue);
-        /// <summary> Suspending. </summary>
+
+        /// <summary> Gets the Suspending. </summary>
         public static CapacityProvisioningState Suspending { get; } = new CapacityProvisioningState(SuspendingValue);
-        /// <summary> Pausing. </summary>
+
+        /// <summary> Gets the Pausing. </summary>
         public static CapacityProvisioningState Pausing { get; } = new CapacityProvisioningState(PausingValue);
-        /// <summary> Resuming. </summary>
+
+        /// <summary> Gets the Resuming. </summary>
         public static CapacityProvisioningState Resuming { get; } = new CapacityProvisioningState(ResumingValue);
-        /// <summary> Preparing. </summary>
+
+        /// <summary> Gets the Preparing. </summary>
         public static CapacityProvisioningState Preparing { get; } = new CapacityProvisioningState(PreparingValue);
-        /// <summary> Scaling. </summary>
+
+        /// <summary> Gets the Scaling. </summary>
         public static CapacityProvisioningState Scaling { get; } = new CapacityProvisioningState(ScalingValue);
+
         /// <summary> Determines if two <see cref="CapacityProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CapacityProvisioningState left, CapacityProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CapacityProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CapacityProvisioningState left, CapacityProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CapacityProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CapacityProvisioningState(string value) => new CapacityProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CapacityProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CapacityProvisioningState?(string value) => value == null ? null : new CapacityProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CapacityProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CapacityProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,37 +5,31 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> An enumeration of shares. </summary>
     internal partial class ListSharesResponse
     {
         /// <summary> Initializes a new instance of <see cref="ListSharesResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="nextMarker"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="nextMarker"/> is null. </exception>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="nextMarker"> The next marker. </param>
         internal ListSharesResponse(string serviceEndpoint, string nextMarker)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(nextMarker, nameof(nextMarker));
-
             ServiceEndpoint = serviceEndpoint;
             ShareItems = new ChangeTrackingList<ShareItemInternal>();
             NextMarker = nextMarker;
         }
 
         /// <summary> Initializes a new instance of <see cref="ListSharesResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="prefix"></param>
-        /// <param name="marker"></param>
-        /// <param name="maxResults"></param>
-        /// <param name="shareItems"></param>
-        /// <param name="nextMarker"></param>
-        internal ListSharesResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IReadOnlyList<ShareItemInternal> shareItems, string nextMarker)
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="prefix"> The prefix. </param>
+        /// <param name="marker"> The marker. </param>
+        /// <param name="maxResults"> The max results. </param>
+        /// <param name="shareItems"> The share items. </param>
+        /// <param name="nextMarker"> The next marker. </param>
+        internal ListSharesResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IList<ShareItemInternal> shareItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -45,17 +39,22 @@ namespace Azure.Storage.Files.Shares.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Gets the service endpoint. </summary>
+        /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
-        /// <summary> Gets the prefix. </summary>
+
+        /// <summary> The prefix. </summary>
         public string Prefix { get; }
-        /// <summary> Gets the marker. </summary>
+
+        /// <summary> The marker. </summary>
         public string Marker { get; }
-        /// <summary> Gets the max results. </summary>
+
+        /// <summary> The max results. </summary>
         public int? MaxResults { get; }
-        /// <summary> Gets the share items. </summary>
-        public IReadOnlyList<ShareItemInternal> ShareItems { get; }
-        /// <summary> Gets the next marker. </summary>
+
+        /// <summary> The share items. </summary>
+        public IList<ShareItemInternal> ShareItems { get; }
+
+        /// <summary> The next marker. </summary>
         public string NextMarker { get; }
     }
 }

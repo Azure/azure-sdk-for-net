@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Web App stack minor version. </summary>
     public partial class WebAppMinorVersion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppMinorVersion"/>. </summary>
         internal WebAppMinorVersion()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="displayText"> Web App stack minor version (display only). </param>
         /// <param name="value"> Web App stack major version name. </param>
         /// <param name="stackSettings"> Settings associated with the minor version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppMinorVersion(string displayText, string value, WebAppRuntimes stackSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppMinorVersion(string displayText, string value, WebAppRuntimes stackSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayText = displayText;
             Value = value;
             StackSettings = stackSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Web App stack minor version (display only). </summary>
         [WirePath("displayText")]
         public string DisplayText { get; }
+
         /// <summary> Web App stack major version name. </summary>
         [WirePath("value")]
         public string Value { get; }
+
         /// <summary> Settings associated with the minor version. </summary>
         [WirePath("stackSettings")]
         public WebAppRuntimes StackSettings { get; }

@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal class MachineLearningEndpointAuthKeysOperationSource : IOperationSource<MachineLearningEndpointAuthKeys>
+    /// <summary></summary>
+    internal partial class MachineLearningEndpointAuthKeysOperationSource : IOperationSource<MachineLearningEndpointAuthKeys>
     {
-        MachineLearningEndpointAuthKeys IOperationSource<MachineLearningEndpointAuthKeys>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal MachineLearningEndpointAuthKeysOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        MachineLearningEndpointAuthKeys IOperationSource<MachineLearningEndpointAuthKeys>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<MachineLearningEndpointAuthKeys> IOperationSource<MachineLearningEndpointAuthKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

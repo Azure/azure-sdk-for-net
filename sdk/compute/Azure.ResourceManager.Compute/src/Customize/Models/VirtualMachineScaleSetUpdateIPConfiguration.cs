@@ -1,16 +1,49 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    // Backward compatibility: this model previously inherited ComputeWriteableSubResourceData and its virtual Id property.
+    // Without this base type, ApiCompat reports the removed base class and missing inherited Id accessors.
     public partial class VirtualMachineScaleSetUpdateIPConfiguration : ComputeWriteableSubResourceData
     {
+        // Backward compatibility: the generated Compute-local property is named ApplicationGatewayBackendAddressPoolResources
+        // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
+        /// <summary> The application gateway backend address pools. </summary>
+        [Obsolete("This property is obsolete and no longer works. Use ApplicationGatewayBackendAddressPoolResources instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceIdentifier Id { get; set; }
+        // Compatibility placeholder only; this property is not wired to ApplicationGatewayBackendAddressPoolResources.
+        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; set; }
+
+        // Backward compatibility: the generated Compute-local property is named ApplicationSecurityGroupResources
+        // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
+        /// <summary> Specifies an array of references to application security group. </summary>
+        [Obsolete("This property is obsolete and no longer works. Use ApplicationSecurityGroupResources instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        // Compatibility placeholder only; this property is not wired to ApplicationSecurityGroupResources.
+        public IList<WritableSubResource> ApplicationSecurityGroups { get; set; }
+
+        // Backward compatibility: the generated Compute-local property is named LoadBalancerBackendAddressPoolResources
+        // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
+        /// <summary> The load balancer backend address pools. </summary>
+        [Obsolete("This property is obsolete and no longer works. Use LoadBalancerBackendAddressPoolResources instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        // Compatibility placeholder only; this property is not wired to LoadBalancerBackendAddressPoolResources.
+        public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; set; }
+
+        // Backward compatibility: the generated Compute-local property is named LoadBalancerInboundNatPoolResources
+        // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
+        /// <summary> The load balancer inbound nat pools. </summary>
+        [Obsolete("This property is obsolete and no longer works. Use LoadBalancerInboundNatPoolResources instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        // Compatibility placeholder only; this property is not wired to LoadBalancerInboundNatPoolResources.
+        public IList<WritableSubResource> LoadBalancerInboundNatPools { get; set; }
     }
 }

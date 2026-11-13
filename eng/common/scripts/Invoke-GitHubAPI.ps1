@@ -114,6 +114,66 @@ function Get-GitHubPullRequest {
           -MaximumRetryCount 3
 }
 
+# Returns the pull requests associated with a commit SHA.
+# See https://docs.github.com/rest/commits/commits#list-pull-requests-associated-with-a-commit
+function Get-GitHubPullRequestsForCommit {
+  param (
+    $RepoOwner,
+    $RepoName,
+    $RepoId = "$RepoOwner/$RepoName",
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    $CommitSha,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+  # A commit is associated with ~1 pull request, so a single request is sufficient.
+  $uri = "$GithubAPIBaseURI/$RepoId/commits/$CommitSha/pulls"
+
+  return Invoke-RestMethod `
+          -Method GET `
+          -Uri $uri `
+          -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+          -MaximumRetryCount 3
+}
+
+# Returns the list of files changed in a pull request, following pagination.
+# See https://docs.github.com/rest/pulls/pulls#list-pull-requests-files
+function Get-GitHubPullRequestFiles {
+  param (
+    $RepoOwner,
+    $RepoName,
+    $RepoId = "$RepoOwner/$RepoName",
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    $PullRequestNumber,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+
+  $headers = Get-GitHubApiHeaders -token $AuthToken
+  $pageSize = 100
+  $page = 1
+  $files = @()
+
+  do {
+    $uri = "$GithubAPIBaseURI/$RepoId/pulls/$PullRequestNumber/files?per_page=$pageSize&page=$page"
+    $response = Invoke-RestMethod `
+            -Method GET `
+            -Uri $uri `
+            -Headers $headers `
+            -MaximumRetryCount 3
+
+    $response = @($response)
+    if ($response.Count -gt 0) { $files += $response }
+    $page++
+  } while ($response.Count -eq $pageSize)
+
+  return $files
+}
+
 function New-GitHubPullRequest {
   param (
     $RepoOwner,

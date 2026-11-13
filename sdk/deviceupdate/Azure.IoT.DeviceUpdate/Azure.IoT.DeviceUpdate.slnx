@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.IoT.DeviceUpdate.csproj" />
+  <Project Path="tests/Azure.IoT.DeviceUpdate.Tests.csproj" />
+</Solution>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BmcKeySetPrivilegeLevel : IEquatable<BmcKeySetPrivilegeLevel>
     {
         private readonly string _value;
+        /// <summary> ReadOnly privilege level. </summary>
+        private const string ReadOnlyValue = "ReadOnly";
+        /// <summary> Administrator privilege level. </summary>
+        private const string AdministratorValue = "Administrator";
 
         /// <summary> Initializes a new instance of <see cref="BmcKeySetPrivilegeLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BmcKeySetPrivilegeLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ReadOnlyValue = "ReadOnly";
-        private const string AdministratorValue = "Administrator";
-
-        /// <summary> ReadOnly. </summary>
+        /// <summary> ReadOnly privilege level. </summary>
         public static BmcKeySetPrivilegeLevel ReadOnly { get; } = new BmcKeySetPrivilegeLevel(ReadOnlyValue);
-        /// <summary> Administrator. </summary>
+
+        /// <summary> Administrator privilege level. </summary>
         public static BmcKeySetPrivilegeLevel Administrator { get; } = new BmcKeySetPrivilegeLevel(AdministratorValue);
+
         /// <summary> Determines if two <see cref="BmcKeySetPrivilegeLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BmcKeySetPrivilegeLevel left, BmcKeySetPrivilegeLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BmcKeySetPrivilegeLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BmcKeySetPrivilegeLevel left, BmcKeySetPrivilegeLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BmcKeySetPrivilegeLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BmcKeySetPrivilegeLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BmcKeySetPrivilegeLevel(string value) => new BmcKeySetPrivilegeLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BmcKeySetPrivilegeLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BmcKeySetPrivilegeLevel?(string value) => value == null ? null : new BmcKeySetPrivilegeLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BmcKeySetPrivilegeLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BmcKeySetPrivilegeLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

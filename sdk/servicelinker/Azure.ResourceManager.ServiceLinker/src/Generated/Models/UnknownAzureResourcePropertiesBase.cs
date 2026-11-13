@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> Unknown version of AzureResourcePropertiesBase. </summary>
     internal partial class UnknownAzureResourcePropertiesBase : AzureResourceBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureResourcePropertiesBase"/>. </summary>
-        /// <param name="azureResourceType"> The azure resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAzureResourcePropertiesBase(AzureResourceType azureResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(azureResourceType, serializedAdditionalRawData)
-        {
-            AzureResourceType = azureResourceType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAzureResourcePropertiesBase"/> for deserialization. </summary>
-        internal UnknownAzureResourcePropertiesBase()
+        /// <param name="type"> The azure resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAzureResourcePropertiesBase(AzureResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

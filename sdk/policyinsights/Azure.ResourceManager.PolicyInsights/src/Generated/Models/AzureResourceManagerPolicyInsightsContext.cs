@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PolicyInsights.Models;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AttestationEvidence))]
     [ModelReaderWriterBuildable(typeof(AttestationListResult))]
     [ModelReaderWriterBuildable(typeof(CheckManagementGroupPolicyRestrictionsContent))]
     [ModelReaderWriterBuildable(typeof(CheckPolicyRestrictionsContent))]
     [ModelReaderWriterBuildable(typeof(CheckPolicyRestrictionsResult))]
+    [ModelReaderWriterBuildable(typeof(CheckRestrictionEvaluationDetails))]
     [ModelReaderWriterBuildable(typeof(CheckRestrictionsResourceDetails))]
-    [ModelReaderWriterBuildable(typeof(CheckRestrictionsResultContentEvaluationResult))]
     [ModelReaderWriterBuildable(typeof(ComplianceDetail))]
     [ModelReaderWriterBuildable(typeof(ComponentEventDetails))]
+    [ModelReaderWriterBuildable(typeof(ComponentExpressionEvaluationDetails))]
+    [ModelReaderWriterBuildable(typeof(ComponentPolicyEvaluationDetails))]
+    [ModelReaderWriterBuildable(typeof(ComponentPolicyState))]
+    [ModelReaderWriterBuildable(typeof(ComponentPolicyStatesQueryResults))]
     [ModelReaderWriterBuildable(typeof(ComponentStateDetails))]
     [ModelReaderWriterBuildable(typeof(ExpressionEvaluationDetails))]
     [ModelReaderWriterBuildable(typeof(FieldRestriction))]
@@ -35,6 +40,7 @@ namespace Azure.ResourceManager.PolicyInsights
     [ModelReaderWriterBuildable(typeof(PolicyAttestationResource))]
     [ModelReaderWriterBuildable(typeof(PolicyDefinitionSummary))]
     [ModelReaderWriterBuildable(typeof(PolicyDetails))]
+    [ModelReaderWriterBuildable(typeof(PolicyEffectDetails))]
     [ModelReaderWriterBuildable(typeof(PolicyEvaluationDetails))]
     [ModelReaderWriterBuildable(typeof(PolicyEvaluationResult))]
     [ModelReaderWriterBuildable(typeof(PolicyEvent))]

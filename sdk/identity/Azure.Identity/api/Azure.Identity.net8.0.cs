@@ -1,5 +1,6 @@
 namespace Azure.Identity
 {
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class AuthenticationFailedException : System.Exception
     {
         [System.ObsoleteAttribute(DiagnosticId="SYSLIB0051")]
@@ -7,6 +8,7 @@ namespace Azure.Identity
         public AuthenticationFailedException(string message) { }
         public AuthenticationFailedException(string message, System.Exception innerException) { }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class AuthenticationRecord
     {
         internal AuthenticationRecord() { }
@@ -20,6 +22,7 @@ namespace Azure.Identity
         public void Serialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public System.Threading.Tasks.Task SerializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class AuthenticationRequiredException : Azure.Identity.CredentialUnavailableException
     {
         [System.ObsoleteAttribute(DiagnosticId="SYSLIB0051")]
@@ -28,31 +31,39 @@ namespace Azure.Identity
         public AuthenticationRequiredException(string message, Azure.Core.TokenRequestContext context, System.Exception innerException) : base (default(string)) { }
         public Azure.Core.TokenRequestContext TokenRequestContext { get { throw null; } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AuthorizationCodeCredential : Azure.Core.TokenCredential
     {
         protected AuthorizationCodeCredential() { }
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode) { }
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, Azure.Identity.AuthorizationCodeCredentialOptions options) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class AuthorizationCodeCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AuthorizationCodeCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public static partial class AzureAuthorityHosts
     {
+        public static System.Uri AzureBleuCloud { get { throw null; } }
         public static System.Uri AzureChina { get { throw null; } }
         [System.ObsoleteAttribute("Microsoft Cloud Germany was closed on October 29th, 2021.")]
         public static System.Uri AzureGermany { get { throw null; } }
         public static System.Uri AzureGovernment { get { throw null; } }
         public static System.Uri AzurePublicCloud { get { throw null; } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AzureCliCredential : Azure.Core.TokenCredential
     {
         public AzureCliCredential() { }
@@ -60,6 +71,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class AzureCliCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AzureCliCredentialOptions() { }
@@ -68,6 +80,8 @@ namespace Azure.Identity
         public string Subscription { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential
     {
         public AzureDeveloperCliCredential() { }
@@ -75,6 +89,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class AzureDeveloperCliCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AzureDeveloperCliCredentialOptions() { }
@@ -82,6 +97,8 @@ namespace Azure.Identity
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AzurePipelinesCredential : Azure.Core.TokenCredential
     {
         protected AzurePipelinesCredential() { }
@@ -89,6 +106,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class AzurePipelinesCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AzurePipelinesCredentialOptions() { }
@@ -96,6 +114,8 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
     {
         public AzurePowerShellCredential() { }
@@ -103,6 +123,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class AzurePowerShellCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AzurePowerShellCredentialOptions() { }
@@ -110,13 +131,16 @@ namespace Azure.Identity
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class BrowserCustomizationOptions
     {
         public BrowserCustomizationOptions() { }
         public string ErrorMessage { get { throw null; } set { } }
         public string SuccessMessage { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This option requires additional dependencies on Microsoft.Identity.Client.Desktop and is no longer supported. Consider using brokered authentication instead")]
         public bool? UseEmbeddedWebView { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
         protected ChainedTokenCredential() { }
@@ -124,6 +148,8 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class ClientAssertionCredential : Azure.Core.TokenCredential
     {
         protected ClientAssertionCredential() { }
@@ -132,27 +158,31 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class ClientAssertionCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientAssertionCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
         protected ClientCertificateCredential() { }
         public ClientCertificateCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate) { }
         public ClientCertificateCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, Azure.Identity.ClientCertificateCredentialOptions options) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ClientCertificateCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, Azure.Identity.TokenCredentialOptions options) { }
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath) { }
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, Azure.Identity.ClientCertificateCredentialOptions options) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class ClientCertificateCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientCertificateCredentialOptions() { }
@@ -160,7 +190,11 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class ClientSecretCredential : Azure.Core.TokenCredential
     {
         protected ClientSecretCredential() { }
@@ -170,13 +204,35 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class ClientSecretCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientSecretCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
+    public static partial class ConfigurationExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAzureCredentialResolver(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddAzureCredentialResolver(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings GetAzureCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings GetAzureCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings GetAzureCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
+    }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
         [System.ObsoleteAttribute(DiagnosticId="SYSLIB0051")]
@@ -184,6 +240,8 @@ namespace Azure.Identity
         public CredentialUnavailableException(string message) : base (default(string)) { }
         public CredentialUnavailableException(string message, System.Exception innerException) : base (default(string)) { }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class DefaultAzureCredential : Azure.Core.TokenCredential
     {
         public const string DefaultEnvironmentVariableName = "AZURE_TOKEN_CREDENTIALS";
@@ -194,6 +252,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class DefaultAzureCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public DefaultAzureCredentialOptions() { }
@@ -207,36 +266,30 @@ namespace Azure.Identity
         public bool ExcludeEnvironmentCredential { get { throw null; } set { } }
         public bool ExcludeInteractiveBrowserCredential { get { throw null; } set { } }
         public bool ExcludeManagedIdentityCredential { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
         public bool ExcludeSharedTokenCacheCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCodeCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCredential { get { throw null; } set { } }
         public bool ExcludeWorkloadIdentityCredential { get { throw null; } set { } }
         public string InteractiveBrowserCredentialClientId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string InteractiveBrowserTenantId { get { throw null; } set { } }
         public string ManagedIdentityClientId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SharedTokenCacheTenantId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
         public string SharedTokenCacheUsername { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string VisualStudioCodeTenantId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string VisualStudioTenantId { get { throw null; } set { } }
         public string WorkloadIdentityClientId { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class DeviceCodeCredential : Azure.Core.TokenCredential
     {
         public DeviceCodeCredential() { }
         public DeviceCodeCredential(Azure.Identity.DeviceCodeCredentialOptions options) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public DeviceCodeCredential(System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> deviceCodeCallback, string clientId, Azure.Identity.TokenCredentialOptions options = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public DeviceCodeCredential(System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> deviceCodeCallback, string tenantId, string clientId, Azure.Identity.TokenCredentialOptions options = null) { }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -245,6 +298,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class DeviceCodeCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public DeviceCodeCredentialOptions() { }
@@ -256,7 +310,10 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct DeviceCodeInfo
     {
@@ -270,33 +327,36 @@ namespace Azure.Identity
         public string UserCode { get { throw null; } }
         public System.Uri VerificationUri { get { throw null; } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class EnvironmentCredential : Azure.Core.TokenCredential
     {
         public EnvironmentCredential() { }
         public EnvironmentCredential(Azure.Identity.EnvironmentCredentialOptions options) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public EnvironmentCredential(Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class EnvironmentCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public EnvironmentCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public static partial class IdentityModelFactory
     {
         public static Azure.Identity.AuthenticationRecord AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId) { throw null; }
         public static Azure.Identity.DeviceCodeInfo DeviceCodeInfo(string userCode, string deviceCode, System.Uri verificationUri, System.DateTimeOffset expiresOn, string message, string clientId, System.Collections.Generic.IReadOnlyCollection<string> scopes) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class InteractiveBrowserCredential : Azure.Core.TokenCredential
     {
         public InteractiveBrowserCredential() { }
         public InteractiveBrowserCredential(Azure.Identity.InteractiveBrowserCredentialOptions options) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string clientId) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string tenantId, string clientId, Azure.Identity.TokenCredentialOptions options = null) { }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -305,6 +365,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class InteractiveBrowserCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public InteractiveBrowserCredentialOptions() { }
@@ -318,23 +379,31 @@ namespace Azure.Identity
         public System.Uri RedirectUri { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
         protected ManagedIdentityCredential() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("Use constructor ManagedIdentityCredential(ManagedIdentityId id) or ManagedIdentityCredential(ManagedIdentityCredentialOptions options).")]
         public ManagedIdentityCredential(Azure.Core.ResourceIdentifier resourceId, Azure.Identity.TokenCredentialOptions options = null) { }
         public ManagedIdentityCredential(Azure.Identity.ManagedIdentityCredentialOptions options) { }
         public ManagedIdentityCredential(Azure.Identity.ManagedIdentityId id) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("Use constructor ManagedIdentityCredential(ManagedIdentityId id) or ManagedIdentityCredential(ManagedIdentityCredentialOptions options).")]
         public ManagedIdentityCredential(string clientId = null, Azure.Identity.TokenCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class ManagedIdentityCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ManagedIdentityCredentialOptions(Azure.Identity.ManagedIdentityId managedIdentityId = null) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
+        public bool EnableMtlsProofOfPossession { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class ManagedIdentityId
     {
         internal ManagedIdentityId() { }
@@ -344,6 +413,8 @@ namespace Azure.Identity
         public static Azure.Identity.ManagedIdentityId FromUserAssignedResourceId(Azure.Core.ResourceIdentifier id) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
     {
         protected OnBehalfOfCredential() { }
@@ -356,6 +427,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class OnBehalfOfCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public OnBehalfOfCredentialOptions() { }
@@ -363,20 +435,22 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This credential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential
     {
         public SharedTokenCacheCredential() { }
         public SharedTokenCacheCredential(Azure.Identity.SharedTokenCacheCredentialOptions options) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public SharedTokenCacheCredential(string username, Azure.Identity.TokenCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class SharedTokenCacheCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public SharedTokenCacheCredentialOptions() { }
@@ -389,6 +463,7 @@ namespace Azure.Identity
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct TokenCacheData
     {
@@ -397,36 +472,44 @@ namespace Azure.Identity
         public TokenCacheData(System.ReadOnlyMemory<byte> cacheBytes) { throw null; }
         public System.ReadOnlyMemory<byte> CacheBytes { get { throw null; } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class TokenCachePersistenceOptions
     {
         public TokenCachePersistenceOptions() { }
         public string Name { get { throw null; } set { } }
         public bool UnsafeAllowUnencryptedStorage { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class TokenCacheRefreshArgs
     {
         internal TokenCacheRefreshArgs() { }
         public bool IsCaeEnabled { get { throw null; } }
         public string SuggestedCacheKey { get { throw null; } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class TokenCacheUpdatedArgs
     {
         internal TokenCacheUpdatedArgs() { }
         public bool IsCaeEnabled { get { throw null; } }
         public System.ReadOnlyMemory<byte> UnsafeCacheData { get { throw null; } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class TokenCredentialDiagnosticsOptions : Azure.Core.DiagnosticsOptions
     {
         public TokenCredentialDiagnosticsOptions() { }
         public bool IsAccountIdentifierLoggingEnabled { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0001")]
+        public System.Collections.Generic.IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get { throw null; } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
         public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {
         protected UnsafeTokenCacheOptions() { }
@@ -434,8 +517,9 @@ namespace Azure.Identity
         protected internal virtual System.Threading.Tasks.Task<Azure.Identity.TokenCacheData> RefreshCacheAsync(Azure.Identity.TokenCacheRefreshArgs args, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {
         protected UsernamePasswordCredential() { }
@@ -449,8 +533,8 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class UsernamePasswordCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public UsernamePasswordCredentialOptions() { }
@@ -458,6 +542,8 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class VisualStudioCodeCredential : Azure.Identity.InteractiveBrowserCredential
     {
         public VisualStudioCodeCredential() { }
@@ -465,12 +551,15 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class VisualStudioCodeCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public VisualStudioCodeCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class VisualStudioCredential : Azure.Core.TokenCredential
     {
         public VisualStudioCredential() { }
@@ -478,6 +567,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class VisualStudioCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public VisualStudioCredentialOptions() { }
@@ -485,6 +575,8 @@ namespace Azure.Identity
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class WorkloadIdentityCredential : Azure.Core.TokenCredential
     {
         public WorkloadIdentityCredential() { }
@@ -492,12 +584,14 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class WorkloadIdentityCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public WorkloadIdentityCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public bool IsAzureProxyEnabled { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }
     }

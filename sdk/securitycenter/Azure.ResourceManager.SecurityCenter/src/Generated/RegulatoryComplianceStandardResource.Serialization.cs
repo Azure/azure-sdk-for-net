@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class RegulatoryComplianceStandardResource : IJsonModel<RegulatoryComplianceStandardData>
     {
-        private static RegulatoryComplianceStandardData s_dataDeserializationInstance;
-        private static RegulatoryComplianceStandardData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RegulatoryComplianceStandardData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RegulatoryComplianceStandardData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RegulatoryComplianceStandardData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RegulatoryComplianceStandardData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RegulatoryComplianceStandardData>)Data).Write(writer, options);
 
-        RegulatoryComplianceStandardData IJsonModel<RegulatoryComplianceStandardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RegulatoryComplianceStandardData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RegulatoryComplianceStandardData IJsonModel<RegulatoryComplianceStandardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RegulatoryComplianceStandardData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RegulatoryComplianceStandardData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RegulatoryComplianceStandardData IPersistableModel<RegulatoryComplianceStandardData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RegulatoryComplianceStandardData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<RegulatoryComplianceStandardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RegulatoryComplianceStandardData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RegulatoryComplianceStandardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

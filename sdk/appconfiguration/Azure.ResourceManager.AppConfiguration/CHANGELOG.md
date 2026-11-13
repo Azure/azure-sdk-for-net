@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0-beta.2 (2026-07-20)
+
+### Features Added
+
+- Added Network Security Perimeter (NSP) configuration support with new operations on `AppConfigurationStoreResource`:
+  - `GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName)` — retrieves an NSP configuration.
+  - `GetNetworkSecurityPerimeterConfigurations()` — lists all NSP configurations for a store.
+  - `Reconcile(WaitUntil, string networkSecurityPerimeterConfigurationName)` — reconciles an NSP configuration.
+- Added new models: `NetworkSecurityPerimeterConfiguration`, `NetworkSecurityPerimeterConfigurationProperties`, `NetworkSecurityPerimeter`, `NetworkSecurityProfile`, `AccessRule`, `AccessRuleProperties`, `AccessRuleDirection`, `ProvisioningIssue`, `ProvisioningIssueProperties`, `ResourceAssociation`, `ResourceAssociationAccessMode`, `IssueType`, `Severity`.
+
+## 1.5.0-beta.1 (2026-04-28)
+
+### Features Added
+
+- Upgraded api-version tag from `package-2024-05-01` to `package-preview-2025-06`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/appconfiguration/resource-manager/readme.md.
+- Added `AzureFrontDoor` property to `AppConfigurationStoreData` and `AppConfigurationStorePatch` to support Azure Front Door configuration for a configuration store.
+- Added new model `AppConfigurationAzureFrontDoorProperties` with a `ResourceId` property representing an Azure Front Door profile resource ID.
 
 ## 1.4.1 (2025-07-28)
 

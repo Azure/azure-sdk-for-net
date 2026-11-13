@@ -14,15 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel()
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel() : base("TableLevelOutput")
         {
-            ResultType = "TableLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="cdcInsertCounter"> Number of applied inserts. </param>
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalChangesApplied"> Total number of applied changes. </param>
         /// <param name="dataErrorsCounter"> Number of data errors occurred. </param>
         /// <param name="lastModifiedOn"> Last modified time on target. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string tableName, string databaseName, long? cdcInsertCounter, long? cdcUpdateCounter, long? cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishedOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn) : base(id, resultType, serializedAdditionalRawData)
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string tableName, string databaseName, long? cdcInsertCounter, long? cdcUpdateCounter, long? cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishedOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn) : base(id, resultType, additionalBinaryDataProperties)
         {
             TableName = tableName;
             DatabaseName = databaseName;
@@ -51,33 +50,44 @@ namespace Azure.ResourceManager.DataMigration.Models
             TotalChangesApplied = totalChangesApplied;
             DataErrorsCounter = dataErrorsCounter;
             LastModifiedOn = lastModifiedOn;
-            ResultType = resultType ?? "TableLevelOutput";
         }
 
         /// <summary> Name of the table. </summary>
         public string TableName { get; }
+
         /// <summary> Name of the database. </summary>
         public string DatabaseName { get; }
+
         /// <summary> Number of applied inserts. </summary>
         public long? CdcInsertCounter { get; }
+
         /// <summary> Number of applied updates. </summary>
         public long? CdcUpdateCounter { get; }
+
         /// <summary> Number of applied deletes. </summary>
         public long? CdcDeleteCounter { get; }
+
         /// <summary> Estimate to finish full load. </summary>
         public DateTimeOffset? FullLoadEstFinishedOn { get; }
+
         /// <summary> Full load start time. </summary>
         public DateTimeOffset? FullLoadStartedOn { get; }
+
         /// <summary> Full load end time. </summary>
         public DateTimeOffset? FullLoadEndedOn { get; }
+
         /// <summary> Number of rows applied in full load. </summary>
         public long? FullLoadTotalRows { get; }
+
         /// <summary> Current state of the table migration. </summary>
         public SyncTableMigrationState? State { get; }
+
         /// <summary> Total number of applied changes. </summary>
         public long? TotalChangesApplied { get; }
+
         /// <summary> Number of data errors occurred. </summary>
         public long? DataErrorsCounter { get; }
+
         /// <summary> Last modified time on target. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
     }

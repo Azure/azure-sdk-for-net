@@ -6,29 +6,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PropagatedRouteTableNfv : IUtf8JsonSerializable, IJsonModel<PropagatedRouteTableNfv>
+    public partial class PropagatedRouteTableNfv : IJsonModel<PropagatedRouteTableNfv>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropagatedRouteTableNfv>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<PropagatedRouteTableNfv>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTableNfv>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(PropagatedRouteTableNfv)} does not support '{format}' format.");
-            }
-
+            ValidateFormat(options);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
-                foreach (var item in Labels)
+                foreach (string item in Labels)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -38,9 +32,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
-                foreach (var item in Ids)
+                foreach (RoutingConfigurationNfvSubResource item in Ids)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,12 +43,6 @@ namespace Azure.ResourceManager.Network.Models
 
         PropagatedRouteTableNfv IJsonModel<PropagatedRouteTableNfv>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTableNfv>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(PropagatedRouteTableNfv)} does not support '{format}' format.");
-            }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePropagatedRouteTableNfv(document.RootElement, options);
         }
@@ -62,76 +50,64 @@ namespace Azure.ResourceManager.Network.Models
         internal static PropagatedRouteTableNfv DeserializePropagatedRouteTableNfv(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
-
+            ValidateFormat(options);
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> labels = default;
-            IList<RoutingConfigurationNfvSubResource> ids = default;
-            foreach (var property in element.EnumerateObject())
+            IList<string> labels = new ChangeTrackingList<string>();
+            IList<RoutingConfigurationNfvSubResource> ids = new ChangeTrackingList<RoutingConfigurationNfvSubResource>();
+            foreach (JsonProperty property in element.EnumerateObject())
             {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    continue;
+                }
                 if (property.NameEquals("labels"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    labels = new List<string>();
+                    foreach (JsonElement item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        labels.Add(item.GetString());
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    labels = array;
-                    continue;
                 }
-                if (property.NameEquals("ids"u8))
+                else if (property.NameEquals("ids"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    ids = new List<RoutingConfigurationNfvSubResource>();
+                    foreach (JsonElement item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        ids.Add(RoutingConfigurationNfvSubResource.DeserializeRoutingConfigurationNfvSubResource(item, options));
                     }
-                    List<RoutingConfigurationNfvSubResource> array = new List<RoutingConfigurationNfvSubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(RoutingConfigurationNfvSubResource.DeserializeRoutingConfigurationNfvSubResource(item));
-                    }
-                    ids = array;
-                    continue;
                 }
             }
-            return new PropagatedRouteTableNfv(labels ?? new ChangeTrackingList<string>(), ids ?? new ChangeTrackingList<RoutingConfigurationNfvSubResource>());
+            return new PropagatedRouteTableNfv(labels, ids);
         }
 
         BinaryData IPersistableModel<PropagatedRouteTableNfv>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTableNfv>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
+            ValidateFormat(options);
+            using MemoryStream stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PropagatedRouteTableNfv)} does not support '{options.Format}' format.");
+                ((IJsonModel<PropagatedRouteTableNfv>)this).Write(writer, options);
             }
+            return new BinaryData(stream.ToArray());
         }
 
         PropagatedRouteTableNfv IPersistableModel<PropagatedRouteTableNfv>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTableNfv>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePropagatedRouteTableNfv(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PropagatedRouteTableNfv)} does not support '{options.Format}' format.");
-            }
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePropagatedRouteTableNfv(document.RootElement, options);
         }
 
         string IPersistableModel<PropagatedRouteTableNfv>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private static void ValidateFormat(ModelReaderWriterOptions options)
+        {
+            if (options.Format != "J" && options.Format != "W")
+            {
+                throw new FormatException($"The model {nameof(PropagatedRouteTableNfv)} does not support '{options.Format}' format.");
+            }
+        }
     }
 }

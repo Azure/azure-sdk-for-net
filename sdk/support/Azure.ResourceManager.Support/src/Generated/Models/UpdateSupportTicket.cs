@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Updates severity, ticket status, contact details, advanced diagnostic consent and secondary consent in the support ticket. </summary>
     public partial class UpdateSupportTicket
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateSupportTicket"/>. </summary>
         public UpdateSupportTicket()
@@ -57,26 +29,35 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="contactDetails"> Contact details to be updated on the support ticket. </param>
         /// <param name="advancedDiagnosticConsent"> Advanced diagnostic consent to be updated on the support ticket. </param>
         /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateSupportTicket(SupportSeverityLevel? severity, SupportTicketStatus? status, SupportContactProfileContent contactDetails, AdvancedDiagnosticConsent? advancedDiagnosticConsent, IList<SecondaryConsent> secondaryConsent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="directConnectEscalation"> Direct Connect Escalation details for a support ticket. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateSupportTicket(SupportSeverityLevel? severity, SupportTicketStatus? status, SupportContactProfileContent contactDetails, AdvancedDiagnosticConsent? advancedDiagnosticConsent, IList<SecondaryConsent> secondaryConsent, SupportDirectConnectEscalation directConnectEscalation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Severity = severity;
             Status = status;
             ContactDetails = contactDetails;
             AdvancedDiagnosticConsent = advancedDiagnosticConsent;
             SecondaryConsent = secondaryConsent;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            DirectConnectEscalation = directConnectEscalation;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Severity level. </summary>
         public SupportSeverityLevel? Severity { get; set; }
+
         /// <summary> Status to be updated on the ticket. </summary>
         public SupportTicketStatus? Status { get; set; }
+
         /// <summary> Contact details to be updated on the support ticket. </summary>
         public SupportContactProfileContent ContactDetails { get; set; }
+
         /// <summary> Advanced diagnostic consent to be updated on the support ticket. </summary>
         public AdvancedDiagnosticConsent? AdvancedDiagnosticConsent { get; set; }
+
         /// <summary> This property indicates secondary consents for the support ticket. </summary>
         public IList<SecondaryConsent> SecondaryConsent { get; }
+
+        /// <summary> Direct Connect Escalation details for a support ticket. </summary>
+        public SupportDirectConnectEscalation DirectConnectEscalation { get; set; }
     }
 }

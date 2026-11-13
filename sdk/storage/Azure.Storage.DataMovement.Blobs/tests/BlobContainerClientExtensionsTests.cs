@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             var blobUri = new Uri(accountUrl + (addBlobDirectoryPath ? containerName + "/" + blobDirectoryPrefix : containerName));
 
-            var directoryPath = Path.GetTempPath();
+            var directoryPath = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
 
             var options = addTransferOptions ? new TransferOptions() : (TransferOptions)null;
 
@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             var blobUri = new Uri(accountUrl + (addBlobDirectoryPath ? containerName + "/" + blobDirectoryPrefix : containerName));
 
-            var directoryPath = Path.GetTempPath();
+            var directoryPath = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
 
             var options = addTransferOptions ? new TransferOptions() : (TransferOptions)null;
 

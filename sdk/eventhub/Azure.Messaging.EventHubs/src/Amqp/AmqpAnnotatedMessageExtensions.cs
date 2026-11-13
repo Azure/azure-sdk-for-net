@@ -41,50 +41,50 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                        DateTimeOffset? lastPartitionEnqueuedTime = null,
                                                        DateTimeOffset? lastPartitionPropertiesRetrievalTime = null)
         {
-           if (properties != null)
-           {
-               CopyDictionary(properties, instance.ApplicationProperties);
-           }
+            if (properties != null)
+            {
+                CopyDictionary(properties, instance.ApplicationProperties);
+            }
 
-           if (sequenceNumber.HasValue)
-           {
-               instance.MessageAnnotations[AmqpProperty.SequenceNumber.ToString()] = sequenceNumber.Value;
-           }
+            if (sequenceNumber.HasValue)
+            {
+                instance.MessageAnnotations[AmqpProperty.SequenceNumber.ToString()] = sequenceNumber.Value;
+            }
 
-           if (!string.IsNullOrEmpty(offset))
-           {
-               instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset;
-           }
+            if (!string.IsNullOrEmpty(offset))
+            {
+                instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset;
+            }
 
-           if (enqueuedTime.HasValue)
-           {
-               instance.MessageAnnotations[AmqpProperty.EnqueuedTime.ToString()] = enqueuedTime.Value;
-           }
+            if (enqueuedTime.HasValue)
+            {
+                instance.MessageAnnotations[AmqpProperty.EnqueuedTime.ToString()] = enqueuedTime.Value;
+            }
 
-           if (!string.IsNullOrEmpty(partitionKey))
-           {
-               instance.MessageAnnotations[AmqpProperty.PartitionKey.ToString()] = partitionKey;
-           }
+            if (!string.IsNullOrEmpty(partitionKey))
+            {
+                instance.MessageAnnotations[AmqpProperty.PartitionKey.ToString()] = partitionKey;
+            }
 
-           if (lastPartitionSequenceNumber.HasValue)
-           {
-               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString()] = lastPartitionSequenceNumber.Value;
-           }
+            if (lastPartitionSequenceNumber.HasValue)
+            {
+                instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString()] = lastPartitionSequenceNumber.Value;
+            }
 
-           if (!string.IsNullOrEmpty(lastPartitionOffset))
-           {
-               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset;
-           }
+            if (!string.IsNullOrEmpty(lastPartitionOffset))
+            {
+                instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset;
+            }
 
-           if (lastPartitionEnqueuedTime.HasValue)
-           {
-               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedTimeUtc.ToString()] = lastPartitionEnqueuedTime.Value;
-           }
+            if (lastPartitionEnqueuedTime.HasValue)
+            {
+                instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedTimeUtc.ToString()] = lastPartitionEnqueuedTime.Value;
+            }
 
-           if (lastPartitionPropertiesRetrievalTime.HasValue)
-           {
-               instance.DeliveryAnnotations[AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc.ToString()] = lastPartitionPropertiesRetrievalTime.Value;
-           }
+            if (lastPartitionPropertiesRetrievalTime.HasValue)
+            {
+                instance.DeliveryAnnotations[AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc.ToString()] = lastPartitionPropertiesRetrievalTime.Value;
+            }
         }
 
         /// <summary>
@@ -97,44 +97,44 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public static AmqpAnnotatedMessage Clone(this AmqpAnnotatedMessage instance)
         {
-           if (instance == null)
-           {
-               return null;
-           }
+            if (instance == null)
+            {
+                return null;
+            }
 
-           var clone = new AmqpAnnotatedMessage(CloneBody(instance.Body));
+            var clone = new AmqpAnnotatedMessage(CloneBody(instance.Body));
 
-           if (instance.HasSection(AmqpMessageSection.Header))
-           {
-               CopyHeaderSection(instance.Header, clone.Header);
-           }
+            if (instance.HasSection(AmqpMessageSection.Header))
+            {
+                CopyHeaderSection(instance.Header, clone.Header);
+            }
 
-           if (instance.HasSection(AmqpMessageSection.Properties))
-           {
-               CopyPropertiesSection(instance.Properties, clone.Properties);
-           }
+            if (instance.HasSection(AmqpMessageSection.Properties))
+            {
+                CopyPropertiesSection(instance.Properties, clone.Properties);
+            }
 
-           if (instance.HasSection(AmqpMessageSection.Footer))
-           {
-               CopyDictionary(instance.Footer, clone.Footer);
-           }
+            if (instance.HasSection(AmqpMessageSection.Footer))
+            {
+                CopyDictionary(instance.Footer, clone.Footer);
+            }
 
-           if (instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
-           {
-               CopyDictionary(instance.DeliveryAnnotations, clone.DeliveryAnnotations);
-           }
+            if (instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
+            {
+                CopyDictionary(instance.DeliveryAnnotations, clone.DeliveryAnnotations);
+            }
 
-           if (instance.HasSection(AmqpMessageSection.MessageAnnotations))
-           {
-               CopyDictionary(instance.MessageAnnotations, clone.MessageAnnotations);
-           }
+            if (instance.HasSection(AmqpMessageSection.MessageAnnotations))
+            {
+                CopyDictionary(instance.MessageAnnotations, clone.MessageAnnotations);
+            }
 
-           if (instance.HasSection(AmqpMessageSection.ApplicationProperties))
-           {
-               CopyDictionary(instance.ApplicationProperties, clone.ApplicationProperties);
-           }
+            if (instance.HasSection(AmqpMessageSection.ApplicationProperties))
+            {
+                CopyDictionary(instance.ApplicationProperties, clone.ApplicationProperties);
+            }
 
-           return clone;
+            return clone;
         }
 
         /// <summary>

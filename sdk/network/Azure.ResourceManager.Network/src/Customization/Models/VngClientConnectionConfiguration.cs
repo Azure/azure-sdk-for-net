@@ -4,19 +4,21 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> A vpn client connection configuration for client connection configuration. </summary>
+    // Native generation loses the released NetworkResourceData inheritance (ApiCompat CP0007).
     public partial class VngClientConnectionConfiguration : NetworkResourceData
     {
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        // Lazily restore the supported flattened facade using the native change-tracking list.
+        /// <summary> Gets the VPN client address prefixes. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> VpnClientAddressPrefixes
         {
             get
             {
-                if (VpnClientAddressPool is null)
-                    VpnClientAddressPool = new VirtualNetworkAddressSpace();
+                VpnClientAddressPool ??= new VirtualNetworkAddressSpace();
                 return VpnClientAddressPool.AddressPrefixes;
             }
         }

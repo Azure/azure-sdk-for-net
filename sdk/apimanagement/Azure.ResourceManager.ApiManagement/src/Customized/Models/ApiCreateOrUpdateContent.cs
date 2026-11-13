@@ -8,7 +8,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Summary of revision metadata. </summary>
+    // Old SDK exposed both string (TermsOfServiceLink/ServiceLink) and Uri (TermsOfServiceUri/ServiceUri).
+    // The string versions are generated natively via @@clientName. These provide the Uri wrappers.
+    // Not spec-fixable: @@alternateType replaces the property type entirely, removing the
+    // string accessor which is also part of the published contract.
     public partial class ApiCreateOrUpdateContent
     {
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>

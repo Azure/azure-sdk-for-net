@@ -12,19 +12,29 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
+    /// <summary></summary>
     public partial class HciEdgeDeviceResource : IJsonModel<HciEdgeDeviceData>
     {
-        private static UnknownEdgeDevice s_dataDeserializationInstance;
-        private static UnknownEdgeDevice DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciEdgeDeviceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciEdgeDeviceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new UnknownHciEdgeDevice();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciEdgeDeviceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciEdgeDeviceData>)Data).Write(writer, options);
 
-        HciEdgeDeviceData IJsonModel<HciEdgeDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciEdgeDeviceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciEdgeDeviceData IJsonModel<HciEdgeDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciEdgeDeviceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciEdgeDeviceData>(Data, options, AzureResourceManagerHciContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciEdgeDeviceData IPersistableModel<HciEdgeDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciEdgeDeviceData>(data, options, AzureResourceManagerHciContext.Default);
 
-        string IPersistableModel<HciEdgeDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciEdgeDeviceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciEdgeDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

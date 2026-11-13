@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App scaling configurations. </summary>
     public partial class ContainerAppScale
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppScale"/>. </summary>
         public ContainerAppScale()
@@ -56,30 +28,40 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="maxReplicas"> Optional. Maximum number of container replicas. Defaults to 10 if not set. </param>
         /// <param name="cooldownPeriod"> Optional. KEDA Cooldown Period in seconds. Defaults to 300 seconds if not set. </param>
         /// <param name="pollingInterval"> Optional. KEDA Polling Interval in seconds. Defaults to 30 seconds if not set. </param>
+        /// <param name="allowScalingRuleOverride"> Optional. Whether custom scale rules can override the automatic scale rules. This property is only applicable to Function Apps. </param>
         /// <param name="rules"> Scaling rules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppScale(int? minReplicas, int? maxReplicas, int? cooldownPeriod, int? pollingInterval, IList<ContainerAppScaleRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppScale(int? minReplicas, int? maxReplicas, int? cooldownPeriod, int? pollingInterval, bool? allowScalingRuleOverride, IList<ContainerAppScaleRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinReplicas = minReplicas;
             MaxReplicas = maxReplicas;
             CooldownPeriod = cooldownPeriod;
             PollingInterval = pollingInterval;
+            AllowScalingRuleOverride = allowScalingRuleOverride;
             Rules = rules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional. Minimum number of container replicas. </summary>
         [WirePath("minReplicas")]
         public int? MinReplicas { get; set; }
+
         /// <summary> Optional. Maximum number of container replicas. Defaults to 10 if not set. </summary>
         [WirePath("maxReplicas")]
         public int? MaxReplicas { get; set; }
+
         /// <summary> Optional. KEDA Cooldown Period in seconds. Defaults to 300 seconds if not set. </summary>
         [WirePath("cooldownPeriod")]
         public int? CooldownPeriod { get; set; }
+
         /// <summary> Optional. KEDA Polling Interval in seconds. Defaults to 30 seconds if not set. </summary>
         [WirePath("pollingInterval")]
         public int? PollingInterval { get; set; }
+
+        /// <summary> Optional. Whether custom scale rules can override the automatic scale rules. This property is only applicable to Function Apps. </summary>
+        [WirePath("allowScalingRuleOverride")]
+        public bool? AllowScalingRuleOverride { get; set; }
+
         /// <summary> Scaling rules. </summary>
         [WirePath("rules")]
         public IList<ContainerAppScaleRule> Rules { get; }

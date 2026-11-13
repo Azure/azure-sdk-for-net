@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Search.Models
     public readonly partial struct SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState : IEquatable<SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The configuration was provisioned successfully. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The configuration is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The configuration is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The configuration is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The configuration request was accepted and provisioning has not started yet. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The configuration failed to provision. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The configuration provisioning was canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> The configuration was provisioned successfully. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> The configuration is being created. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Creating { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> The configuration is being updated. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Updating { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> The configuration is being deleted. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Deleting { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(DeletingValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> The configuration request was accepted and provisioning has not started yet. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Accepted { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(AcceptedValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The configuration failed to provision. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Failed { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The configuration provisioning was canceled. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Canceled { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState left, SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState left, SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(string value) => new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? null : new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

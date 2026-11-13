@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct CpuManufacturer : IEquatable<CpuManufacturer>
     {
         private readonly string _value;
+        /// <summary> Intel CPU. </summary>
+        private const string IntelValue = "Intel";
+        /// <summary> AMD CPU. </summary>
+        private const string AMDValue = "AMD";
+        /// <summary> Microsoft CPU. </summary>
+        private const string MicrosoftValue = "Microsoft";
+        /// <summary> Ampere CPU. </summary>
+        private const string AmpereValue = "Ampere";
 
         /// <summary> Initializes a new instance of <see cref="CpuManufacturer"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CpuManufacturer(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IntelValue = "Intel";
-        private const string AMDValue = "AMD";
-        private const string MicrosoftValue = "Microsoft";
-        private const string AmpereValue = "Ampere";
+            _value = value;
+        }
 
         /// <summary> Intel CPU. </summary>
         public static CpuManufacturer Intel { get; } = new CpuManufacturer(IntelValue);
+
         /// <summary> AMD CPU. </summary>
         public static CpuManufacturer AMD { get; } = new CpuManufacturer(AMDValue);
+
         /// <summary> Microsoft CPU. </summary>
         public static CpuManufacturer Microsoft { get; } = new CpuManufacturer(MicrosoftValue);
+
         /// <summary> Ampere CPU. </summary>
         public static CpuManufacturer Ampere { get; } = new CpuManufacturer(AmpereValue);
+
         /// <summary> Determines if two <see cref="CpuManufacturer"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CpuManufacturer left, CpuManufacturer right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CpuManufacturer"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CpuManufacturer left, CpuManufacturer right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CpuManufacturer"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CpuManufacturer"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CpuManufacturer(string value) => new CpuManufacturer(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CpuManufacturer"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CpuManufacturer?(string value) => value == null ? null : new CpuManufacturer(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CpuManufacturer other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CpuManufacturer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

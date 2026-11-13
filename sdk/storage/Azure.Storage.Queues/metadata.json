@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Storage.Queues": "2026-04-06"
+  }
+}

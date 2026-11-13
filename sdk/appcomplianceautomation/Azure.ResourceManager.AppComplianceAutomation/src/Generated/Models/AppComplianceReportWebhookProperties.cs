@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> Webhook properties. </summary>
     public partial class AppComplianceReportWebhookProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportWebhookProperties"/>. </summary>
         public AppComplianceReportWebhookProperties()
@@ -65,8 +37,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="enableSslVerification"> whether to enable ssl verification. </param>
         /// <param name="deliveryStatus"> webhook deliveryStatus. </param>
         /// <param name="provisioningState"> Azure Resource Provisioning State. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceReportWebhookProperties(string webhookId, WebhookStatus? status, Guid? tenantId, SendAllEvent? sendAllEvents, IList<WebhookNotificationEvent> events, Uri payloadUri, WebhookContentType? contentType, string webhookKey, UpdateWebhookKey? updateWebhookKey, WebhookKeyEnabled? webhookKeyEnabled, EnableSslVerification? enableSslVerification, WebhookDeliveryStatus? deliveryStatus, AppComplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppComplianceReportWebhookProperties(string webhookId, WebhookStatus? status, Guid? tenantId, SendAllEvent? sendAllEvents, IList<WebhookNotificationEvent> events, Uri payloadUri, WebhookContentType? contentType, string webhookKey, UpdateWebhookKey? updateWebhookKey, WebhookKeyEnabled? webhookKeyEnabled, EnableSslVerification? enableSslVerification, WebhookDeliveryStatus? deliveryStatus, AppComplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebhookId = webhookId;
             Status = status;
@@ -81,33 +53,45 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             EnableSslVerification = enableSslVerification;
             DeliveryStatus = deliveryStatus;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Webhook id in database. </summary>
         public string WebhookId { get; }
+
         /// <summary> Webhook status. </summary>
         public WebhookStatus? Status { get; set; }
+
         /// <summary> Tenant id. </summary>
         public Guid? TenantId { get; }
+
         /// <summary> whether to send notification under any event. </summary>
         public SendAllEvent? SendAllEvents { get; set; }
+
         /// <summary> under which event notification should be sent. </summary>
         public IList<WebhookNotificationEvent> Events { get; }
+
         /// <summary> webhook payload url. </summary>
         public Uri PayloadUri { get; set; }
+
         /// <summary> content type. </summary>
         public WebhookContentType? ContentType { get; set; }
+
         /// <summary> webhook secret token. If not set, this field value is null; otherwise, please set a string value. </summary>
         public string WebhookKey { get; set; }
+
         /// <summary> whether to update webhookKey. </summary>
         public UpdateWebhookKey? UpdateWebhookKey { get; set; }
+
         /// <summary> whether webhookKey is enabled. </summary>
         public WebhookKeyEnabled? WebhookKeyEnabled { get; }
+
         /// <summary> whether to enable ssl verification. </summary>
         public EnableSslVerification? EnableSslVerification { get; set; }
+
         /// <summary> webhook deliveryStatus. </summary>
         public WebhookDeliveryStatus? DeliveryStatus { get; }
+
         /// <summary> Azure Resource Provisioning State. </summary>
         public AppComplianceProvisioningState? ProvisioningState { get; }
     }

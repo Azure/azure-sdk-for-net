@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
@@ -21,7 +20,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class PageableOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly RequestPathPattern _contextualPath;
         private readonly RestClientInfo _restClientInfo;
         private readonly InputPagingServiceMethod _method;
         private readonly MethodProvider _convenienceMethod;
@@ -33,25 +31,33 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
 
+        private readonly ParameterContextRegistry _parameterMappings;
+        private readonly ParameterProvider? _scopeParameter;
+
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
-            RequestPathPattern contextualPath,
+            ParameterContextRegistry parameterMappings,
             RestClientInfo restClientInfo,
             InputPagingServiceMethod method,
             bool isAsync,
-            string? methodName = null)
+            string? methodName = null,
+            ResourceClientProvider? explicitResourceClient = null,
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
-            _contextualPath = contextualPath;
+            _scopeParameter = scopeParameter;
             _restClientInfo = restClientInfo;
             _method = method;
-            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
+            _parameterMappings = parameterMappings;
+            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync, enclosingType);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
             InitializeTypeInfo(
                 _itemType,
+                _enclosingType,
                 ref _actualItemType!,
-                ref _itemResourceClient
+                ref _itemResourceClient,
+                explicitResourceClient
             );
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _signature = CreateSignature();
@@ -60,12 +66,32 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private static void InitializeTypeInfo(
             CSharpType itemType,
+            TypeProvider enclosingType,
             ref CSharpType actualItemType,
-            ref ResourceClientProvider? resourceClient
+            ref ResourceClientProvider? resourceClient,
+            ResourceClientProvider? explicitResourceClient = null
             )
         {
             actualItemType = itemType;
-            if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
+            // If explicit resource client is provided, use it to avoid incorrect lookup when multiple resources share same model
+            if (explicitResourceClient != null && explicitResourceClient.IsResourceDataType(itemType))
+            {
+                resourceClient = explicitResourceClient;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceCollectionClientProvider collectionProvider &&
+                collectionProvider.Resource.IsResourceDataType(itemType))
+            {
+                resourceClient = collectionProvider.Resource;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceClientProvider resourceProvider &&
+                resourceProvider.IsResourceDataType(itemType))
+            {
+                resourceClient = resourceProvider;
+                actualItemType = resourceClient.Type;
+            }
+            else if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
             {
                 actualItemType = resourceClient.Type;
             }
@@ -73,10 +99,22 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(PageableOperationMethodProvider pageableOperationMethodProvider)
         {
-            return new MethodProvider(
+            var methodProvider = new ManagementMethodProvider(
                 pageableOperationMethodProvider._signature,
                 pageableOperationMethodProvider._bodyStatements,
-                pageableOperationMethodProvider._enclosingType);
+                pageableOperationMethodProvider._enclosingType,
+                ScmMethodKind.Convenience,
+                collectionDefinition: ((ScmMethodProvider)pageableOperationMethodProvider._convenienceMethod).CollectionDefinition,
+                serviceMethod: pageableOperationMethodProvider._method);
+
+            // Add enhanced XML documentation with structured tags
+            ResourceHelpers.BuildEnhancedXmlDocs(
+                pageableOperationMethodProvider._method,
+                pageableOperationMethodProvider._convenienceMethod.Signature.Description,
+                pageableOperationMethodProvider._enclosingType,
+                methodProvider.XmlDocs);
+
+            return methodProvider;
         }
 
         protected MethodSignature CreateSignature()
@@ -94,7 +132,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: _method.IsLongRunningOperation(), scopeParameter: _scopeParameter, methodName: _methodName),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -108,7 +146,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var collectionResult = ((ScmMethodProvider)_convenienceMethod).CollectionDefinition!;
             var diagnosticScope = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
-            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult, diagnosticScope);
 
             var collectionResultOfT = collectionResult.Type;
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
@@ -119,7 +156,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 _restClientInfo.RestClient,
             };
-            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            arguments.AddRange(_parameterMappings.PopulateArguments(idExpression, requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            arguments.Add(Literal(diagnosticScope));
 
             // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)

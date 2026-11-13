@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 for (var counter = 0; counter < int.MaxValue; ++counter)
                 {
-                    var eventBody = new BinaryData($"Event Number: { counter }");
+                    var eventBody = new BinaryData($"Event Number: {counter}");
                     var eventData = new EventData(eventBody);
 
                     if (!eventBatch.TryAdd(eventData))
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               await producer.CloseAsync();
+                await producer.CloseAsync();
             }
 
             #endregion
@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               await consumer.CloseAsync();
+                await consumer.CloseAsync();
             }
 
             #endregion

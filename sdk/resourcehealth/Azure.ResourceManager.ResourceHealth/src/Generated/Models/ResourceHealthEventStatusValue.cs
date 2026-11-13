@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     public readonly partial struct ResourceHealthEventStatusValue : IEquatable<ResourceHealthEventStatusValue>
     {
         private readonly string _value;
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Resolved. </summary>
+        private const string ResolvedValue = "Resolved";
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthEventStatusValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceHealthEventStatusValue(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string ResolvedValue = "Resolved";
+            _value = value;
+        }
 
         /// <summary> Active. </summary>
         public static ResourceHealthEventStatusValue Active { get; } = new ResourceHealthEventStatusValue(ActiveValue);
+
         /// <summary> Resolved. </summary>
         public static ResourceHealthEventStatusValue Resolved { get; } = new ResourceHealthEventStatusValue(ResolvedValue);
+
         /// <summary> Determines if two <see cref="ResourceHealthEventStatusValue"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceHealthEventStatusValue left, ResourceHealthEventStatusValue right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceHealthEventStatusValue"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceHealthEventStatusValue left, ResourceHealthEventStatusValue right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthEventStatusValue"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceHealthEventStatusValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceHealthEventStatusValue(string value) => new ResourceHealthEventStatusValue(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceHealthEventStatusValue"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceHealthEventStatusValue?(string value) => value == null ? null : new ResourceHealthEventStatusValue(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceHealthEventStatusValue other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceHealthEventStatusValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

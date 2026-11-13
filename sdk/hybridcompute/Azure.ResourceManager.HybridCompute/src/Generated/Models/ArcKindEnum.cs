@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct ArcKindEnum : IEquatable<ArcKindEnum>
     {
         private readonly string _value;
+        /// <summary> AVS. </summary>
+        private const string AvsValue = "AVS";
+        /// <summary> HCI. </summary>
+        private const string HciValue = "HCI";
+        /// <summary> SCVMM. </summary>
+        private const string ScVmmValue = "SCVMM";
+        /// <summary> VMware. </summary>
+        private const string VMwareValue = "VMware";
+        /// <summary> EPS. </summary>
+        private const string EpsValue = "EPS";
+        /// <summary> GCP. </summary>
+        private const string GcpValue = "GCP";
+        /// <summary> AWS. </summary>
+        private const string AwsValue = "AWS";
 
         /// <summary> Initializes a new instance of <see cref="ArcKindEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArcKindEnum(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvsValue = "AVS";
-        private const string HciValue = "HCI";
-        private const string ScVmmValue = "SCVMM";
-        private const string VMwareValue = "VMware";
-        private const string EpsValue = "EPS";
-        private const string GcpValue = "GCP";
-        private const string AwsValue = "AWS";
+            _value = value;
+        }
 
         /// <summary> AVS. </summary>
         public static ArcKindEnum Avs { get; } = new ArcKindEnum(AvsValue);
+
         /// <summary> HCI. </summary>
         public static ArcKindEnum Hci { get; } = new ArcKindEnum(HciValue);
+
         /// <summary> SCVMM. </summary>
         public static ArcKindEnum ScVmm { get; } = new ArcKindEnum(ScVmmValue);
+
         /// <summary> VMware. </summary>
         public static ArcKindEnum VMware { get; } = new ArcKindEnum(VMwareValue);
+
         /// <summary> EPS. </summary>
         public static ArcKindEnum Eps { get; } = new ArcKindEnum(EpsValue);
+
         /// <summary> GCP. </summary>
         public static ArcKindEnum Gcp { get; } = new ArcKindEnum(GcpValue);
+
         /// <summary> AWS. </summary>
         public static ArcKindEnum Aws { get; } = new ArcKindEnum(AwsValue);
+
         /// <summary> Determines if two <see cref="ArcKindEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArcKindEnum left, ArcKindEnum right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArcKindEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArcKindEnum left, ArcKindEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArcKindEnum"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArcKindEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArcKindEnum(string value) => new ArcKindEnum(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArcKindEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArcKindEnum?(string value) => value == null ? null : new ArcKindEnum(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArcKindEnum other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArcKindEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

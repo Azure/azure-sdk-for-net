@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
+    /// <summary></summary>
     public partial class DicomServiceResource : IJsonModel<DicomServiceData>
     {
-        private static DicomServiceData s_dataDeserializationInstance;
-        private static DicomServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DicomServiceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DicomServiceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DicomServiceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DicomServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DicomServiceData>)Data).Write(writer, options);
 
-        DicomServiceData IJsonModel<DicomServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DicomServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DicomServiceData IJsonModel<DicomServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DicomServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DicomServiceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DicomServiceData IPersistableModel<DicomServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DicomServiceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        string IPersistableModel<DicomServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DicomServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DicomServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

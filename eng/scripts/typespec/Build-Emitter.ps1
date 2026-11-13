@@ -4,7 +4,8 @@ param(
     [string] $OutputDirectory,
     [switch] $TargetNpmJsFeed,
     [string] $emitterPackagePath,
-    [string] $GeneratorVersion
+    [string] $GeneratorVersion,
+    [switch] $BuildPlaygroundBundle
 )
 
 if ([string]::IsNullOrEmpty($GeneratorVersion)) {
@@ -44,8 +45,18 @@ function Build-Emitter {
         Write-Host "Copying $file to $outputPath"
         Copy-Item $file -Destination $outputPath
 
+        if ($BuildPlaygroundBundle) {
+            $playgroundTools = Join-Path $PSScriptRoot "playground"
+            $playgroundOutput = [System.IO.Path]::GetFullPath((Join-Path $outputPath "../playground"))
+            Invoke-LoggedCommand "npm ci --prefix `"$playgroundTools`""
+            Invoke-LoggedCommand "npm test --prefix `"$playgroundTools`""
+            $packageName = Split-Path $packageRoot -Leaf
+            Invoke-LoggedCommand "node --test --test-name-pattern `"^$packageName bundles `" `"$playgroundTools/test/browser.test.mjs`""
+            Invoke-LoggedCommand "node `"$playgroundTools/bundle.mjs`" `"$packageRoot`" `"$playgroundOutput`" `"$file`""
+        }
+
         if (!$TargetNpmJsFeed) {
-            $feedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry"
+            $feedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry"
 
             $packageJson = Get-Content -Path "./package.json" | ConvertFrom-Json
             $packageVersion = $packageJson.version
@@ -115,7 +126,7 @@ Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $over
 
 # Pack the generator
 Push-Location "$packageRoot/generator"
-$generatorSolutionFile = Get-ChildItem -Path . -Filter "*.sln" -File | Select-Object -First 1
+$generatorSolutionFile = Get-ChildItem -Path . -Filter "*.slnx" -File | Select-Object -First 1
 $generatorName = $generatorSolutionFile.BaseName
 try {
     Write-Host "Working in $PWD"

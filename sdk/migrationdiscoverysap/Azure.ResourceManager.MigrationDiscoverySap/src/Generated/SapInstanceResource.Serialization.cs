@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
+    /// <summary></summary>
     public partial class SapInstanceResource : IJsonModel<SapInstanceData>
     {
-        private static SapInstanceData s_dataDeserializationInstance;
-        private static SapInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SapInstanceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SapInstanceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SapInstanceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SapInstanceData>)Data).Write(writer, options);
 
-        SapInstanceData IJsonModel<SapInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapInstanceData IJsonModel<SapInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SapInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapInstanceData>(Data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SapInstanceData IPersistableModel<SapInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapInstanceData>(data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
 
-        string IPersistableModel<SapInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SapInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

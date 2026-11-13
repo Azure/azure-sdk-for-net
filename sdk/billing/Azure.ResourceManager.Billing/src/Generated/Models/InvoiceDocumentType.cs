@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct InvoiceDocumentType : IEquatable<InvoiceDocumentType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Invoice. </summary>
+        private const string InvoiceValue = "Invoice";
+        /// <summary> VoidNote. </summary>
+        private const string VoidNoteValue = "VoidNote";
+        /// <summary> TaxReceipt. </summary>
+        private const string TaxReceiptValue = "TaxReceipt";
+        /// <summary> CreditNote. </summary>
+        private const string CreditNoteValue = "CreditNote";
+        /// <summary> Summary. </summary>
+        private const string SummaryValue = "Summary";
+        /// <summary> Transactions. </summary>
+        private const string TransactionsValue = "Transactions";
 
         /// <summary> Initializes a new instance of <see cref="InvoiceDocumentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InvoiceDocumentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string InvoiceValue = "Invoice";
-        private const string VoidNoteValue = "VoidNote";
-        private const string TaxReceiptValue = "TaxReceipt";
-        private const string CreditNoteValue = "CreditNote";
-        private const string SummaryValue = "Summary";
-        private const string TransactionsValue = "Transactions";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static InvoiceDocumentType Other { get; } = new InvoiceDocumentType(OtherValue);
+
         /// <summary> Invoice. </summary>
         public static InvoiceDocumentType Invoice { get; } = new InvoiceDocumentType(InvoiceValue);
+
         /// <summary> VoidNote. </summary>
         public static InvoiceDocumentType VoidNote { get; } = new InvoiceDocumentType(VoidNoteValue);
+
         /// <summary> TaxReceipt. </summary>
         public static InvoiceDocumentType TaxReceipt { get; } = new InvoiceDocumentType(TaxReceiptValue);
+
         /// <summary> CreditNote. </summary>
         public static InvoiceDocumentType CreditNote { get; } = new InvoiceDocumentType(CreditNoteValue);
+
         /// <summary> Summary. </summary>
         public static InvoiceDocumentType Summary { get; } = new InvoiceDocumentType(SummaryValue);
+
         /// <summary> Transactions. </summary>
         public static InvoiceDocumentType Transactions { get; } = new InvoiceDocumentType(TransactionsValue);
+
         /// <summary> Determines if two <see cref="InvoiceDocumentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InvoiceDocumentType left, InvoiceDocumentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InvoiceDocumentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InvoiceDocumentType left, InvoiceDocumentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InvoiceDocumentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InvoiceDocumentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InvoiceDocumentType(string value) => new InvoiceDocumentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InvoiceDocumentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InvoiceDocumentType?(string value) => value == null ? null : new InvoiceDocumentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InvoiceDocumentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InvoiceDocumentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

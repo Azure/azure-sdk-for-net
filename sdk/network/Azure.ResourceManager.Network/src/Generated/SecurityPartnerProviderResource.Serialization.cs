@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class SecurityPartnerProviderResource : IJsonModel<SecurityPartnerProviderData>
     {
-        private static SecurityPartnerProviderData s_dataDeserializationInstance;
-        private static SecurityPartnerProviderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityPartnerProviderData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityPartnerProviderData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityPartnerProviderData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityPartnerProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityPartnerProviderData>)Data).Write(writer, options);
 
-        SecurityPartnerProviderData IJsonModel<SecurityPartnerProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityPartnerProviderData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityPartnerProviderData IJsonModel<SecurityPartnerProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityPartnerProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityPartnerProviderData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityPartnerProviderData IPersistableModel<SecurityPartnerProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityPartnerProviderData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<SecurityPartnerProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityPartnerProviderData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityPartnerProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

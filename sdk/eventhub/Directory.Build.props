@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!--
     Extend the criteria for identifying a samples project, to allow for the pattern:
     Azure.Messaging.EventHubs.Samples.[[ SCENARIO ]].  This is intended to support breaking

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
+    /// <summary></summary>
     public partial class ArtifactManifestResource : IJsonModel<ArtifactManifestData>
     {
-        private static ArtifactManifestData s_dataDeserializationInstance;
-        private static ArtifactManifestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ArtifactManifestData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ArtifactManifestData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ArtifactManifestData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArtifactManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactManifestData>)Data).Write(writer, options);
 
-        ArtifactManifestData IJsonModel<ArtifactManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactManifestData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArtifactManifestData IJsonModel<ArtifactManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ArtifactManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArtifactManifestData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ArtifactManifestData IPersistableModel<ArtifactManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArtifactManifestData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<ArtifactManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArtifactManifestData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ArtifactManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

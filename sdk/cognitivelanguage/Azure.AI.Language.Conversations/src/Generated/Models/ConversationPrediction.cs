@@ -17,13 +17,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="ConversationPrediction"/>. </summary>
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="intents"/> or <paramref name="entities"/> is null. </exception>
-        internal ConversationPrediction(IEnumerable<ConversationIntent> intents, IEnumerable<ConversationEntity> entities)
+        internal ConversationPrediction(IEnumerable<ConversationIntent> intents, IEnumerable<ConversationEntity> entities) : base(ProjectKind.Conversation)
         {
-            Argument.AssertNotNull(intents, nameof(intents));
-            Argument.AssertNotNull(entities, nameof(entities));
-
-            ProjectKind = ProjectKind.Conversation;
             Intents = intents.ToList();
             Entities = entities.ToList();
         }
@@ -31,23 +26,19 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="ConversationPrediction"/>. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
-        internal ConversationPrediction(ProjectKind projectKind, string topIntent, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<ConversationIntent> intents, IReadOnlyList<ConversationEntity> entities) : base(projectKind, topIntent, serializedAdditionalRawData)
+        internal ConversationPrediction(ProjectKind projectKind, string topIntent, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ConversationIntent> intents, IList<ConversationEntity> entities) : base(projectKind, topIntent, additionalBinaryDataProperties)
         {
             Intents = intents;
             Entities = entities;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationPrediction"/> for deserialization. </summary>
-        internal ConversationPrediction()
-        {
-        }
-
         /// <summary> The intent classification results. </summary>
-        public IReadOnlyList<ConversationIntent> Intents { get; }
+        public IList<ConversationIntent> Intents { get; }
+
         /// <summary> The entity extraction results. </summary>
-        public IReadOnlyList<ConversationEntity> Entities { get; }
+        public IList<ConversationEntity> Entities { get; }
     }
 }

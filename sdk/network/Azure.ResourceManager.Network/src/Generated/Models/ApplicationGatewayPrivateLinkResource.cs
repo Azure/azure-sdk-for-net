@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,38 +19,65 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
         public ApplicationGatewayPrivateLinkResource()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="groupId"> Group identifier of private link resource. </param>
-        /// <param name="requiredMembers"> Required member names of private link resource. </param>
-        /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        internal ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the application gateway private link resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ApplicationGatewayPrivateLinkResourceProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
-            ETag = etag;
-            GroupId = groupId;
-            RequiredMembers = requiredMembers;
-            RequiredZoneNames = requiredZoneNames;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the application gateway private link resource. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayPrivateLinkResourceProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Group identifier of private link resource. </summary>
         [WirePath("properties.groupId")]
-        public string GroupId { get; }
+        public string GroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupId;
+            }
+        }
+
         /// <summary> Required member names of private link resource. </summary>
         [WirePath("properties.requiredMembers")]
-        public IReadOnlyList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredMembers;
+            }
+        }
+
         /// <summary> Required DNS zone names of the the private link resource. </summary>
         [WirePath("properties.requiredZoneNames")]
-        public IList<string> RequiredZoneNames { get; }
+        public IList<string> RequiredZoneNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredZoneNames;
+            }
+        }
     }
 }

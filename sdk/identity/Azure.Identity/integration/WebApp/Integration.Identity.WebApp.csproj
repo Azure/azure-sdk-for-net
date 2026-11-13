@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>$(LtsTargetFramework)</TargetFramework>
+    <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
+    <SupportsNetStandard20>false</SupportsNetStandard20>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>

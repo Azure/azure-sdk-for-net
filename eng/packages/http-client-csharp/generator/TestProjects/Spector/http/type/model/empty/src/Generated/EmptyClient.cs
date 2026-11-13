@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,7 +19,12 @@ namespace _Type.Model.Empty
     {
         public EmptyClient() : this(new Uri("http://localhost:3000"), new EmptyClientOptions()) => throw null;
 
-        public EmptyClient(Uri endpoint, EmptyClientOptions options) => throw null;
+        internal EmptyClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, EmptyClientOptions options) => throw null;
+
+        public EmptyClient(Uri endpoint, EmptyClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public EmptyClient(EmptyClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

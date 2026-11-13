@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentSafety.Tests
 {
@@ -22,7 +22,8 @@ namespace Azure.AI.ContentSafety.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             BlocklistClient client;
-            var options = InstrumentClientOptions(new ContentSafetyClientOptions());
+            // TODO - re-record tests and unpin version https://github.com/Azure/azure-sdk-for-net/issues/53232
+            var options = InstrumentClientOptions(new ContentSafetyClientOptions(ContentSafetyClientOptions.ServiceVersion.V2023_10_01));
 
             if (useTokenCredential)
             {

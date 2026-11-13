@@ -409,7 +409,7 @@ namespace Azure.Core
                 throw new ArgumentNullException(nameof(rawResponse));
             }
 
-            return new OperationState<T>(rawResponse, true, false, default, operationFailedException);
+            return new OperationState<T>(rawResponse, true, false, default, operationFailedException ?? new RequestFailedException(rawResponse));
         }
 
         /// <summary>

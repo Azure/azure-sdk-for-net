@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct HostEndpointSettingsMode : IEquatable<HostEndpointSettingsMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="HostEndpointSettingsMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HostEndpointSettingsMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AuditValue = "Audit";
         private const string EnforceValue = "Enforce";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Audit. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostEndpointSettingsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HostEndpointSettingsMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Audit. </summary>
         public static HostEndpointSettingsMode Audit { get; } = new HostEndpointSettingsMode(AuditValue);
-        /// <summary> Enforce. </summary>
+
+        /// <summary> Gets the Enforce. </summary>
         public static HostEndpointSettingsMode Enforce { get; } = new HostEndpointSettingsMode(EnforceValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static HostEndpointSettingsMode Disabled { get; } = new HostEndpointSettingsMode(DisabledValue);
+
         /// <summary> Determines if two <see cref="HostEndpointSettingsMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HostEndpointSettingsMode left, HostEndpointSettingsMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HostEndpointSettingsMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HostEndpointSettingsMode left, HostEndpointSettingsMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HostEndpointSettingsMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HostEndpointSettingsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HostEndpointSettingsMode(string value) => new HostEndpointSettingsMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HostEndpointSettingsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HostEndpointSettingsMode?(string value) => value == null ? null : new HostEndpointSettingsMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HostEndpointSettingsMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HostEndpointSettingsMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

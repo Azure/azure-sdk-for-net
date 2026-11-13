@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct IntegrationRuntimeLicenseType : IEquatable<IntegrationRuntimeLicenseType>
     {
         private readonly string _value;
+        /// <summary> BasePrice. </summary>
+        private const string BasePriceValue = "BasePrice";
+        /// <summary> LicenseIncluded. </summary>
+        private const string LicenseIncludedValue = "LicenseIncluded";
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IntegrationRuntimeLicenseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasePriceValue = "BasePrice";
-        private const string LicenseIncludedValue = "LicenseIncluded";
+            _value = value;
+        }
 
         /// <summary> BasePrice. </summary>
         public static IntegrationRuntimeLicenseType BasePrice { get; } = new IntegrationRuntimeLicenseType(BasePriceValue);
+
         /// <summary> LicenseIncluded. </summary>
         public static IntegrationRuntimeLicenseType LicenseIncluded { get; } = new IntegrationRuntimeLicenseType(LicenseIncludedValue);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeLicenseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IntegrationRuntimeLicenseType left, IntegrationRuntimeLicenseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeLicenseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IntegrationRuntimeLicenseType left, IntegrationRuntimeLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeLicenseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IntegrationRuntimeLicenseType(string value) => new IntegrationRuntimeLicenseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IntegrationRuntimeLicenseType?(string value) => value == null ? null : new IntegrationRuntimeLicenseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IntegrationRuntimeLicenseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IntegrationRuntimeLicenseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

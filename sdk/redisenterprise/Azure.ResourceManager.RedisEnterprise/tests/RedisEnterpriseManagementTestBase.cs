@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.RedisEnterprise.Tests
 {
     public class RedisEnterpriseManagementTestBase : ManagementRecordedTestBase<RedisEnterpriseManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => "centraluseuap";
+        protected AzureLocation DefaultLocation => new("eastus2euap");
 
         protected ArmClient Client { get; private set; }
 
@@ -29,25 +29,27 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         }
 
         [SetUp]
-        public async Task CreateCommonClient()
+        public void CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            DefaultSubscription = Client.GetSubscriptionResource(
+                new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}"));
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(AzureLocation? location = null)
         {
-            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            var resourceGroupName = Recording.GenerateId("testRG-", 64);
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
-                new ResourceGroupData(DefaultLocation)
+                new ResourceGroupData(location ?? DefaultLocation)
                 {
                     Tags =
                     {
                         { "test", "env" }
                     }
                 });
+            TestContext.Progress.WriteLine($"Created test resource group: {rgOp.Value.Id}");
             return rgOp.Value;
         }
     }

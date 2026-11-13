@@ -1,0 +1,6 @@
+directory: specification/newrelic/NewRelicObservability.Management
+commit: c8e1ea0817257e22c9bea05882feecdb78a3ef96
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-	public partial class SqlServerPatch
+    public partial class SqlServerPatch
     {
         /// <summary>
         /// Gets minimal tls version for a server.

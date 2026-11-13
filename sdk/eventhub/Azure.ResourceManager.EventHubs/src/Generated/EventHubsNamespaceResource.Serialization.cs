@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsNamespaceResource : IJsonModel<EventHubsNamespaceData>
+    /// <summary></summary>
+    public partial class EventHubsNamespaceResource : ArmResource, IJsonModel<EventHubsNamespaceData>
     {
-        private static EventHubsNamespaceData s_dataDeserializationInstance;
-        private static EventHubsNamespaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EventHubsNamespaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EventHubsNamespaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EventHubsNamespaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventHubsNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsNamespaceData>)Data).Write(writer, options);
 
-        EventHubsNamespaceData IJsonModel<EventHubsNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsNamespaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventHubsNamespaceData IJsonModel<EventHubsNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EventHubsNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsNamespaceData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EventHubsNamespaceData IPersistableModel<EventHubsNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsNamespaceData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
-        string IPersistableModel<EventHubsNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsNamespaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventHubsNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

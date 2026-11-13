@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class HostingEnvironmentStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HostingEnvironmentStatus value) => value switch
         {
             HostingEnvironmentStatus.Preparing => "Preparing",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostingEnvironmentStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static HostingEnvironmentStatus ToHostingEnvironmentStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Preparing")) return HostingEnvironmentStatus.Preparing;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ready")) return HostingEnvironmentStatus.Ready;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Scaling")) return HostingEnvironmentStatus.Scaling;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return HostingEnvironmentStatus.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Preparing"))
+            {
+                return HostingEnvironmentStatus.Preparing;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ready"))
+            {
+                return HostingEnvironmentStatus.Ready;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Scaling"))
+            {
+                return HostingEnvironmentStatus.Scaling;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting"))
+            {
+                return HostingEnvironmentStatus.Deleting;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostingEnvironmentStatus value.");
         }
     }

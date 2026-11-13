@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> run command result. </summary>
     public partial class ManagedClusterRunCommandResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandResult"/>. </summary>
         internal ManagedClusterRunCommandResult()
@@ -52,45 +24,81 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandResult"/>. </summary>
         /// <param name="id"> The command id. </param>
-        /// <param name="provisioningState"> provisioning State. </param>
-        /// <param name="exitCode"> The exit code of the command. </param>
-        /// <param name="startedOn"> The time when the command started. </param>
-        /// <param name="finishedOn"> The time when the command finished. </param>
-        /// <param name="logs"> The command output. </param>
-        /// <param name="reason"> An explanation of why provisioningState is set to failed (if so). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterRunCommandResult(string id, string provisioningState, int? exitCode, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, string logs, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of command result. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterRunCommandResult(string id, CommandResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            ProvisioningState = provisioningState;
-            ExitCode = exitCode;
-            StartedOn = startedOn;
-            FinishedOn = finishedOn;
-            Logs = logs;
-            Reason = reason;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The command id. </summary>
         [WirePath("id")]
         public string Id { get; }
+
+        /// <summary> Properties of command result. </summary>
+        [WirePath("properties")]
+        internal CommandResultProperties Properties { get; }
+
         /// <summary> provisioning State. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The exit code of the command. </summary>
         [WirePath("properties.exitCode")]
-        public int? ExitCode { get; }
+        public int? ExitCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExitCode;
+            }
+        }
+
         /// <summary> The time when the command started. </summary>
         [WirePath("properties.startedAt")]
-        public DateTimeOffset? StartedOn { get; }
+        public DateTimeOffset? StartedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartedOn;
+            }
+        }
+
         /// <summary> The time when the command finished. </summary>
         [WirePath("properties.finishedAt")]
-        public DateTimeOffset? FinishedOn { get; }
+        public DateTimeOffset? FinishedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FinishedOn;
+            }
+        }
+
         /// <summary> The command output. </summary>
         [WirePath("properties.logs")]
-        public string Logs { get; }
+        public string Logs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Logs;
+            }
+        }
+
         /// <summary> An explanation of why provisioningState is set to failed (if so). </summary>
         [WirePath("properties.reason")]
-        public string Reason { get; }
+        public string Reason
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Reason;
+            }
+        }
     }
 }

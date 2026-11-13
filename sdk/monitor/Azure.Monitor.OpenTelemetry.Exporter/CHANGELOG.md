@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.11.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,283 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.11.0-beta.1 (2026-11-09)
+
+### Features Added
+
+- Added Attach SDK statistics per customer connection string observed in newly exported telemetry for multi-endpoint routing. A configured connection string alone no longer produces Attach in this mode, and offline-storage replays do not create or refresh Attach associations. Single-endpoint Attach is unchanged.
+- Multi-endpoint routing reads a new `microsoft.ingestion_auth` attribute. Telemetry marked `"aad"` is sent and stored separately from instrumentation-key telemetry for the same endpoint, in preparation for Microsoft Entra ID support.
+- Multi-endpoint routing can now be used with `AzureMonitorExporterOptions.Credential`. Only telemetry marked `"aad"` is sent with a token, scoped to the audience in the `Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience` AppContext value (public cloud by default). Without a credential, telemetry marked `"aad"` is dropped.
+- Added the experimental `Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase` AppContext switch. When enabled, the custom property truncation limit for `gen_ai.input.messages` and `gen_ai.output.messages` increases from 256 KiB to 4 MiB (characters) to support GenAI multimodal content. Limits are unchanged by default: 256 KiB for GenAI attributes and 8 KiB for all other custom properties.
+
+### Bugs Fixed
+
+- Fixed a multi-endpoint offline-storage race where disk-size recounts discarded in-progress write reservations, potentially allowing storage to exceed its shared budget. ([#63845](https://github.com/Azure/azure-sdk-for-net/pull/63845))
+- Multi-endpoint Attach SDK statistics refresh version and attachment mode after late resource initialization.
+- Attach SDK statistics use monotonic time for reporting intervals and association expiry, avoiding delays caused by system clock adjustments.
+- Microsoft OpenTelemetry SDK statistics use the standard collector endpoint for all customer regions while retaining each item's EU/non-EU SDK statistics instrumentation key and customer key. Non-distro Breeze routing is unchanged.
+- Uploading telemetry from offline storage (at startup, on retry, and at shutdown) is no longer recorded as an HTTP dependency by HttpClient instrumentation.
+  ([#63821](https://github.com/Azure/azure-sdk-for-net/issues/63821))
+- Fixed `LogFilteringProcessor` behavior in .net 11 when `RandomTraceId` is set. ([64084](https://github.com/Azure/azure-sdk-for-net/pull/64084))
+
+### Other Changes
+
+- Updated `OpenTelemetry` and `OpenTelemetry.Extensions.Hosting` from 1.18.0 to 1.20.1, and `OpenTelemetry.PersistentStorage.FileSystem` from 1.1.1 to 1.1.3.
+- Removed registry-owned locks from multi-endpoint Attach SDK statistics observation and collection. Endpoint regions are cached, and observation is skipped when both stats regions are disabled.
+
+## 1.10.0 (2026-10-05)
+
+### Features Added
+
+- Added the `Azure.Monitor.OpenTelemetry.Exporter.StorageSubDirectory` AppContext value, settable with `AppContext.SetData` or a `runtimeconfig.json` configProperty, so that the processes or entry points of one application can share a persistent storage directory. By default the directory name is derived from the process name and `AppContext.BaseDirectory`, which splits storage when components of one application differ in either, and a component that runs rarely never drains its backlog. When set, the value replaces those two inputs; the instrumentation key and user name still contribute, so different users and resources stay isolated. Behaviour is unchanged when the value is not set.
+  ([#62997](https://github.com/Azure/azure-sdk-for-net/issues/62997))
+
+### Bugs Fixed
+
+- SDK statistics sent to the Microsoft OpenTelemetry distro's configured ingestion endpoint (the `Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint` AppContext switch) now carry the same region-matched SDK statistics instrumentation key as the existing SDK statistics endpoint, instead of an all-zero placeholder. Only the destination differs on the distro path.
+  ([#63342](https://github.com/Azure/azure-sdk-for-net/pull/63342))
+
+## 1.10.0-beta.1 (2026-09-16)
+
+### Features Added
+
+- Enable AOT compatibility validation for Azure Monitor OpenTelemetry Exporter
+  ([#62850](https://github.com/Azure/azure-sdk-for-net/pull/62850))
+
+- Multi-endpoint routing now maps the `microsoft.multi_endpoint_cloud_role` attribute to `ai.cloud.role` for traces and logs. Missing or invalid values use `unknown_service`, while `ai.cloud.roleInstance` remains host-derived. The attribute is read from Activity tags for traces and `LogRecord.Attributes` for logs, and only affects cloud role when multi-endpoint routing is enabled.
+  ([#62909](https://github.com/Azure/azure-sdk-for-net/pull/62909))
+
+- Added multi-endpoint routing for traces, off by default and enabled with the `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch. When enabled, an Activity carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; Activities without both attributes are dropped. Live Metrics is disabled while the switch is on, and sampling defaults to fixed-rate rather than rate-limited because a per-process rate limit would be shared across every destination the process carries. The switch cannot be combined with Microsoft Entra ID authentication, because the credential is scoped to the exporter's own audience and would be sent to endpoints supplied by telemetry.
+  ([#62707](https://github.com/Azure/azure-sdk-for-net/pull/62707))
+
+- Extended multi-endpoint routing to logs, off by default and enabled with the same `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch used for traces. When enabled, a `LogRecord` carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; log records without both attributes are dropped. The two routing attributes are consumed for routing and are not emitted as custom properties. Routing reads only `LogRecord.Attributes`, not logging scopes. Live Metrics disablement and the Microsoft Entra ID restriction that apply to multi-endpoint traces apply to logs as well, since both are enforced on the shared transmitter.
+  ([#62885](https://github.com/Azure/azure-sdk-for-net/pull/62885))
+
+- Extended multi-endpoint routing to metrics, off by default and enabled with the same `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch used for traces and logs. A measurement carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` dimensions is sent to that endpoint instead of the exporter's own; measurements without both are dropped. Unlike traces and logs, the routing values are supplied as dimensions at measurement time rather than stamped afterwards, because a metric's dimensions are part of its aggregation key: each destination becomes its own time series, and one instrument can feed several endpoints. Routing is applied per `MetricPoint`, the three routing dimensions are consumed rather than emitted as custom properties, and `microsoft.multi_endpoint_cloud_role` sets `ai.cloud.role` as it does for traces and logs. Standard metrics and performance counters are not collected while the switch is on: routed destinations are not sent standard metrics, and a process-scoped performance counter has no single owner among the destinations a routed process carries.
+  ([#62957](https://github.com/Azure/azure-sdk-for-net/pull/62957))
+
+- A connection string is no longer required when multi-endpoint routing is enabled. Routing takes every destination from the telemetry itself, so a process that only routes has no component of its own to name, and previously had to nominate one that received nothing. Telemetry carrying valid routing attributes is still sent to the endpoint it names; telemetry without them is dropped, as it already was. SDK statistics are not collected in this configuration, because they identify a component by instrumentation key and select their region from its ingestion endpoint, neither of which exists without a connection string. Behaviour is unchanged when a connection string is configured, and unchanged when the switch is off: a missing connection string is still an error.
+  ([#63004](https://github.com/Azure/azure-sdk-for-net/pull/63004))
+
+### Other Changes
+
+- Added self-diagnostics for multi-endpoint routing, including rejected telemetry, endpoint delivery, partition limits, and storage eviction.
+  ([#62925](https://github.com/Azure/azure-sdk-for-net/pull/62925))
+
+## 1.9.0 (2026-09-04)
+
+### Features Added
+- Add support for project id attributes propagation
+  ([#62052](https://github.com/Azure/azure-sdk-for-net/pull/62052))
+
+- Shutting down a provider (including `Dispose()`) now writes pending telemetry to offline storage and uploads it in the background instead of blocking on ingestion. Short-lived applications such as CLI tools previously lost this telemetry, because they exit before a transmission completes; the telemetry is now durable before exit, and delivery is completed by a background drain in this or a subsequent run. `ForceFlush` is unchanged by default and can be opted in with the `Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush` AppContext switch, which applies to traces and logs only: a metric reader cannot distinguish a caller's flush from its periodic collection, so metric `ForceFlush` always transmits. The previous behavior can be restored with the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` AppContext switch.
+  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
+
+- How long shutdown waits for that background drain can now be set through the `Azure.Monitor.OpenTelemetry.Exporter.ShutdownDrainBudgetMilliseconds` AppContext data value, using either `AppContext.SetData` or a `runtimeconfig.json` configProperty. `Dispose()` passes a finite timeout, so by default part of that window is spent delivering telemetry and process exit tracks ingestion latency. Short-lived applications should set this to `0`, which makes exit cost only the file write: measured at 2.7 ms regardless of ingestion latency, against 2011 ms with a two second ingestion delay. The default is unchanged, so long-running services keep delivering their final batch within the window `Dispose()` allows. A single-run CI job, where no later run exists to drain storage, should not raise this value but set the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` switch with a bounded `Retry.NetworkTimeout`: raising the budget cannot guarantee delivery, because `Shutdown()` waits on the drain for no time at all and `Dispose()` is capped by the five second grace period OpenTelemetry allows it.
+  ([#62340](https://github.com/Azure/azure-sdk-for-net/pull/62340))
+
+### Bugs Fixed
+
+- The ingestion redirect cache is now keyed by the endpoint it was issued for. A redirect returned by one ingestion endpoint could previously be applied to a request bound for another.
+  ([#62707](https://github.com/Azure/azure-sdk-for-net/pull/62707))
+
+- Telemetry left in offline storage by a process that exited during a transmission is no longer stranded permanently. A leased blob is renamed so that it matches neither the storage provider's blob enumeration nor its retention sweep, and the provider only reclaims those leases on a two minute maintenance timer that a short-lived process never reaches. Expired leases are now reclaimed when storage is drained.
+  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
+
+- Offline storage is now drained shortly after startup rather than only after the process has been running for two minutes, so telemetry persisted by a previous run is uploaded even when no single run is long-lived.
+  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
+
+- Telemetry is no longer dropped when the offline storage directory reaches its size cap. The oldest stored telemetry is evicted to make room.
+  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
+
+- Statsbeat no longer holds up process exit. It exports once more as its meter provider is disposed, which put an ingestion round trip on the exit path; that final export now runs in the background, and its network timeout is bounded at five seconds rather than the pipeline default of 100 seconds. The customer SDK stats meter provider is instead left to live for the process lifetime, so it never exports on the exit path at all; its stats are delivered by its own periodic reader.
+  ([#62340](https://github.com/Azure/azure-sdk-for-net/pull/62340))
+
+- Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
+- Added the `telemetrySuccess` dimension to `Item_Dropped_Count` for request and dependency telemetry.
+  ([#62081](https://github.com/Azure/azure-sdk-for-net/pull/62081))
+
+### Other Changes
+
+- Updated OpenTelemetry dependencies to 1.18.0 and `OpenTelemetry.PersistentStorage.FileSystem` to 1.1.1.
+  ([#62698](https://github.com/Azure/azure-sdk-for-net/pull/62698))
+
+- Improved activity conversion performance by reading recognized attributes from a fixed index instead of scanning the tag list for each one. Every span shape converts faster, by about a third for spans carrying Application Insights override attributes, and each conversion rents fewer pooled buffers. Standard metrics no longer collect the tags they never read.
+  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
+  - Fixed pooled tag buffers being leaked whenever converting an activity failed, and retaining tag keys and values after being returned to the pool.
+  - Fixed the buffer rent size being process-wide mutable state written without synchronization.
+  - Fixed an activity tag with a null key dropping the remaining tags from custom properties.
+  - Removed two attribute lookups that could never match. `http.server_name` and `server.socket.address` are still exported as custom properties, unchanged.
+
+## 1.8.3 (2026-07-24)
+
+### Bugs Fixed
+
+- Hardened ingestion and Live Metrics redirect handling to reject untrusted destinations before replaying telemetry or caching the redirect. Redirect targets must now use HTTPS and match an approved Azure Monitor trust boundary, preventing credentials and telemetry from being forwarded to attacker-controlled endpoints.
+  ([#61244](https://github.com/Azure/azure-sdk-for-net/pull/61244))
+
+### Other Changes
+
+- Customer SDK stats are now on by default; opt out with `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true`. `dropCode`/`retryCode` dimension values now use the spec's SCREAMING_SNAKE_CASE (e.g. `CLIENT_EXCEPTION`).
+
+## 1.8.2 (2026-06-30)
+
+### Features Added
+
+- Added support for the Microsoft OpenTelemetry distro's SDK statistics: a new internal meter subscription and an AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint`) that lets the distro redirect SDK statistics to its own ingestion path. The ingestion destination and an on/off signal are resolved at startup by fetching a remote configuration; on success the configured destination is used, an explicit remote disable signal turns SDK statistics off, and any other outcome falls back to the existing region-derived ingestion endpoint so SDK statistics keep flowing. The AppContext switch has no effect on Statsbeat for callers that do not opt in.
+  ([#59811](https://github.com/Azure/azure-sdk-for-net/pull/59811))
+
+- Subscribed the Statsbeat `MeterProvider` to the Microsoft OpenTelemetry distro's Network SDKStats meter (`MicrosoftOpenTelemetryNetworkSdkStatsMeter`) so distro-emitted Network statistics flow through the existing Statsbeat cadence when the distro runs with a non-Azure-Monitor exporter.
+  ([#60209](https://github.com/Azure/azure-sdk-for-net/pull/60209))
+
+- Subscribed the Statsbeat `MeterProvider` to the Microsoft OpenTelemetry distro's Feature SDKStats meter (`MicrosoftOpenTelemetryFeatureSdkStatsMeter`) so distro-emitted Feature statistics reach the Statsbeat ingestion path. The distro uses an independent, spec-aligned bit map to avoid collisions with the classic Application Insights SDK's `FeatureStatsbeatMeter`.
+  ([#59529](https://github.com/Azure/azure-sdk-for-net/pull/59529))
+
+- Added Network SDKStats reporting, emitting the short-interval Network statistics defined in the Application Insights SDKStats spec on a 15-minute cadence: `Request_Success_Count`, `Request_Failure_Count`, `Request_Duration`, `Retry_Count`, `Throttle_Count`, and `Exception_Count`, each with the spec-defined dimensions (including `host`, `statusCode`, and `exceptionType`).
+  ([#59909](https://github.com/Azure/azure-sdk-for-net/pull/59909), [#60018](https://github.com/Azure/azure-sdk-for-net/pull/60018))
+
+### Other Changes
+
+- Updated customer SDK stats dimension key names to use camelCase (`computeType`, `telemetryType`, `dropCode`, `dropReason`, `retryCode`, `retryReason`).
+  ([#59902](https://github.com/Azure/azure-sdk-for-net/pull/59902))
+
+## 1.8.1 (2026-05-20)
+
+### Features Added
+
+- Added GenAI main agent attribution support. Automatically propagates `microsoft.gen_ai.main_agent.*` attributes from parent spans to child spans and log records, enabling end-to-end tracing of AI agent orchestration.
+  ([#59368](https://github.com/Azure/azure-sdk-for-net/pull/59368))
+
+## 1.8.0 (2026-04-29)
+
+### Other Changes
+
+- Pulled in OpenTelemetry dependency updates.
+
+## 1.7.0 (2026-03-27)
+
+### Features Added
+
+- Added `ApplicationInsightsRestClientSettings` to support creating a `ApplicationInsightsRestClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+  ([#56891](https://github.com/Azure/azure-sdk-for-net/pull/56891))
+
+### Bugs Fixed
+
+- Fixed AOT warning regression by using the source generator for `ConfigurationBinder` calls.
+  ([#56368](https://github.com/Azure/azure-sdk-for-net/pull/56368))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  - OpenTelemetry 1.15.1
+  - OpenTelemetry.Extensions.Hosting 1.15.1
+  ([#57549](https://github.com/Azure/azure-sdk-for-net/pull/57549))
+* Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, and `AzureMonitorTraceExporter` public for direct use when configuring OpenTelemetry.
+   ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
+* Made options `EnablePerformanceCounters` and `EnableStandardMetrics` public in `AzureMonitorExporterOptions`.
+   ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
+
+## 1.6.0 (2026-01-28)
+
+### Other Changes
+
+* The customer-facing SDK stats feature
+  metric names have been updated to match the stable specification.
+  - **Metric names changed**: `preview.item.success.count` → `Item_Success_Count`,
+    `preview.item.dropped.count` → `Item_Dropped_Count`,
+    `preview.item.retry.count` → `Item_Retry_Count`.
+  - **New environment variable**: To enable, set environment variable
+    `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=false`.
+  - The old environment variable `APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW`
+    is no longer recognized.
+
+## 1.6.0-beta.2 (2026-01-12)
+
+### Breaking Changes
+* **Default Sampler Changed** ([#54942](https://github.com/Azure/azure-sdk-for-net/pull/54942)): The default sampling behavior has been changed from
+  `ApplicationInsightsSampler` with 100% sampling (all traces sampled) to
+  `RateLimitedSampler` with 5.0 traces per second. This change significantly
+  reduces telemetry volume for high-traffic applications and provides better
+  cost optimization out of the box.
+  **Impact**: Applications with more than 5 requests per second will see fewer
+  traces exported by default.
+  **Migration**: To maintain the previous behavior (100% sampling), explicitly
+  configure the sampler:
+  ```csharp
+  // Option 1: Set SamplingRatio and clear TracesPerSecond
+  builder.Services.AddOpenTelemetry()
+      .UseAzureMonitorExporter(options =>
+      {
+          options.SamplingRatio = 1.0f;
+          options.TracesPerSecond = null;
+      });
+  // Option 2: Use environment variables
+  // OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
+  // OTEL_TRACES_SAMPLER_ARG=1.0
+  ```
+
+### Bugs Fixed
+
+* Fixed performance counter metrics not using configured resource attributes
+  (cloud_RoleName and cloud_RoleInstance), which previously showed
+  "unknown_service:appName" instead of the configured values.
+  ([#54944](https://github.com/Azure/azure-sdk-for-net/pull/54944))
+
+## 1.6.0-beta.1 (2025-12-03)
+
+### Features Added
+* Added Microsoft override attributes to preserve exact Application Insights
+  semantics when exporting telemetry data.
+  ([#54023](https://github.com/Azure/azure-sdk-for-net/pull/54023))
+  * Request: `microsoft.request.name`, `microsoft.request.url`,
+    `microsoft.request.source`, `microsoft.request.resultCode`
+  * Dependency: `microsoft.dependency.type`, `microsoft.dependency.target`,
+    `microsoft.dependency.name`, `microsoft.dependency.data`,
+    `microsoft.dependency.resultCode`
+  * Operation: `microsoft.operation.name`
+
+### Other Changes
+* Added distinct SDK version labels for all Application Insights shim packages
+  to enable accurate attribution and visibility of exporter, distro, and shim
+  telemetry during migration and analysis.
+  ([#54011](https://github.com/Azure/azure-sdk-for-net/pull/54011))
+
+## 1.5.0 (2025-11-14)
+
+### Features Added
+
+* Enabled resource metrics export by default.
+  ([#53432](https://github.com/Azure/azure-sdk-for-net/pull/53432))
+
+* Added `EnableTraceBasedLogSampler` property to `AzureMonitorExporterOptions`
+  to enable filtering logs based on trace sampling decisions, reducing log
+  volume while maintaining trace-log correlation.
+  ([#53441](https://github.com/Azure/azure-sdk-for-net/pull/53441))
+
+* Update OpenTelemetry dependencies
+  ([#53910](https://github.com/Azure/azure-sdk-for-net/pull/53910))
+  - OpenTelemetry 1.14.0
+
+## 1.5.0-beta.1 (2025-10-16)
+
+### Features Added
+
+* Added mapping for `enduser.pseudo.id` attribute to `user_Id`
+
+* Added support for configuring sampling via OpenTelemetry environment
+  variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`,
+    `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for
+  `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
+  `microsoft.fixed_percentage`). This now applies to both
+  `UseAzureMonitorExporter` and the direct
+  `Sdk.CreateTracerProviderBuilder().AddAzureMonitorTraceExporter(...)` path.
+  ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
+
+* Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
 
 ## 1.4.0 (2025-05-08)
 

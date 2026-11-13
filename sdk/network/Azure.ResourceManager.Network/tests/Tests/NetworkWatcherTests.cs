@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 if (w.Data.Location == TestEnvironment.Location)
                 {
-                    await w.DeleteAsync(WaitUntil.Completed);
+                    await w.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests
             var networkWatcherCollection = await GetCollection();
             var location = TestEnvironment.Location;
             var properties = new NetworkWatcherData { Location = location };
-            var createResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
+            var createResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties, System.Threading.CancellationToken.None);
             Assert.AreEqual(networkWatcherName, createResponse.Value.Data.Name);
             Assert.AreEqual(location, createResponse.Value.Data.Location.ToString());
             Assert.IsEmpty(createResponse.Value.Data.Tags);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(getResponse.Value.Data.Tags);
 
             properties.Tags.Add("test", "test");
-            var updateResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
+            var updateResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties, System.Threading.CancellationToken.None);
             Assert.AreEqual(networkWatcherName, updateResponse.Value.Data.Name);
             Assert.AreEqual(location, updateResponse.Value.Data.Location.ToString());
             Has.One.Equals(updateResponse.Value.Data.Tags);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Tests
             //await getResponse.Value.GetNetworkConfigurationDiagnosticAsync();
 
             //Delete Network Watcher
-            await getResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             //Get all Network Watchers in the subscription
             List<NetworkWatcherResource> listAllAfterDeletingResponse = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
@@ -125,20 +125,26 @@ namespace Azure.ResourceManager.Network.Tests
             // Create Network Watcher in the resource group
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             var properties = new NetworkWatcherData { Location = location };
-            var networkWatcherLro = await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
+            var networkWatcherLro = await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties, System.Threading.CancellationToken.None);
             NetworkWatcherResource networkWatcher = networkWatcherLro.Value;
 
             // Create two VMs for test vm connectivity
-            var vm1 = await CreateWindowsVM(Recording.GenerateAssetName("vm"), Recording.GenerateAssetName("nic"), location, resourceGroup);
-            var vm2 = await CreateWindowsVM(Recording.GenerateAssetName("vm"), Recording.GenerateAssetName("nic"), location, resourceGroup);
-            await deployWindowsNetworkAgent(vm1.Data.Name, location, resourceGroup);
-            await deployWindowsNetworkAgent(vm2.Data.Name, location, resourceGroup);
+            string vm1Name = Recording.GenerateAssetName("vm");
+            string nic1Name = Recording.GenerateAssetName("nic");
+            var vm1 = await CreateWindowsVM(vm1Name, nic1Name, location, resourceGroup);
+            string vm2Name = Recording.GenerateAssetName("vm");
+            string nic2Name = Recording.GenerateAssetName("nic");
+            var vm2 = await CreateWindowsVM(vm2Name, nic2Name, location, resourceGroup);
+            await deployWindowsNetworkAgent(vm1Name, location, resourceGroup);
+            await deployWindowsNetworkAgent(vm2Name, location, resourceGroup);
 
             // Test connectivity
+            ResourceIdentifier vm1Id = new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vm1Name}");
+            ResourceIdentifier vm2Id = new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vm2Name}");
             ConnectivityContent content = new ConnectivityContent(
-                new ConnectivitySource(vm1.Id),
-                new ConnectivityDestination() { Port = 22, ResourceId = vm2.Id });
-            var connectivityResult = await networkWatcher.CheckConnectivityAsync(WaitUntil.Completed, content);
+                new ConnectivitySource(vm1Id),
+                new ConnectivityDestination() { Port = 22, ResourceId = vm2Id });
+            var connectivityResult = await networkWatcher.CheckConnectivityAsync(WaitUntil.Completed, content, System.Threading.CancellationToken.None);
             Assert.IsNotNull(connectivityResult.Value.NetworkConnectionStatus);
             Assert.IsNull(connectivityResult.Value.Hops.First().Links.First().ResourceId);
         }

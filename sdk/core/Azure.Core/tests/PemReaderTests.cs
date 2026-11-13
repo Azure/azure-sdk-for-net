@@ -254,6 +254,26 @@ pn29yMivL7r48dlo";
             Assert.Throws<NotSupportedException>(() => PemReader.LoadCertificate(ECDsaCertificate.AsSpan(), keyType: PemReader.KeyType.Auto));
         }
 
+        [Test]
+        public void LoadCertificateChain()
+        {
+            // PEM with chain: key + leaf cert + intermediate cert + root cert (standard RFC 2459 order)
+            using X509Certificate2 certificate = PemReader.LoadCertificate(RsaPemChain.AsSpan(), keyType: PemReader.KeyType.RSA);
+            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
+            Assert.IsTrue(certificate.HasPrivateKey);
+            Assert.AreEqual(s_rsaChainLeafCertificateBytes, certificate.RawData);
+        }
+
+        [Test]
+        public void LoadCertificateChainReversedCerts()
+        {
+            // PEM with chain certs in reversed order (intermediate + root + leaf + key)
+            using X509Certificate2 certificate = PemReader.LoadCertificate(RsaPemChainReversedCerts.AsSpan(), keyType: PemReader.KeyType.RSA);
+            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
+            Assert.IsTrue(certificate.HasPrivateKey);
+            Assert.AreEqual(s_rsaChainLeafCertificateBytes, certificate.RawData);
+        }
+
         private static IEnumerable<string> LineEndings => new[]
         {
             "\n",   // Linux

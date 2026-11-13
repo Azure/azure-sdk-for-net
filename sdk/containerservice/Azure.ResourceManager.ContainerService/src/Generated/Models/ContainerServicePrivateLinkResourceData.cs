@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> A private link resource. </summary>
     public partial class ContainerServicePrivateLinkResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourceData"/>. </summary>
         public ContainerServicePrivateLinkResourceData()
@@ -54,13 +26,13 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The ID of the private link resource. </param>
-        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="name"> The name of the private link resource. See [naming rules](https://aka.ms/search-naming-rules) for more details. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="groupId"> The group ID of the resource. </param>
         /// <param name="requiredMembers"> The RequiredMembers of the resource. </param>
         /// <param name="privateLinkServiceId"> The private link service ID of the resource, this field is exposed only to NRP internally. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, string groupId, IList<string> requiredMembers, ResourceIdentifier privateLinkServiceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, string groupId, IList<string> requiredMembers, ResourceIdentifier privateLinkServiceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -68,24 +40,29 @@ namespace Azure.ResourceManager.ContainerService.Models
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             PrivateLinkServiceId = privateLinkServiceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the private link resource. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
-        /// <summary> The name of the private link resource. </summary>
+
+        /// <summary> The name of the private link resource. See [naming rules](https://aka.ms/search-naming-rules) for more details. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> The resource type. </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
+
         /// <summary> The group ID of the resource. </summary>
         [WirePath("groupId")]
         public string GroupId { get; set; }
+
         /// <summary> The RequiredMembers of the resource. </summary>
         [WirePath("requiredMembers")]
         public IList<string> RequiredMembers { get; }
+
         /// <summary> The private link service ID of the resource, this field is exposed only to NRP internally. </summary>
         [WirePath("privateLinkServiceID")]
         public ResourceIdentifier PrivateLinkServiceId { get; }

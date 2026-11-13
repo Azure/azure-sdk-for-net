@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Terraform;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Terraform.Models
     public readonly partial struct TerraformAuthorizationScopeFilter : IEquatable<TerraformAuthorizationScopeFilter>
     {
         private readonly string _value;
+        /// <summary> Returns assignments for the given scope and all child scopes. </summary>
+        private const string AtScopeAndBelowValue = "AtScopeAndBelow";
+        /// <summary> Returns assignments for the given scope and all parent scopes, but not child scopes. </summary>
+        private const string AtScopeAndAboveValue = "AtScopeAndAbove";
+        /// <summary> Returns assignments for the given scope, all parent scopes, and all child scopes. </summary>
+        private const string AtScopeAboveAndBelowValue = "AtScopeAboveAndBelow";
+        /// <summary> Returns assignments only for the given scope; no parent or child scopes are included. </summary>
+        private const string AtScopeExactValue = "AtScopeExact";
 
         /// <summary> Initializes a new instance of <see cref="TerraformAuthorizationScopeFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TerraformAuthorizationScopeFilter(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AtScopeAndBelowValue = "AtScopeAndBelow";
-        private const string AtScopeAndAboveValue = "AtScopeAndAbove";
-        private const string AtScopeAboveAndBelowValue = "AtScopeAboveAndBelow";
-        private const string AtScopeExactValue = "AtScopeExact";
+            _value = value;
+        }
 
         /// <summary> Returns assignments for the given scope and all child scopes. </summary>
         public static TerraformAuthorizationScopeFilter AtScopeAndBelow { get; } = new TerraformAuthorizationScopeFilter(AtScopeAndBelowValue);
+
         /// <summary> Returns assignments for the given scope and all parent scopes, but not child scopes. </summary>
         public static TerraformAuthorizationScopeFilter AtScopeAndAbove { get; } = new TerraformAuthorizationScopeFilter(AtScopeAndAboveValue);
+
         /// <summary> Returns assignments for the given scope, all parent scopes, and all child scopes. </summary>
         public static TerraformAuthorizationScopeFilter AtScopeAboveAndBelow { get; } = new TerraformAuthorizationScopeFilter(AtScopeAboveAndBelowValue);
+
         /// <summary> Returns assignments only for the given scope; no parent or child scopes are included. </summary>
         public static TerraformAuthorizationScopeFilter AtScopeExact { get; } = new TerraformAuthorizationScopeFilter(AtScopeExactValue);
+
         /// <summary> Determines if two <see cref="TerraformAuthorizationScopeFilter"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TerraformAuthorizationScopeFilter left, TerraformAuthorizationScopeFilter right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TerraformAuthorizationScopeFilter"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TerraformAuthorizationScopeFilter left, TerraformAuthorizationScopeFilter right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TerraformAuthorizationScopeFilter"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TerraformAuthorizationScopeFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TerraformAuthorizationScopeFilter(string value) => new TerraformAuthorizationScopeFilter(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TerraformAuthorizationScopeFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TerraformAuthorizationScopeFilter?(string value) => value == null ? null : new TerraformAuthorizationScopeFilter(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TerraformAuthorizationScopeFilter other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TerraformAuthorizationScopeFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

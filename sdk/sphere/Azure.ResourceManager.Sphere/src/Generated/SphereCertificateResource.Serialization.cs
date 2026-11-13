@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sphere
 {
+    /// <summary></summary>
     public partial class SphereCertificateResource : IJsonModel<SphereCertificateData>
     {
-        private static SphereCertificateData s_dataDeserializationInstance;
-        private static SphereCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SphereCertificateData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SphereCertificateData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SphereCertificateData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SphereCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SphereCertificateData>)Data).Write(writer, options);
 
-        SphereCertificateData IJsonModel<SphereCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereCertificateData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SphereCertificateData IJsonModel<SphereCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SphereCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SphereCertificateData>(Data, options, AzureResourceManagerSphereContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SphereCertificateData IPersistableModel<SphereCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereCertificateData>(data, options, AzureResourceManagerSphereContext.Default);
 
-        string IPersistableModel<SphereCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SphereCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

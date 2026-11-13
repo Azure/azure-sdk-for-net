@@ -13,76 +13,75 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A class representing the NetAppVolumeGroup data model.
-    /// Volume group resource for create
-    /// </summary>
+    /// <summary> Volume group resource for create. </summary>
     public partial class NetAppVolumeGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupData"/>. </summary>
         public NetAppVolumeGroupData()
         {
-            Volumes = new ChangeTrackingList<NetAppVolumeGroupVolume>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Volume group properties. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="groupMetaData"> Volume group details. </param>
-        /// <param name="volumes"> List of volumes from group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IList<NetAppVolumeGroupVolume> volumes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VolumeGroupProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Location = location;
-            ProvisioningState = provisioningState;
-            GroupMetaData = groupMetaData;
-            Volumes = volumes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Volume group properties. </summary>
+        internal VolumeGroupProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; set; }
+
         /// <summary> Azure lifecycle management. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Volume group details. </summary>
-        public NetAppVolumeGroupMetadata GroupMetaData { get; set; }
+        public NetAppVolumeGroupMetadata GroupMetaData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupMetaData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.GroupMetaData = value;
+            }
+        }
+
         /// <summary> List of volumes from group. </summary>
-        public IList<NetAppVolumeGroupVolume> Volumes { get; }
+        public IList<NetAppVolumeGroupVolume> Volumes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                return Properties.Volumes;
+            }
+        }
     }
 }

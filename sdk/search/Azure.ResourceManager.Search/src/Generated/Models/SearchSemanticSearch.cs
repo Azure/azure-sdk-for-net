@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </summary>
+    /// <summary> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </summary>
     public readonly partial struct SearchSemanticSearch : IEquatable<SearchSemanticSearch>
     {
         private readonly string _value;
+        /// <summary> Indicates that semantic reranker is disabled for the search service. </summary>
+        private const string DisabledValue = "disabled";
+        /// <summary> Enables semantic reranker on a search service and indicates that it is to be used within the limits of the free plan. The free plan would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. This is the default. </summary>
+        private const string FreeValue = "free";
+        /// <summary> Enables semantic reranker on a search service as a billable feature after the free quota is exhausted, with higher throughput and volume of semantically reranked queries. </summary>
+        private const string StandardValue = "standard";
 
         /// <summary> Initializes a new instance of <see cref="SearchSemanticSearch"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchSemanticSearch(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DisabledValue = "disabled";
-        private const string FreeValue = "free";
-        private const string StandardValue = "standard";
-
-        /// <summary> Indicates that semantic reranker is disabled for the search service. This is the default. </summary>
+        /// <summary> Indicates that semantic reranker is disabled for the search service. </summary>
         public static SearchSemanticSearch Disabled { get; } = new SearchSemanticSearch(DisabledValue);
-        /// <summary> Enables semantic reranker on a search service and indicates that it is to be used within the limits of the free plan. The free plan would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. </summary>
+
+        /// <summary> Enables semantic reranker on a search service and indicates that it is to be used within the limits of the free plan. The free plan would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. This is the default. </summary>
         public static SearchSemanticSearch Free { get; } = new SearchSemanticSearch(FreeValue);
-        /// <summary> Enables semantic reranker on a search service as a billable feature, with higher throughput and volume of semantically reranked queries. </summary>
+
+        /// <summary> Enables semantic reranker on a search service as a billable feature after the free quota is exhausted, with higher throughput and volume of semantically reranked queries. </summary>
         public static SearchSemanticSearch Standard { get; } = new SearchSemanticSearch(StandardValue);
+
         /// <summary> Determines if two <see cref="SearchSemanticSearch"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchSemanticSearch left, SearchSemanticSearch right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchSemanticSearch"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchSemanticSearch left, SearchSemanticSearch right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchSemanticSearch"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchSemanticSearch"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchSemanticSearch(string value) => new SearchSemanticSearch(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchSemanticSearch"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchSemanticSearch?(string value) => value == null ? null : new SearchSemanticSearch(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchSemanticSearch other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchSemanticSearch other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

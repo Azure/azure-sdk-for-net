@@ -5,9 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects;
 
-namespace Azure.Core.Foundations
+namespace Azure.AI.Projects
 {
     /// <summary> Paged collection of Connection items. </summary>
     internal partial class PagedConnection
@@ -17,7 +16,7 @@ namespace Azure.Core.Foundations
 
         /// <summary> Initializes a new instance of <see cref="PagedConnection"/>. </summary>
         /// <param name="value"> The Connection items on this page. </param>
-        internal PagedConnection(IEnumerable<ConnectionProperties> value)
+        internal PagedConnection(IEnumerable<AIProjectConnection> value)
         {
             Value = value.ToList();
         }
@@ -27,7 +26,7 @@ namespace Azure.Core.Foundations
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedConnection(IList<ConnectionProperties> value, Uri nextLink, string clientRequestId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedConnection(IList<AIProjectConnection> value, Uri nextLink, string clientRequestId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +35,7 @@ namespace Azure.Core.Foundations
         }
 
         /// <summary> The Connection items on this page. </summary>
-        public IList<ConnectionProperties> Value { get; }
+        public IList<AIProjectConnection> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

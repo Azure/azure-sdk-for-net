@@ -3,24 +3,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualNetworkGateway data model.
-    /// A common class for general resource information.
-    /// </summary>
-    public partial class VirtualNetworkGatewayData : NetworkTrackedResourceData
+    public partial class VirtualNetworkGatewayData
     {
+        // Preserve the released property while the generated boolean uses the preferred IsActive name.
+        /// <inheritdoc cref="IsActive"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use IsActive instead.")]
+        public bool? Active
+        {
+            get => IsActive;
+            set => IsActive = value;
+        }
+
+        // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.customRoutes.addressPrefixes")]
         public IList<string> CustomRoutesAddressPrefixes
         {
             get
             {
-                if (CustomRoutes is null)
-                    CustomRoutes = new VirtualNetworkAddressSpace();
+                CustomRoutes ??= new VirtualNetworkAddressSpace();
                 return CustomRoutes.AddressPrefixes;
             }
         }

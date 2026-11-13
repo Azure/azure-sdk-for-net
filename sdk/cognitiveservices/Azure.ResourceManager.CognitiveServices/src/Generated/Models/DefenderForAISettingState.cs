@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct DefenderForAISettingState : IEquatable<DefenderForAISettingState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DefenderForAISettingState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DefenderForAISettingState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForAISettingState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DefenderForAISettingState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Disabled. </summary>
         public static DefenderForAISettingState Disabled { get; } = new DefenderForAISettingState(DisabledValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static DefenderForAISettingState Enabled { get; } = new DefenderForAISettingState(EnabledValue);
+
         /// <summary> Determines if two <see cref="DefenderForAISettingState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DefenderForAISettingState left, DefenderForAISettingState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DefenderForAISettingState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DefenderForAISettingState left, DefenderForAISettingState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DefenderForAISettingState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DefenderForAISettingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DefenderForAISettingState(string value) => new DefenderForAISettingState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DefenderForAISettingState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DefenderForAISettingState?(string value) => value == null ? null : new DefenderForAISettingState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DefenderForAISettingState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DefenderForAISettingState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

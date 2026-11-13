@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppReplicationType : IEquatable<NetAppReplicationType>
     {
         private readonly string _value;
+        /// <summary> Cross region replication. </summary>
+        private const string CrossRegionReplicationValue = "CrossRegionReplication";
+        /// <summary> Cross zone replication. </summary>
+        private const string CrossZoneReplicationValue = "CrossZoneReplication";
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppReplicationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CrossRegionReplicationValue = "CrossRegionReplication";
-        private const string CrossZoneReplicationValue = "CrossZoneReplication";
+            _value = value;
+        }
 
         /// <summary> Cross region replication. </summary>
         public static NetAppReplicationType CrossRegionReplication { get; } = new NetAppReplicationType(CrossRegionReplicationValue);
+
         /// <summary> Cross zone replication. </summary>
         public static NetAppReplicationType CrossZoneReplication { get; } = new NetAppReplicationType(CrossZoneReplicationValue);
+
         /// <summary> Determines if two <see cref="NetAppReplicationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppReplicationType left, NetAppReplicationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppReplicationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppReplicationType left, NetAppReplicationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppReplicationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppReplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppReplicationType(string value) => new NetAppReplicationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppReplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppReplicationType?(string value) => value == null ? null : new NetAppReplicationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppReplicationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppReplicationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

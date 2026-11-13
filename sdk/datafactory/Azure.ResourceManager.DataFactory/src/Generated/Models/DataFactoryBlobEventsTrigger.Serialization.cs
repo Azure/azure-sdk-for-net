@@ -7,16 +7,61 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryBlobEventsTrigger : IUtf8JsonSerializable, IJsonModel<DataFactoryBlobEventsTrigger>
+    /// <summary> Trigger that runs every time a Blob event occurs. </summary>
+    public partial class DataFactoryBlobEventsTrigger : MultiplePipelineTrigger, IJsonModel<DataFactoryBlobEventsTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryBlobEventsTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobEventsTrigger"/> for deserialization. </summary>
+        internal DataFactoryBlobEventsTrigger()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryTriggerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataFactoryBlobEventsTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataFactoryBlobEventsTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryBlobEventsTrigger IPersistableModel<DataFactoryBlobEventsTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataFactoryBlobEventsTrigger)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryBlobEventsTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryBlobEventsTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,234 +73,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(BlobPathBeginsWith))
-            {
-                writer.WritePropertyName("blobPathBeginsWith"u8);
-                writer.WriteStringValue(BlobPathBeginsWith);
-            }
-            if (Optional.IsDefined(BlobPathEndsWith))
-            {
-                writer.WritePropertyName("blobPathEndsWith"u8);
-                writer.WriteStringValue(BlobPathEndsWith);
-            }
-            if (Optional.IsDefined(IgnoreEmptyBlobs))
-            {
-                writer.WritePropertyName("ignoreEmptyBlobs"u8);
-                writer.WriteBooleanValue(IgnoreEmptyBlobs.Value);
-            }
-            writer.WritePropertyName("events"u8);
-            writer.WriteStartArray();
-            foreach (var item in Events)
-            {
-                writer.WriteStringValue(item.ToString());
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("scope"u8);
-            writer.WriteStringValue(Scope);
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
-        DataFactoryBlobEventsTrigger IJsonModel<DataFactoryBlobEventsTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryBlobEventsTrigger IJsonModel<DataFactoryBlobEventsTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataFactoryBlobEventsTrigger)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryTriggerProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataFactoryBlobEventsTrigger(document.RootElement, options);
         }
-
-        internal static DataFactoryBlobEventsTrigger DeserializeDataFactoryBlobEventsTrigger(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            IList<TriggerPipelineReference> pipelines = default;
-            string type = default;
-            string description = default;
-            DataFactoryTriggerRuntimeState? runtimeState = default;
-            IList<BinaryData> annotations = default;
-            string blobPathBeginsWith = default;
-            string blobPathEndsWith = default;
-            bool? ignoreEmptyBlobs = default;
-            IList<DataFactoryBlobEventType> events = default;
-            string scope = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("pipelines"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item, options));
-                    }
-                    pipelines = array;
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("runtimeState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    runtimeState = new DataFactoryTriggerRuntimeState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("annotations"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
-                        }
-                    }
-                    annotations = array;
-                    continue;
-                }
-                if (property.NameEquals("typeProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("blobPathBeginsWith"u8))
-                        {
-                            blobPathBeginsWith = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("blobPathEndsWith"u8))
-                        {
-                            blobPathEndsWith = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ignoreEmptyBlobs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ignoreEmptyBlobs = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("events"u8))
-                        {
-                            List<DataFactoryBlobEventType> array = new List<DataFactoryBlobEventType>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new DataFactoryBlobEventType(item.GetString()));
-                            }
-                            events = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("scope"u8))
-                        {
-                            scope = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryBlobEventsTrigger(
-                type,
-                description,
-                runtimeState,
-                annotations ?? new ChangeTrackingList<BinaryData>(),
-                additionalProperties,
-                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
-                blobPathBeginsWith,
-                blobPathEndsWith,
-                ignoreEmptyBlobs,
-                events,
-                scope);
-        }
-
-        BinaryData IPersistableModel<DataFactoryBlobEventsTrigger>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataFactoryBlobEventsTrigger IPersistableModel<DataFactoryBlobEventsTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataFactoryBlobEventsTrigger(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataFactoryBlobEventsTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

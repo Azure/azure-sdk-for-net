@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkTapEncapsulationType : IEquatable<NetworkTapEncapsulationType>
     {
         private readonly string _value;
+        /// <summary> None EncapsulationType. </summary>
+        private const string NoneValue = "None";
+        /// <summary> GTPv1 EncapsulationType. </summary>
+        private const string GTPv1Value = "GTPv1";
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapEncapsulationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkTapEncapsulationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string GTPv1Value = "GTPv1";
-
-        /// <summary> None. </summary>
+        /// <summary> None EncapsulationType. </summary>
         public static NetworkTapEncapsulationType None { get; } = new NetworkTapEncapsulationType(NoneValue);
-        /// <summary> GTPv1. </summary>
+
+        /// <summary> GTPv1 EncapsulationType. </summary>
         public static NetworkTapEncapsulationType GTPv1 { get; } = new NetworkTapEncapsulationType(GTPv1Value);
+
         /// <summary> Determines if two <see cref="NetworkTapEncapsulationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkTapEncapsulationType left, NetworkTapEncapsulationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkTapEncapsulationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkTapEncapsulationType left, NetworkTapEncapsulationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkTapEncapsulationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkTapEncapsulationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkTapEncapsulationType(string value) => new NetworkTapEncapsulationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkTapEncapsulationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkTapEncapsulationType?(string value) => value == null ? null : new NetworkTapEncapsulationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkTapEncapsulationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkTapEncapsulationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

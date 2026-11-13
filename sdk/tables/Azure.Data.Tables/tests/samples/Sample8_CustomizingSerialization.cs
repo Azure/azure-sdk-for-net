@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.Data.Tables.Tests;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Data.Tables.Tests;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Data.Tables.Samples
 {
@@ -20,7 +20,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string tableName = "OfficeSupplies" + _random.Next();
 
-#region Snippet:TablesSample7ModelProperties
+            #region Snippet:TablesSample7ModelProperties
             // Construct a new TableClient using a TokenCredential.
             var client = new TableClient(
                 new Uri(storageUri),
@@ -70,9 +70,9 @@ namespace Azure.Data.Tables.Samples
             rename_me
             */
         }
-#endregion
+        #endregion
 
-#region Snippet:TablesSample7ModelPropertiesClass
+        #region Snippet:TablesSample7ModelPropertiesClass
 
         // Define a strongly typed entity by implementing the ITableEntity interface.
         public class CustomSerializationEntity : ITableEntity
@@ -89,6 +89,6 @@ namespace Azure.Data.Tables.Samples
 
             [DataMember(Name = "rename_me")] public string RenameMe { get; set; }
         }
-#endregion
+        #endregion
     }
 }

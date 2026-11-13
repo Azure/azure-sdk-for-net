@@ -7,17 +7,57 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapTableSource : IUtf8JsonSerializable, IJsonModel<SapTableSource>
+    /// <summary> A copy activity source for SAP Table source. </summary>
+    public partial class SapTableSource : TabularSource, IJsonModel<SapTableSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapTableSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopyActivitySource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapTableSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSapTableSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapTableSource)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapTableSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SapTableSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SapTableSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapTableSource IPersistableModel<SapTableSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SapTableSource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SapTableSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapTableSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,55 +69,54 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapTableSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapTableSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapTableSource)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RowCount))
             {
                 writer.WritePropertyName("rowCount"u8);
-                JsonSerializer.Serialize(writer, RowCount);
+                writer.WriteObjectValue<DataFactoryElement<int>>(RowCount, options);
             }
             if (Optional.IsDefined(RowSkips))
             {
                 writer.WritePropertyName("rowSkips"u8);
-                JsonSerializer.Serialize(writer, RowSkips);
+                writer.WriteObjectValue<DataFactoryElement<int>>(RowSkips, options);
             }
             if (Optional.IsDefined(RfcTableFields))
             {
                 writer.WritePropertyName("rfcTableFields"u8);
-                JsonSerializer.Serialize(writer, RfcTableFields);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RfcTableFields, options);
             }
             if (Optional.IsDefined(RfcTableOptions))
             {
                 writer.WritePropertyName("rfcTableOptions"u8);
-                JsonSerializer.Serialize(writer, RfcTableOptions);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RfcTableOptions, options);
             }
             if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
-                JsonSerializer.Serialize(writer, BatchSize);
+                writer.WriteObjectValue<DataFactoryElement<int>>(BatchSize, options);
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-                JsonSerializer.Serialize(writer, CustomRfcReadTableFunctionModule);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CustomRfcReadTableFunctionModule, options);
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-                JsonSerializer.Serialize(writer, SapDataColumnDelimiter);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SapDataColumnDelimiter, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionOption);
+                writer.WriteRawValue(PartitionOption);
 #else
-                using (JsonDocument document = JsonDocument.Parse(PartitionOption, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(PartitionOption))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -88,252 +127,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings, options);
             }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
         }
 
-        SapTableSource IJsonModel<SapTableSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapTableSource IJsonModel<SapTableSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SapTableSource)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopyActivitySource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapTableSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapTableSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapTableSource)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapTableSource(document.RootElement, options);
         }
-
-        internal static SapTableSource DeserializeSapTableSource(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            DataFactoryElement<int> rowCount = default;
-            DataFactoryElement<int> rowSkips = default;
-            DataFactoryElement<string> rfcTableFields = default;
-            DataFactoryElement<string> rfcTableOptions = default;
-            DataFactoryElement<int> batchSize = default;
-            DataFactoryElement<string> customRfcReadTableFunctionModule = default;
-            DataFactoryElement<string> sapDataColumnDelimiter = default;
-            BinaryData partitionOption = default;
-            SapTablePartitionSettings partitionSettings = default;
-            DataFactoryElement<string> queryTimeout = default;
-            BinaryData additionalColumns = default;
-            string type = default;
-            DataFactoryElement<int> sourceRetryCount = default;
-            DataFactoryElement<string> sourceRetryWait = default;
-            DataFactoryElement<int> maxConcurrentConnections = default;
-            DataFactoryElement<bool> disableMetricsCollection = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("rowCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rowCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("rowSkips"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rowSkips = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("rfcTableFields"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rfcTableFields = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("rfcTableOptions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rfcTableOptions = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("batchSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    batchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("customRfcReadTableFunctionModule"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    customRfcReadTableFunctionModule = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sapDataColumnDelimiter"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sapDataColumnDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("partitionOption"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partitionOption = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("partitionSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partitionSettings = SapTablePartitionSettings.DeserializeSapTablePartitionSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("queryTimeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("additionalColumns"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sourceRetryCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sourceRetryWait"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("maxConcurrentConnections"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("disableMetricsCollection"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new SapTableSource(
-                type,
-                sourceRetryCount,
-                sourceRetryWait,
-                maxConcurrentConnections,
-                disableMetricsCollection,
-                additionalProperties,
-                queryTimeout,
-                additionalColumns,
-                rowCount,
-                rowSkips,
-                rfcTableFields,
-                rfcTableOptions,
-                batchSize,
-                customRfcReadTableFunctionModule,
-                sapDataColumnDelimiter,
-                partitionOption,
-                partitionSettings);
-        }
-
-        BinaryData IPersistableModel<SapTableSource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapTableSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SapTableSource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SapTableSource IPersistableModel<SapTableSource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapTableSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSapTableSource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapTableSource)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SapTableSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

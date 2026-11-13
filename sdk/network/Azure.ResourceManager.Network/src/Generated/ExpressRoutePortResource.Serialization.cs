@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class ExpressRoutePortResource : IJsonModel<ExpressRoutePortData>
     {
-        private static ExpressRoutePortData s_dataDeserializationInstance;
-        private static ExpressRoutePortData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ExpressRoutePortData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ExpressRoutePortData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExpressRoutePortData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpressRoutePortData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortData>)Data).Write(writer, options);
 
-        ExpressRoutePortData IJsonModel<ExpressRoutePortData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRoutePortData IJsonModel<ExpressRoutePortData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExpressRoutePortData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRoutePortData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ExpressRoutePortData IPersistableModel<ExpressRoutePortData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRoutePortData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ExpressRoutePortData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRoutePortData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRoutePortData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

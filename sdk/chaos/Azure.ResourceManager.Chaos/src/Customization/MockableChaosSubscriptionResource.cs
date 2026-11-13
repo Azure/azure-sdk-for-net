@@ -2,13 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Threading;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.Chaos;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Chaos.Mocking
 {
+    // Customization: Suppresses the generator-emitted GetExperiments / GetExperimentsAsync names
+    // and re-emits them under the shipped GetChaosExperiments / GetChaosExperimentsAsync names.
+    // The generator now derives "GetExperiments" from the @@clientName(Experiments.listAll, "getExperiments")
+    // override in the spec. The spec fix has been applied in azure-rest-api-specs#43122; this
+    // customization can be removed (and the method body restored to generated form) once
+    // tsp-location.yaml is bumped to a commit that contains the fix.
+    [CodeGenSuppress("GetExperimentsAsync", typeof(bool?), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetExperiments", typeof(bool?), typeof(string), typeof(CancellationToken))]
     public partial class MockableChaosSubscriptionResource
     {
         /// <summary> Gets a collection of ChaosTargetTypeResources in the SubscriptionResource. </summary>
@@ -91,6 +102,101 @@ namespace Azure.ResourceManager.Chaos.Mocking
         public virtual async Task<Response<ChaosTargetTypeResource>> GetChaosTargetTypeAsync(string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
             return await GetChaosTargetTypes(locationName).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        // Customization: Preserves shipped GetChaosExperiments / GetChaosExperimentsAsync names.
+        // The generator now emits these as GetExperiments / GetExperimentsAsync (due to the
+        // @@clientName(Experiments.listAll, "getExperiments") override in the spec). The spec
+        // fix has been applied in azure-rest-api-specs#43122; this customization can be removed
+        // once tsp-location.yaml is bumped to a commit that contains the fix.
+        /// <summary> Get a list of Experiment resources in a subscription. </summary>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ChaosExperimentResource> GetChaosExperimentsAsync(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsListAsyncCollectionResultOfT(
+                ExperimentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                null,
+                running,
+                continuationToken,
+                context,
+                "MockableChaosSubscriptionResource.GetChaosExperiments"), data => new ChaosExperimentResource(Client, data));
+        }
+
+        /// <summary> Get a list of Experiment resources in a subscription. </summary>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ChaosExperimentResource> GetChaosExperiments(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsListCollectionResultOfT(
+                ExperimentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                null,
+                running,
+                continuationToken,
+                context,
+                "MockableChaosSubscriptionResource.GetChaosExperiments"), data => new ChaosExperimentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the async operation. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Azure.Response<Azure.ResourceManager.Models.OperationStatusResult>> GetChaosOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            return await GetAsync(location.Name, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the async operation. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Azure.Response<Azure.ResourceManager.Models.OperationStatusResult> GetChaosOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            return Get(location.Name, operationId, cancellationToken);
         }
     }
 }

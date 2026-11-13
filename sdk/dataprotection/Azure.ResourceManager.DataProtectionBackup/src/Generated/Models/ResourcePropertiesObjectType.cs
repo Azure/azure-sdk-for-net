@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     internal readonly partial struct ResourcePropertiesObjectType : IEquatable<ResourcePropertiesObjectType>
     {
         private readonly string _value;
+        private const string DefaultResourcePropertiesValue = "DefaultResourceProperties";
 
         /// <summary> Initializes a new instance of <see cref="ResourcePropertiesObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourcePropertiesObjectType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DefaultResourcePropertiesValue = "DefaultResourceProperties";
-
-        /// <summary> DefaultResourceProperties. </summary>
+        /// <summary> Gets the DefaultResourceProperties. </summary>
         public static ResourcePropertiesObjectType DefaultResourceProperties { get; } = new ResourcePropertiesObjectType(DefaultResourcePropertiesValue);
+
         /// <summary> Determines if two <see cref="ResourcePropertiesObjectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourcePropertiesObjectType left, ResourcePropertiesObjectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourcePropertiesObjectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourcePropertiesObjectType left, ResourcePropertiesObjectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourcePropertiesObjectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourcePropertiesObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourcePropertiesObjectType(string value) => new ResourcePropertiesObjectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourcePropertiesObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourcePropertiesObjectType?(string value) => value == null ? null : new ResourcePropertiesObjectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourcePropertiesObjectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourcePropertiesObjectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

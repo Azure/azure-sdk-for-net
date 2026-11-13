@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to RouteTableV3 associated with the connection. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsoleted and will be removed in a future version.")]
     public partial class RoutingConfigurationNfvSubResource
     {
         /// <summary> Initializes a new instance of RoutingConfigurationNfvSubResource. </summary>
@@ -17,8 +18,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of RoutingConfigurationNfvSubResource. </summary>
-        /// <param name="resourceUri"> Resource ID. </param>
         internal RoutingConfigurationNfvSubResource(Uri resourceUri)
         {
             ResourceUri = resourceUri;

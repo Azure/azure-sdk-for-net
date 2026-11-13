@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>
         /// <param name="recordingKind"></param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
         internal RecordingStateChanged(string callConnectionId, string serverCallId, string correlationId, string recordingId, RecordingState state, DateTimeOffset? startDateTime, RecordingKind? recordingKind, ResultInformation resultInformation)
         {
             CallConnectionId = callConnectionId;

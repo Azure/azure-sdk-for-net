@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.1 (2026-09-17)
+
+### Features Added
+
+- Upgraded API version to `2026-07-29-preview`.
+- Added custom packet capture and Azure Monitor Data Collection Rule-based log ingestion resources.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.62.0.
+
+## 1.2.1 (2026-06-23)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.2.0 (2025-11-13)
+
+### Features Added
+
+- Upgraded api-version tag to `package-2025-10-08`, details please check https://github.com/Azure/azure-rest-api-specs/blob/dbd27c2a6be4ecbd2a43833ab48e5046c3b8b03f/specification/paloaltonetworks/resource-manager/readme.md .
 
 ## 1.1.1 (2025-03-11)
 

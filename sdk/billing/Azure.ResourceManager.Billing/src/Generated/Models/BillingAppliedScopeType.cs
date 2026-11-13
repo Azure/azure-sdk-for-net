@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingAppliedScopeType : IEquatable<BillingAppliedScopeType>
     {
         private readonly string _value;
+        /// <summary> Single. </summary>
+        private const string SingleValue = "Single";
+        /// <summary> Shared. </summary>
+        private const string SharedValue = "Shared";
+        /// <summary> ManagementGroup. </summary>
+        private const string ManagementGroupValue = "ManagementGroup";
 
         /// <summary> Initializes a new instance of <see cref="BillingAppliedScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingAppliedScopeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleValue = "Single";
-        private const string SharedValue = "Shared";
-        private const string ManagementGroupValue = "ManagementGroup";
+            _value = value;
+        }
 
         /// <summary> Single. </summary>
         public static BillingAppliedScopeType Single { get; } = new BillingAppliedScopeType(SingleValue);
+
         /// <summary> Shared. </summary>
         public static BillingAppliedScopeType Shared { get; } = new BillingAppliedScopeType(SharedValue);
+
         /// <summary> ManagementGroup. </summary>
         public static BillingAppliedScopeType ManagementGroup { get; } = new BillingAppliedScopeType(ManagementGroupValue);
+
         /// <summary> Determines if two <see cref="BillingAppliedScopeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingAppliedScopeType left, BillingAppliedScopeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingAppliedScopeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingAppliedScopeType left, BillingAppliedScopeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingAppliedScopeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingAppliedScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingAppliedScopeType(string value) => new BillingAppliedScopeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingAppliedScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingAppliedScopeType?(string value) => value == null ? null : new BillingAppliedScopeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingAppliedScopeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingAppliedScopeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

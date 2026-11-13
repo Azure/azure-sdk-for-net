@@ -5,12 +5,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
-    /// Abstract base model for defining evaluation targets.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModelResponseGenerationTarget"/>.
+    /// Base class for targets with discriminator support.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAIAgentTarget"/> and <see cref="AzureAIModelTarget"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEvaluationTarget))]
     public abstract partial class EvaluationTarget : IJsonModel<EvaluationTarget>
@@ -19,6 +20,46 @@ namespace Azure.AI.Projects
         internal EvaluationTarget()
         {
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EvaluationTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluationTarget>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEvaluationTarget(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EvaluationTarget)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluationTarget>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EvaluationTarget)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EvaluationTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EvaluationTarget IPersistableModel<EvaluationTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EvaluationTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -39,7 +80,7 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(EvaluationTarget)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -86,51 +127,13 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
-                    case "modelResponseGeneration":
-                        return ModelResponseGenerationTarget.DeserializeModelResponseGenerationTarget(element, options);
+                    case "azure_ai_agent":
+                        return AzureAIAgentTarget.DeserializeAzureAIAgentTarget(element, options);
+                    case "azure_ai_model":
+                        return AzureAIModelTarget.DeserializeAzureAIModelTarget(element, options);
                 }
             }
             return UnknownEvaluationTarget.DeserializeUnknownEvaluationTarget(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluationTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationTarget>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EvaluationTarget)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluationTarget IPersistableModel<EvaluationTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EvaluationTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationTarget>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeEvaluationTarget(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EvaluationTarget)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluationTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

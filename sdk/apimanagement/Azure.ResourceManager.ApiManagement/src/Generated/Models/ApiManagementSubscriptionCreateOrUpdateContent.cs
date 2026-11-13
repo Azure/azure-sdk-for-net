@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Subscription create details. </summary>
     public partial class ApiManagementSubscriptionCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionCreateOrUpdateContent"/>. </summary>
         public ApiManagementSubscriptionCreateOrUpdateContent()
@@ -51,46 +23,142 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionCreateOrUpdateContent"/>. </summary>
-        /// <param name="ownerId"> User (user id path) for whom subscription is being created in form /users/{userId}. </param>
-        /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
-        /// <param name="displayName"> Subscription name. </param>
-        /// <param name="primaryKey"> Primary subscription key. If not specified during request key will be generated automatically. </param>
-        /// <param name="secondaryKey"> Secondary subscription key. If not specified during request key will be generated automatically. </param>
-        /// <param name="state"> Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
-        /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementSubscriptionCreateOrUpdateContent(string ownerId, string scope, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Subscription contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementSubscriptionCreateOrUpdateContent(SubscriptionCreateParameterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OwnerId = ownerId;
-            Scope = scope;
-            DisplayName = displayName;
-            PrimaryKey = primaryKey;
-            SecondaryKey = secondaryKey;
-            State = state;
-            AllowTracing = allowTracing;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Subscription contract properties. </summary>
+        [WirePath("properties")]
+        internal SubscriptionCreateParameterProperties Properties { get; set; }
 
         /// <summary> User (user id path) for whom subscription is being created in form /users/{userId}. </summary>
         [WirePath("properties.ownerId")]
-        public string OwnerId { get; set; }
+        public string OwnerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OwnerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionCreateParameterProperties();
+                }
+                Properties.OwnerId = value;
+            }
+        }
+
         /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
         [WirePath("properties.scope")]
-        public string Scope { get; set; }
+        public string Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionCreateParameterProperties();
+                }
+                Properties.Scope = value;
+            }
+        }
+
         /// <summary> Subscription name. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionCreateParameterProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Primary subscription key. If not specified during request key will be generated automatically. </summary>
         [WirePath("properties.primaryKey")]
-        public string PrimaryKey { get; set; }
+        public string PrimaryKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionCreateParameterProperties();
+                }
+                Properties.PrimaryKey = value;
+            }
+        }
+
         /// <summary> Secondary subscription key. If not specified during request key will be generated automatically. </summary>
         [WirePath("properties.secondaryKey")]
-        public string SecondaryKey { get; set; }
-        /// <summary> Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </summary>
+        public string SecondaryKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionCreateParameterProperties();
+                }
+                Properties.SecondaryKey = value;
+            }
+        }
+
+        /// <summary> Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </summary>
         [WirePath("properties.state")]
-        public SubscriptionState? State { get; set; }
+        public SubscriptionState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionCreateParameterProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> Determines whether tracing can be enabled. </summary>
         [WirePath("properties.allowTracing")]
-        public bool? AllowTracing { get; set; }
+        public bool? AllowTracing
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowTracing;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionCreateParameterProperties();
+                }
+                Properties.AllowTracing = value;
+            }
+        }
     }
 }

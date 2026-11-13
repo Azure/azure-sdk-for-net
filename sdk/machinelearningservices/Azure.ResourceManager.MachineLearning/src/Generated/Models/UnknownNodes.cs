@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of Nodes. </summary>
     internal partial class UnknownNodes : JobNodes
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNodes"/>. </summary>
         /// <param name="nodesValueType"> [Required] Type of the Nodes value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownNodes(NodesValueType nodesValueType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(nodesValueType, serializedAdditionalRawData)
-        {
-            NodesValueType = nodesValueType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownNodes"/> for deserialization. </summary>
-        internal UnknownNodes()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNodes(NodesValueType nodesValueType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(nodesValueType != default ? nodesValueType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

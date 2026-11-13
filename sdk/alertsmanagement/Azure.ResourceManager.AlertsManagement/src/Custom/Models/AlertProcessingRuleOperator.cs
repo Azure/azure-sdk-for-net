@@ -1,0 +1,50 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.AlertsManagement.Models
+{
+    /// <summary> Operator for a given condition. </summary>
+    [Obsolete("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public readonly partial struct AlertProcessingRuleOperator : IEquatable<AlertProcessingRuleOperator>
+    {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance. </summary>
+        /// <param name="value"> The value. </param>
+        public AlertProcessingRuleOperator(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
+
+        /// <summary> Equals. </summary>
+        public static AlertProcessingRuleOperator EqualsValue => throw new NotSupportedException();
+        /// <summary> NotEquals. </summary>
+        public static AlertProcessingRuleOperator NotEquals => throw new NotSupportedException();
+        /// <summary> Contains. </summary>
+        public static AlertProcessingRuleOperator Contains => throw new NotSupportedException();
+        /// <summary> DoesNotContain. </summary>
+        public static AlertProcessingRuleOperator DoesNotContain => throw new NotSupportedException();
+
+        /// <summary> Converts a string. </summary>
+        public static implicit operator AlertProcessingRuleOperator(string value) => new AlertProcessingRuleOperator(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is AlertProcessingRuleOperator other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(AlertProcessingRuleOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
+
+        /// <summary> Equality operator. </summary>
+        public static bool operator ==(AlertProcessingRuleOperator left, AlertProcessingRuleOperator right) => left.Equals(right);
+        /// <summary> Inequality operator. </summary>
+        public static bool operator !=(AlertProcessingRuleOperator left, AlertProcessingRuleOperator right) => !left.Equals(right);
+    }
+}

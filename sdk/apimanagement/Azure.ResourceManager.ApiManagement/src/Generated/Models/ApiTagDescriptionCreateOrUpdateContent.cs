@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameters supplied to the Create TagDescription operation. </summary>
     public partial class ApiTagDescriptionCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionCreateOrUpdateContent"/>. </summary>
         public ApiTagDescriptionCreateOrUpdateContent()
@@ -51,26 +23,70 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionCreateOrUpdateContent"/>. </summary>
-        /// <param name="description"> Description of the Tag. </param>
-        /// <param name="externalDocsUri"> Absolute URL of external resources describing the tag. </param>
-        /// <param name="externalDocsDescription"> Description of the external resources describing the tag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiTagDescriptionCreateOrUpdateContent(string description, Uri externalDocsUri, string externalDocsDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties supplied to Create TagDescription operation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiTagDescriptionCreateOrUpdateContent(TagDescriptionBaseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
-            ExternalDocsUri = externalDocsUri;
-            ExternalDocsDescription = externalDocsDescription;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties supplied to Create TagDescription operation. </summary>
+        [WirePath("properties")]
+        internal TagDescriptionBaseProperties Properties { get; set; }
 
         /// <summary> Description of the Tag. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionBaseProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Absolute URL of external resources describing the tag. </summary>
         [WirePath("properties.externalDocsUrl")]
-        public Uri ExternalDocsUri { get; set; }
+        public Uri ExternalDocsUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalDocsUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionBaseProperties();
+                }
+                Properties.ExternalDocsUri = value;
+            }
+        }
+
         /// <summary> Description of the external resources describing the tag. </summary>
         [WirePath("properties.externalDocsDescription")]
-        public string ExternalDocsDescription { get; set; }
+        public string ExternalDocsDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalDocsDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionBaseProperties();
+                }
+                Properties.ExternalDocsDescription = value;
+            }
+        }
     }
 }

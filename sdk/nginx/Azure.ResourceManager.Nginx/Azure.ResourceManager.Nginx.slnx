@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Nginx.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Nginx.Tests.csproj" />
+</Solution>

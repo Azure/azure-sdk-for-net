@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
+    /// <summary></summary>
     public partial class AccessPolicyAssignmentResource : IJsonModel<AccessPolicyAssignmentData>
     {
-        private static AccessPolicyAssignmentData s_dataDeserializationInstance;
-        private static AccessPolicyAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AccessPolicyAssignmentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AccessPolicyAssignmentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AccessPolicyAssignmentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AccessPolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AccessPolicyAssignmentData>)Data).Write(writer, options);
 
-        AccessPolicyAssignmentData IJsonModel<AccessPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AccessPolicyAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AccessPolicyAssignmentData IJsonModel<AccessPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AccessPolicyAssignmentData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AccessPolicyAssignmentData IPersistableModel<AccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AccessPolicyAssignmentData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        string IPersistableModel<AccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AccessPolicyAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -339,7 +339,7 @@ namespace Azure.AI.Translation.Document
         /// Cancel a running translation operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual void Cancel(CancellationToken cancellationToken)
+        public virtual void Cancel(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(Cancel)}");
             scope.Start();
@@ -359,7 +359,7 @@ namespace Azure.AI.Translation.Document
         /// Cancel a running translation operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual async Task CancelAsync(CancellationToken cancellationToken)
+        public virtual async Task CancelAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(Cancel)}");
             scope.Start();

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     public readonly partial struct FhirResourceVersionPolicy : IEquatable<FhirResourceVersionPolicy>
     {
         private readonly string _value;
+        /// <summary> no-version. </summary>
+        private const string NoVersionValue = "no-version";
+        /// <summary> versioned. </summary>
+        private const string VersionedValue = "versioned";
+        /// <summary> versioned-update. </summary>
+        private const string VersionedUpdateValue = "versioned-update";
 
         /// <summary> Initializes a new instance of <see cref="FhirResourceVersionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FhirResourceVersionPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoVersionValue = "no-version";
-        private const string VersionedValue = "versioned";
-        private const string VersionedUpdateValue = "versioned-update";
+            _value = value;
+        }
 
         /// <summary> no-version. </summary>
         public static FhirResourceVersionPolicy NoVersion { get; } = new FhirResourceVersionPolicy(NoVersionValue);
+
         /// <summary> versioned. </summary>
         public static FhirResourceVersionPolicy Versioned { get; } = new FhirResourceVersionPolicy(VersionedValue);
+
         /// <summary> versioned-update. </summary>
         public static FhirResourceVersionPolicy VersionedUpdate { get; } = new FhirResourceVersionPolicy(VersionedUpdateValue);
+
         /// <summary> Determines if two <see cref="FhirResourceVersionPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FhirResourceVersionPolicy left, FhirResourceVersionPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FhirResourceVersionPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FhirResourceVersionPolicy left, FhirResourceVersionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FhirResourceVersionPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FhirResourceVersionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FhirResourceVersionPolicy(string value) => new FhirResourceVersionPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FhirResourceVersionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FhirResourceVersionPolicy?(string value) => value == null ? null : new FhirResourceVersionPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FhirResourceVersionPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FhirResourceVersionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct EnableSslVerification : IEquatable<EnableSslVerification>
     {
         private readonly string _value;
+        /// <summary> The ssl verification is enabled. </summary>
+        private const string TrueValue = "true";
+        /// <summary> The ssl verification is not enabled. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="EnableSslVerification"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnableSslVerification(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrueValue = "true";
-        private const string FalseValue = "false";
+            _value = value;
+        }
 
         /// <summary> The ssl verification is enabled. </summary>
         public static EnableSslVerification True { get; } = new EnableSslVerification(TrueValue);
+
         /// <summary> The ssl verification is not enabled. </summary>
         public static EnableSslVerification False { get; } = new EnableSslVerification(FalseValue);
+
         /// <summary> Determines if two <see cref="EnableSslVerification"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnableSslVerification left, EnableSslVerification right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnableSslVerification"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnableSslVerification left, EnableSslVerification right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnableSslVerification"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnableSslVerification"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnableSslVerification(string value) => new EnableSslVerification(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnableSslVerification"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnableSslVerification?(string value) => value == null ? null : new EnableSslVerification(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnableSslVerification other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnableSslVerification other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

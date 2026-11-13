@@ -15,40 +15,50 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct DiffBackupIntervalInHours : IEquatable<DiffBackupIntervalInHours>
     {
         private readonly int _value;
+        /// <summary> 12. </summary>
+        private const int TwelveValue = 12;
+        /// <summary> 24. </summary>
+        private const int TwentyFourValue = 24;
 
         /// <summary> Initializes a new instance of <see cref="DiffBackupIntervalInHours"/>. </summary>
+        /// <param name="value"> The value. </param>
         public DiffBackupIntervalInHours(int value)
         {
             _value = value;
         }
 
-        private const int TwelveValue = 12;
-        private const int TwentyFourValue = 24;
-
         /// <summary> 12. </summary>
         public static DiffBackupIntervalInHours Twelve { get; } = new DiffBackupIntervalInHours(TwelveValue);
+
         /// <summary> 24. </summary>
         public static DiffBackupIntervalInHours TwentyFour { get; } = new DiffBackupIntervalInHours(TwentyFourValue);
 
-        internal int ToSerialInt32() => _value;
-
         /// <summary> Determines if two <see cref="DiffBackupIntervalInHours"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiffBackupIntervalInHours left, DiffBackupIntervalInHours right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiffBackupIntervalInHours"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiffBackupIntervalInHours left, DiffBackupIntervalInHours right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="int"/> to a <see cref="DiffBackupIntervalInHours"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiffBackupIntervalInHours"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiffBackupIntervalInHours(int value) => new DiffBackupIntervalInHours(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiffBackupIntervalInHours other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiffBackupIntervalInHours other) => Equals(_value, other._value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value.ToString(CultureInfo.InvariantCulture);
     }
 }

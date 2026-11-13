@@ -15,19 +15,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeLinkedService"/>. </summary>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
-        /// <param name="accessToken">
-        /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> or <paramref name="accessToken"/> is null. </exception>
-        public AzureDatabricksDeltaLakeLinkedService(object domain, SecretBase accessToken)
+        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
+        public AzureDatabricksDeltaLakeLinkedService(object domain)
         {
             Argument.AssertNotNull(domain, nameof(domain));
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
 
             Domain = domain;
-            AccessToken = accessToken;
             Type = "AzureDatabricksDeltaLake";
         }
 
@@ -48,13 +41,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="clusterId"> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureDatabricksDeltaLakeLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object clusterId, object encryptedCredential, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="workspaceResourceId"> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </param>
+        internal AzureDatabricksDeltaLakeLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object clusterId, object encryptedCredential, CredentialReference credential, object workspaceResourceId) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
             ClusterId = clusterId;
             EncryptedCredential = encryptedCredential;
             Credential = credential;
+            WorkspaceResourceId = workspaceResourceId;
             Type = type ?? "AzureDatabricksDeltaLake";
         }
 
@@ -72,5 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
+        /// <summary> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
+        public object WorkspaceResourceId { get; set; }
     }
 }

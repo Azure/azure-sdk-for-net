@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,11 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class MabBackupJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of <see cref="MabBackupJob"/>. </summary>
-        public MabBackupJob()
+        public MabBackupJob() : base("MabJob")
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
             ErrorDetails = new ChangeTrackingList<MabErrorInfo>();
-            JobType = "MabJob";
         }
 
         /// <summary> Initializes a new instance of <see cref="MabBackupJob"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="endOn"> The end time. </param>
         /// <param name="activityId"> ActivityId of job. </param>
         /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="duration"> Time taken by job to run. </param>
         /// <param name="actionsInfo"> The state/actions applicable on jobs like cancel/retry. </param>
         /// <param name="mabServerName"> Name of server protecting the DS. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="workloadType"> Workload type of backup item. </param>
         /// <param name="errorDetails"> The errors. </param>
         /// <param name="extendedInfo"> Additional information on the job. </param>
-        internal MabBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, string mabServerName, MabServerType? mabServerType, BackupWorkloadType? workloadType, IList<MabErrorInfo> errorDetails, MabBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, serializedAdditionalRawData)
+        internal MabBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, string mabServerName, MabServerType? mabServerType, BackupWorkloadType? workloadType, IList<MabErrorInfo> errorDetails, MabBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, additionalBinaryDataProperties)
         {
             Duration = duration;
             ActionsInfo = actionsInfo;
@@ -47,21 +47,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             WorkloadType = workloadType;
             ErrorDetails = errorDetails;
             ExtendedInfo = extendedInfo;
-            JobType = jobType ?? "MabJob";
         }
 
         /// <summary> Time taken by job to run. </summary>
         public TimeSpan? Duration { get; set; }
+
         /// <summary> The state/actions applicable on jobs like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
+
         /// <summary> Name of server protecting the DS. </summary>
         public string MabServerName { get; set; }
+
         /// <summary> Server type of MAB container. </summary>
         public MabServerType? MabServerType { get; set; }
+
         /// <summary> Workload type of backup item. </summary>
         public BackupWorkloadType? WorkloadType { get; set; }
+
         /// <summary> The errors. </summary>
         public IList<MabErrorInfo> ErrorDetails { get; }
+
         /// <summary> Additional information on the job. </summary>
         public MabBackupJobExtendedInfo ExtendedInfo { get; set; }
     }

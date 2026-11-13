@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppConnectedEnvironmentProvisioningState : IEquatable<ContainerAppConnectedEnvironmentProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Waiting. </summary>
+        private const string WaitingValue = "Waiting";
+        /// <summary> InitializationInProgress. </summary>
+        private const string InitializationInProgressValue = "InitializationInProgress";
+        /// <summary> InfrastructureSetupInProgress. </summary>
+        private const string InfrastructureSetupInProgressValue = "InfrastructureSetupInProgress";
+        /// <summary> InfrastructureSetupComplete. </summary>
+        private const string InfrastructureSetupCompleteValue = "InfrastructureSetupComplete";
+        /// <summary> ScheduledForDelete. </summary>
+        private const string ScheduledForDeleteValue = "ScheduledForDelete";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppConnectedEnvironmentProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string WaitingValue = "Waiting";
-        private const string InitializationInProgressValue = "InitializationInProgress";
-        private const string InfrastructureSetupInProgressValue = "InfrastructureSetupInProgress";
-        private const string InfrastructureSetupCompleteValue = "InfrastructureSetupComplete";
-        private const string ScheduledForDeleteValue = "ScheduledForDelete";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState Succeeded { get; } = new ContainerAppConnectedEnvironmentProvisioningState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState Failed { get; } = new ContainerAppConnectedEnvironmentProvisioningState(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState Canceled { get; } = new ContainerAppConnectedEnvironmentProvisioningState(CanceledValue);
+
         /// <summary> Waiting. </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState Waiting { get; } = new ContainerAppConnectedEnvironmentProvisioningState(WaitingValue);
+
         /// <summary> InitializationInProgress. </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState InitializationInProgress { get; } = new ContainerAppConnectedEnvironmentProvisioningState(InitializationInProgressValue);
+
         /// <summary> InfrastructureSetupInProgress. </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState InfrastructureSetupInProgress { get; } = new ContainerAppConnectedEnvironmentProvisioningState(InfrastructureSetupInProgressValue);
+
         /// <summary> InfrastructureSetupComplete. </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState InfrastructureSetupComplete { get; } = new ContainerAppConnectedEnvironmentProvisioningState(InfrastructureSetupCompleteValue);
+
         /// <summary> ScheduledForDelete. </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState ScheduledForDelete { get; } = new ContainerAppConnectedEnvironmentProvisioningState(ScheduledForDeleteValue);
+
         /// <summary> Determines if two <see cref="ContainerAppConnectedEnvironmentProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppConnectedEnvironmentProvisioningState left, ContainerAppConnectedEnvironmentProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppConnectedEnvironmentProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppConnectedEnvironmentProvisioningState left, ContainerAppConnectedEnvironmentProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppConnectedEnvironmentProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppConnectedEnvironmentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppConnectedEnvironmentProvisioningState(string value) => new ContainerAppConnectedEnvironmentProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppConnectedEnvironmentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppConnectedEnvironmentProvisioningState?(string value) => value == null ? null : new ContainerAppConnectedEnvironmentProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppConnectedEnvironmentProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppConnectedEnvironmentProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

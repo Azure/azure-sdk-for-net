@@ -7,7 +7,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
-    public class SipRoutingClientTestEnvironment: CommunicationTestEnvironment
+    public class SipRoutingClientTestEnvironment : CommunicationTestEnvironment
     {
         public string GetTestDomain()
         {

@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type.Model.Visibility
 {
     public partial class VisibilityClientOptions : ClientOptions
     {
+        public VisibilityClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal VisibilityClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

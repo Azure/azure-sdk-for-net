@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     internal readonly partial struct CarbonEmissionQueryReportType : IEquatable<CarbonEmissionQueryReportType>
     {
         private readonly string _value;
+        /// <summary> Overall summary report provides total carbon emissions for the specified date range and query parameters, as well as comparative values for a high-level overview. This report type can accept different values in the start and end fields within DateRange (e.g., start: 2024-03-01 and end: 2024-06-01). </summary>
+        private const string OverallSummaryReportValue = "OverallSummaryReport";
+        /// <summary> MonthlySummaryReport provides carbon emissions data by month for the specified query parameters. This report type can accept different values in the start and end fields within DateRange (e.g., start: 2024-03-01 and end: 2024-06-01). </summary>
+        private const string MonthlySummaryReportValue = "MonthlySummaryReport";
+        /// <summary> TopItemsSummaryReport provides the N highest-emitting items for the specified query filters. This report returns data for a single month at a time, so it requires the same values for the start and end fields within DateRange. A maximum of N=10 items can be returned at a time. </summary>
+        private const string TopItemsSummaryReportValue = "TopItemsSummaryReport";
+        /// <summary> TopItemsMonthlyReport provides the N highest-emitting items by month for the specified query filter. Returns emissions data for the top N items by month within the given date range. A maximum of N=10 items can be returned at a time. </summary>
+        private const string TopItemsMonthlySummaryReportValue = "TopItemsMonthlySummaryReport";
+        /// <summary> ItemDetailsReport provides a granular list of items based on the specified CategoryType (e.g., Resource, ResourceGroup, ResourceType, Location, or Subscription) for the query filter. This report can be queried for only one month at a time, requiring the same values in the start and end fields within DateRange. </summary>
+        private const string ItemDetailsReportValue = "ItemDetailsReport";
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryReportType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CarbonEmissionQueryReportType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OverallSummaryReportValue = "OverallSummaryReport";
-        private const string MonthlySummaryReportValue = "MonthlySummaryReport";
-        private const string TopItemsSummaryReportValue = "TopItemsSummaryReport";
-        private const string TopItemsMonthlySummaryReportValue = "TopItemsMonthlySummaryReport";
-        private const string ItemDetailsReportValue = "ItemDetailsReport";
+            _value = value;
+        }
 
         /// <summary> Overall summary report provides total carbon emissions for the specified date range and query parameters, as well as comparative values for a high-level overview. This report type can accept different values in the start and end fields within DateRange (e.g., start: 2024-03-01 and end: 2024-06-01). </summary>
         public static CarbonEmissionQueryReportType OverallSummaryReport { get; } = new CarbonEmissionQueryReportType(OverallSummaryReportValue);
+
         /// <summary> MonthlySummaryReport provides carbon emissions data by month for the specified query parameters. This report type can accept different values in the start and end fields within DateRange (e.g., start: 2024-03-01 and end: 2024-06-01). </summary>
         public static CarbonEmissionQueryReportType MonthlySummaryReport { get; } = new CarbonEmissionQueryReportType(MonthlySummaryReportValue);
+
         /// <summary> TopItemsSummaryReport provides the N highest-emitting items for the specified query filters. This report returns data for a single month at a time, so it requires the same values for the start and end fields within DateRange. A maximum of N=10 items can be returned at a time. </summary>
         public static CarbonEmissionQueryReportType TopItemsSummaryReport { get; } = new CarbonEmissionQueryReportType(TopItemsSummaryReportValue);
+
         /// <summary> TopItemsMonthlyReport provides the N highest-emitting items by month for the specified query filter. Returns emissions data for the top N items by month within the given date range. A maximum of N=10 items can be returned at a time. </summary>
         public static CarbonEmissionQueryReportType TopItemsMonthlySummaryReport { get; } = new CarbonEmissionQueryReportType(TopItemsMonthlySummaryReportValue);
+
         /// <summary> ItemDetailsReport provides a granular list of items based on the specified CategoryType (e.g., Resource, ResourceGroup, ResourceType, Location, or Subscription) for the query filter. This report can be queried for only one month at a time, requiring the same values in the start and end fields within DateRange. </summary>
         public static CarbonEmissionQueryReportType ItemDetailsReport { get; } = new CarbonEmissionQueryReportType(ItemDetailsReportValue);
+
         /// <summary> Determines if two <see cref="CarbonEmissionQueryReportType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CarbonEmissionQueryReportType left, CarbonEmissionQueryReportType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CarbonEmissionQueryReportType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CarbonEmissionQueryReportType left, CarbonEmissionQueryReportType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionQueryReportType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CarbonEmissionQueryReportType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CarbonEmissionQueryReportType(string value) => new CarbonEmissionQueryReportType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CarbonEmissionQueryReportType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CarbonEmissionQueryReportType?(string value) => value == null ? null : new CarbonEmissionQueryReportType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CarbonEmissionQueryReportType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CarbonEmissionQueryReportType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

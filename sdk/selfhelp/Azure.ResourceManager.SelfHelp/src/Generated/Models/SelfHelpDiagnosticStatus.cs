@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct SelfHelpDiagnosticStatus : IEquatable<SelfHelpDiagnosticStatus>
     {
         private readonly string _value;
+        /// <summary> Diagnostic creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Request is missing required inputs to run. </summary>
+        private const string MissingInputsValue = "MissingInputs";
+        /// <summary> Diagnostic is still running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Diagnostic creation succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Diagnostic was timed out. </summary>
+        private const string TimeoutValue = "Timeout";
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SelfHelpDiagnosticStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FailedValue = "Failed";
-        private const string MissingInputsValue = "MissingInputs";
-        private const string RunningValue = "Running";
-        private const string SucceededValue = "Succeeded";
-        private const string TimeoutValue = "Timeout";
+            _value = value;
+        }
 
         /// <summary> Diagnostic creation failed. </summary>
         public static SelfHelpDiagnosticStatus Failed { get; } = new SelfHelpDiagnosticStatus(FailedValue);
+
         /// <summary> Request is missing required inputs to run. </summary>
         public static SelfHelpDiagnosticStatus MissingInputs { get; } = new SelfHelpDiagnosticStatus(MissingInputsValue);
+
         /// <summary> Diagnostic is still running. </summary>
         public static SelfHelpDiagnosticStatus Running { get; } = new SelfHelpDiagnosticStatus(RunningValue);
+
         /// <summary> Diagnostic creation succeeded. </summary>
         public static SelfHelpDiagnosticStatus Succeeded { get; } = new SelfHelpDiagnosticStatus(SucceededValue);
+
         /// <summary> Diagnostic was timed out. </summary>
         public static SelfHelpDiagnosticStatus Timeout { get; } = new SelfHelpDiagnosticStatus(TimeoutValue);
+
         /// <summary> Determines if two <see cref="SelfHelpDiagnosticStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SelfHelpDiagnosticStatus left, SelfHelpDiagnosticStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SelfHelpDiagnosticStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SelfHelpDiagnosticStatus left, SelfHelpDiagnosticStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpDiagnosticStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SelfHelpDiagnosticStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SelfHelpDiagnosticStatus(string value) => new SelfHelpDiagnosticStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SelfHelpDiagnosticStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SelfHelpDiagnosticStatus?(string value) => value == null ? null : new SelfHelpDiagnosticStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SelfHelpDiagnosticStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SelfHelpDiagnosticStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

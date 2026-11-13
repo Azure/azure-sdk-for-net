@@ -5,14 +5,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     internal partial class UnknownEvaluationTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEvaluationTarget"/>. </summary>
-        /// <param name="type"> Discriminator that defines the type of the evaluation target. </param>
+        /// <param name="type"> The type of target. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEvaluationTarget(EvaluationTargetType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownEvaluationTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
+    /// <summary></summary>
     public partial class CommitmentPlanResource : IJsonModel<CommitmentPlanData>
     {
-        private static CommitmentPlanData s_dataDeserializationInstance;
-        private static CommitmentPlanData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CommitmentPlanData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CommitmentPlanData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CommitmentPlanData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CommitmentPlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommitmentPlanData>)Data).Write(writer, options);
 
-        CommitmentPlanData IJsonModel<CommitmentPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommitmentPlanData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CommitmentPlanData IJsonModel<CommitmentPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CommitmentPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommitmentPlanData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CommitmentPlanData IPersistableModel<CommitmentPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommitmentPlanData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<CommitmentPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommitmentPlanData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CommitmentPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

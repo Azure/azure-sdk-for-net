@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsAlertConfidenceScoreStatus : IEquatable<SecurityInsightsAlertConfidenceScoreStatus>
     {
         private readonly string _value;
+        /// <summary> Score will not be calculated for this alert as it is not supported by virtual analyst. </summary>
+        private const string NotApplicableValue = "NotApplicable";
+        /// <summary> No score was set yet and calculation is in progress. </summary>
+        private const string InProcessValue = "InProcess";
+        /// <summary> Score is calculated and shown as part of the alert, but may be updated again at a later time following the processing of additional data. </summary>
+        private const string NotFinalValue = "NotFinal";
+        /// <summary> Final score was calculated and available. </summary>
+        private const string FinalValue = "Final";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertConfidenceScoreStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsAlertConfidenceScoreStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotApplicableValue = "NotApplicable";
-        private const string InProcessValue = "InProcess";
-        private const string NotFinalValue = "NotFinal";
-        private const string FinalValue = "Final";
+            _value = value;
+        }
 
         /// <summary> Score will not be calculated for this alert as it is not supported by virtual analyst. </summary>
         public static SecurityInsightsAlertConfidenceScoreStatus NotApplicable { get; } = new SecurityInsightsAlertConfidenceScoreStatus(NotApplicableValue);
+
         /// <summary> No score was set yet and calculation is in progress. </summary>
         public static SecurityInsightsAlertConfidenceScoreStatus InProcess { get; } = new SecurityInsightsAlertConfidenceScoreStatus(InProcessValue);
+
         /// <summary> Score is calculated and shown as part of the alert, but may be updated again at a later time following the processing of additional data. </summary>
         public static SecurityInsightsAlertConfidenceScoreStatus NotFinal { get; } = new SecurityInsightsAlertConfidenceScoreStatus(NotFinalValue);
+
         /// <summary> Final score was calculated and available. </summary>
         public static SecurityInsightsAlertConfidenceScoreStatus Final { get; } = new SecurityInsightsAlertConfidenceScoreStatus(FinalValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceScoreStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsAlertConfidenceScoreStatus left, SecurityInsightsAlertConfidenceScoreStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceScoreStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsAlertConfidenceScoreStatus left, SecurityInsightsAlertConfidenceScoreStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsAlertConfidenceScoreStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertConfidenceScoreStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsAlertConfidenceScoreStatus(string value) => new SecurityInsightsAlertConfidenceScoreStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertConfidenceScoreStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsAlertConfidenceScoreStatus?(string value) => value == null ? null : new SecurityInsightsAlertConfidenceScoreStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsAlertConfidenceScoreStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsAlertConfidenceScoreStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

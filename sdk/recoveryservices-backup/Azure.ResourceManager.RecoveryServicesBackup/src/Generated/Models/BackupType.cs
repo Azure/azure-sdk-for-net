@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupType : IEquatable<BackupType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string FullValue = "Full";
         private const string DifferentialValue = "Differential";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SnapshotFullValue = "SnapshotFull";
         private const string SnapshotCopyOnlyFullValue = "SnapshotCopyOnlyFull";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupType Invalid { get; } = new BackupType(InvalidValue);
-        /// <summary> Full. </summary>
+
+        /// <summary> Gets the Full. </summary>
         public static BackupType Full { get; } = new BackupType(FullValue);
-        /// <summary> Differential. </summary>
+
+        /// <summary> Gets the Differential. </summary>
         public static BackupType Differential { get; } = new BackupType(DifferentialValue);
-        /// <summary> Log. </summary>
+
+        /// <summary> Gets the Log. </summary>
         public static BackupType Log { get; } = new BackupType(LogValue);
-        /// <summary> CopyOnlyFull. </summary>
+
+        /// <summary> Gets the CopyOnlyFull. </summary>
         public static BackupType CopyOnlyFull { get; } = new BackupType(CopyOnlyFullValue);
-        /// <summary> Incremental. </summary>
+
+        /// <summary> Gets the Incremental. </summary>
         public static BackupType Incremental { get; } = new BackupType(IncrementalValue);
-        /// <summary> SnapshotFull. </summary>
+
+        /// <summary> Gets the SnapshotFull. </summary>
         public static BackupType SnapshotFull { get; } = new BackupType(SnapshotFullValue);
-        /// <summary> SnapshotCopyOnlyFull. </summary>
+
+        /// <summary> Gets the SnapshotCopyOnlyFull. </summary>
         public static BackupType SnapshotCopyOnlyFull { get; } = new BackupType(SnapshotCopyOnlyFullValue);
+
         /// <summary> Determines if two <see cref="BackupType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupType left, BackupType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupType left, BackupType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupType(string value) => new BackupType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupType?(string value) => value == null ? null : new BackupType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

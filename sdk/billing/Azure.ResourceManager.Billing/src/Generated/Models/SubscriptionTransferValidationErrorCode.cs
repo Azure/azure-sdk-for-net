@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,116 +15,187 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct SubscriptionTransferValidationErrorCode : IEquatable<SubscriptionTransferValidationErrorCode>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> BillingAccountInactive. </summary>
+        private const string BillingAccountInactiveValue = "BillingAccountInactive";
+        /// <summary> DestinationBillingProfileInactive. </summary>
+        private const string DestinationBillingProfileInactiveValue = "DestinationBillingProfileInactive";
+        /// <summary> DestinationBillingProfileNotFound. </summary>
+        private const string DestinationBillingProfileNotFoundValue = "DestinationBillingProfileNotFound";
+        /// <summary> DestinationBillingProfilePastDue. </summary>
+        private const string DestinationBillingProfilePastDueValue = "DestinationBillingProfilePastDue";
+        /// <summary> DestinationInvoiceSectionInactive. </summary>
+        private const string DestinationInvoiceSectionInactiveValue = "DestinationInvoiceSectionInactive";
+        /// <summary> DestinationInvoiceSectionNotFound. </summary>
+        private const string DestinationInvoiceSectionNotFoundValue = "DestinationInvoiceSectionNotFound";
+        /// <summary> InsufficientPermissionOnDestination. </summary>
+        private const string InsufficientPermissionOnDestinationValue = "InsufficientPermissionOnDestination";
+        /// <summary> InsufficientPermissionOnSource. </summary>
+        private const string InsufficientPermissionOnSourceValue = "InsufficientPermissionOnSource";
+        /// <summary> InvalidDestination. </summary>
+        private const string InvalidDestinationValue = "InvalidDestination";
+        /// <summary> InvalidSource. </summary>
+        private const string InvalidSourceValue = "InvalidSource";
+        /// <summary> MarketplaceNotEnabledOnDestination. </summary>
+        private const string MarketplaceNotEnabledOnDestinationValue = "MarketplaceNotEnabledOnDestination";
+        /// <summary> ProductInactive. </summary>
+        private const string ProductInactiveValue = "ProductInactive";
+        /// <summary> ProductNotFound. </summary>
+        private const string ProductNotFoundValue = "ProductNotFound";
+        /// <summary> ProductTypeNotSupported. </summary>
+        private const string ProductTypeNotSupportedValue = "ProductTypeNotSupported";
+        /// <summary> SourceBillingProfilePastDue. </summary>
+        private const string SourceBillingProfilePastDueValue = "SourceBillingProfilePastDue";
+        /// <summary> SourceInvoiceSectionInactive. </summary>
+        private const string SourceInvoiceSectionInactiveValue = "SourceInvoiceSectionInactive";
+        /// <summary> AccountIsLocked. </summary>
+        private const string AccountIsLockedValue = "AccountIsLocked";
+        /// <summary> AssetHasCap. </summary>
+        private const string AssetHasCapValue = "AssetHasCap";
+        /// <summary> AssetNotActive. </summary>
+        private const string AssetNotActiveValue = "AssetNotActive";
+        /// <summary> BillingProfilePastDue. </summary>
+        private const string BillingProfilePastDueValue = "BillingProfilePastDue";
+        /// <summary> CrossBillingAccountNotAllowed. </summary>
+        private const string CrossBillingAccountNotAllowedValue = "CrossBillingAccountNotAllowed";
+        /// <summary> NoActiveAzurePlan. </summary>
+        private const string NoActiveAzurePlanValue = "NoActiveAzurePlan";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> SubscriptionNotActive. </summary>
+        private const string SubscriptionNotActiveValue = "SubscriptionNotActive";
+        /// <summary> SubscriptionHasReservations. </summary>
+        private const string SubscriptionHasReservationsValue = "SubscriptionHasReservations";
+        /// <summary> SubscriptionTypeNotSupported. </summary>
+        private const string SubscriptionTypeNotSupportedValue = "SubscriptionTypeNotSupported";
+        /// <summary> InvoiceSectionIsRestricted. </summary>
+        private const string InvoiceSectionIsRestrictedValue = "InvoiceSectionIsRestricted";
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionTransferValidationErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SubscriptionTransferValidationErrorCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string BillingAccountInactiveValue = "BillingAccountInactive";
-        private const string DestinationBillingProfileInactiveValue = "DestinationBillingProfileInactive";
-        private const string DestinationBillingProfileNotFoundValue = "DestinationBillingProfileNotFound";
-        private const string DestinationBillingProfilePastDueValue = "DestinationBillingProfilePastDue";
-        private const string DestinationInvoiceSectionInactiveValue = "DestinationInvoiceSectionInactive";
-        private const string DestinationInvoiceSectionNotFoundValue = "DestinationInvoiceSectionNotFound";
-        private const string InsufficientPermissionOnDestinationValue = "InsufficientPermissionOnDestination";
-        private const string InsufficientPermissionOnSourceValue = "InsufficientPermissionOnSource";
-        private const string InvalidDestinationValue = "InvalidDestination";
-        private const string InvalidSourceValue = "InvalidSource";
-        private const string MarketplaceNotEnabledOnDestinationValue = "MarketplaceNotEnabledOnDestination";
-        private const string ProductInactiveValue = "ProductInactive";
-        private const string ProductNotFoundValue = "ProductNotFound";
-        private const string ProductTypeNotSupportedValue = "ProductTypeNotSupported";
-        private const string SourceBillingProfilePastDueValue = "SourceBillingProfilePastDue";
-        private const string SourceInvoiceSectionInactiveValue = "SourceInvoiceSectionInactive";
-        private const string AccountIsLockedValue = "AccountIsLocked";
-        private const string AssetHasCapValue = "AssetHasCap";
-        private const string AssetNotActiveValue = "AssetNotActive";
-        private const string BillingProfilePastDueValue = "BillingProfilePastDue";
-        private const string CrossBillingAccountNotAllowedValue = "CrossBillingAccountNotAllowed";
-        private const string NoActiveAzurePlanValue = "NoActiveAzurePlan";
-        private const string NoneValue = "None";
-        private const string SubscriptionNotActiveValue = "SubscriptionNotActive";
-        private const string SubscriptionHasReservationsValue = "SubscriptionHasReservations";
-        private const string SubscriptionTypeNotSupportedValue = "SubscriptionTypeNotSupported";
-        private const string InvoiceSectionIsRestrictedValue = "InvoiceSectionIsRestricted";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static SubscriptionTransferValidationErrorCode Other { get; } = new SubscriptionTransferValidationErrorCode(OtherValue);
+
         /// <summary> BillingAccountInactive. </summary>
         public static SubscriptionTransferValidationErrorCode BillingAccountInactive { get; } = new SubscriptionTransferValidationErrorCode(BillingAccountInactiveValue);
+
         /// <summary> DestinationBillingProfileInactive. </summary>
         public static SubscriptionTransferValidationErrorCode DestinationBillingProfileInactive { get; } = new SubscriptionTransferValidationErrorCode(DestinationBillingProfileInactiveValue);
+
         /// <summary> DestinationBillingProfileNotFound. </summary>
         public static SubscriptionTransferValidationErrorCode DestinationBillingProfileNotFound { get; } = new SubscriptionTransferValidationErrorCode(DestinationBillingProfileNotFoundValue);
+
         /// <summary> DestinationBillingProfilePastDue. </summary>
         public static SubscriptionTransferValidationErrorCode DestinationBillingProfilePastDue { get; } = new SubscriptionTransferValidationErrorCode(DestinationBillingProfilePastDueValue);
+
         /// <summary> DestinationInvoiceSectionInactive. </summary>
         public static SubscriptionTransferValidationErrorCode DestinationInvoiceSectionInactive { get; } = new SubscriptionTransferValidationErrorCode(DestinationInvoiceSectionInactiveValue);
+
         /// <summary> DestinationInvoiceSectionNotFound. </summary>
         public static SubscriptionTransferValidationErrorCode DestinationInvoiceSectionNotFound { get; } = new SubscriptionTransferValidationErrorCode(DestinationInvoiceSectionNotFoundValue);
+
         /// <summary> InsufficientPermissionOnDestination. </summary>
         public static SubscriptionTransferValidationErrorCode InsufficientPermissionOnDestination { get; } = new SubscriptionTransferValidationErrorCode(InsufficientPermissionOnDestinationValue);
+
         /// <summary> InsufficientPermissionOnSource. </summary>
         public static SubscriptionTransferValidationErrorCode InsufficientPermissionOnSource { get; } = new SubscriptionTransferValidationErrorCode(InsufficientPermissionOnSourceValue);
+
         /// <summary> InvalidDestination. </summary>
         public static SubscriptionTransferValidationErrorCode InvalidDestination { get; } = new SubscriptionTransferValidationErrorCode(InvalidDestinationValue);
+
         /// <summary> InvalidSource. </summary>
         public static SubscriptionTransferValidationErrorCode InvalidSource { get; } = new SubscriptionTransferValidationErrorCode(InvalidSourceValue);
+
         /// <summary> MarketplaceNotEnabledOnDestination. </summary>
         public static SubscriptionTransferValidationErrorCode MarketplaceNotEnabledOnDestination { get; } = new SubscriptionTransferValidationErrorCode(MarketplaceNotEnabledOnDestinationValue);
+
         /// <summary> ProductInactive. </summary>
         public static SubscriptionTransferValidationErrorCode ProductInactive { get; } = new SubscriptionTransferValidationErrorCode(ProductInactiveValue);
+
         /// <summary> ProductNotFound. </summary>
         public static SubscriptionTransferValidationErrorCode ProductNotFound { get; } = new SubscriptionTransferValidationErrorCode(ProductNotFoundValue);
+
         /// <summary> ProductTypeNotSupported. </summary>
         public static SubscriptionTransferValidationErrorCode ProductTypeNotSupported { get; } = new SubscriptionTransferValidationErrorCode(ProductTypeNotSupportedValue);
+
         /// <summary> SourceBillingProfilePastDue. </summary>
         public static SubscriptionTransferValidationErrorCode SourceBillingProfilePastDue { get; } = new SubscriptionTransferValidationErrorCode(SourceBillingProfilePastDueValue);
+
         /// <summary> SourceInvoiceSectionInactive. </summary>
         public static SubscriptionTransferValidationErrorCode SourceInvoiceSectionInactive { get; } = new SubscriptionTransferValidationErrorCode(SourceInvoiceSectionInactiveValue);
+
         /// <summary> AccountIsLocked. </summary>
         public static SubscriptionTransferValidationErrorCode AccountIsLocked { get; } = new SubscriptionTransferValidationErrorCode(AccountIsLockedValue);
+
         /// <summary> AssetHasCap. </summary>
         public static SubscriptionTransferValidationErrorCode AssetHasCap { get; } = new SubscriptionTransferValidationErrorCode(AssetHasCapValue);
+
         /// <summary> AssetNotActive. </summary>
         public static SubscriptionTransferValidationErrorCode AssetNotActive { get; } = new SubscriptionTransferValidationErrorCode(AssetNotActiveValue);
+
         /// <summary> BillingProfilePastDue. </summary>
         public static SubscriptionTransferValidationErrorCode BillingProfilePastDue { get; } = new SubscriptionTransferValidationErrorCode(BillingProfilePastDueValue);
+
         /// <summary> CrossBillingAccountNotAllowed. </summary>
         public static SubscriptionTransferValidationErrorCode CrossBillingAccountNotAllowed { get; } = new SubscriptionTransferValidationErrorCode(CrossBillingAccountNotAllowedValue);
+
         /// <summary> NoActiveAzurePlan. </summary>
         public static SubscriptionTransferValidationErrorCode NoActiveAzurePlan { get; } = new SubscriptionTransferValidationErrorCode(NoActiveAzurePlanValue);
+
         /// <summary> None. </summary>
         public static SubscriptionTransferValidationErrorCode None { get; } = new SubscriptionTransferValidationErrorCode(NoneValue);
+
         /// <summary> SubscriptionNotActive. </summary>
         public static SubscriptionTransferValidationErrorCode SubscriptionNotActive { get; } = new SubscriptionTransferValidationErrorCode(SubscriptionNotActiveValue);
+
         /// <summary> SubscriptionHasReservations. </summary>
         public static SubscriptionTransferValidationErrorCode SubscriptionHasReservations { get; } = new SubscriptionTransferValidationErrorCode(SubscriptionHasReservationsValue);
+
         /// <summary> SubscriptionTypeNotSupported. </summary>
         public static SubscriptionTransferValidationErrorCode SubscriptionTypeNotSupported { get; } = new SubscriptionTransferValidationErrorCode(SubscriptionTypeNotSupportedValue);
+
         /// <summary> InvoiceSectionIsRestricted. </summary>
         public static SubscriptionTransferValidationErrorCode InvoiceSectionIsRestricted { get; } = new SubscriptionTransferValidationErrorCode(InvoiceSectionIsRestrictedValue);
+
         /// <summary> Determines if two <see cref="SubscriptionTransferValidationErrorCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionTransferValidationErrorCode left, SubscriptionTransferValidationErrorCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionTransferValidationErrorCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionTransferValidationErrorCode left, SubscriptionTransferValidationErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionTransferValidationErrorCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionTransferValidationErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionTransferValidationErrorCode(string value) => new SubscriptionTransferValidationErrorCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionTransferValidationErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionTransferValidationErrorCode?(string value) => value == null ? null : new SubscriptionTransferValidationErrorCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionTransferValidationErrorCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionTransferValidationErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

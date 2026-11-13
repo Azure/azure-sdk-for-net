@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DataFactoryExpressionV2Type : IEquatable<DataFactoryExpressionV2Type>
     {
         private readonly string _value;
+        /// <summary> Constant. </summary>
+        private const string ConstantValue = "Constant";
+        /// <summary> Field. </summary>
+        private const string FieldValue = "Field";
+        /// <summary> Unary. </summary>
+        private const string UnaryValue = "Unary";
+        /// <summary> Binary. </summary>
+        private const string BinaryValue = "Binary";
+        /// <summary> NAry. </summary>
+        private const string NAryValue = "NAry";
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryExpressionV2Type"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFactoryExpressionV2Type(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ConstantValue = "Constant";
-        private const string FieldValue = "Field";
-        private const string UnaryValue = "Unary";
-        private const string BinaryValue = "Binary";
-        private const string NAryValue = "NAry";
+            _value = value;
+        }
 
         /// <summary> Constant. </summary>
         public static DataFactoryExpressionV2Type Constant { get; } = new DataFactoryExpressionV2Type(ConstantValue);
+
         /// <summary> Field. </summary>
         public static DataFactoryExpressionV2Type Field { get; } = new DataFactoryExpressionV2Type(FieldValue);
+
         /// <summary> Unary. </summary>
         public static DataFactoryExpressionV2Type Unary { get; } = new DataFactoryExpressionV2Type(UnaryValue);
+
         /// <summary> Binary. </summary>
         public static DataFactoryExpressionV2Type Binary { get; } = new DataFactoryExpressionV2Type(BinaryValue);
+
         /// <summary> NAry. </summary>
         public static DataFactoryExpressionV2Type NAry { get; } = new DataFactoryExpressionV2Type(NAryValue);
+
         /// <summary> Determines if two <see cref="DataFactoryExpressionV2Type"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFactoryExpressionV2Type left, DataFactoryExpressionV2Type right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFactoryExpressionV2Type"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFactoryExpressionV2Type left, DataFactoryExpressionV2Type right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryExpressionV2Type"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFactoryExpressionV2Type"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFactoryExpressionV2Type(string value) => new DataFactoryExpressionV2Type(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFactoryExpressionV2Type"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFactoryExpressionV2Type?(string value) => value == null ? null : new DataFactoryExpressionV2Type(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFactoryExpressionV2Type other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFactoryExpressionV2Type other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

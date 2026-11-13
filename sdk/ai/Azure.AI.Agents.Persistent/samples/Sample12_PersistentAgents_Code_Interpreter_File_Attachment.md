@@ -47,7 +47,7 @@ PersistentThreadMessage message = client.Messages.CreateMessage(
 
 Asynchronous sample:
 ```C# Snippet:AgentsCreateAgentWithInterpreterTool
-List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
 // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
@@ -75,7 +75,7 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "Can you give me the documented codes for 'banana' and 'orange'?",
-    attachments: [ attachment ]
+    attachments: [attachment]
 );
 ```
 

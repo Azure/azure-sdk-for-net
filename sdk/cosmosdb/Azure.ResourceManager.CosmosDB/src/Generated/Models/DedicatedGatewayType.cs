@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct DedicatedGatewayType : IEquatable<DedicatedGatewayType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DedicatedGatewayType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DedicatedGatewayType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IntegratedCacheValue = "IntegratedCache";
         private const string DistributedQueryValue = "DistributedQuery";
 
-        /// <summary> IntegratedCache. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DedicatedGatewayType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the IntegratedCache. </summary>
         public static DedicatedGatewayType IntegratedCache { get; } = new DedicatedGatewayType(IntegratedCacheValue);
-        /// <summary> DistributedQuery. </summary>
+
+        /// <summary> Gets the DistributedQuery. </summary>
         public static DedicatedGatewayType DistributedQuery { get; } = new DedicatedGatewayType(DistributedQueryValue);
+
         /// <summary> Determines if two <see cref="DedicatedGatewayType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DedicatedGatewayType left, DedicatedGatewayType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DedicatedGatewayType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DedicatedGatewayType left, DedicatedGatewayType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DedicatedGatewayType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DedicatedGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DedicatedGatewayType(string value) => new DedicatedGatewayType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DedicatedGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DedicatedGatewayType?(string value) => value == null ? null : new DedicatedGatewayType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DedicatedGatewayType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DedicatedGatewayType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

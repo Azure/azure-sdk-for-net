@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SkusCreateOrUpdateNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_CreateOrUpdateNestedResourceTypeSecond.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/Skus_CreateOrUpdateNestedResourceTypeSecond.json
             // this example is just showing the usage of "Skus_CreateOrUpdateNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,7 +74,7 @@ Costs = {new ResourceTypeSkuCost("xxx")},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SkusGetNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeSecond.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/Skus_GetNestedResourceTypeSecond.json
             // this example is just showing the usage of "Skus_GetNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ Costs = {new ResourceTypeSkuCost("xxx")},
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SkusListByResourceTypeRegistrationsNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond.json
             // this example is just showing the usage of "Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,7 +148,7 @@ Costs = {new ResourceTypeSkuCost("xxx")},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SkusGetNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeSecond.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/Skus_GetNestedResourceTypeSecond.json
             // this example is just showing the usage of "Skus_GetNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +180,7 @@ Costs = {new ResourceTypeSkuCost("xxx")},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SkusGetNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeSecond.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/Skus_GetNestedResourceTypeSecond.json
             // this example is just showing the usage of "Skus_GetNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

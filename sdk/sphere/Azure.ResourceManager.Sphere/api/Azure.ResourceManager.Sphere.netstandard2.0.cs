@@ -28,7 +28,10 @@ namespace Azure.ResourceManager.Sphere
         public SphereCatalogData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.SphereCatalogData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereCatalogData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereCatalogData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.SphereCatalogData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.SphereCatalogData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -106,7 +109,10 @@ namespace Azure.ResourceManager.Sphere
         public Azure.ResourceManager.Sphere.Models.SphereCertificateStatus? Status { get { throw null; } }
         public string Subject { get { throw null; } }
         public string Thumbprint { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.SphereCertificateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereCertificateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereCertificateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.SphereCertificateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.SphereCertificateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -156,7 +162,10 @@ namespace Azure.ResourceManager.Sphere
         public System.DateTimeOffset? DeploymentDateUtc { get { throw null; } }
         public string DeploymentId { get { throw null; } set { } }
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.SphereDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.SphereDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.SphereDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -209,7 +218,10 @@ namespace Azure.ResourceManager.Sphere
         public System.DateTimeOffset? LastOSUpdateUtc { get { throw null; } }
         public System.DateTimeOffset? LastUpdateRequestUtc { get { throw null; } }
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.SphereDeviceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereDeviceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereDeviceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.SphereDeviceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.SphereDeviceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -243,7 +255,10 @@ namespace Azure.ResourceManager.Sphere
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? RegionalDataBoundary { get { throw null; } set { } }
         public Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy? UpdatePolicy { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.SphereDeviceGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereDeviceGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereDeviceGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.SphereDeviceGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.SphereDeviceGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -344,7 +359,10 @@ namespace Azure.ResourceManager.Sphere
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? RegionalDataBoundary { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.SphereImageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.SphereImageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.SphereImageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -392,7 +410,10 @@ namespace Azure.ResourceManager.Sphere
         public SphereProductData() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.SphereProductData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereProductData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereProductData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.SphereProductData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.SphereProductData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -457,26 +478,37 @@ namespace Azure.ResourceManager.Sphere.Models
 {
     public static partial class ArmSphereModelFactory
     {
+        public static Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent ClaimSphereDevicesContent(System.Collections.Generic.IEnumerable<string> deviceIdentifiers = null) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.CountDevicesResult CountDevicesResult(int value = 0) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.CountElementsResult CountElementsResult(int value = 0) { throw null; }
+        public static Azure.ResourceManager.Sphere.Models.GenerateCapabilityImageContent GenerateCapabilityImageContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.Models.SphereCapabilityType> capabilities = null) { throw null; }
+        public static Azure.ResourceManager.Sphere.Models.ListSphereDeviceGroupsContent ListSphereDeviceGroupsContent(string deviceGroupName = null) { throw null; }
+        public static Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceContent ProofOfPossessionNonceContent(string proofOfPossessionNonce = null) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceResponse ProofOfPossessionNonceResponse(string certificate = null, Azure.ResourceManager.Sphere.Models.SphereCertificateStatus? status = default(Azure.ResourceManager.Sphere.Models.SphereCertificateStatus?), string subject = null, string thumbprint = null, System.DateTimeOffset? expiryUtc = default(System.DateTimeOffset?), System.DateTimeOffset? notBeforeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.SignedCapabilityImageResponse SignedCapabilityImageResponse(string image = null) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereCatalogData SphereCatalogData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Sphere.Models.SphereCatalogPatch SphereCatalogPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.SphereCertificateChainResult SphereCertificateChainResult(string certificateChain = null) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereCertificateData SphereCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string certificate = null, Azure.ResourceManager.Sphere.Models.SphereCertificateStatus? status = default(Azure.ResourceManager.Sphere.Models.SphereCertificateStatus?), string subject = null, string thumbprint = null, System.DateTimeOffset? expiryUtc = default(System.DateTimeOffset?), System.DateTimeOffset? notBeforeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.SphereCertificateProperties SphereCertificateProperties(string certificate = null, Azure.ResourceManager.Sphere.Models.SphereCertificateStatus? status = default(Azure.ResourceManager.Sphere.Models.SphereCertificateStatus?), string subject = null, string thumbprint = null, System.DateTimeOffset? expiryUtc = default(System.DateTimeOffset?), System.DateTimeOffset? notBeforeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereDeploymentData SphereDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deploymentId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereImageData> deployedImages = null, System.DateTimeOffset? deploymentDateUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereDeviceData SphereDeviceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deviceId = null, string chipSku = null, string lastAvailableOSVersion = null, string lastInstalledOSVersion = null, System.DateTimeOffset? lastOSUpdateUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdateRequestUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereDeviceGroupData SphereDeviceGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Sphere.Models.SphereOSFeedType? osFeedType = default(Azure.ResourceManager.Sphere.Models.SphereOSFeedType?), Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy? updatePolicy = default(Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy?), Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default(Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus?), Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? regionalDataBoundary = default(Azure.ResourceManager.Sphere.Models.RegionalDataBoundary?), bool? hasDeployment = default(bool?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Sphere.Models.SphereDeviceGroupPatch SphereDeviceGroupPatch(string description = null, Azure.ResourceManager.Sphere.Models.SphereOSFeedType? osFeedType = default(Azure.ResourceManager.Sphere.Models.SphereOSFeedType?), Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy? updatePolicy = default(Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy?), Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default(Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus?), Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? regionalDataBoundary = default(Azure.ResourceManager.Sphere.Models.RegionalDataBoundary?)) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.SphereDeviceInsight SphereDeviceInsight(string deviceId = null, string description = null, System.DateTimeOffset startTimestampUtc = default(System.DateTimeOffset), System.DateTimeOffset endTimestampUtc = default(System.DateTimeOffset), string eventCategory = null, string eventClass = null, string eventType = null, int eventCount = 0) { throw null; }
+        public static Azure.ResourceManager.Sphere.Models.SphereDevicePatch SphereDevicePatch(string deviceGroupId = null) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereImageData SphereImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string image = null, string imageId = null, string imageName = null, Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? regionalDataBoundary = default(Azure.ResourceManager.Sphere.Models.RegionalDataBoundary?), System.Uri uri = null, string description = null, string componentId = null, Azure.ResourceManager.Sphere.Models.SphereImageType? imageType = default(Azure.ResourceManager.Sphere.Models.SphereImageType?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereProductData SphereProductData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Sphere.Models.SphereProductPatch SphereProductPatch(string description = null) { throw null; }
     }
     public partial class ClaimSphereDevicesContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent>
     {
         public ClaimSphereDevicesContent(System.Collections.Generic.IEnumerable<string> deviceIdentifiers) { }
         public System.Collections.Generic.IList<string> DeviceIdentifiers { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -486,7 +518,10 @@ namespace Azure.ResourceManager.Sphere.Models
     public partial class CountDevicesResult : Azure.ResourceManager.Sphere.Models.CountElementsResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>
     {
         internal CountDevicesResult() { }
+        protected override Azure.ResourceManager.Sphere.Models.CountElementsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Sphere.Models.CountElementsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.CountDevicesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.CountDevicesResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -497,7 +532,10 @@ namespace Azure.ResourceManager.Sphere.Models
     {
         internal CountElementsResult() { }
         public int Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sphere.Models.CountElementsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.CountElementsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.CountElementsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountElementsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountElementsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.CountElementsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountElementsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -508,7 +546,10 @@ namespace Azure.ResourceManager.Sphere.Models
     {
         public GenerateCapabilityImageContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.Models.SphereCapabilityType> capabilities) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sphere.Models.SphereCapabilityType> Capabilities { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sphere.Models.GenerateCapabilityImageContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.GenerateCapabilityImageContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.GenerateCapabilityImageContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.GenerateCapabilityImageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.GenerateCapabilityImageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.GenerateCapabilityImageContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.GenerateCapabilityImageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -519,7 +560,10 @@ namespace Azure.ResourceManager.Sphere.Models
     {
         public ListSphereDeviceGroupsContent() { }
         public string DeviceGroupName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Sphere.Models.ListSphereDeviceGroupsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.ListSphereDeviceGroupsContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.ListSphereDeviceGroupsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ListSphereDeviceGroupsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ListSphereDeviceGroupsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.ListSphereDeviceGroupsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.ListSphereDeviceGroupsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -530,7 +574,10 @@ namespace Azure.ResourceManager.Sphere.Models
     {
         public ProofOfPossessionNonceContent(string proofOfPossessionNonce) { }
         public string ProofOfPossessionNonce { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -540,7 +587,10 @@ namespace Azure.ResourceManager.Sphere.Models
     public partial class ProofOfPossessionNonceResponse : Azure.ResourceManager.Sphere.Models.SphereCertificateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceResponse>
     {
         internal ProofOfPossessionNonceResponse() { }
+        protected override Azure.ResourceManager.Sphere.Models.SphereCertificateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Sphere.Models.SphereCertificateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -556,12 +606,11 @@ namespace Azure.ResourceManager.Sphere.Models
         public static Azure.ResourceManager.Sphere.Models.RegionalDataBoundary EU { get { throw null; } }
         public static Azure.ResourceManager.Sphere.Models.RegionalDataBoundary None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sphere.Models.RegionalDataBoundary other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Sphere.Models.RegionalDataBoundary left, Azure.ResourceManager.Sphere.Models.RegionalDataBoundary right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sphere.Models.RegionalDataBoundary (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sphere.Models.RegionalDataBoundary left, Azure.ResourceManager.Sphere.Models.RegionalDataBoundary right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -569,7 +618,10 @@ namespace Azure.ResourceManager.Sphere.Models
     {
         internal SignedCapabilityImageResponse() { }
         public string Image { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sphere.Models.SignedCapabilityImageResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.SignedCapabilityImageResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.SignedCapabilityImageResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SignedCapabilityImageResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SignedCapabilityImageResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.SignedCapabilityImageResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.SignedCapabilityImageResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -585,12 +637,11 @@ namespace Azure.ResourceManager.Sphere.Models
         public static Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus left, Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus left, Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -603,12 +654,11 @@ namespace Azure.ResourceManager.Sphere.Models
         public static Azure.ResourceManager.Sphere.Models.SphereCapabilityType ApplicationDevelopment { get { throw null; } }
         public static Azure.ResourceManager.Sphere.Models.SphereCapabilityType FieldServicing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sphere.Models.SphereCapabilityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Sphere.Models.SphereCapabilityType left, Azure.ResourceManager.Sphere.Models.SphereCapabilityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sphere.Models.SphereCapabilityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sphere.Models.SphereCapabilityType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sphere.Models.SphereCapabilityType left, Azure.ResourceManager.Sphere.Models.SphereCapabilityType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -616,7 +666,10 @@ namespace Azure.ResourceManager.Sphere.Models
     {
         public SphereCatalogPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereCatalogPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereCatalogPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.SphereCatalogPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereCatalogPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereCatalogPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.SphereCatalogPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.SphereCatalogPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -627,7 +680,10 @@ namespace Azure.ResourceManager.Sphere.Models
     {
         internal SphereCertificateChainResult() { }
         public string CertificateChain { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereCertificateChainResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereCertificateChainResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.SphereCertificateChainResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereCertificateChainResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereCertificateChainResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.SphereCertificateChainResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.SphereCertificateChainResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -644,7 +700,10 @@ namespace Azure.ResourceManager.Sphere.Models
         public Azure.ResourceManager.Sphere.Models.SphereCertificateStatus? Status { get { throw null; } }
         public string Subject { get { throw null; } }
         public string Thumbprint { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereCertificateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereCertificateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.SphereCertificateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereCertificateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereCertificateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.SphereCertificateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.SphereCertificateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -662,12 +721,11 @@ namespace Azure.ResourceManager.Sphere.Models
         public static Azure.ResourceManager.Sphere.Models.SphereCertificateStatus Inactive { get { throw null; } }
         public static Azure.ResourceManager.Sphere.Models.SphereCertificateStatus Revoked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sphere.Models.SphereCertificateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Sphere.Models.SphereCertificateStatus left, Azure.ResourceManager.Sphere.Models.SphereCertificateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sphere.Models.SphereCertificateStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sphere.Models.SphereCertificateStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sphere.Models.SphereCertificateStatus left, Azure.ResourceManager.Sphere.Models.SphereCertificateStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -679,7 +737,10 @@ namespace Azure.ResourceManager.Sphere.Models
         public Azure.ResourceManager.Sphere.Models.SphereOSFeedType? OSFeedType { get { throw null; } set { } }
         public Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? RegionalDataBoundary { get { throw null; } set { } }
         public Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy? UpdatePolicy { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereDeviceGroupPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereDeviceGroupPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.SphereDeviceGroupPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereDeviceGroupPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereDeviceGroupPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.SphereDeviceGroupPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.SphereDeviceGroupPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -697,7 +758,10 @@ namespace Azure.ResourceManager.Sphere.Models
         public int EventCount { get { throw null; } }
         public string EventType { get { throw null; } }
         public System.DateTimeOffset StartTimestampUtc { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereDeviceInsight JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereDeviceInsight PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.SphereDeviceInsight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereDeviceInsight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereDeviceInsight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.SphereDeviceInsight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.SphereDeviceInsight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -708,7 +772,10 @@ namespace Azure.ResourceManager.Sphere.Models
     {
         public SphereDevicePatch() { }
         public string DeviceGroupId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereDevicePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereDevicePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.SphereDevicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereDevicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereDevicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.SphereDevicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.SphereDevicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -746,12 +813,11 @@ namespace Azure.ResourceManager.Sphere.Models
         public static Azure.ResourceManager.Sphere.Models.SphereImageType UpdateCertStore { get { throw null; } }
         public static Azure.ResourceManager.Sphere.Models.SphereImageType WifiFirmware { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sphere.Models.SphereImageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Sphere.Models.SphereImageType left, Azure.ResourceManager.Sphere.Models.SphereImageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sphere.Models.SphereImageType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sphere.Models.SphereImageType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sphere.Models.SphereImageType left, Azure.ResourceManager.Sphere.Models.SphereImageType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -764,12 +830,11 @@ namespace Azure.ResourceManager.Sphere.Models
         public static Azure.ResourceManager.Sphere.Models.SphereOSFeedType Retail { get { throw null; } }
         public static Azure.ResourceManager.Sphere.Models.SphereOSFeedType RetailEval { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sphere.Models.SphereOSFeedType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Sphere.Models.SphereOSFeedType left, Azure.ResourceManager.Sphere.Models.SphereOSFeedType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sphere.Models.SphereOSFeedType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sphere.Models.SphereOSFeedType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sphere.Models.SphereOSFeedType left, Azure.ResourceManager.Sphere.Models.SphereOSFeedType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -777,7 +842,10 @@ namespace Azure.ResourceManager.Sphere.Models
     {
         public SphereProductPatch() { }
         public string Description { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereProductPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sphere.Models.SphereProductPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Sphere.Models.SphereProductPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereProductPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.SphereProductPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sphere.Models.SphereProductPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.SphereProductPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -798,12 +866,11 @@ namespace Azure.ResourceManager.Sphere.Models
         public static Azure.ResourceManager.Sphere.Models.SphereProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Sphere.Models.SphereProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sphere.Models.SphereProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Sphere.Models.SphereProvisioningState left, Azure.ResourceManager.Sphere.Models.SphereProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sphere.Models.SphereProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sphere.Models.SphereProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sphere.Models.SphereProvisioningState left, Azure.ResourceManager.Sphere.Models.SphereProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -816,12 +883,11 @@ namespace Azure.ResourceManager.Sphere.Models
         public static Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy No3RdPartyAppUpdates { get { throw null; } }
         public static Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy UpdateAll { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy left, Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy left, Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy right) { throw null; }
         public override string ToString() { throw null; }
     }

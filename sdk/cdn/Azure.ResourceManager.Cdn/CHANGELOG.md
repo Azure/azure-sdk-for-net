@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2026-10-29)
+
+### Features Added
+
+- Upgraded api-version to 2026-10-01.
+- Added support for creating a rule set together with its rules in batch mode via `FrontDoorRuleSetData.IsBatchMode` and `FrontDoorRuleSetData.Rules`.
+- Added server TLS group configuration via `AfdServerTlsGroupPolicy` and `AfdServerTlsGroup`.
+- Added `CertificateNameCheckValidationMode` and `CustomCertificateSubjects` to Front Door origins.
+- Added `TokenDestinationHeader` to `OriginAuthenticationProperties`.
+
+### Breaking Changes
+
+- Removed preview-only features introduced in 1.6.0-beta.1 (api-version 2025-09-01-preview) that are not part of the stable api-version 2026-10-01, including key groups, web agents, profile agents, deployment versions, and embedded WAF policies.
+
+## 1.6.0-beta.1 (2026-06-02)
+
+### Features Added
+
+- Upgraded api-version to 2025-09-01-preview.
+
+### Other Changes
+
+- Migrated from AutoRest/Swagger to TypeSpec-based generation.
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.5.1 (2025-11-18)
+
+### Features Added
+
+- Enabled `WirePath` attributes for all properties in this library.
 
 ## 1.5.0 (2025-08-08)
 

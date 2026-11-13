@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct SoftwareAssuranceStatus : IEquatable<SoftwareAssuranceStatus>
     {
         private readonly string _value;
+        /// <summary> Software Assurance is enabled for the cluster. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Software Assurance is disabled for the cluster. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SoftwareAssuranceStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Software Assurance is enabled for the cluster. </summary>
         public static SoftwareAssuranceStatus Enabled { get; } = new SoftwareAssuranceStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Software Assurance is disabled for the cluster. </summary>
         public static SoftwareAssuranceStatus Disabled { get; } = new SoftwareAssuranceStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="SoftwareAssuranceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SoftwareAssuranceStatus left, SoftwareAssuranceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SoftwareAssuranceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SoftwareAssuranceStatus left, SoftwareAssuranceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SoftwareAssuranceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SoftwareAssuranceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SoftwareAssuranceStatus(string value) => new SoftwareAssuranceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SoftwareAssuranceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SoftwareAssuranceStatus?(string value) => value == null ? null : new SoftwareAssuranceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SoftwareAssuranceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SoftwareAssuranceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

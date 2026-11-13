@@ -16,6 +16,53 @@ namespace Azure.Security.KeyVault.Administration.Models
 {
     internal partial class FullBackupDetailsInternal : IJsonModel<FullBackupDetailsInternal>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FullBackupDetailsInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FullBackupDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFullBackupDetailsInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FullBackupDetailsInternal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FullBackupDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FullBackupDetailsInternal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FullBackupDetailsInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FullBackupDetailsInternal IPersistableModel<FullBackupDetailsInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FullBackupDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FullBackupDetailsInternal"/> from. </param>
+        public static explicit operator FullBackupDetailsInternal(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFullBackupDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FullBackupDetailsInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -44,20 +91,34 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error, _errorIsDefined))
             {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                if (Error != null)
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error, options);
+                }
+                else
+                {
+                    writer.WriteNull("error"u8);
+                }
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteNumberValue(StartTime.Value, "U");
+                writer.WriteNumberValue(StartsOn.Value, "U");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteNumberValue(EndTime.Value, "U");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteNumberValue(EndsOn.Value, "U");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (Optional.IsDefined(JobId))
             {
@@ -113,9 +174,11 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
             OperationStatus? status = default;
             string statusDetails = default;
+            bool errorIsDefined = false;
             KeyVaultServiceError error = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
+            DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
+            DateTimeOffset? endsOn = default;
             string jobId = default;
             string azureStorageBlobContainerUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -137,6 +200,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
+                    errorIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         error = null;
@@ -151,17 +215,18 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    startTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endTime = null;
+                        endsOn = null;
                         continue;
                     }
-                    endTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -176,66 +241,22 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FullBackupDetailsInternal(
                 status,
                 statusDetails,
                 error,
-                startTime,
-                endTime,
+                startsOn,
+                endsOn,
                 jobId,
                 azureStorageBlobContainerUri,
-                additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FullBackupDetailsInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FullBackupDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
+                additionalBinaryDataProperties)
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FullBackupDetailsInternal)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FullBackupDetailsInternal IPersistableModel<FullBackupDetailsInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FullBackupDetailsInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FullBackupDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeFullBackupDetailsInternal(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FullBackupDetailsInternal)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FullBackupDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FullBackupDetailsInternal"/> from. </param>
-        public static explicit operator FullBackupDetailsInternal(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeFullBackupDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
+                _errorIsDefined = errorIsDefined,
+                _endsOnIsDefined = endsOnIsDefined
+            };
         }
     }
 }

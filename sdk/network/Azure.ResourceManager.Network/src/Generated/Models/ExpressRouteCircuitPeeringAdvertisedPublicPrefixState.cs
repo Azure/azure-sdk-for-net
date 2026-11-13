@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExpressRouteCircuitPeeringAdvertisedPublicPrefixState : IEquatable<ExpressRouteCircuitPeeringAdvertisedPublicPrefixState>
     {
         private readonly string _value;
+        /// <summary> NotConfigured. </summary>
+        private const string NotConfiguredValue = "NotConfigured";
+        /// <summary> Configuring. </summary>
+        private const string ConfiguringValue = "Configuring";
+        /// <summary> Configured. </summary>
+        private const string ConfiguredValue = "Configured";
+        /// <summary> ValidationNeeded. </summary>
+        private const string ValidationNeededValue = "ValidationNeeded";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringAdvertisedPublicPrefixState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotConfiguredValue = "NotConfigured";
-        private const string ConfiguringValue = "Configuring";
-        private const string ConfiguredValue = "Configured";
-        private const string ValidationNeededValue = "ValidationNeeded";
+            _value = value;
+        }
 
         /// <summary> NotConfigured. </summary>
         public static ExpressRouteCircuitPeeringAdvertisedPublicPrefixState NotConfigured { get; } = new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(NotConfiguredValue);
+
         /// <summary> Configuring. </summary>
         public static ExpressRouteCircuitPeeringAdvertisedPublicPrefixState Configuring { get; } = new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(ConfiguringValue);
+
         /// <summary> Configured. </summary>
         public static ExpressRouteCircuitPeeringAdvertisedPublicPrefixState Configured { get; } = new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(ConfiguredValue);
+
         /// <summary> ValidationNeeded. </summary>
         public static ExpressRouteCircuitPeeringAdvertisedPublicPrefixState ValidationNeeded { get; } = new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(ValidationNeededValue);
+
         /// <summary> Determines if two <see cref="ExpressRouteCircuitPeeringAdvertisedPublicPrefixState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressRouteCircuitPeeringAdvertisedPublicPrefixState left, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressRouteCircuitPeeringAdvertisedPublicPrefixState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressRouteCircuitPeeringAdvertisedPublicPrefixState left, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteCircuitPeeringAdvertisedPublicPrefixState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressRouteCircuitPeeringAdvertisedPublicPrefixState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(string value) => new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressRouteCircuitPeeringAdvertisedPublicPrefixState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressRouteCircuitPeeringAdvertisedPublicPrefixState?(string value) => value == null ? null : new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressRouteCircuitPeeringAdvertisedPublicPrefixState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressRouteCircuitPeeringAdvertisedPublicPrefixState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

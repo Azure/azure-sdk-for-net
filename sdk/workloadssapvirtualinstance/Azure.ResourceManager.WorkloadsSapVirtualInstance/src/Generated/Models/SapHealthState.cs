@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct SapHealthState : IEquatable<SapHealthState>
     {
         private readonly string _value;
+        /// <summary> SAP System health is unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> SAP System health is healthy. </summary>
+        private const string HealthyValue = "Healthy";
+        /// <summary> SAP System is unhealthy. </summary>
+        private const string UnhealthyValue = "Unhealthy";
+        /// <summary> SAP System health is degraded. </summary>
+        private const string DegradedValue = "Degraded";
 
         /// <summary> Initializes a new instance of <see cref="SapHealthState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapHealthState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string HealthyValue = "Healthy";
-        private const string UnhealthyValue = "Unhealthy";
-        private const string DegradedValue = "Degraded";
+            _value = value;
+        }
 
         /// <summary> SAP System health is unknown. </summary>
         public static SapHealthState Unknown { get; } = new SapHealthState(UnknownValue);
+
         /// <summary> SAP System health is healthy. </summary>
         public static SapHealthState Healthy { get; } = new SapHealthState(HealthyValue);
+
         /// <summary> SAP System is unhealthy. </summary>
         public static SapHealthState Unhealthy { get; } = new SapHealthState(UnhealthyValue);
+
         /// <summary> SAP System health is degraded. </summary>
         public static SapHealthState Degraded { get; } = new SapHealthState(DegradedValue);
+
         /// <summary> Determines if two <see cref="SapHealthState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapHealthState left, SapHealthState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapHealthState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapHealthState left, SapHealthState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapHealthState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapHealthState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapHealthState(string value) => new SapHealthState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapHealthState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapHealthState?(string value) => value == null ? null : new SapHealthState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapHealthState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapHealthState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

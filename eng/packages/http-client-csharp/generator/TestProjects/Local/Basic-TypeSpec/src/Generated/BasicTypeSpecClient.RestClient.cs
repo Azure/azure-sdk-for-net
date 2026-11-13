@@ -15,17 +15,17 @@ namespace BasicTypeSpec
     public partial class BasicTypeSpecClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
+        private static ResponseClassifier _pipelineMessageClassifier200204;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier200204 => _pipelineMessageClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
+
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateSayHiRequest(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/hello", false);
@@ -34,7 +34,10 @@ namespace BasicTypeSpec
             {
                 uri.AppendQuery("optionalQuery", optionalQuery, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("head-parameter", headParameter);
             request.Headers.SetValue("Accept", "application/json");
             return message;
@@ -42,14 +45,14 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateHelloAgainRequest(string p2, string p1, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/againHi/", false);
             uri.AppendPath(p2, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("p1", p1);
             request.Headers.SetValue("Content-Type", "text/plain");
             request.Headers.SetValue("Accept", "application/json");
@@ -59,14 +62,14 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateNoContentTypeRequest(string p2, string p1, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/noContentType/", false);
             uri.AppendPath(p2, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("p1", p1);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
@@ -76,26 +79,26 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateHelloDemo2Request(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/demoHi", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateCreateLiteralRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/literal", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -104,15 +107,15 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateHelloLiteralRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/helloLiteral/", false);
             uri.AppendPath(123.ToString(), true);
-            uri.AppendQuery("p3", TypeFormatters.ConvertToString(true, null), true);
+            uri.AppendQuery("p3", TypeFormatters.ConvertToString(true), true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("p1", "test");
             request.Headers.SetValue("Accept", "application/json");
             return message;
@@ -120,40 +123,40 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateTopActionRequest(DateTimeOffset action, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top/", false);
             uri.AppendPath(action.ToString("O"), true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateTopAction2Request(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top2", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreatePatchActionRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Patch;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/patch", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -162,13 +165,13 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateAnonymousBodyRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/anonymousBody", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -177,13 +180,13 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateFriendlyModelRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/friendlyName", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -192,26 +195,26 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateAddTimeHeaderRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, "R"));
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
             return message;
         }
 
         internal HttpMessage CreateProjectedNameModelRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projectedName", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -220,39 +223,39 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateReturnsAnonymousModelRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/returnsAnonymousModel", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetUnknownValueRequest(string accept, RequestContext context)
+        internal HttpMessage CreateGetUnknownValueRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/unknown-value", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.SetValue("Accept", accept);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "text/plain");
             return message;
         }
 
         internal HttpMessage CreateInternalProtocolRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/internalProtocol", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -261,109 +264,161 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateStillConvenientRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stillConvenient", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             return message;
         }
 
         internal HttpMessage CreateHeadAsBooleanRequest(string id, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/headAsBoolean/", false);
             uri.AppendPath(id, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             return message;
         }
 
         internal HttpMessage CreateGetWithNextLinkRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/link", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateNextGetWithNextLinkRequest(Uri nextPage, RequestContext context)
         {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetWithStringNextLinkRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/linkString", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateNextGetWithStringNextLinkRequest(Uri nextPage, RequestContext context)
         {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetWithHeaderNextLinkRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/linkHeader", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateNextGetWithHeaderNextLinkRequest(Uri nextPage, RequestContext context)
         {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetWithHeaderNextLinkWithMaxPageRequest(int numElements, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkHeaderWithMaxPage", false);
+            uri.AppendQuery("numElements", TypeFormatters.ConvertToString(numElements), true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetWithHeaderNextLinkWithMaxPageRequest(Uri nextPage, int numElements, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("numElements", TypeFormatters.ConvertToString(numElements));
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetWithContinuationTokenRequest(string token, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/continuation", false);
@@ -371,16 +426,34 @@ namespace BasicTypeSpec
             {
                 uri.AppendQuery("token", token, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetWithContinuationTokenWithMaxPageRequest(int numElements, string token, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/continuationWithMaxPage", false);
+            if (token != null)
+            {
+                uri.AppendQuery("token", token, true);
+            }
+            uri.AppendQuery("numElements", TypeFormatters.ConvertToString(numElements), true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetWithContinuationTokenHeaderResponseRequest(string token, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/continuation/header", false);
@@ -388,33 +461,36 @@ namespace BasicTypeSpec
             {
                 uri.AppendQuery("token", token, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetWithPagingRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/list/paging", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateConditionalRequestRequest(MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/conditionalrequest", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -424,17 +500,192 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateConditionalRequestDateRequest(RequestConditions requestConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/conditionalrequest/date", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (requestConditions != null)
             {
                 request.Headers.Add(requestConditions);
             }
+            return message;
+        }
+
+        internal HttpMessage CreateMultipartRequestRequest(RequestContent content, string contentType, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/multipart", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", contentType);
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCreateDataFactoryModelRequest(RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datafactory", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetDataFactoryModelRequest(string id, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datafactory/", false);
+            uri.AppendPath(id, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetXmlAdvancedModelRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/xmlAdvanced", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateXmlAdvancedModelRequest(RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/xmlAdvanced", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Content-Type", "application/xml");
+            request.Headers.SetValue("Accept", "application/xml");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUploadCatRequest(RequestContent content, string contentType, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/cats", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", contentType);
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSendJsonLinesRequest(RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/streaming/jsonl/send", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/jsonl");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateReceiveJsonLinesRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/streaming/jsonl/receive", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/jsonl");
+            return message;
+        }
+
+        internal HttpMessage CreateReceiveSseRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/streaming/sse/receive", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "text/event-stream");
+            return message;
+        }
+
+        internal HttpMessage CreateGetOptionalResponseRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/optional-response", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRoundTripResourceIdentifiersRequest(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/resource-identifiers/", false);
+            uri.AppendPath(resourceId.ToString(), true);
+            if (queryId != null)
+            {
+                uri.AppendQuery("queryId", TypeFormatters.ConvertToString(queryId), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            if (headerId != null)
+            {
+                request.Headers.SetValue("x-resource-id", TypeFormatters.ConvertToString(headerId));
+            }
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetResourceIdentifiersXmlRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/resource-identifiers/xml", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/xml");
             return message;
         }
     }

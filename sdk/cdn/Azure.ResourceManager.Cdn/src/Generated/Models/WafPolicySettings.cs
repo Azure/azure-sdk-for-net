@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines contents of a web application firewall global configuration
-    /// Serialized Name: PolicySettings
-    /// </summary>
+    /// <summary> Defines contents of a web application firewall global configuration. </summary>
     public partial class WafPolicySettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WafPolicySettings"/>. </summary>
         public WafPolicySettings()
@@ -54,88 +23,55 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WafPolicySettings"/>. </summary>
-        /// <param name="enabledState">
-        /// describes if the policy is in enabled state or disabled state
-        /// Serialized Name: PolicySettings.enabledState
-        /// </param>
-        /// <param name="mode">
-        /// Describes if it is in detection mode or prevention mode at policy level.
-        /// Serialized Name: PolicySettings.mode
-        /// </param>
-        /// <param name="defaultRedirectUri">
-        /// If action type is redirect, this field represents the default redirect URL for the client.
-        /// Serialized Name: PolicySettings.defaultRedirectUrl
-        /// </param>
-        /// <param name="defaultCustomBlockResponseStatusCode">
-        /// If the action type is block, this field defines the default customer overridable http response status code.
-        /// Serialized Name: PolicySettings.defaultCustomBlockResponseStatusCode
-        /// </param>
-        /// <param name="defaultCustomBlockResponseBody">
-        /// If the action type is block, customer can override the response body. The body must be specified in base64 encoding.
-        /// Serialized Name: PolicySettings.defaultCustomBlockResponseBody
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WafPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, BinaryData defaultCustomBlockResponseBody, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="enabledState"> describes if the policy is in enabled state or disabled state. </param>
+        /// <param name="mode"> Describes if it is in detection mode or prevention mode at policy level. </param>
+        /// <param name="defaultRedirectUri"> If action type is redirect, this field represents the default redirect URL for the client. </param>
+        /// <param name="defaultCustomBlockResponseStatusCode"> If the action type is block, this field defines the default customer overridable http response status code. </param>
+        /// <param name="defaultCustomBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WafPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, BinaryData defaultCustomBlockResponseBody, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnabledState = enabledState;
             Mode = mode;
             DefaultRedirectUri = defaultRedirectUri;
             DefaultCustomBlockResponseStatusCode = defaultCustomBlockResponseStatusCode;
             DefaultCustomBlockResponseBody = defaultCustomBlockResponseBody;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// describes if the policy is in enabled state or disabled state
-        /// Serialized Name: PolicySettings.enabledState
-        /// </summary>
+        /// <summary> describes if the policy is in enabled state or disabled state. </summary>
+        [WirePath("enabledState")]
         public PolicyEnabledState? EnabledState { get; set; }
-        /// <summary>
-        /// Describes if it is in detection mode or prevention mode at policy level.
-        /// Serialized Name: PolicySettings.mode
-        /// </summary>
+
+        /// <summary> Describes if it is in detection mode or prevention mode at policy level. </summary>
+        [WirePath("mode")]
         public PolicyMode? Mode { get; set; }
-        /// <summary>
-        /// If action type is redirect, this field represents the default redirect URL for the client.
-        /// Serialized Name: PolicySettings.defaultRedirectUrl
-        /// </summary>
+
+        /// <summary> If action type is redirect, this field represents the default redirect URL for the client. </summary>
+        [WirePath("defaultRedirectUrl")]
         public Uri DefaultRedirectUri { get; set; }
-        /// <summary>
-        /// If the action type is block, this field defines the default customer overridable http response status code.
-        /// Serialized Name: PolicySettings.defaultCustomBlockResponseStatusCode
-        /// </summary>
+
+        /// <summary> If the action type is block, this field defines the default customer overridable http response status code. </summary>
+        [WirePath("defaultCustomBlockResponseStatusCode")]
         public PolicySettingsDefaultCustomBlockResponseStatusCode? DefaultCustomBlockResponseStatusCode { get; set; }
+
         /// <summary>
         /// If the action type is block, customer can override the response body. The body must be specified in base64 encoding.
-        /// Serialized Name: PolicySettings.defaultCustomBlockResponseBody
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
         /// </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("defaultCustomBlockResponseBody")]
         public BinaryData DefaultCustomBlockResponseBody { get; set; }
     }
 }

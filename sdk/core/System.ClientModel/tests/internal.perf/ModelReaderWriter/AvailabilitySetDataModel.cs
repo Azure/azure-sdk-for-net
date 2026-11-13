@@ -9,7 +9,7 @@ namespace System.ClientModel.Tests.Internal.Perf
     public class AvailabilitySetDataModel : JsonModelBenchmark<AvailabilitySetData>
     {
         protected override AvailabilitySetData Read(JsonElement jsonElement)
-            => AvailabilitySetData.DeserializeAvailabilitySetData(jsonElement, _options);
+            => AvailabilitySetData.DeserializeAvailabilitySetData(jsonElement, _options, null);
 
         protected override string JsonFileName => "AvailabilitySetData/AvailabilitySetData.json";
     }

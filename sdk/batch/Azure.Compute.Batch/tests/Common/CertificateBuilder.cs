@@ -3,19 +3,19 @@
 
 using System;
 using System.IO;
-using System.Security.Cryptography;
 using System.Linq;
-using Org.BouncyCastle.Crypto.Prng;
-using Org.BouncyCastle.Math;
-using Org.BouncyCastle.Security;
-using Org.BouncyCastle.X509;
+using System.Numerics;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
-using System.Security.Cryptography.X509Certificates;
-using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Crypto.Operators;
-using System.Numerics;
+using Org.BouncyCastle.Crypto.Prng;
+using Org.BouncyCastle.Math;
+using Org.BouncyCastle.Pkcs;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.X509;
 
 namespace Azure.Compute.Batch.Tests.Common
 {
@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch.Tests.Common
         /// <param name="signatureAlgorithm">The signature algorithm to use</param>
         /// <param name="password">True if there is a password, false otherwise.  Note that if there is a password, PFX format is assumed.</param>
         /// <param name="seed">seed for cert</param>
-        public static X509Certificate2 CreateSelfSignedInFile2(string subjectName, string fileName, string signatureAlgorithm, string password = "", long seed=1)
+        public static X509Certificate2 CreateSelfSignedInFile2(string subjectName, string fileName, string signatureAlgorithm, string password = "", long seed = 1)
         {
             byte[] serialNumber = GenerateSerialNumber();
             string subject = string.Format("CN={0}", subjectName);

@@ -650,8 +650,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = Mock.Of<TokenCredential>();
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
-            var receiver = new PartitionReceiver("cg","pid", EventPosition.Earliest, namespaceUri, "eventHub", credential);
+            var namespaceUri = $"sb://{host}";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, namespaceUri, "eventHub", credential);
 
             Assert.That(receiver.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
         }
@@ -665,8 +665,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureNamedKeyCredential("key", "value");
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
-            var receiver = new PartitionReceiver("cg","pid", EventPosition.Earliest, namespaceUri, "eventHub", credential);
+            var namespaceUri = $"sb://{host}";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, namespaceUri, "eventHub", credential);
 
             Assert.That(receiver.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
         }
@@ -680,8 +680,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
-            var receiver = new PartitionReceiver("cg","pid", EventPosition.Earliest, namespaceUri, "eventHub", credential);
+            var namespaceUri = $"sb://{host}";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, namespaceUri, "eventHub", credential);
 
             Assert.That(receiver.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
         }

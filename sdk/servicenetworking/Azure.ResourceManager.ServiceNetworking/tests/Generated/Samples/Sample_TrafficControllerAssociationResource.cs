@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAssociation()
         {
-            // Generated from example definition: 2025-01-01/AssociationGet.json
+            // Generated from example definition: 2025-03-01-preview/AssociationGet.json
             // this example is just showing the usage of "Association_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAssociation()
         {
-            // Generated from example definition: 2025-01-01/AssociationDelete.json
+            // Generated from example definition: 2025-03-01-preview/AssociationDelete.json
             // this example is just showing the usage of "Association_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAssociation()
         {
-            // Generated from example definition: 2025-01-01/AssociationPatch.json
+            // Generated from example definition: 2025-03-01-preview/AssociationPatch.json
             // this example is just showing the usage of "Association_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

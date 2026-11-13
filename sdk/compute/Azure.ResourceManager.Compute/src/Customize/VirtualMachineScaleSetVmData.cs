@@ -12,6 +12,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
+    // Backward compatibility: flatten VMSS VM properties (HardwareProfile, NetworkProfile, etc.)
+    // onto the Data model after @@flattenProperty was disabled for C# in the TypeSpec migration.
     public partial class VirtualMachineScaleSetVmData : TrackedResourceData
     {
         /// <summary> Specifies whether the latest model has been applied to the virtual machine. </summary>

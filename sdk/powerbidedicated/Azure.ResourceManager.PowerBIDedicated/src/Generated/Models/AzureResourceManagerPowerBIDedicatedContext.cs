@@ -6,17 +6,21 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AutoScaleVCoreData))]
     [ModelReaderWriterBuildable(typeof(AutoScaleVCoreListResult))]
+    [ModelReaderWriterBuildable(typeof(AutoScaleVCoreMutableProperties))]
     [ModelReaderWriterBuildable(typeof(AutoScaleVCorePatch))]
+    [ModelReaderWriterBuildable(typeof(AutoScaleVCoreProperties))]
     [ModelReaderWriterBuildable(typeof(AutoScaleVCoreResource))]
     [ModelReaderWriterBuildable(typeof(AutoScaleVCoreSku))]
     [ModelReaderWriterBuildable(typeof(CapacitySku))]
@@ -25,9 +29,12 @@ namespace Azure.ResourceManager.PowerBIDedicated
     [ModelReaderWriterBuildable(typeof(DedicatedCapacities))]
     [ModelReaderWriterBuildable(typeof(DedicatedCapacityAdministrators))]
     [ModelReaderWriterBuildable(typeof(DedicatedCapacityData))]
+    [ModelReaderWriterBuildable(typeof(DedicatedCapacityMutableProperties))]
     [ModelReaderWriterBuildable(typeof(DedicatedCapacityPatch))]
+    [ModelReaderWriterBuildable(typeof(DedicatedCapacityProperties))]
     [ModelReaderWriterBuildable(typeof(DedicatedCapacityResource))]
-    [ModelReaderWriterBuildable(typeof(PowerBIDedicatedResourceData))]
+    [ModelReaderWriterBuildable(typeof(OkResponse))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SkuDetails))]
     [ModelReaderWriterBuildable(typeof(SkuEnumerationForExistingResourceResult))]
     [ModelReaderWriterBuildable(typeof(SkuEnumerationForNewResourceResult))]

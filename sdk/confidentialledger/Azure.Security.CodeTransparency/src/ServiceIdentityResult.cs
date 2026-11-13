@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using System.Security.Cryptography.X509Certificates;
+using Azure.Core;
 
 namespace Azure.Security.CodeTransparency
 {
@@ -18,14 +18,14 @@ namespace Azure.Security.CodeTransparency
             Argument.AssertNotNull(ledgerTlsCertificate, nameof(ledgerTlsCertificate));
 
             TlsCertificatePem = ledgerTlsCertificate;
-            CreatedAt = DateTime.Now;
+            CreatedOn = DateTimeOffset.UtcNow;
         }
 
         /// <summary> String representing the PEM encoded TLS cert. </summary>
         public string TlsCertificatePem { get; }
 
         /// <summary> The time this class was created to be used in cache. </summary>
-        public DateTime CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
         /// Parses the PEM certificate string to the X509Certificate2.

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The channel type of call recording. </summary>
+    /// <summary> Defines the channel type of call recording. </summary>
     public readonly partial struct RecordingChannel : IEquatable<RecordingChannel>
     {
         private readonly string _value;

@@ -9,65 +9,143 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.ArizeAIObservabilityEval;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmArizeAIObservabilityEvalModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData"/> instance for mocking. </returns>
-        public static ArizeAIObservabilityEvalOrganizationData ArizeAIObservabilityEvalOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArizeAIObservabilityEvalOrganizationProperties properties = null, ManagedServiceIdentity identity = null)
+        public static ArizeAIObservabilityEvalOrganizationData ArizeAIObservabilityEvalOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ArizeAIObservabilityEvalOrganizationProperties properties = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ArizeAIObservabilityEvalOrganizationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 identity,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="partnerDescription"> partner properties. </param>
+        /// <param name="partnerDescription"> Description of the Organization's purpose. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOrganizationProperties"/> instance for mocking. </returns>
-        public static ArizeAIObservabilityEvalOrganizationProperties ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace = null, ArizeAIObservabilityEvalUserDetails user = null, ArizeAIObservabilityEvalOfferProvisioningState? provisioningState = null, string partnerDescription = null, ArizeAIObservabilityEvalSingleSignOnPropertiesV2 singleSignOnProperties = null)
+        public static ArizeAIObservabilityEvalOrganizationProperties ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace = default, ArizeAIObservabilityEvalUserDetails user = default, ArizeAIObservabilityEvalOfferProvisioningState? provisioningState = default, string partnerDescription = default, ArizeAIObservabilityEvalSingleSignOnPropertiesV2 singleSignOnProperties = default)
         {
             return new ArizeAIObservabilityEvalOrganizationProperties(
                 marketplace,
                 user,
                 provisioningState,
-                partnerDescription != null ? new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, serializedAdditionalRawData: null) : null,
+                partnerDescription is null ? default : new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, default),
                 singleSignOnProperties,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ArizeAIObservabilityEvalMarketplaceDetails"/>. </summary>
+        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalMarketplaceDetails"/> instance for mocking. </returns>
-        public static ArizeAIObservabilityEvalMarketplaceDetails ArizeAIObservabilityEvalMarketplaceDetails(string subscriptionId = null, ArizeAIObservabilityEvalMarketplaceSubscriptionStatus? subscriptionStatus = null, ArizeAIObservabilityEvalOfferDetails offerDetails = null)
+        public static ArizeAIObservabilityEvalMarketplaceDetails ArizeAIObservabilityEvalMarketplaceDetails(string subscriptionId = default, ArizeAIObservabilityEvalMarketplaceSubscriptionStatus? subscriptionStatus = default, ArizeAIObservabilityEvalOfferDetails offerDetails = default)
         {
-            return new ArizeAIObservabilityEvalMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
+            return new ArizeAIObservabilityEvalMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
+        }
+
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
+        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
+        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
+        /// <param name="planId"> Plan Id for the marketplace offer. </param>
+        /// <param name="planName"> Plan Name for the marketplace offer. </param>
+        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOfferDetails"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalOfferDetails ArizeAIObservabilityEvalOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
+        {
+            return new ArizeAIObservabilityEvalOfferDetails(
+                publisherId,
+                offerId,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                default);
+        }
+
+        /// <summary> User details for an organization. </summary>
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="emailAddress"> Email address of the user. </param>
+        /// <param name="upn"> User's principal name. </param>
+        /// <param name="phoneNumber"> User's phone number. </param>
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalUserDetails"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalUserDetails ArizeAIObservabilityEvalUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        {
+            return new ArizeAIObservabilityEvalUserDetails(
+                firstName,
+                lastName,
+                emailAddress,
+                upn,
+                phoneNumber,
+                default);
+        }
+
+        /// <summary> Partner's specific Properties. </summary>
+        /// <param name="description"> Description of the Organization's purpose. </param>
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOfferPartnerProperties"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalOfferPartnerProperties ArizeAIObservabilityEvalOfferPartnerProperties(string description = default)
+        {
+            return new ArizeAIObservabilityEvalOfferPartnerProperties(description, default);
+        }
+
+        /// <summary> Properties specific to Single Sign On Resource. </summary>
+        /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
+        /// <param name="state"> State of the Single Sign On for the resource. </param>
+        /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
+        /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
+        /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalSingleSignOnPropertiesV2 ArizeAIObservabilityEvalSingleSignOnPropertiesV2(ArizeAIObservabilityEvalSingleSignOnType @type = default, ArizeAIObservabilityEvalSingleSignOnState? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
+        {
+            aadDomains ??= new ChangeTrackingList<string>();
+
+            return new ArizeAIObservabilityEvalSingleSignOnPropertiesV2(
+                @type,
+                state,
+                enterpriseAppId,
+                uri,
+                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> The type used for update operations of the Organization Resource. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOrganizationPatch"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalOrganizationPatch ArizeAIObservabilityEvalOrganizationPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ArizeAIObservabilityEvalOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
     }
 }

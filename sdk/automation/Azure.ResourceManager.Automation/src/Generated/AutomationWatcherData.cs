@@ -7,113 +7,163 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the AutomationWatcher data model.
-    /// Definition of the watcher type.
-    /// </summary>
+    /// <summary> Definition of the watcher type. </summary>
     public partial class AutomationWatcherData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationWatcherData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AutomationWatcherData(AzureLocation location) : base(location)
         {
-            ScriptParameters = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationWatcherData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Gets or sets the etag of the resource. </param>
-        /// <param name="executionFrequencyInSeconds"> Gets or sets the frequency at which the watcher is invoked. </param>
-        /// <param name="scriptName"> Gets or sets the name of the script the watcher is attached to, i.e. the name of an existing runbook. </param>
-        /// <param name="scriptParameters"> Gets or sets the parameters of the script. </param>
-        /// <param name="scriptRunOn"> Gets or sets the name of the hybrid worker group the watcher will run on. </param>
-        /// <param name="status"> Gets the current status of the watcher. </param>
-        /// <param name="createdOn"> Gets or sets the creation time. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
-        /// <param name="lastModifiedBy"> Details of the user who last modified the watcher. </param>
-        /// <param name="description"> Gets or sets the description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationWatcherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? executionFrequencyInSeconds, string scriptName, IDictionary<string, string> scriptParameters, string scriptRunOn, string status, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Gets or sets the watcher properties. </param>
+        /// <param name="eTag"> Gets or sets the etag of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationWatcherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WatcherProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            ExecutionFrequencyInSeconds = executionFrequencyInSeconds;
-            ScriptName = scriptName;
-            ScriptParameters = scriptParameters;
-            ScriptRunOn = scriptRunOn;
-            Status = status;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            LastModifiedBy = lastModifiedBy;
-            Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationWatcherData"/> for deserialization. </summary>
-        internal AutomationWatcherData()
-        {
-        }
+        /// <summary> Gets or sets the watcher properties. </summary>
+        internal WatcherProperties Properties { get; set; }
 
         /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
+
         /// <summary> Gets or sets the frequency at which the watcher is invoked. </summary>
-        public long? ExecutionFrequencyInSeconds { get; set; }
+        public long? ExecutionFrequencyInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecutionFrequencyInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatcherProperties();
+                }
+                Properties.ExecutionFrequencyInSeconds = value;
+            }
+        }
+
         /// <summary> Gets or sets the name of the script the watcher is attached to, i.e. the name of an existing runbook. </summary>
-        public string ScriptName { get; set; }
+        public string ScriptName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScriptName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatcherProperties();
+                }
+                Properties.ScriptName = value;
+            }
+        }
+
         /// <summary> Gets or sets the parameters of the script. </summary>
-        public IDictionary<string, string> ScriptParameters { get; }
+        public IDictionary<string, string> ScriptParameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatcherProperties();
+                }
+                return Properties.ScriptParameters;
+            }
+        }
+
         /// <summary> Gets or sets the name of the hybrid worker group the watcher will run on. </summary>
-        public string ScriptRunOn { get; set; }
+        public string ScriptRunOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScriptRunOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatcherProperties();
+                }
+                Properties.ScriptRunOn = value;
+            }
+        }
+
         /// <summary> Gets the current status of the watcher. </summary>
-        public string Status { get; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Gets or sets the last modified time. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> Details of the user who last modified the watcher. </summary>
-        public string LastModifiedBy { get; }
+        public string LastModifiedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedBy;
+            }
+        }
+
         /// <summary> Gets or sets the description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatcherProperties();
+                }
+                Properties.Description = value;
+            }
+        }
     }
 }

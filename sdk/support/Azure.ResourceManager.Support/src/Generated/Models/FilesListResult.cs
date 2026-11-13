@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    /// <summary> Object that represents a collection of File resources. </summary>
+    /// <summary> [Placeholder] Description for page model. </summary>
     internal partial class FilesListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FilesListResult"/>. </summary>
         internal FilesListResult()
@@ -52,19 +24,20 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FilesListResult"/>. </summary>
-        /// <param name="value"> List of File resources. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of File resources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FilesListResult(IReadOnlyList<SupportFileDetailData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="nextLink"> [Placeholder] Description for nextLink property. </param>
+        /// <param name="value"> [Placeholder] Description for value property. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FilesListResult(string nextLink, IList<SupportFileDetailData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Value = value;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of File resources. </summary>
-        public IReadOnlyList<SupportFileDetailData> Value { get; }
-        /// <summary> The URI to fetch the next page of File resources. </summary>
+        /// <summary> [Placeholder] Description for nextLink property. </summary>
         public string NextLink { get; }
+
+        /// <summary> [Placeholder] Description for value property. </summary>
+        public IList<SupportFileDetailData> Value { get; }
     }
 }

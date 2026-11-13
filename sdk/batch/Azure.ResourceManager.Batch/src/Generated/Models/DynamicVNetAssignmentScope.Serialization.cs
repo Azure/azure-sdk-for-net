@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class DynamicVNetAssignmentScopeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DynamicVNetAssignmentScope value) => value switch
         {
             DynamicVNetAssignmentScope.None => "none",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DynamicVNetAssignmentScope value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DynamicVNetAssignmentScope ToDynamicVNetAssignmentScope(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return DynamicVNetAssignmentScope.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "job")) return DynamicVNetAssignmentScope.Job;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none"))
+            {
+                return DynamicVNetAssignmentScope.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "job"))
+            {
+                return DynamicVNetAssignmentScope.Job;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DynamicVNetAssignmentScope value.");
         }
     }

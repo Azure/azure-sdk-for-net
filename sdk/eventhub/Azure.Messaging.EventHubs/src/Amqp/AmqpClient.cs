@@ -175,11 +175,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                     null => ServiceEndpoint,
 
                     _ => new UriBuilder
-                        {
-                            Scheme = ServiceEndpoint.Scheme,
-                            Host = clientOptions.CustomEndpointAddress.Host,
-                            Port = clientOptions.CustomEndpointAddress.IsDefaultPort ? -1 : clientOptions.CustomEndpointAddress.Port
-                        }.Uri
+                    {
+                        Scheme = ServiceEndpoint.Scheme,
+                        Host = clientOptions.CustomEndpointAddress.Host,
+                        Port = clientOptions.CustomEndpointAddress.IsDefaultPort ? -1 : clientOptions.CustomEndpointAddress.Port
+                    }.Uri
                 };
 
                 EventHubName = eventHubName;

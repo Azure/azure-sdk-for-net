@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,47 +15,82 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     internal readonly partial struct EnvironmentType : IEquatable<EnvironmentType>
     {
         private readonly string _value;
+        /// <summary> AwsAccount. </summary>
+        private const string AwsAccountValue = "AwsAccount";
+        /// <summary> GcpProject. </summary>
+        private const string GcpProjectValue = "GcpProject";
+        /// <summary> GithubScope. </summary>
+        private const string GithubScopeValue = "GithubScope";
+        /// <summary> AzureDevOpsScope. </summary>
+        private const string AzureDevOpsScopeValue = "AzureDevOpsScope";
+        /// <summary> GitlabScope. </summary>
+        private const string GitlabScopeValue = "GitlabScope";
+        /// <summary> DockerHubOrganization. </summary>
+        private const string DockerHubOrganizationValue = "DockerHubOrganization";
+        /// <summary> JFrogArtifactory. </summary>
+        private const string JFrogArtifactoryValue = "JFrogArtifactory";
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnvironmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AwsAccountValue = "AwsAccount";
-        private const string GcpProjectValue = "GcpProject";
-        private const string GithubScopeValue = "GithubScope";
-        private const string AzureDevOpsScopeValue = "AzureDevOpsScope";
-        private const string GitlabScopeValue = "GitlabScope";
+            _value = value;
+        }
 
         /// <summary> AwsAccount. </summary>
         public static EnvironmentType AwsAccount { get; } = new EnvironmentType(AwsAccountValue);
+
         /// <summary> GcpProject. </summary>
         public static EnvironmentType GcpProject { get; } = new EnvironmentType(GcpProjectValue);
+
         /// <summary> GithubScope. </summary>
         public static EnvironmentType GithubScope { get; } = new EnvironmentType(GithubScopeValue);
+
         /// <summary> AzureDevOpsScope. </summary>
         public static EnvironmentType AzureDevOpsScope { get; } = new EnvironmentType(AzureDevOpsScopeValue);
+
         /// <summary> GitlabScope. </summary>
         public static EnvironmentType GitlabScope { get; } = new EnvironmentType(GitlabScopeValue);
+
+        /// <summary> DockerHubOrganization. </summary>
+        public static EnvironmentType DockerHubOrganization { get; } = new EnvironmentType(DockerHubOrganizationValue);
+
+        /// <summary> JFrogArtifactory. </summary>
+        public static EnvironmentType JFrogArtifactory { get; } = new EnvironmentType(JFrogArtifactoryValue);
+
         /// <summary> Determines if two <see cref="EnvironmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnvironmentType left, EnvironmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnvironmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnvironmentType left, EnvironmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnvironmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnvironmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnvironmentType(string value) => new EnvironmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnvironmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnvironmentType?(string value) => value == null ? null : new EnvironmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnvironmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnvironmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

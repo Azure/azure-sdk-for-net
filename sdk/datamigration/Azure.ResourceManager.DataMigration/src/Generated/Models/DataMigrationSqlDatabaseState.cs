@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationSqlDatabaseState : IEquatable<DataMigrationSqlDatabaseState>
     {
         private readonly string _value;
+        /// <summary> Online. </summary>
+        private const string OnlineValue = "Online";
+        /// <summary> Restoring. </summary>
+        private const string RestoringValue = "Restoring";
+        /// <summary> Recovering. </summary>
+        private const string RecoveringValue = "Recovering";
+        /// <summary> RecoveryPending. </summary>
+        private const string RecoveryPendingValue = "RecoveryPending";
+        /// <summary> Suspect. </summary>
+        private const string SuspectValue = "Suspect";
+        /// <summary> Emergency. </summary>
+        private const string EmergencyValue = "Emergency";
+        /// <summary> Offline. </summary>
+        private const string OfflineValue = "Offline";
+        /// <summary> Copying. </summary>
+        private const string CopyingValue = "Copying";
+        /// <summary> OfflineSecondary. </summary>
+        private const string OfflineSecondaryValue = "OfflineSecondary";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationSqlDatabaseState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationSqlDatabaseState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OnlineValue = "Online";
-        private const string RestoringValue = "Restoring";
-        private const string RecoveringValue = "Recovering";
-        private const string RecoveryPendingValue = "RecoveryPending";
-        private const string SuspectValue = "Suspect";
-        private const string EmergencyValue = "Emergency";
-        private const string OfflineValue = "Offline";
-        private const string CopyingValue = "Copying";
-        private const string OfflineSecondaryValue = "OfflineSecondary";
+            _value = value;
+        }
 
         /// <summary> Online. </summary>
         public static DataMigrationSqlDatabaseState Online { get; } = new DataMigrationSqlDatabaseState(OnlineValue);
+
         /// <summary> Restoring. </summary>
         public static DataMigrationSqlDatabaseState Restoring { get; } = new DataMigrationSqlDatabaseState(RestoringValue);
+
         /// <summary> Recovering. </summary>
         public static DataMigrationSqlDatabaseState Recovering { get; } = new DataMigrationSqlDatabaseState(RecoveringValue);
+
         /// <summary> RecoveryPending. </summary>
         public static DataMigrationSqlDatabaseState RecoveryPending { get; } = new DataMigrationSqlDatabaseState(RecoveryPendingValue);
+
         /// <summary> Suspect. </summary>
         public static DataMigrationSqlDatabaseState Suspect { get; } = new DataMigrationSqlDatabaseState(SuspectValue);
+
         /// <summary> Emergency. </summary>
         public static DataMigrationSqlDatabaseState Emergency { get; } = new DataMigrationSqlDatabaseState(EmergencyValue);
+
         /// <summary> Offline. </summary>
         public static DataMigrationSqlDatabaseState Offline { get; } = new DataMigrationSqlDatabaseState(OfflineValue);
+
         /// <summary> Copying. </summary>
         public static DataMigrationSqlDatabaseState Copying { get; } = new DataMigrationSqlDatabaseState(CopyingValue);
+
         /// <summary> OfflineSecondary. </summary>
         public static DataMigrationSqlDatabaseState OfflineSecondary { get; } = new DataMigrationSqlDatabaseState(OfflineSecondaryValue);
+
         /// <summary> Determines if two <see cref="DataMigrationSqlDatabaseState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationSqlDatabaseState left, DataMigrationSqlDatabaseState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationSqlDatabaseState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationSqlDatabaseState left, DataMigrationSqlDatabaseState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationSqlDatabaseState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationSqlDatabaseState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationSqlDatabaseState(string value) => new DataMigrationSqlDatabaseState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationSqlDatabaseState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationSqlDatabaseState?(string value) => value == null ? null : new DataMigrationSqlDatabaseState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationSqlDatabaseState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationSqlDatabaseState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

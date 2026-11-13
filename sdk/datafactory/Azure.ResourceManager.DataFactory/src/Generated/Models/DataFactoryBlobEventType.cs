@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The DataFactoryBlobEventType. </summary>
+    /// <summary></summary>
     public readonly partial struct DataFactoryBlobEventType : IEquatable<DataFactoryBlobEventType>
     {
         private readonly string _value;
+        /// <summary> Microsoft.Storage.BlobCreated. </summary>
+        private const string MicrosoftStorageBlobCreatedValue = "Microsoft.Storage.BlobCreated";
+        /// <summary> Microsoft.Storage.BlobDeleted. </summary>
+        private const string MicrosoftStorageBlobDeletedValue = "Microsoft.Storage.BlobDeleted";
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryBlobEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFactoryBlobEventType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftStorageBlobCreatedValue = "Microsoft.Storage.BlobCreated";
-        private const string MicrosoftStorageBlobDeletedValue = "Microsoft.Storage.BlobDeleted";
+            _value = value;
+        }
 
         /// <summary> Microsoft.Storage.BlobCreated. </summary>
         public static DataFactoryBlobEventType MicrosoftStorageBlobCreated { get; } = new DataFactoryBlobEventType(MicrosoftStorageBlobCreatedValue);
+
         /// <summary> Microsoft.Storage.BlobDeleted. </summary>
         public static DataFactoryBlobEventType MicrosoftStorageBlobDeleted { get; } = new DataFactoryBlobEventType(MicrosoftStorageBlobDeletedValue);
+
         /// <summary> Determines if two <see cref="DataFactoryBlobEventType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFactoryBlobEventType left, DataFactoryBlobEventType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFactoryBlobEventType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFactoryBlobEventType left, DataFactoryBlobEventType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryBlobEventType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFactoryBlobEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFactoryBlobEventType(string value) => new DataFactoryBlobEventType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFactoryBlobEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFactoryBlobEventType?(string value) => value == null ? null : new DataFactoryBlobEventType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFactoryBlobEventType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFactoryBlobEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

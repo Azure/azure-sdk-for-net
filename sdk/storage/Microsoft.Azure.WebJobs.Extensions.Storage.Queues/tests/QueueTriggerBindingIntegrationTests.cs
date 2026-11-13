@@ -42,6 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 "parameterName",
                 queueServiceClient,
                 queue,
+                queue,
                 argumentBinding,
                 new QueuesOptions(),
                 exceptionHandler,

@@ -55,6 +55,20 @@ namespace Azure.Security.KeyVault
             return firstPage.ToUri();
         }
 
+        public Uri CreateUriWithQueryParams(Uri uri, params ValueTuple<string, string>[] queryParams)
+        {
+            var finalUri = new RequestUriBuilder();
+            finalUri.Reset(uri);
+            finalUri.AppendQuery("api-version", ApiVersion);
+
+            foreach ((string, string) tuple in queryParams)
+            {
+                finalUri.AppendQuery(tuple.Item1, tuple.Item2);
+            }
+
+            return finalUri.ToUri();
+        }
+
         public Request CreateRequest(RequestMethod method, Uri uri, bool appendApiVersion)
         {
             Request request = _pipeline.CreateRequest();
@@ -200,10 +214,10 @@ namespace Azure.Security.KeyVault
             return CreateResponse(response, resultFactory());
         }
 
-        public async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
+        public async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, bool appendApiVersion, CancellationToken cancellationToken)
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, uri, true);
+            using Request request = CreateRequest(method, uri, appendApiVersion);
             Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             return CreateResponse(response, resultFactory());
@@ -218,10 +232,10 @@ namespace Azure.Security.KeyVault
             return CreateResponse(response, resultFactory());
         }
 
-        public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
+        public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, bool appendApiVersion, CancellationToken cancellationToken)
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, uri, true);
+            using Request request = CreateRequest(method, uri, appendApiVersion);
             Response response = SendRequest(request, cancellationToken);
 
             return CreateResponse(response, resultFactory());

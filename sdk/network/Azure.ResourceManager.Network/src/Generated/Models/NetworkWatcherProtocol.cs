@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkWatcherProtocol : IEquatable<NetworkWatcherProtocol>
     {
         private readonly string _value;
+        /// <summary> Tcp. </summary>
+        private const string TcpValue = "Tcp";
+        /// <summary> Http. </summary>
+        private const string HttpValue = "Http";
+        /// <summary> Https. </summary>
+        private const string HttpsValue = "Https";
+        /// <summary> Icmp. </summary>
+        private const string IcmpValue = "Icmp";
 
         /// <summary> Initializes a new instance of <see cref="NetworkWatcherProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkWatcherProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "Tcp";
-        private const string HttpValue = "Http";
-        private const string HttpsValue = "Https";
-        private const string IcmpValue = "Icmp";
+            _value = value;
+        }
 
         /// <summary> Tcp. </summary>
         public static NetworkWatcherProtocol Tcp { get; } = new NetworkWatcherProtocol(TcpValue);
+
         /// <summary> Http. </summary>
         public static NetworkWatcherProtocol Http { get; } = new NetworkWatcherProtocol(HttpValue);
+
         /// <summary> Https. </summary>
         public static NetworkWatcherProtocol Https { get; } = new NetworkWatcherProtocol(HttpsValue);
+
         /// <summary> Icmp. </summary>
         public static NetworkWatcherProtocol Icmp { get; } = new NetworkWatcherProtocol(IcmpValue);
+
         /// <summary> Determines if two <see cref="NetworkWatcherProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkWatcherProtocol left, NetworkWatcherProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkWatcherProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkWatcherProtocol left, NetworkWatcherProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkWatcherProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkWatcherProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkWatcherProtocol(string value) => new NetworkWatcherProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkWatcherProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkWatcherProtocol?(string value) => value == null ? null : new NetworkWatcherProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkWatcherProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkWatcherProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

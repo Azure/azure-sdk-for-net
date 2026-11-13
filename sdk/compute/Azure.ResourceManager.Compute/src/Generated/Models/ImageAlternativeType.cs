@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ImageAlternativeType : IEquatable<ImageAlternativeType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ImageAlternativeType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ImageAlternativeType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string OfferValue = "Offer";
         private const string PlanValue = "Plan";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageAlternativeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ImageAlternativeType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static ImageAlternativeType None { get; } = new ImageAlternativeType(NoneValue);
-        /// <summary> Offer. </summary>
+
+        /// <summary> Gets the Offer. </summary>
         public static ImageAlternativeType Offer { get; } = new ImageAlternativeType(OfferValue);
-        /// <summary> Plan. </summary>
+
+        /// <summary> Gets the Plan. </summary>
         public static ImageAlternativeType Plan { get; } = new ImageAlternativeType(PlanValue);
+
         /// <summary> Determines if two <see cref="ImageAlternativeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageAlternativeType left, ImageAlternativeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImageAlternativeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageAlternativeType left, ImageAlternativeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageAlternativeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImageAlternativeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImageAlternativeType(string value) => new ImageAlternativeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImageAlternativeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImageAlternativeType?(string value) => value == null ? null : new ImageAlternativeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImageAlternativeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImageAlternativeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

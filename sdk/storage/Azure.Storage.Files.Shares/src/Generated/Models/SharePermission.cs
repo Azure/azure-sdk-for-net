@@ -6,35 +6,37 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> A permission (a security descriptor) at the share level. </summary>
     internal partial class SharePermission
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="SharePermission"/>. </summary>
         /// <param name="permission"> The permission in the Security Descriptor Definition Language (SDDL). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
         public SharePermission(string permission)
         {
-            Argument.AssertNotNull(permission, nameof(permission));
-
             Permission = permission;
         }
 
         /// <summary> Initializes a new instance of <see cref="SharePermission"/>. </summary>
         /// <param name="permission"> The permission in the Security Descriptor Definition Language (SDDL). </param>
-        /// <param name="format"></param>
-        internal SharePermission(string permission, FilePermissionFormat? format)
+        /// <param name="format"> The permission format. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SharePermission(string permission, FilePermissionFormat? format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Permission = permission;
             Format = format;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The permission in the Security Descriptor Definition Language (SDDL). </summary>
         public string Permission { get; set; }
-        /// <summary> Gets or sets the format. </summary>
+
+        /// <summary> The permission format. </summary>
         public FilePermissionFormat? Format { get; set; }
     }
 }

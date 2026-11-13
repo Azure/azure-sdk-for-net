@@ -6,17 +6,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Policy Info in backupInstance. </summary>
     public partial class BackupInstancePolicyInfo
     {
         /// <summary>
-        /// Gets or sets the DataStore Parameters
-        /// Please note <see cref="DataStoreSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OperationalDataStoreSettings"/>.
+        /// Gets the DataStore Parameters
         /// Please note <see cref="DataStoreSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OperationalDataStoreSettings"/>.
         /// </summary>

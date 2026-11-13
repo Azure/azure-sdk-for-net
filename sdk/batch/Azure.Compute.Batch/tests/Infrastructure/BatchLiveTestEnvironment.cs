@@ -17,5 +17,15 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         public string BatchAccountURI => GetRecordedVariable("batch_account_uri");
 
         public string BatchAccountKey => GetRecordedVariable("batch_account_key");
+
+        public string BatchUserSubAccountName => GetRecordedVariable("batch_usersub_account_name");
+
+        public string BatchUserSubAccountURI => GetRecordedVariable("batch_usersub_account_uri");
+
+        public string BatchUserSubAccountKey => GetRecordedVariable("batch_usersub_account_key");
+
+        public string DiskEncryptionSetId => GetRecordedVariable("diskencryptionset_id");
+
+        public string CmkKeyvalutKeyUriWithVersion => GetRecordedVariable("cmk_keyvalut_keyUriWithVersion");
     }
 }

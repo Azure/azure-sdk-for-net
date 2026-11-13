@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SubscriptionUsageResource : IJsonModel<SubscriptionUsageData>
     {
-        private static SubscriptionUsageData s_dataDeserializationInstance;
-        private static SubscriptionUsageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SubscriptionUsageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SubscriptionUsageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SubscriptionUsageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SubscriptionUsageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionUsageData>)Data).Write(writer, options);
 
-        SubscriptionUsageData IJsonModel<SubscriptionUsageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionUsageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubscriptionUsageData IJsonModel<SubscriptionUsageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SubscriptionUsageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionUsageData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SubscriptionUsageData IPersistableModel<SubscriptionUsageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionUsageData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SubscriptionUsageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionUsageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SubscriptionUsageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryVmEncryptionType : IEquatable<SiteRecoveryVmEncryptionType>
     {
         private readonly string _value;
+        /// <summary> NotEncrypted. </summary>
+        private const string NotEncryptedValue = "NotEncrypted";
+        /// <summary> OnePassEncrypted. </summary>
+        private const string OnePassEncryptedValue = "OnePassEncrypted";
+        /// <summary> TwoPassEncrypted. </summary>
+        private const string TwoPassEncryptedValue = "TwoPassEncrypted";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryVmEncryptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotEncryptedValue = "NotEncrypted";
-        private const string OnePassEncryptedValue = "OnePassEncrypted";
-        private const string TwoPassEncryptedValue = "TwoPassEncrypted";
+            _value = value;
+        }
 
         /// <summary> NotEncrypted. </summary>
         public static SiteRecoveryVmEncryptionType NotEncrypted { get; } = new SiteRecoveryVmEncryptionType(NotEncryptedValue);
+
         /// <summary> OnePassEncrypted. </summary>
         public static SiteRecoveryVmEncryptionType OnePassEncrypted { get; } = new SiteRecoveryVmEncryptionType(OnePassEncryptedValue);
+
         /// <summary> TwoPassEncrypted. </summary>
         public static SiteRecoveryVmEncryptionType TwoPassEncrypted { get; } = new SiteRecoveryVmEncryptionType(TwoPassEncryptedValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryVmEncryptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryVmEncryptionType left, SiteRecoveryVmEncryptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryVmEncryptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryVmEncryptionType left, SiteRecoveryVmEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryVmEncryptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryVmEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryVmEncryptionType(string value) => new SiteRecoveryVmEncryptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryVmEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryVmEncryptionType?(string value) => value == null ? null : new SiteRecoveryVmEncryptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryVmEncryptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryVmEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -23,7 +23,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Tests
 {
-    public class MySqlFlexibleServerBackupTests: MySqlManagementTestBase
+    public class MySqlFlexibleServerBackupTests : MySqlManagementTestBase
     {
         public MySqlFlexibleServerBackupTests(bool isAsync)
             : base(isAsync)//,RecordedTestMode.Record)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MySql.Tests
             return storageAccount;
         }
 
-        private async Task<BlobContainerResource> CreateBlobContainer(StorageAccountResource storageAccount,ResourceGroupResource resourceGroup)
+        private async Task<BlobContainerResource> CreateBlobContainer(StorageAccountResource storageAccount, ResourceGroupResource resourceGroup)
         {
             var blobService = storageAccount.GetBlobService();
             var blobContainersCollection = blobService.GetBlobContainers();

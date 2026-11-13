@@ -3,8 +3,8 @@
 
 using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement
 {

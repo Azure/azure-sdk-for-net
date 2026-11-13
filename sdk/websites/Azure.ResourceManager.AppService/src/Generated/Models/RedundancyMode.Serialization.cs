@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class RedundancyModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RedundancyMode value) => value switch
         {
             RedundancyMode.None => "None",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedundancyMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RedundancyMode ToRedundancyMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return RedundancyMode.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return RedundancyMode.Manual;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failover")) return RedundancyMode.Failover;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActiveActive")) return RedundancyMode.ActiveActive;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GeoRedundant")) return RedundancyMode.GeoRedundant;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return RedundancyMode.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual"))
+            {
+                return RedundancyMode.Manual;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failover"))
+            {
+                return RedundancyMode.Failover;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActiveActive"))
+            {
+                return RedundancyMode.ActiveActive;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GeoRedundant"))
+            {
+                return RedundancyMode.GeoRedundant;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedundancyMode value.");
         }
     }

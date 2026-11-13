@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerJobTargetGroupResource : IJsonModel<SqlServerJobTargetGroupData>
     {
-        private static SqlServerJobTargetGroupData s_dataDeserializationInstance;
-        private static SqlServerJobTargetGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerJobTargetGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerJobTargetGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerJobTargetGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerJobTargetGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobTargetGroupData>)Data).Write(writer, options);
 
-        SqlServerJobTargetGroupData IJsonModel<SqlServerJobTargetGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobTargetGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerJobTargetGroupData IJsonModel<SqlServerJobTargetGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerJobTargetGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobTargetGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerJobTargetGroupData IPersistableModel<SqlServerJobTargetGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobTargetGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobTargetGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobTargetGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerJobTargetGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

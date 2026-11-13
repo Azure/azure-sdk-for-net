@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public readonly partial struct VMwareToAzureMigrateResyncState : IEquatable<VMwareToAzureMigrateResyncState>
     {
         private readonly string _value;
+        /// <summary> None state. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Prepared for resynchronization state. </summary>
+        private const string PreparedForResynchronizationValue = "PreparedForResynchronization";
+        /// <summary> Started resynchronization state. </summary>
+        private const string StartedResynchronizationValue = "StartedResynchronization";
 
         /// <summary> Initializes a new instance of <see cref="VMwareToAzureMigrateResyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VMwareToAzureMigrateResyncState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string PreparedForResynchronizationValue = "PreparedForResynchronization";
-        private const string StartedResynchronizationValue = "StartedResynchronization";
+            _value = value;
+        }
 
         /// <summary> None state. </summary>
         public static VMwareToAzureMigrateResyncState None { get; } = new VMwareToAzureMigrateResyncState(NoneValue);
+
         /// <summary> Prepared for resynchronization state. </summary>
         public static VMwareToAzureMigrateResyncState PreparedForResynchronization { get; } = new VMwareToAzureMigrateResyncState(PreparedForResynchronizationValue);
+
         /// <summary> Started resynchronization state. </summary>
         public static VMwareToAzureMigrateResyncState StartedResynchronization { get; } = new VMwareToAzureMigrateResyncState(StartedResynchronizationValue);
+
         /// <summary> Determines if two <see cref="VMwareToAzureMigrateResyncState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VMwareToAzureMigrateResyncState left, VMwareToAzureMigrateResyncState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VMwareToAzureMigrateResyncState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VMwareToAzureMigrateResyncState left, VMwareToAzureMigrateResyncState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VMwareToAzureMigrateResyncState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VMwareToAzureMigrateResyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VMwareToAzureMigrateResyncState(string value) => new VMwareToAzureMigrateResyncState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VMwareToAzureMigrateResyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VMwareToAzureMigrateResyncState?(string value) => value == null ? null : new VMwareToAzureMigrateResyncState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VMwareToAzureMigrateResyncState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VMwareToAzureMigrateResyncState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

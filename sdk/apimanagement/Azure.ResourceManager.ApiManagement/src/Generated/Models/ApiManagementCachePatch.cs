@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Cache update details. </summary>
     public partial class ApiManagementCachePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCachePatch"/>. </summary>
         public ApiManagementCachePatch()
@@ -51,31 +23,88 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCachePatch"/>. </summary>
-        /// <param name="description"> Cache description. </param>
-        /// <param name="connectionString"> Runtime connection string to cache. </param>
-        /// <param name="useFromLocation"> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </param>
-        /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementCachePatch(string description, string connectionString, string useFromLocation, Uri resourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Cache update properties details. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementCachePatch(CacheUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
-            ConnectionString = connectionString;
-            UseFromLocation = useFromLocation;
-            ResourceUri = resourceUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Cache update properties details. </summary>
+        [WirePath("properties")]
+        internal CacheUpdateProperties Properties { get; set; }
 
         /// <summary> Cache description. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheUpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Runtime connection string to cache. </summary>
         [WirePath("properties.connectionString")]
-        public string ConnectionString { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheUpdateProperties();
+                }
+                Properties.ConnectionString = value;
+            }
+        }
+
         /// <summary> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </summary>
         [WirePath("properties.useFromLocation")]
-        public string UseFromLocation { get; set; }
+        public string UseFromLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseFromLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheUpdateProperties();
+                }
+                Properties.UseFromLocation = value;
+            }
+        }
+
         /// <summary> Original uri of entity in external system cache points to. </summary>
         [WirePath("properties.resourceId")]
-        public Uri ResourceUri { get; set; }
+        public Uri ResourceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheUpdateProperties();
+                }
+                Properties.ResourceUri = value;
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.4 (Unreleased)
+## 1.4.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,39 @@
 
 ### Other Changes
 
+## 1.4.0-beta.6 (2026-11-10)
+
+### Features Added
+
+- Added managed identity support to autoscale settings.
+- Added tenant action group management and test notification operations.
+
+### Breaking Changes
+
+- VM Insights onboarding status JSON now uses generated serialization for the required `resourceId`, `onboardingStatus`, and `dataStatus` fields instead of the legacy omission and null-tolerant customization.
+
+### Bugs Fixed
+
+- Restored generated diagnostic setting operations, model serialization, and model factory support instead of throwing compatibility stubs.
+
+## 1.4.0-beta.5 (2026-06-13)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.4.0-beta.4 (2025-11-18)
+
+### Features Added
+
+- Updated azure monitor metric alert APIs to version `2024-03-01-preview`.
+
 ## 1.4.0-beta.3 (2025-03-14)
 
 ### Features Added
 
-- Updated azure monitor pipeline group APIs to version `2024-10-01-preview`
+- Updated azure monitor pipeline group APIs to version `2024-10-01-preview`.
 
 ## 1.4.0-beta.2 (2025-02-14)
 

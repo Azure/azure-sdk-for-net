@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Unknown version of DeploymentResourceIdReference. </summary>
     internal partial class UnknownDeploymentResourceIdReference : DeploymentResourceIdReference
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDeploymentResourceIdReference"/>. </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDeploymentResourceIdReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(idType, serializedAdditionalRawData)
-        {
-            IdType = idType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDeploymentResourceIdReference"/> for deserialization. </summary>
-        internal UnknownDeploymentResourceIdReference()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDeploymentResourceIdReference(IdType idType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(idType != default ? idType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

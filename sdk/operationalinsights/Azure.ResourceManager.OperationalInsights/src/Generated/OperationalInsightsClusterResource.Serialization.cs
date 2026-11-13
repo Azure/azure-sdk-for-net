@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
+    /// <summary></summary>
     public partial class OperationalInsightsClusterResource : IJsonModel<OperationalInsightsClusterData>
     {
-        private static OperationalInsightsClusterData s_dataDeserializationInstance;
-        private static OperationalInsightsClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OperationalInsightsClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OperationalInsightsClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OperationalInsightsClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OperationalInsightsClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsClusterData>)Data).Write(writer, options);
 
-        OperationalInsightsClusterData IJsonModel<OperationalInsightsClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsClusterData IJsonModel<OperationalInsightsClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OperationalInsightsClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsClusterData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OperationalInsightsClusterData IPersistableModel<OperationalInsightsClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsClusterData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OperationalInsightsClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

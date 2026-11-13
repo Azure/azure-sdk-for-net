@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedInstanceStartStopScheduleResource : IJsonModel<ManagedInstanceStartStopScheduleData>
     {
-        private static ManagedInstanceStartStopScheduleData s_dataDeserializationInstance;
-        private static ManagedInstanceStartStopScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedInstanceStartStopScheduleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedInstanceStartStopScheduleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedInstanceStartStopScheduleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstanceStartStopScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceStartStopScheduleData>)Data).Write(writer, options);
 
-        ManagedInstanceStartStopScheduleData IJsonModel<ManagedInstanceStartStopScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceStartStopScheduleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstanceStartStopScheduleData IJsonModel<ManagedInstanceStartStopScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedInstanceStartStopScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceStartStopScheduleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedInstanceStartStopScheduleData IPersistableModel<ManagedInstanceStartStopScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceStartStopScheduleData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceStartStopScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceStartStopScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstanceStartStopScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

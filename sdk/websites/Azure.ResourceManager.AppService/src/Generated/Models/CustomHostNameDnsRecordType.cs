@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Type of the DNS record. </summary>
+    /// <summary> Custom DNS record type. </summary>
     public enum CustomHostNameDnsRecordType
     {
         /// <summary> CName. </summary>

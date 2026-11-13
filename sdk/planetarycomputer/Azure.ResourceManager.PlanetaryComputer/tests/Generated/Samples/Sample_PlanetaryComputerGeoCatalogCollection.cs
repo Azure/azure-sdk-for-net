@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_GeoCatalogsCreate()
         {
-            // Generated from example definition: 2025-02-11-preview/GeoCatalogs_Create.json
+            // Generated from example definition: 2026-04-15/GeoCatalogs_Create.json
             // this example is just showing the usage of "GeoCatalog_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GeoCatalogsGet()
         {
-            // Generated from example definition: 2025-02-11-preview/GeoCatalogs_Get.json
+            // Generated from example definition: 2026-04-15/GeoCatalogs_Get.json
             // this example is just showing the usage of "GeoCatalog_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GeoCatalogsListByResourceGroup()
         {
-            // Generated from example definition: 2025-02-11-preview/GeoCatalogs_ListByResourceGroup.json
+            // Generated from example definition: 2026-04-15/GeoCatalogs_ListByResourceGroup.json
             // this example is just showing the usage of "GeoCatalog_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GeoCatalogsGet()
         {
-            // Generated from example definition: 2025-02-11-preview/GeoCatalogs_Get.json
+            // Generated from example definition: 2026-04-15/GeoCatalogs_Get.json
             // this example is just showing the usage of "GeoCatalog_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GeoCatalogsGet()
         {
-            // Generated from example definition: 2025-02-11-preview/GeoCatalogs_Get.json
+            // Generated from example definition: 2026-04-15/GeoCatalogs_Get.json
             // this example is just showing the usage of "GeoCatalog_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

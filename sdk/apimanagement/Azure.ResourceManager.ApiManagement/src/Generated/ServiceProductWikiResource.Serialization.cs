@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ServiceProductWikiResource : IJsonModel<WikiContractData>
     {
-        private static WikiContractData s_dataDeserializationInstance;
-        private static WikiContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WikiContractData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WikiContractData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WikiContractData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WikiContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WikiContractData>)Data).Write(writer, options);
 
-        WikiContractData IJsonModel<WikiContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WikiContractData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WikiContractData IJsonModel<WikiContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WikiContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WikiContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WikiContractData IPersistableModel<WikiContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WikiContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<WikiContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WikiContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WikiContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

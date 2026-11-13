@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> The overview of the compliance result for one report. </summary>
     public partial class ReportOverviewStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReportOverviewStatus"/>. </summary>
-        internal ReportOverviewStatus()
+        public ReportOverviewStatus()
         {
         }
 
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="manualCount"> The count of all manual control. </param>
         /// <param name="notApplicableCount"> The count of all not applicable control. </param>
         /// <param name="pendingCount"> The count of all pending for approval control. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportOverviewStatus(int? passedCount, int? failedCount, int? manualCount, int? notApplicableCount, int? pendingCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReportOverviewStatus(int? passedCount, int? failedCount, int? manualCount, int? notApplicableCount, int? pendingCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PassedCount = passedCount;
             FailedCount = failedCount;
             ManualCount = manualCount;
             NotApplicableCount = notApplicableCount;
             PendingCount = pendingCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The count of all passed control. </summary>
         public int? PassedCount { get; }
+
         /// <summary> The count of all failed control. </summary>
         public int? FailedCount { get; }
+
         /// <summary> The count of all manual control. </summary>
         public int? ManualCount { get; }
+
         /// <summary> The count of all not applicable control. </summary>
         public int? NotApplicableCount { get; }
+
         /// <summary> The count of all pending for approval control. </summary>
         public int? PendingCount { get; }
     }

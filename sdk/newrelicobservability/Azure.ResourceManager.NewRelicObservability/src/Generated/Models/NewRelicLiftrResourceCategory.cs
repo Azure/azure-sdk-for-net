@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct NewRelicLiftrResourceCategory : IEquatable<NewRelicLiftrResourceCategory>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NewRelicLiftrResourceCategory"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NewRelicLiftrResourceCategory(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string MonitorLogsValue = "MonitorLogs";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicLiftrResourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NewRelicLiftrResourceCategory(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static NewRelicLiftrResourceCategory Unknown { get; } = new NewRelicLiftrResourceCategory(UnknownValue);
-        /// <summary> MonitorLogs. </summary>
+
+        /// <summary> Gets the MonitorLogs. </summary>
         public static NewRelicLiftrResourceCategory MonitorLogs { get; } = new NewRelicLiftrResourceCategory(MonitorLogsValue);
+
         /// <summary> Determines if two <see cref="NewRelicLiftrResourceCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NewRelicLiftrResourceCategory left, NewRelicLiftrResourceCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NewRelicLiftrResourceCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NewRelicLiftrResourceCategory left, NewRelicLiftrResourceCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicLiftrResourceCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NewRelicLiftrResourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NewRelicLiftrResourceCategory(string value) => new NewRelicLiftrResourceCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NewRelicLiftrResourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NewRelicLiftrResourceCategory?(string value) => value == null ? null : new NewRelicLiftrResourceCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NewRelicLiftrResourceCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NewRelicLiftrResourceCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

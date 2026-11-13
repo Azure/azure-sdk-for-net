@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Client.Structure.MultiClient
 {
     public partial class ClientBClientOptions : ClientOptions
     {
+        public ClientBClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal ClientBClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

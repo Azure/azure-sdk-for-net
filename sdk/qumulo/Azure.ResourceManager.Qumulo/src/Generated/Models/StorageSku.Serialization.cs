@@ -5,24 +5,9 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Qumulo.Models
 {
     internal static partial class StorageSkuExtensions
     {
-        public static string ToSerialString(this StorageSku value) => value switch
-        {
-            StorageSku.Standard => "Standard",
-            StorageSku.Performance => "Performance",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSku value.")
-        };
-
-        public static StorageSku ToStorageSku(this string value)
-        {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return StorageSku.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Performance")) return StorageSku.Performance;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSku value.");
-        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public readonly partial struct ApiKind : IEquatable<ApiKind>
     {
         private readonly string _value;
+        /// <summary> A Representational State Transfer Api. </summary>
+        private const string RestValue = "rest";
+        /// <summary> A Graph query language Api. </summary>
+        private const string GraphqlValue = "graphql";
+        /// <summary> A gRPC Api. </summary>
+        private const string GrpcValue = "grpc";
+        /// <summary> A SOAP Api. </summary>
+        private const string SoapValue = "soap";
+        /// <summary> Web Hook. </summary>
+        private const string WebhookValue = "webhook";
+        /// <summary> Web Socket. </summary>
+        private const string WebsocketValue = "websocket";
 
         /// <summary> Initializes a new instance of <see cref="ApiKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RestValue = "rest";
-        private const string GraphqlValue = "graphql";
-        private const string GrpcValue = "grpc";
-        private const string SoapValue = "soap";
-        private const string WebhookValue = "webhook";
-        private const string WebsocketValue = "websocket";
+            _value = value;
+        }
 
         /// <summary> A Representational State Transfer Api. </summary>
         public static ApiKind Rest { get; } = new ApiKind(RestValue);
+
         /// <summary> A Graph query language Api. </summary>
         public static ApiKind Graphql { get; } = new ApiKind(GraphqlValue);
+
         /// <summary> A gRPC Api. </summary>
         public static ApiKind Grpc { get; } = new ApiKind(GrpcValue);
+
         /// <summary> A SOAP Api. </summary>
         public static ApiKind Soap { get; } = new ApiKind(SoapValue);
+
         /// <summary> Web Hook. </summary>
         public static ApiKind Webhook { get; } = new ApiKind(WebhookValue);
+
         /// <summary> Web Socket. </summary>
         public static ApiKind Websocket { get; } = new ApiKind(WebsocketValue);
+
         /// <summary> Determines if two <see cref="ApiKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiKind left, ApiKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiKind left, ApiKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiKind(string value) => new ApiKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiKind?(string value) => value == null ? null : new ApiKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

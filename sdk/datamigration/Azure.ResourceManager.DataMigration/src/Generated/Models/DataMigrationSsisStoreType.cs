@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationSsisStoreType : IEquatable<DataMigrationSsisStoreType>
     {
         private readonly string _value;
+        /// <summary> SsisCatalog. </summary>
+        private const string SsisCatalogValue = "SsisCatalog";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationSsisStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationSsisStoreType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SsisCatalogValue = "SsisCatalog";
+            _value = value;
+        }
 
         /// <summary> SsisCatalog. </summary>
         public static DataMigrationSsisStoreType SsisCatalog { get; } = new DataMigrationSsisStoreType(SsisCatalogValue);
+
         /// <summary> Determines if two <see cref="DataMigrationSsisStoreType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationSsisStoreType left, DataMigrationSsisStoreType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationSsisStoreType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationSsisStoreType left, DataMigrationSsisStoreType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationSsisStoreType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationSsisStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationSsisStoreType(string value) => new DataMigrationSsisStoreType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationSsisStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationSsisStoreType?(string value) => value == null ? null : new DataMigrationSsisStoreType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationSsisStoreType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationSsisStoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

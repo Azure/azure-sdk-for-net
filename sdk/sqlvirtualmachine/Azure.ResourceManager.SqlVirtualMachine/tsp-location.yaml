@@ -1,0 +1,4 @@
+directory: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/SqlVirtualMachine
+commit: dfc2d47e22c44015d55f2a4a1b008b10ff17e9d6
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

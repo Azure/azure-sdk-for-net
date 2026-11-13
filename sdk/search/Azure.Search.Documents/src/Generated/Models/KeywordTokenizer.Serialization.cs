@@ -7,121 +7,35 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KeywordTokenizer : IUtf8JsonSerializable, IJsonModel<KeywordTokenizer>
+    /// <summary> Emits the entire input as a single token. This tokenizer is implemented using Apache Lucene. </summary>
+    public partial class KeywordTokenizer : LexicalTokenizer, IJsonModel<KeywordTokenizer>
     {
-        void IJsonModel<KeywordTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MaxTokenLength))
-            {
-                writer.WritePropertyName("maxTokenLength"u8);
-                writer.WriteNumberValue(MaxTokenLength.Value);
-            }
-            if (Optional.IsDefined(BufferSize))
-            {
-                if (BufferSize != null)
-                {
-                    writer.WritePropertyName("bufferSize"u8);
-                    writer.WriteNumberValue(BufferSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("bufferSize");
-                }
-            }
-        }
-
-        KeywordTokenizer IJsonModel<KeywordTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeywordTokenizer(document.RootElement, options);
-        }
-
-        internal static KeywordTokenizer DeserializeKeywordTokenizer(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            int? maxTokenLength = default;
-            int? bufferSize = default;
-            string odataType = default;
-            string name = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("maxTokenLength"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        continue;
+                        return DeserializeKeywordTokenizer(document.RootElement, options);
                     }
-                    maxTokenLength = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("bufferSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        bufferSize = null;
-                        continue;
-                    }
-                    bufferSize = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
+                default:
+                    throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support reading '{options.Format}' format.");
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new KeywordTokenizer(odataType, name, serializedAdditionalRawData, maxTokenLength, bufferSize);
         }
 
-        BinaryData IPersistableModel<KeywordTokenizer>.Write(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -131,38 +45,40 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        KeywordTokenizer IPersistableModel<KeywordTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KeywordTokenizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKeywordTokenizer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support reading '{options.Format}' format.");
-            }
-        }
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeywordTokenizer IPersistableModel<KeywordTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeywordTokenizer)PersistableModelCreateCore(data, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeywordTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new KeywordTokenizer FromResponse(Response response)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<KeywordTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKeywordTokenizer(document.RootElement);
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeywordTokenizer IJsonModel<KeywordTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KeywordTokenizer)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LexicalTokenizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            string format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeywordTokenizer(document.RootElement, options);
         }
     }
 }

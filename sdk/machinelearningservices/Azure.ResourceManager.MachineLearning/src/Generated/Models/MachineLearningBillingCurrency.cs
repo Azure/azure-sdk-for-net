@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningBillingCurrency : IEquatable<MachineLearningBillingCurrency>
     {
         private readonly string _value;
+        private const string USDValue = "USD";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningBillingCurrency"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningBillingCurrency(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string UsdValue = "USD";
+        /// <summary> Gets the USD. </summary>
+        public static MachineLearningBillingCurrency USD { get; } = new MachineLearningBillingCurrency(USDValue);
 
-        /// <summary> USD. </summary>
-        public static MachineLearningBillingCurrency Usd { get; } = new MachineLearningBillingCurrency(UsdValue);
         /// <summary> Determines if two <see cref="MachineLearningBillingCurrency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningBillingCurrency left, MachineLearningBillingCurrency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningBillingCurrency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningBillingCurrency left, MachineLearningBillingCurrency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningBillingCurrency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningBillingCurrency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningBillingCurrency(string value) => new MachineLearningBillingCurrency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningBillingCurrency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningBillingCurrency?(string value) => value == null ? null : new MachineLearningBillingCurrency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningBillingCurrency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningBillingCurrency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

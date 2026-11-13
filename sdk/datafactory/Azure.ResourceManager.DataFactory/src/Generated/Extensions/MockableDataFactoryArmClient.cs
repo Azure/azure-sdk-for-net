@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDataFactoryArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDataFactoryArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDataFactoryArmClient for mocking. </summary>
         protected MockableDataFactoryArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataFactoryArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDataFactoryArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataFactoryArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDataFactoryArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryResource"/> object. </returns>
         public virtual DataFactoryResource GetDataFactoryResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryIntegrationRuntimeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryIntegrationRuntimeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryIntegrationRuntimeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryIntegrationRuntimeResource"/> object. </returns>
         public virtual DataFactoryIntegrationRuntimeResource GetDataFactoryIntegrationRuntimeResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryIntegrationRuntimeResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryLinkedServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryLinkedServiceResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryLinkedServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryLinkedServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryLinkedServiceResource"/> object. </returns>
         public virtual DataFactoryLinkedServiceResource GetDataFactoryLinkedServiceResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryLinkedServiceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryDatasetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryDatasetResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryDatasetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryDatasetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryDatasetResource"/> object. </returns>
         public virtual DataFactoryDatasetResource GetDataFactoryDatasetResource(ResourceIdentifier id)
@@ -82,10 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryDatasetResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryPipelineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryPipelineResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPipelineResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryPipelineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryPipelineResource"/> object. </returns>
         public virtual DataFactoryPipelineResource GetDataFactoryPipelineResource(ResourceIdentifier id)
@@ -94,10 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryPipelineResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryTriggerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryTriggerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryTriggerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryTriggerResource"/> object. </returns>
         public virtual DataFactoryTriggerResource GetDataFactoryTriggerResource(ResourceIdentifier id)
@@ -106,10 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryTriggerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryDataFlowResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryDataFlowResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryDataFlowResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryDataFlowResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryDataFlowResource"/> object. </returns>
         public virtual DataFactoryDataFlowResource GetDataFactoryDataFlowResource(ResourceIdentifier id)
@@ -118,10 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryDataFlowResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryManagedVirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryManagedVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryManagedVirtualNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryManagedVirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryManagedVirtualNetworkResource"/> object. </returns>
         public virtual DataFactoryManagedVirtualNetworkResource GetDataFactoryManagedVirtualNetworkResource(ResourceIdentifier id)
@@ -130,10 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryManagedVirtualNetworkResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryPrivateEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPrivateEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryPrivateEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryPrivateEndpointResource"/> object. </returns>
         public virtual DataFactoryPrivateEndpointResource GetDataFactoryPrivateEndpointResource(ResourceIdentifier id)
@@ -142,10 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryPrivateEndpointResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryServiceCredentialResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryServiceCredentialResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryServiceCredentialResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryServiceCredentialResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryServiceCredentialResource"/> object. </returns>
         public virtual DataFactoryServiceCredentialResource GetDataFactoryServiceCredentialResource(ResourceIdentifier id)
@@ -154,10 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryServiceCredentialResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryPrivateEndpointConnectionResource"/> object. </returns>
         public virtual DataFactoryPrivateEndpointConnectionResource GetDataFactoryPrivateEndpointConnectionResource(ResourceIdentifier id)
@@ -166,10 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryGlobalParameterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryGlobalParameterResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryGlobalParameterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryGlobalParameterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryGlobalParameterResource"/> object. </returns>
         public virtual DataFactoryGlobalParameterResource GetDataFactoryGlobalParameterResource(ResourceIdentifier id)
@@ -178,10 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             return new DataFactoryGlobalParameterResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryChangeDataCaptureResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryChangeDataCaptureResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryChangeDataCaptureResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataFactoryChangeDataCaptureResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataFactoryChangeDataCaptureResource"/> object. </returns>
         public virtual DataFactoryChangeDataCaptureResource GetDataFactoryChangeDataCaptureResource(ResourceIdentifier id)

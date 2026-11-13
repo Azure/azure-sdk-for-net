@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -20,19 +20,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample3_ConversationsAuthoring_Export
-            string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
 
+            string projectName = "{projectName}";
             Operation operation = projectClient.Export(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
-             // Extract the operation-location header
+            // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
@@ -46,14 +47,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample3_ConversationsAuthoring_ExportAsync
-            string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
 
+            string projectName = "{projectName}";
             Operation operation = await projectClient.ExportAsync(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
+    /// <summary></summary>
     public partial class ScalingPlanPersonalScheduleResource : IJsonModel<ScalingPlanPersonalScheduleData>
     {
-        private static ScalingPlanPersonalScheduleData s_dataDeserializationInstance;
-        private static ScalingPlanPersonalScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ScalingPlanPersonalScheduleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ScalingPlanPersonalScheduleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ScalingPlanPersonalScheduleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScalingPlanPersonalScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanPersonalScheduleData>)Data).Write(writer, options);
 
-        ScalingPlanPersonalScheduleData IJsonModel<ScalingPlanPersonalScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanPersonalScheduleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScalingPlanPersonalScheduleData IJsonModel<ScalingPlanPersonalScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ScalingPlanPersonalScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScalingPlanPersonalScheduleData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ScalingPlanPersonalScheduleData IPersistableModel<ScalingPlanPersonalScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScalingPlanPersonalScheduleData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<ScalingPlanPersonalScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScalingPlanPersonalScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScalingPlanPersonalScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

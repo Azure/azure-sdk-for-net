@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The LastUpdateStatus. </summary>
+    /// <summary></summary>
     public readonly partial struct LastUpdateStatus : IEquatable<LastUpdateStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LastUpdateStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LastUpdateStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string NotEnabledValue = "NotEnabled";
         private const string PartiallySucceededValue = "PartiallySucceeded";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string InitializedValue = "Initialized";
         private const string FirstInitializationValue = "FirstInitialization";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LastUpdateStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static LastUpdateStatus Invalid { get; } = new LastUpdateStatus(InvalidValue);
-        /// <summary> NotEnabled. </summary>
+
+        /// <summary> Gets the NotEnabled. </summary>
         public static LastUpdateStatus NotEnabled { get; } = new LastUpdateStatus(NotEnabledValue);
-        /// <summary> PartiallySucceeded. </summary>
+
+        /// <summary> Gets the PartiallySucceeded. </summary>
         public static LastUpdateStatus PartiallySucceeded { get; } = new LastUpdateStatus(PartiallySucceededValue);
-        /// <summary> PartiallyFailed. </summary>
+
+        /// <summary> Gets the PartiallyFailed. </summary>
         public static LastUpdateStatus PartiallyFailed { get; } = new LastUpdateStatus(PartiallyFailedValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static LastUpdateStatus Failed { get; } = new LastUpdateStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static LastUpdateStatus Succeeded { get; } = new LastUpdateStatus(SucceededValue);
-        /// <summary> Initialized. </summary>
+
+        /// <summary> Gets the Initialized. </summary>
         public static LastUpdateStatus Initialized { get; } = new LastUpdateStatus(InitializedValue);
-        /// <summary> FirstInitialization. </summary>
+
+        /// <summary> Gets the FirstInitialization. </summary>
         public static LastUpdateStatus FirstInitialization { get; } = new LastUpdateStatus(FirstInitializationValue);
+
         /// <summary> Determines if two <see cref="LastUpdateStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LastUpdateStatus left, LastUpdateStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LastUpdateStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LastUpdateStatus left, LastUpdateStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LastUpdateStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LastUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LastUpdateStatus(string value) => new LastUpdateStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LastUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LastUpdateStatus?(string value) => value == null ? null : new LastUpdateStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LastUpdateStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LastUpdateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

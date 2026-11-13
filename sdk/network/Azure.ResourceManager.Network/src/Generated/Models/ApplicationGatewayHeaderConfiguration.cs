@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Header configuration of the Actions set in Application Gateway. </summary>
     public partial class ApplicationGatewayHeaderConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHeaderConfiguration"/>. </summary>
         public ApplicationGatewayHeaderConfiguration()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="headerName"> Header name of the header configuration. </param>
         /// <param name="headerValueMatcher"> An optional field under "Rewrite Action". It lets you capture and modify the value(s) of a specific header when multiple headers with the same name exist. Currently supported for Set-Cookie Response header only. For more details, visit https://aka.ms/appgwheadercrud. </param>
         /// <param name="headerValue"> Header value of the header configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayHeaderConfiguration(string headerName, HeaderValueMatcher headerValueMatcher, string headerValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayHeaderConfiguration(string headerName, HeaderValueMatcher headerValueMatcher, string headerValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HeaderName = headerName;
             HeaderValueMatcher = headerValueMatcher;
             HeaderValue = headerValue;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Header name of the header configuration. </summary>
         [WirePath("headerName")]
         public string HeaderName { get; set; }
+
         /// <summary> An optional field under "Rewrite Action". It lets you capture and modify the value(s) of a specific header when multiple headers with the same name exist. Currently supported for Set-Cookie Response header only. For more details, visit https://aka.ms/appgwheadercrud. </summary>
         [WirePath("headerValueMatcher")]
         public HeaderValueMatcher HeaderValueMatcher { get; set; }
+
         /// <summary> Header value of the header configuration. </summary>
         [WirePath("headerValue")]
         public string HeaderValue { get; set; }

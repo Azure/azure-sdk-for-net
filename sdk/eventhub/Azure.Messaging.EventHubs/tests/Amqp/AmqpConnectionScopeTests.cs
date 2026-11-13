@@ -196,14 +196,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expected = new ConnectionConfiguration
             {
-               serviceEndpoint = serviceEndpoint,
-               connectionEndpoint = connectionEndpoint,
-               transportType = transport,
-               proxy = mockProxy,
-               scopeIdentifier = identifier,
-               sendBufferSizeBytes = sendBuffer,
-               receiveBufferSizeBytes = receiveBufer,
-               certificateValidationCallback = certCallback
+                serviceEndpoint = serviceEndpoint,
+                connectionEndpoint = connectionEndpoint,
+                transportType = transport,
+                proxy = mockProxy,
+                scopeIdentifier = identifier,
+                sendBufferSizeBytes = sendBuffer,
+                receiveBufferSizeBytes = receiveBufer,
+                certificateValidationCallback = certCallback
             };
 
             await mockScope.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), cancellationSource.Token);
@@ -627,8 +627,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var linkSource = (Source)link.Settings.Source;
             Assert.That(linkSource.FilterSet.Any(item => item.Key.Key.ToString() == AmqpFilter.ConsumerFilterName), Is.True, "There should have been a producer filter set.");
-            Assert.That(linkSource.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
-            Assert.That(linkSource.Address.ToString(), Contains.Substring($"/{ consumerGroup }"), "The consumer group should have been part of the link address.");
+            Assert.That(linkSource.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
+            Assert.That(linkSource.Address.ToString(), Contains.Substring($"/{consumerGroup}"), "The consumer group should have been part of the link address.");
 
             Assert.That(link.Settings.TotalLinkCredit, Is.EqualTo(prefetchCount), "The prefetch count should have been used to set the credits.");
             Assert.That(link.GetSettingPropertyOrDefault<long>(AmqpProperty.ConsumerOwnerLevel, -1), Is.EqualTo(ownerLevel), "The owner level should have been used.");
@@ -1287,7 +1287,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
-            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
+            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
@@ -1361,7 +1361,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
-            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
+            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.False, "The producer group should not have been set.");
@@ -1434,7 +1434,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
-            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
+            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
@@ -1514,7 +1514,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
-            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
+            Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{partitionId}"), "The partition identifier should have been part of the link address.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");

@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Waf Rankings Response
-    /// Serialized Name: WafRankingsResponse
-    /// </summary>
+    /// <summary> Waf Rankings Response. </summary>
     public partial class WafRankingsResponse
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WafRankingsResponse"/>. </summary>
         internal WafRankingsResponse()
@@ -56,27 +25,34 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WafRankingsResponse"/>. </summary>
-        /// <param name="dateTimeBegin"> Serialized Name: WafRankingsResponse.dateTimeBegin. </param>
-        /// <param name="dateTimeEnd"> Serialized Name: WafRankingsResponse.dateTimeEnd. </param>
-        /// <param name="groups"> Serialized Name: WafRankingsResponse.groups. </param>
-        /// <param name="data"> Serialized Name: WafRankingsResponse.data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WafRankingsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, IReadOnlyList<string> groups, IReadOnlyList<WafRankingsResponseDataItem> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="dateTimeBegin"></param>
+        /// <param name="dateTimeEnd"></param>
+        /// <param name="groups"></param>
+        /// <param name="data"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WafRankingsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, IReadOnlyList<string> groups, IReadOnlyList<WafRankingsResponseDataItem> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
             Groups = groups;
             Data = data;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: WafRankingsResponse.dateTimeBegin. </summary>
+        /// <summary> Gets the DateTimeBegin. </summary>
+        [WirePath("dateTimeBegin")]
         public DateTimeOffset? DateTimeBegin { get; }
-        /// <summary> Serialized Name: WafRankingsResponse.dateTimeEnd. </summary>
+
+        /// <summary> Gets the DateTimeEnd. </summary>
+        [WirePath("dateTimeEnd")]
         public DateTimeOffset? DateTimeEnd { get; }
-        /// <summary> Serialized Name: WafRankingsResponse.groups. </summary>
+
+        /// <summary> Gets the Groups. </summary>
+        [WirePath("groups")]
         public IReadOnlyList<string> Groups { get; }
-        /// <summary> Serialized Name: WafRankingsResponse.data. </summary>
+
+        /// <summary> Gets the Data. </summary>
+        [WirePath("data")]
         public IReadOnlyList<WafRankingsResponseDataItem> Data { get; }
     }
 }

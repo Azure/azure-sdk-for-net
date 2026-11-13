@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Settings for Azure Monitor based alerts. </summary>
     public partial class RecoveryServicesAzureMonitorAlertSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesAzureMonitorAlertSettings"/>. </summary>
         public RecoveryServicesAzureMonitorAlertSettings()
@@ -54,20 +25,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="alertsForAllJobFailures"></param>
         /// <param name="alertsForAllReplicationIssues"></param>
         /// <param name="alertsForAllFailoverIssues"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesAzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures, RecoveryServicesAlertsState? alertsForAllReplicationIssues, RecoveryServicesAlertsState? alertsForAllFailoverIssues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesAzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures, RecoveryServicesAlertsState? alertsForAllReplicationIssues, RecoveryServicesAlertsState? alertsForAllFailoverIssues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertsForAllJobFailures = alertsForAllJobFailures;
             AlertsForAllReplicationIssues = alertsForAllReplicationIssues;
             AlertsForAllFailoverIssues = alertsForAllFailoverIssues;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the alerts for all job failures. </summary>
+        /// <summary> Gets or sets the AlertsForAllJobFailures. </summary>
         public RecoveryServicesAlertsState? AlertsForAllJobFailures { get; set; }
-        /// <summary> Gets or sets the alerts for all replication issues. </summary>
+
+        /// <summary> Gets or sets the AlertsForAllReplicationIssues. </summary>
         public RecoveryServicesAlertsState? AlertsForAllReplicationIssues { get; set; }
-        /// <summary> Gets or sets the alerts for all failover issues. </summary>
+
+        /// <summary> Gets or sets the AlertsForAllFailoverIssues. </summary>
         public RecoveryServicesAlertsState? AlertsForAllFailoverIssues { get; set; }
     }
 }

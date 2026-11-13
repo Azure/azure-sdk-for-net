@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PlanetaryComputer;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
     public readonly partial struct PlanetaryComputerGeoCatalogTier : IEquatable<PlanetaryComputerGeoCatalogTier>
     {
         private readonly string _value;
+        /// <summary> The basic tier that utilizes shared resources across catalog instances. </summary>
+        private const string BasicValue = "Basic";
 
         /// <summary> Initializes a new instance of <see cref="PlanetaryComputerGeoCatalogTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PlanetaryComputerGeoCatalogTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
+            _value = value;
+        }
 
         /// <summary> The basic tier that utilizes shared resources across catalog instances. </summary>
         public static PlanetaryComputerGeoCatalogTier Basic { get; } = new PlanetaryComputerGeoCatalogTier(BasicValue);
+
         /// <summary> Determines if two <see cref="PlanetaryComputerGeoCatalogTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PlanetaryComputerGeoCatalogTier left, PlanetaryComputerGeoCatalogTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PlanetaryComputerGeoCatalogTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PlanetaryComputerGeoCatalogTier left, PlanetaryComputerGeoCatalogTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PlanetaryComputerGeoCatalogTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PlanetaryComputerGeoCatalogTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PlanetaryComputerGeoCatalogTier(string value) => new PlanetaryComputerGeoCatalogTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PlanetaryComputerGeoCatalogTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PlanetaryComputerGeoCatalogTier?(string value) => value == null ? null : new PlanetaryComputerGeoCatalogTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PlanetaryComputerGeoCatalogTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PlanetaryComputerGeoCatalogTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

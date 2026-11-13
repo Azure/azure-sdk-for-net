@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,74 +15,117 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct RecommendedActionCurrentState : IEquatable<RecommendedActionCurrentState>
     {
         private readonly string _value;
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Executing. </summary>
+        private const string ExecutingValue = "Executing";
+        /// <summary> Verifying. </summary>
+        private const string VerifyingValue = "Verifying";
+        /// <summary> PendingRevert. </summary>
+        private const string PendingRevertValue = "PendingRevert";
+        /// <summary> RevertCancelled. </summary>
+        private const string RevertCancelledValue = "RevertCancelled";
+        /// <summary> Reverting. </summary>
+        private const string RevertingValue = "Reverting";
+        /// <summary> Reverted. </summary>
+        private const string RevertedValue = "Reverted";
+        /// <summary> Ignored. </summary>
+        private const string IgnoredValue = "Ignored";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
+        /// <summary> Monitoring. </summary>
+        private const string MonitoringValue = "Monitoring";
+        /// <summary> Resolved. </summary>
+        private const string ResolvedValue = "Resolved";
+        /// <summary> Success. </summary>
+        private const string SuccessValue = "Success";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="RecommendedActionCurrentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RecommendedActionCurrentState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string PendingValue = "Pending";
-        private const string ExecutingValue = "Executing";
-        private const string VerifyingValue = "Verifying";
-        private const string PendingRevertValue = "PendingRevert";
-        private const string RevertCancelledValue = "RevertCancelled";
-        private const string RevertingValue = "Reverting";
-        private const string RevertedValue = "Reverted";
-        private const string IgnoredValue = "Ignored";
-        private const string ExpiredValue = "Expired";
-        private const string MonitoringValue = "Monitoring";
-        private const string ResolvedValue = "Resolved";
-        private const string SuccessValue = "Success";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> Active. </summary>
         public static RecommendedActionCurrentState Active { get; } = new RecommendedActionCurrentState(ActiveValue);
+
         /// <summary> Pending. </summary>
         public static RecommendedActionCurrentState Pending { get; } = new RecommendedActionCurrentState(PendingValue);
+
         /// <summary> Executing. </summary>
         public static RecommendedActionCurrentState Executing { get; } = new RecommendedActionCurrentState(ExecutingValue);
+
         /// <summary> Verifying. </summary>
         public static RecommendedActionCurrentState Verifying { get; } = new RecommendedActionCurrentState(VerifyingValue);
+
         /// <summary> PendingRevert. </summary>
         public static RecommendedActionCurrentState PendingRevert { get; } = new RecommendedActionCurrentState(PendingRevertValue);
+
         /// <summary> RevertCancelled. </summary>
         public static RecommendedActionCurrentState RevertCancelled { get; } = new RecommendedActionCurrentState(RevertCancelledValue);
+
         /// <summary> Reverting. </summary>
         public static RecommendedActionCurrentState Reverting { get; } = new RecommendedActionCurrentState(RevertingValue);
+
         /// <summary> Reverted. </summary>
         public static RecommendedActionCurrentState Reverted { get; } = new RecommendedActionCurrentState(RevertedValue);
+
         /// <summary> Ignored. </summary>
         public static RecommendedActionCurrentState Ignored { get; } = new RecommendedActionCurrentState(IgnoredValue);
+
         /// <summary> Expired. </summary>
         public static RecommendedActionCurrentState Expired { get; } = new RecommendedActionCurrentState(ExpiredValue);
+
         /// <summary> Monitoring. </summary>
         public static RecommendedActionCurrentState Monitoring { get; } = new RecommendedActionCurrentState(MonitoringValue);
+
         /// <summary> Resolved. </summary>
         public static RecommendedActionCurrentState Resolved { get; } = new RecommendedActionCurrentState(ResolvedValue);
+
         /// <summary> Success. </summary>
         public static RecommendedActionCurrentState Success { get; } = new RecommendedActionCurrentState(SuccessValue);
+
         /// <summary> Error. </summary>
         public static RecommendedActionCurrentState Error { get; } = new RecommendedActionCurrentState(ErrorValue);
+
         /// <summary> Determines if two <see cref="RecommendedActionCurrentState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecommendedActionCurrentState left, RecommendedActionCurrentState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecommendedActionCurrentState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecommendedActionCurrentState left, RecommendedActionCurrentState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecommendedActionCurrentState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecommendedActionCurrentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecommendedActionCurrentState(string value) => new RecommendedActionCurrentState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecommendedActionCurrentState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecommendedActionCurrentState?(string value) => value == null ? null : new RecommendedActionCurrentState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecommendedActionCurrentState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecommendedActionCurrentState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

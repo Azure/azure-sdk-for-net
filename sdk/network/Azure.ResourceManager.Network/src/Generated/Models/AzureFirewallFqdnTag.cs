@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -25,25 +27,41 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="provisioningState"> The provisioning state of the Azure firewall FQDN tag resource. </param>
-        /// <param name="fqdnTagName"> The name of this FQDN Tag. </param>
-        internal AzureFirewallFqdnTag(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkProvisioningState? provisioningState, string fqdnTagName) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the azure firewall FQDN tag. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal AzureFirewallFqdnTag(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureFirewallFqdnTagPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            ProvisioningState = provisioningState;
-            FqdnTagName = fqdnTagName;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the azure firewall FQDN tag. </summary>
+        [WirePath("properties")]
+        internal AzureFirewallFqdnTagPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The provisioning state of the Azure firewall FQDN tag resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The name of this FQDN Tag. </summary>
         [WirePath("properties.fqdnTagName")]
-        public string FqdnTagName { get; }
+        public string FqdnTagName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FqdnTagName;
+            }
+        }
     }
 }

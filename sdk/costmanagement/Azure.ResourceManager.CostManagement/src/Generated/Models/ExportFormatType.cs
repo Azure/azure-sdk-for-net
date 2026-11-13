@@ -7,42 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The format of the export being delivered. Currently only 'Csv' is supported. </summary>
+    /// <summary> The format of the export being delivered. </summary>
     public readonly partial struct ExportFormatType : IEquatable<ExportFormatType>
     {
         private readonly string _value;
+        private const string CsvValue = "Csv";
+        private const string ParquetValue = "Parquet";
 
         /// <summary> Initializes a new instance of <see cref="ExportFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExportFormatType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CsvValue = "Csv";
-
-        /// <summary> Csv. </summary>
+        /// <summary> Gets the Csv. </summary>
         public static ExportFormatType Csv { get; } = new ExportFormatType(CsvValue);
+
+        /// <summary> Gets the Parquet. </summary>
+        public static ExportFormatType Parquet { get; } = new ExportFormatType(ParquetValue);
+
         /// <summary> Determines if two <see cref="ExportFormatType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExportFormatType left, ExportFormatType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExportFormatType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExportFormatType left, ExportFormatType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportFormatType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExportFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExportFormatType(string value) => new ExportFormatType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExportFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExportFormatType?(string value) => value == null ? null : new ExportFormatType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExportFormatType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExportFormatType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

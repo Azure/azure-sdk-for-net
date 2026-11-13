@@ -9,11 +9,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Monitor.OpenTelemetry.Exporter;
 using NUnit.Framework;
+using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using OpenTelemetry;
-using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.AI.Agents.Persistent.Tests;
 

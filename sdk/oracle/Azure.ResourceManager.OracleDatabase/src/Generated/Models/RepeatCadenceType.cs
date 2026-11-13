@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct RepeatCadenceType : IEquatable<RepeatCadenceType>
     {
         private readonly string _value;
+        /// <summary> Repeat one time. </summary>
+        private const string OneTimeValue = "OneTime";
+        /// <summary> Repeat weekly. </summary>
+        private const string WeeklyValue = "Weekly";
+        /// <summary> Repeat monthly. </summary>
+        private const string MonthlyValue = "Monthly";
+        /// <summary> Repeat yearly. </summary>
+        private const string YearlyValue = "Yearly";
 
         /// <summary> Initializes a new instance of <see cref="RepeatCadenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RepeatCadenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OneTimeValue = "OneTime";
-        private const string WeeklyValue = "Weekly";
-        private const string MonthlyValue = "Monthly";
-        private const string YearlyValue = "Yearly";
+            _value = value;
+        }
 
         /// <summary> Repeat one time. </summary>
         public static RepeatCadenceType OneTime { get; } = new RepeatCadenceType(OneTimeValue);
+
         /// <summary> Repeat weekly. </summary>
         public static RepeatCadenceType Weekly { get; } = new RepeatCadenceType(WeeklyValue);
+
         /// <summary> Repeat monthly. </summary>
         public static RepeatCadenceType Monthly { get; } = new RepeatCadenceType(MonthlyValue);
+
         /// <summary> Repeat yearly. </summary>
         public static RepeatCadenceType Yearly { get; } = new RepeatCadenceType(YearlyValue);
+
         /// <summary> Determines if two <see cref="RepeatCadenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RepeatCadenceType left, RepeatCadenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RepeatCadenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RepeatCadenceType left, RepeatCadenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RepeatCadenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RepeatCadenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RepeatCadenceType(string value) => new RepeatCadenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RepeatCadenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RepeatCadenceType?(string value) => value == null ? null : new RepeatCadenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RepeatCadenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RepeatCadenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

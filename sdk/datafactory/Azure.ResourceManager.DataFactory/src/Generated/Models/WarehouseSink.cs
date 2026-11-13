@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class WarehouseSink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="WarehouseSink"/>. </summary>
-        public WarehouseSink()
+        public WarehouseSink() : base("WarehouseSink")
         {
-            CopySinkType = "WarehouseSink";
         }
 
         /// <summary> Initializes a new instance of <see cref="WarehouseSink"/>. </summary>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="preCopyScript"> SQL pre-copy script. Type: string (or Expression with resultType string). </param>
         /// <param name="allowCopyCommand"> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyCommandSettings"> Specifies Copy Command related settings when allowCopyCommand is true. </param>
@@ -41,17 +40,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopyCommandSettings = copyCommandSettings;
             TableOption = tableOption;
             WriteBehavior = writeBehavior;
-            CopySinkType = copySinkType ?? "WarehouseSink";
         }
 
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PreCopyScript { get; set; }
+
         /// <summary> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> AllowCopyCommand { get; set; }
+
         /// <summary> Specifies Copy Command related settings when allowCopyCommand is true. </summary>
         public DWCopyCommandSettings CopyCommandSettings { get; set; }
+
         /// <summary> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableOption { get; set; }
+
         /// <summary> Write behavior when copying data into azure Microsoft Fabric Data Warehouse. Type: DWWriteBehaviorEnum (or Expression with resultType DWWriteBehaviorEnum). </summary>
         public DataFactoryElement<string> WriteBehavior { get; set; }
     }

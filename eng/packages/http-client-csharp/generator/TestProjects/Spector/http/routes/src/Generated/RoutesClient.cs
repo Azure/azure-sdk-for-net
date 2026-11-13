@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,7 +20,12 @@ namespace Routes
     {
         public RoutesClient() : this(new Uri("http://localhost:3000"), new RoutesClientOptions()) => throw null;
 
-        public RoutesClient(Uri endpoint, RoutesClientOptions options) => throw null;
+        internal RoutesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, RoutesClientOptions options) => throw null;
+
+        public RoutesClient(Uri endpoint, RoutesClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public RoutesClient(RoutesClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ConsoleDetailedStatus : IEquatable<ConsoleDetailedStatus>
     {
         private readonly string _value;
+        /// <summary> The Ready status. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> The Error status. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="ConsoleDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConsoleDetailedStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ReadyValue = "Ready";
-        private const string ErrorValue = "Error";
-
-        /// <summary> Ready. </summary>
+        /// <summary> The Ready status. </summary>
         public static ConsoleDetailedStatus Ready { get; } = new ConsoleDetailedStatus(ReadyValue);
-        /// <summary> Error. </summary>
+
+        /// <summary> The Error status. </summary>
         public static ConsoleDetailedStatus Error { get; } = new ConsoleDetailedStatus(ErrorValue);
+
         /// <summary> Determines if two <see cref="ConsoleDetailedStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConsoleDetailedStatus left, ConsoleDetailedStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConsoleDetailedStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConsoleDetailedStatus left, ConsoleDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsoleDetailedStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConsoleDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConsoleDetailedStatus(string value) => new ConsoleDetailedStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConsoleDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConsoleDetailedStatus?(string value) => value == null ? null : new ConsoleDetailedStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConsoleDetailedStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConsoleDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -117,7 +117,7 @@ namespace Azure.Messaging.EventHubs
                                                                                     int? lastPublishedSequenceNumber) =>
             new PartitionPublishingProperties(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
 
-                /// <summary>
+        /// <summary>
         ///   Initializes a new instance of the <see cref="Consumer.LastEnqueuedEventProperties"/> class.
         /// </summary>
         ///

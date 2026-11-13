@@ -1021,9 +1021,9 @@ namespace Azure.Maps.Weather.Models
         /// <param name="description"> A textual explanation of this air quality result in the requested language. </param>
         /// <param name="pollutants"> Information about individual pollutants. </param>
         /// <returns> A new <see cref="Models.AirQuality"/> instance for mocking. </returns>
-        public static AirQuality AirQuality(DateTimeOffset? timestamp = null, float? index = null, float? globalIndex = null, DominantPollutant? dominantPollutant = null, string category = null, string categoryColor = null, string description = null, IEnumerable<Pollutant> pollutants = null)
+        public static AirQuality AirQuality(DateTimeOffset? timestamp = null, float? index = null, float? globalIndex = null, DominantPollutant? dominantPollutant = null, string category = null, string categoryColor = null, string description = null, IEnumerable<WeatherPollutant> pollutants = null)
         {
-            pollutants ??= new List<Pollutant>();
+            pollutants ??= new List<WeatherPollutant>();
 
             return new AirQuality(
                 timestamp,
@@ -1036,16 +1036,16 @@ namespace Azure.Maps.Weather.Models
                 pollutants?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Pollutant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherPollutant"/>. </summary>
         /// <param name="type"> Type of pollutant. Please note that more may be added at any time. </param>
         /// <param name="name"> The name of the pollutant in English. </param>
         /// <param name="index"> Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information. </param>
         /// <param name="globalIndex"> Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality. </param>
         /// <param name="concentration"> An object containing the number of pollutant particles per volume of air. </param>
-        /// <returns> A new <see cref="Models.Pollutant"/> instance for mocking. </returns>
-        public static Pollutant Pollutant(PollutantType? type = null, string name = null, float? index = null, float? globalIndex = null, WeatherValue concentration = null)
+        /// <returns> A new <see cref="Models.WeatherPollutant"/> instance for mocking. </returns>
+        public static WeatherPollutant WeatherPollutant(PollutantType? type = null, string name = null, float? index = null, float? globalIndex = null, WeatherValue concentration = null)
         {
-            return new Pollutant(type, name, index, globalIndex, concentration);
+            return new WeatherPollutant(type, name, index, globalIndex, concentration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DailyAirQualityForecastResult"/>. </summary>

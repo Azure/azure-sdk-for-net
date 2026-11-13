@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An azure function receiver. </summary>
     public partial class MonitorAzureFunctionReceiver
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorAzureFunctionReceiver"/>. </summary>
         /// <param name="name"> The name of the azure function receiver. Names must be unique across all receivers within an action group. </param>
@@ -72,8 +44,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="httpTriggerUri"> The http trigger url where http request sent to. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
         /// <param name="managedIdentity"> The principal id of the managed identity. The value can be "None", "SystemAssigned". </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorAzureFunctionReceiver(string name, ResourceIdentifier functionAppResourceId, string functionName, Uri httpTriggerUri, bool? useCommonAlertSchema, string managedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorAzureFunctionReceiver(string name, ResourceIdentifier functionAppResourceId, string functionName, Uri httpTriggerUri, bool? useCommonAlertSchema, string managedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             FunctionAppResourceId = functionAppResourceId;
@@ -81,24 +53,24 @@ namespace Azure.ResourceManager.Monitor.Models
             HttpTriggerUri = httpTriggerUri;
             UseCommonAlertSchema = useCommonAlertSchema;
             ManagedIdentity = managedIdentity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MonitorAzureFunctionReceiver"/> for deserialization. </summary>
-        internal MonitorAzureFunctionReceiver()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the azure function receiver. Names must be unique across all receivers within an action group. </summary>
         public string Name { get; set; }
+
         /// <summary> The azure resource id of the function app. </summary>
         public ResourceIdentifier FunctionAppResourceId { get; set; }
+
         /// <summary> The function name in the function app. </summary>
         public string FunctionName { get; set; }
+
         /// <summary> The http trigger url where http request sent to. </summary>
         public Uri HttpTriggerUri { get; set; }
+
         /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
+
         /// <summary> The principal id of the managed identity. The value can be "None", "SystemAssigned". </summary>
         public string ManagedIdentity { get; set; }
     }

@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Text
 {
     /// <summary> Model factory for models. </summary>
-    [CodeGenModel("AILanguageTextModelFactory")]
+    [CodeGenType("LanguageTextModelFactory")]
     public static partial class TextAnalysisModelFactory
     {
     }

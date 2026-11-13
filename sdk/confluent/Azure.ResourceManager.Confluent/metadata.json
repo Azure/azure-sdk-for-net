@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.Confluent": "2026-06-02-preview"
+  }
+}

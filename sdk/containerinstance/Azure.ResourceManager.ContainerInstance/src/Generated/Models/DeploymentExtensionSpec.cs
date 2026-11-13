@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> Extension sidecars to be added to the deployment. </summary>
     public partial class DeploymentExtensionSpec
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentExtensionSpec"/>. </summary>
         /// <param name="name"> Name of the extension. </param>
@@ -57,93 +29,87 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentExtensionSpec"/>. </summary>
         /// <param name="name"> Name of the extension. </param>
-        /// <param name="extensionType"> Type of extension to be added. </param>
-        /// <param name="version"> Version of the extension being used. </param>
-        /// <param name="settings"> Settings for the extension. </param>
-        /// <param name="protectedSettings"> Protected settings for the extension. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentExtensionSpec(string name, string extensionType, string version, BinaryData settings, BinaryData protectedSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Extension specific properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentExtensionSpec(string name, DeploymentExtensionSpecProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            ExtensionType = extensionType;
-            Version = version;
-            Settings = settings;
-            ProtectedSettings = protectedSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionSpec"/> for deserialization. </summary>
-        internal DeploymentExtensionSpec()
-        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the extension. </summary>
         public string Name { get; set; }
+
+        /// <summary> Extension specific properties. </summary>
+        internal DeploymentExtensionSpecProperties Properties { get; set; }
+
         /// <summary> Type of extension to be added. </summary>
-        public string ExtensionType { get; set; }
+        public string ExtensionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtensionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentExtensionSpecProperties();
+                }
+                Properties.ExtensionType = value;
+            }
+        }
+
         /// <summary> Version of the extension being used. </summary>
-        public string Version { get; set; }
-        /// <summary>
-        /// Settings for the extension.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Settings { get; set; }
-        /// <summary>
-        /// Protected settings for the extension.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ProtectedSettings { get; set; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentExtensionSpecProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
+        /// <summary> Settings for the extension. </summary>
+        public BinaryData Settings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Settings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentExtensionSpecProperties();
+                }
+                Properties.Settings = value;
+            }
+        }
+
+        /// <summary> Protected settings for the extension. </summary>
+        public BinaryData ProtectedSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProtectedSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentExtensionSpecProperties();
+                }
+                Properties.ProtectedSettings = value;
+            }
+        }
     }
 }

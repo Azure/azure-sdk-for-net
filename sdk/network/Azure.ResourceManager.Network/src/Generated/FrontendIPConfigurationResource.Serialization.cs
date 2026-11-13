@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class FrontendIPConfigurationResource : IJsonModel<FrontendIPConfigurationData>
     {
-        private static FrontendIPConfigurationData s_dataDeserializationInstance;
-        private static FrontendIPConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FrontendIPConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FrontendIPConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FrontendIPConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontendIPConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontendIPConfigurationData>)Data).Write(writer, options);
 
-        FrontendIPConfigurationData IJsonModel<FrontendIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontendIPConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontendIPConfigurationData IJsonModel<FrontendIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FrontendIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontendIPConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FrontendIPConfigurationData IPersistableModel<FrontendIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontendIPConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<FrontendIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontendIPConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontendIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

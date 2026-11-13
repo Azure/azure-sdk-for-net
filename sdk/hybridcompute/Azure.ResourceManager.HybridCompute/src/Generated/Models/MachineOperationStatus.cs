@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct MachineOperationStatus : IEquatable<MachineOperationStatus>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> CompletedWithWarnings. </summary>
+        private const string CompletedWithWarningsValue = "CompletedWithWarnings";
 
         /// <summary> Initializes a new instance of <see cref="MachineOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineOperationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string CompletedWithWarningsValue = "CompletedWithWarnings";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static MachineOperationStatus Unknown { get; } = new MachineOperationStatus(UnknownValue);
+
         /// <summary> InProgress. </summary>
         public static MachineOperationStatus InProgress { get; } = new MachineOperationStatus(InProgressValue);
+
         /// <summary> Failed. </summary>
         public static MachineOperationStatus Failed { get; } = new MachineOperationStatus(FailedValue);
+
         /// <summary> Succeeded. </summary>
         public static MachineOperationStatus Succeeded { get; } = new MachineOperationStatus(SucceededValue);
+
         /// <summary> CompletedWithWarnings. </summary>
         public static MachineOperationStatus CompletedWithWarnings { get; } = new MachineOperationStatus(CompletedWithWarningsValue);
+
         /// <summary> Determines if two <see cref="MachineOperationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineOperationStatus left, MachineOperationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineOperationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineOperationStatus left, MachineOperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineOperationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineOperationStatus(string value) => new MachineOperationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineOperationStatus?(string value) => value == null ? null : new MachineOperationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineOperationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineOperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

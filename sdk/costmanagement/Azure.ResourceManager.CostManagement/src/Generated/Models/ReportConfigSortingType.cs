@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ReportConfigSortingType : IEquatable<ReportConfigSortingType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ReportConfigSortingType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReportConfigSortingType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AscendingValue = "Ascending";
         private const string DescendingValue = "Descending";
 
-        /// <summary> Ascending. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportConfigSortingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ReportConfigSortingType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Ascending. </summary>
         public static ReportConfigSortingType Ascending { get; } = new ReportConfigSortingType(AscendingValue);
-        /// <summary> Descending. </summary>
+
+        /// <summary> Gets the Descending. </summary>
         public static ReportConfigSortingType Descending { get; } = new ReportConfigSortingType(DescendingValue);
+
         /// <summary> Determines if two <see cref="ReportConfigSortingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReportConfigSortingType left, ReportConfigSortingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReportConfigSortingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReportConfigSortingType left, ReportConfigSortingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportConfigSortingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReportConfigSortingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReportConfigSortingType(string value) => new ReportConfigSortingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReportConfigSortingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReportConfigSortingType?(string value) => value == null ? null : new ReportConfigSortingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReportConfigSortingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReportConfigSortingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

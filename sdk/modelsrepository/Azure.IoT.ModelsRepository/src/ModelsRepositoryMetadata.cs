@@ -41,7 +41,7 @@ namespace Azure.IoT.ModelsRepository
             Features = features;
         }
 
-        public ModelsRepositoryMetadata(): this(new RepositoryFeatures())
+        public ModelsRepositoryMetadata() : this(new RepositoryFeatures())
         {
         }
     }

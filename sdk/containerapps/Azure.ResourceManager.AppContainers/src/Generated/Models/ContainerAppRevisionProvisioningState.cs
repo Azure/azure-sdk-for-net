@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppRevisionProvisioningState : IEquatable<ContainerAppRevisionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Provisioned. </summary>
+        private const string ProvisionedValue = "Provisioned";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Deprovisioning. </summary>
+        private const string DeprovisioningValue = "Deprovisioning";
+        /// <summary> Deprovisioned. </summary>
+        private const string DeprovisionedValue = "Deprovisioned";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppRevisionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProvisioningValue = "Provisioning";
-        private const string ProvisionedValue = "Provisioned";
-        private const string FailedValue = "Failed";
-        private const string DeprovisioningValue = "Deprovisioning";
-        private const string DeprovisionedValue = "Deprovisioned";
+            _value = value;
+        }
 
         /// <summary> Provisioning. </summary>
         public static ContainerAppRevisionProvisioningState Provisioning { get; } = new ContainerAppRevisionProvisioningState(ProvisioningValue);
+
         /// <summary> Provisioned. </summary>
         public static ContainerAppRevisionProvisioningState Provisioned { get; } = new ContainerAppRevisionProvisioningState(ProvisionedValue);
+
         /// <summary> Failed. </summary>
         public static ContainerAppRevisionProvisioningState Failed { get; } = new ContainerAppRevisionProvisioningState(FailedValue);
+
         /// <summary> Deprovisioning. </summary>
         public static ContainerAppRevisionProvisioningState Deprovisioning { get; } = new ContainerAppRevisionProvisioningState(DeprovisioningValue);
+
         /// <summary> Deprovisioned. </summary>
         public static ContainerAppRevisionProvisioningState Deprovisioned { get; } = new ContainerAppRevisionProvisioningState(DeprovisionedValue);
+
         /// <summary> Determines if two <see cref="ContainerAppRevisionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppRevisionProvisioningState left, ContainerAppRevisionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppRevisionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppRevisionProvisioningState left, ContainerAppRevisionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppRevisionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppRevisionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppRevisionProvisioningState(string value) => new ContainerAppRevisionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppRevisionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppRevisionProvisioningState?(string value) => value == null ? null : new ContainerAppRevisionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppRevisionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppRevisionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

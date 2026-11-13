@@ -6,26 +6,21 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ApplicationListResult))]
     [ModelReaderWriterBuildable(typeof(ClientGroupInfo))]
-    [ModelReaderWriterBuildable(typeof(ClusterListResult))]
-    [ModelReaderWriterBuildable(typeof(ComputeProfile))]
     [ModelReaderWriterBuildable(typeof(ConnectivityEndpoint))]
-    [ModelReaderWriterBuildable(typeof(EncryptionInTransitProperties))]
     [ModelReaderWriterBuildable(typeof(EntraUserInfo))]
     [ModelReaderWriterBuildable(typeof(ExcludedServicesConfig))]
     [ModelReaderWriterBuildable(typeof(ExecuteScriptActionContent))]
-    [ModelReaderWriterBuildable(typeof(HardwareProfile))]
     [ModelReaderWriterBuildable(typeof(HDInsightApplicationData))]
     [ModelReaderWriterBuildable(typeof(HDInsightApplicationEndpoint))]
     [ModelReaderWriterBuildable(typeof(HDInsightApplicationHttpsEndpoint))]
@@ -59,6 +54,7 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(HDInsightClusterDiskEncryptionContent))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterEnableClusterMonitoringContent))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterExtensionStatus))]
+    [ModelReaderWriterBuildable(typeof(HDInsightClusterGatewaySettings))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterHostInfo))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterIPTag))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterNetworkProperties))]
@@ -79,12 +75,10 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(HDInsightNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(HDInsightNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(HDInsightPrivateEndpointConnectionData))]
-    [ModelReaderWriterBuildable(typeof(HDInsightPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(HDInsightPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(HDInsightPrivateLinkConfiguration))]
     [ModelReaderWriterBuildable(typeof(HDInsightPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(HDInsightPrivateLinkResourceData))]
-    [ModelReaderWriterBuildable(typeof(HDInsightPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(HDInsightPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(HDInsightSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(HDInsightSshPublicKey))]
@@ -97,25 +91,16 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(HDInsightVmSizeProperty))]
     [ModelReaderWriterBuildable(typeof(KafkaRestProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(OSProfile))]
     [ModelReaderWriterBuildable(typeof(QuotaCapability))]
-    [ModelReaderWriterBuildable(typeof(QuotaInfo))]
     [ModelReaderWriterBuildable(typeof(RegionalQuotaCapability))]
     [ModelReaderWriterBuildable(typeof(RegionsCapability))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuntimeScriptAction))]
     [ModelReaderWriterBuildable(typeof(RuntimeScriptActionDetail))]
     [ModelReaderWriterBuildable(typeof(ScriptAction))]
-    [ModelReaderWriterBuildable(typeof(ScriptActionExecutionHistoryList))]
     [ModelReaderWriterBuildable(typeof(ScriptActionExecutionSummary))]
-    [ModelReaderWriterBuildable(typeof(ScriptActionsList))]
-    [ModelReaderWriterBuildable(typeof(SshProfile))]
-    [ModelReaderWriterBuildable(typeof(StorageProfile))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UsagesListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerHDInsightContext : ModelReaderWriterContext
     {
     }

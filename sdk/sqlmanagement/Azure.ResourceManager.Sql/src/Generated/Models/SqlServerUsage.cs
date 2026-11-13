@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Usage metric of a server. </summary>
     public partial class SqlServerUsage : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerUsage"/>. </summary>
         public SqlServerUsage()
@@ -53,45 +25,80 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerUsage"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> User-readable name of the metric. </param>
-        /// <param name="currentValue"> Current value of the metric. </param>
-        /// <param name="limit"> Boundary value of the metric. </param>
-        /// <param name="unit"> Unit of the metric. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, double? currentValue, double? limit, string unit, string resourceName, DateTimeOffset? nextResetOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerUsageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            CurrentValue = currentValue;
-            Limit = limit;
-            Unit = unit;
-            ResourceName = resourceName;
-            NextResetOn = nextResetOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ServerUsageProperties Properties { get; set; }
 
         /// <summary> User-readable name of the metric. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
         /// <summary> Current value of the metric. </summary>
         [WirePath("properties.currentValue")]
-        public double? CurrentValue { get; }
+        public double? CurrentValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentValue;
+            }
+        }
+
         /// <summary> Boundary value of the metric. </summary>
         [WirePath("properties.limit")]
-        public double? Limit { get; }
+        public double? Limit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Limit;
+            }
+        }
+
         /// <summary> Unit of the metric. </summary>
         [WirePath("properties.unit")]
-        public string Unit { get; }
+        public string Unit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Unit;
+            }
+        }
+
         /// <summary> The name of the resource. </summary>
         [WirePath("properties.resourceName")]
-        public string ResourceName { get; }
+        public string ResourceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceName;
+            }
+        }
+
         /// <summary> The next reset time for the metric (ISO8601 format). </summary>
         [WirePath("properties.nextResetTime")]
-        public DateTimeOffset? NextResetOn { get; }
+        public DateTimeOffset? NextResetOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextResetOn;
+            }
+        }
     }
 }

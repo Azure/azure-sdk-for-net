@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Job Delay Notification details. </summary>
     public partial class JobDelayDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="JobDelayDetails"/>. </summary>
         internal JobDelayDetails()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="description"> Description of the delay. </param>
         /// <param name="startOn"> Timestamp when the delay notification was created. </param>
         /// <param name="resolutionOn"> Timestamp when the delay notification was resolved. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobDelayDetails(DelayNotificationStatus? status, PortalDelayErrorCode? errorCode, string description, DateTimeOffset? startOn, DateTimeOffset? resolutionOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JobDelayDetails(DelayNotificationStatus? status, PortalDelayErrorCode? errorCode, string description, DateTimeOffset? startOn, DateTimeOffset? resolutionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ErrorCode = errorCode;
             Description = description;
             StartOn = startOn;
             ResolutionOn = resolutionOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Status of notification. </summary>
         public DelayNotificationStatus? Status { get; }
+
         /// <summary> Delay Error code. </summary>
         public PortalDelayErrorCode? ErrorCode { get; }
+
         /// <summary> Description of the delay. </summary>
         public string Description { get; }
+
         /// <summary> Timestamp when the delay notification was created. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> Timestamp when the delay notification was resolved. </summary>
         public DateTimeOffset? ResolutionOn { get; }
     }

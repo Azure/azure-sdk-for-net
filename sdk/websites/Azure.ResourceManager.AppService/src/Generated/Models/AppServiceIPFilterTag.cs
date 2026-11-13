@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct AppServiceIPFilterTag : IEquatable<AppServiceIPFilterTag>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppServiceIPFilterTag"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppServiceIPFilterTag(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DefaultValue = "Default";
         private const string XffProxyValue = "XffProxy";
         private const string ServiceTagValue = "ServiceTag";
 
-        /// <summary> Default. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceIPFilterTag"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppServiceIPFilterTag(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Default. </summary>
         public static AppServiceIPFilterTag Default { get; } = new AppServiceIPFilterTag(DefaultValue);
-        /// <summary> XffProxy. </summary>
+
+        /// <summary> Gets the XffProxy. </summary>
         public static AppServiceIPFilterTag XffProxy { get; } = new AppServiceIPFilterTag(XffProxyValue);
-        /// <summary> ServiceTag. </summary>
+
+        /// <summary> Gets the ServiceTag. </summary>
         public static AppServiceIPFilterTag ServiceTag { get; } = new AppServiceIPFilterTag(ServiceTagValue);
+
         /// <summary> Determines if two <see cref="AppServiceIPFilterTag"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceIPFilterTag left, AppServiceIPFilterTag right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceIPFilterTag"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceIPFilterTag left, AppServiceIPFilterTag right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceIPFilterTag"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceIPFilterTag"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceIPFilterTag(string value) => new AppServiceIPFilterTag(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceIPFilterTag"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceIPFilterTag?(string value) => value == null ? null : new AppServiceIPFilterTag(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceIPFilterTag other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceIPFilterTag other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

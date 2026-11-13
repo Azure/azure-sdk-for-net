@@ -12,10 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SiteManager.Tests
 {
-    [TestFixture]
     public class SiteCollectionTests : SiteManagerManagementTestBase
     {
-        public SiteCollectionTests() : base(true)
+        public SiteCollectionTests(bool async) : base(async)
         {
         }
 
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.SiteManager.Tests
         {
             var location = AzureLocation.EastUS;
             var resourceGroup = await CreateResourceGroup(DefaultSubscription, "sites-rg", location);
-            var siteCollection = resourceGroup.GetEdgeSites();
+            var siteCollection = resourceGroup.GetResourceGroupEdgeSites();
             var siteName = Recording.GenerateAssetName("SeattleSite");
 
             // Create
@@ -36,14 +35,14 @@ namespace Azure.ResourceManager.SiteManager.Tests
             Assert.AreEqual(siteData.Properties.SiteAddress.Country, "USA");
 
             // Get
-            EdgeSiteResource siteResourceFromGet = await siteCollection.GetAsync(siteName);
+            ResourceGroupEdgeSiteResource siteResourceFromGet = await siteCollection.GetAsync(siteName);
             siteData = siteResourceFromGet.Data;
             Assert.AreEqual(siteData.Name, siteName);
             Assert.AreEqual(siteData.Properties.DisplayName, "Seattle Site");
             Assert.AreEqual(siteData.Properties.SiteAddress.Country, "USA");
             Assert.That(siteData.Properties.Labels, Does.ContainKey("city").WithValue("Seattle"));
 
-            await foreach (EdgeSiteResource siteResourceFromCollection in siteCollection)
+            await foreach (var siteResourceFromCollection in siteCollection)
             {
                 Assert.AreEqual(siteResourceFromCollection.Data.Name, siteName);
                 Assert.AreEqual(siteResourceFromCollection.Data.Properties.DisplayName, "Seattle Site");

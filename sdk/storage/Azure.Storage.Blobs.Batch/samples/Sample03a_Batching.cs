@@ -132,7 +132,12 @@ namespace Azure.Storage.Blobs.Samples
             batchClient.SubmitBatch(batch);
             #endregion
 
-            Pageable<BlobItem> blobs = container.GetBlobs(states: BlobStates.Snapshots);
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                States = BlobStates.Snapshots
+            };
+
+            Pageable<BlobItem> blobs = container.GetBlobs(options);
             Assert.AreEqual(1, blobs.Count());
             Assert.AreEqual("bar", blobs.FirstOrDefault().Name);
             // Clean up after the test when we're finished

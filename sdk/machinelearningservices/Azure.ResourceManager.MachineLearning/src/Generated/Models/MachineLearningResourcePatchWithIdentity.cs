@@ -20,15 +20,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningResourcePatchWithIdentity"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        internal MachineLearningResourcePatchWithIdentity(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningPartialManagedServiceIdentity identity) : base(tags, serializedAdditionalRawData)
+        internal MachineLearningResourcePatchWithIdentity(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningPartialManagedServiceIdentity identity) : base(tags, additionalBinaryDataProperties)
         {
             Identity = identity;
         }
-
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        [WirePath("identity")]
-        public MachineLearningPartialManagedServiceIdentity Identity { get; set; }
     }
 }

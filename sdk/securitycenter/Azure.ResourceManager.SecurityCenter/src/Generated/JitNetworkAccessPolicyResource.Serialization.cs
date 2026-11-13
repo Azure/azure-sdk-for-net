@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class JitNetworkAccessPolicyResource : IJsonModel<JitNetworkAccessPolicyData>
     {
-        private static JitNetworkAccessPolicyData s_dataDeserializationInstance;
-        private static JitNetworkAccessPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<JitNetworkAccessPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<JitNetworkAccessPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new JitNetworkAccessPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JitNetworkAccessPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<JitNetworkAccessPolicyData>)Data).Write(writer, options);
 
-        JitNetworkAccessPolicyData IJsonModel<JitNetworkAccessPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JitNetworkAccessPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JitNetworkAccessPolicyData IJsonModel<JitNetworkAccessPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<JitNetworkAccessPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JitNetworkAccessPolicyData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         JitNetworkAccessPolicyData IPersistableModel<JitNetworkAccessPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JitNetworkAccessPolicyData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<JitNetworkAccessPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JitNetworkAccessPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<JitNetworkAccessPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

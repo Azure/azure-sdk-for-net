@@ -30,7 +30,7 @@ public class ThreadUpdate : StreamingUpdate<PersistentAgentThread>
         StreamingUpdateReason updateKind,
         ModelReaderWriterOptions options = null)
     {
-        PersistentAgentThread thread = PersistentAgentThread.DeserializePersistentAgentThread(element, options);
+        PersistentAgentThread thread = PersistentAgentThread.DeserializePersistentAgentThread(element, options ?? ModelSerializationExtensions.WireOptions);
         return updateKind switch
         {
             StreamingUpdateReason.ThreadCreated => new List<StreamingUpdate<PersistentAgentThread>> { new ThreadUpdate(thread) },

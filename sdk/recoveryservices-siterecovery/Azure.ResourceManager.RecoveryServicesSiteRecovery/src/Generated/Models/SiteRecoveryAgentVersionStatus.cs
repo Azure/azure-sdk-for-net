@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryAgentVersionStatus : IEquatable<SiteRecoveryAgentVersionStatus>
     {
         private readonly string _value;
+        /// <summary> Supported. </summary>
+        private const string SupportedValue = "Supported";
+        /// <summary> NotSupported. </summary>
+        private const string NotSupportedValue = "NotSupported";
+        /// <summary> Deprecated. </summary>
+        private const string DeprecatedValue = "Deprecated";
+        /// <summary> UpdateRequired. </summary>
+        private const string UpdateRequiredValue = "UpdateRequired";
+        /// <summary> SecurityUpdateRequired. </summary>
+        private const string SecurityUpdateRequiredValue = "SecurityUpdateRequired";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryAgentVersionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryAgentVersionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SupportedValue = "Supported";
-        private const string NotSupportedValue = "NotSupported";
-        private const string DeprecatedValue = "Deprecated";
-        private const string UpdateRequiredValue = "UpdateRequired";
-        private const string SecurityUpdateRequiredValue = "SecurityUpdateRequired";
+            _value = value;
+        }
 
         /// <summary> Supported. </summary>
         public static SiteRecoveryAgentVersionStatus Supported { get; } = new SiteRecoveryAgentVersionStatus(SupportedValue);
+
         /// <summary> NotSupported. </summary>
         public static SiteRecoveryAgentVersionStatus NotSupported { get; } = new SiteRecoveryAgentVersionStatus(NotSupportedValue);
+
         /// <summary> Deprecated. </summary>
         public static SiteRecoveryAgentVersionStatus Deprecated { get; } = new SiteRecoveryAgentVersionStatus(DeprecatedValue);
+
         /// <summary> UpdateRequired. </summary>
         public static SiteRecoveryAgentVersionStatus UpdateRequired { get; } = new SiteRecoveryAgentVersionStatus(UpdateRequiredValue);
+
         /// <summary> SecurityUpdateRequired. </summary>
         public static SiteRecoveryAgentVersionStatus SecurityUpdateRequired { get; } = new SiteRecoveryAgentVersionStatus(SecurityUpdateRequiredValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryAgentVersionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryAgentVersionStatus left, SiteRecoveryAgentVersionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryAgentVersionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryAgentVersionStatus left, SiteRecoveryAgentVersionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryAgentVersionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryAgentVersionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryAgentVersionStatus(string value) => new SiteRecoveryAgentVersionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryAgentVersionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryAgentVersionStatus?(string value) => value == null ? null : new SiteRecoveryAgentVersionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryAgentVersionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryAgentVersionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

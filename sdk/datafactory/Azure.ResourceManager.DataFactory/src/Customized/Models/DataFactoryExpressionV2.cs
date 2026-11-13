@@ -8,16 +8,16 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Nested representation of a complex expression. </summary>
+    // Customization to restore back-compat properties renamed by MPG generator.
     public partial class DataFactoryExpressionV2
     {
-        /// <summary> Expression operator value Type: string. </summary>
+        /// <summary> Back-compat alias for legacy "operator" property. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         public string Operator { get; set; }
 
-        /// <summary> Value for Constant/Field Type: string. </summary>
+        /// <summary> Back-compat alias for legacy "value" property. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string Value { get => V2Value.ToString(); set => V2Value = value; }
+        public string Value { get; set; }
     }
 }

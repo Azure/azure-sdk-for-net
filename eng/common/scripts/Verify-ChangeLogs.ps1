@@ -1,7 +1,8 @@
 # Wrapper Script for ChangeLog Verification in a PR
 [CmdletBinding()]
 param (
-  [String]$PackagePropertiesFolder
+  [String]$PackagePropertiesFolder,
+  [boolean]$ForRelease = $False
 )
 Set-StrictMode -Version 3
 
@@ -10,8 +11,10 @@ Set-StrictMode -Version 3
 
 function ShouldVerifyChangeLog ($PkgArtifactDetails) {
   if ($PkgArtifactDetails) {
-    if ($PkgArtifactDetails.PSObject.Properties["skipVerifyChangeLog"] -eq $true) {
-      return $false
+    if ($PkgArtifactDetails.PSObject.Properties.Name -contains "skipVerifyChangeLog") {
+      if ($PkgArtifactDetails.skipVerifyChangeLog) {
+        return $false
+      }
     }
 
     return $true
@@ -33,7 +36,9 @@ foreach($propertiesFile in $packageProperties) {
         continue
   }
 
-  $validChangeLog =  Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.ChangeLogPath -VersionString $PackageProp.Version -ForRelease $false
+  Write-Host "Verifying changelog for $($PackageProp.Name)"
+
+  $validChangeLog =  Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.ChangeLogPath -VersionString $PackageProp.Version -ForRelease $ForRelease
 
   if (-not $validChangeLog) {
     $allPassing = $false

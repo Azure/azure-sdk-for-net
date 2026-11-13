@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     internal static partial class DeviceProvisioningServicesIPFilterTargetTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DeviceProvisioningServicesIPFilterTargetType value) => value switch
         {
             DeviceProvisioningServicesIPFilterTargetType.All => "all",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeviceProvisioningServicesIPFilterTargetType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DeviceProvisioningServicesIPFilterTargetType ToDeviceProvisioningServicesIPFilterTargetType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all")) return DeviceProvisioningServicesIPFilterTargetType.All;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "serviceApi")) return DeviceProvisioningServicesIPFilterTargetType.ServiceApi;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deviceApi")) return DeviceProvisioningServicesIPFilterTargetType.DeviceApi;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all"))
+            {
+                return DeviceProvisioningServicesIPFilterTargetType.All;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "serviceApi"))
+            {
+                return DeviceProvisioningServicesIPFilterTargetType.ServiceApi;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deviceApi"))
+            {
+                return DeviceProvisioningServicesIPFilterTargetType.DeviceApi;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeviceProvisioningServicesIPFilterTargetType value.");
         }
     }

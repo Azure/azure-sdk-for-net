@@ -8,10 +8,14 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Vpn Client Parameters for package generation. </summary>
-    [Obsolete("This class is obsolete and will be removed in a future release", false)]
+    /// <summary> Compatibility alias for VPN client parameters. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class VpnClientParameters : VpnClientContent
+    [Obsolete("This class is obsolete and will be removed in a future release", false)]
+    public partial class VpnClientParameters : VpnClientContent
     {
+        /// <summary> Initializes a new instance of <see cref="VpnClientParameters"/>. </summary>
+        public VpnClientParameters()
+        {
+        }
     }
 }

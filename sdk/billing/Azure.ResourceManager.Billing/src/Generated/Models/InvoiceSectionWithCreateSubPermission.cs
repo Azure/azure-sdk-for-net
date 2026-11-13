@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Invoice section properties with create subscription permission. </summary>
     public partial class InvoiceSectionWithCreateSubPermission
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InvoiceSectionWithCreateSubPermission"/>. </summary>
         internal InvoiceSectionWithCreateSubPermission()
@@ -63,8 +35,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="invoiceSectionDisplayName"> The name of the invoice section. </param>
         /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
         /// <param name="invoiceSectionSystemId"> The system generated unique identifier for an invoice section. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InvoiceSectionWithCreateSubPermission(string billingProfileDisplayName, ResourceIdentifier billingProfileId, string billingProfileSystemId, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, BillingSpendingLimit? billingProfileSpendingLimit, IReadOnlyList<BillingAzurePlan> enabledAzurePlans, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionSystemId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InvoiceSectionWithCreateSubPermission(string billingProfileDisplayName, ResourceIdentifier billingProfileId, string billingProfileSystemId, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, BillingSpendingLimit? billingProfileSpendingLimit, IReadOnlyList<BillingAzurePlan> enabledAzurePlans, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionSystemId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingProfileDisplayName = billingProfileDisplayName;
             BillingProfileId = billingProfileId;
@@ -76,36 +48,45 @@ namespace Azure.ResourceManager.Billing.Models
             InvoiceSectionDisplayName = invoiceSectionDisplayName;
             InvoiceSectionId = invoiceSectionId;
             InvoiceSectionSystemId = invoiceSectionSystemId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the billing profile. </summary>
         [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
+
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
         [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
+
         /// <summary> The system generated unique identifier for a billing profile. </summary>
         [WirePath("billingProfileSystemId")]
         public string BillingProfileSystemId { get; }
+
         /// <summary> The status of the billing profile. </summary>
         [WirePath("billingProfileStatus")]
         public BillingProfileStatus? BillingProfileStatus { get; }
+
         /// <summary> Reason for the specified billing profile status. </summary>
         [WirePath("billingProfileStatusReasonCode")]
         public BillingProfileStatusReasonCode? BillingProfileStatusReasonCode { get; }
+
         /// <summary> The billing profile spending limit. </summary>
         [WirePath("billingProfileSpendingLimit")]
         public BillingSpendingLimit? BillingProfileSpendingLimit { get; }
+
         /// <summary> Enabled azure plans for the associated billing profile. </summary>
         [WirePath("enabledAzurePlans")]
         public IReadOnlyList<BillingAzurePlan> EnabledAzurePlans { get; }
+
         /// <summary> The name of the invoice section. </summary>
         [WirePath("invoiceSectionDisplayName")]
         public string InvoiceSectionDisplayName { get; }
+
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
         [WirePath("invoiceSectionId")]
         public ResourceIdentifier InvoiceSectionId { get; }
+
         /// <summary> The system generated unique identifier for an invoice section. </summary>
         [WirePath("invoiceSectionSystemId")]
         public string InvoiceSectionSystemId { get; }

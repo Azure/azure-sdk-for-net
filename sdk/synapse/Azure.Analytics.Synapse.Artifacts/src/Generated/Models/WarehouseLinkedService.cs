@@ -38,6 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="artifactId"> The ID of Microsoft Fabric Warehouse artifact. Type: string (or Expression with resultType string). </param>
         /// <param name="endpoint"> The endpoint of Microsoft Fabric Warehouse server. Type: string (or Expression with resultType string). </param>
         /// <param name="workspaceId"> The ID of Microsoft Fabric workspace. Type: string (or Expression with resultType string). </param>
+        /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="servicePrincipalId"> The ID of the application used to authenticate against Microsoft Fabric Warehouse. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// The Key of the application used to authenticate against Microsoft Fabric Warehouse.
@@ -52,17 +53,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
-        internal WarehouseLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object artifactId, object endpoint, object workspaceId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, string encryptedCredential, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal WarehouseLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object artifactId, object endpoint, object workspaceId, WarehouseAuthenticationType? authenticationType, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, string encryptedCredential, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ArtifactId = artifactId;
             Endpoint = endpoint;
             WorkspaceId = workspaceId;
+            AuthenticationType = authenticationType;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             EncryptedCredential = encryptedCredential;
             ServicePrincipalCredentialType = servicePrincipalCredentialType;
             ServicePrincipalCredential = servicePrincipalCredential;
+            Credential = credential;
             Type = type ?? "Warehouse";
         }
 
@@ -72,6 +76,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Endpoint { get; set; }
         /// <summary> The ID of Microsoft Fabric workspace. Type: string (or Expression with resultType string). </summary>
         public object WorkspaceId { get; set; }
+        /// <summary> The authentication type to use. </summary>
+        public WarehouseAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The ID of the application used to authenticate against Microsoft Fabric Warehouse. Type: string (or Expression with resultType string). </summary>
         public object ServicePrincipalId { get; set; }
         /// <summary>
@@ -92,5 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase ServicePrincipalCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

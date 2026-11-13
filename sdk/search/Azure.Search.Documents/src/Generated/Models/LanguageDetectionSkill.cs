@@ -7,47 +7,71 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that detects the language of input text and reports a single language code for every document submitted on the request. The language code is paired with a score indicating the confidence of the analysis. </summary>
     public partial class LanguageDetectionSkill : SearchIndexerSkill
     {
+        private string _defaultCountryHint;
+        private bool _defaultCountryHintIsDefined;
+        private string _modelVersion;
+        private bool _modelVersionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="LanguageDetectionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public LanguageDetectionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
+        public LanguageDetectionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.LanguageDetectionSkill", inputs, outputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            ODataType = "#Microsoft.Skills.Text.LanguageDetectionSkill";
         }
 
         /// <summary> Initializes a new instance of <see cref="LanguageDetectionSkill"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of skill. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaultCountryHint"> A country code to use as a hint to the language detection model if it cannot disambiguate the language. </param>
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
-        internal LanguageDetectionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string defaultCountryHint, string modelVersion) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
+        internal LanguageDetectionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string defaultCountryHint, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
-            DefaultCountryHint = defaultCountryHint;
-            ModelVersion = modelVersion;
-            ODataType = oDataType ?? "#Microsoft.Skills.Text.LanguageDetectionSkill";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionSkill"/> for deserialization. </summary>
-        internal LanguageDetectionSkill()
-        {
+            _defaultCountryHint = defaultCountryHint;
+            _modelVersion = modelVersion;
         }
 
         /// <summary> A country code to use as a hint to the language detection model if it cannot disambiguate the language. </summary>
-        public string DefaultCountryHint { get; set; }
+        public string DefaultCountryHint
+        {
+            get
+            {
+                return _defaultCountryHint;
+            }
+            set
+            {
+                _defaultCountryHint = value;
+                _defaultCountryHintIsDefined = true;
+            }
+        }
+
+        /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
+        public string ModelVersion
+        {
+            get
+            {
+                return _modelVersion;
+            }
+            set
+            {
+                _modelVersion = value;
+                _modelVersionIsDefined = true;
+            }
+        }
     }
 }

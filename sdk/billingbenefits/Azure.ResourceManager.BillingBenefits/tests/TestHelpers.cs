@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests.Helper
     {
         public static BillingBenefitsSavingsPlanOrderAliasData CreateSavingsPlanOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType scope)
         {
-            var request = new BillingBenefitsSavingsPlanOrderAliasData(new BillingBenefitsSku("Compute_Savings_Plan", null))
+            var request = new BillingBenefitsSavingsPlanOrderAliasData()
             {
+                SkuName = "Compute_Savings_Plan",
                 BillingScopeId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"),
                 Term = new BillingBenefitsTerm("P3Y"),
                 AppliedScopeType = scope,
@@ -47,8 +48,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests.Helper
 
         public static BillingBenefitsReservationOrderAliasCreateOrUpdateContent CreateReservationOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType scope)
         {
-            var request = new BillingBenefitsReservationOrderAliasCreateOrUpdateContent(new BillingBenefitsSku("Standard_B1s", null))
+            var request = new BillingBenefitsReservationOrderAliasCreateOrUpdateContent()
             {
+                SkuName = "Standard_B1s",
                 BillingScopeId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"),
                 Term = new BillingBenefitsTerm("P3Y"),
                 AppliedScopeType = scope,

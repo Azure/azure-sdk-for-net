@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     internal static partial class ContainerRegistryPasswordNameExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ContainerRegistryPasswordName value) => value switch
         {
             ContainerRegistryPasswordName.Password => "password",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerRegistryPasswordName value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ContainerRegistryPasswordName ToContainerRegistryPasswordName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "password")) return ContainerRegistryPasswordName.Password;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "password2")) return ContainerRegistryPasswordName.Password2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "password"))
+            {
+                return ContainerRegistryPasswordName.Password;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "password2"))
+            {
+                return ContainerRegistryPasswordName.Password2;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerRegistryPasswordName value.");
         }
     }

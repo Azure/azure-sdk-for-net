@@ -5,11 +5,10 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure;
 
-namespace _Specs_.Azure.Core.Basic
+namespace Specs.Azure.Core.Basic
 {
     public static partial class _Specs_AzureCoreBasicModelFactory
     {

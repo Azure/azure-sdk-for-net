@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct SnowflakeAuthenticationType : IEquatable<SnowflakeAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> KeyPair. </summary>
+        private const string KeyPairValue = "KeyPair";
+        /// <summary> AADServicePrincipal. </summary>
+        private const string AADServicePrincipalValue = "AADServicePrincipal";
 
         /// <summary> Initializes a new instance of <see cref="SnowflakeAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SnowflakeAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string KeyPairValue = "KeyPair";
-        private const string AADServicePrincipalValue = "AADServicePrincipal";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static SnowflakeAuthenticationType Basic { get; } = new SnowflakeAuthenticationType(BasicValue);
+
         /// <summary> KeyPair. </summary>
         public static SnowflakeAuthenticationType KeyPair { get; } = new SnowflakeAuthenticationType(KeyPairValue);
+
         /// <summary> AADServicePrincipal. </summary>
         public static SnowflakeAuthenticationType AADServicePrincipal { get; } = new SnowflakeAuthenticationType(AADServicePrincipalValue);
+
         /// <summary> Determines if two <see cref="SnowflakeAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SnowflakeAuthenticationType left, SnowflakeAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SnowflakeAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SnowflakeAuthenticationType left, SnowflakeAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SnowflakeAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SnowflakeAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SnowflakeAuthenticationType(string value) => new SnowflakeAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SnowflakeAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SnowflakeAuthenticationType?(string value) => value == null ? null : new SnowflakeAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SnowflakeAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SnowflakeAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

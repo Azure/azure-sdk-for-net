@@ -8,9 +8,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: serialization companion for the GA-compatible partial identity model.
+    // The TypeSpec generator writes the generated schema shape, so this custom serializer preserves the
+    // previous SDK property names and user-assigned identity dictionary wire payload.
     public partial class MachineLearningPartialManagedServiceIdentity : IUtf8JsonSerializable, IJsonModel<MachineLearningPartialManagedServiceIdentity>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningPartialManagedServiceIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
 #endif
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                    return ModelReaderWriter.Write(this, options, Azure.ResourceManager.MachineLearning.AzureResourceManagerMachineLearningContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningPartialManagedServiceIdentity)} does not support '{options.Format}' format.");
             }

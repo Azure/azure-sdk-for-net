@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BfdEnabled : IEquatable<BfdEnabled>
     {
         private readonly string _value;
+        /// <summary> BFD is enabled for this BGP peer. </summary>
+        private const string TrueValue = "True";
+        /// <summary> BFD is disabled for this BGP peer. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="BfdEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BfdEnabled(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> BFD is enabled for this BGP peer. </summary>
         public static BfdEnabled True { get; } = new BfdEnabled(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> BFD is disabled for this BGP peer. </summary>
         public static BfdEnabled False { get; } = new BfdEnabled(FalseValue);
+
         /// <summary> Determines if two <see cref="BfdEnabled"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BfdEnabled left, BfdEnabled right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BfdEnabled"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BfdEnabled left, BfdEnabled right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BfdEnabled"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BfdEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BfdEnabled(string value) => new BfdEnabled(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BfdEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BfdEnabled?(string value) => value == null ? null : new BfdEnabled(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BfdEnabled other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BfdEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

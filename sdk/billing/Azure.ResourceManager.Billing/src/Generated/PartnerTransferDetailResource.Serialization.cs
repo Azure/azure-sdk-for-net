@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Billing
 {
+    /// <summary></summary>
     public partial class PartnerTransferDetailResource : IJsonModel<PartnerTransferDetailData>
     {
-        private static PartnerTransferDetailData s_dataDeserializationInstance;
-        private static PartnerTransferDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PartnerTransferDetailData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PartnerTransferDetailData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PartnerTransferDetailData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PartnerTransferDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PartnerTransferDetailData>)Data).Write(writer, options);
 
-        PartnerTransferDetailData IJsonModel<PartnerTransferDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerTransferDetailData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PartnerTransferDetailData IJsonModel<PartnerTransferDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PartnerTransferDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PartnerTransferDetailData>(Data, options, AzureResourceManagerBillingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PartnerTransferDetailData IPersistableModel<PartnerTransferDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerTransferDetailData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<PartnerTransferDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerTransferDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PartnerTransferDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -13,89 +13,91 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkFabricInternetGatewayRule data model.
-    /// The Internet Gateway Rule resource definition.
-    /// </summary>
+    /// <summary> The Internet Gateway Rule resource definition. </summary>
     public partial class NetworkFabricInternetGatewayRuleData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayRuleData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="ruleProperties"> Rules for the InternetGateways. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleProperties"/> is null. </exception>
-        public NetworkFabricInternetGatewayRuleData(AzureLocation location, InternetGatewayRules ruleProperties) : base(location)
+        public NetworkFabricInternetGatewayRuleData(AzureLocation location, Models.InternetGatewayRules ruleProperties) : base(location)
         {
             Argument.AssertNotNull(ruleProperties, nameof(ruleProperties));
 
-            RuleProperties = ruleProperties;
-            InternetGatewayIds = new ChangeTrackingList<ResourceIdentifier>();
+            Properties = new InternetGatewayRuleProperties(ruleProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ruleProperties"> Rules for the InternetGateways. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="internetGatewayIds"> List of Internet Gateway resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternetGatewayRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, InternetGatewayRules ruleProperties, NetworkFabricProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> internetGatewayIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The Internet Gateway Rule properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricInternetGatewayRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, InternetGatewayRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Annotation = annotation;
-            RuleProperties = ruleProperties;
-            ProvisioningState = provisioningState;
-            InternetGatewayIds = internetGatewayIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayRuleData"/> for deserialization. </summary>
-        internal NetworkFabricInternetGatewayRuleData()
-        {
-        }
+        /// <summary> The Internet Gateway Rule properties. </summary>
+        internal InternetGatewayRuleProperties Properties { get; set; }
 
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternetGatewayRuleProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> Rules for the InternetGateways. </summary>
-        public InternetGatewayRules RuleProperties { get; set; }
+        public Models.InternetGatewayRules RuleProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternetGatewayRuleProperties();
+                }
+                Properties.RuleProperties = value;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
-        /// <summary> List of Internet Gateway resource Id. </summary>
-        public IReadOnlyList<ResourceIdentifier> InternetGatewayIds { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
     }
 }

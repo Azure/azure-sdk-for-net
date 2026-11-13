@@ -6,20 +6,45 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text.Json.Serialization;
+using Azure;
+using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The FooProperties. </summary>
     public partial class FooProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        [Experimental("SCME0001")]
+        private JsonPatch _patch;
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
-        public FooProperties()
+        /// <param name="something"> something. </param>
+        /// <param name="prop1"></param>
+        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public FooProperties(ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties)
         {
+            Argument.AssertNotNull(something, nameof(something));
+            Argument.AssertNotNull(prop1, nameof(prop1));
+            Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
+
+            Something = something;
+            Prop1 = prop1.ToList();
+            Prop2 = new ChangeTrackingList<int>();
+            NestedProperty = new NestedFooModel(nestedPropertyProperties);
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
         /// <param name="serviceUri"> the service url. </param>
@@ -27,30 +52,152 @@ namespace MgmtTypeSpec.Models
         /// <param name="boolValue"> boolean value. </param>
         /// <param name="floatValue"> float value. </param>
         /// <param name="doubleValue"> double value. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, string something, bool? boolValue, float? floatValue, double? doubleValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="prop1"></param>
+        /// <param name="prop2"></param>
+        /// <param name="nestedProperty"></param>
+        /// <param name="optionalProperty"></param>
+        /// <param name="vmProfile"> Test ApplicationProfile flattening scenario. </param>
+        /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
+        /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
+        /// <param name="computeFleetVmProfile"> Test case for multi-layer safe flatten. </param>
+        /// <param name="patch"></param>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, VmProfile vmProfile, ETag? eTag, WritableSubResource writableSubResourceProp, ComputeFleetVmProfile computeFleetVmProfile, in JsonPatch patch)
         {
             ServiceUri = serviceUri;
             Something = something;
             BoolValue = boolValue;
             FloatValue = floatValue;
             DoubleValue = doubleValue;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Prop1 = prop1;
+            Prop2 = prop2;
+            NestedProperty = nestedProperty;
+            OptionalProperty = optionalProperty;
+            VmProfile = vmProfile;
+            ETag = eTag;
+            WritableSubResourceProp = writableSubResourceProp;
+            ComputeFleetVmProfile = computeFleetVmProfile;
+            _patch = patch;
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary> Gets the Patch. </summary>
+        [JsonIgnore]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Experimental("SCME0001")]
+        public ref JsonPatch Patch => ref _patch;
 
         /// <summary> the service url. </summary>
+        [WirePath("serviceUrl")]
         public Uri ServiceUri { get; set; }
 
         /// <summary> something. </summary>
-        public string Something { get; set; }
+        [WirePath("something")]
+        public ManagedServiceIdentity Something { get; set; }
 
         /// <summary> boolean value. </summary>
+        [WirePath("boolValue")]
         public bool? BoolValue { get; set; }
 
         /// <summary> float value. </summary>
+        [WirePath("floatValue")]
         public float? FloatValue { get; set; }
 
         /// <summary> double value. </summary>
+        [WirePath("doubleValue")]
         public double? DoubleValue { get; set; }
+
+        /// <summary> Gets the Prop1. </summary>
+        [WirePath("prop1")]
+        public IList<string> Prop1 { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> Gets the Prop2. </summary>
+        [WirePath("prop2")]
+        public IList<int> Prop2 { get; } = new ChangeTrackingList<int>();
+
+        /// <summary> Gets or sets the NestedProperty. </summary>
+        [WirePath("nestedProperty")]
+        internal NestedFooModel NestedProperty { get; set; }
+
+        /// <summary> Gets or sets the OptionalProperty. </summary>
+        [WirePath("optionalProperty")]
+        internal SafeFlattenModel OptionalProperty { get; set; }
+
+        /// <summary> Test ApplicationProfile flattening scenario. </summary>
+        [WirePath("vmProfile")]
+        internal VmProfile VmProfile { get; set; }
+
+        /// <summary> ETag property for testing etag parameter name generation. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; set; }
+
+        /// <summary> WritableSubResource property for testing WritableSubResource type replacement. </summary>
+        [WirePath("writableSubResourceProp")]
+        public WritableSubResource WritableSubResourceProp { get; set; }
+
+        /// <summary> Test case for multi-layer safe flatten. </summary>
+        [WirePath("computeFleetVmProfile")]
+        internal ComputeFleetVmProfile ComputeFleetVmProfile { get; set; }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("nestedProperty.properties")]
+        public FooProperties NestedPropertyProperties
+        {
+            get
+            {
+                return NestedProperty is null ? default : NestedProperty.Properties;
+            }
+            set
+            {
+                NestedProperty = new NestedFooModel(value);
+            }
+        }
+
+        /// <summary> Gets the FlattenedProperty. </summary>
+        [WirePath("optionalProperty.flattenedProperty")]
+        public IList<string> FlattenedProperty
+        {
+            get
+            {
+                if (OptionalProperty is null)
+                {
+                    OptionalProperty = new SafeFlattenModel();
+                }
+                return OptionalProperty.FlattenedProperty;
+            }
+        }
+
+        /// <summary> Specifies the gallery applications that should be made available. </summary>
+        [WirePath("vmProfile.applicationProfile.galleryApplications")]
+        public IList<string> VmGalleryApplications
+        {
+            get
+            {
+                if (VmProfile is null)
+                {
+                    VmProfile = new VmProfile();
+                }
+                return VmProfile.GalleryApplications;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        [WirePath("computeFleetVmProfile.capacityReservation.capacityReservationGroup.id")]
+        public ResourceIdentifier ComputeFleetVmCapacityReservationGroupId
+        {
+            get
+            {
+                return ComputeFleetVmProfile is null ? default : ComputeFleetVmProfile.CapacityReservationGroupId;
+            }
+            set
+            {
+                if (ComputeFleetVmProfile is null)
+                {
+                    ComputeFleetVmProfile = new ComputeFleetVmProfile();
+                }
+                ComputeFleetVmProfile.CapacityReservationGroupId = value;
+            }
+        }
     }
 }

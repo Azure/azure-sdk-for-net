@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct TraceVerbosityLevel : IEquatable<TraceVerbosityLevel>
     {
         private readonly string _value;
+        /// <summary> All the traces emitted by trace policies will be sent to the logger attached to this diagnostic instance. </summary>
+        private const string VerboseValue = "verbose";
+        /// <summary> Traces with 'severity' set to 'information' and 'error' will be sent to the logger attached to this diagnostic instance. </summary>
+        private const string InformationValue = "information";
+        /// <summary> Only traces with 'severity' set to 'error' will be sent to the logger attached to this diagnostic instance. </summary>
+        private const string ErrorValue = "error";
 
         /// <summary> Initializes a new instance of <see cref="TraceVerbosityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TraceVerbosityLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VerboseValue = "verbose";
-        private const string InformationValue = "information";
-        private const string ErrorValue = "error";
+            _value = value;
+        }
 
         /// <summary> All the traces emitted by trace policies will be sent to the logger attached to this diagnostic instance. </summary>
         public static TraceVerbosityLevel Verbose { get; } = new TraceVerbosityLevel(VerboseValue);
+
         /// <summary> Traces with 'severity' set to 'information' and 'error' will be sent to the logger attached to this diagnostic instance. </summary>
         public static TraceVerbosityLevel Information { get; } = new TraceVerbosityLevel(InformationValue);
+
         /// <summary> Only traces with 'severity' set to 'error' will be sent to the logger attached to this diagnostic instance. </summary>
         public static TraceVerbosityLevel Error { get; } = new TraceVerbosityLevel(ErrorValue);
+
         /// <summary> Determines if two <see cref="TraceVerbosityLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TraceVerbosityLevel left, TraceVerbosityLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TraceVerbosityLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TraceVerbosityLevel left, TraceVerbosityLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TraceVerbosityLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TraceVerbosityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TraceVerbosityLevel(string value) => new TraceVerbosityLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TraceVerbosityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TraceVerbosityLevel?(string value) => value == null ? null : new TraceVerbosityLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TraceVerbosityLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TraceVerbosityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

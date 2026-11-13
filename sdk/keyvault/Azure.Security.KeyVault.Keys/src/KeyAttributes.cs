@@ -18,12 +18,16 @@ namespace Azure.Security.KeyVault.Keys
         private const string ExportablePropertyName = "exportable";
         private const string HsmPlatformPropertyName = "hsmPlatform";
         private const string KeyAttestationPropertyName = "attestation";
-
+        private const string KeySizePropertyName = "key_size";
+        private const string ExternalKeyPropertyName = "external_key";
+        private const string ExternalKeyIdPropertyName = "id";
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
         private static readonly JsonEncodedText s_notBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
         private static readonly JsonEncodedText s_expiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
         private static readonly JsonEncodedText s_exportablePropertyNameBytes = JsonEncodedText.Encode(ExportablePropertyName);
         private static readonly JsonEncodedText s_keyAttestationPropertyNameBytes = JsonEncodedText.Encode(KeyAttestationPropertyName);
+        private static readonly JsonEncodedText s_externalKeyPropertyNameBytes = JsonEncodedText.Encode(ExternalKeyPropertyName);
+        private static readonly JsonEncodedText s_externalKeyIdPropertyNameBytes = JsonEncodedText.Encode(ExternalKeyIdPropertyName);
 
         public bool? Enabled { get; set; }
 
@@ -45,12 +49,17 @@ namespace Azure.Security.KeyVault.Keys
 
         public KeyAttestation Attestation { get; set; }
 
+        public int? KeySize { get; internal set; }
+
+        public ExternalKey ExternalKey { get; set; }
+
         internal bool ShouldSerialize =>
             Enabled.HasValue ||
             NotBefore.HasValue ||
             ExpiresOn.HasValue ||
             Exportable.HasValue ||
-            Attestation != null;
+            Attestation != null ||
+            ExternalKey != null;
 
         internal void ReadProperties(JsonElement json)
         {
@@ -114,6 +123,29 @@ namespace Azure.Security.KeyVault.Keys
                             }
                         }
                         break;
+                    case KeySizePropertyName:
+                        if (prop.Value.ValueKind != JsonValueKind.Null)
+                        {
+                            KeySize = prop.Value.GetInt32();
+                        }
+                        break;
+                    case ExternalKeyPropertyName:
+                        if (prop.Value.ValueKind != JsonValueKind.Null)
+                        {
+                            string externalId = null;
+                            foreach (JsonProperty extProp in prop.Value.EnumerateObject())
+                            {
+                                if (extProp.Name == ExternalKeyIdPropertyName)
+                                {
+                                    externalId = extProp.Value.GetString();
+                                }
+                            }
+                            if (externalId != null)
+                            {
+                                ExternalKey = new ExternalKey(externalId);
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -159,6 +191,13 @@ namespace Azure.Security.KeyVault.Keys
                 {
                     json.WriteString("version", Attestation.Version);
                 }
+                json.WriteEndObject();
+            }
+
+            if (ExternalKey != null)
+            {
+                json.WriteStartObject(s_externalKeyPropertyNameBytes);
+                json.WriteString(s_externalKeyIdPropertyNameBytes, ExternalKey.Id);
                 json.WriteEndObject();
             }
 

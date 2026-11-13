@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,80 +15,127 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct WeightUnit : IEquatable<WeightUnit>
     {
         private readonly string _value;
+        /// <summary> Unspecified weight unit. </summary>
+        private const string UnspecifiedValue = "Unspecified";
+        /// <summary> Weight unit in kilograms. </summary>
+        private const string KilogramValue = "Kilogram";
+        /// <summary> Weight unit in grams. </summary>
+        private const string GramValue = "Gram";
+        /// <summary> Weight unit in milligrams. </summary>
+        private const string MilligramValue = "Milligram";
+        /// <summary> Volume unit in gallons. </summary>
+        private const string GallonValue = "Gallon";
+        /// <summary> Weight unit in metric tons. </summary>
+        private const string MetricTonValue = "MetricTon";
+        /// <summary> Weight unit in tons. </summary>
+        private const string TonValue = "Ton";
+        /// <summary> Weight unit in pounds. </summary>
+        private const string PoundValue = "Pound";
+        /// <summary> Weight unit in ounces. </summary>
+        private const string OunceValue = "Ounce";
+        /// <summary> Weight unit in grains. </summary>
+        private const string GrainValue = "Grain";
+        /// <summary> Weight unit in pennyweights. </summary>
+        private const string PennyWeightValue = "PennyWeight";
+        /// <summary> Weight unit in long tons (British). </summary>
+        private const string LongTonBritishValue = "LongTonBritish";
+        /// <summary> Weight unit in short tons (US). </summary>
+        private const string ShortTonUSValue = "ShortTonUS";
+        /// <summary> Weight unit in short hundredweights (US). </summary>
+        private const string ShortHundredWeightUSValue = "ShortHundredWeightUS";
+        /// <summary> Weight unit in stones. </summary>
+        private const string StoneValue = "Stone";
+        /// <summary> Weight unit in drams. </summary>
+        private const string DramValue = "Dram";
 
         /// <summary> Initializes a new instance of <see cref="WeightUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WeightUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnspecifiedValue = "Unspecified";
-        private const string KilogramValue = "Kilogram";
-        private const string GramValue = "Gram";
-        private const string MilligramValue = "Milligram";
-        private const string GallonValue = "Gallon";
-        private const string MetricTonValue = "MetricTon";
-        private const string TonValue = "Ton";
-        private const string PoundValue = "Pound";
-        private const string OunceValue = "Ounce";
-        private const string GrainValue = "Grain";
-        private const string PennyWeightValue = "PennyWeight";
-        private const string LongTonBritishValue = "LongTonBritish";
-        private const string ShortTonUSValue = "ShortTonUS";
-        private const string ShortHundredWeightUSValue = "ShortHundredWeightUS";
-        private const string StoneValue = "Stone";
-        private const string DramValue = "Dram";
+            _value = value;
+        }
 
         /// <summary> Unspecified weight unit. </summary>
         public static WeightUnit Unspecified { get; } = new WeightUnit(UnspecifiedValue);
+
         /// <summary> Weight unit in kilograms. </summary>
         public static WeightUnit Kilogram { get; } = new WeightUnit(KilogramValue);
+
         /// <summary> Weight unit in grams. </summary>
         public static WeightUnit Gram { get; } = new WeightUnit(GramValue);
+
         /// <summary> Weight unit in milligrams. </summary>
         public static WeightUnit Milligram { get; } = new WeightUnit(MilligramValue);
+
         /// <summary> Volume unit in gallons. </summary>
         public static WeightUnit Gallon { get; } = new WeightUnit(GallonValue);
+
         /// <summary> Weight unit in metric tons. </summary>
         public static WeightUnit MetricTon { get; } = new WeightUnit(MetricTonValue);
+
         /// <summary> Weight unit in tons. </summary>
         public static WeightUnit Ton { get; } = new WeightUnit(TonValue);
+
         /// <summary> Weight unit in pounds. </summary>
         public static WeightUnit Pound { get; } = new WeightUnit(PoundValue);
+
         /// <summary> Weight unit in ounces. </summary>
         public static WeightUnit Ounce { get; } = new WeightUnit(OunceValue);
+
         /// <summary> Weight unit in grains. </summary>
         public static WeightUnit Grain { get; } = new WeightUnit(GrainValue);
+
         /// <summary> Weight unit in pennyweights. </summary>
         public static WeightUnit PennyWeight { get; } = new WeightUnit(PennyWeightValue);
+
         /// <summary> Weight unit in long tons (British). </summary>
         public static WeightUnit LongTonBritish { get; } = new WeightUnit(LongTonBritishValue);
+
         /// <summary> Weight unit in short tons (US). </summary>
         public static WeightUnit ShortTonUS { get; } = new WeightUnit(ShortTonUSValue);
+
         /// <summary> Weight unit in short hundredweights (US). </summary>
         public static WeightUnit ShortHundredWeightUS { get; } = new WeightUnit(ShortHundredWeightUSValue);
+
         /// <summary> Weight unit in stones. </summary>
         public static WeightUnit Stone { get; } = new WeightUnit(StoneValue);
+
         /// <summary> Weight unit in drams. </summary>
         public static WeightUnit Dram { get; } = new WeightUnit(DramValue);
+
         /// <summary> Determines if two <see cref="WeightUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WeightUnit left, WeightUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WeightUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WeightUnit left, WeightUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WeightUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WeightUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WeightUnit(string value) => new WeightUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WeightUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WeightUnit?(string value) => value == null ? null : new WeightUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WeightUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WeightUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

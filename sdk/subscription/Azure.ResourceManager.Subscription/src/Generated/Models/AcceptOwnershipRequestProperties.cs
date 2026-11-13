@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
     /// <summary> Accept subscription ownership request properties. </summary>
     public partial class AcceptOwnershipRequestProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcceptOwnershipRequestProperties"/>. </summary>
         /// <param name="displayName"> The friendly name of the subscription. </param>
@@ -60,24 +32,21 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="displayName"> The friendly name of the subscription. </param>
         /// <param name="managementGroupId"> Management group Id for the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcceptOwnershipRequestProperties(string displayName, string managementGroupId, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptOwnershipRequestProperties(string displayName, string managementGroupId, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ManagementGroupId = managementGroupId;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipRequestProperties"/> for deserialization. </summary>
-        internal AcceptOwnershipRequestProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The friendly name of the subscription. </summary>
         public string DisplayName { get; }
+
         /// <summary> Management group Id for the subscription. </summary>
         public string ManagementGroupId { get; set; }
+
         /// <summary> Tags for the subscription. </summary>
         public IDictionary<string, string> Tags { get; }
     }

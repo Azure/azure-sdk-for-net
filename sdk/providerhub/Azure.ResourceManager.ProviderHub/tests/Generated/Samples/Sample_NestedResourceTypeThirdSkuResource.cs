@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SkusGetNestedResourceTypeThird()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeThird.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/Skus_GetNestedResourceTypeThird.json
             // this example is just showing the usage of "Skus_GetNestedResourceTypeThird" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_SkusDeleteNestedResourceTypeThird()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_DeleteNestedResourceTypeThird.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/Skus_DeleteNestedResourceTypeThird.json
             // this example is just showing the usage of "Skus_DeleteNestedResourceTypeThird" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_SkusCreateOrUpdateNestedResourceTypeThird()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_CreateOrUpdateNestedResourceTypeThird.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/Skus_CreateOrUpdateNestedResourceTypeThird.json
             // this example is just showing the usage of "Skus_CreateOrUpdateNestedResourceTypeThird" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

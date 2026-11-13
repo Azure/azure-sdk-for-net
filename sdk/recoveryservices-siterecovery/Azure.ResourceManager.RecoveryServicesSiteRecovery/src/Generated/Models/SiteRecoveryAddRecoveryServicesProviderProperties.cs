@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The properties of an add provider request. </summary>
     public partial class SiteRecoveryAddRecoveryServicesProviderProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddRecoveryServicesProviderProperties"/>. </summary>
         /// <param name="machineName"> The name of the machine where the provider is getting added. </param>
@@ -68,8 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="authenticationIdentityContent"> The identity provider input for DRA authentication. </param>
         /// <param name="resourceAccessIdentityContent"> The identity provider input for resource access. </param>
         /// <param name="dataPlaneAuthenticationIdentityContent"> The identity provider input for data plane authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryAddRecoveryServicesProviderProperties(string machineName, string machineId, string biosId, IdentityProviderContent authenticationIdentityContent, IdentityProviderContent resourceAccessIdentityContent, IdentityProviderContent dataPlaneAuthenticationIdentityContent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryAddRecoveryServicesProviderProperties(string machineName, string machineId, string biosId, IdentityProviderContent authenticationIdentityContent, IdentityProviderContent resourceAccessIdentityContent, IdentityProviderContent dataPlaneAuthenticationIdentityContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MachineName = machineName;
             MachineId = machineId;
@@ -77,24 +49,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AuthenticationIdentityContent = authenticationIdentityContent;
             ResourceAccessIdentityContent = resourceAccessIdentityContent;
             DataPlaneAuthenticationIdentityContent = dataPlaneAuthenticationIdentityContent;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddRecoveryServicesProviderProperties"/> for deserialization. </summary>
-        internal SiteRecoveryAddRecoveryServicesProviderProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the machine where the provider is getting added. </summary>
         public string MachineName { get; }
+
         /// <summary> The Id of the machine where the provider is getting added. </summary>
         public string MachineId { get; set; }
+
         /// <summary> The Bios Id of the machine. </summary>
         public string BiosId { get; set; }
+
         /// <summary> The identity provider input for DRA authentication. </summary>
         public IdentityProviderContent AuthenticationIdentityContent { get; }
+
         /// <summary> The identity provider input for resource access. </summary>
         public IdentityProviderContent ResourceAccessIdentityContent { get; }
+
         /// <summary> The identity provider input for data plane authentication. </summary>
         public IdentityProviderContent DataPlaneAuthenticationIdentityContent { get; set; }
     }

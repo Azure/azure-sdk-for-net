@@ -30,6 +30,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public const string FilterReceivedAt = FilterReceivedAtPartNameV2 + " > ";
         public const string FilterReceivedAtFormatString = FilterReceivedAt + "{0}";
         public static readonly AmqpSymbol SessionFilterName = AmqpConstants.Vendor + ":session-filter";
+        public static readonly AmqpSymbol NonExclusiveSessionFilterName = AmqpConstants.Vendor + ":non-exclusive-session-filter";
+
+        /// <summary>
+        /// The portion of an attach rejection that names the filter as one the endpoint does not recognize. An
+        /// endpoint without non-exclusive session locking refuses <see cref="NonExclusiveSessionFilterName" /> with
+        /// a description carrying this. The service authors the wording under no contract, so a rewording returns
+        /// callers to the exception the refusal's condition maps to. Observed in the form "The link '&lt;name&gt;'
+        /// contains invalid filter type. System only support Jms or Apache selector filter type."
+        /// </summary>
+        public const string UnrecognizedFilterErrorFragment = "invalid filter type";
+
         public static readonly AmqpSymbol MessageReceiptsFilterName = AmqpConstants.Vendor + ":message-receipts-filter";
         public static readonly AmqpSymbol ClientSideCursorFilterName = AmqpConstants.Vendor + ":client-side-filter";
         public static readonly TimeSpan ClientMinimumTokenRefreshInterval = TimeSpan.FromMinutes(4);
@@ -38,6 +49,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public static readonly AmqpSymbol AttachEpoch = AmqpConstants.Vendor + ":epoch";
         public static readonly AmqpSymbol BatchFlushIntervalName = AmqpConstants.Vendor + ":batch-flush-interval";
         public static readonly AmqpSymbol EntityTypeName = AmqpConstants.Vendor + ":entity-type";
+        public static readonly AmqpSymbol MaxMessageBatchSizeName = AmqpConstants.Vendor + ":max-message-batch-size";
         public static readonly AmqpSymbol TransferDestinationAddress = AmqpConstants.Vendor + ":transfer-destination-address";
         public static readonly AmqpSymbol TimeoutName = AmqpConstants.Vendor + ":timeout";
         public static readonly AmqpSymbol TrackingIdName = AmqpConstants.Vendor + ":tracking-id";

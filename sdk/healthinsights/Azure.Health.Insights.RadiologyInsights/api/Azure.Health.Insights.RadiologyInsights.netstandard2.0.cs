@@ -63,9 +63,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType GenomicSequencing { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType Note { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType left, Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType (string value) { throw null; }
@@ -87,9 +85,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.ClinicalDocumentType Progress { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.ClinicalDocumentType RadiologyReport { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.ClinicalDocumentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.ClinicalDocumentType left, Azure.Health.Insights.RadiologyInsights.ClinicalDocumentType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.ClinicalDocumentType (string value) { throw null; }
@@ -123,9 +119,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.ContactPointSystem Sms { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.ContactPointSystem Url { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.ContactPointSystem other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.ContactPointSystem left, Azure.Health.Insights.RadiologyInsights.ContactPointSystem right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.ContactPointSystem (string value) { throw null; }
@@ -144,9 +138,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.ContactPointUse Temp { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.ContactPointUse Work { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.ContactPointUse other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.ContactPointUse left, Azure.Health.Insights.RadiologyInsights.ContactPointUse right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.ContactPointUse (string value) { throw null; }
@@ -197,9 +189,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType Inline { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType Reference { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType left, Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType (string value) { throw null; }
@@ -219,9 +209,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.EncounterClass Observation { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.EncounterClass Virtual { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.EncounterClass other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.EncounterClass left, Azure.Health.Insights.RadiologyInsights.EncounterClass right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.EncounterClass (string value) { throw null; }
@@ -757,9 +745,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.GuidanceRankingType High { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.GuidanceRankingType Low { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.GuidanceRankingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.GuidanceRankingType left, Azure.Health.Insights.RadiologyInsights.GuidanceRankingType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.GuidanceRankingType (string value) { throw null; }
@@ -847,9 +833,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.JobStatus Running { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.JobStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.JobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.JobStatus left, Azure.Health.Insights.RadiologyInsights.JobStatus right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.JobStatus (string value) { throw null; }
@@ -878,9 +862,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.LateralityDiscrepancyType TextLateralityContradiction { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.LateralityDiscrepancyType TextLateralityMissing { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.LateralityDiscrepancyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.LateralityDiscrepancyType left, Azure.Health.Insights.RadiologyInsights.LateralityDiscrepancyType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.LateralityDiscrepancyType (string value) { throw null; }
@@ -912,9 +894,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.MedicalProfessionalType PhysicianAssistant { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.MedicalProfessionalType Unknown { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.MedicalProfessionalType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.MedicalProfessionalType left, Azure.Health.Insights.RadiologyInsights.MedicalProfessionalType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.MedicalProfessionalType (string value) { throw null; }
@@ -936,9 +916,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType Registered { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType Unknown { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType left, Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType (string value) { throw null; }
@@ -1027,9 +1005,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.PatientSex Male { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.PatientSex Unspecified { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.PatientSex other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.PatientSex left, Azure.Health.Insights.RadiologyInsights.PatientSex right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.PatientSex (string value) { throw null; }
@@ -1073,9 +1049,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.QualityMeasureComplianceType PerformanceMet { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.QualityMeasureComplianceType PerformanceNotMet { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.QualityMeasureComplianceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.QualityMeasureComplianceType left, Azure.Health.Insights.RadiologyInsights.QualityMeasureComplianceType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.QualityMeasureComplianceType (string value) { throw null; }
@@ -1136,9 +1110,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.QualityMeasureType Qmm19 { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.QualityMeasureType Qmm26 { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.QualityMeasureType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.QualityMeasureType left, Azure.Health.Insights.RadiologyInsights.QualityMeasureType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.QualityMeasureType (string value) { throw null; }
@@ -1248,9 +1220,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceType ScoringAndAssessment { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceType SexMismatch { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceType left, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceType (string value) { throw null; }
@@ -1340,9 +1310,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.RecommendationFindingStatusType Present { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.RecommendationFindingStatusType RuleOut { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.RecommendationFindingStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.RecommendationFindingStatusType left, Azure.Health.Insights.RadiologyInsights.RecommendationFindingStatusType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.RecommendationFindingStatusType (string value) { throw null; }
@@ -1392,9 +1360,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.ResearchStudyStatusCodeType TemporarilyClosedToAccrualAndIntervention { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.ResearchStudyStatusCodeType Withdrawn { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.ResearchStudyStatusCodeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.ResearchStudyStatusCodeType left, Azure.Health.Insights.RadiologyInsights.ResearchStudyStatusCodeType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.ResearchStudyStatusCodeType (string value) { throw null; }
@@ -1442,9 +1408,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.ScoringAndAssessmentCategoryType UsLiRadsVisualizationScore { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.ScoringAndAssessmentCategoryType ZScore { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.ScoringAndAssessmentCategoryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.ScoringAndAssessmentCategoryType left, Azure.Health.Insights.RadiologyInsights.ScoringAndAssessmentCategoryType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.ScoringAndAssessmentCategoryType (string value) { throw null; }
@@ -1485,9 +1449,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.SpecialtyType Pathology { get { throw null; } }
         public static Azure.Health.Insights.RadiologyInsights.SpecialtyType Radiology { get { throw null; } }
         public bool Equals(Azure.Health.Insights.RadiologyInsights.SpecialtyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.SpecialtyType left, Azure.Health.Insights.RadiologyInsights.SpecialtyType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.SpecialtyType (string value) { throw null; }

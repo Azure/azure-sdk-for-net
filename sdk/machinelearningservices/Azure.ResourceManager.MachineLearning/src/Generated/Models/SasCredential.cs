@@ -7,30 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Access with full SAS uri. </summary>
     public partial class SasCredential : DataReferenceCredential
     {
+        private Uri _sasUri;
+        private bool _sasUriIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
-        internal SasCredential()
+        internal SasCredential() : base(DataReferenceCredentialType.SAS)
         {
-            CredentialType = DataReferenceCredentialType.Sas;
         }
 
         /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
         /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sasUri"> Full SAS Uri, including the storage, container/blob path and SAS token. </param>
-        internal SasCredential(DataReferenceCredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri sasUri) : base(credentialType, serializedAdditionalRawData)
+        internal SasCredential(DataReferenceCredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri sasUri) : base(credentialType, additionalBinaryDataProperties)
         {
-            SasUri = sasUri;
-            CredentialType = credentialType;
+            _sasUri = sasUri;
         }
 
         /// <summary> Full SAS Uri, including the storage, container/blob path and SAS token. </summary>
         [WirePath("sasUri")]
-        public Uri SasUri { get; }
+        public Uri SasUri
+        {
+            get
+            {
+                return _sasUri;
+            }
+        }
     }
 }

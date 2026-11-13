@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Resources.DeploymentStacks;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
-    /// <summary> The UnmanageActionResourceMode. </summary>
+    /// <summary> Specifies an action for a newly unmanaged resource. </summary>
     public readonly partial struct UnmanageActionResourceMode : IEquatable<UnmanageActionResourceMode>
     {
         private readonly string _value;
+        /// <summary> Delete the resources from Azure. </summary>
+        private const string DeleteValue = "delete";
+        /// <summary> Keep the resources in Azure. </summary>
+        private const string DetachValue = "detach";
 
         /// <summary> Initializes a new instance of <see cref="UnmanageActionResourceMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UnmanageActionResourceMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DeleteValue = "delete";
-        private const string DetachValue = "detach";
-
-        /// <summary> delete. </summary>
+        /// <summary> Delete the resources from Azure. </summary>
         public static UnmanageActionResourceMode Delete { get; } = new UnmanageActionResourceMode(DeleteValue);
-        /// <summary> detach. </summary>
+
+        /// <summary> Keep the resources in Azure. </summary>
         public static UnmanageActionResourceMode Detach { get; } = new UnmanageActionResourceMode(DetachValue);
+
         /// <summary> Determines if two <see cref="UnmanageActionResourceMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UnmanageActionResourceMode left, UnmanageActionResourceMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UnmanageActionResourceMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UnmanageActionResourceMode left, UnmanageActionResourceMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UnmanageActionResourceMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UnmanageActionResourceMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UnmanageActionResourceMode(string value) => new UnmanageActionResourceMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UnmanageActionResourceMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UnmanageActionResourceMode?(string value) => value == null ? null : new UnmanageActionResourceMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UnmanageActionResourceMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UnmanageActionResourceMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -3,8 +3,8 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 
 namespace Azure.ResourceManager.DesktopVirtualization
@@ -16,40 +16,36 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class SessionHostCollection : ArmCollection, IEnumerable<SessionHostResource>, IAsyncEnumerable<SessionHostResource>
     {
-        /// <summary>
-        /// List sessionHosts.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List sessionHosts. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<SessionHostResource> GetAllAsync(CancellationToken cancellationToken) => GetAllAsync(null, null, null, cancellationToken);
+        public virtual AsyncPageable<SessionHostResource> GetAllAsync(CancellationToken cancellationToken) => GetAllAsync(null, null, null, null, cancellationToken);
 
-        /// <summary>
-        /// List sessionHosts.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List sessionHosts. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<SessionHostResource> GetAll(CancellationToken cancellationToken) => GetAll(null, null, null, cancellationToken);
+        public virtual Pageable<SessionHostResource> GetAll(CancellationToken cancellationToken) => GetAll(null, null, null, null, cancellationToken);
+
+        /// <summary> List sessionHosts. </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<SessionHostResource> GetAllAsync(int? pageSize, bool? isDescending, int? initialSkip, CancellationToken cancellationToken)
+            => GetAllAsync(pageSize, isDescending, initialSkip, null, cancellationToken);
+
+        /// <summary> List sessionHosts. </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<SessionHostResource> GetAll(int? pageSize, bool? isDescending, int? initialSkip, CancellationToken cancellationToken)
+            => GetAll(pageSize, isDescending, initialSkip, null, cancellationToken);
     }
 }

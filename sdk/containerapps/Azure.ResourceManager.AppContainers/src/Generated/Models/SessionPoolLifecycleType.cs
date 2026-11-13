@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct SessionPoolLifecycleType : IEquatable<SessionPoolLifecycleType>
     {
         private readonly string _value;
+        /// <summary> Timed. </summary>
+        private const string TimedValue = "Timed";
+        /// <summary> OnContainerExit. </summary>
+        private const string OnContainerExitValue = "OnContainerExit";
 
         /// <summary> Initializes a new instance of <see cref="SessionPoolLifecycleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SessionPoolLifecycleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TimedValue = "Timed";
-        private const string OnContainerExitValue = "OnContainerExit";
+            _value = value;
+        }
 
         /// <summary> Timed. </summary>
         public static SessionPoolLifecycleType Timed { get; } = new SessionPoolLifecycleType(TimedValue);
+
         /// <summary> OnContainerExit. </summary>
         public static SessionPoolLifecycleType OnContainerExit { get; } = new SessionPoolLifecycleType(OnContainerExitValue);
+
         /// <summary> Determines if two <see cref="SessionPoolLifecycleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SessionPoolLifecycleType left, SessionPoolLifecycleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SessionPoolLifecycleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SessionPoolLifecycleType left, SessionPoolLifecycleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionPoolLifecycleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SessionPoolLifecycleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SessionPoolLifecycleType(string value) => new SessionPoolLifecycleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SessionPoolLifecycleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SessionPoolLifecycleType?(string value) => value == null ? null : new SessionPoolLifecycleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SessionPoolLifecycleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SessionPoolLifecycleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct CognitiveServicesSkuRestrictionReasonCode : IEquatable<CognitiveServicesSkuRestrictionReasonCode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuRestrictionReasonCode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CognitiveServicesSkuRestrictionReasonCode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string QuotaIdValue = "QuotaId";
         private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
 
-        /// <summary> QuotaId. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuRestrictionReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CognitiveServicesSkuRestrictionReasonCode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the QuotaId. </summary>
         public static CognitiveServicesSkuRestrictionReasonCode QuotaId { get; } = new CognitiveServicesSkuRestrictionReasonCode(QuotaIdValue);
-        /// <summary> NotAvailableForSubscription. </summary>
+
+        /// <summary> Gets the NotAvailableForSubscription. </summary>
         public static CognitiveServicesSkuRestrictionReasonCode NotAvailableForSubscription { get; } = new CognitiveServicesSkuRestrictionReasonCode(NotAvailableForSubscriptionValue);
+
         /// <summary> Determines if two <see cref="CognitiveServicesSkuRestrictionReasonCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CognitiveServicesSkuRestrictionReasonCode left, CognitiveServicesSkuRestrictionReasonCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CognitiveServicesSkuRestrictionReasonCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CognitiveServicesSkuRestrictionReasonCode left, CognitiveServicesSkuRestrictionReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesSkuRestrictionReasonCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CognitiveServicesSkuRestrictionReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CognitiveServicesSkuRestrictionReasonCode(string value) => new CognitiveServicesSkuRestrictionReasonCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CognitiveServicesSkuRestrictionReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CognitiveServicesSkuRestrictionReasonCode?(string value) => value == null ? null : new CognitiveServicesSkuRestrictionReasonCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CognitiveServicesSkuRestrictionReasonCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CognitiveServicesSkuRestrictionReasonCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

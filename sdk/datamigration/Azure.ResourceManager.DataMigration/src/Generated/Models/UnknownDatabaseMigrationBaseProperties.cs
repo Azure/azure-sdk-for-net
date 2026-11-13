@@ -11,7 +11,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> Unknown version of DatabaseMigrationBaseProperties. </summary>
     internal partial class UnknownDatabaseMigrationBaseProperties : DatabaseMigrationBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatabaseMigrationBaseProperties"/>. </summary>
@@ -25,14 +24,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationOperationId"> ID for current migration operation. </param>
         /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDatabaseMigrationBaseProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDatabaseMigrationBaseProperties"/> for deserialization. </summary>
-        internal UnknownDatabaseMigrationBaseProperties()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDatabaseMigrationBaseProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, additionalBinaryDataProperties)
         {
         }
     }

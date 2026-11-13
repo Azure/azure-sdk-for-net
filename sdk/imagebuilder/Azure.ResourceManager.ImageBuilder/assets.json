@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/imagebuilder/Azure.ResourceManager.ImageBuilder",
+  "Tag": "net/imagebuilder/Azure.ResourceManager.ImageBuilder_41bc3ffd67"
+}

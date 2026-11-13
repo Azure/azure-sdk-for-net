@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("eastus");
-            await foreach (MachineLearningVmSize item in subscriptionResource.GetMachineLearningVmSizesAsync(location))
+            await foreach (MachineLearningVmSize item in subscriptionResource.GetMachineLearningVmSizesAsync(location, CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -140,7 +141,7 @@ Limit = 200L,
 Unit = MachineLearningQuotaUnit.Count,
 }},
             };
-            await foreach (MachineLearningWorkspaceQuotaUpdate item in subscriptionResource.UpdateMachineLearningQuotasAsync(location, content))
+            await foreach (MachineLearningWorkspaceQuotaUpdate item in subscriptionResource.UpdateMachineLearningQuotasAsync(location, content, CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

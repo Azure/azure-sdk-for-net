@@ -7,30 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Datastore certificate secrets. </summary>
     public partial class MachineLearningCertificateDatastoreSecrets : MachineLearningDatastoreSecrets
     {
+        private string _certificate;
+        private bool _certificateIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreSecrets"/>. </summary>
-        public MachineLearningCertificateDatastoreSecrets()
+        public MachineLearningCertificateDatastoreSecrets() : base(SecretsType.Certificate)
         {
-            SecretsType = SecretsType.Certificate;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="certificate"> Service principal certificate. </param>
-        internal MachineLearningCertificateDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string certificate) : base(secretsType, serializedAdditionalRawData)
+        internal MachineLearningCertificateDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string certificate) : base(secretsType, additionalBinaryDataProperties)
         {
-            Certificate = certificate;
-            SecretsType = secretsType;
+            _certificate = certificate;
         }
 
         /// <summary> Service principal certificate. </summary>
         [WirePath("certificate")]
-        public string Certificate { get; set; }
+        public string Certificate
+        {
+            get
+            {
+                return _certificate;
+            }
+            set
+            {
+                _certificate = value;
+                _certificateIsDefined = true;
+            }
+        }
     }
 }

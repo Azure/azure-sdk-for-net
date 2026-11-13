@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ResilienceManagement.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ResilienceManagement.Tests.csproj" />
+</Solution>

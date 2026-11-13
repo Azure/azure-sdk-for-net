@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct AccessPolicyProvisioningState : IEquatable<AccessPolicyProvisioningState>
     {
         private readonly string _value;
+        /// <summary> An operation is in progress. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The operation succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> A delete operation is in progress. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The access policy is considered deleted, if it still exists. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> The operation was canceled. Access policies may be in a partially updated state. Update them again to have a well-defined state. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The operation failed. Access policies may be in a partially updated state. Update them again to have a well-defined state. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="AccessPolicyProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AccessPolicyProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string UpdatingValue = "Updating";
-        private const string SucceededValue = "Succeeded";
-        private const string DeletingValue = "Deleting";
-        private const string DeletedValue = "Deleted";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Updating. </summary>
+        /// <summary> An operation is in progress. </summary>
         public static AccessPolicyProvisioningState Updating { get; } = new AccessPolicyProvisioningState(UpdatingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> The operation succeeded. </summary>
         public static AccessPolicyProvisioningState Succeeded { get; } = new AccessPolicyProvisioningState(SucceededValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> A delete operation is in progress. </summary>
         public static AccessPolicyProvisioningState Deleting { get; } = new AccessPolicyProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> The access policy is considered deleted, if it still exists. </summary>
         public static AccessPolicyProvisioningState Deleted { get; } = new AccessPolicyProvisioningState(DeletedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The operation was canceled. Access policies may be in a partially updated state. Update them again to have a well-defined state. </summary>
         public static AccessPolicyProvisioningState Canceled { get; } = new AccessPolicyProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The operation failed. Access policies may be in a partially updated state. Update them again to have a well-defined state. </summary>
         public static AccessPolicyProvisioningState Failed { get; } = new AccessPolicyProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="AccessPolicyProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AccessPolicyProvisioningState left, AccessPolicyProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AccessPolicyProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AccessPolicyProvisioningState left, AccessPolicyProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessPolicyProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AccessPolicyProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AccessPolicyProvisioningState(string value) => new AccessPolicyProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AccessPolicyProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AccessPolicyProvisioningState?(string value) => value == null ? null : new AccessPolicyProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AccessPolicyProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AccessPolicyProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

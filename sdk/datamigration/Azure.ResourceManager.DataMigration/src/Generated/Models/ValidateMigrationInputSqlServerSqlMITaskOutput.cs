@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Output for task that validates migration input for SQL to Azure SQL Managed Instance migrations. </summary>
     public partial class ValidateMigrationInputSqlServerSqlMITaskOutput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskOutput"/>. </summary>
         internal ValidateMigrationInputSqlServerSqlMITaskOutput()
@@ -64,8 +36,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupStorageAccountErrors"> Errors associated with the storage account provided. </param>
         /// <param name="existingBackupErrors"> Errors associated with existing backup files. </param>
         /// <param name="databaseBackupInfo"> Information about backup files when existing backup mode is used. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateMigrationInputSqlServerSqlMITaskOutput(string id, string name, IReadOnlyList<DataMigrationReportableException> restoreDatabaseNameErrors, IReadOnlyList<DataMigrationReportableException> backupFolderErrors, IReadOnlyList<DataMigrationReportableException> backupShareCredentialsErrors, IReadOnlyList<DataMigrationReportableException> backupStorageAccountErrors, IReadOnlyList<DataMigrationReportableException> existingBackupErrors, DataMigrationDatabaseBackupInfo databaseBackupInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateMigrationInputSqlServerSqlMITaskOutput(string id, string name, IReadOnlyList<DataMigrationReportableException> restoreDatabaseNameErrors, IReadOnlyList<DataMigrationReportableException> backupFolderErrors, IReadOnlyList<DataMigrationReportableException> backupShareCredentialsErrors, IReadOnlyList<DataMigrationReportableException> backupStorageAccountErrors, IReadOnlyList<DataMigrationReportableException> existingBackupErrors, DataMigrationDatabaseBackupInfo databaseBackupInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -75,23 +47,30 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupStorageAccountErrors = backupStorageAccountErrors;
             ExistingBackupErrors = existingBackupErrors;
             DatabaseBackupInfo = databaseBackupInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Result identifier. </summary>
         public string Id { get; }
+
         /// <summary> Name of database. </summary>
         public string Name { get; }
+
         /// <summary> Errors associated with the RestoreDatabaseName. </summary>
         public IReadOnlyList<DataMigrationReportableException> RestoreDatabaseNameErrors { get; }
+
         /// <summary> Errors associated with the BackupFolder path. </summary>
         public IReadOnlyList<DataMigrationReportableException> BackupFolderErrors { get; }
+
         /// <summary> Errors associated with backup share user name and password credentials. </summary>
         public IReadOnlyList<DataMigrationReportableException> BackupShareCredentialsErrors { get; }
+
         /// <summary> Errors associated with the storage account provided. </summary>
         public IReadOnlyList<DataMigrationReportableException> BackupStorageAccountErrors { get; }
+
         /// <summary> Errors associated with existing backup files. </summary>
         public IReadOnlyList<DataMigrationReportableException> ExistingBackupErrors { get; }
+
         /// <summary> Information about backup files when existing backup mode is used. </summary>
         public DataMigrationDatabaseBackupInfo DatabaseBackupInfo { get; }
     }

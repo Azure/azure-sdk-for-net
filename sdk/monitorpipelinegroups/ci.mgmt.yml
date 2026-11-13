@@ -1,0 +1,19 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/monitorpipelinegroups/Azure.ResourceManager.Monitor.PipelineGroups
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: monitorpipelinegroups
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.Monitor.PipelineGroups
+      safeName: AzureResourceManagerMonitorPipelineGroups

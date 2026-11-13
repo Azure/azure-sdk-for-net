@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingPolicyType : IEquatable<BillingPolicyType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> UserControlled. </summary>
+        private const string UserControlledValue = "UserControlled";
+        /// <summary> SystemControlled. </summary>
+        private const string SystemControlledValue = "SystemControlled";
 
         /// <summary> Initializes a new instance of <see cref="BillingPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingPolicyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string UserControlledValue = "UserControlled";
-        private const string SystemControlledValue = "SystemControlled";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingPolicyType Other { get; } = new BillingPolicyType(OtherValue);
+
         /// <summary> UserControlled. </summary>
         public static BillingPolicyType UserControlled { get; } = new BillingPolicyType(UserControlledValue);
+
         /// <summary> SystemControlled. </summary>
         public static BillingPolicyType SystemControlled { get; } = new BillingPolicyType(SystemControlledValue);
+
         /// <summary> Determines if two <see cref="BillingPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingPolicyType left, BillingPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingPolicyType left, BillingPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingPolicyType(string value) => new BillingPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingPolicyType?(string value) => value == null ? null : new BillingPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

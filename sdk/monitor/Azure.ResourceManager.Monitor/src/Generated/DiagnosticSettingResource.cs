@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing a DiagnosticSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticSettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDiagnosticSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDiagnosticSetting method.
+    /// A class representing a DiagnosticSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDiagnosticSettings method.
     /// </summary>
     public partial class DiagnosticSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DiagnosticSettingResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _diagnosticSettingClientDiagnostics;
-        private readonly DiagnosticSettingsRestOperations _diagnosticSettingRestClient;
+        private readonly ClientDiagnostics _diagnosticSettingsClientDiagnostics;
+        private readonly DiagnosticSettings _diagnosticSettingsRestClient;
         private readonly DiagnosticSettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/diagnosticSettings";
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DiagnosticSettingResource for mocking. </summary>
         protected DiagnosticSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiagnosticSettingResource(ArmClient client, DiagnosticSettingData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.Monitor
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiagnosticSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diagnosticSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string diagnosticSettingApiVersion);
-            _diagnosticSettingRestClient = new DiagnosticSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diagnosticSettingApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _diagnosticSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            _diagnosticSettingsRestClient = new DiagnosticSettings(_diagnosticSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diagnosticSettingApiVersion ?? "2021-05-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DiagnosticSettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the active diagnostic settings for the specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticSettingsResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DiagnosticSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Get");
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _diagnosticSettingRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.Monitor
         /// Gets the active diagnostic settings for the specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticSettingsResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DiagnosticSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Get");
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _diagnosticSettingRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,20 +189,20 @@ namespace Azure.ResourceManager.Monitor
         /// Deletes existing diagnostic settings for the specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticSettingsResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,16 +210,23 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Delete");
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Delete");
             scope.Start();
             try
             {
-                var response = await _diagnosticSettingRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _diagnosticSettingRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation operation = new MonitorArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Monitor
         /// Deletes existing diagnostic settings for the specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticSettingsResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,16 +261,23 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Delete");
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Delete");
             scope.Start();
             try
             {
-                var response = _diagnosticSettingRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var uri = _diagnosticSettingRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation operation = new MonitorArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -255,23 +288,23 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Creates or updates diagnostic settings for the specified resource.
+        /// Update a DiagnosticSetting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticSettingsResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,16 +316,24 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Update");
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _diagnosticSettingRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _diagnosticSettingRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DiagnosticSettingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation<DiagnosticSettingResource> operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -303,23 +344,23 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Creates or updates diagnostic settings for the specified resource.
+        /// Update a DiagnosticSetting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticSettingsResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,16 +372,24 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Update");
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _diagnosticSettingRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var uri = _diagnosticSettingRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DiagnosticSettingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation<DiagnosticSettingResource> operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ManagedPipelineModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ManagedPipelineMode value) => value switch
         {
             ManagedPipelineMode.Integrated => "Integrated",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedPipelineMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ManagedPipelineMode ToManagedPipelineMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Integrated")) return ManagedPipelineMode.Integrated;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Classic")) return ManagedPipelineMode.Classic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Integrated"))
+            {
+                return ManagedPipelineMode.Integrated;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Classic"))
+            {
+                return ManagedPipelineMode.Classic;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedPipelineMode value.");
         }
     }

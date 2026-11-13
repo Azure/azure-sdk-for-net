@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityInsightsThreatIntelligenceIndicatorResource : IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>
     {
-        private static SecurityInsightsThreatIntelligenceIndicatorBaseData s_dataDeserializationInstance;
-        private static SecurityInsightsThreatIntelligenceIndicatorBaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsightsThreatIntelligenceIndicatorBaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)Data).Write(writer, options);
 
-        SecurityInsightsThreatIntelligenceIndicatorBaseData IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsThreatIntelligenceIndicatorBaseData IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsThreatIntelligenceIndicatorBaseData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityInsightsThreatIntelligenceIndicatorBaseData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsThreatIntelligenceIndicatorBaseData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

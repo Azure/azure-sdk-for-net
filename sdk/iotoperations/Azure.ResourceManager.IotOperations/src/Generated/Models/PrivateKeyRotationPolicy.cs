@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct PrivateKeyRotationPolicy : IEquatable<PrivateKeyRotationPolicy>
     {
         private readonly string _value;
+        /// <summary> Rotation Policy - Always. </summary>
+        private const string AlwaysValue = "Always";
+        /// <summary> Rotation Policy - Never. </summary>
+        private const string NeverValue = "Never";
 
         /// <summary> Initializes a new instance of <see cref="PrivateKeyRotationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrivateKeyRotationPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlwaysValue = "Always";
-        private const string NeverValue = "Never";
+            _value = value;
+        }
 
         /// <summary> Rotation Policy - Always. </summary>
         public static PrivateKeyRotationPolicy Always { get; } = new PrivateKeyRotationPolicy(AlwaysValue);
+
         /// <summary> Rotation Policy - Never. </summary>
         public static PrivateKeyRotationPolicy Never { get; } = new PrivateKeyRotationPolicy(NeverValue);
+
         /// <summary> Determines if two <see cref="PrivateKeyRotationPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrivateKeyRotationPolicy left, PrivateKeyRotationPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrivateKeyRotationPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrivateKeyRotationPolicy left, PrivateKeyRotationPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateKeyRotationPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PrivateKeyRotationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrivateKeyRotationPolicy(string value) => new PrivateKeyRotationPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrivateKeyRotationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrivateKeyRotationPolicy?(string value) => value == null ? null : new PrivateKeyRotationPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateKeyRotationPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrivateKeyRotationPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

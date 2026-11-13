@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace Routes
 {
+    [ModelReaderWriterBuildable(typeof(ExpandParameters))]
     public partial class RoutesContext : ModelReaderWriterContext
     {
     }

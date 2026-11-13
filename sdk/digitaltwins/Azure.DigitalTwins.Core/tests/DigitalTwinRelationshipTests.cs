@@ -763,7 +763,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     floorContainsRoomRelationshipId)
                     .ConfigureAwait(false)).Value.ETag;
 
-                Assert.IsNotNull(correctETag);
+                Assert.That(correctETag, Is.Not.Null);
 
                 try
                 {
@@ -993,7 +993,7 @@ namespace Azure.DigitalTwins.Core.Tests
                         floorContainsRoomRelationshipId)
                     .ConfigureAwait(false)).Value.ETag;
 
-                Assert.IsNotNull(correctEtag);
+                Assert.That(correctEtag, Is.Not.Null);
 
                 try
                 {

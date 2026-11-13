@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct L3NetworkProvisioningState : IEquatable<L3NetworkProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The Succeeded status. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The Failed status. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The Canceled status. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The Provisioning status. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The Accepted status. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="L3NetworkProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public L3NetworkProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string AcceptedValue = "Accepted";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> The Succeeded status. </summary>
         public static L3NetworkProvisioningState Succeeded { get; } = new L3NetworkProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The Failed status. </summary>
         public static L3NetworkProvisioningState Failed { get; } = new L3NetworkProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The Canceled status. </summary>
         public static L3NetworkProvisioningState Canceled { get; } = new L3NetworkProvisioningState(CanceledValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> The Provisioning status. </summary>
         public static L3NetworkProvisioningState Provisioning { get; } = new L3NetworkProvisioningState(ProvisioningValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> The Accepted status. </summary>
         public static L3NetworkProvisioningState Accepted { get; } = new L3NetworkProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="L3NetworkProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(L3NetworkProvisioningState left, L3NetworkProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="L3NetworkProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(L3NetworkProvisioningState left, L3NetworkProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="L3NetworkProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="L3NetworkProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator L3NetworkProvisioningState(string value) => new L3NetworkProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="L3NetworkProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator L3NetworkProvisioningState?(string value) => value == null ? null : new L3NetworkProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is L3NetworkProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(L3NetworkProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

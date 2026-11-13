@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Extensions.OpenAI.MemorySearchToolCallResponseItem</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Extensions.OpenAI.MemorySearchToolCallStatus</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Extensions.OpenAI.MemoryToolSearchItem</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Extensions.OpenAI.ExtensionsOpenAIModelFactory.MemorySearchToolCallResponseItem(System.String,Azure.AI.Extensions.OpenAI.AgentReference,System.String,Azure.AI.Extensions.OpenAI.MemorySearchToolCallStatus,System.Collections.Generic.IEnumerable{Azure.AI.Extensions.OpenAI.MemoryToolSearchItem})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Extensions.OpenAI.ExtensionsOpenAIModelFactory.MemoryToolSearchItem(Azure.AI.Extensions.OpenAI.MemoryOutputItem)</Target>
+  </Suppression>
+</Suppressions>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
@@ -16,6 +17,8 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
+    // This test uses service principal authentication to connect to Key Vault and Search service, so it only runs in V2024_07_01 and runs in playback with recorded credentials.
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01)]
     public class EncryptedIndex : SearchTestBase
     {
         public EncryptedIndex(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -27,6 +30,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [SyncOnly]
+        [PlaybackOnly("This test uses service principal authentication to connect to Key Vault and Search service, so it only runs in playback with recorded credentials.")]
         public async Task CreateDoubleEncryptedIndex()
         {
             string keyVaultUrl = TestEnvironment.KeyVaultUrl;
@@ -131,11 +135,11 @@ namespace Azure.Search.Documents.Tests.Samples
 #endif
                 indexerClient.CreateDataSourceConnection(dataSourceConnection);
 #if !SNIPPET
-                cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName));
+                cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName, cancellationToken: CancellationToken.None));
 #endif
                 indexerClient.CreateIndexer(indexer);
 #if !SNIPPET
-                cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName));
+                cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName, cancellationToken: CancellationToken.None));
 #endif
                 #endregion Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Index
 

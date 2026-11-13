@@ -21,8 +21,12 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="bool"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator bool(DynamicData value)
+        public static implicit operator bool(DynamicData? value)
         {
+            if (value is null)
+            {
+                return false;
+            }
             try
             {
                 return value._element.GetBoolean();
@@ -37,8 +41,13 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="string"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator string?(DynamicData value)
+        public static implicit operator string?(DynamicData? value)
         {
+            if (value is null)
+            {
+                return null;
+            }
+
             try
             {
                 return value._element.GetString();
@@ -55,6 +64,11 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator byte(DynamicData value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetByte();
@@ -75,6 +89,11 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator sbyte(DynamicData value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetSByte();
@@ -95,6 +114,11 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator short(DynamicData value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetInt16();
@@ -115,6 +139,11 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator ushort(DynamicData value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetUInt16();
@@ -135,6 +164,11 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator int(DynamicData value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetInt32();
@@ -153,8 +187,13 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="uint"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator uint(DynamicData value)
+        public static implicit operator uint(DynamicData? value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetUInt32();
@@ -175,6 +214,11 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator long(DynamicData value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetInt64();
@@ -193,8 +237,13 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="ulong"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator ulong(DynamicData value)
+        public static implicit operator ulong(DynamicData? value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetUInt64();
@@ -215,6 +264,11 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator float(DynamicData value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetSingle();
@@ -233,8 +287,13 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="double"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator double(DynamicData value)
+        public static implicit operator double(DynamicData? value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetDouble();
@@ -253,8 +312,13 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="decimal"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator decimal(DynamicData value)
+        public static implicit operator decimal(DynamicData? value)
         {
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
                 return value._element.GetDecimal();

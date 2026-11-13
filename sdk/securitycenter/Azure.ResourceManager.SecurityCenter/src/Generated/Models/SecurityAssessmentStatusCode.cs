@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityAssessmentStatusCode : IEquatable<SecurityAssessmentStatusCode>
     {
         private readonly string _value;
+        /// <summary> The resource is healthy. </summary>
+        private const string HealthyValue = "Healthy";
+        /// <summary> The resource has a security issue that needs to be addressed. </summary>
+        private const string UnhealthyValue = "Unhealthy";
+        /// <summary> Assessment for this resource did not happen. </summary>
+        private const string NotApplicableValue = "NotApplicable";
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAssessmentStatusCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HealthyValue = "Healthy";
-        private const string UnhealthyValue = "Unhealthy";
-        private const string NotApplicableValue = "NotApplicable";
+            _value = value;
+        }
 
         /// <summary> The resource is healthy. </summary>
         public static SecurityAssessmentStatusCode Healthy { get; } = new SecurityAssessmentStatusCode(HealthyValue);
+
         /// <summary> The resource has a security issue that needs to be addressed. </summary>
         public static SecurityAssessmentStatusCode Unhealthy { get; } = new SecurityAssessmentStatusCode(UnhealthyValue);
+
         /// <summary> Assessment for this resource did not happen. </summary>
         public static SecurityAssessmentStatusCode NotApplicable { get; } = new SecurityAssessmentStatusCode(NotApplicableValue);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentStatusCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityAssessmentStatusCode left, SecurityAssessmentStatusCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentStatusCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityAssessmentStatusCode left, SecurityAssessmentStatusCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAssessmentStatusCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityAssessmentStatusCode(string value) => new SecurityAssessmentStatusCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityAssessmentStatusCode?(string value) => value == null ? null : new SecurityAssessmentStatusCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityAssessmentStatusCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityAssessmentStatusCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

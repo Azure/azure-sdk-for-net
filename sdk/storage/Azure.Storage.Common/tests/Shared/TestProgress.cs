@@ -9,10 +9,14 @@ namespace Azure.Storage.Test
 {
     public class TestProgress : IProgress<long>
     {
+        private readonly object _lock = new object();
         public List<long> List = new List<long>();
         public void Report(long value)
         {
-            List.Add(value);
+            lock (_lock)
+            {
+                List.Add(value);
+            }
         }
     }
 }

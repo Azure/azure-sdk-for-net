@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -20,9 +21,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="StateUpdateCommonPostActionResult"/>. </summary>
         /// <param name="error"> The error object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
-        internal StateUpdateCommonPostActionResult(ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationState? configurationState) : base(error, serializedAdditionalRawData)
+        internal StateUpdateCommonPostActionResult(ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricConfigurationState? configurationState) : base(error, additionalBinaryDataProperties)
         {
             ConfigurationState = configurationState;
         }

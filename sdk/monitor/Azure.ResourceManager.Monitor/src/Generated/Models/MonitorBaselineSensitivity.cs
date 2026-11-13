@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MonitorBaselineSensitivity : IEquatable<MonitorBaselineSensitivity>
     {
         private readonly string _value;
+        /// <summary> Low. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Medium. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> High. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="MonitorBaselineSensitivity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorBaselineSensitivity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowValue = "Low";
-        private const string MediumValue = "Medium";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Low. </summary>
         public static MonitorBaselineSensitivity Low { get; } = new MonitorBaselineSensitivity(LowValue);
+
         /// <summary> Medium. </summary>
         public static MonitorBaselineSensitivity Medium { get; } = new MonitorBaselineSensitivity(MediumValue);
+
         /// <summary> High. </summary>
         public static MonitorBaselineSensitivity High { get; } = new MonitorBaselineSensitivity(HighValue);
+
         /// <summary> Determines if two <see cref="MonitorBaselineSensitivity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorBaselineSensitivity left, MonitorBaselineSensitivity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorBaselineSensitivity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorBaselineSensitivity left, MonitorBaselineSensitivity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorBaselineSensitivity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorBaselineSensitivity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorBaselineSensitivity(string value) => new MonitorBaselineSensitivity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorBaselineSensitivity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorBaselineSensitivity?(string value) => value == null ? null : new MonitorBaselineSensitivity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorBaselineSensitivity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorBaselineSensitivity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

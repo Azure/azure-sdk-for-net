@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes operator to be matched
-    /// Serialized Name: RequestHeaderOperator
-    /// </summary>
+    /// <summary> Describes operator to be matched. </summary>
     public readonly partial struct RequestHeaderOperator : IEquatable<RequestHeaderOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RequestHeaderOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RequestHeaderOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -36,73 +26,76 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary>
-        /// Any
-        /// Serialized Name: RequestHeaderOperator.Any
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestHeaderOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RequestHeaderOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static RequestHeaderOperator Any { get; } = new RequestHeaderOperator(AnyValue);
-        /// <summary>
-        /// Equal
-        /// Serialized Name: RequestHeaderOperator.Equal
-        /// </summary>
+
+        /// <summary> Gets the Equal. </summary>
         public static RequestHeaderOperator Equal { get; } = new RequestHeaderOperator(EqualValue);
-        /// <summary>
-        /// Contains
-        /// Serialized Name: RequestHeaderOperator.Contains
-        /// </summary>
+
+        /// <summary> Gets the Contains. </summary>
         public static RequestHeaderOperator Contains { get; } = new RequestHeaderOperator(ContainsValue);
-        /// <summary>
-        /// BeginsWith
-        /// Serialized Name: RequestHeaderOperator.BeginsWith
-        /// </summary>
+
+        /// <summary> Gets the BeginsWith. </summary>
         public static RequestHeaderOperator BeginsWith { get; } = new RequestHeaderOperator(BeginsWithValue);
-        /// <summary>
-        /// EndsWith
-        /// Serialized Name: RequestHeaderOperator.EndsWith
-        /// </summary>
+
+        /// <summary> Gets the EndsWith. </summary>
         public static RequestHeaderOperator EndsWith { get; } = new RequestHeaderOperator(EndsWithValue);
-        /// <summary>
-        /// LessThan
-        /// Serialized Name: RequestHeaderOperator.LessThan
-        /// </summary>
+
+        /// <summary> Gets the LessThan. </summary>
         public static RequestHeaderOperator LessThan { get; } = new RequestHeaderOperator(LessThanValue);
-        /// <summary>
-        /// LessThanOrEqual
-        /// Serialized Name: RequestHeaderOperator.LessThanOrEqual
-        /// </summary>
+
+        /// <summary> Gets the LessThanOrEqual. </summary>
         public static RequestHeaderOperator LessThanOrEqual { get; } = new RequestHeaderOperator(LessThanOrEqualValue);
-        /// <summary>
-        /// GreaterThan
-        /// Serialized Name: RequestHeaderOperator.GreaterThan
-        /// </summary>
+
+        /// <summary> Gets the GreaterThan. </summary>
         public static RequestHeaderOperator GreaterThan { get; } = new RequestHeaderOperator(GreaterThanValue);
-        /// <summary>
-        /// GreaterThanOrEqual
-        /// Serialized Name: RequestHeaderOperator.GreaterThanOrEqual
-        /// </summary>
+
+        /// <summary> Gets the GreaterThanOrEqual. </summary>
         public static RequestHeaderOperator GreaterThanOrEqual { get; } = new RequestHeaderOperator(GreaterThanOrEqualValue);
-        /// <summary>
-        /// RegEx
-        /// Serialized Name: RequestHeaderOperator.RegEx
-        /// </summary>
+
+        /// <summary> Gets the RegEx. </summary>
         public static RequestHeaderOperator RegEx { get; } = new RequestHeaderOperator(RegExValue);
+
         /// <summary> Determines if two <see cref="RequestHeaderOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RequestHeaderOperator left, RequestHeaderOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RequestHeaderOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RequestHeaderOperator left, RequestHeaderOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestHeaderOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RequestHeaderOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RequestHeaderOperator(string value) => new RequestHeaderOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RequestHeaderOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RequestHeaderOperator?(string value) => value == null ? null : new RequestHeaderOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RequestHeaderOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RequestHeaderOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create hybrid runbook worker group operation. </summary>
     public partial class HybridRunbookWorkerGroupCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerGroupCreateOrUpdateContent"/>. </summary>
         public HybridRunbookWorkerGroupCreateOrUpdateContent()
@@ -51,29 +22,36 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerGroupCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Gets or sets hybrid runbook worker group create or update properties. </param>
         /// <param name="name"> Gets or sets the name of the resource. </param>
-        /// <param name="credential"> Sets the credential of a worker group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridRunbookWorkerGroupCreateOrUpdateContent(string name, RunAsCredentialAssociationProperty credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridRunbookWorkerGroupCreateOrUpdateContent(HybridRunbookWorkerGroupCreateOrUpdateProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Name = name;
-            Credential = credential;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets or sets hybrid runbook worker group create or update properties. </summary>
+        internal HybridRunbookWorkerGroupCreateOrUpdateProperties Properties { get; set; }
 
         /// <summary> Gets or sets the name of the resource. </summary>
         public string Name { get; set; }
-        /// <summary> Sets the credential of a worker group. </summary>
-        internal RunAsCredentialAssociationProperty Credential { get; set; }
+
         /// <summary> Gets or sets the name of the credential. </summary>
         public string CredentialName
         {
-            get => Credential is null ? default : Credential.Name;
+            get
+            {
+                return Properties is null ? default : Properties.CredentialName;
+            }
             set
             {
-                if (Credential is null)
-                    Credential = new RunAsCredentialAssociationProperty();
-                Credential.Name = value;
+                if (Properties is null)
+                {
+                    Properties = new HybridRunbookWorkerGroupCreateOrUpdateProperties();
+                }
+                Properties.CredentialName = value;
             }
         }
     }

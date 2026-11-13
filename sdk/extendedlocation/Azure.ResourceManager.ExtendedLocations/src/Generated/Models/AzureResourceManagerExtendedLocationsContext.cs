@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ExtendedLocations.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,19 +14,28 @@ namespace Azure.ResourceManager.ExtendedLocations
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CustomLocationAuthentication))]
     [ModelReaderWriterBuildable(typeof(CustomLocationData))]
     [ModelReaderWriterBuildable(typeof(CustomLocationEnabledResourceType))]
     [ModelReaderWriterBuildable(typeof(CustomLocationEnabledResourceTypeMetadata))]
     [ModelReaderWriterBuildable(typeof(CustomLocationEnabledResourceTypesResult))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationFindTargetResourceGroupProperties))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationFindTargetResourceGroupResult))]
     [ModelReaderWriterBuildable(typeof(CustomLocationListResult))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationOperationInfo))]
     [ModelReaderWriterBuildable(typeof(CustomLocationPatch))]
     [ModelReaderWriterBuildable(typeof(CustomLocationResource))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResourceSyncRuleData))]
+    [ModelReaderWriterBuildable(typeof(ResourceSyncRuleMatchExpression))]
+    [ModelReaderWriterBuildable(typeof(ResourceSyncRulePatch))]
+    [ModelReaderWriterBuildable(typeof(ResourceSyncRulePropertiesSelector))]
+    [ModelReaderWriterBuildable(typeof(ResourceSyncRuleResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerExtendedLocationsContext : ModelReaderWriterContext
     {
     }

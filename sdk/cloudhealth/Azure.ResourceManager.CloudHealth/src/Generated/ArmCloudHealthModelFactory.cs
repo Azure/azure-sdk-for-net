@@ -9,61 +9,59 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.CloudHealth;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmCloudHealthModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="healthModelProvisioningState"> The status of the last operation. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelData"/> instance for mocking. </returns>
-        public static HealthModelData HealthModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthModelProperties properties = null, ManagedServiceIdentity identity = null)
+        public static HealthModelData HealthModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthModelProvisioningState? healthModelProvisioningState = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HealthModelData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties,
+                healthModelProvisioningState is null ? default : new HealthModelProperties(healthModelProvisioningState, default),
                 identity,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelProperties"/>. </summary>
-        /// <param name="dataplaneEndpoint"> The data plane endpoint for interacting with health data. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="discovery"> Configure to automatically discover entities from a given scope, such as a Service Group. The discovered entities will be linked to the root entity of the health model. </param>
-        /// <returns> A new <see cref="Models.HealthModelProperties"/> instance for mocking. </returns>
-        public static HealthModelProperties HealthModelProperties(string dataplaneEndpoint = null, HealthModelProvisioningState? provisioningState = null, ModelDiscoverySettings discovery = null)
+        /// <summary> The type used for update operations of the HealthModel. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HealthModelPatch"/> instance for mocking. </returns>
+        public static HealthModelPatch HealthModelPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
-            return new HealthModelProperties(dataplaneEndpoint, provisioningState, discovery, serializedAdditionalRawData: null);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HealthModelPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelSignalDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Please note <see cref="Models.HealthModelSignalDefinitionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ResourceMetricSignalDefinitionProperties"/>, <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/> and <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>.
-        /// </param>
+        /// <summary> A signal definition in a health model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelSignalDefinitionData"/> instance for mocking. </returns>
-        public static HealthModelSignalDefinitionData HealthModelSignalDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelSignalDefinitionProperties properties = null)
+        public static HealthModelSignalDefinitionData HealthModelSignalDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelSignalDefinitionProperties properties = default)
         {
             return new HealthModelSignalDefinitionData(
                 id,
@@ -71,144 +69,152 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 resourceType,
                 systemData,
                 properties,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelSignalDefinitionProperties"/>. </summary>
+        /// <summary>
+        /// SignalDefinition properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/>, <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>, and <see cref="Models.ResourceMetricSignalDefinitionProperties"/>.
+        /// </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="signalKind"> Kind of the signal definition. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <returns> A new <see cref="Models.HealthModelSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static HealthModelSignalDefinitionProperties HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string signalKind = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null)
+        public static HealthModelSignalDefinitionProperties HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string signalKind = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default)
         {
-            labels ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new UnknownHealthModelSignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                signalKind == null ? default : new EntitySignalKind(signalKind),
+                signalKind is null ? default : new EntitySignalKind(signalKind),
                 refreshInterval,
-                labels,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
                 evaluationRules,
-                deletedOn,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceMetricSignalDefinitionProperties"/>. </summary>
+        /// <summary> Evaluation rule for a signal definition. </summary>
+        /// <param name="degradedRule"> Degraded rule with static threshold. </param>
+        /// <param name="unhealthyRule"> Unhealthy rule with static threshold. </param>
+        /// <returns> A new <see cref="Models.EntitySignalEvaluationRule"/> instance for mocking. </returns>
+        public static EntitySignalEvaluationRule EntitySignalEvaluationRule(EntitySignalThresholdRule degradedRule = default, EntitySignalThresholdRule unhealthyRule = default)
+        {
+            return new EntitySignalEvaluationRule(degradedRule, unhealthyRule, default);
+        }
+
+        /// <summary> Threshold-based evaluation rule for a signal definition. </summary>
+        /// <param name="signalOperator"> Operator how to compare the signal value with the threshold. </param>
+        /// <param name="threshold"> Threshold value. </param>
+        /// <param name="sensitivity"> Sensitivity level for dynamic threshold detection. Only applicable when operator is Dynamic. </param>
+        /// <returns> A new <see cref="Models.EntitySignalThresholdRule"/> instance for mocking. </returns>
+        public static EntitySignalThresholdRule EntitySignalThresholdRule(EntitySignalOperator signalOperator = default, double? threshold = default, EntityDynamicThresholdSensitivity? sensitivity = default)
+        {
+            return new EntitySignalThresholdRule(signalOperator, threshold, sensitivity, default);
+        }
+
+        /// <summary> Azure Resource Metric Signal Definition properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="metricNamespace"> Metric namespace. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
-        /// <param name="dimension"> Optional: Dimension to split by. </param>
-        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
+        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. </param>
         /// <returns> A new <see cref="Models.ResourceMetricSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string metricNamespace = null, string metricName = null, string timeGrain = null, MetricAggregationType aggregationType = default, string dimension = null, string dimensionFilter = null)
+        public static ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, string metricNamespace = default, string metricName = default, string timeGrain = default, HealthModelMetricAggregationType aggregationType = default, string dimensionFilter = default)
         {
-            labels ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ResourceMetricSignalDefinitionProperties(
                 provisioningState,
                 displayName,
                 EntitySignalKind.AzureResourceMetric,
                 refreshInterval,
-                labels,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
                 evaluationRules,
-                deletedOn,
-                serializedAdditionalRawData: null,
+                default,
                 metricNamespace,
                 metricName,
                 timeGrain,
                 aggregationType,
-                dimension,
                 dimensionFilter);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/>. </summary>
+        /// <summary> Log Analytics Query Signal Definition properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="queryText"> Query text in KQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </param>
         /// <param name="valueColumnName"> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </param>
         /// <returns> A new <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/> instance for mocking. </returns>
-        public static LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string queryText = null, string timeGrain = null, string valueColumnName = null)
+        public static LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, string queryText = default, string timeGrain = default, string valueColumnName = default)
         {
-            labels ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new LogAnalyticsQuerySignalDefinitionProperties(
                 provisioningState,
                 displayName,
                 EntitySignalKind.LogAnalyticsQuery,
                 refreshInterval,
-                labels,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
                 evaluationRules,
-                deletedOn,
-                serializedAdditionalRawData: null,
+                default,
                 queryText,
                 timeGrain,
                 valueColumnName);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>. </summary>
+        /// <summary> Prometheus Metrics Signal Definition properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="queryText"> Query text in PromQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <returns> A new <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string queryText = null, string timeGrain = null)
+        public static PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, string queryText = default, string timeGrain = default)
         {
-            labels ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new PrometheusMetricsSignalDefinitionProperties(
                 provisioningState,
                 displayName,
                 EntitySignalKind.PrometheusMetricsQuery,
                 refreshInterval,
-                labels,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
                 evaluationRules,
-                deletedOn,
-                serializedAdditionalRawData: null,
+                default,
                 queryText,
                 timeGrain);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelAuthenticationSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Please note <see cref="Models.HealthModelAuthenticationSettingProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/>.
-        /// </param>
+        /// <summary> An authentication setting in a health model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelAuthenticationSettingData"/> instance for mocking. </returns>
-        public static HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelAuthenticationSettingProperties properties = null)
+        public static HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelAuthenticationSettingProperties properties = default)
         {
             return new HealthModelAuthenticationSettingData(
                 id,
@@ -216,37 +222,40 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 resourceType,
                 systemData,
                 properties,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelAuthenticationSettingProperties"/>. </summary>
+        /// <summary>
+        /// Authentication setting properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/>.
+        /// </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="authenticationKind"> Kind of the authentication setting. </param>
         /// <returns> A new <see cref="Models.HealthModelAuthenticationSettingProperties"/> instance for mocking. </returns>
-        public static HealthModelAuthenticationSettingProperties HealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string authenticationKind = null)
+        public static HealthModelAuthenticationSettingProperties HealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string authenticationKind = default)
         {
-            return new UnknownHealthModelAuthenticationSettingProperties(provisioningState, displayName, authenticationKind == null ? default : new HealthModelAuthenticationKind(authenticationKind), serializedAdditionalRawData: null);
+            return new UnknownHealthModelAuthenticationSettingProperties(provisioningState, displayName, authenticationKind is null ? default : new HealthModelAuthenticationKind(authenticationKind), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/>. </summary>
+        /// <summary> Authentication setting properties for Azure Managed Identity. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="managedIdentityName"> Name of the managed identity to use. Either 'SystemAssigned' or the resourceId of a user-assigned identity. </param>
         /// <returns> A new <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/> instance for mocking. </returns>
-        public static ManagedIdentityAuthenticationSettingProperties ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string managedIdentityName = null)
+        public static ManagedIdentityAuthenticationSettingProperties ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string managedIdentityName = default)
         {
-            return new ManagedIdentityAuthenticationSettingProperties(provisioningState, displayName, HealthModelAuthenticationKind.ManagedIdentity, serializedAdditionalRawData: null, managedIdentityName);
+            return new ManagedIdentityAuthenticationSettingProperties(provisioningState, displayName, HealthModelAuthenticationKind.ManagedIdentity, default, managedIdentityName);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelEntityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> An entity (aka node) of a health model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelEntityData"/> instance for mocking. </returns>
-        public static HealthModelEntityData HealthModelEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelEntityProperties properties = null)
+        public static HealthModelEntityData HealthModelEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelEntityProperties properties = default)
         {
             return new HealthModelEntityData(
                 id,
@@ -254,53 +263,643 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 resourceType,
                 systemData,
                 properties,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelEntityProperties"/>. </summary>
+        /// <summary> Properties which are common across all kinds of entities. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
-        /// <param name="kind"> Entity kind. </param>
         /// <param name="canvasPosition"> Positioning of the entity on the model canvas. </param>
         /// <param name="icon"> Visual icon definition. If not set, a default icon is used. </param>
         /// <param name="healthObjective"> Health objective as a percentage of time the entity should be healthy. </param>
         /// <param name="impact"> Impact of the entity in health state propagation. </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
-        /// <param name="signals"> Signal groups which are assigned to this entity. </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
+        /// <param name="signalGroups"> Signal groups which are assigned to this entity. </param>
+        /// <param name="signalAggregationGroups"> Logical aggregation groups over the signals on this entity. Overlap is allowed: the same signal may appear in more than one group's members. Each group is evaluated independently according to its strategy, and a shared signal can contribute to multiple group states and related per-group telemetry. Group states contribute alongside any ungrouped signals and the dependency-aggregated child health to the entity's overall worst-of composite. </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </param>
-        /// <param name="deletedOn"> Date when the entity was (soft-)deleted. </param>
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
         /// <returns> A new <see cref="Models.HealthModelEntityProperties"/> instance for mocking. </returns>
-        public static HealthModelEntityProperties HealthModelEntityProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string kind = null, EntityCoordinates canvasPosition = null, EntityIcon icon = null, float? healthObjective = null, EntityImpact? impact = null, IDictionary<string, string> labels = null, EntitySignalGroup signals = null, string discoveredBy = null, DateTimeOffset? deletedOn = null, EntityHealthState? healthState = null, EntityAlerts alerts = null)
+        public static HealthModelEntityProperties HealthModelEntityProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, HealthModelEntityCoordinates canvasPosition = default, HealthModelEntityIcon icon = default, float? healthObjective = default, HealthModelEntityImpact? impact = default, IDictionary<string, string> tags = default, EntitySignalGroups signalGroups = default, IEnumerable<HealthModelSignalAggregationGroup> signalAggregationGroups = default, string discoveredBy = default, EntityHealthState? healthState = default, EntityAlerts alerts = default)
         {
-            labels ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            signalAggregationGroups ??= new ChangeTrackingList<HealthModelSignalAggregationGroup>();
 
             return new HealthModelEntityProperties(
                 provisioningState,
                 displayName,
-                kind,
                 canvasPosition,
                 icon,
                 healthObjective,
                 impact,
-                labels,
-                signals,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                signalGroups,
+                (signalAggregationGroups ?? new ChangeTrackingList<HealthModelSignalAggregationGroup>()).ToList(),
                 discoveredBy,
-                deletedOn,
                 healthState,
                 alerts,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelRelationshipData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Visual position of the entity. </summary>
+        /// <param name="x"> X Coordinate. </param>
+        /// <param name="y"> Y Coordinate. </param>
+        /// <returns> A new <see cref="Models.HealthModelEntityCoordinates"/> instance for mocking. </returns>
+        public static HealthModelEntityCoordinates HealthModelEntityCoordinates(float x = default, float y = default)
+        {
+            return new HealthModelEntityCoordinates(x, y, default);
+        }
+
+        /// <summary> Visual icon definition of an entity. </summary>
+        /// <param name="iconName"> Name of the built-in icon, or 'Custom' to use customData. </param>
+        /// <param name="customData"> Custom data. Base64-encoded SVG data. If set, this overrides the built-in icon. </param>
+        /// <returns> A new <see cref="Models.HealthModelEntityIcon"/> instance for mocking. </returns>
+        public static HealthModelEntityIcon HealthModelEntityIcon(string iconName = default, string customData = default)
+        {
+            return new HealthModelEntityIcon(iconName, customData, default);
+        }
+
+        /// <param name="azureResource"> Azure Resource Signal Group. </param>
+        /// <param name="azureLogAnalytics"> Log Analytics Signal Group. </param>
+        /// <param name="azureMonitorWorkspace"> Azure Monitor Workspace Signal Group. </param>
+        /// <param name="dependencies"> Settings for dependency signals to control how the health state of child entities influences the health state of the parent entity. </param>
+        /// <param name="externalSignals"> Signals assigned to this signal group. </param>
+        /// <returns> A new <see cref="Models.EntitySignalGroups"/> instance for mocking. </returns>
+        public static EntitySignalGroups EntitySignalGroups(HealthModelResourceSignals azureResource = default, LogAnalyticsSignals azureLogAnalytics = default, MonitorWorkspaceSignals azureMonitorWorkspace = default, HealthModelDependenciesSignalGroup dependencies = default, IEnumerable<HealthModelExternalSignal> externalSignals = default)
+        {
+            return new EntitySignalGroups(
+                azureResource,
+                azureLogAnalytics,
+                azureMonitorWorkspace,
+                dependencies,
+                externalSignals is null ? default : new ExternalSignalGroup((externalSignals ?? new ChangeTrackingList<HealthModelExternalSignal>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> A grouping of Azure resource signals. </summary>
+        /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying the data source. </param>
+        /// <param name="azureResourceId"> Azure resource ID. </param>
+        /// <param name="azureResourceKind"> Azure resource kind (e.g., 'functionapp'). Populated by the UI for icon rendering. Can be null if not populated. </param>
+        /// <param name="signals"> Signals assigned to this group. </param>
+        /// <param name="resourceHealth"> Optional configuration for automatically adding a signal based on the resource's availability state in Azure Resource Health. </param>
+        /// <returns> A new <see cref="Models.HealthModelResourceSignals"/> instance for mocking. </returns>
+        public static HealthModelResourceSignals HealthModelResourceSignals(string authenticationSetting = default, ResourceIdentifier azureResourceId = default, string azureResourceKind = default, IEnumerable<HealthModelResourceMetricSignal> signals = default, ResourceHealthSignal resourceHealth = default)
+        {
+            signals ??= new ChangeTrackingList<HealthModelResourceMetricSignal>();
+
+            return new HealthModelResourceSignals(
+                authenticationSetting,
+                azureResourceId,
+                azureResourceKind,
+                (signals ?? new ChangeTrackingList<HealthModelResourceMetricSignal>()).ToList(),
+                resourceHealth,
+                default);
+        }
+
+        /// <summary> An Azure Resource Metric signal instance assigned to an entity. </summary>
+        /// <param name="name"> Unique name of the signal within the entity. </param>
+        /// <param name="signalDefinitionName"> Optional reference to a signal definition that provides default values. </param>
+        /// <param name="status"> Current status of the signal. </param>
+        /// <param name="metricNamespace"> Metric namespace. </param>
+        /// <param name="metricName"> Name of the metric. </param>
+        /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
+        /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
+        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. </param>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
+        /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
+        /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
+        /// <returns> A new <see cref="Models.HealthModelResourceMetricSignal"/> instance for mocking. </returns>
+        public static HealthModelResourceMetricSignal HealthModelResourceMetricSignal(string name = default, string signalDefinitionName = default, HealthModelSignalStatus status = default, string metricNamespace = default, string metricName = default, string timeGrain = default, HealthModelMetricAggregationType? aggregationType = default, string dimensionFilter = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default)
+        {
+            return new HealthModelResourceMetricSignal(
+                EntitySignalKind.AzureResourceMetric,
+                name,
+                signalDefinitionName,
+                status,
+                default,
+                metricNamespace,
+                metricName,
+                timeGrain,
+                aggregationType,
+                dimensionFilter,
+                displayName,
+                refreshInterval,
+                dataUnit,
+                evaluationRules);
+        }
+
+        /// <summary>
+        /// Additional properties for signal instances assigned to an entity
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HealthModelExternalSignal"/>, <see cref="Models.HealthModelResourceMetricSignal"/>, <see cref="Models.LogAnalyticsSignal"/>, and <see cref="Models.PrometheusMetricsSignal"/>.
+        /// </summary>
+        /// <param name="signalKind"> Kind of the signal instance. </param>
+        /// <param name="name"> Unique name of the signal within the entity. </param>
+        /// <param name="signalDefinitionName"> Optional reference to a signal definition that provides default values. </param>
+        /// <param name="status"> Current status of the signal. </param>
+        /// <returns> A new <see cref="Models.HealthModelSignalInstanceProperties"/> instance for mocking. </returns>
+        public static HealthModelSignalInstanceProperties HealthModelSignalInstanceProperties(string signalKind = default, string name = default, string signalDefinitionName = default, HealthModelSignalStatus status = default)
+        {
+            return new UnknownHealthModelSignalInstanceProperties(signalKind is null ? default : new EntitySignalKind(signalKind), name, signalDefinitionName, status, default);
+        }
+
+        /// <summary> Status of a signal. </summary>
+        /// <param name="healthState"> Health state of this signal. </param>
+        /// <param name="value"> Reported value of the signal. </param>
+        /// <param name="reportedOn"> Timestamp when the value was reported. </param>
+        /// <param name="error"> Error message if the signal status cannot be retrieved. </param>
+        /// <param name="additionalContext"> Additional context as provided by the submitter. </param>
+        /// <returns> A new <see cref="Models.HealthModelSignalStatus"/> instance for mocking. </returns>
+        public static HealthModelSignalStatus HealthModelSignalStatus(EntityHealthState? healthState = default, double? value = default, DateTimeOffset? reportedOn = default, string error = default, string additionalContext = default)
+        {
+            return new HealthModelSignalStatus(
+                healthState,
+                value,
+                reportedOn,
+                error,
+                additionalContext,
+                default);
+        }
+
+        /// <summary> A Log Analytics Query signal instance assigned to an entity. </summary>
+        /// <param name="name"> Unique name of the signal within the entity. </param>
+        /// <param name="signalDefinitionName"> Optional reference to a signal definition that provides default values. </param>
+        /// <param name="status"> Current status of the signal. </param>
+        /// <param name="queryText"> Query text in KQL syntax. </param>
+        /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </param>
+        /// <param name="valueColumnName"> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </param>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
+        /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
+        /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsSignal"/> instance for mocking. </returns>
+        public static LogAnalyticsSignal LogAnalyticsSignal(string name = default, string signalDefinitionName = default, HealthModelSignalStatus status = default, string queryText = default, string timeGrain = default, string valueColumnName = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default)
+        {
+            return new LogAnalyticsSignal(
+                EntitySignalKind.LogAnalyticsQuery,
+                name,
+                signalDefinitionName,
+                status,
+                default,
+                queryText,
+                timeGrain,
+                valueColumnName,
+                displayName,
+                refreshInterval,
+                dataUnit,
+                evaluationRules);
+        }
+
+        /// <summary> A Prometheus Metrics Query signal instance assigned to an entity. </summary>
+        /// <param name="name"> Unique name of the signal within the entity. </param>
+        /// <param name="signalDefinitionName"> Optional reference to a signal definition that provides default values. </param>
+        /// <param name="status"> Current status of the signal. </param>
+        /// <param name="queryText"> Query text in PromQL syntax. </param>
+        /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
+        /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
+        /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
+        /// <returns> A new <see cref="Models.PrometheusMetricsSignal"/> instance for mocking. </returns>
+        public static PrometheusMetricsSignal PrometheusMetricsSignal(string name = default, string signalDefinitionName = default, HealthModelSignalStatus status = default, string queryText = default, string timeGrain = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default)
+        {
+            return new PrometheusMetricsSignal(
+                EntitySignalKind.PrometheusMetricsQuery,
+                name,
+                signalDefinitionName,
+                status,
+                default,
+                queryText,
+                timeGrain,
+                displayName,
+                refreshInterval,
+                dataUnit,
+                evaluationRules);
+        }
+
+        /// <summary> An externally submitted signal instance assigned to an entity. </summary>
+        /// <param name="name"> Unique name of the signal within the entity. </param>
+        /// <param name="signalDefinitionName"> Optional reference to a signal definition that provides default values. </param>
+        /// <param name="status"> Current status of the signal. </param>
+        /// <param name="evaluationRules"> Evaluation rules for the external signal as submitted. </param>
+        /// <returns> A new <see cref="Models.HealthModelExternalSignal"/> instance for mocking. </returns>
+        public static HealthModelExternalSignal HealthModelExternalSignal(string name = default, string signalDefinitionName = default, HealthModelSignalStatus status = default, EntitySignalEvaluationRule evaluationRules = default)
+        {
+            return new HealthModelExternalSignal(
+                EntitySignalKind.ExternalSignal,
+                name,
+                signalDefinitionName,
+                status,
+                default,
+                evaluationRules);
+        }
+
+        /// <summary> Azure resource health signal configuration. </summary>
+        /// <param name="enabled"> Whether to automatically add a signal for the Azure resource's availability state from Azure Resource Health. Defaults to Enabled. </param>
+        /// <param name="signalName"> The unique name of the Azure resource health signal. System assigned. </param>
+        /// <param name="status"> Current status of the Azure resource health signal. </param>
+        /// <returns> A new <see cref="Models.ResourceHealthSignal"/> instance for mocking. </returns>
+        public static ResourceHealthSignal ResourceHealthSignal(ResourceHealthAvailabilityStateSignalBehavior? enabled = default, string signalName = default, ResourceHealthSignalStatus status = default)
+        {
+            return new ResourceHealthSignal(enabled, signalName, status, default);
+        }
+
+        /// <summary> Status of an Azure Resource Health signal, including availability information reported by Azure Resource Health. </summary>
+        /// <param name="healthState"> Health state of this signal. </param>
+        /// <param name="value"> Reported value of the signal. </param>
+        /// <param name="reportedOn"> Timestamp when the value was reported. </param>
+        /// <param name="error"> Error message if the signal status cannot be retrieved. </param>
+        /// <param name="additionalContext"> Additional context as provided by the submitter. </param>
+        /// <param name="availabilityState"> Availability state of the Azure resource as reported by Azure Resource Health. </param>
+        /// <param name="category"> Whether the status changing event was planned or unplanned. </param>
+        /// <param name="detailedStatus"> Detailed status of the Azure resource as reported by Azure Resource Health. </param>
+        /// <param name="summary"> Human-readable summary of the current availability state from Azure Resource Health. </param>
+        /// <param name="reasonType"> Reason type for the current availability state (e.g. 'Unplanned', 'Planned', 'UserInitiated'). </param>
+        /// <param name="reasonChronicity"> Whether the current availability state is 'Persistent' or 'Transient'. </param>
+        /// <param name="availabilityReportedOn"> Timestamp when Azure Resource Health observed the current availability state. </param>
+        /// <returns> A new <see cref="Models.ResourceHealthSignalStatus"/> instance for mocking. </returns>
+        public static ResourceHealthSignalStatus ResourceHealthSignalStatus(EntityHealthState? healthState = default, double? value = default, DateTimeOffset? reportedOn = default, string error = default, string additionalContext = default, ResourceHealthAvailabilityState? availabilityState = default, ResourceHealthCategory? category = default, string detailedStatus = default, string summary = default, ResourceHealthReasonType? reasonType = default, ResourceHealthReasonChronicity? reasonChronicity = default, DateTimeOffset? availabilityReportedOn = default)
+        {
+            return new ResourceHealthSignalStatus(
+                healthState,
+                value,
+                reportedOn,
+                error,
+                additionalContext,
+                availabilityState,
+                category,
+                detailedStatus,
+                summary,
+                reasonType,
+                reasonChronicity,
+                availabilityReportedOn,
+                default);
+        }
+
+        /// <summary> A grouping of Log Analytics workspace signals. </summary>
+        /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying the data source. </param>
+        /// <param name="logAnalyticsWorkspaceResourceId"> Log Analytics workspace resource ID. </param>
+        /// <param name="signals"> Signals assigned to this group. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsSignals"/> instance for mocking. </returns>
+        public static LogAnalyticsSignals LogAnalyticsSignals(string authenticationSetting = default, ResourceIdentifier logAnalyticsWorkspaceResourceId = default, IEnumerable<LogAnalyticsSignal> signals = default)
+        {
+            signals ??= new ChangeTrackingList<LogAnalyticsSignal>();
+
+            return new LogAnalyticsSignals(authenticationSetting, logAnalyticsWorkspaceResourceId, (signals ?? new ChangeTrackingList<LogAnalyticsSignal>()).ToList(), default);
+        }
+
+        /// <summary> A grouping of Azure Monitor workspace signals. </summary>
+        /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying the data source. </param>
+        /// <param name="azureMonitorWorkspaceResourceId"> Azure Monitor workspace resource ID. </param>
+        /// <param name="signals"> Signals assigned to this signal group. </param>
+        /// <returns> A new <see cref="Models.MonitorWorkspaceSignals"/> instance for mocking. </returns>
+        public static MonitorWorkspaceSignals MonitorWorkspaceSignals(string authenticationSetting = default, ResourceIdentifier azureMonitorWorkspaceResourceId = default, IEnumerable<PrometheusMetricsSignal> signals = default)
+        {
+            signals ??= new ChangeTrackingList<PrometheusMetricsSignal>();
+
+            return new MonitorWorkspaceSignals(authenticationSetting, azureMonitorWorkspaceResourceId, (signals ?? new ChangeTrackingList<PrometheusMetricsSignal>()).ToList(), default);
+        }
+
+        /// <summary> Properties for dependent entities, i.e. child entities. </summary>
+        /// <param name="aggregationType"> Aggregation type for child dependencies. </param>
+        /// <param name="degradedThreshold"> Degraded threshold for aggregation. For MinHealthy: parent is degraded when healthy count/percentage falls to or below this value. For MaxNotHealthy: parent is degraded when not-healthy count/percentage reaches or exceeds this value. Optional — if not set, there is no degraded state (transitions directly from Healthy to Unhealthy). </param>
+        /// <param name="unhealthyThreshold"> Unhealthy threshold for aggregation. For MinHealthy: parent is unhealthy when healthy count/percentage falls to or below this value. For MaxNotHealthy: parent is unhealthy when not-healthy count/percentage reaches or exceeds this value. Required when aggregationType is MinHealthy or MaxNotHealthy. </param>
+        /// <param name="unit"> Unit type for the aggregation thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy. </param>
+        /// <param name="shouldIgnoreUnknown"> If true, children with Unknown health state are excluded from aggregation calculations. Defaults to true. </param>
+        /// <returns> A new <see cref="Models.HealthModelDependenciesSignalGroup"/> instance for mocking. </returns>
+        public static HealthModelDependenciesSignalGroup HealthModelDependenciesSignalGroup(HealthStateAggregationType aggregationType = default, double? degradedThreshold = default, double? unhealthyThreshold = default, HealthStateAggregationUnit? unit = default, bool? shouldIgnoreUnknown = default)
+        {
+            return new HealthModelDependenciesSignalGroup(
+                aggregationType,
+                degradedThreshold,
+                unhealthyThreshold,
+                unit,
+                shouldIgnoreUnknown,
+                default);
+        }
+
+        /// <summary> A logical group of signals on an entity, evaluated under a configurable aggregation strategy. Groups are independent even when they share members. Each group's aggregated state is one of the inputs to the entity's composite health computation alongside any signals not declared in any group's members[]. </summary>
+        /// <param name="name"> Name of the aggregation group. Unique within the entity. </param>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="aggregationType"> Aggregation strategy applied across the members of this group. </param>
+        /// <param name="members"> Names of signals on this entity which are members of the group. Members are matched by name; references to signals that do not currently exist on the entity are accepted (typically for pre-declared external signals) and surfaced via 'unresolvedMembers'. A signal may be listed in multiple groups; no duplicates within this list. </param>
+        /// <param name="degradedThreshold"> Degraded threshold for threshold-bearing strategies (MinHealthy, MaxNotHealthy). For MinHealthy: group is degraded when the healthy member count/percentage falls to or below this value. For MaxNotHealthy: group is degraded when the not-healthy member count/percentage reaches or exceeds this value. Optional — if not set, the group transitions directly between Healthy and Unhealthy. MUST NOT be set when aggregationType is WorstOf or BestOf. </param>
+        /// <param name="unhealthyThreshold"> Unhealthy threshold for threshold-bearing strategies. Required when aggregationType is MinHealthy or MaxNotHealthy; MUST NOT be set otherwise. </param>
+        /// <param name="unit"> Unit type for the thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy; MUST NOT be set otherwise. </param>
+        /// <param name="shouldIgnoreUnknown"> If true (default), members reporting Unknown are excluded from the aggregation. For MinHealthy and MaxNotHealthy this flag affects the denominator/count and is meaningful. For WorstOf and BestOf the flag has no observable effect: under WorstOf, Unknown=0 is the lowest severity and can never beat any non-Unknown member in a Max() so filtering it changes nothing observable; under BestOf, Unknown is unconditionally excluded by the strategy itself irrespective of the flag. The flag is retained on the contract for vocabulary symmetry across all four strategies. </param>
+        /// <param name="aggregatedHealthState"> Computed aggregated health state of the group as of the last entity evaluation. Unknown if no resolvable members or all members filtered out. </param>
+        /// <param name="unresolvedMembers"> Members listed in 'members' that do not currently resolve to a signal on this entity at the time of the last entity evaluation. Treated as Unknown during aggregation. Empty/omitted when every member resolves. </param>
+        /// <returns> A new <see cref="Models.HealthModelSignalAggregationGroup"/> instance for mocking. </returns>
+        public static HealthModelSignalAggregationGroup HealthModelSignalAggregationGroup(string name = default, string displayName = default, HealthStateAggregationType? aggregationType = default, IEnumerable<string> members = default, double? degradedThreshold = default, double? unhealthyThreshold = default, HealthStateAggregationUnit? unit = default, bool? shouldIgnoreUnknown = default, EntityHealthState? aggregatedHealthState = default, IEnumerable<string> unresolvedMembers = default)
+        {
+            members ??= new ChangeTrackingList<string>();
+            unresolvedMembers ??= new ChangeTrackingList<string>();
+
+            return new HealthModelSignalAggregationGroup(
+                name,
+                displayName,
+                aggregationType,
+                (members ?? new ChangeTrackingList<string>()).ToList(),
+                degradedThreshold,
+                unhealthyThreshold,
+                unit,
+                shouldIgnoreUnknown,
+                aggregatedHealthState,
+                (unresolvedMembers ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> Alert configuration for an entity. </summary>
+        /// <param name="unhealthy"> Alert to be triggered on state change to unhealthy. </param>
+        /// <param name="degraded"> Alert to be triggered on state change to degraded. </param>
+        /// <returns> A new <see cref="Models.EntityAlerts"/> instance for mocking. </returns>
+        public static EntityAlerts EntityAlerts(EntityAlertConfiguration unhealthy = default, EntityAlertConfiguration degraded = default)
+        {
+            return new EntityAlerts(unhealthy, degraded, default);
+        }
+
+        /// <summary> Alert configuration details. </summary>
+        /// <param name="severity"> The severity of triggered alert. </param>
+        /// <param name="description"> The alert rule description. </param>
+        /// <param name="actionGroupIds"> Optional list of action group resource IDs to be notified when the alert is triggered. </param>
+        /// <returns> A new <see cref="Models.EntityAlertConfiguration"/> instance for mocking. </returns>
+        public static EntityAlertConfiguration EntityAlertConfiguration(EntityAlertSeverity severity = default, string description = default, IEnumerable<ResourceIdentifier> actionGroupIds = default)
+        {
+            actionGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new EntityAlertConfiguration(severity, description, (actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+        }
+
+        /// <summary> Request body for getting entity health history. </summary>
+        /// <param name="startsOn"> Start time for the history query. Defaults to 24 hours ago if not specified. </param>
+        /// <param name="endsOn"> End time for the history query. Defaults to now if not specified. </param>
+        /// <param name="top"> Maximum number of health state transitions to return per page. Defaults to 1000. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Must not be combined with startAt or endAt. </param>
+        /// <returns> A new <see cref="Models.EntityHistoryContent"/> instance for mocking. </returns>
+        public static EntityHistoryContent EntityHistoryContent(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? top = default, string nextMarker = default)
+        {
+            return new EntityHistoryContent(startsOn, endsOn, top, nextMarker, default);
+        }
+
+        /// <summary> Response containing entity health state transitions. </summary>
+        /// <param name="entityName"> Name of the entity. </param>
+        /// <param name="history"> List of health state transitions. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. </param>
+        /// <returns> A new <see cref="Models.EntityHistoryResult"/> instance for mocking. </returns>
+        public static EntityHistoryResult EntityHistoryResult(string entityName = default, IEnumerable<HealthStateTransition> history = default, string nextMarker = default)
+        {
+            history ??= new ChangeTrackingList<HealthStateTransition>();
+
+            return new EntityHistoryResult(entityName, (history ?? new ChangeTrackingList<HealthStateTransition>()).ToList(), nextMarker, default);
+        }
+
+        /// <summary> A health state transition record. </summary>
+        /// <param name="previousState"> Previous health state before the transition. </param>
+        /// <param name="newState"> New health state after the transition. </param>
+        /// <param name="occurredOn"> Timestamp when the transition occurred. </param>
+        /// <param name="reason"> Reason of the transition. </param>
+        /// <returns> A new <see cref="Models.HealthStateTransition"/> instance for mocking. </returns>
+        public static HealthStateTransition HealthStateTransition(EntityHealthState previousState = default, EntityHealthState newState = default, DateTimeOffset occurredOn = default, string reason = default)
+        {
+            return new HealthStateTransition(previousState, newState, occurredOn, reason, default);
+        }
+
+        /// <summary> Request body for getting signal history. </summary>
+        /// <param name="signalName"> Name of the signal to get history for. </param>
+        /// <param name="startsOn"> Start time for the history query. Defaults to 24 hours ago if not specified. </param>
+        /// <param name="endsOn"> End time for the history query. Defaults to now if not specified. </param>
+        /// <param name="top"> Maximum number of data points to return per page. Defaults to 1000. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Must not be combined with startAt or endAt. </param>
+        /// <returns> A new <see cref="Models.EntitySignalHistoryContent"/> instance for mocking. </returns>
+        public static EntitySignalHistoryContent EntitySignalHistoryContent(string signalName = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? top = default, string nextMarker = default)
+        {
+            return new EntitySignalHistoryContent(
+                signalName,
+                startsOn,
+                endsOn,
+                top,
+                nextMarker,
+                default);
+        }
+
+        /// <summary> Response containing signal history. </summary>
+        /// <param name="entityName"> Name of the entity. </param>
+        /// <param name="signalName"> Name of the signal. </param>
+        /// <param name="history"> Signal history data points. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. </param>
+        /// <returns> A new <see cref="Models.EntitySignalHistoryResult"/> instance for mocking. </returns>
+        public static EntitySignalHistoryResult EntitySignalHistoryResult(string entityName = default, string signalName = default, IEnumerable<HealthModelSignalHistoryDataPoint> history = default, string nextMarker = default)
+        {
+            history ??= new ChangeTrackingList<HealthModelSignalHistoryDataPoint>();
+
+            return new EntitySignalHistoryResult(entityName, signalName, (history ?? new ChangeTrackingList<HealthModelSignalHistoryDataPoint>()).ToList(), nextMarker, default);
+        }
+
+        /// <summary> A data point in the signal time series. </summary>
+        /// <param name="occurredOn"> Timestamp of the data point. </param>
+        /// <param name="value"> Signal value at this point in time. </param>
+        /// <param name="healthState"> Health state at this point in time. </param>
+        /// <param name="additionalContext"> Additional context as provided by the submitter. </param>
+        /// <returns> A new <see cref="Models.HealthModelSignalHistoryDataPoint"/> instance for mocking. </returns>
+        public static HealthModelSignalHistoryDataPoint HealthModelSignalHistoryDataPoint(DateTimeOffset occurredOn = default, double? value = default, EntityHealthState healthState = default, string additionalContext = default)
+        {
+            return new HealthModelSignalHistoryDataPoint(occurredOn, value, healthState, additionalContext, default);
+        }
+
+        /// <summary> Health report that's submitted for a specific signal. </summary>
+        /// <param name="signalName"> Name of the entity signal to report health for. </param>
+        /// <param name="healthState"> Health state to report for the signal. </param>
+        /// <param name="value"> Reported value of the signal. </param>
+        /// <param name="evaluationRules"> Evaluation rules that were used to determine the reported health state. </param>
+        /// <param name="expiresInMinutes"> Number of minutes until the health report expires. Defaults to 60 (1 hour) if not specified. </param>
+        /// <param name="additionalContext"> Optional additional context or description for the health report. </param>
+        /// <returns> A new <see cref="Models.EntityHealthReportContent"/> instance for mocking. </returns>
+        public static EntityHealthReportContent EntityHealthReportContent(string signalName = default, EntityHealthState healthState = default, double? value = default, HealthReportEvaluationRule evaluationRules = default, int? expiresInMinutes = default, string additionalContext = default)
+        {
+            return new EntityHealthReportContent(
+                signalName,
+                healthState,
+                value,
+                evaluationRules,
+                expiresInMinutes,
+                additionalContext,
+                default);
+        }
+
+        /// <summary> Evaluation rules for the health report. </summary>
+        /// <param name="degradedRule"> Degraded rule with static threshold. </param>
+        /// <param name="unhealthyRule"> Unhealthy rule with static threshold. </param>
+        /// <returns> A new <see cref="Models.HealthReportEvaluationRule"/> instance for mocking. </returns>
+        public static HealthReportEvaluationRule HealthReportEvaluationRule(EntitySignalThresholdRule degradedRule = default, EntitySignalThresholdRule unhealthyRule = default)
+        {
+            return new HealthReportEvaluationRule(degradedRule, unhealthyRule, default);
+        }
+
+        /// <summary> Request body for adding a data annotation. </summary>
+        /// <param name="annotationDetails"> Annotation details as a dynamic key-value pair bag. Service-enforced limits: a maximum of 10 entries per annotation and a maximum value length of 256 characters. Requests exceeding these limits will be rejected with a 400 response. </param>
+        /// <param name="description"> Optional description of the annotation. </param>
+        /// <returns> A new <see cref="Models.EntityAddDataAnnotationContent"/> instance for mocking. </returns>
+        public static EntityAddDataAnnotationContent EntityAddDataAnnotationContent(IDictionary<string, string> annotationDetails = default, string description = default)
+        {
+            annotationDetails ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EntityAddDataAnnotationContent(annotationDetails ?? new ChangeTrackingDictionary<string, string>(), description, default);
+        }
+
+        /// <summary> A single data annotation on an entity. </summary>
+        /// <param name="annotationId"> Auto-assigned identifier for the annotation. </param>
+        /// <param name="createdOn"> Timestamp when the annotation was created. </param>
+        /// <param name="annotationDetails"> Annotation details as a dynamic key-value pair bag. Service-enforced limits: a maximum of 10 entries per annotation and a maximum value length of 256 characters. Requests exceeding these limits will be rejected with a 400 response. </param>
+        /// <param name="description"> Optional description of the annotation. </param>
+        /// <returns> A new <see cref="Models.EntityDataAnnotation"/> instance for mocking. </returns>
+        public static EntityDataAnnotation EntityDataAnnotation(string annotationId = default, DateTimeOffset? createdOn = default, IDictionary<string, string> annotationDetails = default, string description = default)
+        {
+            annotationDetails ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EntityDataAnnotation(annotationId, createdOn, annotationDetails ?? new ChangeTrackingDictionary<string, string>(), description, default);
+        }
+
+        /// <summary> Request body for querying data annotations. </summary>
+        /// <param name="startsOn"> Start of UTC time range. Defaults to 24 hours ago if not specified. </param>
+        /// <param name="endsOn"> End of UTC time range. Defaults to now if not specified. </param>
+        /// <param name="top"> Maximum number of annotations to return per page. Defaults to 100. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Must not be combined with startAt or endAt. </param>
+        /// <returns> A new <see cref="Models.EntityGetDataAnnotationsContent"/> instance for mocking. </returns>
+        public static EntityGetDataAnnotationsContent EntityGetDataAnnotationsContent(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? top = default, string nextMarker = default)
+        {
+            return new EntityGetDataAnnotationsContent(startsOn, endsOn, top, nextMarker, default);
+        }
+
+        /// <summary> Response containing data annotations for an entity. </summary>
+        /// <param name="entityName"> Name of the entity. </param>
+        /// <param name="annotations"> List of data annotations. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. </param>
+        /// <returns> A new <see cref="Models.EntityGetDataAnnotationsResult"/> instance for mocking. </returns>
+        public static EntityGetDataAnnotationsResult EntityGetDataAnnotationsResult(string entityName = default, IEnumerable<EntityDataAnnotation> annotations = default, string nextMarker = default)
+        {
+            annotations ??= new ChangeTrackingList<EntityDataAnnotation>();
+
+            return new EntityGetDataAnnotationsResult(entityName, (annotations ?? new ChangeTrackingList<EntityDataAnnotation>()).ToList(), nextMarker, default);
+        }
+
+        /// <summary> Response from `getSignalRecommendations` containing two independent suggestion streams for the Azure resource type represented by the target Entity. `recommendedSignals` lists signals broadly recommended to be enabled by default; `recommendedConfigurations` lists additional metrics that are not broadly applicable but, if a caller chooses to monitor one of them, ship with suggested starting-point thresholds. The two arrays are independent — items are not paired by index, and callers should treat them as two separate suggestion streams. </summary>
+        /// <param name="recommendedSignals"> Signals that are broadly recommended to be enabled by default for health models monitoring an Entity of this resource type. Each entry is a complete signal configuration (metric, aggregation, thresholds) ready to be added to a health model. Independent of `recommendedConfigurations` — not paired by index. </param>
+        /// <param name="recommendedConfigurations"> Additional signal configurations for metrics that are not broadly applicable to every health model for an Entity of this resource type, but if a caller chooses to monitor one of these metrics, the provided thresholds are suggested as a starting point. Independent of `recommendedSignals` — not paired by index. </param>
+        /// <returns> A new <see cref="Models.EntityGetSignalRecommendationsResult"/> instance for mocking. </returns>
+        public static EntityGetSignalRecommendationsResult EntityGetSignalRecommendationsResult(IEnumerable<HealthModelSignalConfiguration> recommendedSignals = default, IEnumerable<HealthModelSignalConfiguration> recommendedConfigurations = default)
+        {
+            recommendedSignals ??= new ChangeTrackingList<HealthModelSignalConfiguration>();
+            recommendedConfigurations ??= new ChangeTrackingList<HealthModelSignalConfiguration>();
+
+            return new EntityGetSignalRecommendationsResult((recommendedSignals ?? new ChangeTrackingList<HealthModelSignalConfiguration>()).ToList(), (recommendedConfigurations ?? new ChangeTrackingList<HealthModelSignalConfiguration>()).ToList(), default);
+        }
+
+        /// <summary> A signal configuration for an Azure resource type. </summary>
+        /// <param name="signalId"> Unique identifier of the recommended signal configuration. </param>
+        /// <param name="displayName"> Display name of the recommended signal configuration. </param>
+        /// <param name="description"> Description of the recommended signal configuration. </param>
+        /// <param name="applicableResourceTypes"> Azure resource types to which the recommended signal configuration applies. </param>
+        /// <param name="refreshInterval"> Interval in which the recommended signal is evaluated. </param>
+        /// <param name="dataUnit"> Unit of the recommended signal result (e.g. Bytes, MilliSeconds, Percent, Count). </param>
+        /// <param name="configuration"> Kind-specific settings for the recommended signal. </param>
+        /// <param name="evaluationRules"> Evaluation rules with recommended thresholds. </param>
+        /// <returns> A new <see cref="Models.HealthModelSignalConfiguration"/> instance for mocking. </returns>
+        public static HealthModelSignalConfiguration HealthModelSignalConfiguration(string signalId = default, string displayName = default, string description = default, IEnumerable<ResourceType> applicableResourceTypes = default, EntitySignalRefreshInterval? refreshInterval = default, string dataUnit = default, HealthModelSignalRecommendationConfiguration configuration = default, EntitySignalEvaluationRule evaluationRules = default)
+        {
+            applicableResourceTypes ??= new ChangeTrackingList<ResourceType>();
+
+            return new HealthModelSignalConfiguration(
+                signalId,
+                displayName,
+                description,
+                (applicableResourceTypes ?? new ChangeTrackingList<ResourceType>()).ToList(),
+                refreshInterval,
+                dataUnit,
+                configuration,
+                evaluationRules,
+                default);
+        }
+
+        /// <summary>
+        /// Kind-specific signal recommendation configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureResourceMetricRecommendationConfiguration"/>, <see cref="Models.LogAnalyticsQueryRecommendationConfiguration"/>, and <see cref="Models.PrometheusMetricsRecommendationConfiguration"/>.
+        /// </summary>
+        /// <param name="signalKind"> Kind of the recommended signal. </param>
+        /// <returns> A new <see cref="Models.HealthModelSignalRecommendationConfiguration"/> instance for mocking. </returns>
+        public static HealthModelSignalRecommendationConfiguration HealthModelSignalRecommendationConfiguration(string signalKind = default)
+        {
+            return new UnknownHealthModelSignalRecommendationConfiguration(signalKind is null ? default : new SignalRecommendationKind(signalKind), default);
+        }
+
+        /// <summary> Azure Resource Metric recommendation configuration. </summary>
+        /// <param name="metricNamespace"> Metric namespace. </param>
+        /// <param name="metricName"> Name of the metric. </param>
+        /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
+        /// <param name="timeGrain"> Time range of the metric in ISO 8601 duration format (e.g. 'PT5M'). </param>
+        /// <param name="dimensionFilter"> Optional dimension filter to apply to the metric. </param>
+        /// <returns> A new <see cref="Models.AzureResourceMetricRecommendationConfiguration"/> instance for mocking. </returns>
+        public static AzureResourceMetricRecommendationConfiguration AzureResourceMetricRecommendationConfiguration(string metricNamespace = default, string metricName = default, HealthModelMetricAggregationType aggregationType = default, string timeGrain = default, string dimensionFilter = default)
+        {
+            return new AzureResourceMetricRecommendationConfiguration(
+                SignalRecommendationKind.AzureResourceMetric,
+                default,
+                metricNamespace,
+                metricName,
+                aggregationType,
+                timeGrain,
+                dimensionFilter);
+        }
+
+        /// <summary> Log Analytics Query recommendation configuration. </summary>
+        /// <param name="queryText"> Query text in KQL syntax. Supported entity template variables, such as `{{entity.azureResourceId}}`, may appear in the query. </param>
+        /// <param name="timeGrain"> Time range of the signal in ISO 8601 duration format (e.g. 'PT5M'). If not specified, the KQL query must define a time range. </param>
+        /// <param name="valueColumnName"> Name of the numeric result column to evaluate against the thresholds. </param>
+        /// <param name="requiredTables"> Log Analytics tables required by the query. </param>
+        /// <param name="requiredDiagnosticSettingCategories"> Diagnostic setting categories required to populate the query's tables. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsQueryRecommendationConfiguration"/> instance for mocking. </returns>
+        public static LogAnalyticsQueryRecommendationConfiguration LogAnalyticsQueryRecommendationConfiguration(string queryText = default, string timeGrain = default, string valueColumnName = default, IEnumerable<string> requiredTables = default, IEnumerable<string> requiredDiagnosticSettingCategories = default)
+        {
+            requiredTables ??= new ChangeTrackingList<string>();
+            requiredDiagnosticSettingCategories ??= new ChangeTrackingList<string>();
+
+            return new LogAnalyticsQueryRecommendationConfiguration(
+                SignalRecommendationKind.LogAnalyticsQuery,
+                default,
+                queryText,
+                timeGrain,
+                valueColumnName,
+                (requiredTables ?? new ChangeTrackingList<string>()).ToList(),
+                (requiredDiagnosticSettingCategories ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Prometheus Metrics Query recommendation configuration. </summary>
+        /// <param name="queryText"> Query text in PromQL syntax. Supported entity template variables, such as `{{entity.name}}`, may appear in the query. </param>
+        /// <param name="timeGrain"> Time range of the signal in ISO 8601 duration format (e.g. 'PT5M'). </param>
+        /// <param name="requiredMetrics"> Prometheus metrics required by the query. </param>
+        /// <param name="requiredScrapeTargets"> Prometheus scrape targets required to populate the query's metrics. </param>
+        /// <returns> A new <see cref="Models.PrometheusMetricsRecommendationConfiguration"/> instance for mocking. </returns>
+        public static PrometheusMetricsRecommendationConfiguration PrometheusMetricsRecommendationConfiguration(string queryText = default, string timeGrain = default, IEnumerable<string> requiredMetrics = default, IEnumerable<string> requiredScrapeTargets = default)
+        {
+            requiredMetrics ??= new ChangeTrackingList<string>();
+            requiredScrapeTargets ??= new ChangeTrackingList<string>();
+
+            return new PrometheusMetricsRecommendationConfiguration(
+                SignalRecommendationKind.PrometheusMetricsQuery,
+                default,
+                queryText,
+                timeGrain,
+                (requiredMetrics ?? new ChangeTrackingList<string>()).ToList(),
+                (requiredScrapeTargets ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> A relationship (aka edge) between two entities in a health model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelRelationshipData"/> instance for mocking. </returns>
-        public static HealthModelRelationshipData HealthModelRelationshipData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelRelationshipProperties properties = null)
+        public static HealthModelRelationshipData HealthModelRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelRelationshipProperties properties = default)
         {
             return new HealthModelRelationshipData(
                 id,
@@ -308,41 +907,39 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 resourceType,
                 systemData,
                 properties,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelRelationshipProperties"/>. </summary>
+        /// <summary> Relationship properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="parentEntityName"> Resource name of the parent entity. </param>
         /// <param name="childEntityName"> Resource name of the child entity. </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </param>
-        /// <param name="deletedOn"> Date when the relationship was (soft-)deleted. </param>
         /// <returns> A new <see cref="Models.HealthModelRelationshipProperties"/> instance for mocking. </returns>
-        public static HealthModelRelationshipProperties HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string parentEntityName = null, string childEntityName = null, IDictionary<string, string> labels = null, string discoveredBy = null, DateTimeOffset? deletedOn = null)
+        public static HealthModelRelationshipProperties HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string parentEntityName = default, string childEntityName = default, IDictionary<string, string> tags = default, string discoveredBy = default)
         {
-            labels ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HealthModelRelationshipProperties(
                 provisioningState,
                 displayName,
                 parentEntityName,
                 childEntityName,
-                labels,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 discoveredBy,
-                deletedOn,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelDiscoveryRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A discovery rule which automatically finds entities and relationships in a health model based on an Azure Resource Graph query. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelDiscoveryRuleData"/> instance for mocking. </returns>
-        public static HealthModelDiscoveryRuleData HealthModelDiscoveryRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelDiscoveryRuleProperties properties = null)
+        public static HealthModelDiscoveryRuleData HealthModelDiscoveryRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelDiscoveryRuleProperties properties = default)
         {
             return new HealthModelDiscoveryRuleData(
                 id,
@@ -350,35 +947,71 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 resourceType,
                 systemData,
                 properties,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelDiscoveryRuleProperties"/>. </summary>
+        /// <summary> Discovery rule properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
-        /// <param name="resourceGraphQuery"> Azure Resource Graph query text in KQL syntax. The query must return at least a column named 'id' which contains the resource ID of the discovered resources. </param>
         /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying Azure Resource Graph. The same authentication setting will also be assigned to any discovered entities. </param>
         /// <param name="discoverRelationships"> Whether to create relationships between the discovered entities based on a set of built-in rules. These relationships cannot be manually deleted. </param>
         /// <param name="addRecommendedSignals"> Whether to add all recommended signals to the discovered entities. </param>
-        /// <param name="deletedOn"> Date when the discovery rule was (soft-)deleted. </param>
-        /// <param name="errorMessage"> Error message if the last discovery operation failed. </param>
-        /// <param name="numberOfDiscoveredEntities"> Number of discovered entities in the last discovery operation. </param>
+        /// <param name="specification"> Specification of the discovery rule defining how entities are discovered. </param>
+        /// <param name="addResourceHealthSignal"> Whether to automatically add a signal for the Azure resource's availability state from Azure Resource Health to the discovered entities. Defaults to `Enabled`: discovery rules updated via this API version without setting this field will begin emitting a Resource Health availability signal. Pass `Disabled` to preserve pre-`2026-05-01-preview` behavior. </param>
+        /// <param name="error"> Error details if the last discovery operation failed. </param>
         /// <param name="entityName"> Name of the entity which represents the discovery rule. Note: It might take a few minutes after creating the discovery rule until the entity is created. </param>
         /// <returns> A new <see cref="Models.HealthModelDiscoveryRuleProperties"/> instance for mocking. </returns>
-        public static HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string resourceGraphQuery = null, string authenticationSetting = null, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default, DateTimeOffset? deletedOn = null, string errorMessage = null, int? numberOfDiscoveredEntities = null, string entityName = null)
+        public static HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string authenticationSetting = default, HealthModelDiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default, HealthModelDiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default, HealthModelDiscoveryRuleSpecification specification = default, ResourceHealthAvailabilityStateSignalBehavior? addResourceHealthSignal = default, HealthModelDiscoveryError error = default, string entityName = default)
         {
             return new HealthModelDiscoveryRuleProperties(
                 provisioningState,
                 displayName,
-                resourceGraphQuery,
                 authenticationSetting,
                 discoverRelationships,
                 addRecommendedSignals,
-                deletedOn,
-                errorMessage,
-                numberOfDiscoveredEntities,
+                specification,
+                addResourceHealthSignal,
+                error,
                 entityName,
-                serializedAdditionalRawData: null);
+                default);
+        }
+
+        /// <summary>
+        /// Base model for discovery rule specifications
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ApplicationInsightsTopologySpecification"/> and <see cref="Models.ResourceGraphQuerySpecification"/>.
+        /// </summary>
+        /// <param name="kind"> Kind of the discovery rule specification. </param>
+        /// <returns> A new <see cref="Models.HealthModelDiscoveryRuleSpecification"/> instance for mocking. </returns>
+        public static HealthModelDiscoveryRuleSpecification HealthModelDiscoveryRuleSpecification(string kind = default)
+        {
+            return new UnknownHealthModelDiscoveryRuleSpecification(kind is null ? default : new DiscoveryRuleKind(kind), default);
+        }
+
+        /// <summary> Discovery rule specification for an Azure Resource Graph query. </summary>
+        /// <param name="resourceGraphQuery"> Azure Resource Graph query text in KQL syntax. The query must return at least a column named 'id' which contains the resource ID of the discovered resources. </param>
+        /// <returns> A new <see cref="Models.ResourceGraphQuerySpecification"/> instance for mocking. </returns>
+        public static ResourceGraphQuerySpecification ResourceGraphQuerySpecification(string resourceGraphQuery = default)
+        {
+            return new ResourceGraphQuerySpecification(DiscoveryRuleKind.ResourceGraphQuery, default, resourceGraphQuery);
+        }
+
+        /// <summary> Discovery rule specification for an Application Insights topology query. </summary>
+        /// <param name="applicationInsightsResourceId"> Application Insights resource ID. </param>
+        /// <returns> A new <see cref="Models.ApplicationInsightsTopologySpecification"/> instance for mocking. </returns>
+        public static ApplicationInsightsTopologySpecification ApplicationInsightsTopologySpecification(ResourceIdentifier applicationInsightsResourceId = default)
+        {
+            return new ApplicationInsightsTopologySpecification(DiscoveryRuleKind.ApplicationInsightsTopology, default, applicationInsightsResourceId);
+        }
+
+        /// <summary> Error details for a failed discovery operation. </summary>
+        /// <param name="message"> Error message. </param>
+        /// <param name="context"> Additional context information, like resource IDs or query details. </param>
+        /// <returns> A new <see cref="Models.HealthModelDiscoveryError"/> instance for mocking. </returns>
+        public static HealthModelDiscoveryError HealthModelDiscoveryError(string message = default, IEnumerable<string> context = default)
+        {
+            context ??= new ChangeTrackingList<string>();
+
+            return new HealthModelDiscoveryError(message, (context ?? new ChangeTrackingList<string>()).ToList(), default);
         }
     }
 }

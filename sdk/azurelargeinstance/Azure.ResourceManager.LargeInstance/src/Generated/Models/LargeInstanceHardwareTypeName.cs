@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.LargeInstance.Models
     public readonly partial struct LargeInstanceHardwareTypeName : IEquatable<LargeInstanceHardwareTypeName>
     {
         private readonly string _value;
+        /// <summary> Hardware type of UCS from vendor Cisco. </summary>
+        private const string CiscoUcsValue = "Cisco_UCS";
+        /// <summary> Hardware type of HPE from vendor Hewlett Packard Enterprise. </summary>
+        private const string HpeValue = "HPE";
+        /// <summary> Hardware type of SDFLEX. </summary>
+        private const string SDFlexValue = "SDFLEX";
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceHardwareTypeName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LargeInstanceHardwareTypeName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CiscoUcsValue = "Cisco_UCS";
-        private const string HpeValue = "HPE";
-        private const string SDFlexValue = "SDFLEX";
+            _value = value;
+        }
 
         /// <summary> Hardware type of UCS from vendor Cisco. </summary>
         public static LargeInstanceHardwareTypeName CiscoUcs { get; } = new LargeInstanceHardwareTypeName(CiscoUcsValue);
+
         /// <summary> Hardware type of HPE from vendor Hewlett Packard Enterprise. </summary>
         public static LargeInstanceHardwareTypeName Hpe { get; } = new LargeInstanceHardwareTypeName(HpeValue);
+
         /// <summary> Hardware type of SDFLEX. </summary>
         public static LargeInstanceHardwareTypeName SDFlex { get; } = new LargeInstanceHardwareTypeName(SDFlexValue);
+
         /// <summary> Determines if two <see cref="LargeInstanceHardwareTypeName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LargeInstanceHardwareTypeName left, LargeInstanceHardwareTypeName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LargeInstanceHardwareTypeName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LargeInstanceHardwareTypeName left, LargeInstanceHardwareTypeName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LargeInstanceHardwareTypeName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LargeInstanceHardwareTypeName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LargeInstanceHardwareTypeName(string value) => new LargeInstanceHardwareTypeName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LargeInstanceHardwareTypeName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LargeInstanceHardwareTypeName?(string value) => value == null ? null : new LargeInstanceHardwareTypeName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LargeInstanceHardwareTypeName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LargeInstanceHardwareTypeName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

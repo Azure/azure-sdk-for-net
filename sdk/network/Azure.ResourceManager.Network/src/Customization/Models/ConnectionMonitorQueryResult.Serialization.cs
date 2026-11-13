@@ -11,10 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorQueryResult : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorQueryResult>
+    public partial class ConnectionMonitorQueryResult : IJsonModel<ConnectionMonitorQueryResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorQueryResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
         void IJsonModel<ConnectionMonitorQueryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -26,12 +24,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SourceStatus))
             {
                 writer.WritePropertyName("sourceStatus"u8);
@@ -41,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();
-                foreach (var item in States)
+                foreach (ConnectionStateSnapshot item in States)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -53,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
@@ -66,12 +63,11 @@ namespace Azure.ResourceManager.Network.Models
 
         ConnectionMonitorQueryResult IJsonModel<ConnectionMonitorQueryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectionMonitorQueryResult(document.RootElement, options);
         }
@@ -79,53 +75,47 @@ namespace Azure.ResourceManager.Network.Models
         internal static ConnectionMonitorQueryResult DeserializeConnectionMonitorQueryResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ConnectionMonitorSourceStatus? sourceStatus = default;
             IReadOnlyList<ConnectionStateSnapshot> states = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            var serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        sourceStatus = new ConnectionMonitorSourceStatus(property.Value.GetString());
                     }
-                    sourceStatus = new ConnectionMonitorSourceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("states"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        var array = new List<ConnectionStateSnapshot>();
+                        foreach (JsonElement item in property.Value.EnumerateArray())
+                        {
+                            array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item, options));
+                        }
+                        states = array;
                     }
-                    List<ConnectionStateSnapshot> array = new List<ConnectionStateSnapshot>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item, options));
-                    }
-                    states = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectionMonitorQueryResult(sourceStatus, states ?? new ChangeTrackingList<ConnectionStateSnapshot>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorQueryResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -137,13 +127,12 @@ namespace Azure.ResourceManager.Network.Models
 
         ConnectionMonitorQueryResult IPersistableModel<ConnectionMonitorQueryResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectionMonitorQueryResult(document.RootElement, options);
                     }
                 default:

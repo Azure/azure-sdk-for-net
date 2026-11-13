@@ -3,19 +3,18 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkVirtualApplianceConnection data model.
-    /// NetworkVirtualApplianceConnection resource.
-    /// </summary>
-    public partial class NetworkVirtualApplianceConnectionData : NetworkResourceData
+    public partial class NetworkVirtualApplianceConnectionData
     {
+        // The released NFV compatibility model was independent of the native routing wire property.
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsoleted and will be removed in a future version. Please use ConnectionRoutingConfiguration instead.")]
         public RoutingConfigurationNfv RoutingConfiguration { get; set; }
     }
 }

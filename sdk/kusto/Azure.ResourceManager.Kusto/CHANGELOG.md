@@ -2,19 +2,28 @@
 
 ## 1.7.0-beta.1 (Unreleased)
 
-### Features Added
+### Other Changes
 
-### Breaking Changes
+- Migrated the library to TypeSpec-based code generation.
 
-### Bugs Fixed
+## 1.6.3 (2026-06-13)
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.6.2 (2025-09-04)
+
+### Features Added
+
+- Added `WirePath` attribute to all properties in all models for provisioning support consumption.
 
 ## 1.6.1 (2025-07-28)
 
 ### Features Added
 
-- Make `Azure.ResourceManager.Kusto` AOT-compatible. 
+- Make `Azure.ResourceManager.Kusto` AOT-compatible.
 
 ## 1.6.0 (2025-01-20)
 
@@ -162,4 +171,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

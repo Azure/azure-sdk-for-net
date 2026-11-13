@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Automation;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automation.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAutomationResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableAutomationResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAutomationResourceGroupResource for mocking. </summary>
         protected MockableAutomationResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAutomationResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAutomationResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAutomationResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of AutomationAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AutomationAccountResources and their operations over a AutomationAccountResource. </returns>
+        /// <summary> Gets a collection of AutomationAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationAccounts and their operations over a AutomationAccountResource. </returns>
         public virtual AutomationAccountCollection GetAutomationAccounts()
         {
             return GetCachedClient(client => new AutomationAccountCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// Get information about an Automation Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Automation.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationAccountResource>> GetAutomationAccountAsync(string automationAccountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+
             return await GetAutomationAccounts().GetAsync(automationAccountName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// Get information about an Automation Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Automation.Mocking
         [ForwardsClientCalls]
         public virtual Response<AutomationAccountResource> GetAutomationAccount(string automationAccountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+
             return GetAutomationAccounts().Get(automationAccountName, cancellationToken);
         }
     }

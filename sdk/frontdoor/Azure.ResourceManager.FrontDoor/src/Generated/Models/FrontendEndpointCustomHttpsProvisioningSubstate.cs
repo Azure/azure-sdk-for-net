@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontendEndpointCustomHttpsProvisioningSubstate : IEquatable<FrontendEndpointCustomHttpsProvisioningSubstate>
     {
         private readonly string _value;
+        /// <summary> SubmittingDomainControlValidationRequest. </summary>
+        private const string SubmittingDomainControlValidationRequestValue = "SubmittingDomainControlValidationRequest";
+        /// <summary> PendingDomainControlValidationREquestApproval. </summary>
+        private const string PendingDomainControlValidationRequestApprovalValue = "PendingDomainControlValidationREquestApproval";
+        /// <summary> DomainControlValidationRequestApproved. </summary>
+        private const string DomainControlValidationRequestApprovedValue = "DomainControlValidationRequestApproved";
+        /// <summary> DomainControlValidationRequestRejected. </summary>
+        private const string DomainControlValidationRequestRejectedValue = "DomainControlValidationRequestRejected";
+        /// <summary> DomainControlValidationRequestTimedOut. </summary>
+        private const string DomainControlValidationRequestTimedOutValue = "DomainControlValidationRequestTimedOut";
+        /// <summary> IssuingCertificate. </summary>
+        private const string IssuingCertificateValue = "IssuingCertificate";
+        /// <summary> DeployingCertificate. </summary>
+        private const string DeployingCertificateValue = "DeployingCertificate";
+        /// <summary> CertificateDeployed. </summary>
+        private const string CertificateDeployedValue = "CertificateDeployed";
+        /// <summary> DeletingCertificate. </summary>
+        private const string DeletingCertificateValue = "DeletingCertificate";
+        /// <summary> CertificateDeleted. </summary>
+        private const string CertificateDeletedValue = "CertificateDeleted";
 
         /// <summary> Initializes a new instance of <see cref="FrontendEndpointCustomHttpsProvisioningSubstate"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontendEndpointCustomHttpsProvisioningSubstate(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SubmittingDomainControlValidationRequestValue = "SubmittingDomainControlValidationRequest";
-        private const string PendingDomainControlValidationRequestApprovalValue = "PendingDomainControlValidationREquestApproval";
-        private const string DomainControlValidationRequestApprovedValue = "DomainControlValidationRequestApproved";
-        private const string DomainControlValidationRequestRejectedValue = "DomainControlValidationRequestRejected";
-        private const string DomainControlValidationRequestTimedOutValue = "DomainControlValidationRequestTimedOut";
-        private const string IssuingCertificateValue = "IssuingCertificate";
-        private const string DeployingCertificateValue = "DeployingCertificate";
-        private const string CertificateDeployedValue = "CertificateDeployed";
-        private const string DeletingCertificateValue = "DeletingCertificate";
-        private const string CertificateDeletedValue = "CertificateDeleted";
+            _value = value;
+        }
 
         /// <summary> SubmittingDomainControlValidationRequest. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate SubmittingDomainControlValidationRequest { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(SubmittingDomainControlValidationRequestValue);
+
         /// <summary> PendingDomainControlValidationREquestApproval. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate PendingDomainControlValidationRequestApproval { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(PendingDomainControlValidationRequestApprovalValue);
+
         /// <summary> DomainControlValidationRequestApproved. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestApproved { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(DomainControlValidationRequestApprovedValue);
+
         /// <summary> DomainControlValidationRequestRejected. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestRejected { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(DomainControlValidationRequestRejectedValue);
+
         /// <summary> DomainControlValidationRequestTimedOut. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestTimedOut { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(DomainControlValidationRequestTimedOutValue);
+
         /// <summary> IssuingCertificate. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate IssuingCertificate { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(IssuingCertificateValue);
+
         /// <summary> DeployingCertificate. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate DeployingCertificate { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(DeployingCertificateValue);
+
         /// <summary> CertificateDeployed. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate CertificateDeployed { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(CertificateDeployedValue);
+
         /// <summary> DeletingCertificate. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate DeletingCertificate { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(DeletingCertificateValue);
+
         /// <summary> CertificateDeleted. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate CertificateDeleted { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(CertificateDeletedValue);
+
         /// <summary> Determines if two <see cref="FrontendEndpointCustomHttpsProvisioningSubstate"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontendEndpointCustomHttpsProvisioningSubstate left, FrontendEndpointCustomHttpsProvisioningSubstate right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontendEndpointCustomHttpsProvisioningSubstate"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontendEndpointCustomHttpsProvisioningSubstate left, FrontendEndpointCustomHttpsProvisioningSubstate right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontendEndpointCustomHttpsProvisioningSubstate"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontendEndpointCustomHttpsProvisioningSubstate"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontendEndpointCustomHttpsProvisioningSubstate(string value) => new FrontendEndpointCustomHttpsProvisioningSubstate(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontendEndpointCustomHttpsProvisioningSubstate"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontendEndpointCustomHttpsProvisioningSubstate?(string value) => value == null ? null : new FrontendEndpointCustomHttpsProvisioningSubstate(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontendEndpointCustomHttpsProvisioningSubstate other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontendEndpointCustomHttpsProvisioningSubstate other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

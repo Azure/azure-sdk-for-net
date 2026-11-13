@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct HDInsightPrivateEndpointConnectionProvisioningState : IEquatable<HDInsightPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightPrivateEndpointConnectionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InProgressValue = "InProgress";
-        private const string UpdatingValue = "Updating";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> InProgress. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState InProgress { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(InProgressValue);
+
         /// <summary> Updating. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Updating { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(UpdatingValue);
+
         /// <summary> Failed. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Failed { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(FailedValue);
+
         /// <summary> Succeeded. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Succeeded { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Canceled { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(CanceledValue);
+
         /// <summary> Deleting. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Deleting { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="HDInsightPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightPrivateEndpointConnectionProvisioningState left, HDInsightPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightPrivateEndpointConnectionProvisioningState left, HDInsightPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightPrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightPrivateEndpointConnectionProvisioningState(string value) => new HDInsightPrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new HDInsightPrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightPrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

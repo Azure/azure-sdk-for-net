@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataExplorerAuthMethod : IEquatable<DataExplorerAuthMethod>
     {
         private readonly string _value;
+        /// <summary> SystemAssignedManagedIdentity type. </summary>
+        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
+        /// <summary> UserAssignedManagedIdentity type. </summary>
+        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="DataExplorerAuthMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataExplorerAuthMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
-        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
+            _value = value;
+        }
 
         /// <summary> SystemAssignedManagedIdentity type. </summary>
         public static DataExplorerAuthMethod SystemAssignedManagedIdentity { get; } = new DataExplorerAuthMethod(SystemAssignedManagedIdentityValue);
+
         /// <summary> UserAssignedManagedIdentity type. </summary>
         public static DataExplorerAuthMethod UserAssignedManagedIdentity { get; } = new DataExplorerAuthMethod(UserAssignedManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="DataExplorerAuthMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataExplorerAuthMethod left, DataExplorerAuthMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataExplorerAuthMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataExplorerAuthMethod left, DataExplorerAuthMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataExplorerAuthMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataExplorerAuthMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataExplorerAuthMethod(string value) => new DataExplorerAuthMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataExplorerAuthMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataExplorerAuthMethod?(string value) => value == null ? null : new DataExplorerAuthMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataExplorerAuthMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataExplorerAuthMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

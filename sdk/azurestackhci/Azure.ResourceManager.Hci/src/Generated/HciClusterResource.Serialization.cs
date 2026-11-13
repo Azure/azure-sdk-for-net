@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci
 {
+    /// <summary></summary>
     public partial class HciClusterResource : IJsonModel<HciClusterData>
     {
-        private static HciClusterData s_dataDeserializationInstance;
-        private static HciClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterData>)Data).Write(writer, options);
 
-        HciClusterData IJsonModel<HciClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciClusterData IJsonModel<HciClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciClusterData>(Data, options, AzureResourceManagerHciContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciClusterData IPersistableModel<HciClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciClusterData>(data, options, AzureResourceManagerHciContext.Default);
 
-        string IPersistableModel<HciClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

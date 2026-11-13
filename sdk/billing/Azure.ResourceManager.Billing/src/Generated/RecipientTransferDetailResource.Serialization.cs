@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Billing
 {
+    /// <summary></summary>
     public partial class RecipientTransferDetailResource : IJsonModel<RecipientTransferDetailData>
     {
-        private static RecipientTransferDetailData s_dataDeserializationInstance;
-        private static RecipientTransferDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RecipientTransferDetailData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RecipientTransferDetailData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RecipientTransferDetailData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecipientTransferDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RecipientTransferDetailData>)Data).Write(writer, options);
 
-        RecipientTransferDetailData IJsonModel<RecipientTransferDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecipientTransferDetailData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecipientTransferDetailData IJsonModel<RecipientTransferDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RecipientTransferDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecipientTransferDetailData>(Data, options, AzureResourceManagerBillingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RecipientTransferDetailData IPersistableModel<RecipientTransferDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecipientTransferDetailData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<RecipientTransferDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecipientTransferDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecipientTransferDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

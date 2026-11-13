@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class SecurityAlertsSuppressionRuleResource : IJsonModel<SecurityAlertsSuppressionRuleData>
     {
-        private static SecurityAlertsSuppressionRuleData s_dataDeserializationInstance;
-        private static SecurityAlertsSuppressionRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityAlertsSuppressionRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityAlertsSuppressionRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityAlertsSuppressionRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityAlertsSuppressionRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAlertsSuppressionRuleData>)Data).Write(writer, options);
 
-        SecurityAlertsSuppressionRuleData IJsonModel<SecurityAlertsSuppressionRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAlertsSuppressionRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityAlertsSuppressionRuleData IJsonModel<SecurityAlertsSuppressionRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityAlertsSuppressionRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityAlertsSuppressionRuleData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityAlertsSuppressionRuleData IPersistableModel<SecurityAlertsSuppressionRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAlertsSuppressionRuleData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityAlertsSuppressionRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAlertsSuppressionRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityAlertsSuppressionRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

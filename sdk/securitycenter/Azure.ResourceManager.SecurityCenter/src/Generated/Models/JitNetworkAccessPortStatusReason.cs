@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct JitNetworkAccessPortStatusReason : IEquatable<JitNetworkAccessPortStatusReason>
     {
         private readonly string _value;
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
+        /// <summary> UserRequested. </summary>
+        private const string UserRequestedValue = "UserRequested";
+        /// <summary> NewerRequestInitiated. </summary>
+        private const string NewerRequestInitiatedValue = "NewerRequestInitiated";
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPortStatusReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JitNetworkAccessPortStatusReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExpiredValue = "Expired";
-        private const string UserRequestedValue = "UserRequested";
-        private const string NewerRequestInitiatedValue = "NewerRequestInitiated";
+            _value = value;
+        }
 
         /// <summary> Expired. </summary>
         public static JitNetworkAccessPortStatusReason Expired { get; } = new JitNetworkAccessPortStatusReason(ExpiredValue);
+
         /// <summary> UserRequested. </summary>
         public static JitNetworkAccessPortStatusReason UserRequested { get; } = new JitNetworkAccessPortStatusReason(UserRequestedValue);
+
         /// <summary> NewerRequestInitiated. </summary>
         public static JitNetworkAccessPortStatusReason NewerRequestInitiated { get; } = new JitNetworkAccessPortStatusReason(NewerRequestInitiatedValue);
+
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatusReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JitNetworkAccessPortStatusReason left, JitNetworkAccessPortStatusReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatusReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JitNetworkAccessPortStatusReason left, JitNetworkAccessPortStatusReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JitNetworkAccessPortStatusReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JitNetworkAccessPortStatusReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JitNetworkAccessPortStatusReason(string value) => new JitNetworkAccessPortStatusReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JitNetworkAccessPortStatusReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JitNetworkAccessPortStatusReason?(string value) => value == null ? null : new JitNetworkAccessPortStatusReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JitNetworkAccessPortStatusReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JitNetworkAccessPortStatusReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

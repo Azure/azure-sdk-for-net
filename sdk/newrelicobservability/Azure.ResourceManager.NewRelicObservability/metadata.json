@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "NewRelic.Observability": "2026-06-01"
+  }
+}

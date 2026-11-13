@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterVaultTierRestoreCriteria"/>. </summary>
         /// <param name="includeClusterScopeResources"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore from vault. </param>
-        public KubernetesClusterVaultTierRestoreCriteria(bool includeClusterScopeResources)
+        public KubernetesClusterVaultTierRestoreCriteria(bool includeClusterScopeResources) : base("KubernetesClusterVaultTierRestoreCriteria")
         {
             IncludeClusterScopeResources = includeClusterScopeResources;
             IncludedNamespaces = new ChangeTrackingList<string>();
@@ -26,12 +27,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             LabelSelectors = new ChangeTrackingList<string>();
             NamespaceMappings = new ChangeTrackingDictionary<string, string>();
             RestoreHookReferences = new ChangeTrackingList<NamespacedName>();
-            ObjectType = "KubernetesClusterVaultTierRestoreCriteria";
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterVaultTierRestoreCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="includeClusterScopeResources"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore from vault. </param>
         /// <param name="includedNamespaces"> Gets or sets the include namespaces property. This property sets the namespaces to be included during restore from vault. </param>
         /// <param name="excludedNamespaces"> Gets or sets the exclude namespaces property. This property sets the namespaces to be excluded during restore from vault. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="stagingResourceGroupId"> Gets or sets the staging RG Id for creating staging disks and snapshots during restore from vault. </param>
         /// <param name="stagingStorageAccountId"> Gets or sets the staging Storage Account Id for creating backup extension object store data during restore from vault. </param>
         /// <param name="resourceModifierReference"> Gets or sets the resource modifier reference. This property sets the reference for resource modifier during restore. </param>
-        internal KubernetesClusterVaultTierRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool includeClusterScopeResources, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, PersistentVolumeRestoreMode? persistentVolumeRestoreMode, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy, IDictionary<string, string> namespaceMappings, IList<NamespacedName> restoreHookReferences, ResourceIdentifier stagingResourceGroupId, ResourceIdentifier stagingStorageAccountId, NamespacedName resourceModifierReference) : base(objectType, serializedAdditionalRawData)
+        internal KubernetesClusterVaultTierRestoreCriteria(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool includeClusterScopeResources, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, PersistentVolumeRestoreMode? persistentVolumeRestoreMode, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy, IDictionary<string, string> namespaceMappings, IList<NamespacedName> restoreHookReferences, ResourceIdentifier stagingResourceGroupId, ResourceIdentifier stagingStorageAccountId, NamespacedName resourceModifierReference) : base(objectType, additionalBinaryDataProperties)
         {
             IncludeClusterScopeResources = includeClusterScopeResources;
             IncludedNamespaces = includedNamespaces;
@@ -60,38 +60,44 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             StagingResourceGroupId = stagingResourceGroupId;
             StagingStorageAccountId = stagingStorageAccountId;
             ResourceModifierReference = resourceModifierReference;
-            ObjectType = objectType ?? "KubernetesClusterVaultTierRestoreCriteria";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KubernetesClusterVaultTierRestoreCriteria"/> for deserialization. </summary>
-        internal KubernetesClusterVaultTierRestoreCriteria()
-        {
         }
 
         /// <summary> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore from vault. </summary>
         public bool IncludeClusterScopeResources { get; }
+
         /// <summary> Gets or sets the include namespaces property. This property sets the namespaces to be included during restore from vault. </summary>
         public IList<string> IncludedNamespaces { get; }
+
         /// <summary> Gets or sets the exclude namespaces property. This property sets the namespaces to be excluded during restore from vault. </summary>
         public IList<string> ExcludedNamespaces { get; }
+
         /// <summary> Gets or sets the include resource types property. This property sets the resource types to be included during restore from vault. </summary>
         public IList<string> IncludedResourceTypes { get; }
+
         /// <summary> Gets or sets the exclude resource types property. This property sets the resource types to be excluded during restore from vault. </summary>
         public IList<string> ExcludedResourceTypes { get; }
+
         /// <summary> Gets or sets the LabelSelectors property. This property sets the resource with such label selectors to be included during restore from vault. </summary>
         public IList<string> LabelSelectors { get; }
+
         /// <summary> Gets or sets the PV (Persistent Volume) Restore Mode property. This property sets whether volumes needs to be restored from vault. </summary>
         public PersistentVolumeRestoreMode? PersistentVolumeRestoreMode { get; set; }
+
         /// <summary> Gets or sets the Conflict Policy property. This property sets policy during conflict of resources during restore from vault. </summary>
         public KubernetesClusterRestoreExistingResourcePolicy? ConflictPolicy { get; set; }
+
         /// <summary> Gets or sets the Namespace Mappings property. This property sets if namespace needs to be change during restore from vault. </summary>
         public IDictionary<string, string> NamespaceMappings { get; }
+
         /// <summary> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore from vault. </summary>
         public IList<NamespacedName> RestoreHookReferences { get; }
+
         /// <summary> Gets or sets the staging RG Id for creating staging disks and snapshots during restore from vault. </summary>
         public ResourceIdentifier StagingResourceGroupId { get; set; }
+
         /// <summary> Gets or sets the staging Storage Account Id for creating backup extension object store data during restore from vault. </summary>
         public ResourceIdentifier StagingStorageAccountId { get; set; }
+
         /// <summary> Gets or sets the resource modifier reference. This property sets the reference for resource modifier during restore. </summary>
         public NamespacedName ResourceModifierReference { get; set; }
     }

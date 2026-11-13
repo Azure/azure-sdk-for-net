@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct TapRuleActionType : IEquatable<TapRuleActionType>
     {
         private readonly string _value;
+        /// <summary> TapRuleActionType-Drop. </summary>
+        private const string DropValue = "Drop";
+        /// <summary> TapRuleActionType-Count. </summary>
+        private const string CountValue = "Count";
+        /// <summary> TapRuleActionType-Log. </summary>
+        private const string LogValue = "Log";
+        /// <summary> TapRuleActionType-Replicate. </summary>
+        private const string ReplicateValue = "Replicate";
+        /// <summary> TapRuleActionType-Goto. </summary>
+        private const string GotoValue = "Goto";
+        /// <summary> TapRuleActionType-Redirect. </summary>
+        private const string RedirectValue = "Redirect";
+        /// <summary> TapRuleActionType-Mirror. </summary>
+        private const string MirrorValue = "Mirror";
 
         /// <summary> Initializes a new instance of <see cref="TapRuleActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TapRuleActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DropValue = "Drop";
-        private const string CountValue = "Count";
-        private const string LogValue = "Log";
-        private const string ReplicateValue = "Replicate";
-        private const string GotoValue = "Goto";
-        private const string RedirectValue = "Redirect";
-        private const string MirrorValue = "Mirror";
-
-        /// <summary> Drop. </summary>
+        /// <summary> TapRuleActionType-Drop. </summary>
         public static TapRuleActionType Drop { get; } = new TapRuleActionType(DropValue);
-        /// <summary> Count. </summary>
+
+        /// <summary> TapRuleActionType-Count. </summary>
         public static TapRuleActionType Count { get; } = new TapRuleActionType(CountValue);
-        /// <summary> Log. </summary>
+
+        /// <summary> TapRuleActionType-Log. </summary>
         public static TapRuleActionType Log { get; } = new TapRuleActionType(LogValue);
-        /// <summary> Replicate. </summary>
+
+        /// <summary> TapRuleActionType-Replicate. </summary>
         public static TapRuleActionType Replicate { get; } = new TapRuleActionType(ReplicateValue);
-        /// <summary> Goto. </summary>
+
+        /// <summary> TapRuleActionType-Goto. </summary>
         public static TapRuleActionType Goto { get; } = new TapRuleActionType(GotoValue);
-        /// <summary> Redirect. </summary>
+
+        /// <summary> TapRuleActionType-Redirect. </summary>
         public static TapRuleActionType Redirect { get; } = new TapRuleActionType(RedirectValue);
-        /// <summary> Mirror. </summary>
+
+        /// <summary> TapRuleActionType-Mirror. </summary>
         public static TapRuleActionType Mirror { get; } = new TapRuleActionType(MirrorValue);
+
         /// <summary> Determines if two <see cref="TapRuleActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TapRuleActionType left, TapRuleActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TapRuleActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TapRuleActionType left, TapRuleActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TapRuleActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TapRuleActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TapRuleActionType(string value) => new TapRuleActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TapRuleActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TapRuleActionType?(string value) => value == null ? null : new TapRuleActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TapRuleActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TapRuleActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

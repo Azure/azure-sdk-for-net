@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct HiveAuthenticationType : IEquatable<HiveAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Anonymous. </summary>
+        private const string AnonymousValue = "Anonymous";
+        /// <summary> Username. </summary>
+        private const string UsernameValue = "Username";
+        /// <summary> UsernameAndPassword. </summary>
+        private const string UsernameAndPasswordValue = "UsernameAndPassword";
+        /// <summary> WindowsAzureHDInsightService. </summary>
+        private const string WindowsAzureHDInsightServiceValue = "WindowsAzureHDInsightService";
 
         /// <summary> Initializes a new instance of <see cref="HiveAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HiveAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnonymousValue = "Anonymous";
-        private const string UsernameValue = "Username";
-        private const string UsernameAndPasswordValue = "UsernameAndPassword";
-        private const string WindowsAzureHDInsightServiceValue = "WindowsAzureHDInsightService";
+            _value = value;
+        }
 
         /// <summary> Anonymous. </summary>
         public static HiveAuthenticationType Anonymous { get; } = new HiveAuthenticationType(AnonymousValue);
+
         /// <summary> Username. </summary>
         public static HiveAuthenticationType Username { get; } = new HiveAuthenticationType(UsernameValue);
+
         /// <summary> UsernameAndPassword. </summary>
         public static HiveAuthenticationType UsernameAndPassword { get; } = new HiveAuthenticationType(UsernameAndPasswordValue);
+
         /// <summary> WindowsAzureHDInsightService. </summary>
         public static HiveAuthenticationType WindowsAzureHDInsightService { get; } = new HiveAuthenticationType(WindowsAzureHDInsightServiceValue);
+
         /// <summary> Determines if two <see cref="HiveAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HiveAuthenticationType left, HiveAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HiveAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HiveAuthenticationType left, HiveAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HiveAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HiveAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HiveAuthenticationType(string value) => new HiveAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HiveAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HiveAuthenticationType?(string value) => value == null ? null : new HiveAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HiveAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HiveAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

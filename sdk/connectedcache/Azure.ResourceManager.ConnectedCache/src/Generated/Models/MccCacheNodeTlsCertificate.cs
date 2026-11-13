@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     /// <summary> Mcc cache node resource Tls certificate details. </summary>
     public partial class MccCacheNodeTlsCertificate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeTlsCertificate"/>. </summary>
         internal MccCacheNodeTlsCertificate()
@@ -53,36 +24,47 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeTlsCertificate"/>. </summary>
         /// <param name="actionRequired"> Mcc cache node Tls certificate status. </param>
         /// <param name="certificateFileName"> Mcc cache node Tls certificate file name. </param>
+        /// <param name="certType"> Mcc cache node Tls certificate Type. </param>
         /// <param name="thumbprint"> Mcc cache node Tls certificate thumbprint. </param>
         /// <param name="expiryOn"> Mcc cache node Tls certificate expiry date. </param>
         /// <param name="notBeforeOn"> Mcc cache node Tls certificate not before date. </param>
         /// <param name="subject"> Mcc cache node Tls certificate subject name. </param>
         /// <param name="subjectAltName"> Mcc cache node Tls certificate subject alternate name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeTlsCertificate(string actionRequired, string certificateFileName, string thumbprint, DateTimeOffset? expiryOn, DateTimeOffset? notBeforeOn, string subject, string subjectAltName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MccCacheNodeTlsCertificate(string actionRequired, string certificateFileName, string certType, string thumbprint, DateTimeOffset? expiryOn, DateTimeOffset? notBeforeOn, string subject, string subjectAltName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionRequired = actionRequired;
             CertificateFileName = certificateFileName;
+            CertType = certType;
             Thumbprint = thumbprint;
             ExpiryOn = expiryOn;
             NotBeforeOn = notBeforeOn;
             Subject = subject;
             SubjectAltName = subjectAltName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Mcc cache node Tls certificate status. </summary>
         public string ActionRequired { get; }
+
         /// <summary> Mcc cache node Tls certificate file name. </summary>
         public string CertificateFileName { get; }
+
+        /// <summary> Mcc cache node Tls certificate Type. </summary>
+        public string CertType { get; }
+
         /// <summary> Mcc cache node Tls certificate thumbprint. </summary>
         public string Thumbprint { get; }
+
         /// <summary> Mcc cache node Tls certificate expiry date. </summary>
         public DateTimeOffset? ExpiryOn { get; }
+
         /// <summary> Mcc cache node Tls certificate not before date. </summary>
         public DateTimeOffset? NotBeforeOn { get; }
+
         /// <summary> Mcc cache node Tls certificate subject name. </summary>
         public string Subject { get; }
+
         /// <summary> Mcc cache node Tls certificate subject alternate name. </summary>
         public string SubjectAltName { get; }
     }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.1 (2026-10-19)
+
+### Features Added
+
+- Added support for API version `2026-06-01-preview`, including querying Private DNS resource references.
+- Added `TrafficManagementProfileId` and read-only `ProvisioningState` to record data models.
+
+### Other Changes
+
+- Migrated the library generation from AutoRest to TypeSpec.
+
+## 1.2.3 (2026-06-09)
+
+### Features Added
+
+- Make `Azure.ResourceManager.PrivateDns` AOT-compatible.
+
+## 1.2.2 (2026-04-28)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.2.1 (2025-03-11)
 

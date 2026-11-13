@@ -77,5 +77,26 @@ namespace Azure.Storage.Files.Shares.Models
         /// For HDD, minimum  throughput is 60 MiB/sec and maximum is 5,125 MiB/sec.
         /// </summary>
         public long? ProvisionedMaxBandwidthMibps { get; set; }
+
+        /// <summary>
+        /// Optional. Supported in version 2026-02-01 and above.
+        /// Specifies whether change feed is enabled on the share.
+        /// </summary>
+        public bool? EnableChangeFeed { get; set; }
+
+        /// <summary>
+        /// Optional. Supported in version 2026-02-01 and above.
+        /// Specifies the number of days that change feed records are retained on the share.
+        /// Valid values are between 1 and 365. If not specified, the default is 7 days.
+        /// </summary>
+        public int? ChangeFeedRetentionInDays { get; set; }
+
+        ///// <summary>
+        ///// Optional, default value is true.  Ony applicable to SMB shares.
+        ///// Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled.
+        ///// An input of true specifies that granting of new directory leases is to be allowed.
+        ///// An input of false specifies that granting of new directory leases is to be blocked.
+        ///// </summary>
+        //public bool? EnableDirectoryLease { get; set; }
     }
 }

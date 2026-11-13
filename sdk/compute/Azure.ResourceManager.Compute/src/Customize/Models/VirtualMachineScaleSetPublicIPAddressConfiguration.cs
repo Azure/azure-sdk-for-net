@@ -11,6 +11,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    // Backward compatibility: flatten DnsDomainNameLabel from DnsSettings.DomainNameLabel.
     public partial class VirtualMachineScaleSetPublicIPAddressConfiguration
     {
         /// <summary> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </summary>

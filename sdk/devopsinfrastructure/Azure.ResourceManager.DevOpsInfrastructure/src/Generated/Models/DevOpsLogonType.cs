@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct DevOpsLogonType : IEquatable<DevOpsLogonType>
     {
         private readonly string _value;
+        /// <summary> Run as a service. </summary>
+        private const string ServiceValue = "Service";
+        /// <summary> Run in interactive mode. </summary>
+        private const string InteractiveValue = "Interactive";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsLogonType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevOpsLogonType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ServiceValue = "Service";
-        private const string InteractiveValue = "Interactive";
+            _value = value;
+        }
 
         /// <summary> Run as a service. </summary>
         public static DevOpsLogonType Service { get; } = new DevOpsLogonType(ServiceValue);
+
         /// <summary> Run in interactive mode. </summary>
         public static DevOpsLogonType Interactive { get; } = new DevOpsLogonType(InteractiveValue);
+
         /// <summary> Determines if two <see cref="DevOpsLogonType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevOpsLogonType left, DevOpsLogonType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevOpsLogonType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevOpsLogonType left, DevOpsLogonType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsLogonType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevOpsLogonType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevOpsLogonType(string value) => new DevOpsLogonType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevOpsLogonType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevOpsLogonType?(string value) => value == null ? null : new DevOpsLogonType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevOpsLogonType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevOpsLogonType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

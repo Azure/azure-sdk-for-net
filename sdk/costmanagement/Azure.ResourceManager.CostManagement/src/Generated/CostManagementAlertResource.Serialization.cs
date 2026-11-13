@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CostManagement
 {
+    /// <summary></summary>
     public partial class CostManagementAlertResource : IJsonModel<CostManagementAlertData>
     {
-        private static CostManagementAlertData s_dataDeserializationInstance;
-        private static CostManagementAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CostManagementAlertData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CostManagementAlertData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CostManagementAlertData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CostManagementAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementAlertData>)Data).Write(writer, options);
 
-        CostManagementAlertData IJsonModel<CostManagementAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementAlertData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CostManagementAlertData IJsonModel<CostManagementAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CostManagementAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CostManagementAlertData>(Data, options, AzureResourceManagerCostManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CostManagementAlertData IPersistableModel<CostManagementAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CostManagementAlertData>(data, options, AzureResourceManagerCostManagementContext.Default);
 
-        string IPersistableModel<CostManagementAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CostManagementAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CostManagementAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

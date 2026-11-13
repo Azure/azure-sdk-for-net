@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct SourceControlSourceType : IEquatable<SourceControlSourceType>
     {
         private readonly string _value;
+        /// <summary> VsoGit. </summary>
+        private const string VsoGitValue = "VsoGit";
+        /// <summary> VsoTfvc. </summary>
+        private const string VsoTfvcValue = "VsoTfvc";
+        /// <summary> GitHub. </summary>
+        private const string GitHubValue = "GitHub";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlSourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VsoGitValue = "VsoGit";
-        private const string VsoTfvcValue = "VsoTfvc";
-        private const string GitHubValue = "GitHub";
+            _value = value;
+        }
 
         /// <summary> VsoGit. </summary>
         public static SourceControlSourceType VsoGit { get; } = new SourceControlSourceType(VsoGitValue);
+
         /// <summary> VsoTfvc. </summary>
         public static SourceControlSourceType VsoTfvc { get; } = new SourceControlSourceType(VsoTfvcValue);
+
         /// <summary> GitHub. </summary>
         public static SourceControlSourceType GitHub { get; } = new SourceControlSourceType(GitHubValue);
+
         /// <summary> Determines if two <see cref="SourceControlSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlSourceType left, SourceControlSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlSourceType left, SourceControlSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlSourceType(string value) => new SourceControlSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlSourceType?(string value) => value == null ? null : new SourceControlSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,91 +13,120 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the AppServiceDetector data model.
-    /// Class representing Response from Detector
-    /// </summary>
+    /// <summary> Class representing Response from Detector. </summary>
     public partial class AppServiceDetectorData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDetectorData"/>. </summary>
         public AppServiceDetectorData()
         {
-            Dataset = new ChangeTrackingList<DiagnosticDataset>();
-            DataProvidersMetadata = new ChangeTrackingList<DataProviderMetadata>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDetectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadata"> metadata for the detector. </param>
-        /// <param name="dataset"> Data Set. </param>
-        /// <param name="status"> Indicates status of the most severe insight. </param>
-        /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
-        /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> DetectorResponse resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorInfo metadata, IList<DiagnosticDataset> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorResponseProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Metadata = metadata;
-            Dataset = dataset;
-            Status = status;
-            DataProvidersMetadata = dataProvidersMetadata;
-            SuggestedUtterances = suggestedUtterances;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> metadata for the detector. </summary>
-        [WirePath("properties.metadata")]
-        public DetectorInfo Metadata { get; set; }
-        /// <summary> Data Set. </summary>
-        [WirePath("properties.dataset")]
-        public IList<DiagnosticDataset> Dataset { get; }
-        /// <summary> Indicates status of the most severe insight. </summary>
-        [WirePath("properties.status")]
-        public AppServiceStatusInfo Status { get; set; }
-        /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
-        [WirePath("properties.dataProvidersMetadata")]
-        public IList<DataProviderMetadata> DataProvidersMetadata { get; }
-        /// <summary> Suggested utterances where the detector can be applicable. </summary>
-        [WirePath("properties.suggestedUtterances")]
-        public QueryUtterancesResults SuggestedUtterances { get; set; }
+        /// <summary> DetectorResponse resource specific properties. </summary>
+        [WirePath("properties")]
+        internal DetectorResponseProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> metadata for the detector. </summary>
+        [WirePath("properties.metadata")]
+        public DetectorInfo Metadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                Properties.Metadata = value;
+            }
+        }
+
+        /// <summary> Data Set. </summary>
+        [WirePath("properties.dataset")]
+        public IList<DiagnosticDataset> Dataset
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                return Properties.Dataset;
+            }
+        }
+
+        /// <summary> Indicates status of the most severe insight. </summary>
+        [WirePath("properties.status")]
+        public AppServiceStatusInfo Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
+        /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
+        [WirePath("properties.dataProvidersMetadata")]
+        public IList<DataProviderMetadata> DataProvidersMetadata
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                return Properties.DataProvidersMetadata;
+            }
+        }
+
+        /// <summary> Suggested utterances where the detector can be applicable. </summary>
+        [WirePath("properties.suggestedUtterances")]
+        public QueryUtterancesResults SuggestedUtterances
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SuggestedUtterances;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                Properties.SuggestedUtterances = value;
+            }
+        }
     }
 }

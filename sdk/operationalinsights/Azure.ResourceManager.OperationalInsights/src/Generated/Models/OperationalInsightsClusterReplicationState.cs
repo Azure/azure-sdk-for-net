@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsClusterReplicationState : IEquatable<OperationalInsightsClusterReplicationState>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> EnableRequested. </summary>
+        private const string EnableRequestedValue = "EnableRequested";
+        /// <summary> Enabling. </summary>
+        private const string EnablingValue = "Enabling";
+        /// <summary> DisableRequested. </summary>
+        private const string DisableRequestedValue = "DisableRequested";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> RollbackRequested. </summary>
+        private const string RollbackRequestedValue = "RollbackRequested";
+        /// <summary> RollingBack. </summary>
+        private const string RollingBackValue = "RollingBack";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsClusterReplicationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string EnableRequestedValue = "EnableRequested";
-        private const string EnablingValue = "Enabling";
-        private const string DisableRequestedValue = "DisableRequested";
-        private const string DisablingValue = "Disabling";
-        private const string RollbackRequestedValue = "RollbackRequested";
-        private const string RollingBackValue = "RollingBack";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static OperationalInsightsClusterReplicationState Succeeded { get; } = new OperationalInsightsClusterReplicationState(SucceededValue);
+
         /// <summary> EnableRequested. </summary>
         public static OperationalInsightsClusterReplicationState EnableRequested { get; } = new OperationalInsightsClusterReplicationState(EnableRequestedValue);
+
         /// <summary> Enabling. </summary>
         public static OperationalInsightsClusterReplicationState Enabling { get; } = new OperationalInsightsClusterReplicationState(EnablingValue);
+
         /// <summary> DisableRequested. </summary>
         public static OperationalInsightsClusterReplicationState DisableRequested { get; } = new OperationalInsightsClusterReplicationState(DisableRequestedValue);
+
         /// <summary> Disabling. </summary>
         public static OperationalInsightsClusterReplicationState Disabling { get; } = new OperationalInsightsClusterReplicationState(DisablingValue);
+
         /// <summary> RollbackRequested. </summary>
         public static OperationalInsightsClusterReplicationState RollbackRequested { get; } = new OperationalInsightsClusterReplicationState(RollbackRequestedValue);
+
         /// <summary> RollingBack. </summary>
         public static OperationalInsightsClusterReplicationState RollingBack { get; } = new OperationalInsightsClusterReplicationState(RollingBackValue);
+
         /// <summary> Failed. </summary>
         public static OperationalInsightsClusterReplicationState Failed { get; } = new OperationalInsightsClusterReplicationState(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static OperationalInsightsClusterReplicationState Canceled { get; } = new OperationalInsightsClusterReplicationState(CanceledValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsClusterReplicationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsClusterReplicationState left, OperationalInsightsClusterReplicationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsClusterReplicationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsClusterReplicationState left, OperationalInsightsClusterReplicationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsClusterReplicationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsClusterReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsClusterReplicationState(string value) => new OperationalInsightsClusterReplicationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsClusterReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsClusterReplicationState?(string value) => value == null ? null : new OperationalInsightsClusterReplicationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsClusterReplicationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsClusterReplicationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

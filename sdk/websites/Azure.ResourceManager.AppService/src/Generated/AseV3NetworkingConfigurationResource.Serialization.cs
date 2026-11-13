@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class AseV3NetworkingConfigurationResource : IJsonModel<AseV3NetworkingConfigurationData>
     {
-        private static AseV3NetworkingConfigurationData s_dataDeserializationInstance;
-        private static AseV3NetworkingConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AseV3NetworkingConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AseV3NetworkingConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AseV3NetworkingConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AseV3NetworkingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AseV3NetworkingConfigurationData>)Data).Write(writer, options);
 
-        AseV3NetworkingConfigurationData IJsonModel<AseV3NetworkingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AseV3NetworkingConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AseV3NetworkingConfigurationData IJsonModel<AseV3NetworkingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AseV3NetworkingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AseV3NetworkingConfigurationData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AseV3NetworkingConfigurationData IPersistableModel<AseV3NetworkingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AseV3NetworkingConfigurationData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AseV3NetworkingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AseV3NetworkingConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AseV3NetworkingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

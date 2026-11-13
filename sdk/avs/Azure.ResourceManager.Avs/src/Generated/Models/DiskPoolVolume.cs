@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> An iSCSI volume from Microsoft.StoragePool provider. </summary>
     public partial class DiskPoolVolume
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiskPoolVolume"/>. </summary>
         /// <param name="targetId"> Azure resource ID of the iSCSI target. </param>
@@ -67,30 +39,28 @@ namespace Azure.ResourceManager.Avs.Models
         /// attached as a LUN
         /// </param>
         /// <param name="path"> Device path. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskPoolVolume(ResourceIdentifier targetId, string lunName, LunMountMode? mountOption, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiskPoolVolume(ResourceIdentifier targetId, string lunName, LunMountMode? mountOption, string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetId = targetId;
             LunName = lunName;
             MountOption = mountOption;
             Path = path;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DiskPoolVolume"/> for deserialization. </summary>
-        internal DiskPoolVolume()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure resource ID of the iSCSI target. </summary>
         public ResourceIdentifier TargetId { get; set; }
+
         /// <summary> Name of the LUN to be used for datastore. </summary>
         public string LunName { get; set; }
+
         /// <summary>
         /// Mode that describes whether the LUN has to be mounted as a datastore or
         /// attached as a LUN
         /// </summary>
         public LunMountMode? MountOption { get; set; }
+
         /// <summary> Device path. </summary>
         public string Path { get; }
     }

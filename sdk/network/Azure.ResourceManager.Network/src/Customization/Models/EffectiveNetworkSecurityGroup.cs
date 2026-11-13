@@ -10,7 +10,9 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class EffectiveNetworkSecurityGroup
     {
-        /// <summary> Mapping of tags to list of IP Addresses included within the tag. </summary>
+        // Preserve the unpopulated 1.15 compatibility getter; the generated
+        // TagToIPAddresses dictionary owns the tagMap wire binding.
+        /// <summary> Compatibility member. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public string TagMap { get; }

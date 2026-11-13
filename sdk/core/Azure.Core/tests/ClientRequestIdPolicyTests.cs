@@ -36,7 +36,7 @@ namespace Azure.Core.Tests
             policy.Setup(p => p.OnReceivedResponse(It.IsAny<HttpMessage>()))
                 .Callback<HttpMessage>(message =>
                 {
-                    Assert.AreEqual("ExternalClientId",message.Request.ClientRequestId);
+                    Assert.AreEqual("ExternalClientId", message.Request.ClientRequestId);
                     Assert.True(message.Request.TryGetHeader("x-ms-client-request-id", out string requestId));
                     Assert.AreEqual("ExternalClientId", requestId);
                 }).Verifiable();

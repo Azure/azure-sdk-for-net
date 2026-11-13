@@ -7,8 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The RedTeams sub-client. </summary>
     public partial class RedTeams
@@ -22,11 +23,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of RedTeams. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal RedTeams(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal RedTeams(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -35,8 +38,11 @@ namespace Azure.AI.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
-        /// [Protocol Method] Get a redteam by name.
+        /// [Protocol Method] Retrieves the specified redteam and its configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -44,22 +50,31 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> Identifier of the red team run. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string name, string clientRequestId, RequestOptions options)
+        public virtual ClientResult Get(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, clientRequestId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Get a redteam by name.
+        /// [Protocol Method] Retrieves the specified redteam and its configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -67,104 +82,127 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> Identifier of the red team run. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string name, string clientRequestId, RequestOptions options)
+        public virtual async Task<ClientResult> GetAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, clientRequestId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get a redteam by name. </summary>
+        /// <summary> Retrieves the specified redteam and its configuration. </summary>
         /// <param name="name"> Identifier of the red team run. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<RedTeam> Get(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<RedTeam> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = Get(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = Get(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
         }
 
-        /// <summary> Get a redteam by name. </summary>
+        /// <summary> Retrieves the specified redteam and its configuration. </summary>
         /// <param name="name"> Identifier of the red team run. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<RedTeam>> GetAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<RedTeam>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] List a redteam by name.
+        /// [Protocol Method] Returns the redteams available in the current project.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetAll(string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetAll(RequestOptions options)
         {
-            return new RedTeamsGetAllCollectionResult(this, clientRequestId, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.GetAll");
+            scope.Start();
+            try
+            {
+                return new RedTeamsGetAllCollectionResult(this, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] List a redteam by name.
+        /// [Protocol Method] Returns the redteams available in the current project.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAllAsync(string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(RequestOptions options)
         {
-            return new RedTeamsGetAllAsyncCollectionResult(this, clientRequestId, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.GetAll");
+            scope.Start();
+            try
+            {
+                return new RedTeamsGetAllAsyncCollectionResult(this, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> List a redteam by name. </summary>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
+        /// <summary> Returns the redteams available in the current project. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<RedTeam> GetAll(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<RedTeam> GetAll(CancellationToken cancellationToken = default)
         {
-            return new RedTeamsGetAllCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new RedTeamsGetAllCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List a redteam by name. </summary>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
+        /// <summary> Returns the redteams available in the current project. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<RedTeam> GetAllAsync(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<RedTeam> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return new RedTeamsGetAllAsyncCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new RedTeamsGetAllAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a redteam run.
+        /// [Protocol Method] Submits a new redteam run for execution with the provided configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -178,14 +216,24 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Create(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a redteam run.
+        /// [Protocol Method] Submits a new redteam run for execution with the provided configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -199,13 +247,23 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateAsync(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Creates a redteam run. </summary>
+        /// <summary> Submits a new redteam run for execution with the provided configuration. </summary>
         /// <param name="redTeam"> Redteam to be run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
@@ -214,11 +272,11 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
 
-            ClientResult result = Create(redTeam, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = Create(redTeam, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
         }
 
-        /// <summary> Creates a redteam run. </summary>
+        /// <summary> Submits a new redteam run for execution with the provided configuration. </summary>
         /// <param name="redTeam"> Redteam to be run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
@@ -227,7 +285,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
 
-            ClientResult result = await CreateAsync(redTeam, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await CreateAsync(redTeam, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
         }
     }

@@ -13,30 +13,39 @@ namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateData))]
     [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateListResult))]
     [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(Models.MaintenanceConfigurationAssignmentData))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentFilter))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationData))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceGroupApplyUpdateResource))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceGroupConfigurationAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceLinuxPatchSettings))]
     [ModelReaderWriterBuildable(typeof(MaintenancePatchConfiguration))]
     [ModelReaderWriterBuildable(typeof(MaintenancePublicConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceResourceGroupConfigurationAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceScheduledEventApproveResult))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceScheduledEventIdList))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceSubscriptionConfigurationAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceUpdate))]
     [ModelReaderWriterBuildable(typeof(MaintenanceUpdateListResult))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceVmTagSettings))]
     [ModelReaderWriterBuildable(typeof(MaintenanceWindowsPatchSettings))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetApplyUpdatesByParentOptions))]
-    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetConfigurationAssignmentByParentOptions))]
-    [ModelReaderWriterBuildable(typeof(ScheduledEventApproveResult))]
+    [ModelReaderWriterBuildable(typeof(ScheduledEventsAcknowledgeErrorDetails))]
+    [ModelReaderWriterBuildable(typeof(ScheduledEventsListAcknowledgeError))]
+    [ModelReaderWriterBuildable(typeof(ScheduledEventsListAcknowledgeErrorDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(VmTagSettings))]
     public partial class AzureResourceManagerMaintenanceContext : ModelReaderWriterContext
     {
     }

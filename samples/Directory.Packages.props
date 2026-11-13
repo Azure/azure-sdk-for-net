@@ -1,0 +1,5 @@
+<Project>
+  <!-- This file exists as a redirect target for DirectoryPackagesPropsPath
+       (set in Directory.Build.props) to prevent MSBuild from importing the
+       repo's central Directory.Packages.props. -->
+</Project>

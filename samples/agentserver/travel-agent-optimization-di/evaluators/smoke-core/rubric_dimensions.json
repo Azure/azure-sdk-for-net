@@ -1,0 +1,38 @@
+[
+  {
+    "id": "budget_compliance_and_cost_transparency",
+    "description": "The agent provides a detailed and itemized cost breakdown (flights, hotels, activities) that sums to a total within or below the user’s stated budget, with no hidden or unexplained costs.",
+    "weight": 9
+  },
+  {
+    "id": "alternative_destination_suitability",
+    "description": "When the preferred destination exceeds the budget, the agent suggests at least one viable and demonstrably less expensive alternative destination with corresponding cost details that are realistic and accessible.",
+    "weight": 6
+  },
+  {
+    "id": "date_formatting_clarity_and_localization",
+    "description": "All dates are formatted clearly and consistently according to the user’s locale conventions, avoiding ambiguity.",
+    "weight": 3
+  },
+  {
+    "id": "time_zone_conversion_accuracy",
+    "description": "All itinerary times (flights, activities) reflect accurate and consistent time zone conversions across components to avoid confusion.",
+    "weight": 4
+  },
+  {
+    "id": "internal_consistency_and_coherence",
+    "description": "The output is internally consistent and coherent, with no contradictory or conflicting information across itinerary components.",
+    "weight": 5
+  },
+  {
+    "id": "practical_feasibility_of_suggestions",
+    "description": "Suggested alternatives and itinerary components are practically feasible, respecting travel constraints such as flight availability and realistic booking options.",
+    "weight": 4
+  },
+  {
+    "id": "general_quality",
+    "description": "Other important quality factors not covered by listed criteria.",
+    "weight": 5,
+    "always_applicable": true
+  }
+]

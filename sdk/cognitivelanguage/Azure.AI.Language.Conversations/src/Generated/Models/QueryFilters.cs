@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> filters over knowledge base. </summary>
     public partial class QueryFilters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryFilters"/>. </summary>
         public QueryFilters()
@@ -55,19 +27,21 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="metadataFilter"> filters over knowledge base. </param>
         /// <param name="sourceFilter"> filters over knowledge base. </param>
         /// <param name="logicalOperation"> Logical operation used to join metadata filter with source filter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryFilters(MetadataFilter metadataFilter, IList<string> sourceFilter, LogicalOperationKind? logicalOperation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QueryFilters(MetadataFilter metadataFilter, IList<string> sourceFilter, LogicalOperationKind? logicalOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetadataFilter = metadataFilter;
             SourceFilter = sourceFilter;
             LogicalOperation = logicalOperation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> filters over knowledge base. </summary>
         public MetadataFilter MetadataFilter { get; set; }
+
         /// <summary> filters over knowledge base. </summary>
         public IList<string> SourceFilter { get; }
+
         /// <summary> Logical operation used to join metadata filter with source filter. </summary>
         public LogicalOperationKind? LogicalOperation { get; set; }
     }

@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AutoNCrossValidations : NCrossValidations
     {
         /// <summary> Initializes a new instance of <see cref="AutoNCrossValidations"/>. </summary>
-        public AutoNCrossValidations()
+        public AutoNCrossValidations() : base(NCrossValidationsMode.Auto)
         {
-            Mode = NCrossValidationsMode.Auto;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoNCrossValidations"/>. </summary>
         /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoNCrossValidations(NCrossValidationsMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutoNCrossValidations(NCrossValidationsMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(mode, additionalBinaryDataProperties)
         {
-            Mode = mode;
         }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> A usage model. </summary>
     public partial class StorageCacheUsageModel
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheUsageModel"/>. </summary>
         internal StorageCacheUsageModel()
@@ -54,26 +25,31 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="display"> Localized information describing this usage model. </param>
         /// <param name="modelName"> Non-localized keyword name for this usage model. </param>
         /// <param name="targetType"> The type of Storage Target to which this model is applicable (only nfs3 as of this version). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCacheUsageModel(StorageCacheUsageModelDisplay display, string modelName, string targetType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUsageModel(StorageCacheUsageModelDisplay display, string modelName, string targetType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Display = display;
             ModelName = modelName;
             TargetType = targetType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Localized information describing this usage model. </summary>
         internal StorageCacheUsageModelDisplay Display { get; }
-        /// <summary> String to display for this usage model. </summary>
-        public string DisplayDescription
-        {
-            get => Display?.Description;
-        }
 
         /// <summary> Non-localized keyword name for this usage model. </summary>
         public string ModelName { get; }
+
         /// <summary> The type of Storage Target to which this model is applicable (only nfs3 as of this version). </summary>
         public string TargetType { get; }
+
+        /// <summary> String to display for this usage model. </summary>
+        public string DisplayDescription
+        {
+            get
+            {
+                return Display is null ? default : Display.Description;
+            }
+        }
     }
 }

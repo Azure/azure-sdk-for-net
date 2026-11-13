@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationTaskState : IEquatable<DataMigrationTaskState>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Queued. </summary>
+        private const string QueuedValue = "Queued";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> FailedInputValidation. </summary>
+        private const string FailedInputValidationValue = "FailedInputValidation";
+        /// <summary> Faulted. </summary>
+        private const string FaultedValue = "Faulted";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationTaskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationTaskState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string QueuedValue = "Queued";
-        private const string RunningValue = "Running";
-        private const string CanceledValue = "Canceled";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string FailedInputValidationValue = "FailedInputValidation";
-        private const string FaultedValue = "Faulted";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static DataMigrationTaskState Unknown { get; } = new DataMigrationTaskState(UnknownValue);
+
         /// <summary> Queued. </summary>
         public static DataMigrationTaskState Queued { get; } = new DataMigrationTaskState(QueuedValue);
+
         /// <summary> Running. </summary>
         public static DataMigrationTaskState Running { get; } = new DataMigrationTaskState(RunningValue);
+
         /// <summary> Canceled. </summary>
         public static DataMigrationTaskState Canceled { get; } = new DataMigrationTaskState(CanceledValue);
+
         /// <summary> Succeeded. </summary>
         public static DataMigrationTaskState Succeeded { get; } = new DataMigrationTaskState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static DataMigrationTaskState Failed { get; } = new DataMigrationTaskState(FailedValue);
+
         /// <summary> FailedInputValidation. </summary>
         public static DataMigrationTaskState FailedInputValidation { get; } = new DataMigrationTaskState(FailedInputValidationValue);
+
         /// <summary> Faulted. </summary>
         public static DataMigrationTaskState Faulted { get; } = new DataMigrationTaskState(FaultedValue);
+
         /// <summary> Determines if two <see cref="DataMigrationTaskState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationTaskState left, DataMigrationTaskState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationTaskState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationTaskState left, DataMigrationTaskState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationTaskState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationTaskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationTaskState(string value) => new DataMigrationTaskState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationTaskState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationTaskState?(string value) => value == null ? null : new DataMigrationTaskState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationTaskState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationTaskState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

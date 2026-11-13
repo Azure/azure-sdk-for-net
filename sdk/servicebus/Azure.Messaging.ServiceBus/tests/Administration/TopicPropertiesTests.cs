@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
@@ -78,6 +80,110 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var properties = new TopicProperties(options);
 
             Assert.AreEqual(options, new CreateTopicOptions(properties));
+        }
+
+        [Test]
+        public async Task ParsesTopicWithMaskedAuthorizationRuleKeys()
+        {
+            // The service masks SAS key values (returning empty strings) when the caller
+            // lacks the listkeys/action permission. Parsing such a response must not throw.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/60469.
+            string topicDescriptionXml = $@"<entry xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<title xmlns=""{AdministrationClientConstants.AtomNamespace}"">maskedtopic</title>" +
+                $@"<content xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<TopicDescription xmlns=""{AdministrationClientConstants.ServiceBusNamespace}"" xmlns:i=""{AdministrationClientConstants.XmlSchemaInstanceNamespace}"">" +
+                $"<MaxSizeInMegabytes>1024</MaxSizeInMegabytes>" +
+                $"<AuthorizationRules>" +
+                $@"<AuthorizationRule i:type=""SharedAccessAuthorizationRule"">" +
+                $"<ClaimType>SharedAccessKey</ClaimType>" +
+                $"<ClaimValue>None</ClaimValue>" +
+                $"<Rights><AccessRights>Listen</AccessRights></Rights>" +
+                $"<KeyName>Decisions</KeyName>" +
+                $"<PrimaryKey></PrimaryKey>" +
+                $"<SecondaryKey></SecondaryKey>" +
+                $"</AuthorizationRule>" +
+                $"</AuthorizationRules>" +
+                $"<Status>Active</Status>" +
+                $"</TopicDescription>" +
+                $"</content>" +
+                $"</entry>";
+            MockResponse response = new MockResponse(200);
+            response.SetContent(topicDescriptionXml);
+
+            TopicProperties topicDesc = await TopicPropertiesExtensions.ParseResponseAsync(response);
+
+            Assert.AreEqual("maskedtopic", topicDesc.Name);
+            Assert.AreEqual(1, topicDesc.AuthorizationRules.Count);
+            var rule = (SharedAccessAuthorizationRule)topicDesc.AuthorizationRules[0];
+            Assert.AreEqual("Decisions", rule.KeyName);
+            Assert.AreEqual(string.Empty, rule.PrimaryKey);
+            Assert.AreEqual(string.Empty, rule.SecondaryKey);
+            CollectionAssert.AreEqual(new[] { AccessRights.Listen }, rule.Rights);
+        }
+
+        [Test]
+        public async Task ParsesTopicWithNoAuthorizationRulesSection()
+        {
+            // When the caller lacks listkeys/action, the service redaction removes the
+            // entire AuthorizationRules section (the intended contract). Parsing a response
+            // with no section must succeed and yield an empty rule collection.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/60469.
+            string topicDescriptionXml = $@"<entry xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<title xmlns=""{AdministrationClientConstants.AtomNamespace}"">noauthrules</title>" +
+                $@"<content xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<TopicDescription xmlns=""{AdministrationClientConstants.ServiceBusNamespace}"">" +
+                $"<MaxSizeInMegabytes>1024</MaxSizeInMegabytes>" +
+                $"<Status>Active</Status>" +
+                $"</TopicDescription>" +
+                $"</content>" +
+                $"</entry>";
+            MockResponse response = new MockResponse(200);
+            response.SetContent(topicDescriptionXml);
+
+            TopicProperties topicDesc = await TopicPropertiesExtensions.ParseResponseAsync(response);
+
+            Assert.AreEqual("noauthrules", topicDesc.Name);
+            Assert.IsNotNull(topicDesc.AuthorizationRules);
+            Assert.AreEqual(0, topicDesc.AuthorizationRules.Count);
+        }
+
+        [Test]
+        public async Task CreateTopicOptionsFromPropertiesWithMaskedKeysDoesNotThrow()
+        {
+            // A topic fetched with masked SAS keys must survive the common
+            // get-modify-update round-trip: new CreateTopicOptions(properties) clones
+            // the authorization rules, which must not re-validate the masked keys.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/60469.
+            string topicDescriptionXml = $@"<entry xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<title xmlns=""{AdministrationClientConstants.AtomNamespace}"">maskedtopic</title>" +
+                $@"<content xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<TopicDescription xmlns=""{AdministrationClientConstants.ServiceBusNamespace}"" xmlns:i=""{AdministrationClientConstants.XmlSchemaInstanceNamespace}"">" +
+                $"<MaxSizeInMegabytes>1024</MaxSizeInMegabytes>" +
+                $"<AuthorizationRules>" +
+                $@"<AuthorizationRule i:type=""SharedAccessAuthorizationRule"">" +
+                $"<ClaimType>SharedAccessKey</ClaimType>" +
+                $"<ClaimValue>None</ClaimValue>" +
+                $"<Rights><AccessRights>Listen</AccessRights></Rights>" +
+                $"<KeyName>Decisions</KeyName>" +
+                $"<PrimaryKey></PrimaryKey>" +
+                $"<SecondaryKey></SecondaryKey>" +
+                $"</AuthorizationRule>" +
+                $"</AuthorizationRules>" +
+                $"<Status>Active</Status>" +
+                $"</TopicDescription>" +
+                $"</content>" +
+                $"</entry>";
+            MockResponse response = new MockResponse(200);
+            response.SetContent(topicDescriptionXml);
+            TopicProperties topicDesc = await TopicPropertiesExtensions.ParseResponseAsync(response);
+
+            CreateTopicOptions options = null;
+            Assert.DoesNotThrow(() => options = new CreateTopicOptions(topicDesc));
+            Assert.AreEqual(1, options.AuthorizationRules.Count);
+            var rule = (SharedAccessAuthorizationRule)options.AuthorizationRules[0];
+            Assert.AreEqual("Decisions", rule.KeyName);
+            Assert.AreEqual(string.Empty, rule.PrimaryKey);
+            Assert.AreEqual(string.Empty, rule.SecondaryKey);
         }
     }
 }

@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Request body for adding a new or existing data disk to a virtual machine. </summary>
     public partial class DevTestLabDataDiskProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabDataDiskProperties"/>. </summary>
         public DevTestLabDataDiskProperties()
@@ -55,19 +26,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="attachNewDataDiskOptions"> Specifies options to attach a new disk to the virtual machine. </param>
         /// <param name="existingLabDiskId"> Specifies the existing lab disk id to attach to virtual machine. </param>
         /// <param name="hostCaching"> Caching option for a data disk (i.e. None, ReadOnly, ReadWrite). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabDataDiskProperties(AttachNewDataDiskDetails attachNewDataDiskOptions, ResourceIdentifier existingLabDiskId, DevTestLabHostCachingOption? hostCaching, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabDataDiskProperties(AttachNewDataDiskDetails attachNewDataDiskOptions, ResourceIdentifier existingLabDiskId, DevTestLabHostCachingOption? hostCaching, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AttachNewDataDiskOptions = attachNewDataDiskOptions;
             ExistingLabDiskId = existingLabDiskId;
             HostCaching = hostCaching;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies options to attach a new disk to the virtual machine. </summary>
         public AttachNewDataDiskDetails AttachNewDataDiskOptions { get; set; }
+
         /// <summary> Specifies the existing lab disk id to attach to virtual machine. </summary>
         public ResourceIdentifier ExistingLabDiskId { get; set; }
+
         /// <summary> Caching option for a data disk (i.e. None, ReadOnly, ReadWrite). </summary>
         public DevTestLabHostCachingOption? HostCaching { get; set; }
     }

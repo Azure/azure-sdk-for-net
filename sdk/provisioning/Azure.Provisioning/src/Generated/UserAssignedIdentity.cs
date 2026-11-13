@@ -40,6 +40,17 @@ public partial class UserAssignedIdentity : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
+    /// Enum to configure regional restrictions on identity assignment, as
+    /// necessary.
+    /// </summary>
+    public BicepValue<IsolationScope> IsolationScope 
+    {
+        get { Initialize(); return _isolationScope!; }
+        set { Initialize(); _isolationScope!.Assign(value); }
+    }
+    private BicepValue<IsolationScope>? _isolationScope;
+
+    /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
     public BicepDictionary<string> Tags 
@@ -119,6 +130,7 @@ public partial class UserAssignedIdentity : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _isolationScope = DefineProperty<IsolationScope>("IsolationScope", ["properties", "isolationScope"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _clientId = DefineProperty<Guid>("ClientId", ["properties", "clientId"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

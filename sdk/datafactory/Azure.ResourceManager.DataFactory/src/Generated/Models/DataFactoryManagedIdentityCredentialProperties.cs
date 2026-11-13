@@ -15,24 +15,39 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryManagedIdentityCredentialProperties : DataFactoryCredential
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialProperties"/>. </summary>
-        public DataFactoryManagedIdentityCredentialProperties()
+        public DataFactoryManagedIdentityCredentialProperties() : base("ManagedIdentity")
         {
-            CredentialType = "ManagedIdentity";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialProperties"/>. </summary>
         /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="resourceId"> The resource id of user assigned managed identity. </param>
-        internal DataFactoryManagedIdentityCredentialProperties(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ResourceIdentifier resourceId) : base(credentialType, description, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Managed identity credential properties. </param>
+        internal DataFactoryManagedIdentityCredentialProperties(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ManagedIdentityTypeProperties typeProperties) : base(credentialType, description, annotations, additionalProperties)
         {
-            ResourceId = resourceId;
-            CredentialType = credentialType ?? "ManagedIdentity";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Managed identity credential properties. </summary>
+        internal ManagedIdentityTypeProperties TypeProperties { get; set; }
+
         /// <summary> The resource id of user assigned managed identity. </summary>
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ResourceId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ManagedIdentityTypeProperties();
+                }
+                TypeProperties.ResourceId = value;
+            }
+        }
     }
 }

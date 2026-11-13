@@ -6,9 +6,10 @@
 
   <ItemGroup>
     <!--TODO: REMOVE REFERENCE TO Microsoft.Extensions.Telemetry-->
-    <PackageReference Include="Microsoft.Extensions.Telemetry" VersionOverride="9.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Telemetry" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
+    <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.Exporter.InMemory" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
     <PackageReference Include="xunit" />

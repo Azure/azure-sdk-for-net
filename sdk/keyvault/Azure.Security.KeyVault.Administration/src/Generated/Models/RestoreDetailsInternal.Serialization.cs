@@ -16,6 +16,53 @@ namespace Azure.Security.KeyVault.Administration.Models
 {
     internal partial class RestoreDetailsInternal : IJsonModel<RestoreDetailsInternal>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestoreDetailsInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRestoreDetailsInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestoreDetailsInternal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RestoreDetailsInternal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RestoreDetailsInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestoreDetailsInternal IPersistableModel<RestoreDetailsInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RestoreDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RestoreDetailsInternal"/> from. </param>
+        public static explicit operator RestoreDetailsInternal(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRestoreDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestoreDetailsInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -44,25 +91,39 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error, _errorIsDefined))
             {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                if (Error != null)
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error, options);
+                }
+                else
+                {
+                    writer.WriteNull("error"u8);
+                }
             }
             if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteNumberValue(StartTime.Value, "U");
+                writer.WriteNumberValue(StartsOn.Value, "U");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteNumberValue(EndTime.Value, "U");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteNumberValue(EndsOn.Value, "U");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,10 +169,12 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
             OperationStatus? status = default;
             string statusDetails = default;
+            bool errorIsDefined = false;
             KeyVaultServiceError error = default;
             string jobId = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
+            DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
+            DateTimeOffset? endsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,6 +194,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
+                    errorIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         error = null;
@@ -150,22 +214,23 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    startTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endTime = null;
+                        endsOn = null;
                         continue;
                     }
-                    endTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RestoreDetailsInternal(
@@ -173,57 +238,13 @@ namespace Azure.Security.KeyVault.Administration.Models
                 statusDetails,
                 error,
                 jobId,
-                startTime,
-                endTime,
-                additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestoreDetailsInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
+                startsOn,
+                endsOn,
+                additionalBinaryDataProperties)
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RestoreDetailsInternal)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RestoreDetailsInternal IPersistableModel<RestoreDetailsInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestoreDetailsInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeRestoreDetailsInternal(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RestoreDetailsInternal)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestoreDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RestoreDetailsInternal"/> from. </param>
-        public static explicit operator RestoreDetailsInternal(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeRestoreDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
+                _errorIsDefined = errorIsDefined,
+                _endsOnIsDefined = endsOnIsDefined
+            };
         }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WebSiteExtensionResource : IJsonModel<SiteExtensionInfoData>
     {
-        private static SiteExtensionInfoData s_dataDeserializationInstance;
-        private static SiteExtensionInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SiteExtensionInfoData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SiteExtensionInfoData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SiteExtensionInfoData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteExtensionInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteExtensionInfoData>)Data).Write(writer, options);
 
-        SiteExtensionInfoData IJsonModel<SiteExtensionInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteExtensionInfoData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteExtensionInfoData IJsonModel<SiteExtensionInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SiteExtensionInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteExtensionInfoData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SiteExtensionInfoData IPersistableModel<SiteExtensionInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteExtensionInfoData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<SiteExtensionInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteExtensionInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteExtensionInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

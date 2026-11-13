@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct PartnerTopicActivationState : IEquatable<PartnerTopicActivationState>
     {
         private readonly string _value;
+        /// <summary> NeverActivated. </summary>
+        private const string NeverActivatedValue = "NeverActivated";
+        /// <summary> Activated. </summary>
+        private const string ActivatedValue = "Activated";
+        /// <summary> Deactivated. </summary>
+        private const string DeactivatedValue = "Deactivated";
 
         /// <summary> Initializes a new instance of <see cref="PartnerTopicActivationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartnerTopicActivationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NeverActivatedValue = "NeverActivated";
-        private const string ActivatedValue = "Activated";
-        private const string DeactivatedValue = "Deactivated";
+            _value = value;
+        }
 
         /// <summary> NeverActivated. </summary>
         public static PartnerTopicActivationState NeverActivated { get; } = new PartnerTopicActivationState(NeverActivatedValue);
+
         /// <summary> Activated. </summary>
         public static PartnerTopicActivationState Activated { get; } = new PartnerTopicActivationState(ActivatedValue);
+
         /// <summary> Deactivated. </summary>
         public static PartnerTopicActivationState Deactivated { get; } = new PartnerTopicActivationState(DeactivatedValue);
+
         /// <summary> Determines if two <see cref="PartnerTopicActivationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PartnerTopicActivationState left, PartnerTopicActivationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PartnerTopicActivationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PartnerTopicActivationState left, PartnerTopicActivationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerTopicActivationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PartnerTopicActivationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PartnerTopicActivationState(string value) => new PartnerTopicActivationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PartnerTopicActivationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PartnerTopicActivationState?(string value) => value == null ? null : new PartnerTopicActivationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PartnerTopicActivationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PartnerTopicActivationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

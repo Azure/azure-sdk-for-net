@@ -7,54 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// State of the log scrubbing config. Default value is Enabled.
-    /// Serialized Name: ProfileScrubbingState
-    /// </summary>
+    /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
     public readonly partial struct ProfileScrubbingState : IEquatable<ProfileScrubbingState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProfileScrubbingState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProfileScrubbingState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: ProfileScrubbingState.Enabled
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileScrubbingState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProfileScrubbingState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static ProfileScrubbingState Enabled { get; } = new ProfileScrubbingState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ProfileScrubbingState.Disabled
-        /// </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static ProfileScrubbingState Disabled { get; } = new ProfileScrubbingState(DisabledValue);
+
         /// <summary> Determines if two <see cref="ProfileScrubbingState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProfileScrubbingState left, ProfileScrubbingState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProfileScrubbingState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProfileScrubbingState left, ProfileScrubbingState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProfileScrubbingState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProfileScrubbingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProfileScrubbingState(string value) => new ProfileScrubbingState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProfileScrubbingState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProfileScrubbingState?(string value) => value == null ? null : new ProfileScrubbingState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProfileScrubbingState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProfileScrubbingState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

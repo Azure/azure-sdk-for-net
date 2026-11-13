@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsFileImportState : IEquatable<SecurityInsightsFileImportState>
     {
         private readonly string _value;
+        /// <summary> A fatal error has occurred while ingesting the file. </summary>
+        private const string FatalErrorValue = "FatalError";
+        /// <summary> The file has been ingested. </summary>
+        private const string IngestedValue = "Ingested";
+        /// <summary> The file has been ingested with errors. </summary>
+        private const string IngestedWithErrorsValue = "IngestedWithErrors";
+        /// <summary> The file ingestion is in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The file is invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Waiting for the file to be uploaded. </summary>
+        private const string WaitingForUploadValue = "WaitingForUpload";
+        /// <summary> Unspecified state. </summary>
+        private const string UnspecifiedValue = "Unspecified";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileImportState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsFileImportState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FatalErrorValue = "FatalError";
-        private const string IngestedValue = "Ingested";
-        private const string IngestedWithErrorsValue = "IngestedWithErrors";
-        private const string InProgressValue = "InProgress";
-        private const string InvalidValue = "Invalid";
-        private const string WaitingForUploadValue = "WaitingForUpload";
-        private const string UnspecifiedValue = "Unspecified";
+            _value = value;
+        }
 
         /// <summary> A fatal error has occurred while ingesting the file. </summary>
         public static SecurityInsightsFileImportState FatalError { get; } = new SecurityInsightsFileImportState(FatalErrorValue);
+
         /// <summary> The file has been ingested. </summary>
         public static SecurityInsightsFileImportState Ingested { get; } = new SecurityInsightsFileImportState(IngestedValue);
+
         /// <summary> The file has been ingested with errors. </summary>
         public static SecurityInsightsFileImportState IngestedWithErrors { get; } = new SecurityInsightsFileImportState(IngestedWithErrorsValue);
+
         /// <summary> The file ingestion is in progress. </summary>
         public static SecurityInsightsFileImportState InProgress { get; } = new SecurityInsightsFileImportState(InProgressValue);
+
         /// <summary> The file is invalid. </summary>
         public static SecurityInsightsFileImportState Invalid { get; } = new SecurityInsightsFileImportState(InvalidValue);
+
         /// <summary> Waiting for the file to be uploaded. </summary>
         public static SecurityInsightsFileImportState WaitingForUpload { get; } = new SecurityInsightsFileImportState(WaitingForUploadValue);
+
         /// <summary> Unspecified state. </summary>
         public static SecurityInsightsFileImportState Unspecified { get; } = new SecurityInsightsFileImportState(UnspecifiedValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileImportState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsFileImportState left, SecurityInsightsFileImportState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileImportState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsFileImportState left, SecurityInsightsFileImportState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsFileImportState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileImportState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsFileImportState(string value) => new SecurityInsightsFileImportState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileImportState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsFileImportState?(string value) => value == null ? null : new SecurityInsightsFileImportState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsFileImportState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsFileImportState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

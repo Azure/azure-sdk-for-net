@@ -3,25 +3,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The information about health per rule per backend address. </summary>
     public partial class LoadBalancerHealthPerRulePerBackendAddress
     {
-        /// <summary> The id of the network interface ip configuration belonging to the backend address. </summary>
+        // Preserve the 1.15.0 convenience wrapper; the native wire property stores a string resource ID.
+        /// <summary> Gets the network interface IP configuration identified by the backend address. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkInterfaceIPConfigurationData NetworkInterfaceIPConfigurationId
-        {
-            get
-            {
-                if (NetworkInterfaceIPConfigurationResourceId != null)
-                {
-                    return new NetworkInterfaceIPConfigurationData() { Id = NetworkInterfaceIPConfigurationResourceId };
-                }
-                return null;
-            }
-        }
+            => NetworkInterfaceIPConfigurationResourceId is null ? null : new NetworkInterfaceIPConfigurationData { Id = NetworkInterfaceIPConfigurationResourceId };
     }
 }

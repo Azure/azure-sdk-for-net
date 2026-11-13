@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Backend update parameters. </summary>
     public partial class ApiManagementBackendPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementBackendPatch"/>. </summary>
         public ApiManagementBackendPatch()
@@ -51,105 +23,278 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementBackendPatch"/>. </summary>
-        /// <param name="title"> Backend Title. </param>
-        /// <param name="description"> Backend Description. </param>
-        /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
-        /// <param name="properties"> Backend Properties contract. </param>
-        /// <param name="credentials"> Backend Credentials Contract Properties. </param>
-        /// <param name="proxy"> Backend gateway Contract Properties. </param>
-        /// <param name="tls"> Backend TLS Properties. </param>
-        /// <param name="circuitBreaker"> Backend Circuit Breaker Configuration. </param>
-        /// <param name="pool"></param>
-        /// <param name="backendType"> Type of the backend. A backend can be either Single or Pool. </param>
-        /// <param name="uri"> Runtime Url of the Backend. </param>
-        /// <param name="protocol"> Backend communication protocol. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, BackendBaseParametersPool pool, BackendType? backendType, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Backend entity update contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementBackendPatch(BackendUpdateParameterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Title = title;
-            Description = description;
-            ResourceUri = resourceUri;
             Properties = properties;
-            Credentials = credentials;
-            Proxy = proxy;
-            Tls = tls;
-            CircuitBreaker = circuitBreaker;
-            Pool = pool;
-            BackendType = backendType;
-            Uri = uri;
-            Protocol = protocol;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Backend entity update contract properties. </summary>
+        [WirePath("properties")]
+        internal BackendUpdateParameterProperties Properties { get; set; }
 
         /// <summary> Backend Title. </summary>
         [WirePath("properties.title")]
-        public string Title { get; set; }
-        /// <summary> Backend Description. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
-        [WirePath("properties.resourceId")]
-        public Uri ResourceUri { get; set; }
-        /// <summary> Backend Properties contract. </summary>
-        internal BackendProperties Properties { get; set; }
-        /// <summary> Backend Service Fabric Cluster Properties. </summary>
-        [WirePath("properties.properties.serviceFabricCluster")]
-        public BackendServiceFabricClusterProperties BackendServiceFabricCluster
+        public string Title
         {
-            get => Properties is null ? default : Properties.ServiceFabricCluster;
+            get
+            {
+                return Properties is null ? default : Properties.Title;
+            }
             set
             {
                 if (Properties is null)
-                    Properties = new BackendProperties();
-                Properties.ServiceFabricCluster = value;
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.Title = value;
+            }
+        }
+
+        /// <summary> Backend Description. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        [WirePath("properties.resourceId")]
+        public Uri ResourceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.ResourceUri = value;
             }
         }
 
         /// <summary> Backend Credentials Contract Properties. </summary>
         [WirePath("properties.credentials")]
-        public BackendCredentialsContract Credentials { get; set; }
+        public BackendCredentialsContract Credentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Credentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.Credentials = value;
+            }
+        }
+
         /// <summary> Backend gateway Contract Properties. </summary>
         [WirePath("properties.proxy")]
-        public BackendProxyContract Proxy { get; set; }
+        public BackendProxyContract Proxy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Proxy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.Proxy = value;
+            }
+        }
+
         /// <summary> Backend TLS Properties. </summary>
         [WirePath("properties.tls")]
-        public BackendTlsProperties Tls { get; set; }
-        /// <summary> Backend Circuit Breaker Configuration. </summary>
-        internal BackendCircuitBreaker CircuitBreaker { get; set; }
+        public BackendTlsProperties Tls
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Tls;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.Tls = value;
+            }
+        }
+
+        /// <summary> Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer. </summary>
+        [WirePath("properties.azureRegion")]
+        public string AzureRegion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureRegion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.AzureRegion = value;
+            }
+        }
+
+        /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
+        [WirePath("properties.type")]
+        public BackendType? TypePropertiesType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypePropertiesType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.TypePropertiesType = value;
+            }
+        }
+
+        /// <summary> Backend Service Fabric Cluster Properties. </summary>
+        [WirePath("properties.properties.serviceFabricCluster")]
+        public BackendServiceFabricClusterProperties BackendServiceFabricCluster
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendServiceFabricCluster;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.BackendServiceFabricCluster = value;
+            }
+        }
+
         /// <summary> The rules for tripping the backend. </summary>
         [WirePath("properties.circuitBreaker.rules")]
         public IList<CircuitBreakerRule> CircuitBreakerRules
         {
             get
             {
-                if (CircuitBreaker is null)
-                    CircuitBreaker = new BackendCircuitBreaker();
-                return CircuitBreaker.Rules;
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                return Properties.CircuitBreakerRules;
             }
         }
 
-        /// <summary> Gets or sets the pool. </summary>
-        internal BackendBaseParametersPool Pool { get; set; }
         /// <summary> The list of backend entities belonging to a pool. </summary>
         [WirePath("properties.pool.services")]
         public IList<BackendPoolItem> PoolServices
         {
             get
             {
-                if (Pool is null)
-                    Pool = new BackendBaseParametersPool();
-                return Pool.Services;
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                return Properties.PoolServices;
             }
         }
 
-        /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
-        [WirePath("properties.type")]
-        public BackendType? BackendType { get; set; }
+        /// <summary> The status code of the response. </summary>
+        [WirePath("properties.pool.failureResponse.statusCode")]
+        public int? FailureResponseStatusCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailureResponseStatusCode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.FailureResponseStatusCode = value;
+            }
+        }
+
+        /// <summary> The id that identifies the requests belonging to the same session. </summary>
+        [WirePath("properties.pool.sessionAffinity.sessionId")]
+        public BackendSessionId SessionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.SessionId = value;
+            }
+        }
+
         /// <summary> Runtime Url of the Backend. </summary>
         [WirePath("properties.url")]
-        public Uri Uri { get; set; }
+        public Uri Uri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.Uri = value;
+            }
+        }
+
         /// <summary> Backend communication protocol. </summary>
         [WirePath("properties.protocol")]
-        public BackendProtocol? Protocol { get; set; }
+        public BackendProtocol? Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.Protocol = value;
+            }
+        }
     }
 }

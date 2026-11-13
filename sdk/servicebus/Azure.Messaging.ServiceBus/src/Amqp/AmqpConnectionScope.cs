@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -47,6 +48,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
+        /// <summary>The required claims to execute management operations.</summary>
+        private static readonly string[] s_manageClaims = [ServiceBusClaim.Manage, ServiceBusClaim.Listen, ServiceBusClaim.Send];
 
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
         private volatile bool _disposed;
@@ -359,6 +363,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to connect to.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
+        /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
+        /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A link for use with consumer operations.</returns>
         public virtual async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
@@ -369,7 +375,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
-            CancellationToken cancellationToken)
+            bool isSessionExclusive = true,
+            Guid? sessionLockToken = null,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -389,6 +397,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 receiveMode: receiveMode,
                 sessionId: sessionId,
                 isSessionReceiver: isSessionReceiver,
+                isSessionExclusive: isSessionExclusive,
+                sessionLockToken: sessionLockToken,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
 
@@ -562,7 +572,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Perform the initial authorization for the link.
 
-                string[] claims = { ServiceBusClaim.Manage, ServiceBusClaim.Listen, ServiceBusClaim.Send };
                 var endpoint = new Uri(ServiceEndpoint, entityPath);
                 var audience = new[] { endpoint.AbsoluteUri };
                 DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
@@ -570,7 +579,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     tokenProvider: TokenProvider,
                     endpoint: ServiceEndpoint,
                     audience: audience,
-                    requiredClaims: claims,
+                    requiredClaims: s_manageClaims,
                     timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
                     identifier: identifier)
                     .ConfigureAwait(false);
@@ -592,7 +601,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     tokenProvider: TokenProvider,
                     endpoint: ServiceEndpoint,
                     audience: audience,
-                    requiredClaims: claims,
+                    requiredClaims: s_manageClaims,
                     refreshTimeout: AuthorizationRefreshTimeout,
                     refreshTimerFactory: () => (ActiveLinks.ContainsKey(link) ? refreshTimer : null),
                     identifier: identifier);
@@ -635,6 +644,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to receive from.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
+        /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
+        /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A link for use for operations related to receiving events.</returns>
         protected virtual async Task<ReceivingAmqpLink> CreateReceivingLinkAsync(
@@ -647,7 +658,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
-            CancellationToken cancellationToken)
+            bool isSessionExclusive = true,
+            Guid? sessionLockToken = null,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -661,7 +674,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Perform the initial authorization for the link.
 
-                string[] authClaims = new string[] { ServiceBusClaim.Send };
+                string[] authClaims = [ServiceBusClaim.Send];
                 var audience = new[] { endpoint.AbsoluteUri };
                 DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
                     connection: connection,
@@ -681,10 +694,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var filters = new FilterSet();
 
-                // even if supplied sessionId is null, we need to add the Session filter if it is a session receiver
+                // even if the supplied sessionId is null, a session receiver needs a session filter on the link:
+                // the plain session filter for an exclusive session, or the composite non-exclusive session filter otherwise.
                 if (isSessionReceiver)
                 {
-                    filters.Add(AmqpClientConstants.SessionFilterName, sessionId);
+                    if (isSessionExclusive)
+                    {
+                        filters.Add(AmqpClientConstants.SessionFilterName, sessionId);
+                    }
+                    else
+                    {
+                        // Non-exclusive locking: a single composite filter carries the session id and (for takeover)
+                        // the lock token. Presence of this filter implies non-exclusive mode. The plain session
+                        // filter is omitted. A service that predates this change does not silently ignore the unknown
+                        // filter - it rejects the attach with an "invalid filter type" error - so this path depends on
+                        // the service-side change being deployed in the target region.
+                        filters.Add(
+                            AmqpClientConstants.NonExclusiveSessionFilterName,
+                            new AmqpNonExclusiveSessionFilterCodec { SessionId = sessionId, LockToken = sessionLockToken });
+                    }
                 }
 
                 var linkSettings = new AmqpLinkSettings
@@ -831,7 +859,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 Uri destinationEndpoint = null;
 
                 destinationEndpoint = new Uri(ServiceEndpoint, entityPath);
-                audience = new string[] { destinationEndpoint.AbsoluteUri };
+                audience = [destinationEndpoint.AbsoluteUri];
 
                 // Perform the initial authorization for the link.
 
@@ -965,10 +993,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     if (link is ReceivingAmqpLink)
                     {
                         // Track the send-via receiver in order to handle reconnecting in the proper order (sender first).
-                        if (_sendViaReceiverEntityPath == null)
-                        {
-                            _sendViaReceiverEntityPath = entityPath;
-                        }
+                        _sendViaReceiverEntityPath ??= entityPath;
                     }
                 }
             }

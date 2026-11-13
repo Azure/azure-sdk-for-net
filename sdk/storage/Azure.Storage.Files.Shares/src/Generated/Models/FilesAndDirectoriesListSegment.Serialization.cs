@@ -5,30 +5,253 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FilesAndDirectoriesListSegment
+    internal partial class FilesAndDirectoriesListSegment : IPersistableModel<FilesAndDirectoriesListSegment>, IXmlSerializable
     {
-        internal static FilesAndDirectoriesListSegment DeserializeFilesAndDirectoriesListSegment(XElement element)
+        /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/> for deserialization. </summary>
+        internal FilesAndDirectoriesListSegment()
         {
-            IReadOnlyList<DirectoryItem> directoryItems = default;
-            IReadOnlyList<FileItem> fileItems = default;
-            var array = new List<DirectoryItem>();
-            foreach (var e in element.Elements("Directory"))
-            {
-                array.Add(DirectoryItem.DeserializeDirectoryItem(e));
-            }
-            directoryItems = array;
-            var array0 = new List<FileItem>();
-            foreach (var e in element.Elements("File"))
-            {
-                array0.Add(FileItem.DeserializeFileItem(e));
-            }
-            fileItems = array0;
-            return new FilesAndDirectoriesListSegment(directoryItems, fileItems);
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FilesAndDirectoriesListSegment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FilesAndDirectoriesListSegment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeFilesAndDirectoriesListSegment(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FilesAndDirectoriesListSegment)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FilesAndDirectoriesListSegment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "FilesAndDirectoriesListSegment");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FilesAndDirectoriesListSegment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FilesAndDirectoriesListSegment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FilesAndDirectoriesListSegment IPersistableModel<FilesAndDirectoriesListSegment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FilesAndDirectoriesListSegment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FilesAndDirectoriesListSegment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(FilesAndDirectoriesListSegment)} does not support writing '{format}' format.");
+            }
+
+            foreach (DirectoryItem item in DirectoryItems)
+            {
+                writer.WriteStartElement("Directory");
+                writer.WriteObjectValue(item, options);
+                writer.WriteEndElement();
+            }
+            foreach (FileItem item in FileItems)
+            {
+                writer.WriteStartElement("File");
+                writer.WriteObjectValue(item, options);
+                writer.WriteEndElement();
+            }
+            if (SymLinkItems != null && Optional.IsCollectionDefined(SymLinkItems))
+            {
+                foreach (SymLinkItem item in SymLinkItems)
+                {
+                    writer.WriteStartElement("SymLink");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (BlockDeviceItems != null && Optional.IsCollectionDefined(BlockDeviceItems))
+            {
+                foreach (BlockDeviceItem item in BlockDeviceItems)
+                {
+                    writer.WriteStartElement("BlockDevice");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (CharDeviceItems != null && Optional.IsCollectionDefined(CharDeviceItems))
+            {
+                foreach (CharDeviceItem item in CharDeviceItems)
+                {
+                    writer.WriteStartElement("CharDevice");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (FifoItems != null && Optional.IsCollectionDefined(FifoItems))
+            {
+                foreach (FifoItem item in FifoItems)
+                {
+                    writer.WriteStartElement("Fifo");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (SocketItems != null && Optional.IsCollectionDefined(SocketItems))
+            {
+                foreach (SocketItem item in SocketItems)
+                {
+                    writer.WriteStartElement("Socket");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FilesAndDirectoriesListSegment DeserializeFilesAndDirectoriesListSegment(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
+            IList<DirectoryItem> directoryItems = new List<DirectoryItem>();
+            IList<FileItem> fileItems = new List<FileItem>();
+            IList<SymLinkItem> symLinkItems = default;
+            IList<BlockDeviceItem> blockDeviceItems = default;
+            IList<CharDeviceItem> charDeviceItems = default;
+            IList<FifoItem> fifoItems = default;
+            IList<SocketItem> socketItems = default;
+
+            foreach (var child in element.Elements())
+            {
+                string localName = child.Name.LocalName;
+                if (localName == "Directory")
+                {
+                    directoryItems.Add(DirectoryItem.DeserializeDirectoryItem(child, options));
+                    continue;
+                }
+                if (localName == "File")
+                {
+                    fileItems.Add(FileItem.DeserializeFileItem(child, options));
+                    continue;
+                }
+                if (localName == "SymLink")
+                {
+                    if (symLinkItems == null)
+                    {
+                        symLinkItems = new List<SymLinkItem>();
+                    }
+                    symLinkItems.Add(SymLinkItem.DeserializeSymLinkItem(child, options));
+                    continue;
+                }
+                if (localName == "BlockDevice")
+                {
+                    if (blockDeviceItems == null)
+                    {
+                        blockDeviceItems = new List<BlockDeviceItem>();
+                    }
+                    blockDeviceItems.Add(BlockDeviceItem.DeserializeBlockDeviceItem(child, options));
+                    continue;
+                }
+                if (localName == "CharDevice")
+                {
+                    if (charDeviceItems == null)
+                    {
+                        charDeviceItems = new List<CharDeviceItem>();
+                    }
+                    charDeviceItems.Add(CharDeviceItem.DeserializeCharDeviceItem(child, options));
+                    continue;
+                }
+                if (localName == "Fifo")
+                {
+                    if (fifoItems == null)
+                    {
+                        fifoItems = new List<FifoItem>();
+                    }
+                    fifoItems.Add(FifoItem.DeserializeFifoItem(child, options));
+                    continue;
+                }
+                if (localName == "Socket")
+                {
+                    if (socketItems == null)
+                    {
+                        socketItems = new List<SocketItem>();
+                    }
+                    socketItems.Add(SocketItem.DeserializeSocketItem(child, options));
+                    continue;
+                }
+            }
+            return new FilesAndDirectoriesListSegment(
+                directoryItems ?? new ChangeTrackingList<DirectoryItem>(),
+                fileItems ?? new ChangeTrackingList<FileItem>(),
+                symLinkItems ?? new ChangeTrackingList<SymLinkItem>(),
+                blockDeviceItems ?? new ChangeTrackingList<BlockDeviceItem>(),
+                charDeviceItems ?? new ChangeTrackingList<CharDeviceItem>(),
+                fifoItems ?? new ChangeTrackingList<FifoItem>(),
+                socketItems ?? new ChangeTrackingList<SocketItem>());
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

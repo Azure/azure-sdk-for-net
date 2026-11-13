@@ -18,7 +18,7 @@ We will generate an SDK under the SDK project folder of `azure-sdk-for-net`.
 
 You can update `tsp-location.yaml` under sdk project folder to set the typespec project.
 
-You can refer to the [tsp-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/TypeSpec-Project-Scripts.md#tsp-locationyaml) which describes the supported properties in the file. For new data plane services, you must set the `emitterPackageJsonPath` property in tsp-location.yaml to `eng/azure-typespec-http-client-csharp-emitter-package.json`. An example can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/tsp-location.yaml#L4). You should add the `IncludeAutorestDependency` property and set it to `false` in the corresponding csproj that is generated. An example can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src/Azure.Security.KeyVault.Administration.csproj#L14).
+You can refer to the [tsp-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/TypeSpec-Project-Scripts.md#tsp-locationyaml) which describes the supported properties in the file. For new data plane services, you must set the `emitterPackageJsonPath` property in tsp-location.yaml to `eng/azure-typespec-http-client-csharp-emitter-package.json`. An example can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/tsp-location.yaml#L4).
 
 ### Generate Code
 
@@ -33,6 +33,22 @@ dotnet build /t:GenerateCode
 ```dotnetcli
 dotnet build /t:GenerateCode /p:Trace=true -v d
 ```
+
+#### Run against a local spec
+
+By default the generator syncs the TypeSpec from the remote repo specified by the `repo` and `commit`
+values in `tsp-location.yaml`. To generate against a local clone of the spec instead (for example, to test in-progress
+TypeSpec changes before they are merged), pass the `LocalSpecRepo` property.
+
+`LocalSpecRepo` must point to the **TypeSpec project directory** — the folder that contains `tspconfig.yaml` and
+`main.tsp` — not the spec repo root and not the `main.tsp` file itself. This is the same folder referenced by the
+`directory` property in `tsp-location.yaml`.
+
+```dotnetcli
+dotnet build /t:GenerateCode /p:LocalSpecRepo="C:\src\azure-rest-api-specs\specification\cognitiveservices\AnomalyDetector"
+```
+
+This maps to `tsp-client`'s `--local-spec-repo` argument.
 
 #### Run with additional emitter options
 Any of the [emitter options](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp/README.md#emitter-options) can be passed through to the build target

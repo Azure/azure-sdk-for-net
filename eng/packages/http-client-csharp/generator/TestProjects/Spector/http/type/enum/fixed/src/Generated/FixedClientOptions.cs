@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type._Enum.Fixed
 {
     public partial class FixedClientOptions : ClientOptions
     {
+        public FixedClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal FixedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

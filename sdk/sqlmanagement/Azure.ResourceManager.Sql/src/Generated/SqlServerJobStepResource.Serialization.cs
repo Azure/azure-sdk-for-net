@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerJobStepResource : IJsonModel<SqlServerJobStepData>
     {
-        private static SqlServerJobStepData s_dataDeserializationInstance;
-        private static SqlServerJobStepData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerJobStepData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerJobStepData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerJobStepData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerJobStepData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobStepData>)Data).Write(writer, options);
 
-        SqlServerJobStepData IJsonModel<SqlServerJobStepData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobStepData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerJobStepData IJsonModel<SqlServerJobStepData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerJobStepData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobStepData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerJobStepData IPersistableModel<SqlServerJobStepData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobStepData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobStepData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobStepData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerJobStepData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

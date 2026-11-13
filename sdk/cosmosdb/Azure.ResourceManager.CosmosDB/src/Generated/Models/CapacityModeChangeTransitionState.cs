@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The transition state information related capacity mode change with update request. </summary>
     public partial class CapacityModeChangeTransitionState
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CapacityModeChangeTransitionState"/>. </summary>
         public CapacityModeChangeTransitionState()
@@ -54,38 +26,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="capacityModeTransitionStatus"> The transition status of capacity mode. </param>
         /// <param name="currentCapacityMode"> Indicates the current capacity mode of the account. </param>
         /// <param name="previousCapacityMode"> Indicates the previous capacity mode of the account before successful transition. </param>
-        /// <param name="capacityModeTransitionBeginTimestamp"> Begin time in UTC of the capacity mode change. </param>
-        /// <param name="capacityModeTransitionEndTimestamp"> End time in UTC of the capacity mode change. </param>
-        /// <param name="capacityModeLastSuccessfulTransitionEndTimestamp"> End time in UTC of the last successful capacity mode change. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityModeChangeTransitionState(CapacityModeTransitionStatus? capacityModeTransitionStatus, CapacityMode? currentCapacityMode, CapacityMode? previousCapacityMode, DateTimeOffset? capacityModeTransitionBeginTimestamp, DateTimeOffset? capacityModeTransitionEndTimestamp, DateTimeOffset? capacityModeLastSuccessfulTransitionEndTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="capacityModeTransitionBeganOn"> Begin time in UTC of the capacity mode change. </param>
+        /// <param name="capacityModeTransitionEndedOn"> End time in UTC of the capacity mode change. </param>
+        /// <param name="capacityModeLastSuccessfulTransitionEndedOn"> End time in UTC of the last successful capacity mode change. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CapacityModeChangeTransitionState(CapacityModeTransitionStatus? capacityModeTransitionStatus, CapacityMode? currentCapacityMode, CapacityMode? previousCapacityMode, DateTimeOffset? capacityModeTransitionBeganOn, DateTimeOffset? capacityModeTransitionEndedOn, DateTimeOffset? capacityModeLastSuccessfulTransitionEndedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityModeTransitionStatus = capacityModeTransitionStatus;
             CurrentCapacityMode = currentCapacityMode;
             PreviousCapacityMode = previousCapacityMode;
-            CapacityModeTransitionBeginTimestamp = capacityModeTransitionBeginTimestamp;
-            CapacityModeTransitionEndTimestamp = capacityModeTransitionEndTimestamp;
-            CapacityModeLastSuccessfulTransitionEndTimestamp = capacityModeLastSuccessfulTransitionEndTimestamp;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            CapacityModeTransitionBeganOn = capacityModeTransitionBeganOn;
+            CapacityModeTransitionEndedOn = capacityModeTransitionEndedOn;
+            CapacityModeLastSuccessfulTransitionEndedOn = capacityModeLastSuccessfulTransitionEndedOn;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The transition status of capacity mode. </summary>
         [WirePath("capacityModeTransitionStatus")]
         public CapacityModeTransitionStatus? CapacityModeTransitionStatus { get; set; }
+
         /// <summary> Indicates the current capacity mode of the account. </summary>
         [WirePath("currentCapacityMode")]
         public CapacityMode? CurrentCapacityMode { get; set; }
+
         /// <summary> Indicates the previous capacity mode of the account before successful transition. </summary>
         [WirePath("previousCapacityMode")]
         public CapacityMode? PreviousCapacityMode { get; set; }
+
         /// <summary> Begin time in UTC of the capacity mode change. </summary>
         [WirePath("capacityModeTransitionBeginTimestamp")]
-        public DateTimeOffset? CapacityModeTransitionBeginTimestamp { get; }
+        public DateTimeOffset? CapacityModeTransitionBeganOn { get; }
+
         /// <summary> End time in UTC of the capacity mode change. </summary>
         [WirePath("capacityModeTransitionEndTimestamp")]
-        public DateTimeOffset? CapacityModeTransitionEndTimestamp { get; }
+        public DateTimeOffset? CapacityModeTransitionEndedOn { get; }
+
         /// <summary> End time in UTC of the last successful capacity mode change. </summary>
         [WirePath("capacityModeLastSuccessfulTransitionEndTimestamp")]
-        public DateTimeOffset? CapacityModeLastSuccessfulTransitionEndTimestamp { get; }
+        public DateTimeOffset? CapacityModeLastSuccessfulTransitionEndedOn { get; }
     }
 }

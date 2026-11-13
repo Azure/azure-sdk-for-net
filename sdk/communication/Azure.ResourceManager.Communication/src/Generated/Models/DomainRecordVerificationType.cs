@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Communication.Models
     public readonly partial struct DomainRecordVerificationType : IEquatable<DomainRecordVerificationType>
     {
         private readonly string _value;
+        /// <summary> Domain. </summary>
+        private const string DomainValue = "Domain";
+        /// <summary> SPF. </summary>
+        private const string SpfValue = "SPF";
+        /// <summary> DKIM. </summary>
+        private const string DkimValue = "DKIM";
+        /// <summary> DKIM2. </summary>
+        private const string Dkim2Value = "DKIM2";
+        /// <summary> DMARC. </summary>
+        private const string DmarcValue = "DMARC";
 
         /// <summary> Initializes a new instance of <see cref="DomainRecordVerificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DomainRecordVerificationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DomainValue = "Domain";
-        private const string SpfValue = "SPF";
-        private const string DkimValue = "DKIM";
-        private const string Dkim2Value = "DKIM2";
-        private const string DmarcValue = "DMARC";
+            _value = value;
+        }
 
         /// <summary> Domain. </summary>
         public static DomainRecordVerificationType Domain { get; } = new DomainRecordVerificationType(DomainValue);
+
         /// <summary> SPF. </summary>
         public static DomainRecordVerificationType Spf { get; } = new DomainRecordVerificationType(SpfValue);
+
         /// <summary> DKIM. </summary>
         public static DomainRecordVerificationType Dkim { get; } = new DomainRecordVerificationType(DkimValue);
+
         /// <summary> DKIM2. </summary>
         public static DomainRecordVerificationType Dkim2 { get; } = new DomainRecordVerificationType(Dkim2Value);
+
         /// <summary> DMARC. </summary>
         public static DomainRecordVerificationType Dmarc { get; } = new DomainRecordVerificationType(DmarcValue);
+
         /// <summary> Determines if two <see cref="DomainRecordVerificationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DomainRecordVerificationType left, DomainRecordVerificationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DomainRecordVerificationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DomainRecordVerificationType left, DomainRecordVerificationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainRecordVerificationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DomainRecordVerificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DomainRecordVerificationType(string value) => new DomainRecordVerificationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DomainRecordVerificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DomainRecordVerificationType?(string value) => value == null ? null : new DomainRecordVerificationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DomainRecordVerificationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DomainRecordVerificationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

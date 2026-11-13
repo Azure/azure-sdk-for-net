@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingBenefitCommitmentGrain : IEquatable<BillingBenefitCommitmentGrain>
     {
         private readonly string _value;
+        /// <summary> Hourly. </summary>
+        private const string HourlyValue = "Hourly";
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitCommitmentGrain"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingBenefitCommitmentGrain(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HourlyValue = "Hourly";
+            _value = value;
+        }
 
         /// <summary> Hourly. </summary>
         public static BillingBenefitCommitmentGrain Hourly { get; } = new BillingBenefitCommitmentGrain(HourlyValue);
+
         /// <summary> Determines if two <see cref="BillingBenefitCommitmentGrain"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingBenefitCommitmentGrain left, BillingBenefitCommitmentGrain right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingBenefitCommitmentGrain"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingBenefitCommitmentGrain left, BillingBenefitCommitmentGrain right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitCommitmentGrain"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingBenefitCommitmentGrain"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingBenefitCommitmentGrain(string value) => new BillingBenefitCommitmentGrain(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingBenefitCommitmentGrain"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingBenefitCommitmentGrain?(string value) => value == null ? null : new BillingBenefitCommitmentGrain(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingBenefitCommitmentGrain other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingBenefitCommitmentGrain other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

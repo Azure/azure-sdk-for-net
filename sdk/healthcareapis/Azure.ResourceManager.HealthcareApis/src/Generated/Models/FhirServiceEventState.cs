@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     public readonly partial struct FhirServiceEventState : IEquatable<FhirServiceEventState>
     {
         private readonly string _value;
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="FhirServiceEventState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FhirServiceEventState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> Disabled. </summary>
         public static FhirServiceEventState Disabled { get; } = new FhirServiceEventState(DisabledValue);
+
         /// <summary> Enabled. </summary>
         public static FhirServiceEventState Enabled { get; } = new FhirServiceEventState(EnabledValue);
+
         /// <summary> Updating. </summary>
         public static FhirServiceEventState Updating { get; } = new FhirServiceEventState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="FhirServiceEventState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FhirServiceEventState left, FhirServiceEventState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FhirServiceEventState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FhirServiceEventState left, FhirServiceEventState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FhirServiceEventState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FhirServiceEventState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FhirServiceEventState(string value) => new FhirServiceEventState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FhirServiceEventState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FhirServiceEventState?(string value) => value == null ? null : new FhirServiceEventState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FhirServiceEventState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FhirServiceEventState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

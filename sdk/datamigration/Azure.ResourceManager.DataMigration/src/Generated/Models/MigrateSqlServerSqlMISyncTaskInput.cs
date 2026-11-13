@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
             Argument.AssertNotNull(azureApp, nameof(azureApp));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskInput"/>. </summary>
@@ -36,16 +38,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
         /// <param name="azureApp"> Azure Active Directory Application the DMS (classic) instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="numberOfParallelDatabaseMigrations"> Number of database migrations to start in parallel. </param>
-        internal MigrateSqlServerSqlMISyncTaskInput(IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, DataMigrationFileShareInfo backupFileShare, string storageResourceId, DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationMISqlConnectionInfo targetConnectionInfo, DataMigrationAadApp azureApp, IDictionary<string, BinaryData> serializedAdditionalRawData, float? numberOfParallelDatabaseMigrations) : base(selectedDatabases, backupFileShare, storageResourceId, sourceConnectionInfo, targetConnectionInfo, azureApp, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlMISyncTaskInput(IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, DataMigrationFileShareInfo backupFileShare, string storageResourceId, DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationMISqlConnectionInfo targetConnectionInfo, DataMigrationAadApp azureApp, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? numberOfParallelDatabaseMigrations) : base(selectedDatabases, backupFileShare, storageResourceId, sourceConnectionInfo, targetConnectionInfo, azureApp, additionalBinaryDataProperties)
         {
             NumberOfParallelDatabaseMigrations = numberOfParallelDatabaseMigrations;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskInput"/> for deserialization. </summary>
-        internal MigrateSqlServerSqlMISyncTaskInput()
-        {
         }
 
         /// <summary> Number of database migrations to start in parallel. </summary>

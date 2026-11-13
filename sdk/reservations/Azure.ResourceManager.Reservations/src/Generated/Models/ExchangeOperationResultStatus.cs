@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Reservations.Models
     public readonly partial struct ExchangeOperationResultStatus : IEquatable<ExchangeOperationResultStatus>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> PendingRefunds. </summary>
+        private const string PendingRefundsValue = "PendingRefunds";
+        /// <summary> PendingPurchases. </summary>
+        private const string PendingPurchasesValue = "PendingPurchases";
 
         /// <summary> Initializes a new instance of <see cref="ExchangeOperationResultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExchangeOperationResultStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
-        private const string PendingRefundsValue = "PendingRefunds";
-        private const string PendingPurchasesValue = "PendingPurchases";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static ExchangeOperationResultStatus Succeeded { get; } = new ExchangeOperationResultStatus(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static ExchangeOperationResultStatus Failed { get; } = new ExchangeOperationResultStatus(FailedValue);
+
         /// <summary> Cancelled. </summary>
         public static ExchangeOperationResultStatus Cancelled { get; } = new ExchangeOperationResultStatus(CancelledValue);
+
         /// <summary> PendingRefunds. </summary>
         public static ExchangeOperationResultStatus PendingRefunds { get; } = new ExchangeOperationResultStatus(PendingRefundsValue);
+
         /// <summary> PendingPurchases. </summary>
         public static ExchangeOperationResultStatus PendingPurchases { get; } = new ExchangeOperationResultStatus(PendingPurchasesValue);
+
         /// <summary> Determines if two <see cref="ExchangeOperationResultStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExchangeOperationResultStatus left, ExchangeOperationResultStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExchangeOperationResultStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExchangeOperationResultStatus left, ExchangeOperationResultStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExchangeOperationResultStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExchangeOperationResultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExchangeOperationResultStatus(string value) => new ExchangeOperationResultStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExchangeOperationResultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExchangeOperationResultStatus?(string value) => value == null ? null : new ExchangeOperationResultStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExchangeOperationResultStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExchangeOperationResultStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,44 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> AML Compute properties. </summary>
     public partial class AmlComputeProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private VirtualMachineImage _virtualMachineImage;
+        private bool _virtualMachineImageIsDefined;
+        private MachineLearningUserAccountCredentials _userAccountCredentials;
+        private bool _userAccountCredentialsIsDefined;
+        private ResourceId _subnet;
+        private bool _subnetIsDefined;
+        private int? _currentNodeCount;
+        private bool _currentNodeCountIsDefined;
+        private int? _targetNodeCount;
+        private bool _targetNodeCountIsDefined;
+        private MachineLearningNodeStateCounts _nodeStateCounts;
+        private bool _nodeStateCountsIsDefined;
+        private bool? _enableNodePublicIP;
+        private bool _enableNodePublicIPIsDefined;
+        private BinaryData _propertyBag;
+        private bool _propertyBagIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AmlComputeProperties"/>. </summary>
         public AmlComputeProperties()
@@ -70,122 +59,217 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
         /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
         /// <param name="propertyBag"> A property bag containing additional properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmlComputeProperties(MachineLearningOSType? osType, string vmSize, MachineLearningVmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, AmlComputeScaleSettings scaleSettings, MachineLearningUserAccountCredentials userAccountCredentials, ResourceId subnet, MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, MachineLearningAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<MachineLearningError> errors, int? currentNodeCount, int? targetNodeCount, MachineLearningNodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AmlComputeProperties(MachineLearningOSType? osType, string vmSize, MachineLearningVmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, AmlComputeScaleSettings scaleSettings, MachineLearningUserAccountCredentials userAccountCredentials, ResourceId subnet, MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, MachineLearningAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<MachineLearningError> errors, int? currentNodeCount, int? targetNodeCount, MachineLearningNodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             VmSize = vmSize;
             VmPriority = vmPriority;
-            VirtualMachineImage = virtualMachineImage;
+            _virtualMachineImage = virtualMachineImage;
             IsolatedNetwork = isolatedNetwork;
             ScaleSettings = scaleSettings;
-            UserAccountCredentials = userAccountCredentials;
-            Subnet = subnet;
+            _userAccountCredentials = userAccountCredentials;
+            _subnet = subnet;
             RemoteLoginPortPublicAccess = remoteLoginPortPublicAccess;
             AllocationState = allocationState;
             AllocationStateTransitionOn = allocationStateTransitionOn;
             Errors = errors;
-            CurrentNodeCount = currentNodeCount;
-            TargetNodeCount = targetNodeCount;
-            NodeStateCounts = nodeStateCounts;
-            EnableNodePublicIP = enableNodePublicIP;
-            PropertyBag = propertyBag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _currentNodeCount = currentNodeCount;
+            _targetNodeCount = targetNodeCount;
+            _nodeStateCounts = nodeStateCounts;
+            _enableNodePublicIP = enableNodePublicIP;
+            _propertyBag = propertyBag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Compute OS Type. </summary>
         [WirePath("osType")]
         public MachineLearningOSType? OSType { get; set; }
+
         /// <summary> Virtual Machine Size. </summary>
         [WirePath("vmSize")]
         public string VmSize { get; set; }
+
         /// <summary> Virtual Machine priority. </summary>
         [WirePath("vmPriority")]
         public MachineLearningVmPriority? VmPriority { get; set; }
+
         /// <summary> Virtual Machine image for AML Compute - windows only. </summary>
-        internal VirtualMachineImage VirtualMachineImage { get; set; }
-        /// <summary> Virtual Machine image path. </summary>
-        [WirePath("virtualMachineImage.id")]
-        public string VirtualMachineImageId
+        [WirePath("virtualMachineImage")]
+        internal VirtualMachineImage VirtualMachineImage
         {
-            get => VirtualMachineImage is null ? default : VirtualMachineImage.Id;
-            set => VirtualMachineImage = new VirtualMachineImage(value);
+            get
+            {
+                return _virtualMachineImage;
+            }
+            set
+            {
+                _virtualMachineImage = value;
+                _virtualMachineImageIsDefined = true;
+            }
         }
 
         /// <summary> Network is isolated or not. </summary>
         [WirePath("isolatedNetwork")]
         public bool? IsolatedNetwork { get; set; }
+
         /// <summary> Scale settings for AML Compute. </summary>
         [WirePath("scaleSettings")]
         public AmlComputeScaleSettings ScaleSettings { get; set; }
+
         /// <summary> Credentials for an administrator user account that will be created on each compute node. </summary>
         [WirePath("userAccountCredentials")]
-        public MachineLearningUserAccountCredentials UserAccountCredentials { get; set; }
-        /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
-        internal ResourceId Subnet { get; set; }
-        /// <summary> The ID of the resource. </summary>
-        [WirePath("subnet.id")]
-        public ResourceIdentifier SubnetId
+        public MachineLearningUserAccountCredentials UserAccountCredentials
         {
-            get => Subnet is null ? default : Subnet.Id;
-            set => Subnet = new ResourceId(value);
+            get
+            {
+                return _userAccountCredentials;
+            }
+            set
+            {
+                _userAccountCredentials = value;
+                _userAccountCredentialsIsDefined = true;
+            }
+        }
+
+        /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
+        [WirePath("subnet")]
+        internal ResourceId Subnet
+        {
+            get
+            {
+                return _subnet;
+            }
+            set
+            {
+                _subnet = value;
+                _subnetIsDefined = true;
+            }
         }
 
         /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled. </summary>
         [WirePath("remoteLoginPortPublicAccess")]
         public MachineLearningRemoteLoginPortPublicAccess? RemoteLoginPortPublicAccess { get; set; }
+
         /// <summary> Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute. </summary>
         [WirePath("allocationState")]
         public MachineLearningAllocationState? AllocationState { get; }
+
         /// <summary> The time at which the compute entered its current allocation state. </summary>
         [WirePath("allocationStateTransitionTime")]
         public DateTimeOffset? AllocationStateTransitionOn { get; }
-        /// <summary> Collection of errors encountered by various compute nodes during node setup. </summary>
-        [WirePath("errors")]
-        public IReadOnlyList<MachineLearningError> Errors { get; }
+
         /// <summary> The number of compute nodes currently assigned to the compute. </summary>
         [WirePath("currentNodeCount")]
-        public int? CurrentNodeCount { get; }
+        public int? CurrentNodeCount
+        {
+            get
+            {
+                return _currentNodeCount;
+            }
+        }
+
         /// <summary> The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation. </summary>
         [WirePath("targetNodeCount")]
-        public int? TargetNodeCount { get; }
+        public int? TargetNodeCount
+        {
+            get
+            {
+                return _targetNodeCount;
+            }
+        }
+
         /// <summary> Counts of various node states on the compute. </summary>
         [WirePath("nodeStateCounts")]
-        public MachineLearningNodeStateCounts NodeStateCounts { get; }
+        public MachineLearningNodeStateCounts NodeStateCounts
+        {
+            get
+            {
+                return _nodeStateCounts;
+            }
+        }
+
         /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
         [WirePath("enableNodePublicIp")]
-        public bool? EnableNodePublicIP { get; set; }
+        public bool? EnableNodePublicIP
+        {
+            get
+            {
+                return _enableNodePublicIP;
+            }
+            set
+            {
+                _enableNodePublicIP = value;
+                _enableNodePublicIPIsDefined = true;
+            }
+        }
+
         /// <summary>
         /// A property bag containing additional properties.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         [WirePath("propertyBag")]
-        public BinaryData PropertyBag { get; set; }
+        public BinaryData PropertyBag
+        {
+            get
+            {
+                return _propertyBag;
+            }
+            set
+            {
+                _propertyBag = value;
+                _propertyBagIsDefined = true;
+            }
+        }
+
+        /// <summary> Virtual Machine image path. </summary>
+        [WirePath("virtualMachineImage.id")]
+        public string VirtualMachineImageId
+        {
+            get
+            {
+                return VirtualMachineImage is null ? default : VirtualMachineImage.Id;
+            }
+            set
+            {
+                VirtualMachineImage = new VirtualMachineImage(value);
+            }
+        }
+
+        /// <summary> The ID of the resource. </summary>
+        [WirePath("subnet.id")]
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Subnet is null ? default : Subnet.Id;
+            }
+            set
+            {
+                Subnet = new ResourceId(value);
+            }
+        }
     }
 }

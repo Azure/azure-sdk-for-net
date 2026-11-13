@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ServiceWorkspaceProductGroupLinkResource : IJsonModel<ProductGroupLinkContractData>
     {
-        private static ProductGroupLinkContractData s_dataDeserializationInstance;
-        private static ProductGroupLinkContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ProductGroupLinkContractData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ProductGroupLinkContractData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProductGroupLinkContractData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProductGroupLinkContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProductGroupLinkContractData>)Data).Write(writer, options);
 
-        ProductGroupLinkContractData IJsonModel<ProductGroupLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProductGroupLinkContractData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProductGroupLinkContractData IJsonModel<ProductGroupLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProductGroupLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProductGroupLinkContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProductGroupLinkContractData IPersistableModel<ProductGroupLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProductGroupLinkContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ProductGroupLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProductGroupLinkContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProductGroupLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

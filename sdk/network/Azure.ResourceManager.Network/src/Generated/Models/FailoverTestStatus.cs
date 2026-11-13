@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct FailoverTestStatus : IEquatable<FailoverTestStatus>
     {
         private readonly string _value;
+        /// <summary> NotStarted. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> Starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> StartFailed. </summary>
+        private const string StartFailedValue = "StartFailed";
+        /// <summary> Stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> StopFailed. </summary>
+        private const string StopFailedValue = "StopFailed";
+        /// <summary> Invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
 
         /// <summary> Initializes a new instance of <see cref="FailoverTestStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FailoverTestStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string StartingValue = "Starting";
-        private const string RunningValue = "Running";
-        private const string StartFailedValue = "StartFailed";
-        private const string StoppingValue = "Stopping";
-        private const string CompletedValue = "Completed";
-        private const string StopFailedValue = "StopFailed";
-        private const string InvalidValue = "Invalid";
-        private const string ExpiredValue = "Expired";
+            _value = value;
+        }
 
         /// <summary> NotStarted. </summary>
         public static FailoverTestStatus NotStarted { get; } = new FailoverTestStatus(NotStartedValue);
+
         /// <summary> Starting. </summary>
         public static FailoverTestStatus Starting { get; } = new FailoverTestStatus(StartingValue);
+
         /// <summary> Running. </summary>
         public static FailoverTestStatus Running { get; } = new FailoverTestStatus(RunningValue);
+
         /// <summary> StartFailed. </summary>
         public static FailoverTestStatus StartFailed { get; } = new FailoverTestStatus(StartFailedValue);
+
         /// <summary> Stopping. </summary>
         public static FailoverTestStatus Stopping { get; } = new FailoverTestStatus(StoppingValue);
+
         /// <summary> Completed. </summary>
         public static FailoverTestStatus Completed { get; } = new FailoverTestStatus(CompletedValue);
+
         /// <summary> StopFailed. </summary>
         public static FailoverTestStatus StopFailed { get; } = new FailoverTestStatus(StopFailedValue);
+
         /// <summary> Invalid. </summary>
         public static FailoverTestStatus Invalid { get; } = new FailoverTestStatus(InvalidValue);
+
         /// <summary> Expired. </summary>
         public static FailoverTestStatus Expired { get; } = new FailoverTestStatus(ExpiredValue);
+
         /// <summary> Determines if two <see cref="FailoverTestStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FailoverTestStatus left, FailoverTestStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FailoverTestStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FailoverTestStatus left, FailoverTestStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverTestStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FailoverTestStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FailoverTestStatus(string value) => new FailoverTestStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FailoverTestStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FailoverTestStatus?(string value) => value == null ? null : new FailoverTestStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FailoverTestStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FailoverTestStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

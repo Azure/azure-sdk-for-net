@@ -13,37 +13,14 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Controls the cardinality for chunking the content. </summary>
     public partial class DocumentIntelligenceLayoutSkillChunkingProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DocumentIntelligenceLayoutSkillChunkingUnit? _unit;
+        private bool _unitIsDefined;
+        private int? _maximumLength;
+        private bool _maximumLengthIsDefined;
+        private int? _overlapLength;
+        private bool _overlapLengthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkillChunkingProperties"/>. </summary>
         public DocumentIntelligenceLayoutSkillChunkingProperties()
@@ -54,20 +31,55 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="unit"> The unit of the chunk. </param>
         /// <param name="maximumLength"> The maximum chunk length in characters. Default is 500. </param>
         /// <param name="overlapLength"> The length of overlap provided between two text chunks. Default is 0. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentIntelligenceLayoutSkillChunkingProperties(DocumentIntelligenceLayoutSkillChunkingUnit? unit, int? maximumLength, int? overlapLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentIntelligenceLayoutSkillChunkingProperties(DocumentIntelligenceLayoutSkillChunkingUnit? unit, int? maximumLength, int? overlapLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Unit = unit;
-            MaximumLength = maximumLength;
-            OverlapLength = overlapLength;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _unit = unit;
+            _maximumLength = maximumLength;
+            _overlapLength = overlapLength;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unit of the chunk. </summary>
-        public DocumentIntelligenceLayoutSkillChunkingUnit? Unit { get; set; }
+        public DocumentIntelligenceLayoutSkillChunkingUnit? Unit
+        {
+            get
+            {
+                return _unit;
+            }
+            set
+            {
+                _unit = value;
+                _unitIsDefined = true;
+            }
+        }
+
         /// <summary> The maximum chunk length in characters. Default is 500. </summary>
-        public int? MaximumLength { get; set; }
+        public int? MaximumLength
+        {
+            get
+            {
+                return _maximumLength;
+            }
+            set
+            {
+                _maximumLength = value;
+                _maximumLengthIsDefined = true;
+            }
+        }
+
         /// <summary> The length of overlap provided between two text chunks. Default is 0. </summary>
-        public int? OverlapLength { get; set; }
+        public int? OverlapLength
+        {
+            get
+            {
+                return _overlapLength;
+            }
+            set
+            {
+                _overlapLength = value;
+                _overlapLengthIsDefined = true;
+            }
+        }
     }
 }

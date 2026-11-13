@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,39 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2026-09-15)
+
+### Features Added
+
+- Upgraded api-version to 2026-07-01.
+- Added support for Container App private endpoint connections, Azure Functions, Dapr component resiliency policies, .NET components, label history, sandbox groups, and sandbox group virtual network connections.
+- Added support for managed environment migration eligibility checks and OpenTelemetry configuration.
+
+## 1.6.0-beta.1 (2026-06-02)
+
+### Features Added
+
+- Upgraded api-version to 2025-10-02-preview.
+
+### Other Changes
+
+- Migrated Azure.ResourceManager.AppContainers management-plane generation from AutoRest to TypeSpec.
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.5.0 (2025-10-09)
+
+### Features Added
+
+- Upgraded api-version tag 'package-2024-03' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/33a2135c8115465b292b71a521ea50c1cc336c8c/specification/app/resource-manager/Microsoft.App/ContainerApps/readme.md.
+   - Support Logic App Extension
+   - Support async for connected environment sub resources
+   - Support ingressConfiguration
+   - Support advanced ingress 
+   - Support private endpoint connections for managed environment
+   - Support app health check configuration for DAPR
+   - Support key vault for environment storage
 
 ## 1.4.1 (2025-08-11)
 

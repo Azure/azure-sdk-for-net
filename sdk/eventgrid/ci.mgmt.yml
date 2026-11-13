@@ -1,19 +1,16 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 # This is for Track 2 managment plane SDK
 
-trigger: none
-pr:
+trigger:
   branches:
     include:
     - main
-    - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/eventgrid/ci.mgmt.yml
-    - sdk/eventgrid/Azure.ResourceManager.EventGrid/
-
+    - sdk/eventgrid/Azure.ResourceManager.EventGrid
+    - sdk/eventgrid/Azure.Provisioning.EventGrid
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -23,3 +20,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.EventGrid
       safeName: AzureResourceManagerEventGrid
+    - name: Azure.Provisioning.EventGrid
+      safeName: AzureProvisioningEventGrid

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     public readonly partial struct InformaticaRuntimeType : IEquatable<InformaticaRuntimeType>
     {
         private readonly string _value;
+        /// <summary> Serverless Runtime type. </summary>
+        private const string ServerlessValue = "SERVERLESS";
 
         /// <summary> Initializes a new instance of <see cref="InformaticaRuntimeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InformaticaRuntimeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ServerlessValue = "SERVERLESS";
+            _value = value;
+        }
 
         /// <summary> Serverless Runtime type. </summary>
         public static InformaticaRuntimeType Serverless { get; } = new InformaticaRuntimeType(ServerlessValue);
+
         /// <summary> Determines if two <see cref="InformaticaRuntimeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InformaticaRuntimeType left, InformaticaRuntimeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InformaticaRuntimeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InformaticaRuntimeType left, InformaticaRuntimeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InformaticaRuntimeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InformaticaRuntimeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InformaticaRuntimeType(string value) => new InformaticaRuntimeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InformaticaRuntimeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InformaticaRuntimeType?(string value) => value == null ? null : new InformaticaRuntimeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InformaticaRuntimeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InformaticaRuntimeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

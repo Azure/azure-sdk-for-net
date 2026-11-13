@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkTapPollingType : IEquatable<NetworkTapPollingType>
     {
         private readonly string _value;
+        /// <summary> PollingType-Pull. </summary>
+        private const string PullValue = "Pull";
+        /// <summary> PollingType-Push. </summary>
+        private const string PushValue = "Push";
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapPollingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkTapPollingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PullValue = "Pull";
-        private const string PushValue = "Push";
-
-        /// <summary> Pull. </summary>
+        /// <summary> PollingType-Pull. </summary>
         public static NetworkTapPollingType Pull { get; } = new NetworkTapPollingType(PullValue);
-        /// <summary> Push. </summary>
+
+        /// <summary> PollingType-Push. </summary>
         public static NetworkTapPollingType Push { get; } = new NetworkTapPollingType(PushValue);
+
         /// <summary> Determines if two <see cref="NetworkTapPollingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkTapPollingType left, NetworkTapPollingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkTapPollingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkTapPollingType left, NetworkTapPollingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkTapPollingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkTapPollingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkTapPollingType(string value) => new NetworkTapPollingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkTapPollingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkTapPollingType?(string value) => value == null ? null : new NetworkTapPollingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkTapPollingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkTapPollingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

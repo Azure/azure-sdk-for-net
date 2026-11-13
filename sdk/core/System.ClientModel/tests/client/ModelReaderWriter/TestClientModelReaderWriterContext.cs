@@ -17,6 +17,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public static TestClientModelReaderWriterContext Default => _default ??= new TestClientModelReaderWriterContext();
 
         private AvailabilitySetData_Builder? _availabilitySetData_Builder;
+        private AvailabilitySetDataV2_Builder? _availabilitySetDataV2_Builder;
         private BaseModel_Builder? _baseModel_Builder;
         private ModelAsStruct_Builder? _modelAsStruct_Builder;
         private ModelWithPersistableOnly_Builder? _modelWithPersistableOnly_Builder;
@@ -25,12 +26,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private UnknownBaseModel_Builder? _unknownBaseModel_Builder;
         private ModelY_Builder? _modelY_Builder;
         private ExperimentalModel_Builder? _experimentalModel_Builder;
+        private ListOfAset_Builder? _listOfAset_Builder;
+        private DictionaryOfAset_Builder? _dictionaryOfAset_Builder;
 
         protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
         {
             builder = type switch
             {
                 Type t when t == typeof(AvailabilitySetData) => _availabilitySetData_Builder ??= new(),
+                Type t when t == typeof(AvailabilitySetDataV2) => _availabilitySetDataV2_Builder ??= new(),
                 Type t when t == typeof(BaseModel) => _baseModel_Builder ??= new(),
                 Type t when t == typeof(ModelAsStruct) => _modelAsStruct_Builder ??= new(),
                 Type t when t == typeof(ModelWithPersistableOnly) => _modelWithPersistableOnly_Builder ??= new(),
@@ -41,9 +45,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 #pragma warning disable TEST001
                 Type t when t == typeof(ExperimentalModel) => _experimentalModel_Builder ??= new ExperimentalModel_Builder(),
                 #pragma warning restore TEST001
+                Type t when t == typeof(ListOfAset) => _listOfAset_Builder ??= new(),
+                Type t when t == typeof(DictionaryOfAset) => _dictionaryOfAset_Builder ??= new(),
                 _ => null
             };
             return builder is not null;
+        }
+
+        private class DictionaryOfAset_Builder : ModelReaderWriterTypeBuilder
+        {
+            protected override Type BuilderType => typeof(DictionaryOfAset);
+
+            protected override object CreateInstance() => new DictionaryOfAset();
+        }
+
+        private class ListOfAset_Builder : ModelReaderWriterTypeBuilder
+        {
+            protected override Type BuilderType => typeof(ListOfAset);
+
+            protected override object CreateInstance() => new ListOfAset();
         }
 
         private class ModelY_Builder : ModelReaderWriterTypeBuilder
@@ -100,6 +120,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             protected override Type BuilderType => typeof(AvailabilitySetData);
 
             protected override object CreateInstance() => new AvailabilitySetData();
+        }
+
+        private class AvailabilitySetDataV2_Builder : ModelReaderWriterTypeBuilder
+        {
+            protected override Type BuilderType => typeof(AvailabilitySetDataV2);
+
+            protected override object CreateInstance() => new AvailabilitySetDataV2();
         }
 
 #pragma warning disable TEST001

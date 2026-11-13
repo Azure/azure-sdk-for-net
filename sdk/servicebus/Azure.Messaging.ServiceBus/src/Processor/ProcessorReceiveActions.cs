@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus
             int maxMessages,
             long? fromSequenceNumber = default,
             CancellationToken cancellationToken = default)
-       {
+        {
             ValidateCallbackInScope();
 
             // Peeked messages are not locked so we don't need to track them for lock renewal or autocompletion, as these options do not apply.
@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus
                 maxMessages: maxMessages,
                 fromSequenceNumber: fromSequenceNumber,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-       }
+        }
 
         private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
         {

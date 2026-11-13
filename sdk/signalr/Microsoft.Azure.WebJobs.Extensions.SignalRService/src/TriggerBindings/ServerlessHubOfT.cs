@@ -13,6 +13,10 @@ using Microsoft.Azure.SignalR.Management;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
+    /// <summary>
+    /// A base class for a strongly typed serverless SignalR hub.
+    /// </summary>
+    /// <typeparam name="T">The interface describing the client methods that can be invoked on this hub.</typeparam>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "https://github.com/Azure/azure-sdk-for-net/issues/17164")]
     public abstract class ServerlessHub<T> where T : class
     {

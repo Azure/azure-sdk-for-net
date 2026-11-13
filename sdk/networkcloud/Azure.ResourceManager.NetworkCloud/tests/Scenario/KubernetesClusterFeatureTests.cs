@@ -1,22 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class KubernetesClusterFeatureTests : NetworkCloudManagementTestBase
     {
-        public KubernetesClusterFeatureTests  (bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public KubernetesClusterFeatureTests (bool isAsync) : base(isAsync) {}
+        public KubernetesClusterFeatureTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public KubernetesClusterFeatureTests(bool isAsync) : base(isAsync) { }
 
         [Test, MaxTime(1800000)]
         [RecordedTest]
@@ -44,7 +44,7 @@ new StringKeyValuePair("featureOptionName","featureOptionValue")
 },
             };
             // Create
-            ArmOperation<NetworkCloudKubernetesClusterFeatureResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, featureName, data);
+            ArmOperation<NetworkCloudKubernetesClusterFeatureResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, featureName, data, matchConditions: null);
             Assert.AreEqual(featureName, createResult.Value.Data.Name);
 
             // Get
@@ -68,7 +68,7 @@ new StringKeyValuePair("featureOptionName","featureOptionValue")
                     ["key2"] = "newvalue2",
                 }
             };
-            ArmOperation<NetworkCloudKubernetesClusterFeatureResource> updateResult = await feature.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudKubernetesClusterFeatureResource> updateResult = await feature.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete

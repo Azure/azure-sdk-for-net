@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VirtualNetworkEncryptionEnforcement : IEquatable<VirtualNetworkEncryptionEnforcement>
     {
         private readonly string _value;
+        /// <summary> DropUnencrypted. </summary>
+        private const string DropUnencryptedValue = "DropUnencrypted";
+        /// <summary> AllowUnencrypted. </summary>
+        private const string AllowUnencryptedValue = "AllowUnencrypted";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryptionEnforcement"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkEncryptionEnforcement(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DropUnencryptedValue = "DropUnencrypted";
-        private const string AllowUnencryptedValue = "AllowUnencrypted";
+            _value = value;
+        }
 
         /// <summary> DropUnencrypted. </summary>
         public static VirtualNetworkEncryptionEnforcement DropUnencrypted { get; } = new VirtualNetworkEncryptionEnforcement(DropUnencryptedValue);
+
         /// <summary> AllowUnencrypted. </summary>
         public static VirtualNetworkEncryptionEnforcement AllowUnencrypted { get; } = new VirtualNetworkEncryptionEnforcement(AllowUnencryptedValue);
+
         /// <summary> Determines if two <see cref="VirtualNetworkEncryptionEnforcement"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualNetworkEncryptionEnforcement left, VirtualNetworkEncryptionEnforcement right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualNetworkEncryptionEnforcement"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualNetworkEncryptionEnforcement left, VirtualNetworkEncryptionEnforcement right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkEncryptionEnforcement"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualNetworkEncryptionEnforcement"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualNetworkEncryptionEnforcement(string value) => new VirtualNetworkEncryptionEnforcement(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualNetworkEncryptionEnforcement"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualNetworkEncryptionEnforcement?(string value) => value == null ? null : new VirtualNetworkEncryptionEnforcement(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualNetworkEncryptionEnforcement other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualNetworkEncryptionEnforcement other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

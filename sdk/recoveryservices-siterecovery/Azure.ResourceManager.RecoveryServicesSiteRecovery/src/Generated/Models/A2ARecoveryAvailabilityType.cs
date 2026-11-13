@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct A2ARecoveryAvailabilityType : IEquatable<A2ARecoveryAvailabilityType>
     {
         private readonly string _value;
+        /// <summary> Single. </summary>
+        private const string SingleValue = "Single";
+        /// <summary> AvailabilitySet. </summary>
+        private const string AvailabilitySetValue = "AvailabilitySet";
+        /// <summary> AvailabilityZone. </summary>
+        private const string AvailabilityZoneValue = "AvailabilityZone";
 
         /// <summary> Initializes a new instance of <see cref="A2ARecoveryAvailabilityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public A2ARecoveryAvailabilityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleValue = "Single";
-        private const string AvailabilitySetValue = "AvailabilitySet";
-        private const string AvailabilityZoneValue = "AvailabilityZone";
+            _value = value;
+        }
 
         /// <summary> Single. </summary>
         public static A2ARecoveryAvailabilityType Single { get; } = new A2ARecoveryAvailabilityType(SingleValue);
+
         /// <summary> AvailabilitySet. </summary>
         public static A2ARecoveryAvailabilityType AvailabilitySet { get; } = new A2ARecoveryAvailabilityType(AvailabilitySetValue);
+
         /// <summary> AvailabilityZone. </summary>
         public static A2ARecoveryAvailabilityType AvailabilityZone { get; } = new A2ARecoveryAvailabilityType(AvailabilityZoneValue);
+
         /// <summary> Determines if two <see cref="A2ARecoveryAvailabilityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(A2ARecoveryAvailabilityType left, A2ARecoveryAvailabilityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="A2ARecoveryAvailabilityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(A2ARecoveryAvailabilityType left, A2ARecoveryAvailabilityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="A2ARecoveryAvailabilityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="A2ARecoveryAvailabilityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator A2ARecoveryAvailabilityType(string value) => new A2ARecoveryAvailabilityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="A2ARecoveryAvailabilityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator A2ARecoveryAvailabilityType?(string value) => value == null ? null : new A2ARecoveryAvailabilityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is A2ARecoveryAvailabilityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(A2ARecoveryAvailabilityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

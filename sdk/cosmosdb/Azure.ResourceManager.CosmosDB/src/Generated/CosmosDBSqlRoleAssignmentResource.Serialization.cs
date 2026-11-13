@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class CosmosDBSqlRoleAssignmentResource : IJsonModel<CosmosDBSqlRoleAssignmentData>
     {
-        private static CosmosDBSqlRoleAssignmentData s_dataDeserializationInstance;
-        private static CosmosDBSqlRoleAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CosmosDBSqlRoleAssignmentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CosmosDBSqlRoleAssignmentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CosmosDBSqlRoleAssignmentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBSqlRoleAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlRoleAssignmentData>)Data).Write(writer, options);
 
-        CosmosDBSqlRoleAssignmentData IJsonModel<CosmosDBSqlRoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlRoleAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBSqlRoleAssignmentData IJsonModel<CosmosDBSqlRoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CosmosDBSqlRoleAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBSqlRoleAssignmentData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CosmosDBSqlRoleAssignmentData IPersistableModel<CosmosDBSqlRoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlRoleAssignmentData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBSqlRoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlRoleAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBSqlRoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

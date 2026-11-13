@@ -7,80 +7,51 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for RequestMethod match conditions
-    /// Serialized Name: RequestMethodMatchConditionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for RequestMethod match conditions. </summary>
     public partial class RequestMethodMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
-        /// <param name="requestMethodOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestMethodMatchConditionParameters.operator
-        /// </param>
-        public RequestMethodMatchCondition(RequestMethodOperator requestMethodOperator)
+        /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
+        public RequestMethodMatchCondition(RequestMethodOperator requestMethodOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters)
         {
             RequestMethodOperator = requestMethodOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
             MatchValues = new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="requestMethodOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestMethodMatchConditionParameters.operator
-        /// </param>
-        /// <param name="negateCondition">
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestMethodMatchConditionParameters.negateCondition
-        /// </param>
-        /// <param name="transforms">
-        /// List of transforms
-        /// Serialized Name: RequestMethodMatchConditionParameters.transforms
-        /// </param>
-        /// <param name="matchValues">
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestMethodMatchConditionParameters.matchValues
-        /// </param>
-        internal RequestMethodMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
+        /// <param name="typeName"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
+        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="transforms"> List of transforms. </param>
+        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
+        internal RequestMethodMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionMatchValue> matchValues) : base(typeName, additionalBinaryDataProperties)
         {
             RequestMethodOperator = requestMethodOperator;
             NegateCondition = negateCondition;
             Transforms = transforms;
             MatchValues = matchValues;
-            TypeName = typeName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/> for deserialization. </summary>
-        internal RequestMethodMatchCondition()
-        {
-        }
-
-        /// <summary>
-        /// Describes operator to be matched
-        /// Serialized Name: RequestMethodMatchConditionParameters.operator
-        /// </summary>
+        /// <summary> Describes operator to be matched. </summary>
+        [WirePath("operator")]
         public RequestMethodOperator RequestMethodOperator { get; set; }
-        /// <summary>
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestMethodMatchConditionParameters.negateCondition
-        /// </summary>
+
+        /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
-        /// <summary>
-        /// List of transforms
-        /// Serialized Name: RequestMethodMatchConditionParameters.transforms
-        /// </summary>
+
+        /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
-        /// <summary>
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestMethodMatchConditionParameters.matchValues
-        /// </summary>
+
+        /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<RequestMethodMatchConditionMatchValue> MatchValues { get; }
     }
 }

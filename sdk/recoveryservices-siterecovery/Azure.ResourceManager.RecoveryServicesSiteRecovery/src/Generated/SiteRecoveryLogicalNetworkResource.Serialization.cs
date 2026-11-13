@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
+    /// <summary></summary>
     public partial class SiteRecoveryLogicalNetworkResource : IJsonModel<SiteRecoveryLogicalNetworkData>
     {
-        private static SiteRecoveryLogicalNetworkData s_dataDeserializationInstance;
-        private static SiteRecoveryLogicalNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SiteRecoveryLogicalNetworkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SiteRecoveryLogicalNetworkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SiteRecoveryLogicalNetworkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteRecoveryLogicalNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryLogicalNetworkData>)Data).Write(writer, options);
 
-        SiteRecoveryLogicalNetworkData IJsonModel<SiteRecoveryLogicalNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryLogicalNetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryLogicalNetworkData IJsonModel<SiteRecoveryLogicalNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SiteRecoveryLogicalNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryLogicalNetworkData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SiteRecoveryLogicalNetworkData IPersistableModel<SiteRecoveryLogicalNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryLogicalNetworkData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<SiteRecoveryLogicalNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryLogicalNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteRecoveryLogicalNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

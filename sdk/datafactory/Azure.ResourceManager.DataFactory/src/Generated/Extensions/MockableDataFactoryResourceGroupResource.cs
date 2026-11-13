@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DataFactory;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataFactory.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDataFactoryResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDataFactoryResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDataFactoryResourceGroupResource for mocking. </summary>
         protected MockableDataFactoryResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataFactoryResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDataFactoryResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataFactoryResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DataFactoryResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DataFactoryResources and their operations over a DataFactoryResource. </returns>
+        /// <summary> Gets a collection of DataFactories in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DataFactories and their operations over a DataFactoryResource. </returns>
         public virtual DataFactoryCollection GetDataFactories()
         {
             return GetCachedClient(client => new DataFactoryCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// Gets a factory.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Factories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -67,8 +61,10 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataFactoryResource>> GetDataFactoryAsync(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryResource>> GetDataFactoryAsync(string factoryName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+
             return await GetDataFactories().GetAsync(factoryName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
@@ -76,20 +72,16 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// Gets a factory.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Factories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,8 +91,10 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataFactoryResource> GetDataFactory(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryResource> GetDataFactory(string factoryName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+
             return GetDataFactories().Get(factoryName, ifNoneMatch, cancellationToken);
         }
     }

@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.DeviceUpdate.Models;
-using Azure.ResourceManager.DeviceUpdate.Tests.Helper;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.DeviceUpdate.Models;
+using Azure.ResourceManager.DeviceUpdate.Tests.Helper;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceUpdate.Tests

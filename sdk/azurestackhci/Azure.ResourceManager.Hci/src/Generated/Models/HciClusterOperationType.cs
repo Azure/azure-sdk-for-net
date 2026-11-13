@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct HciClusterOperationType : IEquatable<HciClusterOperationType>
     {
         private readonly string _value;
+        /// <summary> Cluster provisioning operation. </summary>
+        private const string ClusterProvisioningValue = "ClusterProvisioning";
+        /// <summary> Cluster upgrade operation. </summary>
+        private const string ClusterUpgradeValue = "ClusterUpgrade";
 
         /// <summary> Initializes a new instance of <see cref="HciClusterOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciClusterOperationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ClusterProvisioningValue = "ClusterProvisioning";
-        private const string ClusterUpgradeValue = "ClusterUpgrade";
+            _value = value;
+        }
 
         /// <summary> Cluster provisioning operation. </summary>
         public static HciClusterOperationType ClusterProvisioning { get; } = new HciClusterOperationType(ClusterProvisioningValue);
+
         /// <summary> Cluster upgrade operation. </summary>
         public static HciClusterOperationType ClusterUpgrade { get; } = new HciClusterOperationType(ClusterUpgradeValue);
+
         /// <summary> Determines if two <see cref="HciClusterOperationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciClusterOperationType left, HciClusterOperationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciClusterOperationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciClusterOperationType left, HciClusterOperationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciClusterOperationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciClusterOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciClusterOperationType(string value) => new HciClusterOperationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciClusterOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciClusterOperationType?(string value) => value == null ? null : new HciClusterOperationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciClusterOperationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciClusterOperationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

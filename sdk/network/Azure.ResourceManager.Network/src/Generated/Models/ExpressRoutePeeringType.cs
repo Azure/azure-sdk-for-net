@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExpressRoutePeeringType : IEquatable<ExpressRoutePeeringType>
     {
         private readonly string _value;
+        /// <summary> AzurePublicPeering. </summary>
+        private const string AzurePublicPeeringValue = "AzurePublicPeering";
+        /// <summary> AzurePrivatePeering. </summary>
+        private const string AzurePrivatePeeringValue = "AzurePrivatePeering";
+        /// <summary> MicrosoftPeering. </summary>
+        private const string MicrosoftPeeringValue = "MicrosoftPeering";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePeeringType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRoutePeeringType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzurePublicPeeringValue = "AzurePublicPeering";
-        private const string AzurePrivatePeeringValue = "AzurePrivatePeering";
-        private const string MicrosoftPeeringValue = "MicrosoftPeering";
+            _value = value;
+        }
 
         /// <summary> AzurePublicPeering. </summary>
         public static ExpressRoutePeeringType AzurePublicPeering { get; } = new ExpressRoutePeeringType(AzurePublicPeeringValue);
+
         /// <summary> AzurePrivatePeering. </summary>
         public static ExpressRoutePeeringType AzurePrivatePeering { get; } = new ExpressRoutePeeringType(AzurePrivatePeeringValue);
+
         /// <summary> MicrosoftPeering. </summary>
         public static ExpressRoutePeeringType MicrosoftPeering { get; } = new ExpressRoutePeeringType(MicrosoftPeeringValue);
+
         /// <summary> Determines if two <see cref="ExpressRoutePeeringType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressRoutePeeringType left, ExpressRoutePeeringType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressRoutePeeringType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressRoutePeeringType left, ExpressRoutePeeringType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRoutePeeringType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressRoutePeeringType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressRoutePeeringType(string value) => new ExpressRoutePeeringType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressRoutePeeringType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressRoutePeeringType?(string value) => value == null ? null : new ExpressRoutePeeringType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressRoutePeeringType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressRoutePeeringType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -6,7 +6,7 @@
 #nullable disable
 
 using Client.Naming.Model;
-using Client.Naming.Property;
+using Client.Naming._Property;
 
 namespace Client.Naming
 {

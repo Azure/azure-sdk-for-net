@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +21,12 @@ namespace Versioning.TypeChangedFrom
 
         public TypeChangedFromClient(Uri endpoint) : this(endpoint, new TypeChangedFromClientOptions()) => throw null;
 
-        public TypeChangedFromClient(Uri endpoint, TypeChangedFromClientOptions options) => throw null;
+        internal TypeChangedFromClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, TypeChangedFromClientOptions options) => throw null;
+
+        public TypeChangedFromClient(Uri endpoint, TypeChangedFromClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public TypeChangedFromClient(TypeChangedFromClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

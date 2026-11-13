@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class PortalConfigContractResource : IJsonModel<PortalConfigContractData>
     {
-        private static PortalConfigContractData s_dataDeserializationInstance;
-        private static PortalConfigContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PortalConfigContractData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PortalConfigContractData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PortalConfigContractData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PortalConfigContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PortalConfigContractData>)Data).Write(writer, options);
 
-        PortalConfigContractData IJsonModel<PortalConfigContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PortalConfigContractData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PortalConfigContractData IJsonModel<PortalConfigContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PortalConfigContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PortalConfigContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PortalConfigContractData IPersistableModel<PortalConfigContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PortalConfigContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<PortalConfigContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PortalConfigContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PortalConfigContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

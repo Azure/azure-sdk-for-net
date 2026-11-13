@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.csproj" />
+  <Project Path="tests/Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Tests.csproj" />
+</Solution>

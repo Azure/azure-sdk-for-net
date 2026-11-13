@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAllFeatures : MonitoringFeatureFilterBase
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningAllFeatures"/>. </summary>
-        public MachineLearningAllFeatures()
+        public MachineLearningAllFeatures() : base(MonitoringFeatureFilterType.AllFeatures)
         {
-            FilterType = MonitoringFeatureFilterType.AllFeatures;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAllFeatures"/>. </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningAllFeatures(MonitoringFeatureFilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(filterType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningAllFeatures(MonitoringFeatureFilterType filterType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(filterType, additionalBinaryDataProperties)
         {
-            FilterType = filterType;
         }
     }
 }

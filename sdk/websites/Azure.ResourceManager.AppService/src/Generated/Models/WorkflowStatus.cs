@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct WorkflowStatus : IEquatable<WorkflowStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WorkflowStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkflowStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string PausedValue = "Paused";
         private const string RunningValue = "Running";
@@ -36,49 +29,85 @@ namespace Azure.ResourceManager.AppService.Models
         private const string AbortedValue = "Aborted";
         private const string IgnoredValue = "Ignored";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WorkflowStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static WorkflowStatus NotSpecified { get; } = new WorkflowStatus(NotSpecifiedValue);
-        /// <summary> Paused. </summary>
+
+        /// <summary> Gets the Paused. </summary>
         public static WorkflowStatus Paused { get; } = new WorkflowStatus(PausedValue);
-        /// <summary> Running. </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static WorkflowStatus Running { get; } = new WorkflowStatus(RunningValue);
-        /// <summary> Waiting. </summary>
+
+        /// <summary> Gets the Waiting. </summary>
         public static WorkflowStatus Waiting { get; } = new WorkflowStatus(WaitingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static WorkflowStatus Succeeded { get; } = new WorkflowStatus(SucceededValue);
-        /// <summary> Skipped. </summary>
+
+        /// <summary> Gets the Skipped. </summary>
         public static WorkflowStatus Skipped { get; } = new WorkflowStatus(SkippedValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static WorkflowStatus Suspended { get; } = new WorkflowStatus(SuspendedValue);
-        /// <summary> Cancelled. </summary>
+
+        /// <summary> Gets the Cancelled. </summary>
         public static WorkflowStatus Cancelled { get; } = new WorkflowStatus(CancelledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static WorkflowStatus Failed { get; } = new WorkflowStatus(FailedValue);
-        /// <summary> Faulted. </summary>
+
+        /// <summary> Gets the Faulted. </summary>
         public static WorkflowStatus Faulted { get; } = new WorkflowStatus(FaultedValue);
-        /// <summary> TimedOut. </summary>
+
+        /// <summary> Gets the TimedOut. </summary>
         public static WorkflowStatus TimedOut { get; } = new WorkflowStatus(TimedOutValue);
-        /// <summary> Aborted. </summary>
+
+        /// <summary> Gets the Aborted. </summary>
         public static WorkflowStatus Aborted { get; } = new WorkflowStatus(AbortedValue);
-        /// <summary> Ignored. </summary>
+
+        /// <summary> Gets the Ignored. </summary>
         public static WorkflowStatus Ignored { get; } = new WorkflowStatus(IgnoredValue);
+
         /// <summary> Determines if two <see cref="WorkflowStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkflowStatus left, WorkflowStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkflowStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkflowStatus left, WorkflowStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkflowStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkflowStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkflowStatus(string value) => new WorkflowStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkflowStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkflowStatus?(string value) => value == null ? null : new WorkflowStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkflowStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkflowStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

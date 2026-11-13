@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public readonly partial struct ContainerGroupIPAddressType : IEquatable<ContainerGroupIPAddressType>
     {
         private readonly string _value;
+        /// <summary> Public. </summary>
+        private const string PublicValue = "Public";
+        /// <summary> Private. </summary>
+        private const string PrivateValue = "Private";
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupIPAddressType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerGroupIPAddressType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PublicValue = "Public";
-        private const string PrivateValue = "Private";
+            _value = value;
+        }
 
         /// <summary> Public. </summary>
         public static ContainerGroupIPAddressType Public { get; } = new ContainerGroupIPAddressType(PublicValue);
+
         /// <summary> Private. </summary>
         public static ContainerGroupIPAddressType Private { get; } = new ContainerGroupIPAddressType(PrivateValue);
+
         /// <summary> Determines if two <see cref="ContainerGroupIPAddressType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerGroupIPAddressType left, ContainerGroupIPAddressType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerGroupIPAddressType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerGroupIPAddressType left, ContainerGroupIPAddressType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupIPAddressType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerGroupIPAddressType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerGroupIPAddressType(string value) => new ContainerGroupIPAddressType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerGroupIPAddressType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerGroupIPAddressType?(string value) => value == null ? null : new ContainerGroupIPAddressType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerGroupIPAddressType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerGroupIPAddressType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

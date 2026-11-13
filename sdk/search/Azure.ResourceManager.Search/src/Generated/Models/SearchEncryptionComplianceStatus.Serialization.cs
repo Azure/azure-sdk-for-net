@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     internal static partial class SearchEncryptionComplianceStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchEncryptionComplianceStatus value) => value switch
         {
             SearchEncryptionComplianceStatus.Compliant => "Compliant",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Search.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchEncryptionComplianceStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SearchEncryptionComplianceStatus ToSearchEncryptionComplianceStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Compliant")) return SearchEncryptionComplianceStatus.Compliant;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonCompliant")) return SearchEncryptionComplianceStatus.NonCompliant;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Compliant"))
+            {
+                return SearchEncryptionComplianceStatus.Compliant;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonCompliant"))
+            {
+                return SearchEncryptionComplianceStatus.NonCompliant;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchEncryptionComplianceStatus value.");
         }
     }

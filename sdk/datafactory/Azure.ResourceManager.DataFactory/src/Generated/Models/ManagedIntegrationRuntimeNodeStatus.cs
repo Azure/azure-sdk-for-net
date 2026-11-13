@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct ManagedIntegrationRuntimeNodeStatus : IEquatable<ManagedIntegrationRuntimeNodeStatus>
     {
         private readonly string _value;
+        /// <summary> Starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Available. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Recycling. </summary>
+        private const string RecyclingValue = "Recycling";
+        /// <summary> Unavailable. </summary>
+        private const string UnavailableValue = "Unavailable";
 
         /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeNodeStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedIntegrationRuntimeNodeStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartingValue = "Starting";
-        private const string AvailableValue = "Available";
-        private const string RecyclingValue = "Recycling";
-        private const string UnavailableValue = "Unavailable";
+            _value = value;
+        }
 
         /// <summary> Starting. </summary>
         public static ManagedIntegrationRuntimeNodeStatus Starting { get; } = new ManagedIntegrationRuntimeNodeStatus(StartingValue);
+
         /// <summary> Available. </summary>
         public static ManagedIntegrationRuntimeNodeStatus Available { get; } = new ManagedIntegrationRuntimeNodeStatus(AvailableValue);
+
         /// <summary> Recycling. </summary>
         public static ManagedIntegrationRuntimeNodeStatus Recycling { get; } = new ManagedIntegrationRuntimeNodeStatus(RecyclingValue);
+
         /// <summary> Unavailable. </summary>
         public static ManagedIntegrationRuntimeNodeStatus Unavailable { get; } = new ManagedIntegrationRuntimeNodeStatus(UnavailableValue);
+
         /// <summary> Determines if two <see cref="ManagedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedIntegrationRuntimeNodeStatus left, ManagedIntegrationRuntimeNodeStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedIntegrationRuntimeNodeStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedIntegrationRuntimeNodeStatus left, ManagedIntegrationRuntimeNodeStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedIntegrationRuntimeNodeStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedIntegrationRuntimeNodeStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedIntegrationRuntimeNodeStatus(string value) => new ManagedIntegrationRuntimeNodeStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedIntegrationRuntimeNodeStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedIntegrationRuntimeNodeStatus?(string value) => value == null ? null : new ManagedIntegrationRuntimeNodeStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedIntegrationRuntimeNodeStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedIntegrationRuntimeNodeStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

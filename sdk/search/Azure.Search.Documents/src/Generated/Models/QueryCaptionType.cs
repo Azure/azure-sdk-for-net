@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct QueryCaptionType : IEquatable<QueryCaptionType>
     {
         private readonly string _value;
+        /// <summary> Do not return captions for the query. </summary>
+        private const string NoneValue = "none";
+        /// <summary> Extracts captions from the matching documents that contain passages relevant to the search query. </summary>
+        private const string ExtractiveValue = "extractive";
 
         /// <summary> Initializes a new instance of <see cref="QueryCaptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryCaptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string ExtractiveValue = "extractive";
+            _value = value;
+        }
 
         /// <summary> Do not return captions for the query. </summary>
         public static QueryCaptionType None { get; } = new QueryCaptionType(NoneValue);
+
         /// <summary> Extracts captions from the matching documents that contain passages relevant to the search query. </summary>
         public static QueryCaptionType Extractive { get; } = new QueryCaptionType(ExtractiveValue);
+
         /// <summary> Determines if two <see cref="QueryCaptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryCaptionType left, QueryCaptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QueryCaptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryCaptionType left, QueryCaptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryCaptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QueryCaptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QueryCaptionType(string value) => new QueryCaptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QueryCaptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QueryCaptionType?(string value) => value == null ? null : new QueryCaptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QueryCaptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QueryCaptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

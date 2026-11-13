@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.DatabaseWatcher": "2025-01-02"
+  }
+}

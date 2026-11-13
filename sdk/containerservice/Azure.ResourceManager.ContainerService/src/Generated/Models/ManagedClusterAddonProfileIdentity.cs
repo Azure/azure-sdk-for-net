@@ -15,16 +15,11 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterAddonProfileIdentity : ContainerServiceUserAssignedIdentity
     {
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfileIdentity"/>. </summary>
-        public ManagedClusterAddonProfileIdentity()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfileIdentity"/>. </summary>
         /// <param name="resourceId"> The resource ID of the user assigned identity. </param>
         /// <param name="clientId"> The client ID of the user assigned identity. </param>
         /// <param name="objectId"> The object ID of the user assigned identity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAddonProfileIdentity(ResourceIdentifier resourceId, Guid? clientId, Guid? objectId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceId, clientId, objectId, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAddonProfileIdentity(ResourceIdentifier resourceId, Guid? clientId, Guid? objectId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceId, clientId, objectId, additionalBinaryDataProperties)
         {
         }
     }

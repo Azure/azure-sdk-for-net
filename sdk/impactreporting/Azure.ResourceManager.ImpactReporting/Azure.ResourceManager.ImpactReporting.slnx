@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.ResourceManager.ImpactReporting.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ImpactReporting.Tests.csproj" />
+</Solution>

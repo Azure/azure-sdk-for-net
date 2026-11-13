@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct CentralServerVirtualMachineType : IEquatable<CentralServerVirtualMachineType>
     {
         private readonly string _value;
+        /// <summary> Primary central server vm. </summary>
+        private const string PrimaryValue = "Primary";
+        /// <summary> Secondary central server vm. </summary>
+        private const string SecondaryValue = "Secondary";
+        /// <summary> Central server vm type unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> ASCS Central server vm type. </summary>
+        private const string AscsValue = "ASCS";
+        /// <summary> ERSInactive Central server vm type. </summary>
+        private const string ErsInactiveValue = "ERSInactive";
+        /// <summary> ERS Central server vm type. </summary>
+        private const string ErsValue = "ERS";
+        /// <summary> Standby Central server vm type. </summary>
+        private const string StandbyValue = "Standby";
 
         /// <summary> Initializes a new instance of <see cref="CentralServerVirtualMachineType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CentralServerVirtualMachineType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrimaryValue = "Primary";
-        private const string SecondaryValue = "Secondary";
-        private const string UnknownValue = "Unknown";
-        private const string AscsValue = "ASCS";
-        private const string ErsInactiveValue = "ERSInactive";
-        private const string ErsValue = "ERS";
-        private const string StandbyValue = "Standby";
+            _value = value;
+        }
 
         /// <summary> Primary central server vm. </summary>
         public static CentralServerVirtualMachineType Primary { get; } = new CentralServerVirtualMachineType(PrimaryValue);
+
         /// <summary> Secondary central server vm. </summary>
         public static CentralServerVirtualMachineType Secondary { get; } = new CentralServerVirtualMachineType(SecondaryValue);
+
         /// <summary> Central server vm type unknown. </summary>
         public static CentralServerVirtualMachineType Unknown { get; } = new CentralServerVirtualMachineType(UnknownValue);
+
         /// <summary> ASCS Central server vm type. </summary>
         public static CentralServerVirtualMachineType Ascs { get; } = new CentralServerVirtualMachineType(AscsValue);
+
         /// <summary> ERSInactive Central server vm type. </summary>
         public static CentralServerVirtualMachineType ErsInactive { get; } = new CentralServerVirtualMachineType(ErsInactiveValue);
+
         /// <summary> ERS Central server vm type. </summary>
         public static CentralServerVirtualMachineType Ers { get; } = new CentralServerVirtualMachineType(ErsValue);
+
         /// <summary> Standby Central server vm type. </summary>
         public static CentralServerVirtualMachineType Standby { get; } = new CentralServerVirtualMachineType(StandbyValue);
+
         /// <summary> Determines if two <see cref="CentralServerVirtualMachineType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CentralServerVirtualMachineType left, CentralServerVirtualMachineType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CentralServerVirtualMachineType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CentralServerVirtualMachineType left, CentralServerVirtualMachineType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CentralServerVirtualMachineType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CentralServerVirtualMachineType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CentralServerVirtualMachineType(string value) => new CentralServerVirtualMachineType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CentralServerVirtualMachineType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CentralServerVirtualMachineType?(string value) => value == null ? null : new CentralServerVirtualMachineType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CentralServerVirtualMachineType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CentralServerVirtualMachineType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

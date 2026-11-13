@@ -5,17 +5,15 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> signed identifier. </summary>
+    /// <summary> The signed identifier. </summary>
     public partial class QueueSignedIdentifier
     {
-        /// <summary> a unique id. </summary>
+        /// <summary> The unique ID for the signed identifier. </summary>
         public string Id { get; set; }
-        /// <summary> The access policy. </summary>
+
+        /// <summary> The access policy for the signed identifier. </summary>
         public QueueAccessPolicy AccessPolicy { get; set; }
     }
 }

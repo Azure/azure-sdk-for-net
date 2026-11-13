@@ -3,26 +3,33 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> P2SConnectionConfiguration Resource. </summary>
+    // Native generation loses the released NetworkResourceData inheritance (ApiCompat CP0007).
     public partial class P2SConnectionConfiguration : NetworkResourceData
     {
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.
+        /// <summary> A list of address blocks reserved for P2S VPN clients in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.vpnClientAddressPool.addressPrefixes")]
         public IList<string> VpnClientAddressPrefixes
         {
             get
             {
-                if (VpnClientAddressPool is null)
-                    VpnClientAddressPool = new VirtualNetworkAddressSpace();
+                VpnClientAddressPool ??= new VirtualNetworkAddressSpace();
                 return VpnClientAddressPool.AddressPrefixes;
             }
         }
 
-        /// <summary> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </summary>
-        public IReadOnlyList<WritableSubResource> ConfigurationPolicyGroupAssociations { get => (IReadOnlyList<WritableSubResource>)ConfigurationPolicyGroups; }
+        /// <summary> Gets a read-only view of the configuration policy groups. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use ConfigurationPolicyGroups instead.")]
+        public IReadOnlyList<WritableSubResource> ConfigurationPolicyGroupAssociations => new ReadOnlyCollection<WritableSubResource>(ConfigurationPolicyGroups);
     }
 }

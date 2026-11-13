@@ -1710,6 +1710,109 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Set Permissions
 
+        #region Get System Properties
+        /// <summary>
+        /// The <see cref="GetSystemProperties"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public override Response<PathSystemProperties> GetSystemProperties(
+            PathGetSystemPropertiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(GetSystemProperties)}");
+
+            try
+            {
+                scope.Start();
+
+                return base.GetSystemProperties(
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetSystemPropertiesAsync"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public override async Task<Response<PathSystemProperties>> GetSystemPropertiesAsync(
+            PathGetSystemPropertiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(GetSystemProperties)}");
+
+            try
+            {
+                scope.Start();
+
+                return await base.GetSystemPropertiesAsync(
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Get System Properties
+
         #region Get Properties
         /// <summary>
         /// The <see cref="GetProperties"/> operation returns all
@@ -2907,7 +3010,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Paths
         /// <summary>
-        /// The <see cref="GetPaths"/> operation returns an async sequence
+        /// The <see cref="GetPaths(DataLakeGetPathsOptions, CancellationToken)"/> operation returns an async sequence
         /// of paths in this directory.  Enumerating the paths may make
         /// multiple requests to the service while fetching all the values.
         ///
@@ -2915,16 +3018,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
         /// List Path(s)</see>.
         /// </summary>
-        /// <param name="recursive">
-        /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
-        /// </param>
-        /// <param name="userPrincipalName">
-        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
-        /// "true", the user identity values returned in the owner and group fields of each list
-        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
-        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
-        /// The default value is false. Note that group and application Object IDs are not translated
-        /// because they do not have unique friendly names.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2941,19 +3036,57 @@ namespace Azure.Storage.Files.DataLake
         /// containing each failure instance.
         /// </remarks>
         public virtual Pageable<PathItem> GetPaths(
-            bool recursive = default,
-            bool userPrincipalName = default,
+            DataLakeGetPathsOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetPathsAsyncCollection(
                 FileSystemClient,
                 Path,
-                recursive,
-                userPrincipalName,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                options?.StartFrom,
                 $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetPaths"/> operation returns an async sequence
+        /// The <see cref="GetPathsAsync(DataLakeGetPathsOptions, CancellationToken)"/> operation returns an async sequence
+        /// of paths in this directory.  Enumerating the paths may make
+        /// multiple requests to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathItem}"/>
+        /// describing the paths in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual AsyncPageable<PathItem> GetPathsAsync(
+            DataLakeGetPathsOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetPathsAsyncCollection(
+                FileSystemClient,
+                Path,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                options?.StartFrom,
+                $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
+            .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPathsAsync(bool, bool, CancellationToken)"/> operation returns an async sequence
         /// of paths in this directory.  Enumerating the paths may make
         /// multiple requests to the service while fetching all the values.
         ///
@@ -2986,15 +3119,69 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual AsyncPageable<PathItem> GetPathsAsync(
-            bool recursive = default,
-            bool userPrincipalName = default,
-            CancellationToken cancellationToken = default) =>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Pageable<PathItem> GetPaths(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            bool recursive,
+            bool userPrincipalName,
+            CancellationToken cancellationToken) =>
             new GetPathsAsyncCollection(
                 FileSystemClient,
                 Path,
                 recursive,
                 userPrincipalName,
+                beginFrom: default,
+                $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPathsAsync(bool, bool, CancellationToken)"/> operation returns an async sequence
+        /// of paths in this directory.  Enumerating the paths may make
+        /// multiple requests to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="recursive">
+        /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
+        /// </param>
+        /// <param name="userPrincipalName">
+        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
+        /// "true", the user identity values returned in the owner and group fields of each list
+        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
+        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
+        /// The default value is false. Note that group and application Object IDs are not translated
+        /// because they do not have unique friendly names.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathItem}"/>
+        /// describing the paths in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual AsyncPageable<PathItem> GetPathsAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            bool recursive,
+            bool userPrincipalName,
+            CancellationToken cancellationToken) =>
+            new GetPathsAsyncCollection(
+                FileSystemClient,
+                Path,
+                recursive,
+                userPrincipalName,
+                beginFrom: default,
                 $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
         #endregion Get Paths
@@ -3164,7 +3351,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3195,7 +3382,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -3230,7 +3417,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3256,7 +3443,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.

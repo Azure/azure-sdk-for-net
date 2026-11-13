@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database file specific information. </summary>
     public partial class DataMigrationDatabaseFileInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationDatabaseFileInfo"/>. </summary>
         internal DataMigrationDatabaseFileInfo()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="restoreFullName"> Suggested full path of the file for restoring. </param>
         /// <param name="fileType"> Database file type. </param>
         /// <param name="sizeMB"> Size of the file in megabytes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationDatabaseFileInfo(string databaseName, string id, string logicalName, string physicalFullName, string restoreFullName, DataMigrationSqlDatabaseFileType? fileType, double? sizeMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationDatabaseFileInfo(string databaseName, string id, string logicalName, string physicalFullName, string restoreFullName, DataMigrationSqlDatabaseFileType? fileType, double? sizeMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             Id = id;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             RestoreFullName = restoreFullName;
             FileType = fileType;
             SizeMB = sizeMB;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the database. </summary>
         public string DatabaseName { get; }
+
         /// <summary> Unique identifier for database file. </summary>
         public string Id { get; }
+
         /// <summary> Logical name of the file. </summary>
         public string LogicalName { get; }
+
         /// <summary> Operating-system full path of the file. </summary>
         public string PhysicalFullName { get; }
+
         /// <summary> Suggested full path of the file for restoring. </summary>
         public string RestoreFullName { get; }
+
         /// <summary> Database file type. </summary>
         public DataMigrationSqlDatabaseFileType? FileType { get; }
+
         /// <summary> Size of the file in megabytes. </summary>
         public double? SizeMB { get; }
     }

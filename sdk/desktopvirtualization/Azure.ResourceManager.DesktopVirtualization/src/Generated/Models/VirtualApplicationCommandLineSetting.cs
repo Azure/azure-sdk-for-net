@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct VirtualApplicationCommandLineSetting : IEquatable<VirtualApplicationCommandLineSetting>
     {
         private readonly string _value;
+        /// <summary> Cannot be launched with command line arguments. </summary>
+        private const string DoNotAllowValue = "DoNotAllow";
+        /// <summary> Can optionally be launched with command line arguments. </summary>
+        private const string AllowValue = "Allow";
+        /// <summary> Required to be launched with command line arguments. </summary>
+        private const string RequireValue = "Require";
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationCommandLineSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualApplicationCommandLineSetting(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DoNotAllowValue = "DoNotAllow";
-        private const string AllowValue = "Allow";
-        private const string RequireValue = "Require";
-
-        /// <summary> DoNotAllow. </summary>
+        /// <summary> Cannot be launched with command line arguments. </summary>
         public static VirtualApplicationCommandLineSetting DoNotAllow { get; } = new VirtualApplicationCommandLineSetting(DoNotAllowValue);
-        /// <summary> Allow. </summary>
+
+        /// <summary> Can optionally be launched with command line arguments. </summary>
         public static VirtualApplicationCommandLineSetting Allow { get; } = new VirtualApplicationCommandLineSetting(AllowValue);
-        /// <summary> Require. </summary>
+
+        /// <summary> Required to be launched with command line arguments. </summary>
         public static VirtualApplicationCommandLineSetting Require { get; } = new VirtualApplicationCommandLineSetting(RequireValue);
+
         /// <summary> Determines if two <see cref="VirtualApplicationCommandLineSetting"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualApplicationCommandLineSetting left, VirtualApplicationCommandLineSetting right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualApplicationCommandLineSetting"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualApplicationCommandLineSetting left, VirtualApplicationCommandLineSetting right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualApplicationCommandLineSetting"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualApplicationCommandLineSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualApplicationCommandLineSetting(string value) => new VirtualApplicationCommandLineSetting(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualApplicationCommandLineSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualApplicationCommandLineSetting?(string value) => value == null ? null : new VirtualApplicationCommandLineSetting(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualApplicationCommandLineSetting other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualApplicationCommandLineSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

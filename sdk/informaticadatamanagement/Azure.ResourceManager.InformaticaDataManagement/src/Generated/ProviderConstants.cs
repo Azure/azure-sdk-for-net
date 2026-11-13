@@ -9,8 +9,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
-    internal static class ProviderConstants
+    internal static partial class ProviderConstants
     {
+        /// <summary> Gets the DefaultProviderNamespace. </summary>
         public static string DefaultProviderNamespace { get; } = ClientDiagnostics.GetResourceProviderNamespace(typeof(ProviderConstants).Assembly);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct PaymentMethodFamily : IEquatable<PaymentMethodFamily>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> CreditCard. </summary>
+        private const string CreditCardValue = "CreditCard";
+        /// <summary> Credits. </summary>
+        private const string CreditsValue = "Credits";
+        /// <summary> CheckWire. </summary>
+        private const string CheckWireValue = "CheckWire";
+        /// <summary> EWallet. </summary>
+        private const string EWalletValue = "EWallet";
+        /// <summary> TaskOrder. </summary>
+        private const string TaskOrderValue = "TaskOrder";
+        /// <summary> DirectDebit. </summary>
+        private const string DirectDebitValue = "DirectDebit";
 
         /// <summary> Initializes a new instance of <see cref="PaymentMethodFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PaymentMethodFamily(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string NoneValue = "None";
-        private const string CreditCardValue = "CreditCard";
-        private const string CreditsValue = "Credits";
-        private const string CheckWireValue = "CheckWire";
-        private const string EWalletValue = "EWallet";
-        private const string TaskOrderValue = "TaskOrder";
-        private const string DirectDebitValue = "DirectDebit";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static PaymentMethodFamily Other { get; } = new PaymentMethodFamily(OtherValue);
+
         /// <summary> None. </summary>
         public static PaymentMethodFamily None { get; } = new PaymentMethodFamily(NoneValue);
+
         /// <summary> CreditCard. </summary>
         public static PaymentMethodFamily CreditCard { get; } = new PaymentMethodFamily(CreditCardValue);
+
         /// <summary> Credits. </summary>
         public static PaymentMethodFamily Credits { get; } = new PaymentMethodFamily(CreditsValue);
+
         /// <summary> CheckWire. </summary>
         public static PaymentMethodFamily CheckWire { get; } = new PaymentMethodFamily(CheckWireValue);
+
         /// <summary> EWallet. </summary>
         public static PaymentMethodFamily EWallet { get; } = new PaymentMethodFamily(EWalletValue);
+
         /// <summary> TaskOrder. </summary>
         public static PaymentMethodFamily TaskOrder { get; } = new PaymentMethodFamily(TaskOrderValue);
+
         /// <summary> DirectDebit. </summary>
         public static PaymentMethodFamily DirectDebit { get; } = new PaymentMethodFamily(DirectDebitValue);
+
         /// <summary> Determines if two <see cref="PaymentMethodFamily"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PaymentMethodFamily left, PaymentMethodFamily right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PaymentMethodFamily"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PaymentMethodFamily left, PaymentMethodFamily right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PaymentMethodFamily"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PaymentMethodFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PaymentMethodFamily(string value) => new PaymentMethodFamily(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PaymentMethodFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PaymentMethodFamily?(string value) => value == null ? null : new PaymentMethodFamily(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PaymentMethodFamily other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PaymentMethodFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

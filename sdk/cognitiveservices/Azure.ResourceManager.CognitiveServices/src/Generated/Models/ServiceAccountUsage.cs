@@ -7,43 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The usage data for a usage request. </summary>
     public partial class ServiceAccountUsage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private CognitiveServicesQuotaScopeType? _scopeType;
+        private bool _scopeTypeIsDefined;
+        private string _scopeId;
+        private bool _scopeIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountUsage"/>. </summary>
         internal ServiceAccountUsage()
@@ -51,6 +28,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountUsage"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the usage. Ex - /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/usages/{usageName}. </param>
+        /// <param name="type"> The type of the usage resource. E.g. "Microsoft.CognitiveServices/locations/usages". </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
@@ -58,9 +37,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="currentValue"> Current value for this metric. </param>
         /// <param name="nextResetTime"> Next reset time for current quota. </param>
         /// <param name="status"> Cognitive Services account quota usage status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="scopeType"> The scope type of the quota usage. </param>
+        /// <param name="scopeId"> The scope identifier of the quota usage. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountUsage(ResourceIdentifier id, ResourceType? @type, ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, CognitiveServicesQuotaScopeType? scopeType, string scopeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
+            Type = @type;
             Unit = unit;
             Name = name;
             QuotaPeriod = quotaPeriod;
@@ -68,29 +51,65 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CurrentValue = currentValue;
             NextResetTime = nextResetTime;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _scopeType = scopeType;
+            _scopeId = scopeId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Fully qualified resource ID for the usage. Ex - /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/usages/{usageName}. </summary>
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; }
+
+        /// <summary> The type of the usage resource. E.g. "Microsoft.CognitiveServices/locations/usages". </summary>
+        [WirePath("type")]
+        public ResourceType? Type { get; }
 
         /// <summary> The unit of the metric. </summary>
         [WirePath("unit")]
         public ServiceAccountUsageUnitType? Unit { get; }
+
         /// <summary> The name information for the metric. </summary>
         [WirePath("name")]
         public ServiceAccountUsageMetricName Name { get; }
+
         /// <summary> The quota period used to summarize the usage values. </summary>
         [WirePath("quotaPeriod")]
         public string QuotaPeriod { get; }
+
         /// <summary> Maximum value for this metric. </summary>
         [WirePath("limit")]
         public double? Limit { get; }
+
         /// <summary> Current value for this metric. </summary>
         [WirePath("currentValue")]
         public double? CurrentValue { get; }
+
         /// <summary> Next reset time for current quota. </summary>
         [WirePath("nextResetTime")]
         public string NextResetTime { get; }
+
         /// <summary> Cognitive Services account quota usage status. </summary>
         [WirePath("status")]
         public ServiceAccountQuotaUsageStatus? Status { get; }
+
+        /// <summary> The scope type of the quota usage. </summary>
+        [WirePath("scopeType")]
+        public CognitiveServicesQuotaScopeType? ScopeType
+        {
+            get
+            {
+                return _scopeType;
+            }
+        }
+
+        /// <summary> The scope identifier of the quota usage. </summary>
+        [WirePath("scopeId")]
+        public string ScopeId
+        {
+            get
+            {
+                return _scopeId;
+            }
+        }
     }
 }

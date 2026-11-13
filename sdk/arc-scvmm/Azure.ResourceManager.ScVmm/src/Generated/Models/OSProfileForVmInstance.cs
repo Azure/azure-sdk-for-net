@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class OSProfileForVmInstance
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OSProfileForVmInstance"/>. </summary>
         public OSProfileForVmInstance()
@@ -51,31 +22,75 @@ namespace Azure.ResourceManager.ScVmm.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OSProfileForVmInstance"/>. </summary>
+        /// <param name="adminUsername"> Gets or sets the admin username. </param>
         /// <param name="adminPassword"> Admin password of the virtual machine. </param>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="osType"> Gets the type of the os. </param>
         /// <param name="osSku"> Gets os sku. </param>
         /// <param name="osVersion"> Gets os version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSProfileForVmInstance(string adminPassword, string computerName, ScVmmOSType? osType, string osSku, string osVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="domainName"> Gets or sets the domain name. </param>
+        /// <param name="domainUsername"> Gets or sets the domain username. </param>
+        /// <param name="domainPassword"> Password of the domain the VM has to join. </param>
+        /// <param name="workgroup"> Gets or sets the workgroup. </param>
+        /// <param name="productKey"> Gets or sets the product key.Input format xxxxx-xxxxx-xxxxx-xxxxx-xxxxx. </param>
+        /// <param name="timezone"> Gets or sets the index value of the timezone. </param>
+        /// <param name="runOnceCommands"> Get or sets the commands to be run once at the time of creation separated by semicolons. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OSProfileForVmInstance(string adminUsername, string adminPassword, string computerName, ScVmmOSType? osType, string osSku, string osVersion, string domainName, string domainUsername, string domainPassword, string workgroup, string productKey, int? timezone, string runOnceCommands, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            AdminUsername = adminUsername;
             AdminPassword = adminPassword;
             ComputerName = computerName;
             OSType = osType;
             OSSku = osSku;
             OSVersion = osVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            DomainName = domainName;
+            DomainUsername = domainUsername;
+            DomainPassword = domainPassword;
+            Workgroup = workgroup;
+            ProductKey = productKey;
+            Timezone = timezone;
+            RunOnceCommands = runOnceCommands;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets or sets the admin username. </summary>
+        public string AdminUsername { get; set; }
 
         /// <summary> Admin password of the virtual machine. </summary>
         public string AdminPassword { get; set; }
+
         /// <summary> Gets or sets computer name. </summary>
         public string ComputerName { get; set; }
+
         /// <summary> Gets the type of the os. </summary>
         public ScVmmOSType? OSType { get; }
+
         /// <summary> Gets os sku. </summary>
         public string OSSku { get; }
+
         /// <summary> Gets os version. </summary>
         public string OSVersion { get; }
+
+        /// <summary> Gets or sets the domain name. </summary>
+        public string DomainName { get; set; }
+
+        /// <summary> Gets or sets the domain username. </summary>
+        public string DomainUsername { get; set; }
+
+        /// <summary> Password of the domain the VM has to join. </summary>
+        public string DomainPassword { get; set; }
+
+        /// <summary> Gets or sets the workgroup. </summary>
+        public string Workgroup { get; set; }
+
+        /// <summary> Gets or sets the product key.Input format xxxxx-xxxxx-xxxxx-xxxxx-xxxxx. </summary>
+        public string ProductKey { get; set; }
+
+        /// <summary> Gets or sets the index value of the timezone. </summary>
+        public int? Timezone { get; set; }
+
+        /// <summary> Get or sets the commands to be run once at the time of creation separated by semicolons. </summary>
+        public string RunOnceCommands { get; set; }
     }
 }

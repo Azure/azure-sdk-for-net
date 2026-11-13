@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This property allows you to specify the operation type of gallery sharing update. Possible values are: **Add,** **Remove,** **Reset.**. </summary>
+    /// <summary> This property allows you to specify the operation type of gallery sharing update. Possible values are: <b>Add,</b> <b>Remove,</b> <b>Reset.</b>. </summary>
     public readonly partial struct SharingUpdateOperationType : IEquatable<SharingUpdateOperationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SharingUpdateOperationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SharingUpdateOperationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AddValue = "Add";
         private const string RemoveValue = "Remove";
         private const string ResetValue = "Reset";
         private const string EnableCommunityValue = "EnableCommunity";
 
-        /// <summary> Add. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingUpdateOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SharingUpdateOperationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Add. </summary>
         public static SharingUpdateOperationType Add { get; } = new SharingUpdateOperationType(AddValue);
-        /// <summary> Remove. </summary>
+
+        /// <summary> Gets the Remove. </summary>
         public static SharingUpdateOperationType Remove { get; } = new SharingUpdateOperationType(RemoveValue);
-        /// <summary> Reset. </summary>
+
+        /// <summary> Gets the Reset. </summary>
         public static SharingUpdateOperationType Reset { get; } = new SharingUpdateOperationType(ResetValue);
-        /// <summary> EnableCommunity. </summary>
+
+        /// <summary> Gets the EnableCommunity. </summary>
         public static SharingUpdateOperationType EnableCommunity { get; } = new SharingUpdateOperationType(EnableCommunityValue);
+
         /// <summary> Determines if two <see cref="SharingUpdateOperationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SharingUpdateOperationType left, SharingUpdateOperationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SharingUpdateOperationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SharingUpdateOperationType left, SharingUpdateOperationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SharingUpdateOperationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SharingUpdateOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SharingUpdateOperationType(string value) => new SharingUpdateOperationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SharingUpdateOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SharingUpdateOperationType?(string value) => value == null ? null : new SharingUpdateOperationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SharingUpdateOperationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SharingUpdateOperationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

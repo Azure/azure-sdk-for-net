@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlNetworkSecurityPerimeterConfigurationResource : IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>
     {
-        private static SqlNetworkSecurityPerimeterConfigurationData s_dataDeserializationInstance;
-        private static SqlNetworkSecurityPerimeterConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlNetworkSecurityPerimeterConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlNetworkSecurityPerimeterConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlNetworkSecurityPerimeterConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>)Data).Write(writer, options);
 
-        SqlNetworkSecurityPerimeterConfigurationData IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlNetworkSecurityPerimeterConfigurationData IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlNetworkSecurityPerimeterConfigurationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlNetworkSecurityPerimeterConfigurationData IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

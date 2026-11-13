@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class SiteSlotDiagnosticDetectorResource : IJsonModel<DetectorDefinitionResourceData>
     {
-        private static DetectorDefinitionResourceData s_dataDeserializationInstance;
-        private static DetectorDefinitionResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DetectorDefinitionResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DetectorDefinitionResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DetectorDefinitionResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DetectorDefinitionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DetectorDefinitionResourceData>)Data).Write(writer, options);
 
-        DetectorDefinitionResourceData IJsonModel<DetectorDefinitionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DetectorDefinitionResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DetectorDefinitionResourceData IJsonModel<DetectorDefinitionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DetectorDefinitionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DetectorDefinitionResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DetectorDefinitionResourceData IPersistableModel<DetectorDefinitionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DetectorDefinitionResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<DetectorDefinitionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DetectorDefinitionResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DetectorDefinitionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

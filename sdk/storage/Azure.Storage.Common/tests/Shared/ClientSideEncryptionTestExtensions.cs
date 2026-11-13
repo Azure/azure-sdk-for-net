@@ -178,7 +178,8 @@ namespace Azure.Storage.Test.Shared
         {
             var result = new byte[contents.Length];
 
-            if (contents.Length == 0) return result;
+            if (contents.Length == 0)
+                return result;
 
             // Move each byte one position to the left
             new Span<byte>(contents, 1, contents.Length - 1).CopyTo(result);
@@ -193,7 +194,8 @@ namespace Azure.Storage.Test.Shared
         {
             var result = new byte[contents.Length];
 
-            if (contents.Length == 0) return result;
+            if (contents.Length == 0)
+                return result;
 
             // Move each byte one position to the right
             new Span<byte>(contents, 0, contents.Length - 1).CopyTo(new Span<byte>(result, 1, result.Length - 1));

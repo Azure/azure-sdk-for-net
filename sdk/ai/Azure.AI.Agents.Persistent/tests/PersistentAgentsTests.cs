@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -31,7 +31,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         private const string FILE_UPLOAD_CONSTRAINT = "The file is being uploaded as a multipart multipart/form-data, which cannot be recorded.";
         private const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
 
-        public PersistentAgentsTests(bool isAsync) : base(isAsync) {
+        public PersistentAgentsTests(bool isAsync) : base(isAsync)
+        {
             TestDiagnostics = false;
         }
         private class CompositeDisposable : IDisposable
@@ -112,6 +113,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             MicrosoftFabric,
             Sharepoint,
             CodeInterpreter,
+            ComputerUse,
         }
 
         public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
@@ -167,6 +169,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
             {ToolTypes.Sharepoint, "Hello, summarize the key points of the first document in the list."},
             {ToolTypes.CodeInterpreter,  "What feature does Smart Eyewear offer?"},
+            {ToolTypes.ComputerUse, "I can see a web browser with bing.com open and the cursor in the search box. Type 'movies near me' without pressing Enter or any other key. Only type 'movies near me'."},
         };
 
         public Dictionary<ToolTypes, string> ToolInstructions = new()
@@ -184,6 +187,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.MicrosoftFabric, "You are helpful agent."},
             {ToolTypes.Sharepoint, "You are helpful agent."},
             {ToolTypes.CodeInterpreter, "You are helpful agent."},
+            {ToolTypes.ComputerUse, "You are an computer automation assistant. Use the computer_use_preview tool to interact with the screen when needed."}
         };
 
         public Dictionary<ToolTypes, string> RequiredTextInResponse = new()
@@ -215,12 +219,13 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             else
             {
-                object objParams = new {
+                object objParams = new
+                {
                     model = "gpt-4",
                     name = AGENT_NAME,
                     instructions = "You are helpful agent"
                 };
-                RequestContent content = argType == ArgumentType.Bytes?RequestContent.Create(GetBytes(objParams)): RequestContent.Create(GetStream(objParams));
+                RequestContent content = argType == ArgumentType.Bytes ? RequestContent.Create(GetBytes(objParams)) : RequestContent.Create(GetStream(objParams));
                 Response agentResponse = await client.Administration.CreateAgentAsync(content);
                 id = GetFieldFromJson(agentResponse.Content, "id");
                 name = GetFieldFromJson(agentResponse.Content, "name");
@@ -376,8 +381,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 {
                     metadata = new
                     {
-                        key1="value1",
-                        key2="value2"
+                        key1 = "value1",
+                        key2 = "value2"
                     }
                 };
                 RequestContent content = argType == ArgumentType.Bytes ? RequestContent.Create(GetBytes(data)) : RequestContent.Create(GetStream(data));
@@ -582,8 +587,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 for (int i = ids.Count; i < agentLimit; i++)
                 {
-                    PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
-                    ids.Add((await GetAgent(client)).Id);
+                    PersistentAgent agent = await client.Administration.CreateAgentAsync(
+                        model: "gpt-4o",
+                        name: AGENT_NAME,
+                        instructions: "You are helpful agent.");
+                    ids.Add(agent.Id);
                 }
             }
             // Test calling before.
@@ -635,7 +643,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             Assert.AreEqual(idNum, 4);
             // Test calling after.
-            threads = client.Threads.GetThreadsAsync(after: ids[idNum-1], limit: 2, order: ListSortOrder.Ascending);
+            threads = client.Threads.GetThreadsAsync(after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
             await foreach (PersistentAgentThread thread in threads)
             {
                 Assert.AreEqual(ids[idNum], thread.Id, $"The ID #{idNum} is incorrect.");
@@ -706,7 +714,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 ids[i] = run.Id;
             }
             // Test calling before.
-            AsyncPageable<ThreadRun> runs = client.Runs.GetRunsAsync(threadId:thread.Id, before: ids[2], limit: 1, order: ListSortOrder.Ascending);
+            AsyncPageable<ThreadRun> runs = client.Runs.GetRunsAsync(threadId: thread.Id, before: ids[2], limit: 1, order: ListSortOrder.Ascending);
             int idNum = 0;
             await foreach (ThreadRun run in runs)
             {
@@ -721,7 +729,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -736,7 +744,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
 
             // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
-            ConnectedAgentToolDefinition stockPriceConnectedAgentTool = (ConnectedAgentToolDefinition) await GetToolDefinition(ToolTypes.ConnectedAgent);
+            ConnectedAgentToolDefinition stockPriceConnectedAgentTool = (ConnectedAgentToolDefinition)await GetToolDefinition(ToolTypes.ConnectedAgent);
 
             ConnectedAgentToolDefinition weatherConnectedAgentTool = new(
                 new ConnectedAgentDetails(
@@ -761,7 +769,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "What is the stock price of Microsoft and the weather in Seattle?");
 
             // Run the agent
-            ThreadRun run = client.Runs.CreateRun(thread, agent);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
 
             // Check run steps
@@ -799,7 +807,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.True(foundWeatherBot, "The weather bot step was not found.");
             Assert.True(foundStockBot, "The stock bot step was not found.");
 
-            List <PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
+            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
                 threadId: run.ThreadId,
                 runId: run.Id,
                 order: ListSortOrder.Ascending
@@ -807,7 +815,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.Greater(messages.Count, 0);
 
             // NOTE: Comment out these four lines if you plan to reuse the agent later.
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -824,7 +832,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 ids[i] = msg1.Id;
             }
             // Test calling before.
-            AsyncPageable<PersistentThreadMessage> msgResp = client.Messages.GetMessagesAsync(thread.Id, before: ids[4], limit:2, order:ListSortOrder.Ascending);
+            AsyncPageable<PersistentThreadMessage> msgResp = client.Messages.GetMessagesAsync(thread.Id, before: ids[4], limit: 2, order: ListSortOrder.Ascending);
             int idNum = 0;
             await foreach (PersistentThreadMessage msg in msgResp)
             {
@@ -881,7 +889,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 vectorStoreId: vct.Id,
                 limit: 2,
                 order: ListSortOrder.Ascending,
-                after: ids[idNum-1]
+                after: ids[idNum - 1]
             );
             await foreach (VectorStoreFile fle in files)
             {
@@ -1013,8 +1021,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             ));
             var opts = new ThreadAndRunOptions()
             {
-                ThreadOptions=threadOp,
-                Metadata=new Dictionary<string, string> {
+                ThreadOptions = threadOp,
+                Metadata = new Dictionary<string, string> {
                     { "key1", "value1"},
                     { "key2", "value2"}
                 }
@@ -1043,7 +1051,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgent agent = await GetAgent(client);
             PersistentAgentThread thread = await GetThread(client);
             await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
-            ThreadRun  runResp = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
+            ThreadRun runResp = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             runResp = await WaitForRun(client, runResp);
             Assert.AreEqual(0, runResp.Metadata.Count);
             if (argType == ArgumentType.Metadata)
@@ -1128,7 +1136,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     },
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "Use the provided functions to help answer questions.",
                 tools: new List<ToolDefinition> { getFavouriteNameTool }
@@ -1184,7 +1192,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     }
                     if (argType == ArgumentType.Metadata)
                     {
-                        toolRun = await client.Runs.SubmitToolOutputsToRunAsync(toolRun, toolOutputs);
+                        toolRun = await client.Runs.SubmitToolOutputsToRunAsync(toolRun, toolOutputs, toolApprovals: null);
                     }
                     else
                     {
@@ -1244,7 +1252,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (useFileSource)
             {
                 fileDataSource = await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
-                fileIds = [ fileDataSource.Id ];
+                fileIds = [fileDataSource.Id];
             }
             else
             {
@@ -1253,7 +1261,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     assetType: VectorStoreDataSourceAssetType.UriAsset
                 );
                 vectorStoreConf = new VectorStoreConfiguration(
-                    dataSources: [ vectorStoreDataSource ]
+                    dataSources: [vectorStoreDataSource]
                 );
             }
             if (testType == VecrorStoreTestType.JustVectorStore)
@@ -1457,7 +1465,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
-                tools: [ new CodeInterpreterToolDefinition() ],
+                tools: [new CodeInterpreterToolDefinition()],
                 toolResources: useThreads ? null : resources
             );
             PersistentAgentThread thread = await client.Threads.CreateThreadAsync(
@@ -1494,7 +1502,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
             ToolResources tools = new()
             {
-                FileSearch=fileSearch
+                FileSearch = fileSearch
             };
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
@@ -1598,7 +1606,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (includeContent)
             {
                 Assert.Greater(fileSearchCall.FileSearch.Results[0].Content.Count, 0);
-                Assert.AreEqual(FileSearchToolCallContentType.Text, fileSearchCall.FileSearch.Results[0].Content[0].Type);
+                Assert.AreEqual("text", fileSearchCall.FileSearch.Results[0].Content[0].Type.ToString());
                 Assert.False(string.IsNullOrEmpty(fileSearchCall.FileSearch.Results[0].Content[0].Text));
             }
             else
@@ -1639,7 +1647,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 string content = "This is a test file";
                 stream.Write(Encoding.UTF8.GetBytes(content), 0, content.Length);
-            };
+            }
+            ;
 
             PersistentAgentsClient client = GetClient();
             PersistentAgentFileInfo fileDataSource = await client.Files.UploadFileAsync(file.FullName, PersistentAgentFilePurpose.Agents);
@@ -1886,7 +1895,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 tools.Add(incorrectGeHhumidityByAddressTool);
 
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                    model: "gpt-4o-mini",
+                    model: "gpt-4o",
                     name: AGENT_NAME,
                     instructions: "Use the provided functions to help answer questions.",
                     tools: tools
@@ -2070,7 +2079,12 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
-        public async Task TestMcpTool()
+        [TestCase(null, false, true)]
+        [TestCase("always", false, true)]
+        [TestCase("never", false, false)]
+        [TestCase("always", true, true)]
+        [TestCase("never", true, false)]
+        public async Task TestMcpTool(string trust, bool isPerTool, bool shouldApprove)
         {
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
@@ -2090,6 +2104,26 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             MCPToolResource mcpToolResource = new("github");
             mcpToolResource.UpdateHeader("SuperSecret", "123456");
+            if (trust is not null)
+            {
+                MCPApproval trustMode;
+                if (isPerTool)
+                {
+                    MCPApprovalPerTool perTool = new()
+                    {
+                        Never = new MCPToolList(
+                            string.Equals(trust, "never") ? ["search_azure_rest_api_code"] : []),
+                        Always = new MCPToolList(
+                            string.Equals(trust, "always") ? ["search_azure_rest_api_code"] : []),
+                    };
+                    trustMode = new(perToolApproval: perTool);
+                }
+                else
+                {
+                    trustMode = new(trust);
+                }
+                mcpToolResource.RequireApproval = trustMode;
+            }
             ToolResources toolResources = mcpToolResource.ToToolResources();
 
             // Run the agent with MCP tool resources
@@ -2126,7 +2160,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
             Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
-            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
+            Assert.AreEqual(shouldApprove, isApprovalRequested,
+                isApprovalRequested ? $"The approval was requested, but it was not expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}." : $"The approval was not requested, but it was expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}."
+            );
             Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
             AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(thread.Id, run.Id);
             bool isRunStepMCPPresent = false;
@@ -2147,6 +2183,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestMcpToolStreaming()
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
             string searchApiCode = "search_azure_rest_api_code";
@@ -2226,6 +2264,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             // Commenting DeepResearch as it is not compatible with unit test framework iterations
             // and connection breaks after timeout during streaming test.
             // The error says that the thread already contains the active run.
@@ -2254,8 +2294,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileAnnotation = new MessageDeltaTextFileCitationAnnotation(
                     index: 42,
                     type: "file_citation",
-                    serializedAdditionalRawData: null,
-                    fileCitation: new MessageDeltaTextFileCitationAnnotationObject(fileId: await GetFileId(toolRes.FileSearch), quote: "foo", serializedAdditionalRawData: null),
+                    additionalBinaryDataProperties: null,
+                    fileCitation: new MessageDeltaTextFileCitationAnnotationObject(fileId: await GetFileId(toolRes.FileSearch), quote: "foo", additionalBinaryDataProperties: null),
                     text: "test",
                     startIndex: 0,
                     endIndex: 1);
@@ -2277,6 +2317,149 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileAnnotation: fileAnnotation,
                 agentMessagePattern: searchPattern
                 );
+        }
+
+        [RecordedTest]
+        [TestCase(true, "adani")]
+        //TODO: The Image URI is not supported, uncomment this text when the ICM 686545924 will be resolved.
+        //[TestCase(false, "trail")]
+        public async Task TestImageAsInput(bool useUploaded, string expectedWord)
+        {
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent agent = await GetAgent(
+                client: client,
+                model: "gpt-4o",
+                instruction: "Analyze images from internally uploaded files."
+            );
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+            var contentBlocks = new List<MessageInputContentBlock>
+            {
+                new MessageInputTextBlock("Here is an uploaded file. Please describe it:"),
+            };
+            if (useUploaded)
+            {
+                // Note: To get the Image ID, please upload it using sample "Sample_PersistentAgents_ImageFileInputs."
+                contentBlocks.Add(new MessageInputImageFileBlock(new MessageImageFileParam(TestEnvironment.UPLOADED_IMAGE_ID)));
+            }
+            else
+            {
+                string uri = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg";
+                contentBlocks.Add(new MessageInputImageUriBlock(new MessageImageUriParam(uri)));
+            }
+
+            PersistentThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
+                threadId: thread.Id,
+                role: MessageRole.User,
+                contentBlocks: contentBlocks
+            );
+            ThreadRun run = await client.Runs.CreateRunAsync(
+                threadId: thread.Id,
+                assistantId: agent.Id
+            );
+            run = await WaitForRun(client, run);
+            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(threadId: run.ThreadId).ToListAsync();
+            Assert.Greater(messages.Count, 0);
+            StringBuilder sbResponse = new();
+            foreach (PersistentThreadMessage msg in messages)
+            {
+                if (msg.Role == MessageRole.Agent)
+                {
+                    msg.ContentItems.Where(x => x is MessageTextContent).Select(x => ((MessageTextContent)x).Text).Aggregate(sbResponse, (sbResponse, next) => sbResponse.Append(next));
+                }
+            }
+            string response = sbResponse.ToString().ToLower();
+            Assert.That(response.Contains(expectedWord), $"The word {expectedWord} was not found in the response: {response}");
+        }
+
+        [RecordedTest]
+        public async Task TestComputerUsage()
+        {
+            ComputerUseToolDefinition computerUse = new(
+                computerUsePreview: new ComputerUseToolParameters(
+                    displayWidth: 1026,
+                    displayHeight: 769,
+                    environment: "windows"
+                )
+            );
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent agent = await GetAgent(
+                client: client,
+                model: "computer-use-preview",
+                instruction: ToolInstructions[ToolTypes.ComputerUse],
+                tools: [computerUse]
+            );
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+            List<MessageInputContentBlock> contentBlocks = [
+                new MessageInputTextBlock(text: ToolPrompts[ToolTypes.ComputerUse]),
+            new MessageInputImageUriBlock(imageUrl: new MessageImageUriParam(uri: GetEncodedImage("cua_screenshot.jpg")))
+            ];
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                contentBlocks: contentBlocks
+            );
+            ThreadRun run = await client.Runs.CreateRunAsync(
+                thread.Id,
+                agent.Id);
+            do
+            {
+                if (Mode != RecordedTestMode.Playback)
+                    await Task.Delay(TimeSpan.FromMilliseconds(500));
+                run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+
+                if (run.Status == RunStatus.RequiresAction
+                    && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
+                {
+                    Console.WriteLine("Run requires action:");
+                    if (submitToolOutputsAction.ToolCalls == null || !submitToolOutputsAction.ToolCalls.Any())
+                    {
+                        Console.WriteLine("No tool calls provided - cancelling run");
+                        await client.Runs.CancelRunAsync(threadId: run.ThreadId, runId: run.Id);
+                        break;
+                    }
+
+                    List<ComputerToolOutput> toolOutputs = [];
+                    foreach (RequiredToolCall toolCall in submitToolOutputsAction.ToolCalls)
+                    {
+                        ComputerToolOutput toolOutput = GetResolvedToolOutput(toolCall: toolCall, imageUri: GetEncodedImage("cua_screenshot_next.jpg"));
+                        if (toolOutput != null)
+                        {
+                            toolOutputs.Add(toolOutput);
+                            Console.WriteLine($"Tool outputs: {toolOutput}");
+                        }
+                    }
+                    run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs: toolOutputs, toolApprovals: null);
+                }
+            }
+            while (run.Status == RunStatus.Queued
+                || run.Status == RunStatus.InProgress
+                || run.Status == RunStatus.RequiresAction);
+            Assert.AreEqual(
+                RunStatus.Completed,
+                run.Status,
+                run.LastError?.Message);
+            IEnumerable<RunStep> steps = (await client.Runs.GetRunStepsAsync(run).ToListAsync()).Where((x) => x.StepDetails is RunStepToolCallDetails);
+            Assert.That(steps.Any(), "No tool call were found.");
+            bool computerCallFound = false;
+            foreach (RunStep step in steps)
+            {
+                if (step.StepDetails is RunStepToolCallDetails details)
+                {
+                    foreach (RunStepToolCall call in details.ToolCalls)
+                    {
+                        if (call is RunStepComputerUseToolCall)
+                        {
+                            computerCallFound = true;
+                            break;
+                        }
+                    }
+                }
+                if (computerCallFound)
+                    break;
+            }
+            Assert.True(computerCallFound, "Computer use call was not found.");
+            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(threadId: thread.Id).ToListAsync();
+            Assert.Greater(messages.Count, 1);
         }
 
         #region Helpers
@@ -2388,7 +2571,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsTrue(resp.Value);
         }
 
-        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName = AGENT_NAME, string instruction = "You are helpful agent.", string model="gpt-4o", IEnumerable<ToolDefinition> tools=null, ToolResources toolResources=null)
+        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName = AGENT_NAME, string instruction = "You are helpful agent.", string model = "gpt-4o", IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null)
         {
             return await client.Administration.CreateAgentAsync(
                 model: model,
@@ -2399,7 +2582,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
         }
 
-        private static async Task<PersistentAgentThread> GetThread(PersistentAgentsClient client, Dictionary<string, string> metadata=null)
+        private static async Task<PersistentAgentThread> GetThread(PersistentAgentsClient client, Dictionary<string, string> metadata = null)
         {
             return await client.Threads.CreateThreadAsync(metadata: metadata);
         }
@@ -2460,10 +2643,17 @@ namespace Azure.AI.Agents.Persistent.Tests
             return batch;
         }
 
-        private static string GetFile([CallerFilePath] string pth = "", string fileName= FILE_NAME)
+        private static string GetFile([CallerFilePath] string pth = "", string fileName = FILE_NAME)
         {
             var dirName = Path.GetDirectoryName(pth) ?? "";
             return Path.Combine(new string[] { dirName, "TestData", fileName });
+        }
+
+        private static string GetEncodedImage(string name)
+        {
+            string imagePath = GetFile(fileName: name);
+            string imageBase64 = Convert.ToBase64String(File.ReadAllBytes(imagePath));
+            return $"data:image/jpeg;base64,{imageBase64}";
         }
 
         private static async Task<int> CountElementsAndRemoveIds(PersistentAgentsClient client, HashSet<string> ids)
@@ -2542,98 +2732,98 @@ namespace Azure.AI.Agents.Persistent.Tests
 
         private async Task<ToolDefinition> GetToolDefinition(ToolTypes toolType)
             => toolType switch
-                {
-                    ToolTypes.BingGrounding => new BingGroundingToolDefinition(
-                        new BingGroundingSearchToolParameters(
-                            [new BingGroundingSearchConfiguration(TestEnvironment.BING_CONNECTION_ID)]
+            {
+                ToolTypes.BingGrounding => new BingGroundingToolDefinition(
+                    new BingGroundingSearchToolParameters(
+                        [new BingGroundingSearchConfiguration(TestEnvironment.BING_CONNECTION_ID)]
+                    )
+                ),
+                ToolTypes.OpenAPI => new OpenApiToolDefinition(
+                    name: "get_weather",
+                    description: "Retrieve weather information for a location",
+                    spec: BinaryData.FromBytes(File.ReadAllBytes(GetFile(fileName: OPENAPI_SPEC_FILE))),
+                    openApiAuthentication: new OpenApiAnonymousAuthDetails(),
+                    defaultParams: ["format"]
+                ),
+                ToolTypes.DeepResearch => new DeepResearchToolDefinition(
+                    new DeepResearchDetails(
+                            model: TestEnvironment.DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME,
+                            bingGroundingConnections: [
+                                new DeepResearchBingGroundingConnection(TestEnvironment.BING_CONNECTION_ID)
+                        ]
+                    )
+                ),
+                ToolTypes.AzureAISearch => new AzureAISearchToolDefinition(),
+                ToolTypes.ConnectedAgent => new ConnectedAgentToolDefinition(
+                    new ConnectedAgentDetails(
+                        id: (await GetSubAgent()).Id,
+                        name: "stock_price_bot",
+                        description: "Gets the stock price of a company"
+                    )
+                ),
+                ToolTypes.FileSearch => new FileSearchToolDefinition(),
+                ToolTypes.AzureFunction => new AzureFunctionToolDefinition(
+                    name: "foo",
+                    description: "Get answers from the foo bot.",
+                    inputBinding: new AzureFunctionBinding(
+                        new AzureFunctionStorageQueue(
+                            queueName: "azure-function-foo-input",
+                            storageServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI
                         )
                     ),
-                    ToolTypes.OpenAPI => new OpenApiToolDefinition(
-                        name: "get_weather",
-                        description: "Retrieve weather information for a location",
-                        spec: BinaryData.FromBytes(File.ReadAllBytes(GetFile(fileName: OPENAPI_SPEC_FILE))),
-                        openApiAuthentication: new OpenApiAnonymousAuthDetails(),
-                        defaultParams: ["format"]
-                    ),
-                    ToolTypes.DeepResearch => new DeepResearchToolDefinition(
-                        new DeepResearchDetails(
-                                model: TestEnvironment.DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME,
-                                bingGroundingConnections: [
-                                    new DeepResearchBingGroundingConnection(TestEnvironment.BING_CONNECTION_ID)
-                            ]
+                    outputBinding: new AzureFunctionBinding(
+                        new AzureFunctionStorageQueue(
+                            queueName: "azure-function-tool-output",
+                            storageServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI
                         )
                     ),
-                    ToolTypes.AzureAISearch => new AzureAISearchToolDefinition(),
-                    ToolTypes.ConnectedAgent => new ConnectedAgentToolDefinition(
-                        new ConnectedAgentDetails(
-                            id: (await GetSubAgent()).Id,
-                            name: "stock_price_bot",
-                            description: "Gets the stock price of a company"
-                        )
-                    ),
-                    ToolTypes.FileSearch => new FileSearchToolDefinition(),
-                    ToolTypes.AzureFunction =>  new AzureFunctionToolDefinition(
-                        name: "foo",
-                        description: "Get answers from the foo bot.",
-                        inputBinding: new AzureFunctionBinding(
-                            new AzureFunctionStorageQueue(
-                                queueName: "azure-function-foo-input",
-                                storageServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI
-                            )
-                        ),
-                        outputBinding: new AzureFunctionBinding(
-                            new AzureFunctionStorageQueue(
-                                queueName: "azure-function-tool-output",
-                                storageServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI
-                            )
-                        ),
-                        parameters: BinaryData.FromObjectAsJson(
-                                new
+                    parameters: BinaryData.FromObjectAsJson(
+                            new
+                            {
+                                Type = "object",
+                                Properties = new
                                 {
-                                    Type = "object",
-                                    Properties = new
+                                    query = new
                                     {
-                                        query = new
-                                        {
-                                            Type = "string",
-                                            Description = "The question to ask.",
-                                        },
-                                        outputqueueuri = new
-                                        {
-                                            Type = "string",
-                                            Description = "The full output queue uri."
-                                        }
+                                        Type = "string",
+                                        Description = "The question to ask.",
                                     },
+                                    outputqueueuri = new
+                                    {
+                                        Type = "string",
+                                        Description = "The full output queue uri."
+                                    }
                                 },
-                            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
-                        )
-                    ),
-                    ToolTypes.BingCustomGrounding => new BingCustomSearchToolDefinition(
-                        new BingCustomSearchToolParameters(
-                            connectionId: TestEnvironment.BING_CUSTOM_CONNECTION_ID,
-                            instanceName: TestEnvironment.BING_CONFIGURATION_NAME
-                        )
-                    ),
-                    ToolTypes.BrowserAutomation => new BrowserAutomationToolDefinition(
-                       new BrowserAutomationToolParameters(
-                           new BrowserAutomationToolConnectionParameters(id: TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
-                       )
-                    ),
-                    ToolTypes.MicrosoftFabric => new MicrosoftFabricToolDefinition (
-                        new FabricDataAgentToolParameters(
-                            TestEnvironment.FABRIC_CONNECTION_ID
-                        )
-                    ),
-                    ToolTypes.Sharepoint => new SharepointToolDefinition(
-                        new SharepointGroundingToolParameters(
-                            TestEnvironment.SHAREPOINT_CONNECTION_ID
-                        )
-                    ),
-                    ToolTypes.CodeInterpreter => new CodeInterpreterToolDefinition(),
-                    _ => null
-                };
+                            },
+                        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                    )
+                ),
+                ToolTypes.BingCustomGrounding => new BingCustomSearchToolDefinition(
+                    new BingCustomSearchToolParameters(
+                        connectionId: TestEnvironment.BING_CUSTOM_CONNECTION_ID,
+                        instanceName: TestEnvironment.BING_CONFIGURATION_NAME
+                    )
+                ),
+                ToolTypes.BrowserAutomation => new BrowserAutomationToolDefinition(
+                   new BrowserAutomationToolParameters(
+                       new BrowserAutomationToolConnectionParameters(id: TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+                   )
+                ),
+                ToolTypes.MicrosoftFabric => new MicrosoftFabricToolDefinition(
+                    new FabricDataAgentToolParameters(
+                        TestEnvironment.FABRIC_CONNECTION_ID
+                    )
+                ),
+                ToolTypes.Sharepoint => new SharepointToolDefinition(
+                    new SharepointGroundingToolParameters(
+                        TestEnvironment.SHAREPOINT_CONNECTION_ID
+                    )
+                ),
+                ToolTypes.CodeInterpreter => new CodeInterpreterToolDefinition(),
+                _ => null
+            };
 
-        private ToolResources GetAISearchToolResource(AzureAISearchQueryTypeEnum queryType, string filter=null)
+        private ToolResources GetAISearchToolResource(AzureAISearchQueryTypeEnum queryType, string filter = null)
         {
             return new ToolResources()
             {
@@ -2654,7 +2844,36 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.Fail(errorStep.Value.LastError.Message);
             }
         }
+        private static ComputerToolOutput GetResolvedToolOutput(RequiredToolCall toolCall, string imageUri)
+        {
+            if (toolCall is RequiredComputerUseToolCall computerUseToolCall)
+            {
+                Console.WriteLine($"Executing computer use action: {computerUseToolCall.ComputerUsePreview.Action.Type}");
+                ComputerScreenshot screenshot = new()
+                {
+                    ImageUrl = imageUri
+                };
+                if (computerUseToolCall.ComputerUsePreview.Action is TypeAction typeAction)
+                {
+                    Console.WriteLine($"    Text to type: {typeAction.Text}");
+                    // (add hook to input text in managed environment API here)
 
+                    ComputerToolOutput output = new(output: screenshot);
+                    output.ToolCallId = toolCall.Id;
+                    return output;
+                }
+                if (computerUseToolCall.ComputerUsePreview.Action is ScreenshotAction screenshotAction)
+                {
+                    Console.WriteLine($"    Screenshot requested");
+                    // (add hook to take screenshot in managed environment API here)
+
+                    ComputerToolOutput output = new(output: screenshot);
+                    output.ToolCallId = toolCall.Id;
+                    return output;
+                }
+            }
+            return null;
+        }
         #endregion
         #region Cleanup
         [TearDown]
@@ -2688,7 +2907,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             // Remove all vector stores
-            List<PersistentAgentsVectorStore> stores = [..client.VectorStores.GetVectorStores()];
+            List<PersistentAgentsVectorStore> stores = [.. client.VectorStores.GetVectorStores()];
             foreach (PersistentAgentsVectorStore store in stores)
             {
                 if (store.Name == null || store.Name.Equals(VCT_STORE_NAME))
@@ -2696,10 +2915,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             // Remove all agents
-            List<PersistentAgent> agents =[..client.Administration.GetAgents()];
+            List<PersistentAgent> agents = [.. client.Administration.GetAgents()];
             foreach (PersistentAgent agent in agents)
             {
-               if (agent.Name != null && (agent.Name.StartsWith(AGENT_NAME) || string.Equals(agent.Name, "stock-price-bot") || string.Equals(agent.Name, "weather-bot")))
+                if (agent.Name != null && (agent.Name.StartsWith(AGENT_NAME) || string.Equals(agent.Name, "stock-price-bot") || string.Equals(agent.Name, "weather-bot")))
                     client.Administration.DeleteAgent(agent.Id);
             }
         }

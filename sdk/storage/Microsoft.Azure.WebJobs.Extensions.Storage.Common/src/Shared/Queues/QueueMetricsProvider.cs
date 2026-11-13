@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
@@ -15,16 +16,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
     /// </summary>
     internal class QueueMetricsProvider
     {
+        private readonly string _functionId;
         private readonly QueueClient _queue;
         private readonly ILogger _logger;
 
         /// <summary>
         /// Instantiates a QueueMetricsProvider.
         /// </summary>
-        /// <param name="queue">The QueueClient to use for metrics polling.</param>
+        /// <param name="functionId">The function id to make scale decisions for.</param>
+        /// <param name="queue">
+        /// The QueueClient to use for metrics polling. Its PeekMessages must not be subject to
+        /// decode filtering, otherwise an empty peek is ambiguous between "nothing is visible" and
+        /// "messages are present but undecodable" - two opposite scaling decisions. Use a
+        /// <see cref="QueueMessageEncoding.None"/> client, or one whose producer and consumer
+        /// always agree on the encoding.
+        /// </param>
         /// <param name="loggerFactory">Used to create an ILogger instance.</param>
-        public QueueMetricsProvider(QueueClient queue, ILoggerFactory loggerFactory)
+        public QueueMetricsProvider(string functionId, QueueClient queue, ILoggerFactory loggerFactory)
         {
+            _functionId = functionId;
             _queue = queue;
             _logger = loggerFactory.CreateLogger<QueueMetricsProvider>();
         }
@@ -49,12 +59,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     // ignore transient errors, and return default metrics
                     // E.g. if the queue doesn't exist, we'll return a zero queue length
                     // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.ToString()}");
+                    _logger.LogFunctionScaleWarning("Error querying for queue scale status", _functionId, ex);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.ToString()}");
+                _logger.LogFunctionScaleWarning("Fatal error querying for queue scale status", _functionId, ex);
             }
 
             return 0;
@@ -77,18 +87,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                 if (queueLength > 0)
                 {
                     PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
-                    if (message != null)
+                    if (message == null)
                     {
-                        if (message.InsertedOn.HasValue)
-                        {
-                            queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
-                        }
-                    }
-                    else
-                    {
-                        // ApproximateMessageCount often returns a stale value,
-                        // especially when the queue is empty.
+                        // Nothing is visible even though ApproximateMessagesCount is non-zero: the messages
+                        // are scheduled with a visibility delay, are in-flight on another worker, or the count
+                        // is stale after a drain. None of those can be dequeued now, so allocating workers for
+                        // them cannot reduce the backlog. Undecodable messages cannot reach this branch given
+                        // the encoding requirement on the client - see the constructor remarks.
                         queueLength = 0;
+                    }
+                    else if (message.InsertedOn.HasValue)
+                    {
+                        queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
                     }
                 }
             }
@@ -101,12 +111,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     // ignore transient errors, and return default metrics
                     // E.g. if the queue doesn't exist, we'll return a zero queue length
                     // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.ToString()}");
+                    _logger.LogFunctionScaleWarning("Error querying for queue scale status", _functionId, ex);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.ToString()}");
+                _logger.LogFunctionScaleWarning("Fatal error querying for queue scale status", _functionId, ex);
             }
 
             return new QueueTriggerMetrics

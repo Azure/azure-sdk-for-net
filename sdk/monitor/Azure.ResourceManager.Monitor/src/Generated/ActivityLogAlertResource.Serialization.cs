@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor
 {
+    /// <summary></summary>
     public partial class ActivityLogAlertResource : IJsonModel<ActivityLogAlertData>
     {
-        private static ActivityLogAlertData s_dataDeserializationInstance;
-        private static ActivityLogAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ActivityLogAlertData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ActivityLogAlertData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ActivityLogAlertData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ActivityLogAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ActivityLogAlertData>)Data).Write(writer, options);
 
-        ActivityLogAlertData IJsonModel<ActivityLogAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ActivityLogAlertData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActivityLogAlertData IJsonModel<ActivityLogAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ActivityLogAlertData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ActivityLogAlertData IPersistableModel<ActivityLogAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActivityLogAlertData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<ActivityLogAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ActivityLogAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ActivityLogAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

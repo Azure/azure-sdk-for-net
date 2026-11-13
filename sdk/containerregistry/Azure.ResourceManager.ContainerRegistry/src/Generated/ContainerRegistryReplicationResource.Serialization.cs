@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
+    /// <summary></summary>
     public partial class ContainerRegistryReplicationResource : IJsonModel<ContainerRegistryReplicationData>
     {
-        private static ContainerRegistryReplicationData s_dataDeserializationInstance;
-        private static ContainerRegistryReplicationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ContainerRegistryReplicationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ContainerRegistryReplicationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerRegistryReplicationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerRegistryReplicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryReplicationData>)Data).Write(writer, options);
 
-        ContainerRegistryReplicationData IJsonModel<ContainerRegistryReplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryReplicationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerRegistryReplicationData IJsonModel<ContainerRegistryReplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerRegistryReplicationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryReplicationData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerRegistryReplicationData IPersistableModel<ContainerRegistryReplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryReplicationData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        string IPersistableModel<ContainerRegistryReplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryReplicationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerRegistryReplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

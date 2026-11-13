@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Peering.Models
     public readonly partial struct PeeringProvisioningState : IEquatable<PeeringProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PeeringProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PeeringProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PeeringProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static PeeringProvisioningState Succeeded { get; } = new PeeringProvisioningState(SucceededValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static PeeringProvisioningState Updating { get; } = new PeeringProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static PeeringProvisioningState Deleting { get; } = new PeeringProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static PeeringProvisioningState Failed { get; } = new PeeringProvisioningState(FailedValue);
+
+        /// <summary> Gets the Canceled. </summary>
+        public static PeeringProvisioningState Canceled { get; } = new PeeringProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="PeeringProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeeringProvisioningState left, PeeringProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PeeringProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeeringProvisioningState left, PeeringProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PeeringProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PeeringProvisioningState(string value) => new PeeringProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PeeringProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PeeringProvisioningState?(string value) => value == null ? null : new PeeringProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeeringProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PeeringProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -10,7 +10,7 @@ steps:
         $apiChangeDetectRequestUrl = "https://apiview.dev/api/PullRequests/CreateAPIRevisionIfAPIHasChanges"
         echo "##vso[task.setvariable variable=ApiChangeDetectRequestUrl]$apiChangeDetectRequestUrl"
       displayName: "Set API change detect request URL"
-      condition: and(${{ parameters.Condition}}, eq(variables['ApiChangeDetectRequestUrl'], ''))
+      condition: and(succeededOrFailed(), ${{ parameters.Condition}}, eq(variables['ApiChangeDetectRequestUrl'], ''))
 
     - task: Powershell@2
       inputs:

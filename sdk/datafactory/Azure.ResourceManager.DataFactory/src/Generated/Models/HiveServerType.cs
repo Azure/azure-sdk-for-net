@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct HiveServerType : IEquatable<HiveServerType>
     {
         private readonly string _value;
+        /// <summary> HiveServer1. </summary>
+        private const string HiveServer1Value = "HiveServer1";
+        /// <summary> HiveServer2. </summary>
+        private const string HiveServer2Value = "HiveServer2";
+        /// <summary> HiveThriftServer. </summary>
+        private const string HiveThriftServerValue = "HiveThriftServer";
 
         /// <summary> Initializes a new instance of <see cref="HiveServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HiveServerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HiveServer1Value = "HiveServer1";
-        private const string HiveServer2Value = "HiveServer2";
-        private const string HiveThriftServerValue = "HiveThriftServer";
+            _value = value;
+        }
 
         /// <summary> HiveServer1. </summary>
         public static HiveServerType HiveServer1 { get; } = new HiveServerType(HiveServer1Value);
+
         /// <summary> HiveServer2. </summary>
         public static HiveServerType HiveServer2 { get; } = new HiveServerType(HiveServer2Value);
+
         /// <summary> HiveThriftServer. </summary>
         public static HiveServerType HiveThriftServer { get; } = new HiveServerType(HiveThriftServerValue);
+
         /// <summary> Determines if two <see cref="HiveServerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HiveServerType left, HiveServerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HiveServerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HiveServerType left, HiveServerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HiveServerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HiveServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HiveServerType(string value) => new HiveServerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HiveServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HiveServerType?(string value) => value == null ? null : new HiveServerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HiveServerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HiveServerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

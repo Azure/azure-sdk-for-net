@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct HDInsightFilterMode : IEquatable<HDInsightFilterMode>
     {
         private readonly string _value;
+        /// <summary> Exclude. </summary>
+        private const string ExcludeValue = "Exclude";
+        /// <summary> Include. </summary>
+        private const string IncludeValue = "Include";
+        /// <summary> Recommend. </summary>
+        private const string RecommendValue = "Recommend";
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightFilterMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightFilterMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExcludeValue = "Exclude";
-        private const string IncludeValue = "Include";
-        private const string RecommendValue = "Recommend";
-        private const string DefaultValue = "Default";
+            _value = value;
+        }
 
         /// <summary> Exclude. </summary>
         public static HDInsightFilterMode Exclude { get; } = new HDInsightFilterMode(ExcludeValue);
+
         /// <summary> Include. </summary>
         public static HDInsightFilterMode Include { get; } = new HDInsightFilterMode(IncludeValue);
+
         /// <summary> Recommend. </summary>
         public static HDInsightFilterMode Recommend { get; } = new HDInsightFilterMode(RecommendValue);
+
         /// <summary> Default. </summary>
         public static HDInsightFilterMode Default { get; } = new HDInsightFilterMode(DefaultValue);
+
         /// <summary> Determines if two <see cref="HDInsightFilterMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightFilterMode left, HDInsightFilterMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightFilterMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightFilterMode left, HDInsightFilterMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightFilterMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightFilterMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightFilterMode(string value) => new HDInsightFilterMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightFilterMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightFilterMode?(string value) => value == null ? null : new HDInsightFilterMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightFilterMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightFilterMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

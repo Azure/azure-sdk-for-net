@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    /// <summary> The kind of the service, it can be SignalR or RawWebSockets. </summary>
+    /// <summary> The kind of the service. </summary>
     public readonly partial struct SignalRServiceKind : IEquatable<SignalRServiceKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SignalRServiceKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SignalRServiceKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SignalRValue = "SignalR";
         private const string RawWebSocketsValue = "RawWebSockets";
 
-        /// <summary> SignalR. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SignalRServiceKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SignalR. </summary>
         public static SignalRServiceKind SignalR { get; } = new SignalRServiceKind(SignalRValue);
-        /// <summary> RawWebSockets. </summary>
+
+        /// <summary> Gets the RawWebSockets. </summary>
         public static SignalRServiceKind RawWebSockets { get; } = new SignalRServiceKind(RawWebSocketsValue);
+
         /// <summary> Determines if two <see cref="SignalRServiceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SignalRServiceKind left, SignalRServiceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SignalRServiceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SignalRServiceKind left, SignalRServiceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRServiceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SignalRServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SignalRServiceKind(string value) => new SignalRServiceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SignalRServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SignalRServiceKind?(string value) => value == null ? null : new SignalRServiceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignalRServiceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SignalRServiceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

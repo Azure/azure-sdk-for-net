@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,37 +17,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="EdgeNGramTokenizer"/>. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public EdgeNGramTokenizer(string name) : base(name)
+        public EdgeNGramTokenizer(string name) : base("#Microsoft.Azure.Search.EdgeNGramTokenizer", name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             TokenChars = new ChangeTrackingList<TokenCharacterKind>();
-            ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenizer";
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeNGramTokenizer"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of tokenizer. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
         /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
         /// <param name="tokenChars"> Character classes to keep in the tokens. </param>
-        internal EdgeNGramTokenizer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? minGram, int? maxGram, IList<TokenCharacterKind> tokenChars) : base(oDataType, name, serializedAdditionalRawData)
+        internal EdgeNGramTokenizer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? minGram, int? maxGram, IList<TokenCharacterKind> tokenChars) : base(odataType, name, additionalBinaryDataProperties)
         {
             MinGram = minGram;
             MaxGram = maxGram;
             TokenChars = tokenChars;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.EdgeNGramTokenizer";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeNGramTokenizer"/> for deserialization. </summary>
-        internal EdgeNGramTokenizer()
-        {
         }
 
         /// <summary> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </summary>
         public int? MinGram { get; set; }
+
         /// <summary> The maximum n-gram length. Default is 2. Maximum is 300. </summary>
         public int? MaxGram { get; set; }
+
+        /// <summary> Character classes to keep in the tokens. </summary>
+        public IList<TokenCharacterKind> TokenChars { get; }
     }
 }

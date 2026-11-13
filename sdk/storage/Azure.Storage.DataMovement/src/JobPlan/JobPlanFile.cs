@@ -64,12 +64,19 @@ namespace Azure.Storage.DataMovement.JobPlan
             JobPlanFile jobPlanFile = new(id, filePath);
             try
             {
-                using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
+                using (FileStream fileStream = new FileStream(
+                    jobPlanFile.FilePath,
+                    FileMode.Create,
+                    FileAccess.Write,
+                    FileShare.None,
+                    bufferSize: 4096,
+                    FileOptions.None))
                 {
                     await headerStream.CopyToAsync(
                         fileStream,
                         DataMovementConstants.DefaultStreamCopyBufferSize,
                         cancellationToken).ConfigureAwait(false);
+                    await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception)

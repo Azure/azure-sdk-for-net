@@ -10,7 +10,7 @@ using Azure.Test.Perf;
 
 namespace Azure.AI.FormRecognizer.Perf
 {
-    public sealed class RecognizeCustomFormsWithoutLabels: FormRecognizerTest<PerfOptions>
+    public sealed class RecognizeCustomFormsWithoutLabels : FormRecognizerTest<PerfOptions>
     {
         private readonly FormRecognizerClient _client;
 

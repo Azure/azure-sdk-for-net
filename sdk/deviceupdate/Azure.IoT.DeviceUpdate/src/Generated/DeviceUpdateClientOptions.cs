@@ -6,32 +6,64 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    /// <summary> Client options for DeviceUpdate library clients. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class DeviceUpdateClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_10_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_06_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2022-10-01". </summary>
-            V2022_10_01 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of DeviceUpdateClientOptions. </summary>
+        /// <summary> Initializes a new instance of DeviceUpdateClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public DeviceUpdateClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
                 ServiceVersion.V2022_10_01 => "2022-10-01",
+                ServiceVersion.V2026_06_01 => "2026-06-01",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of DeviceUpdateClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal DeviceUpdateClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2026-06-01";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> The 2022-10-01 API version. </summary>
+            V2022_10_01 = 1,
+            /// <summary>
+            /// The 2026-06-01 API version. Adds the optional `downloadSecurity` field on
+            /// Deployment so callers can choose the protocol the device should use when
+            /// downloading update payload (defaults to "https").
+            /// </summary>
+            V2026_06_01 = 2
         }
     }
 }

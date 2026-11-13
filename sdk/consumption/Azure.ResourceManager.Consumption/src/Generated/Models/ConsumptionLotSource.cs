@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Consumption.Models
     public readonly partial struct ConsumptionLotSource : IEquatable<ConsumptionLotSource>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConsumptionLotSource"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConsumptionLotSource(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PurchasedCreditValue = "PurchasedCredit";
         private const string PromotionalCreditValue = "PromotionalCredit";
         private const string ConsumptionCommitmentValue = "ConsumptionCommitment";
 
-        /// <summary> PurchasedCredit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLotSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConsumptionLotSource(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the PurchasedCredit. </summary>
         public static ConsumptionLotSource PurchasedCredit { get; } = new ConsumptionLotSource(PurchasedCreditValue);
-        /// <summary> PromotionalCredit. </summary>
+
+        /// <summary> Gets the PromotionalCredit. </summary>
         public static ConsumptionLotSource PromotionalCredit { get; } = new ConsumptionLotSource(PromotionalCreditValue);
-        /// <summary> ConsumptionCommitment. </summary>
+
+        /// <summary> Gets the ConsumptionCommitment. </summary>
         public static ConsumptionLotSource ConsumptionCommitment { get; } = new ConsumptionLotSource(ConsumptionCommitmentValue);
+
         /// <summary> Determines if two <see cref="ConsumptionLotSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConsumptionLotSource left, ConsumptionLotSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConsumptionLotSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConsumptionLotSource left, ConsumptionLotSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsumptionLotSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConsumptionLotSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConsumptionLotSource(string value) => new ConsumptionLotSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConsumptionLotSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConsumptionLotSource?(string value) => value == null ? null : new ConsumptionLotSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConsumptionLotSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConsumptionLotSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,0 +1,16 @@
+{
+  "apiVersions": {
+    "AnalyticsItems": "2015-05-01",
+    "ComponentAPIs": "2015-05-01",
+    "ComponentLinkedStorageAccountApi": "2020-03-01-preview",
+    "Components": "2020-02-02",
+    "DeletedWorkbookApi": "2024-02-01-preview",
+    "Favorites": "2015-05-01",
+    "LiveTokenApi": "2021-10-14",
+    "WebTestLocation": "2015-05-01",
+    "WebTestsApi": "2022-06-15",
+    "WorkBookOperations": "2021-03-08",
+    "WorkbooksApi": "2023-06-01",
+    "WorkbookTemplatesApi": "2020-11-20"
+  }
+}

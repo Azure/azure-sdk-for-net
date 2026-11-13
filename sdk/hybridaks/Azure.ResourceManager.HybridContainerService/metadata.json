@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.HybridContainerService": "2026-04-01-preview"
+  }
+}

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class CosmosDBSqlStoredProcedureResource : IJsonModel<CosmosDBSqlStoredProcedureData>
     {
-        private static CosmosDBSqlStoredProcedureData s_dataDeserializationInstance;
-        private static CosmosDBSqlStoredProcedureData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CosmosDBSqlStoredProcedureData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CosmosDBSqlStoredProcedureData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CosmosDBSqlStoredProcedureData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBSqlStoredProcedureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlStoredProcedureData>)Data).Write(writer, options);
 
-        CosmosDBSqlStoredProcedureData IJsonModel<CosmosDBSqlStoredProcedureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlStoredProcedureData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBSqlStoredProcedureData IJsonModel<CosmosDBSqlStoredProcedureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CosmosDBSqlStoredProcedureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBSqlStoredProcedureData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CosmosDBSqlStoredProcedureData IPersistableModel<CosmosDBSqlStoredProcedureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlStoredProcedureData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBSqlStoredProcedureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlStoredProcedureData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBSqlStoredProcedureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The roll up count summary of reservations in each state. </summary>
     internal partial class ReservationSummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationSummary"/>. </summary>
         internal ReservationSummary()
@@ -60,8 +32,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="noBenefitCount"> The number of reservation in 'No Benefit' state. </param>
         /// <param name="warningCount"> The number of reservation in Warning state. </param>
         /// <param name="processingCount"> The number of reservation in Processing state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationSummary(float? cancelledCount, float? expiredCount, float? expiringCount, float? failedCount, float? pendingCount, float? succeededCount, float? noBenefitCount, float? warningCount, float? processingCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationSummary(float? cancelledCount, float? expiredCount, float? expiringCount, float? failedCount, float? pendingCount, float? succeededCount, float? noBenefitCount, float? warningCount, float? processingCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CancelledCount = cancelledCount;
             ExpiredCount = expiredCount;
@@ -72,26 +44,43 @@ namespace Azure.ResourceManager.Billing.Models
             NoBenefitCount = noBenefitCount;
             WarningCount = warningCount;
             ProcessingCount = processingCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of reservation in Cancelled state. </summary>
+        [WirePath("cancelledCount")]
         public float? CancelledCount { get; }
+
         /// <summary> The number of reservation in Expired state. </summary>
+        [WirePath("expiredCount")]
         public float? ExpiredCount { get; }
+
         /// <summary> The number of reservation in Expiring state. </summary>
+        [WirePath("expiringCount")]
         public float? ExpiringCount { get; }
+
         /// <summary> The number of reservation in Failed state. </summary>
+        [WirePath("failedCount")]
         public float? FailedCount { get; }
+
         /// <summary> The number of reservation in Pending state. </summary>
+        [WirePath("pendingCount")]
         public float? PendingCount { get; }
+
         /// <summary> The number of reservation in Succeeded state. </summary>
+        [WirePath("succeededCount")]
         public float? SucceededCount { get; }
+
         /// <summary> The number of reservation in 'No Benefit' state. </summary>
+        [WirePath("noBenefitCount")]
         public float? NoBenefitCount { get; }
+
         /// <summary> The number of reservation in Warning state. </summary>
+        [WirePath("warningCount")]
         public float? WarningCount { get; }
+
         /// <summary> The number of reservation in Processing state. </summary>
+        [WirePath("processingCount")]
         public float? ProcessingCount { get; }
     }
 }

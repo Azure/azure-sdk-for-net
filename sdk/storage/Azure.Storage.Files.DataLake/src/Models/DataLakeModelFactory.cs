@@ -5,12 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Microsoft.TypeSpec.Generator.Customizations;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
     /// DataLakeModelFactory provides utilities for mocking.
     /// </summary>
+    [CodeGenType("FilesDataLakeModelFactory")]
+    [CodeGenSuppress("FileSystemItem", typeof(string))]
     public static partial class DataLakeModelFactory
     {
         #region DataLakeFileReadResult
@@ -416,6 +420,42 @@ namespace Azure.Storage.Files.DataLake.Models
             };
         #endregion PathAccessControl
 
+        #region PathSystemProperties
+        /// <summary>
+        /// Creates a new <see cref="PathSystemProperties"/> instance for mocking.
+        /// </summary>
+        public static PathSystemProperties PathSystemProperties(
+            DateTimeOffset? creationTime,
+            DateTimeOffset? lastModifiedTime,
+            ETag eTag,
+            long? contentLength,
+            bool? isDirectory,
+            bool? isServerEncrypted,
+            string encryptionKeySha256,
+            DateTimeOffset? expiresOn,
+            string encryptionScope,
+            string encryptionContext,
+            string owner,
+            string group,
+            PathPermissions permissions)
+            => new PathSystemProperties()
+            {
+                CreatedOn = creationTime,
+                LastModifiedOn = lastModifiedTime,
+                ETag = eTag,
+                ContentLength = contentLength,
+                IsDirectory = isDirectory,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                ExpiresOn = expiresOn,
+                EncryptionScope = encryptionScope,
+                EncryptionContext = encryptionContext,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions
+            };
+        #endregion PathSystemProperties
+
         #region PathContentInfo
         /// <summary>
         /// Creates a new <see cref="PathContentInfo"/> instance for mocking.
@@ -568,6 +608,85 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new PathProperties instance for mocking.
         /// </summary>
+        public static PathProperties PathProperties(
+            DateTimeOffset lastModified,
+            DateTimeOffset creationTime,
+            IDictionary<string, string> metadata,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            bool isIncrementalCopy,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string accessTier,
+            string archiveStatus,
+            DateTimeOffset accessTierChangeTime,
+            bool isDirectory,
+            string encryptionContext,
+            string owner,
+            string group,
+            string permissions,
+            IList<PathAccessControlItem> accessControlList,
+            string smartAccessTier,
+            bool accessTierInferred)
+            => new PathProperties()
+            {
+                LastModified = lastModified,
+                CreatedOn = creationTime,
+                Metadata = metadata,
+                CopyCompletedOn = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                AccessTier = accessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangeTime,
+                IsDirectory = isDirectory,
+                EncryptionContext = encryptionContext,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions,
+                AccessControlList = accessControlList,
+                SmartAccessTier = smartAccessTier,
+                AccessTierInferred = accessTierInferred
+            };
+
+        /// <summary>
+        /// Creates a new PathProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PathProperties PathProperties(
             DateTimeOffset lastModified,
             DateTimeOffset creationTime,
@@ -910,8 +1029,33 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region UserDelegationKey
         /// <summary>
-        /// Creates a new <see cref="UserDelegationKey"/> instance for mocking.
+        /// Creates a new <see cref="UserDelegationKey(string, string, DateTimeOffset, DateTimeOffset, string, string, string, string)"/> instance for mocking.
         /// </summary>
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId = default,
+            string signedTenantId = default,
+            DateTimeOffset signedStart = default,
+            DateTimeOffset signedExpiry = default,
+            string signedService = default,
+            string signedVersion = default,
+            string signedDelegatedUserTenantId = default,
+            string value = default)
+            => new UserDelegationKey()
+            {
+                SignedObjectId = signedObjectId,
+                SignedTenantId = signedTenantId,
+                SignedStartsOn = signedStart,
+                SignedExpiresOn = signedExpiry,
+                SignedService = signedService,
+                SignedVersion = signedVersion,
+                Value = value,
+                SignedDelegatedUserTenantId = signedDelegatedUserTenantId
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="UserDelegationKey(string, string, DateTimeOffset, DateTimeOffset, string, string, string)"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserDelegationKey UserDelegationKey(
             string signedObjectId,
             string signedTenantId,
@@ -949,5 +1093,188 @@ namespace Azure.Storage.Files.DataLake.Models
                 Position = position
             };
         #endregion DataLakeQueryError
+
+        #region GetPathTagResult
+        /// <summary>
+        /// Creates a new GetPathTagResult for mocking.
+        /// </summary>
+        public static GetPathTagResult GetPathTagResult(
+            Tags tags)
+            => new GetPathTagResult()
+            {
+                Tags = tags
+            };
+        #endregion GetPathTagResult
+
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
+        #region DataLakeFileLayoutEndpoint
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoint"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutEndpoint DataLakeFileLayoutEndpoint(
+            int index = default,
+            Uri value = default)
+            => new DataLakeFileLayoutEndpoint()
+            {
+                Index = index,
+                Value = value
+            };
+        #endregion DataLakeFileLayoutEndpoint
+
+        #region DataLakeFileLayoutRange
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutRange"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutRange DataLakeFileLayoutRange(
+            long start = default,
+            long end = default,
+            int endpointIndex = default)
+            => new DataLakeFileLayoutRange()
+            {
+                Start = start,
+                End = end,
+                EndpointIndex = endpointIndex
+            };
+        #endregion DataLakeFileLayoutRange
+
+        #region DataLakeFileLayoutInfo
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutInfo"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutInfo DataLakeFileLayoutInfo(
+            IEnumerable<DataLakeFileLayoutRange> ranges = default,
+            IEnumerable<DataLakeFileLayoutEndpoint> endpoints = default,
+            DateTimeOffset lastModifiedOn = default,
+            DateTimeOffset createdOn = default,
+            IDictionary<string, string> metadata = default,
+            DateTimeOffset copyCompletedOn = default,
+            string copyStatusDescription = default,
+            string copyId = default,
+            string copyProgress = default,
+            Uri copySource = default,
+            CopyStatus? fileCopyStatus = default,
+            bool isIncrementalCopy = default,
+            DataLakeLeaseDuration leaseDuration = default,
+            DataLakeLeaseState leaseState = default,
+            DataLakeLeaseStatus leaseStatus = default,
+            long contentLength = default,
+            string contentType = default,
+            ETag eTag = default,
+            byte[] contentHash = default,
+            string contentEncoding = default,
+            string contentDisposition = default,
+            string contentLanguage = default,
+            string cacheControl = default,
+            string acceptRanges = default,
+            bool isServerEncrypted = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            string accessTier = default,
+            bool accessTierInferred = default,
+            string smartAccessTier = default,
+            string archiveStatus = default,
+            DateTimeOffset accessTierChangedOn = default,
+            DateTimeOffset expiresOn = default,
+            long fileContentLength = default,
+            string fileContentType = default,
+            string fileContentEncoding = default,
+            byte[] fileContentMD5 = default,
+            DateTimeOffset fileCreatedOn = default)
+            => new DataLakeFileLayoutInfo()
+            {
+                Ranges = ranges == null ? null : new List<DataLakeFileLayoutRange>(ranges),
+                Endpoints = endpoints == null ? null : new List<DataLakeFileLayoutEndpoint>(endpoints),
+                LastModifiedOn = lastModifiedOn,
+                CreatedOn = createdOn,
+                Metadata = metadata,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = fileCopyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                AccessTier = accessTier,
+                AccessTierInferred = accessTierInferred,
+                SmartAccessTier = smartAccessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangedOn,
+                ExpiresOn = expiresOn,
+                FileContentLength = fileContentLength,
+                FileContentType = fileContentType,
+                FileContentEncoding = fileContentEncoding,
+                FileContentMD5 = fileContentMD5,
+                FileCreatedOn = fileCreatedOn
+            };
+        #endregion DataLakeFileLayoutInfo
+        */
+
+        #region FileSystemAccessPolicy
+        /// <summary>
+        /// Creates a new <see cref="Models.FileSystemAccessPolicy"/> instance for mocking.
+        /// </summary>
+        public static FileSystemAccessPolicy FileSystemAccessPolicy(
+            PublicAccessType dataLakePublicAccess,
+            ETag eTag,
+            DateTimeOffset lastModified,
+            IEnumerable<DataLakeSignedIdentifier> signedIdentifiers)
+            => new FileSystemAccessPolicy()
+            {
+                DataLakePublicAccess = dataLakePublicAccess,
+                ETag = eTag,
+                LastModified = lastModified,
+                SignedIdentifiers = signedIdentifiers
+            };
+        #endregion FileSystemAccessPolicy
+
+        #region PathDeletedItem
+        /// <summary>
+        /// Creates a new <see cref="Models.PathDeletedItem"/> instance for mocking.
+        /// </summary>
+        public static PathDeletedItem PathDeletedItem(
+            string path,
+            string deletionId,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays)
+            => new PathDeletedItem()
+            {
+                Path = path,
+                DeletionId = deletionId,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays
+            };
+        #endregion PathDeletedItem
+
+        #region AccessControlChangeResult
+        /// <summary>
+        /// Creates a new <see cref="Models.AccessControlChangeResult"/> instance for mocking.
+        /// </summary>
+        public static AccessControlChangeResult AccessControlChangeResult(
+            AccessControlChangeCounters counters,
+            string continuationToken,
+            AccessControlChangeFailure[] batchFailures)
+            => new AccessControlChangeResult()
+            {
+                Counters = counters,
+                ContinuationToken = continuationToken,
+                BatchFailures = batchFailures
+            };
+        #endregion AccessControlChangeResult
     }
 }

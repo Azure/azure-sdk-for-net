@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct PublicIPAddressSkuName : IEquatable<PublicIPAddressSkuName>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> StandardV2. </summary>
+        private const string StandardV2Value = "StandardV2";
 
         /// <summary> Initializes a new instance of <see cref="PublicIPAddressSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PublicIPAddressSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string StandardValue = "Standard";
-        private const string StandardV2Value = "StandardV2";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static PublicIPAddressSkuName Basic { get; } = new PublicIPAddressSkuName(BasicValue);
+
         /// <summary> Standard. </summary>
         public static PublicIPAddressSkuName Standard { get; } = new PublicIPAddressSkuName(StandardValue);
+
         /// <summary> StandardV2. </summary>
         public static PublicIPAddressSkuName StandardV2 { get; } = new PublicIPAddressSkuName(StandardV2Value);
+
         /// <summary> Determines if two <see cref="PublicIPAddressSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PublicIPAddressSkuName left, PublicIPAddressSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PublicIPAddressSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PublicIPAddressSkuName left, PublicIPAddressSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PublicIPAddressSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PublicIPAddressSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PublicIPAddressSkuName(string value) => new PublicIPAddressSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PublicIPAddressSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PublicIPAddressSkuName?(string value) => value == null ? null : new PublicIPAddressSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PublicIPAddressSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PublicIPAddressSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,9 +5,13 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Text.Json;
 using System.Linq;
+using System.Text.Json;
 using Azure.AI.OpenAI.Utility;
+
+// AZC0112: Azure.AI.OpenAI is granted InternalsVisibleTo by System.ClientModel and OpenAI and is the
+// intended caller of these members. The upstream types predate the [Friend] attribute the rule looks for.
+#pragma warning disable AZC0112
 
 namespace Azure.AI.OpenAI.FineTuning;
 
@@ -53,17 +57,15 @@ internal partial class AzureFineTuningClient : FineTuningClient
     {
         return new AzureAsyncCollectionResult<FineTuningJob, FineTuningCollectionPageToken>(
             Pipeline,
-            options,
             continuation => GetJobsPipelineMessage(continuation?.After, pageSize, options),
             page => FineTuningCollectionPageToken.FromResponse(page, pageSize),
             page => GetJobsFromResponse(page.GetRawResponse()),
-            options?.CancellationToken ?? default
-            );
+            options?.CancellationToken ?? default);
     }
 
     private IEnumerable<FineTuningJob> GetJobsFromResponse(PipelineResponse response)
     {
-        InternalListPaginatedFineTuningJobsResponse jobs = ModelReaderWriter.Read<InternalListPaginatedFineTuningJobsResponse>(response.Content)!;
+        InternalListPaginatedFineTuningJobsResponse jobs = ModelReaderWriter.Read<InternalListPaginatedFineTuningJobsResponse>(response.Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default)!;
         return jobs.Data.Select(job => new AzureFineTuningJob(Pipeline, _endpoint, response, _apiVersion, job));
     }
     internal override PipelineMessage PostJobPipelineMessage(BinaryContent content, RequestOptions options)

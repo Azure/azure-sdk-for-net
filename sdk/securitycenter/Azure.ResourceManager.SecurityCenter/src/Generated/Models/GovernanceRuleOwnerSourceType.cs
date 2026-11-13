@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct GovernanceRuleOwnerSourceType : IEquatable<GovernanceRuleOwnerSourceType>
     {
         private readonly string _value;
+        /// <summary> The rule source type defined using resource tag. </summary>
+        private const string ByTagValue = "ByTag";
+        /// <summary> The rule source type defined manually. </summary>
+        private const string ManuallyValue = "Manually";
 
         /// <summary> Initializes a new instance of <see cref="GovernanceRuleOwnerSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GovernanceRuleOwnerSourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ByTagValue = "ByTag";
-        private const string ManuallyValue = "Manually";
+            _value = value;
+        }
 
         /// <summary> The rule source type defined using resource tag. </summary>
         public static GovernanceRuleOwnerSourceType ByTag { get; } = new GovernanceRuleOwnerSourceType(ByTagValue);
+
         /// <summary> The rule source type defined manually. </summary>
         public static GovernanceRuleOwnerSourceType Manually { get; } = new GovernanceRuleOwnerSourceType(ManuallyValue);
+
         /// <summary> Determines if two <see cref="GovernanceRuleOwnerSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GovernanceRuleOwnerSourceType left, GovernanceRuleOwnerSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GovernanceRuleOwnerSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GovernanceRuleOwnerSourceType left, GovernanceRuleOwnerSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GovernanceRuleOwnerSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GovernanceRuleOwnerSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GovernanceRuleOwnerSourceType(string value) => new GovernanceRuleOwnerSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GovernanceRuleOwnerSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GovernanceRuleOwnerSourceType?(string value) => value == null ? null : new GovernanceRuleOwnerSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GovernanceRuleOwnerSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GovernanceRuleOwnerSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

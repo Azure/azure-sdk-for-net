@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct CertificateConfigurationStoreName : IEquatable<CertificateConfigurationStoreName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CertificateConfigurationStoreName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CertificateConfigurationStoreName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CertificateAuthorityValue = "CertificateAuthority";
         private const string RootValue = "Root";
 
-        /// <summary> CertificateAuthority. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateConfigurationStoreName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CertificateConfigurationStoreName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the CertificateAuthority. </summary>
         public static CertificateConfigurationStoreName CertificateAuthority { get; } = new CertificateConfigurationStoreName(CertificateAuthorityValue);
-        /// <summary> Root. </summary>
+
+        /// <summary> Gets the Root. </summary>
         public static CertificateConfigurationStoreName Root { get; } = new CertificateConfigurationStoreName(RootValue);
+
         /// <summary> Determines if two <see cref="CertificateConfigurationStoreName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CertificateConfigurationStoreName left, CertificateConfigurationStoreName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CertificateConfigurationStoreName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CertificateConfigurationStoreName left, CertificateConfigurationStoreName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateConfigurationStoreName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CertificateConfigurationStoreName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CertificateConfigurationStoreName(string value) => new CertificateConfigurationStoreName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CertificateConfigurationStoreName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CertificateConfigurationStoreName?(string value) => value == null ? null : new CertificateConfigurationStoreName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CertificateConfigurationStoreName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CertificateConfigurationStoreName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

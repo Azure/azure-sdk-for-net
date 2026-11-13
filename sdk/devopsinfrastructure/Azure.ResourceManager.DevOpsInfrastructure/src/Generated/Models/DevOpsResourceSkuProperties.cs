@@ -15,37 +15,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     /// <summary> Properties of a ResourceSku. </summary>
     public partial class DevOpsResourceSkuProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsResourceSkuProperties"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
@@ -56,18 +27,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
         /// <param name="capabilities"> Name value pairs to describe the capability. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/>, <paramref name="tier"/>, <paramref name="size"/>, <paramref name="family"/>, <paramref name="locations"/>, <paramref name="locationInfo"/>, <paramref name="capabilities"/> or <paramref name="restrictions"/> is null. </exception>
         internal DevOpsResourceSkuProperties(string resourceType, string tier, string size, string family, IEnumerable<AzureLocation> locations, IEnumerable<ResourceSkuLocationInfo> locationInfo, IEnumerable<ResourceSkuCapabilities> capabilities, IEnumerable<ResourceSkuRestrictions> restrictions)
         {
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
-            Argument.AssertNotNull(tier, nameof(tier));
-            Argument.AssertNotNull(size, nameof(size));
-            Argument.AssertNotNull(family, nameof(family));
-            Argument.AssertNotNull(locations, nameof(locations));
-            Argument.AssertNotNull(locationInfo, nameof(locationInfo));
-            Argument.AssertNotNull(capabilities, nameof(capabilities));
-            Argument.AssertNotNull(restrictions, nameof(restrictions));
-
             ResourceType = resourceType;
             Tier = tier;
             Size = size;
@@ -87,8 +48,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
         /// <param name="capabilities"> Name value pairs to describe the capability. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsResourceSkuProperties(string resourceType, string tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevOpsResourceSkuProperties(string resourceType, string tier, string size, string family, IList<AzureLocation> locations, IList<ResourceSkuLocationInfo> locationInfo, IList<ResourceSkuCapabilities> capabilities, IList<ResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Tier = tier;
@@ -98,29 +59,31 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             LocationInfo = locationInfo;
             Capabilities = capabilities;
             Restrictions = restrictions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevOpsResourceSkuProperties"/> for deserialization. </summary>
-        internal DevOpsResourceSkuProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
         public string ResourceType { get; }
+
         /// <summary> The tier of virtual machines in a scale set. </summary>
         public string Tier { get; }
+
         /// <summary> The size of the SKU. </summary>
         public string Size { get; }
+
         /// <summary> The family of the SKU. </summary>
         public string Family { get; }
+
         /// <summary> The set of locations that the SKU is available. </summary>
-        public IReadOnlyList<AzureLocation> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
+
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
-        public IReadOnlyList<ResourceSkuLocationInfo> LocationInfo { get; }
+        public IList<ResourceSkuLocationInfo> LocationInfo { get; }
+
         /// <summary> Name value pairs to describe the capability. </summary>
-        public IReadOnlyList<ResourceSkuCapabilities> Capabilities { get; }
+        public IList<ResourceSkuCapabilities> Capabilities { get; }
+
         /// <summary> The restrictions of the SKU. </summary>
-        public IReadOnlyList<ResourceSkuRestrictions> Restrictions { get; }
+        public IList<ResourceSkuRestrictions> Restrictions { get; }
     }
 }

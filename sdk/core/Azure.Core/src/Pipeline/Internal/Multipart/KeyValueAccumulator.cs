@@ -73,7 +73,7 @@ namespace Azure.Core
 
         public int ValueCount { get; private set; }
 
-        public Dictionary<string, string []?> GetResults()
+        public Dictionary<string, string[]?> GetResults()
         {
             if (_expandingAccumulator != null)
             {

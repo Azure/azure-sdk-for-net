@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     /// <summary> Model representing Customer resource for ConnectedCache resource. </summary>
     public partial class MccCustomerEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MccCustomerEntity"/>. </summary>
         public MccCustomerEntity()
@@ -67,11 +38,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="lastSyncedWithAzureOn"> Customer resource last Azure sync timestamp. </param>
         /// <param name="isEnterpriseManaged"> Customer resource flag for enterprise management as boolean. </param>
         /// <param name="shouldMigrate"> Customer resource flag for migration. </param>
-        /// <param name="resendSignupCode"> Customer resource flag for resending signup code as boolean. </param>
-        /// <param name="verifySignupCode"> Customer resource flag for requiring verification of signup code as boolean. </param>
+        /// <param name="shouldResendSignupCode"> Customer resource flag for resending signup code as boolean. </param>
+        /// <param name="shouldVerifySignupCode"> Customer resource flag for requiring verification of signup code as boolean. </param>
         /// <param name="verifySignupPhrase"> Customer resource phrase for verifying signup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCustomerEntity(ResourceIdentifier fullyQualifiedResourceId, string customerId, string customerName, string contactEmail, string contactPhone, string contactName, bool? isEntitled, int? releaseVersion, string createAsyncOperationId, string deleteAsyncOperationId, string clientTenantId, int? synchWithAzureAttemptsCount, DateTimeOffset? lastSyncedWithAzureOn, bool? isEnterpriseManaged, bool? shouldMigrate, bool? resendSignupCode, bool? verifySignupCode, string verifySignupPhrase, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MccCustomerEntity(ResourceIdentifier fullyQualifiedResourceId, string customerId, string customerName, string contactEmail, string contactPhone, string contactName, bool? isEntitled, int? releaseVersion, string createAsyncOperationId, string deleteAsyncOperationId, string clientTenantId, int? synchWithAzureAttemptsCount, DateTimeOffset? lastSyncedWithAzureOn, bool? isEnterpriseManaged, bool? shouldMigrate, bool? shouldResendSignupCode, bool? shouldVerifySignupCode, string verifySignupPhrase, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FullyQualifiedResourceId = fullyQualifiedResourceId;
             CustomerId = customerId;
@@ -88,46 +59,63 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             LastSyncedWithAzureOn = lastSyncedWithAzureOn;
             IsEnterpriseManaged = isEnterpriseManaged;
             ShouldMigrate = shouldMigrate;
-            ResendSignupCode = resendSignupCode;
-            VerifySignupCode = verifySignupCode;
+            ShouldResendSignupCode = shouldResendSignupCode;
+            ShouldVerifySignupCode = shouldVerifySignupCode;
             VerifySignupPhrase = verifySignupPhrase;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Customer resource Azure fully qualified resource Id. </summary>
         public ResourceIdentifier FullyQualifiedResourceId { get; set; }
+
         /// <summary> Customer resource Guid Id. </summary>
         public string CustomerId { get; }
+
         /// <summary> Customer resource name. </summary>
         public string CustomerName { get; set; }
+
         /// <summary> Customer resource contact email. </summary>
         public string ContactEmail { get; set; }
+
         /// <summary> Customer resource contact phone. </summary>
         public string ContactPhone { get; set; }
+
         /// <summary> Customer resource contact full name. </summary>
         public string ContactName { get; set; }
+
         /// <summary> Customer resource entitlement flag as boolean. </summary>
         public bool? IsEntitled { get; set; }
+
         /// <summary> Customer resource Mcc release version. </summary>
         public int? ReleaseVersion { get; set; }
+
         /// <summary> Customer resource create async operation Id. </summary>
         public string CreateAsyncOperationId { get; }
+
         /// <summary> Customer resource deletion async operation Id. </summary>
         public string DeleteAsyncOperationId { get; }
+
         /// <summary> Customer resource client tenant Id of subscription. </summary>
         public string ClientTenantId { get; set; }
+
         /// <summary> Customer resource sync attempts. </summary>
         public int? SynchWithAzureAttemptsCount { get; }
+
         /// <summary> Customer resource last Azure sync timestamp. </summary>
         public DateTimeOffset? LastSyncedWithAzureOn { get; }
+
         /// <summary> Customer resource flag for enterprise management as boolean. </summary>
         public bool? IsEnterpriseManaged { get; set; }
+
         /// <summary> Customer resource flag for migration. </summary>
         public bool? ShouldMigrate { get; set; }
+
         /// <summary> Customer resource flag for resending signup code as boolean. </summary>
-        public bool? ResendSignupCode { get; set; }
+        public bool? ShouldResendSignupCode { get; set; }
+
         /// <summary> Customer resource flag for requiring verification of signup code as boolean. </summary>
-        public bool? VerifySignupCode { get; set; }
+        public bool? ShouldVerifySignupCode { get; set; }
+
         /// <summary> Customer resource phrase for verifying signup. </summary>
         public string VerifySignupPhrase { get; set; }
     }

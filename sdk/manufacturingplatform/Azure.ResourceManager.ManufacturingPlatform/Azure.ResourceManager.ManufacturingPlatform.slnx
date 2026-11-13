@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ManufacturingPlatform.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ManufacturingPlatform.Tests.csproj" />
+</Solution>

@@ -10,13 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvironment>
+    public partial class ConfigurationSamples : SamplesBase<AppConfigurationTestEnvironment>
     {
         [Test]
         public async Task CreateSecretReference()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             #region Snippet:Sample_CreateSecretReference
             var secretId = "https://keyvault_name.vault.azure.net/secrets/<secret_name>";

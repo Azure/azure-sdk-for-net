@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    /// <summary>
+    /// Job details based on specific job type.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsrJobDetails"/>, <see cref="ClusterFailoverJobDetails"/>, <see cref="ClusterSwitchProtectionJobDetails"/>, <see cref="ClusterTestFailoverJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/>, and <see cref="TestFailoverJobDetails"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownJobDetails))]
-    public partial class SiteRecoveryJobDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryJobDetails>
+    public abstract partial class SiteRecoveryJobDetails : IJsonModel<SiteRecoveryJobDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryJobDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryJobDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSiteRecoveryJobDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SiteRecoveryJobDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryJobDetails IPersistableModel<SiteRecoveryJobDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteRecoveryJobDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteRecoveryJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +72,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (Optional.IsCollectionDefined(AffectedObjectDetails))
@@ -43,19 +86,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 foreach (var item in AffectedObjectDetails)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -64,72 +112,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        SiteRecoveryJobDetails IJsonModel<SiteRecoveryJobDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryJobDetails IJsonModel<SiteRecoveryJobDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryJobDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSiteRecoveryJobDetails(document.RootElement, options);
         }
 
-        internal static SiteRecoveryJobDetails DeserializeSiteRecoveryJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SiteRecoveryJobDetails DeserializeSiteRecoveryJobDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AsrJobDetails": return AsrJobDetails.DeserializeAsrJobDetails(element, options);
-                    case "ClusterFailoverJobDetails": return ClusterFailoverJobDetails.DeserializeClusterFailoverJobDetails(element, options);
-                    case "ClusterSwitchProtectionJobDetails": return ClusterSwitchProtectionJobDetails.DeserializeClusterSwitchProtectionJobDetails(element, options);
-                    case "ClusterTestFailoverJobDetails": return ClusterTestFailoverJobDetails.DeserializeClusterTestFailoverJobDetails(element, options);
-                    case "ExportJobDetails": return ExportJobDetails.DeserializeExportJobDetails(element, options);
-                    case "FailoverJobDetails": return FailoverJobDetails.DeserializeFailoverJobDetails(element, options);
-                    case "SwitchProtectionJobDetails": return SwitchProtectionJobDetails.DeserializeSwitchProtectionJobDetails(element, options);
-                    case "TestFailoverJobDetails": return TestFailoverJobDetails.DeserializeTestFailoverJobDetails(element, options);
+                    case "AsrJobDetails":
+                        return AsrJobDetails.DeserializeAsrJobDetails(element, options);
+                    case "ClusterFailoverJobDetails":
+                        return ClusterFailoverJobDetails.DeserializeClusterFailoverJobDetails(element, options);
+                    case "ClusterSwitchProtectionJobDetails":
+                        return ClusterSwitchProtectionJobDetails.DeserializeClusterSwitchProtectionJobDetails(element, options);
+                    case "ClusterTestFailoverJobDetails":
+                        return ClusterTestFailoverJobDetails.DeserializeClusterTestFailoverJobDetails(element, options);
+                    case "ExportJobDetails":
+                        return ExportJobDetails.DeserializeExportJobDetails(element, options);
+                    case "FailoverJobDetails":
+                        return FailoverJobDetails.DeserializeFailoverJobDetails(element, options);
+                    case "SwitchProtectionJobDetails":
+                        return SwitchProtectionJobDetails.DeserializeSwitchProtectionJobDetails(element, options);
+                    case "TestFailoverJobDetails":
+                        return TestFailoverJobDetails.DeserializeTestFailoverJobDetails(element, options);
                 }
             }
             return UnknownJobDetails.DeserializeUnknownJobDetails(element, options);
         }
-
-        BinaryData IPersistableModel<SiteRecoveryJobDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SiteRecoveryJobDetails IPersistableModel<SiteRecoveryJobDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSiteRecoveryJobDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SiteRecoveryJobDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

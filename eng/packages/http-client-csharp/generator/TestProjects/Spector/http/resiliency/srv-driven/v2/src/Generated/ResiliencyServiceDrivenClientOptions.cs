@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Resiliency.ServiceDriven
 {
@@ -14,6 +16,9 @@ namespace Resiliency.ServiceDriven
         private const ServiceVersion LatestVersion = ServiceVersion.V2;
 
         public ResiliencyServiceDrivenClientOptions(ServiceVersion version = LatestVersion) => throw null;
+
+        [Experimental("SCME0002")]
+        internal ResiliencyServiceDrivenClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using _Specs_.Azure.Encode.Duration;
+using Specs.Azure.Encode.Duration;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Azure.Encode.Duration

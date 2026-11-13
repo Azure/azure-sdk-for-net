@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Stress;
 public class SendReceiveBatchesTest : TestScenario
 {
     /// <summary> The array of <see cref="Role" />s needed to run this test scenario.</summary>
-    public override Role[] Roles { get; } = {Role.Sender, Role.Receiver};
+    public override Role[] Roles { get; } = { Role.Sender, Role.Receiver };
 
     /// <summary> The name of this test.</summary>
     public override string Name { get; } = "SendReceiveBatchesTest";
@@ -58,7 +58,7 @@ public class SendReceiveBatchesTest : TestScenario
                 return Task.Run(() => receiver.RunAsync(cancellationToken));
 
             default:
-                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
+                throw new NotSupportedException($"Running role {role.ToString()} is not supported by this test scenario.");
         }
     }
 }

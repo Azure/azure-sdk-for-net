@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoClusterPublicIPType : IEquatable<KustoClusterPublicIPType>
     {
         private readonly string _value;
+        /// <summary> IPv4. </summary>
+        private const string IPv4Value = "IPv4";
+        /// <summary> DualStack. </summary>
+        private const string DualStackValue = "DualStack";
 
         /// <summary> Initializes a new instance of <see cref="KustoClusterPublicIPType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoClusterPublicIPType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IPv4Value = "IPv4";
-        private const string DualStackValue = "DualStack";
+            _value = value;
+        }
 
         /// <summary> IPv4. </summary>
         public static KustoClusterPublicIPType IPv4 { get; } = new KustoClusterPublicIPType(IPv4Value);
+
         /// <summary> DualStack. </summary>
         public static KustoClusterPublicIPType DualStack { get; } = new KustoClusterPublicIPType(DualStackValue);
+
         /// <summary> Determines if two <see cref="KustoClusterPublicIPType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoClusterPublicIPType left, KustoClusterPublicIPType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoClusterPublicIPType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoClusterPublicIPType left, KustoClusterPublicIPType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterPublicIPType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoClusterPublicIPType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoClusterPublicIPType(string value) => new KustoClusterPublicIPType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoClusterPublicIPType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoClusterPublicIPType?(string value) => value == null ? null : new KustoClusterPublicIPType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoClusterPublicIPType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoClusterPublicIPType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

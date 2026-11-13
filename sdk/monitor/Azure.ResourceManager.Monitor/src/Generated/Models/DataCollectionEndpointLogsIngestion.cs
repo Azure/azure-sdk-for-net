@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointLogsIngestion"/>. </summary>
         /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionEndpointLogsIngestion(string endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpoint, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionEndpointLogsIngestion(string endpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(endpoint, additionalBinaryDataProperties)
         {
         }
     }

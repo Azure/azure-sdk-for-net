@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an Aml Instance DataMount. </summary>
     public partial class MachineLearningComputeInstanceDataMount
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataMount"/>. </summary>
         internal MachineLearningComputeInstanceDataMount()
@@ -55,50 +27,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sourceType"> Data source type. </param>
         /// <param name="mountName"> name of the ComputeInstance data mount. </param>
         /// <param name="mountAction"> Mount Action. </param>
+        /// <param name="mountMode"> Mount Mode. </param>
         /// <param name="createdBy"> who this data mount created by. </param>
         /// <param name="mountPath"> Path of this data mount. </param>
         /// <param name="mountState"> Mount state. </param>
         /// <param name="mountedOn"> The time when the disk mounted. </param>
         /// <param name="error"> Error of this data mount. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeInstanceDataMount(string source, MachineLearningSourceType? sourceType, string mountName, MachineLearningMountAction? mountAction, string createdBy, string mountPath, MachineLearningMountState? mountState, DateTimeOffset? mountedOn, string error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceDataMount(string source, MachineLearningSourceType? sourceType, string mountName, MachineLearningMountAction? mountAction, MountMode? mountMode, string createdBy, string mountPath, MachineLearningMountState? mountState, DateTimeOffset? mountedOn, string error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             SourceType = sourceType;
             MountName = mountName;
             MountAction = mountAction;
+            MountMode = mountMode;
             CreatedBy = createdBy;
             MountPath = mountPath;
             MountState = mountState;
             MountedOn = mountedOn;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Source of the ComputeInstance data mount. </summary>
         [WirePath("source")]
         public string Source { get; }
+
         /// <summary> Data source type. </summary>
         [WirePath("sourceType")]
         public MachineLearningSourceType? SourceType { get; }
+
         /// <summary> name of the ComputeInstance data mount. </summary>
         [WirePath("mountName")]
         public string MountName { get; }
+
         /// <summary> Mount Action. </summary>
         [WirePath("mountAction")]
         public MachineLearningMountAction? MountAction { get; }
+
+        /// <summary> Mount Mode. </summary>
+        [WirePath("mountMode")]
+        public MountMode? MountMode { get; }
+
         /// <summary> who this data mount created by. </summary>
         [WirePath("createdBy")]
         public string CreatedBy { get; }
+
         /// <summary> Path of this data mount. </summary>
         [WirePath("mountPath")]
         public string MountPath { get; }
+
         /// <summary> Mount state. </summary>
         [WirePath("mountState")]
         public MachineLearningMountState? MountState { get; }
+
         /// <summary> The time when the disk mounted. </summary>
         [WirePath("mountedOn")]
         public DateTimeOffset? MountedOn { get; }
+
         /// <summary> Error of this data mount. </summary>
         [WirePath("error")]
         public string Error { get; }

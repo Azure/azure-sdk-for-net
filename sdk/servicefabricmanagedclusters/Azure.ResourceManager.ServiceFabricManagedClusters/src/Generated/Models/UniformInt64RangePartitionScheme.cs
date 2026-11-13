@@ -23,17 +23,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The upper bound of the partition key range that
         /// should be split between the partition ‘Count’
         /// </param>
-        public UniformInt64RangePartitionScheme(int count, long lowKey, long highKey)
+        public UniformInt64RangePartitionScheme(int count, long lowKey, long highKey) : base(PartitionScheme.UniformInt64Range)
         {
             Count = count;
             LowKey = lowKey;
             HighKey = highKey;
-            PartitionScheme = PartitionScheme.UniformInt64Range;
         }
 
         /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionScheme"/>. </summary>
         /// <param name="partitionScheme"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// The lower bound of the partition key range that
@@ -43,26 +42,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The upper bound of the partition key range that
         /// should be split between the partition ‘Count’
         /// </param>
-        internal UniformInt64RangePartitionScheme(PartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData, int count, long lowKey, long highKey) : base(partitionScheme, serializedAdditionalRawData)
+        internal UniformInt64RangePartitionScheme(PartitionScheme partitionScheme, IDictionary<string, BinaryData> additionalBinaryDataProperties, int count, long lowKey, long highKey) : base(partitionScheme, additionalBinaryDataProperties)
         {
             Count = count;
             LowKey = lowKey;
             HighKey = highKey;
-            PartitionScheme = partitionScheme;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionScheme"/> for deserialization. </summary>
-        internal UniformInt64RangePartitionScheme()
-        {
         }
 
         /// <summary> The number of partitions. </summary>
         public int Count { get; set; }
+
         /// <summary>
         /// The lower bound of the partition key range that
         /// should be split between the partition ‘Count’
         /// </summary>
         public long LowKey { get; set; }
+
         /// <summary>
         /// The upper bound of the partition key range that
         /// should be split between the partition ‘Count’

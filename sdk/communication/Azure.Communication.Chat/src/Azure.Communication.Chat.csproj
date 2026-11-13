@@ -13,6 +13,7 @@
     <PackageTags>Microsoft Azure Communication Chat Service;Microsoft;Azure;Azure Communication Service;Azure Communication Chat Service;Chat;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

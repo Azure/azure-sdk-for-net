@@ -1,23 +1,59 @@
-param(    
+[CmdletBinding()]
+param(
     [Parameter(Mandatory = $true)]
-    [string]$PackageInfoFilePath
+    [string]$PackageInfoFilePath,
+    [Parameter(Mandatory = $true)]
+    [string]$AzsdkExePath,
+    [ValidateScript({
+        $id = 0
+        if (-not [int]::TryParse($_, [System.Globalization.NumberStyles]::None, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$id))
+        {
+            throw 'Release plan ID must be a nonnegative 32-bit integer, without fractions or whitespace.'
+        }
+        return $true
+    })]
+    [string]$ReleasePlanId = '0',
+    [string]$SdkPullRequest = '',
+    [string]$PipelineUrl = ''
 )
 
 <#
 .SYNOPSIS
-    Marks release plan completion by identifying pull requests that changed files in a given path.
+    Updates release status using an explicit release-plan ID or SDK PR when supplied, otherwise the legacy package lookup.
 
 .DESCRIPTION
-    This script helps to mark release plan completion by finding the active release plans for a package name
+    Uses the requester-supplied release-plan ID for manual releases, or the triggering SDK PR
+    for automatic releases. azsdk resolves the existing ADO plan and validates the language/package.
+    TRANSITIONAL: when neither is supplied, the original package-name lookup is used and an informational message is logged
+    so pipelines that do not yet forward the association keep working. Remove once every pipeline forwards one.
 
 .PARAMETER PackageInfoFilePath
     The path to the package information file (required) or path to the directory containing package information files.
+
+.PARAMETER AzsdkExePath
+    The path to the azsdk executable used to mark the release completion.
+
+.PARAMETER ReleasePlanId
+    The release-plan ID explicitly supplied for this manual release. Zero means no manual association.
+
+.PARAMETER SdkPullRequest
+    The unambiguous SDK PR that triggered the automatic release. Not a spec PR or a previous package PR.
+
+.PARAMETER PipelineUrl
+    The current release pipeline URL, recorded for manual and automatic releases.
 #>
 
-Set-StrictMode -Version 3
+Set-StrictMode -Version 4
+$ErrorActionPreference = 'Stop'
+[int]$suppliedPlanId = [int]::Parse($ReleasePlanId, [System.Globalization.CultureInfo]::InvariantCulture)
 . (Join-Path $PSScriptRoot common.ps1)
-. (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
+#Validate azsdk executable path
+if (-Not (Test-Path $AzsdkExePath))
+{
+    Write-Error "The azsdk executable was not found at path '$AzsdkExePath'. Please ensure the executable exists and the path is correct."
+    exit 1
+}
 
 #Get package properties
 if (-Not (Test-Path $PackageInfoFilePath))
@@ -29,41 +65,79 @@ if (-Not (Test-Path $PackageInfoFilePath))
 function Process-Package([string]$packageInfoPath)
 {
     # Get package info from json file created before updating version to daily dev
-    $pkgInfo = Get-Content $packageInfoPath | ConvertFrom-Json
-    $PackageVersion = $pkgInfo.Version
-    $PackageName = $pkgInfo.Name
-    if (!$PackageName -or !$PackageVersion)
+    $pkgInfo = Get-Content -LiteralPath $packageInfoPath -Raw | ConvertFrom-Json -AsHashtable
+    if ($pkgInfo -isnot [System.Collections.IDictionary])
     {
-        Write-Host "Package name or version is not available in the package information file. Skipping the release plan status update for the package."
+        Write-Warning "Package information must be a JSON object: $packageInfoPath. No release plan was updated."
+        return
+    }
+    $PackageName = $pkgInfo['Name']
+    if ($PackageName -isnot [string] -or [string]::IsNullOrWhiteSpace($PackageName))
+    {
+        Write-Host "Package name is not available in the package information file. Skipping the release plan status update for the package."
         return
     }
 
-    # Check Azure DevOps Release Plan work items
-    Write-Host "Checking active release plan work items for package: $PackageName"
-    $workItems = Get-ReleasePlanForPackage $PackageName
-    if(!$workItems)
+    $isLegacyLookup = ($suppliedPlanId -eq 0 -and [string]::IsNullOrWhiteSpace($SdkPullRequest))
+    if ($isLegacyLookup)
     {
-        Write-Host "No active release plans found for package name: $PackageName."
-        return
+        Write-Host "LEGACY_RELEASE_PLAN_LOOKUP: Package '$PackageName' has no release-plan ID or triggering SDK PR; using the legacy package lookup. Forward ReleasePlanId or SdkPullRequest from the release pipeline."
     }
 
-    $activeReleasePlan = $workItems
-    if($workItems.Count -gt 1 -and ($workItems -is [System.Array]))
-    {    
-        $concatenatedIds = ($workItems | Select-Object -ExpandProperty id) -join ','
-        Write-Host "Multiple release plans found for package name: $PackageName with work item IDs: $concatenatedIds. Using the first release plan to update release status."
-        $activeReleasePlan = $workItems[0]
+    # Do not inherit plan IDs from package metadata; unrelated bug-fix builds can reuse those files.
+    Write-Host "Correlating release status for package '$PackageName', language '$LanguageDisplayName'."
+    $releaseArgs = @("release-plan", "update-release-status", "--package-name", $PackageName, "--language", $LanguageDisplayName, "--status", "Released")
+    if ($suppliedPlanId -gt 0)
+    {
+        $releaseArgs += @("--release-plan-id", "$suppliedPlanId")
     }
-    # Update release status
-    Write-Host "Release plan work item ID: $($activeReleasePlan["id"])"
-    Write-Host "Marking release completion for package, name: $PackageName version: $PackageVersion"
-    Update-ReleaseStatusInReleasePlan $activeReleasePlan.id "Released" $PackageVersion
-    Write-Host "Successfully marked release completion for package, name: $PackageName version: $PackageVersion."
+    if (-not [string]::IsNullOrWhiteSpace($SdkPullRequest))
+    {
+        $releaseArgs += @("--sdk-pull-request", $SdkPullRequest)
+    }
+    if (-not [string]::IsNullOrWhiteSpace($PipelineUrl))
+    {
+        $releaseArgs += @("--release-pipeline", $PipelineUrl)
+    }
+    $PackageVersion = $pkgInfo['Version']
+    $version = $null
+    if ($PackageVersion -is [string] -and -not [string]::IsNullOrWhiteSpace($PackageVersion))
+    {
+        $version = [AzureEngSemanticVersion]::ParseVersionString($PackageVersion)
+    }
+    if ($version)
+    {
+        $sdkReleaseType = if ($version.IsPrerelease) { 'beta' } else { 'stable' }
+        $releaseArgs += @("--package-version", $PackageVersion, "--sdk-release-type", $sdkReleaseType)
+    }
+    else
+    {
+        Write-Host "Package version is missing or invalid for '$PackageName'. Updating release status without version metadata."
+    }
+    $releaseInfo = & $AzsdkExePath @releaseArgs
+    if ($LASTEXITCODE -ne 0)
+    {
+        ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
+        Write-Host "Release plan status was not updated for package '$PackageName'. Exit code: $LASTEXITCODE. Not all packages have a release plan."
+    }
+    Write-Host "Details: $releaseInfo"
+    return
 }
 
 Write-Host "Finding all package info files in the path: $PackageInfoFilePath"
 # Get all package info file under the directory given in input param and process
-Get-ChildItem -Path $PackageInfoFilePath -Filter "*.json" | ForEach-Object {
-    Write-Host "Processing package info file: $_"
-    Process-Package $_.FullName
+foreach ($packageInfoFile in Get-ChildItem -Path $PackageInfoFilePath -Filter "*.json" -File)
+{
+    try
+    {
+        Write-Host "Processing package info file: $packageInfoFile"
+        Process-Package $packageInfoFile.FullName
+    }
+    catch
+    {
+        Write-Warning "Failed to update release status for '$packageInfoFile': $($_.Exception.Message)"
+    }
 }
+
+# Status reporting must not change the outcome of an already completed package release.
+exit 0

@@ -7,57 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The IdentityProviderType. </summary>
+    /// <summary></summary>
     public readonly partial struct IdentityProviderType : IEquatable<IdentityProviderType>
     {
         private readonly string _value;
+        /// <summary> Facebook as Identity provider. </summary>
+        private const string FacebookValue = "facebook";
+        /// <summary> Google as Identity provider. </summary>
+        private const string GoogleValue = "google";
+        /// <summary> Microsoft Live as Identity provider. </summary>
+        private const string MicrosoftValue = "microsoft";
+        /// <summary> Twitter as Identity provider. </summary>
+        private const string TwitterValue = "twitter";
+        /// <summary> Azure Active Directory as Identity provider. </summary>
+        private const string AadValue = "aad";
+        /// <summary> Azure Active Directory B2C as Identity provider. </summary>
+        private const string AadB2CValue = "aadB2C";
 
         /// <summary> Initializes a new instance of <see cref="IdentityProviderType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IdentityProviderType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FacebookValue = "facebook";
-        private const string GoogleValue = "google";
-        private const string MicrosoftValue = "microsoft";
-        private const string TwitterValue = "twitter";
-        private const string AadValue = "aad";
-        private const string AadB2CValue = "aadB2C";
+            _value = value;
+        }
 
         /// <summary> Facebook as Identity provider. </summary>
         public static IdentityProviderType Facebook { get; } = new IdentityProviderType(FacebookValue);
+
         /// <summary> Google as Identity provider. </summary>
         public static IdentityProviderType Google { get; } = new IdentityProviderType(GoogleValue);
+
         /// <summary> Microsoft Live as Identity provider. </summary>
         public static IdentityProviderType Microsoft { get; } = new IdentityProviderType(MicrosoftValue);
+
         /// <summary> Twitter as Identity provider. </summary>
         public static IdentityProviderType Twitter { get; } = new IdentityProviderType(TwitterValue);
+
         /// <summary> Azure Active Directory as Identity provider. </summary>
         public static IdentityProviderType Aad { get; } = new IdentityProviderType(AadValue);
+
         /// <summary> Azure Active Directory B2C as Identity provider. </summary>
         public static IdentityProviderType AadB2C { get; } = new IdentityProviderType(AadB2CValue);
+
         /// <summary> Determines if two <see cref="IdentityProviderType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IdentityProviderType left, IdentityProviderType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IdentityProviderType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IdentityProviderType left, IdentityProviderType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityProviderType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IdentityProviderType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IdentityProviderType(string value) => new IdentityProviderType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IdentityProviderType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IdentityProviderType?(string value) => value == null ? null : new IdentityProviderType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IdentityProviderType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IdentityProviderType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

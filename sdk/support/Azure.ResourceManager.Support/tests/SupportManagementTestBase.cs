@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Support.Tests
 {
@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Support.Tests
             try
             {
                 DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
-            }catch (Exception){ } //  bypassing failures for tenant level scenarios
+            }
+            catch (Exception) { } //  bypassing failures for tenant level scenarios
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

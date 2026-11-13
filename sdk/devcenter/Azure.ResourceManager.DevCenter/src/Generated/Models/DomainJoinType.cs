@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -14,38 +15,62 @@ namespace Azure.ResourceManager.DevCenter.Models
     public readonly partial struct DomainJoinType : IEquatable<DomainJoinType>
     {
         private readonly string _value;
+        /// <summary> Hybrid Azure AD Join type. </summary>
+        private const string HybridAadJoinValue = "HybridAzureADJoin";
+        /// <summary> Azure AD Join type. </summary>
+        private const string AadJoinValue = "AzureADJoin";
+        /// <summary> No Active Directory join type. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="DomainJoinType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DomainJoinType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string HybridAadJoinValue = "HybridAzureADJoin";
-        private const string AadJoinValue = "AzureADJoin";
-
-        /// <summary> HybridAzureADJoin. </summary>
+        /// <summary> Hybrid Azure AD Join type. </summary>
         public static DomainJoinType HybridAadJoin { get; } = new DomainJoinType(HybridAadJoinValue);
-        /// <summary> AzureADJoin. </summary>
+
+        /// <summary> Azure AD Join type. </summary>
         public static DomainJoinType AadJoin { get; } = new DomainJoinType(AadJoinValue);
+
+        /// <summary> No Active Directory join type. </summary>
+        public static DomainJoinType None { get; } = new DomainJoinType(NoneValue);
+
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DomainJoinType left, DomainJoinType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DomainJoinType left, DomainJoinType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainJoinType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DomainJoinType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DomainJoinType(string value) => new DomainJoinType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DomainJoinType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DomainJoinType?(string value) => value == null ? null : new DomainJoinType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DomainJoinType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DomainJoinType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

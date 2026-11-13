@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.Core;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetAllPrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint1 = await CreatePrivateEndpoint();
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task PrivateEndpointConnectionDelete()
         {
             await CreatePrivateEndpoint();

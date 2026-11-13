@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    /// <summary> The SqlVmAutoBackupDayOfWeek. </summary>
+    /// <summary></summary>
     public readonly partial struct SqlVmAutoBackupDayOfWeek : IEquatable<SqlVmAutoBackupDayOfWeek>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SqlVmAutoBackupDayOfWeek"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SqlVmAutoBackupDayOfWeek(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MondayValue = "Monday";
         private const string TuesdayValue = "Tuesday";
         private const string WednesdayValue = "Wednesday";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         private const string SaturdayValue = "Saturday";
         private const string SundayValue = "Sunday";
 
-        /// <summary> Monday. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAutoBackupDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SqlVmAutoBackupDayOfWeek(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Monday. </summary>
         public static SqlVmAutoBackupDayOfWeek Monday { get; } = new SqlVmAutoBackupDayOfWeek(MondayValue);
-        /// <summary> Tuesday. </summary>
+
+        /// <summary> Gets the Tuesday. </summary>
         public static SqlVmAutoBackupDayOfWeek Tuesday { get; } = new SqlVmAutoBackupDayOfWeek(TuesdayValue);
-        /// <summary> Wednesday. </summary>
+
+        /// <summary> Gets the Wednesday. </summary>
         public static SqlVmAutoBackupDayOfWeek Wednesday { get; } = new SqlVmAutoBackupDayOfWeek(WednesdayValue);
-        /// <summary> Thursday. </summary>
+
+        /// <summary> Gets the Thursday. </summary>
         public static SqlVmAutoBackupDayOfWeek Thursday { get; } = new SqlVmAutoBackupDayOfWeek(ThursdayValue);
-        /// <summary> Friday. </summary>
+
+        /// <summary> Gets the Friday. </summary>
         public static SqlVmAutoBackupDayOfWeek Friday { get; } = new SqlVmAutoBackupDayOfWeek(FridayValue);
-        /// <summary> Saturday. </summary>
+
+        /// <summary> Gets the Saturday. </summary>
         public static SqlVmAutoBackupDayOfWeek Saturday { get; } = new SqlVmAutoBackupDayOfWeek(SaturdayValue);
-        /// <summary> Sunday. </summary>
+
+        /// <summary> Gets the Sunday. </summary>
         public static SqlVmAutoBackupDayOfWeek Sunday { get; } = new SqlVmAutoBackupDayOfWeek(SundayValue);
+
         /// <summary> Determines if two <see cref="SqlVmAutoBackupDayOfWeek"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlVmAutoBackupDayOfWeek left, SqlVmAutoBackupDayOfWeek right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlVmAutoBackupDayOfWeek"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlVmAutoBackupDayOfWeek left, SqlVmAutoBackupDayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlVmAutoBackupDayOfWeek"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlVmAutoBackupDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlVmAutoBackupDayOfWeek(string value) => new SqlVmAutoBackupDayOfWeek(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlVmAutoBackupDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlVmAutoBackupDayOfWeek?(string value) => value == null ? null : new SqlVmAutoBackupDayOfWeek(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlVmAutoBackupDayOfWeek other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlVmAutoBackupDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

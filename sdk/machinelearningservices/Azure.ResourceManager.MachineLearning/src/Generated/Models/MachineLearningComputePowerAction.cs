@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The compute power action. </summary>
+    /// <summary> [Required] The compute power action. </summary>
     public readonly partial struct MachineLearningComputePowerAction : IEquatable<MachineLearningComputePowerAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningComputePowerAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningComputePowerAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StartValue = "Start";
         private const string StopValue = "Stop";
 
-        /// <summary> Start. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputePowerAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningComputePowerAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Start. </summary>
         public static MachineLearningComputePowerAction Start { get; } = new MachineLearningComputePowerAction(StartValue);
-        /// <summary> Stop. </summary>
+
+        /// <summary> Gets the Stop. </summary>
         public static MachineLearningComputePowerAction Stop { get; } = new MachineLearningComputePowerAction(StopValue);
+
         /// <summary> Determines if two <see cref="MachineLearningComputePowerAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningComputePowerAction left, MachineLearningComputePowerAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningComputePowerAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningComputePowerAction left, MachineLearningComputePowerAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningComputePowerAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningComputePowerAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningComputePowerAction(string value) => new MachineLearningComputePowerAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningComputePowerAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningComputePowerAction?(string value) => value == null ? null : new MachineLearningComputePowerAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningComputePowerAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningComputePowerAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

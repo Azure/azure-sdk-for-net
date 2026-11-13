@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="Azure.Generator.StubLibrary/src/Azure.Generator.StubLibrary.csproj" />
+  <Project Path="Azure.Generator/src/Azure.Generator.csproj" />
+  <Project Path="Azure.Generator/test/Azure.Generator.Tests.csproj" />
+  <Project Path="Azure.Generator/test/common/Azure.Generator.Tests.Common.csproj" />
+  <Project Path="TestProjects/Local.Tests/TestProjects.Local.Tests.csproj" />
+  <Project Path="TestProjects/Spector.Tests/TestProjects.Spector.Tests.csproj" />
+</Solution>

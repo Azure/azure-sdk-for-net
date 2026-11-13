@@ -8,7 +8,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests.TestFramework
 {
-    internal sealed class TestOperation<T> : Operation<T> where T: struct
+    internal sealed class TestOperation<T> : Operation<T> where T : struct
     {
         private TimeSpan _after;
         private readonly T _finalResult;

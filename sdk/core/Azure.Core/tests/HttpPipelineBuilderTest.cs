@@ -175,6 +175,44 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task CreateTelemetryPolicyHonorsCustomMaxApplicationIdLength()
+        {
+            var longApplicationId = new string('a', 50);
+            var options = new TestOptionsWithCustomMaxApplicationIdLength(50);
+            options.Diagnostics.ApplicationId = longApplicationId;
+
+            var transport = new MockTransport(new MockResponse(200));
+            var telemetryPolicy = HttpPipelineBuilder.CreateTelemetryPolicy(options);
+
+            await SendGetRequest(transport, telemetryPolicy);
+
+            Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
+            StringAssert.StartsWith(longApplicationId + " ", userAgent);
+        }
+
+        [Test]
+        public void ApplicationIdExceedingDefaultMaxLengthThrowsAtPipelineBuild()
+        {
+            var options = new TestOptions();
+            options.Diagnostics.ApplicationId = new string('a', 25);
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => HttpPipelineBuilder.Build(options));
+            Assert.That(ex.Message, Does.Contain("applicationId must be shorter than 25 characters"));
+            Assert.That(ex.Message, Does.Contain("MaxApplicationIdLength"));
+        }
+
+        [Test]
+        public void ApplicationIdExceedingCustomMaxLengthThrowsAtPipelineBuild()
+        {
+            var options = new TestOptionsWithCustomMaxApplicationIdLength(50);
+            options.Diagnostics.ApplicationId = new string('a', 51);
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => HttpPipelineBuilder.Build(options));
+            Assert.That(ex.Message, Does.Contain("applicationId must be shorter than 51 characters"));
+            Assert.That(ex.Message, Does.Contain("MaxApplicationIdLength"));
+        }
+
+        [Test]
         public async Task CustomClientRequestIdAvailableInPerCallPolicies()
         {
             var policy = new Mock<HttpPipelineSynchronousPolicy>();
@@ -334,6 +372,15 @@ namespace Azure.Core.Tests
         {
             public TestOptions()
             {
+                Retry.Delay = TimeSpan.Zero;
+            }
+        }
+
+        private class TestOptionsWithCustomMaxApplicationIdLength : ClientOptions
+        {
+            public TestOptionsWithCustomMaxApplicationIdLength(int maxApplicationIdLength)
+            {
+                MaxApplicationIdLength = maxApplicationIdLength;
                 Retry.Delay = TimeSpan.Zero;
             }
         }

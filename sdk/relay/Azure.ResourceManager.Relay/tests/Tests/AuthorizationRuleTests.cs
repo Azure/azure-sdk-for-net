@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Tests
 {
-    public class AuthorizationRuleTests: RelayTestBase
+    public class AuthorizationRuleTests : RelayTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private RelayNamespaceResource _relayNamespace;
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.Relay.Tests
 
             RelayHybridConnectionCollection _hybridConnectionCollection = _relayNamespace.GetRelayHybridConnections();
             _relayHybridConnection = (await _hybridConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, "h1", new RelayHybridConnectionData()
-                {
-                    IsClientAuthorizationRequired = true
-                })).Value;
+            {
+                IsClientAuthorizationRequired = true
+            })).Value;
 
             WcfRelayCollection _wcfRelayCollection = _relayNamespace.GetWcfRelays();
             _relayWcf = (await _wcfRelayCollection.CreateOrUpdateAsync(WaitUntil.Completed, "h2", new WcfRelayData()
-                {
-                    IsClientAuthorizationRequired = true,
-                    RelayType = RelayType.NetTcp
-                })).Value;
+            {
+                IsClientAuthorizationRequired = true,
+                RelayType = RelayType.NetTcp
+            })).Value;
         }
 
         [Test]

@@ -6,46 +6,14 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> The ElasticSanDeleteRetentionPolicyState. </summary>
+    /// <summary></summary>
     public readonly partial struct ElasticSanDeleteRetentionPolicyState : IEquatable<ElasticSanDeleteRetentionPolicyState>
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticSanDeleteRetentionPolicyState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticSanDeleteRetentionPolicyState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
-        public static ElasticSanDeleteRetentionPolicyState Enabled { get; } = new ElasticSanDeleteRetentionPolicyState(EnabledValue);
-        /// <summary> Disabled. </summary>
-        public static ElasticSanDeleteRetentionPolicyState Disabled { get; } = new ElasticSanDeleteRetentionPolicyState(DisabledValue);
-        /// <summary> Determines if two <see cref="ElasticSanDeleteRetentionPolicyState"/> values are the same. </summary>
-        public static bool operator ==(ElasticSanDeleteRetentionPolicyState left, ElasticSanDeleteRetentionPolicyState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ElasticSanDeleteRetentionPolicyState"/> values are not the same. </summary>
-        public static bool operator !=(ElasticSanDeleteRetentionPolicyState left, ElasticSanDeleteRetentionPolicyState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanDeleteRetentionPolicyState"/>. </summary>
-        public static implicit operator ElasticSanDeleteRetentionPolicyState(string value) => new ElasticSanDeleteRetentionPolicyState(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ElasticSanDeleteRetentionPolicyState other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ElasticSanDeleteRetentionPolicyState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> Converts a string to a <see cref="ElasticSanDeleteRetentionPolicyState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticSanDeleteRetentionPolicyState?(string value) => value == null ? null : new ElasticSanDeleteRetentionPolicyState(value);
     }
 }

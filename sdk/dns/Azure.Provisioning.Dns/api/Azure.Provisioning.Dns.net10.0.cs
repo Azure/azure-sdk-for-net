@@ -1,0 +1,543 @@
+namespace Azure.Provisioning.Dns
+{
+    public partial class DelegationSignerInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DelegationSignerInfo() { }
+        public Azure.Provisioning.BicepValue<int> DigestAlgorithmType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DigestValue { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Record { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsAaaaRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsAaaaRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsAaaaRecordInfo> AaaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsAaaaRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsAaaaRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsAaaaRecordInfo() { }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use IPv6Address instead.")]
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> Ipv6Address { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> IPv6Address { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsARecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsARecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsARecordInfo> ARecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsARecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsARecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsARecordInfo() { }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use IPv4Address instead.")]
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> Ipv4Address { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> IPv4Address { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsCaaRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsCaaRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsCaaRecordInfo> CaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsCaaRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsCaaRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsCaaRecordInfo() { }
+        public Azure.Provisioning.BicepValue<int> Flags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Tag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsCnameRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsCnameRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsCnameRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsDSRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsDSRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsDSRecordInfo> DsRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsDSRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsDSRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsDSRecordInfo() { }
+        public Azure.Provisioning.BicepValue<int> Algorithm { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DSRecordDigest Digest { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> KeyTag { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsMXRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsMXRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsMXRecordInfo> MxRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsMXRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsMXRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsMXRecordInfo() { }
+        public Azure.Provisioning.BicepValue<string> Exchange { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Preference { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsNaptrRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsNaptrRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsNaptrRecordInfo> NaptrRecords { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsNaptrRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsNaptrRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsNaptrRecordInfo() { }
+        public Azure.Provisioning.BicepValue<string> Flags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Order { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Preference { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Regexp { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Replacement { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Services { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsNSRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsNSRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsNSRecordInfo> NsRecords { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use NsRecords instead.")]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsNSRecordInfo> NSRecords { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsNSRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsNSRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsNSRecordInfo() { }
+        public Azure.Provisioning.BicepValue<string> DnsNSDomainName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsPtrRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsPtrRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsPtrRecordInfo> PtrRecords { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsPtrRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsPtrRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsPtrRecordInfo() { }
+        public Azure.Provisioning.BicepValue<string> DnsPtrDomainName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnssecConfig : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnssecConfig(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSigningKey> SigningKeys { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnssecConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsSigningKey : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsSigningKey() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DelegationSignerInfo> DelegationSignerInfo { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> Flags { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> KeyTag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> Protocol { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PublicKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> SecurityAlgorithmType { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsSoaRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsSoaRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use SoaRecordInfo instead.")]
+        public Azure.Provisioning.Dns.DnsSoaRecordInfo SoaRecord { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsSoaRecordInfo SoaRecordInfo { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsSoaRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsSoaRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsSoaRecordInfo() { }
+        public Azure.Provisioning.BicepValue<string> Email { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> ExpireTimeInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Host { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> MinimumTtlInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> RefreshTimeInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> RetryTimeInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> SerialNumber { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsSrvRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsSrvRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSrvRecordInfo> SrvRecords { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsSrvRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsSrvRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsSrvRecordInfo() { }
+        public Azure.Provisioning.BicepValue<int> Port { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Priority { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Weight { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsSubResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsSubResourceInfo() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsTlsaRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsTlsaRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsTlsaRecordInfo> TlsaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsTlsaRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsTlsaRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsTlsaRecordInfo() { }
+        public Azure.Provisioning.BicepValue<string> CertAssociationData { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MatchingType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Selector { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Usage { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsTxtRecord : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsTxtRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsTxtRecordInfo> TxtRecords { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsTxtRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public partial class DnsTxtRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsTxtRecordInfo() { }
+        public Azure.Provisioning.BicepList<string> Values { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DnsZone : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DnsZone(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> MaxNumberOfRecords { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> MaxNumberOfRecordsPerRecord { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> NameServers { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> NumberOfRecords { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSubResourceInfo> RegistrationVirtualNetworkReferences { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use RegistrationVirtualNetworkReferences instead.")]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> RegistrationVirtualNetworks { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSubResourceInfo> ResolutionVirtualNetworkReferences { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use ResolutionVirtualNetworkReferences instead.")]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> ResolutionVirtualNetworks { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSigningKey> SigningKeys { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Dns.DnsZoneType> ZoneType { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Dns.DnsZone FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2016_04_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2018_05_01;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_07_01_PREVIEW;
+        }
+    }
+    public enum DnsZoneType
+    {
+        Public = 0,
+        Private = 1,
+    }
+    public partial class DSRecordDigest : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DSRecordDigest() { }
+        public Azure.Provisioning.BicepValue<int> AlgorithmType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+}

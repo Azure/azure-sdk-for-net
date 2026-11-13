@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct StaticSiteBuildStatus : IEquatable<StaticSiteBuildStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StaticSiteBuildStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string WaitingForDeploymentValue = "WaitingForDeployment";
         private const string UploadingValue = "Uploading";
         private const string DeployingValue = "Deploying";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.AppService.Models
         private const string DeletingValue = "Deleting";
         private const string DetachedValue = "Detached";
 
-        /// <summary> WaitingForDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StaticSiteBuildStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the WaitingForDeployment. </summary>
         public static StaticSiteBuildStatus WaitingForDeployment { get; } = new StaticSiteBuildStatus(WaitingForDeploymentValue);
-        /// <summary> Uploading. </summary>
+
+        /// <summary> Gets the Uploading. </summary>
         public static StaticSiteBuildStatus Uploading { get; } = new StaticSiteBuildStatus(UploadingValue);
-        /// <summary> Deploying. </summary>
+
+        /// <summary> Gets the Deploying. </summary>
         public static StaticSiteBuildStatus Deploying { get; } = new StaticSiteBuildStatus(DeployingValue);
-        /// <summary> Ready. </summary>
+
+        /// <summary> Gets the Ready. </summary>
         public static StaticSiteBuildStatus Ready { get; } = new StaticSiteBuildStatus(ReadyValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static StaticSiteBuildStatus Failed { get; } = new StaticSiteBuildStatus(FailedValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static StaticSiteBuildStatus Deleting { get; } = new StaticSiteBuildStatus(DeletingValue);
-        /// <summary> Detached. </summary>
+
+        /// <summary> Gets the Detached. </summary>
         public static StaticSiteBuildStatus Detached { get; } = new StaticSiteBuildStatus(DetachedValue);
+
         /// <summary> Determines if two <see cref="StaticSiteBuildStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StaticSiteBuildStatus left, StaticSiteBuildStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StaticSiteBuildStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StaticSiteBuildStatus left, StaticSiteBuildStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StaticSiteBuildStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StaticSiteBuildStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StaticSiteBuildStatus(string value) => new StaticSiteBuildStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StaticSiteBuildStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StaticSiteBuildStatus?(string value) => value == null ? null : new StaticSiteBuildStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StaticSiteBuildStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StaticSiteBuildStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

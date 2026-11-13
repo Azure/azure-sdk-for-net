@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct StorageSettingStoreType : IEquatable<StorageSettingStoreType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageSettingStoreType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageSettingStoreType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ArchiveStoreValue = "ArchiveStore";
         private const string OperationalStoreValue = "OperationalStore";
         private const string VaultStoreValue = "VaultStore";
 
-        /// <summary> ArchiveStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSettingStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageSettingStoreType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ArchiveStore. </summary>
         public static StorageSettingStoreType ArchiveStore { get; } = new StorageSettingStoreType(ArchiveStoreValue);
-        /// <summary> OperationalStore. </summary>
+
+        /// <summary> Gets the OperationalStore. </summary>
         public static StorageSettingStoreType OperationalStore { get; } = new StorageSettingStoreType(OperationalStoreValue);
-        /// <summary> VaultStore. </summary>
+
+        /// <summary> Gets the VaultStore. </summary>
         public static StorageSettingStoreType VaultStore { get; } = new StorageSettingStoreType(VaultStoreValue);
+
         /// <summary> Determines if two <see cref="StorageSettingStoreType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageSettingStoreType left, StorageSettingStoreType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageSettingStoreType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageSettingStoreType left, StorageSettingStoreType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSettingStoreType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageSettingStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageSettingStoreType(string value) => new StorageSettingStoreType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageSettingStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageSettingStoreType?(string value) => value == null ? null : new StorageSettingStoreType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageSettingStoreType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageSettingStoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,68 +15,107 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingSubscriptionStatus : IEquatable<BillingSubscriptionStatus>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> Warned. </summary>
+        private const string WarnedValue = "Warned";
+        /// <summary> Expiring. </summary>
+        private const string ExpiringValue = "Expiring";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
+        /// <summary> AutoRenew. </summary>
+        private const string AutoRenewValue = "AutoRenew";
+        /// <summary> Cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> Suspended. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="BillingSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string UnknownValue = "Unknown";
-        private const string ActiveValue = "Active";
-        private const string DisabledValue = "Disabled";
-        private const string DeletedValue = "Deleted";
-        private const string WarnedValue = "Warned";
-        private const string ExpiringValue = "Expiring";
-        private const string ExpiredValue = "Expired";
-        private const string AutoRenewValue = "AutoRenew";
-        private const string CancelledValue = "Cancelled";
-        private const string SuspendedValue = "Suspended";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingSubscriptionStatus Other { get; } = new BillingSubscriptionStatus(OtherValue);
+
         /// <summary> Unknown. </summary>
         public static BillingSubscriptionStatus Unknown { get; } = new BillingSubscriptionStatus(UnknownValue);
+
         /// <summary> Active. </summary>
         public static BillingSubscriptionStatus Active { get; } = new BillingSubscriptionStatus(ActiveValue);
+
         /// <summary> Disabled. </summary>
         public static BillingSubscriptionStatus Disabled { get; } = new BillingSubscriptionStatus(DisabledValue);
+
         /// <summary> Deleted. </summary>
         public static BillingSubscriptionStatus Deleted { get; } = new BillingSubscriptionStatus(DeletedValue);
+
         /// <summary> Warned. </summary>
         public static BillingSubscriptionStatus Warned { get; } = new BillingSubscriptionStatus(WarnedValue);
+
         /// <summary> Expiring. </summary>
         public static BillingSubscriptionStatus Expiring { get; } = new BillingSubscriptionStatus(ExpiringValue);
+
         /// <summary> Expired. </summary>
         public static BillingSubscriptionStatus Expired { get; } = new BillingSubscriptionStatus(ExpiredValue);
+
         /// <summary> AutoRenew. </summary>
         public static BillingSubscriptionStatus AutoRenew { get; } = new BillingSubscriptionStatus(AutoRenewValue);
+
         /// <summary> Cancelled. </summary>
         public static BillingSubscriptionStatus Cancelled { get; } = new BillingSubscriptionStatus(CancelledValue);
+
         /// <summary> Suspended. </summary>
         public static BillingSubscriptionStatus Suspended { get; } = new BillingSubscriptionStatus(SuspendedValue);
+
         /// <summary> Failed. </summary>
         public static BillingSubscriptionStatus Failed { get; } = new BillingSubscriptionStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="BillingSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingSubscriptionStatus left, BillingSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingSubscriptionStatus left, BillingSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingSubscriptionStatus(string value) => new BillingSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingSubscriptionStatus?(string value) => value == null ? null : new BillingSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

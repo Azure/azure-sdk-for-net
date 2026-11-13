@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.EventHubs.Tests
 {
     [ClientTestFixture]
-    public class EventHubTestBase:ManagementRecordedTestBase<EventHubsManagementTestEnvironment>
+    public class EventHubTestBase : ManagementRecordedTestBase<EventHubsManagementTestEnvironment>
     {
         public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
                 EventHubsNameAvailabilityResult res = await DefaultSubscription.CheckEventHubsNamespaceNameAvailabilityAsync(new EventHubsNameAvailabilityContent(namespaceName));
-                if (res.NameAvailable==true)
+                if (res.NameAvailable == true)
                 {
                     return namespaceName;
                 }

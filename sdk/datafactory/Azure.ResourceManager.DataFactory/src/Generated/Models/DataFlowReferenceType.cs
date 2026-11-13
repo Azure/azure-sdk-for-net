@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DataFlowReferenceType : IEquatable<DataFlowReferenceType>
     {
         private readonly string _value;
+        /// <summary> DataFlowReference. </summary>
+        private const string DataFlowReferenceValue = "DataFlowReference";
 
         /// <summary> Initializes a new instance of <see cref="DataFlowReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFlowReferenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DataFlowReferenceValue = "DataFlowReference";
+            _value = value;
+        }
 
         /// <summary> DataFlowReference. </summary>
         public static DataFlowReferenceType DataFlowReference { get; } = new DataFlowReferenceType(DataFlowReferenceValue);
+
         /// <summary> Determines if two <see cref="DataFlowReferenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFlowReferenceType left, DataFlowReferenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFlowReferenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFlowReferenceType left, DataFlowReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFlowReferenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFlowReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFlowReferenceType(string value) => new DataFlowReferenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFlowReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFlowReferenceType?(string value) => value == null ? null : new DataFlowReferenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFlowReferenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFlowReferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

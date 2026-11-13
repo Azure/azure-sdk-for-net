@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class TroubleshootingResultOperationSource : IOperationSource<TroubleshootingResult>
+    /// <summary></summary>
+    internal partial class TroubleshootingResultOperationSource : IOperationSource<TroubleshootingResult>
     {
-        TroubleshootingResult IOperationSource<TroubleshootingResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal TroubleshootingResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return TroubleshootingResult.DeserializeTroubleshootingResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        TroubleshootingResult IOperationSource<TroubleshootingResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return TroubleshootingResult.DeserializeTroubleshootingResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<TroubleshootingResult> IOperationSource<TroubleshootingResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return TroubleshootingResult.DeserializeTroubleshootingResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return TroubleshootingResult.DeserializeTroubleshootingResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class ReachabilityAnalysisRunResource : IJsonModel<ReachabilityAnalysisRunData>
     {
-        private static ReachabilityAnalysisRunData s_dataDeserializationInstance;
-        private static ReachabilityAnalysisRunData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ReachabilityAnalysisRunData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ReachabilityAnalysisRunData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ReachabilityAnalysisRunData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReachabilityAnalysisRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ReachabilityAnalysisRunData>)Data).Write(writer, options);
 
-        ReachabilityAnalysisRunData IJsonModel<ReachabilityAnalysisRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReachabilityAnalysisRunData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReachabilityAnalysisRunData IJsonModel<ReachabilityAnalysisRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ReachabilityAnalysisRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReachabilityAnalysisRunData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ReachabilityAnalysisRunData IPersistableModel<ReachabilityAnalysisRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReachabilityAnalysisRunData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ReachabilityAnalysisRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReachabilityAnalysisRunData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReachabilityAnalysisRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

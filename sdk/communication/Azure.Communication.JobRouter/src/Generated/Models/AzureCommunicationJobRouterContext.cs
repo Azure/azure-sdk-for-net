@@ -11,22 +11,18 @@ namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AcceptJobOfferResult))]
     [ModelReaderWriterBuildable(typeof(BestWorkerMode))]
     [ModelReaderWriterBuildable(typeof(CancelExceptionAction))]
     [ModelReaderWriterBuildable(typeof(CancelJobOptions))]
-    [ModelReaderWriterBuildable(typeof(CancelJobResult))]
     [ModelReaderWriterBuildable(typeof(ClassificationPolicy))]
     [ModelReaderWriterBuildable(typeof(CloseJobOptions))]
-    [ModelReaderWriterBuildable(typeof(CloseJobResult))]
     [ModelReaderWriterBuildable(typeof(CompleteJobOptions))]
-    [ModelReaderWriterBuildable(typeof(CompleteJobResult))]
     [ModelReaderWriterBuildable(typeof(ConditionalQueueSelectorAttachment))]
     [ModelReaderWriterBuildable(typeof(ConditionalWorkerSelectorAttachment))]
     [ModelReaderWriterBuildable(typeof(DeclineJobOfferOptions))]
-    [ModelReaderWriterBuildable(typeof(DeclineJobOfferResult))]
     [ModelReaderWriterBuildable(typeof(DirectMapRouterRule))]
     [ModelReaderWriterBuildable(typeof(DistributionMode))]
     [ModelReaderWriterBuildable(typeof(DistributionPolicy))]
@@ -48,9 +44,6 @@ namespace Azure.Communication.JobRouter
     [ModelReaderWriterBuildable(typeof(QueueSelectorAttachment))]
     [ModelReaderWriterBuildable(typeof(QueueWeightedAllocation))]
     [ModelReaderWriterBuildable(typeof(ReclassifyExceptionAction))]
-    [ModelReaderWriterBuildable(typeof(ReclassifyJobOptions))]
-    [ModelReaderWriterBuildable(typeof(ReclassifyJobResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoundRobinMode))]
     [ModelReaderWriterBuildable(typeof(RouterChannel))]
     [ModelReaderWriterBuildable(typeof(RouterJob))]
@@ -75,13 +68,6 @@ namespace Azure.Communication.JobRouter
     [ModelReaderWriterBuildable(typeof(SuspendMode))]
     [ModelReaderWriterBuildable(typeof(UnassignJobOptions))]
     [ModelReaderWriterBuildable(typeof(UnassignJobResult))]
-    [ModelReaderWriterBuildable(typeof(UnknownDistributionMode))]
-    [ModelReaderWriterBuildable(typeof(UnknownExceptionAction))]
-    [ModelReaderWriterBuildable(typeof(UnknownExceptionTrigger))]
-    [ModelReaderWriterBuildable(typeof(UnknownJobMatchingMode))]
-    [ModelReaderWriterBuildable(typeof(UnknownQueueSelectorAttachment))]
-    [ModelReaderWriterBuildable(typeof(UnknownRouterRule))]
-    [ModelReaderWriterBuildable(typeof(UnknownWorkerSelectorAttachment))]
     [ModelReaderWriterBuildable(typeof(WaitTimeExceptionTrigger))]
     [ModelReaderWriterBuildable(typeof(WebhookRouterRule))]
     [ModelReaderWriterBuildable(typeof(WeightedAllocationQueueSelectorAttachment))]

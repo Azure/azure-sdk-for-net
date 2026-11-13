@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct AzureSearchIndexWriteBehaviorType : IEquatable<AzureSearchIndexWriteBehaviorType>
     {
         private readonly string _value;
+        /// <summary> Merge. </summary>
+        private const string MergeValue = "Merge";
+        /// <summary> Upload. </summary>
+        private const string UploadValue = "Upload";
 
         /// <summary> Initializes a new instance of <see cref="AzureSearchIndexWriteBehaviorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureSearchIndexWriteBehaviorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MergeValue = "Merge";
-        private const string UploadValue = "Upload";
+            _value = value;
+        }
 
         /// <summary> Merge. </summary>
         public static AzureSearchIndexWriteBehaviorType Merge { get; } = new AzureSearchIndexWriteBehaviorType(MergeValue);
+
         /// <summary> Upload. </summary>
         public static AzureSearchIndexWriteBehaviorType Upload { get; } = new AzureSearchIndexWriteBehaviorType(UploadValue);
+
         /// <summary> Determines if two <see cref="AzureSearchIndexWriteBehaviorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureSearchIndexWriteBehaviorType left, AzureSearchIndexWriteBehaviorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureSearchIndexWriteBehaviorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureSearchIndexWriteBehaviorType left, AzureSearchIndexWriteBehaviorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureSearchIndexWriteBehaviorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureSearchIndexWriteBehaviorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureSearchIndexWriteBehaviorType(string value) => new AzureSearchIndexWriteBehaviorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureSearchIndexWriteBehaviorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureSearchIndexWriteBehaviorType?(string value) => value == null ? null : new AzureSearchIndexWriteBehaviorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureSearchIndexWriteBehaviorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureSearchIndexWriteBehaviorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

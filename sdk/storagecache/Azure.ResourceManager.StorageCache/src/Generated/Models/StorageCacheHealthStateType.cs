@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,68 +15,107 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct StorageCacheHealthStateType : IEquatable<StorageCacheHealthStateType>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Healthy. </summary>
+        private const string HealthyValue = "Healthy";
+        /// <summary> Degraded. </summary>
+        private const string DegradedValue = "Degraded";
+        /// <summary> Down. </summary>
+        private const string DownValue = "Down";
+        /// <summary> Transitioning. </summary>
+        private const string TransitioningValue = "Transitioning";
+        /// <summary> Stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Upgrading. </summary>
+        private const string UpgradingValue = "Upgrading";
+        /// <summary> Flushing. </summary>
+        private const string FlushingValue = "Flushing";
+        /// <summary> WaitingForKey. </summary>
+        private const string WaitingForKeyValue = "WaitingForKey";
+        /// <summary> StartFailed. </summary>
+        private const string StartFailedValue = "StartFailed";
+        /// <summary> UpgradeFailed. </summary>
+        private const string UpgradeFailedValue = "UpgradeFailed";
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheHealthStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageCacheHealthStateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string HealthyValue = "Healthy";
-        private const string DegradedValue = "Degraded";
-        private const string DownValue = "Down";
-        private const string TransitioningValue = "Transitioning";
-        private const string StoppingValue = "Stopping";
-        private const string StoppedValue = "Stopped";
-        private const string UpgradingValue = "Upgrading";
-        private const string FlushingValue = "Flushing";
-        private const string WaitingForKeyValue = "WaitingForKey";
-        private const string StartFailedValue = "StartFailed";
-        private const string UpgradeFailedValue = "UpgradeFailed";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static StorageCacheHealthStateType Unknown { get; } = new StorageCacheHealthStateType(UnknownValue);
+
         /// <summary> Healthy. </summary>
         public static StorageCacheHealthStateType Healthy { get; } = new StorageCacheHealthStateType(HealthyValue);
+
         /// <summary> Degraded. </summary>
         public static StorageCacheHealthStateType Degraded { get; } = new StorageCacheHealthStateType(DegradedValue);
+
         /// <summary> Down. </summary>
         public static StorageCacheHealthStateType Down { get; } = new StorageCacheHealthStateType(DownValue);
+
         /// <summary> Transitioning. </summary>
         public static StorageCacheHealthStateType Transitioning { get; } = new StorageCacheHealthStateType(TransitioningValue);
+
         /// <summary> Stopping. </summary>
         public static StorageCacheHealthStateType Stopping { get; } = new StorageCacheHealthStateType(StoppingValue);
+
         /// <summary> Stopped. </summary>
         public static StorageCacheHealthStateType Stopped { get; } = new StorageCacheHealthStateType(StoppedValue);
+
         /// <summary> Upgrading. </summary>
         public static StorageCacheHealthStateType Upgrading { get; } = new StorageCacheHealthStateType(UpgradingValue);
+
         /// <summary> Flushing. </summary>
         public static StorageCacheHealthStateType Flushing { get; } = new StorageCacheHealthStateType(FlushingValue);
+
         /// <summary> WaitingForKey. </summary>
         public static StorageCacheHealthStateType WaitingForKey { get; } = new StorageCacheHealthStateType(WaitingForKeyValue);
+
         /// <summary> StartFailed. </summary>
         public static StorageCacheHealthStateType StartFailed { get; } = new StorageCacheHealthStateType(StartFailedValue);
+
         /// <summary> UpgradeFailed. </summary>
         public static StorageCacheHealthStateType UpgradeFailed { get; } = new StorageCacheHealthStateType(UpgradeFailedValue);
+
         /// <summary> Determines if two <see cref="StorageCacheHealthStateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageCacheHealthStateType left, StorageCacheHealthStateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageCacheHealthStateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageCacheHealthStateType left, StorageCacheHealthStateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheHealthStateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageCacheHealthStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageCacheHealthStateType(string value) => new StorageCacheHealthStateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageCacheHealthStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageCacheHealthStateType?(string value) => value == null ? null : new StorageCacheHealthStateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageCacheHealthStateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageCacheHealthStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

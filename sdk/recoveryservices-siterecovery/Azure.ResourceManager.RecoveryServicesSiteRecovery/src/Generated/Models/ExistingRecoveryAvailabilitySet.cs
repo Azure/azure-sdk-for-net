@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ExistingRecoveryAvailabilitySet : RecoveryAvailabilitySetCustomDetails
     {
         /// <summary> Initializes a new instance of <see cref="ExistingRecoveryAvailabilitySet"/>. </summary>
-        public ExistingRecoveryAvailabilitySet()
+        public ExistingRecoveryAvailabilitySet() : base("Existing")
         {
-            ResourceType = "Existing";
         }
 
         /// <summary> Initializes a new instance of <see cref="ExistingRecoveryAvailabilitySet"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryAvailabilitySetId"> The recovery availability set Id. Will throw error, if resource does not exist. </param>
-        internal ExistingRecoveryAvailabilitySet(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryAvailabilitySetId) : base(resourceType, serializedAdditionalRawData)
+        internal ExistingRecoveryAvailabilitySet(string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier recoveryAvailabilitySetId) : base(resourceType, additionalBinaryDataProperties)
         {
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
-            ResourceType = resourceType ?? "Existing";
         }
 
         /// <summary> The recovery availability set Id. Will throw error, if resource does not exist. </summary>

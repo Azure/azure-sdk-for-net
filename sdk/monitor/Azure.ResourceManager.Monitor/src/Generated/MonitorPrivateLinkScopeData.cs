@@ -13,85 +13,78 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary>
-    /// A class representing the MonitorPrivateLinkScope data model.
-    /// An Azure Monitor PrivateLinkScope definition.
-    /// </summary>
+    /// <summary> An Azure Monitor PrivateLinkScope definition. </summary>
     public partial class MonitorPrivateLinkScopeData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="accessModeSettings"> Access mode settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessModeSettings"/> is null. </exception>
         public MonitorPrivateLinkScopeData(AzureLocation location, MonitorPrivateLinkAccessModeSettings accessModeSettings) : base(location)
         {
             Argument.AssertNotNull(accessModeSettings, nameof(accessModeSettings));
 
-            PrivateEndpointConnections = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
-            AccessModeSettings = accessModeSettings;
+            Properties = new AzureMonitorPrivateLinkScopeProperties(accessModeSettings);
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="accessModeSettings"> Access mode settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorPrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections, MonitorPrivateLinkAccessModeSettings accessModeSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties that define a Azure Monitor PrivateLinkScope resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorPrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AzureMonitorPrivateLinkScopeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            PrivateEndpointConnections = privateEndpointConnections;
-            AccessModeSettings = accessModeSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeData"/> for deserialization. </summary>
-        internal MonitorPrivateLinkScopeData()
+        /// <summary> Properties that define a Azure Monitor PrivateLinkScope resource. </summary>
+        internal AzureMonitorPrivateLinkScopeProperties Properties { get; set; }
+
+        /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. </summary>
+        public MonitorPrivateLinkScopeProvisioningState? PrivateLinkScopeProvisioningState
         {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkScopeProvisioningState;
+            }
         }
 
-        /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>
-        public string ProvisioningState { get; }
         /// <summary> List of private endpoint connections. </summary>
-        public IReadOnlyList<MonitorPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<MonitorPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureMonitorPrivateLinkScopeProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Access mode settings. </summary>
-        public MonitorPrivateLinkAccessModeSettings AccessModeSettings { get; set; }
+        public MonitorPrivateLinkAccessModeSettings AccessModeSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessModeSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureMonitorPrivateLinkScopeProperties();
+                }
+                Properties.AccessModeSettings = value;
+            }
+        }
     }
 }

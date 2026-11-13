@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct WindowsUpdateClassification : IEquatable<WindowsUpdateClassification>
     {
         private readonly string _value;
+        /// <summary> Unclassified. </summary>
+        private const string UnclassifiedValue = "Unclassified";
+        /// <summary> Critical. </summary>
+        private const string CriticalValue = "Critical";
+        /// <summary> Security. </summary>
+        private const string SecurityValue = "Security";
+        /// <summary> UpdateRollup. </summary>
+        private const string UpdateRollupValue = "UpdateRollup";
+        /// <summary> FeaturePack. </summary>
+        private const string FeaturePackValue = "FeaturePack";
+        /// <summary> ServicePack. </summary>
+        private const string ServicePackValue = "ServicePack";
+        /// <summary> Definition. </summary>
+        private const string DefinitionValue = "Definition";
+        /// <summary> Tools. </summary>
+        private const string ToolsValue = "Tools";
+        /// <summary> Updates. </summary>
+        private const string UpdatesValue = "Updates";
 
         /// <summary> Initializes a new instance of <see cref="WindowsUpdateClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WindowsUpdateClassification(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnclassifiedValue = "Unclassified";
-        private const string CriticalValue = "Critical";
-        private const string SecurityValue = "Security";
-        private const string UpdateRollupValue = "UpdateRollup";
-        private const string FeaturePackValue = "FeaturePack";
-        private const string ServicePackValue = "ServicePack";
-        private const string DefinitionValue = "Definition";
-        private const string ToolsValue = "Tools";
-        private const string UpdatesValue = "Updates";
+            _value = value;
+        }
 
         /// <summary> Unclassified. </summary>
         public static WindowsUpdateClassification Unclassified { get; } = new WindowsUpdateClassification(UnclassifiedValue);
+
         /// <summary> Critical. </summary>
         public static WindowsUpdateClassification Critical { get; } = new WindowsUpdateClassification(CriticalValue);
+
         /// <summary> Security. </summary>
         public static WindowsUpdateClassification Security { get; } = new WindowsUpdateClassification(SecurityValue);
+
         /// <summary> UpdateRollup. </summary>
         public static WindowsUpdateClassification UpdateRollup { get; } = new WindowsUpdateClassification(UpdateRollupValue);
+
         /// <summary> FeaturePack. </summary>
         public static WindowsUpdateClassification FeaturePack { get; } = new WindowsUpdateClassification(FeaturePackValue);
+
         /// <summary> ServicePack. </summary>
         public static WindowsUpdateClassification ServicePack { get; } = new WindowsUpdateClassification(ServicePackValue);
+
         /// <summary> Definition. </summary>
         public static WindowsUpdateClassification Definition { get; } = new WindowsUpdateClassification(DefinitionValue);
+
         /// <summary> Tools. </summary>
         public static WindowsUpdateClassification Tools { get; } = new WindowsUpdateClassification(ToolsValue);
+
         /// <summary> Updates. </summary>
         public static WindowsUpdateClassification Updates { get; } = new WindowsUpdateClassification(UpdatesValue);
+
         /// <summary> Determines if two <see cref="WindowsUpdateClassification"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WindowsUpdateClassification left, WindowsUpdateClassification right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WindowsUpdateClassification"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WindowsUpdateClassification left, WindowsUpdateClassification right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsUpdateClassification"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WindowsUpdateClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WindowsUpdateClassification(string value) => new WindowsUpdateClassification(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WindowsUpdateClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WindowsUpdateClassification?(string value) => value == null ? null : new WindowsUpdateClassification(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WindowsUpdateClassification other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WindowsUpdateClassification other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

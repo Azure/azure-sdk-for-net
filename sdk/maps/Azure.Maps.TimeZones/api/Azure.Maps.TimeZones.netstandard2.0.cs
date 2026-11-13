@@ -11,9 +11,7 @@ namespace Azure.Maps.TimeZones
         public static Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation Transitions { get { throw null; } }
         public static Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation ZoneInfo { get { throw null; } }
         public bool Equals(Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation left, Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation right) { throw null; }
         public static implicit operator Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation (string value) { throw null; }
@@ -80,10 +78,12 @@ namespace Azure.Maps.TimeZones
     public static partial class MapsTimeZonesModelFactory
     {
         public static Azure.Maps.TimeZones.CountryRecord CountryRecord(string name = null, string code = null) { throw null; }
+        public static Azure.Maps.TimeZones.IanaIdData IanaIdData(System.Collections.Generic.IEnumerable<Azure.Maps.TimeZones.IanaId> ianaIds = null) { throw null; }
         public static Azure.Maps.TimeZones.TimeZoneIanaVersionResult TimeZoneIanaVersionResult(string version = null) { throw null; }
         public static Azure.Maps.TimeZones.TimeZoneName TimeZoneName(string iso6391LanguageCode = null, string generic = null, string standard = null, string daylight = null) { throw null; }
         public static Azure.Maps.TimeZones.TimeZoneResult TimeZoneResult(string version = null, System.DateTimeOffset? referenceUtcTimestamp = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Maps.TimeZones.TimeZoneId> timeZones = null) { throw null; }
         public static Azure.Maps.TimeZones.WindowsTimeZone WindowsTimeZone(string windowsId = null, string territory = null, System.Collections.Generic.IEnumerable<string> ianaIds = null) { throw null; }
+        public static Azure.Maps.TimeZones.WindowsTimeZoneData WindowsTimeZoneData(System.Collections.Generic.IEnumerable<Azure.Maps.TimeZones.WindowsTimeZone> windowsTimeZones = null) { throw null; }
     }
     public partial class ReferenceTime
     {

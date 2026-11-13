@@ -7,73 +7,34 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Configuration request object. </summary>
     public partial class ConfigurationsContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
-        /// <param name="configurationFilters"> Holds details about product hierarchy information and filterable property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationFilters"/> is null. </exception>
-        public ConfigurationsContent(IEnumerable<ConfigurationFilters> configurationFilters)
+        public ConfigurationsContent()
         {
-            Argument.AssertNotNull(configurationFilters, nameof(configurationFilters));
-
-            ConfigurationFilters = configurationFilters.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
-        /// <param name="configurationFilters"> Holds details about product hierarchy information and filterable property. </param>
+        /// <param name="configurationFilter"> Holds details about product hierarchy information and filterable property. </param>
         /// <param name="customerSubscriptionDetails"> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationsContent(IList<ConfigurationFilters> configurationFilters, CustomerSubscriptionDetails customerSubscriptionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationsContent(ConfigurationFilters configurationFilter, CustomerSubscriptionDetails customerSubscriptionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ConfigurationFilters = configurationFilters;
+            ConfigurationFilter = configurationFilter;
             CustomerSubscriptionDetails = customerSubscriptionDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/> for deserialization. </summary>
-        internal ConfigurationsContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Holds details about product hierarchy information and filterable property. </summary>
-        public IList<ConfigurationFilters> ConfigurationFilters { get; }
+        public ConfigurationFilters ConfigurationFilter { get; set; }
+
         /// <summary> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </summary>
         public CustomerSubscriptionDetails CustomerSubscriptionDetails { get; set; }
     }

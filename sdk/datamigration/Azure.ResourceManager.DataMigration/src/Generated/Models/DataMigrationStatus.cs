@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationStatus : IEquatable<DataMigrationStatus>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Connecting. </summary>
+        private const string ConnectingValue = "Connecting";
+        /// <summary> SourceAndTargetSelected. </summary>
+        private const string SourceAndTargetSelectedValue = "SourceAndTargetSelected";
+        /// <summary> SelectLogins. </summary>
+        private const string SelectLoginsValue = "SelectLogins";
+        /// <summary> Configured. </summary>
+        private const string ConfiguredValue = "Configured";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> CompletedWithWarnings. </summary>
+        private const string CompletedWithWarningsValue = "CompletedWithWarnings";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string ConnectingValue = "Connecting";
-        private const string SourceAndTargetSelectedValue = "SourceAndTargetSelected";
-        private const string SelectLoginsValue = "SelectLogins";
-        private const string ConfiguredValue = "Configured";
-        private const string RunningValue = "Running";
-        private const string ErrorValue = "Error";
-        private const string StoppedValue = "Stopped";
-        private const string CompletedValue = "Completed";
-        private const string CompletedWithWarningsValue = "CompletedWithWarnings";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static DataMigrationStatus Default { get; } = new DataMigrationStatus(DefaultValue);
+
         /// <summary> Connecting. </summary>
         public static DataMigrationStatus Connecting { get; } = new DataMigrationStatus(ConnectingValue);
+
         /// <summary> SourceAndTargetSelected. </summary>
         public static DataMigrationStatus SourceAndTargetSelected { get; } = new DataMigrationStatus(SourceAndTargetSelectedValue);
+
         /// <summary> SelectLogins. </summary>
         public static DataMigrationStatus SelectLogins { get; } = new DataMigrationStatus(SelectLoginsValue);
+
         /// <summary> Configured. </summary>
         public static DataMigrationStatus Configured { get; } = new DataMigrationStatus(ConfiguredValue);
+
         /// <summary> Running. </summary>
         public static DataMigrationStatus Running { get; } = new DataMigrationStatus(RunningValue);
+
         /// <summary> Error. </summary>
         public static DataMigrationStatus Error { get; } = new DataMigrationStatus(ErrorValue);
+
         /// <summary> Stopped. </summary>
         public static DataMigrationStatus Stopped { get; } = new DataMigrationStatus(StoppedValue);
+
         /// <summary> Completed. </summary>
         public static DataMigrationStatus Completed { get; } = new DataMigrationStatus(CompletedValue);
+
         /// <summary> CompletedWithWarnings. </summary>
         public static DataMigrationStatus CompletedWithWarnings { get; } = new DataMigrationStatus(CompletedWithWarningsValue);
+
         /// <summary> Determines if two <see cref="DataMigrationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationStatus left, DataMigrationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationStatus left, DataMigrationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationStatus(string value) => new DataMigrationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationStatus?(string value) => value == null ? null : new DataMigrationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

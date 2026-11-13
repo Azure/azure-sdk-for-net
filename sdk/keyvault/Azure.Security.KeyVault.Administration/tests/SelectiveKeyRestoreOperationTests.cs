@@ -108,8 +108,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync(default));
 
             Assert.Throws<RequestFailedException>(() => { KeyVaultSelectiveKeyRestoreResult x = operation.Value; });
-            Assert.That(operation.StartTime, Is.EqualTo(failedRestore.StartTime));
-            Assert.That(operation.EndTime, Is.EqualTo(failedRestore.EndTime));
+            Assert.That(operation.StartTime, Is.EqualTo(failedRestore.StartsOn));
+            Assert.That(operation.EndTime, Is.EqualTo(failedRestore.EndsOn));
         }
 
         [Test]
@@ -124,8 +124,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var operation = new KeyVaultSelectiveKeyRestoreOperation(incompleteRestore, Mock.Of<Response>(), Mock.Of<KeyVaultBackupClient>());
 
             Assert.Throws<InvalidOperationException>(() => { KeyVaultSelectiveKeyRestoreResult x = operation.Value; });
-            Assert.That(operation.StartTime, Is.EqualTo(incompleteRestore.StartTime));
-            Assert.That(operation.EndTime, Is.EqualTo(incompleteRestore.EndTime));
+            Assert.That(operation.StartTime, Is.EqualTo(incompleteRestore.StartsOn));
+            Assert.That(operation.EndTime, Is.EqualTo(incompleteRestore.EndsOn));
         }
 
         [Test]

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoClusterState : IEquatable<KustoClusterState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Unavailable. </summary>
+        private const string UnavailableValue = "Unavailable";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> Stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Migrated. </summary>
+        private const string MigratedValue = "Migrated";
 
         /// <summary> Initializes a new instance of <see cref="KustoClusterState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoClusterState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UnavailableValue = "Unavailable";
-        private const string RunningValue = "Running";
-        private const string DeletingValue = "Deleting";
-        private const string DeletedValue = "Deleted";
-        private const string StoppingValue = "Stopping";
-        private const string StoppedValue = "Stopped";
-        private const string StartingValue = "Starting";
-        private const string UpdatingValue = "Updating";
-        private const string MigratedValue = "Migrated";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static KustoClusterState Creating { get; } = new KustoClusterState(CreatingValue);
+
         /// <summary> Unavailable. </summary>
         public static KustoClusterState Unavailable { get; } = new KustoClusterState(UnavailableValue);
+
         /// <summary> Running. </summary>
         public static KustoClusterState Running { get; } = new KustoClusterState(RunningValue);
+
         /// <summary> Deleting. </summary>
         public static KustoClusterState Deleting { get; } = new KustoClusterState(DeletingValue);
+
         /// <summary> Deleted. </summary>
         public static KustoClusterState Deleted { get; } = new KustoClusterState(DeletedValue);
+
         /// <summary> Stopping. </summary>
         public static KustoClusterState Stopping { get; } = new KustoClusterState(StoppingValue);
+
         /// <summary> Stopped. </summary>
         public static KustoClusterState Stopped { get; } = new KustoClusterState(StoppedValue);
+
         /// <summary> Starting. </summary>
         public static KustoClusterState Starting { get; } = new KustoClusterState(StartingValue);
+
         /// <summary> Updating. </summary>
         public static KustoClusterState Updating { get; } = new KustoClusterState(UpdatingValue);
+
         /// <summary> Migrated. </summary>
         public static KustoClusterState Migrated { get; } = new KustoClusterState(MigratedValue);
+
         /// <summary> Determines if two <see cref="KustoClusterState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoClusterState left, KustoClusterState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoClusterState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoClusterState left, KustoClusterState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoClusterState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoClusterState(string value) => new KustoClusterState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoClusterState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoClusterState?(string value) => value == null ? null : new KustoClusterState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoClusterState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoClusterState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

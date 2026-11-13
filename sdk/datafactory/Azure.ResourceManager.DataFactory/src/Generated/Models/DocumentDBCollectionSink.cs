@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DocumentDBCollectionSink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionSink"/>. </summary>
-        public DocumentDBCollectionSink()
+        public DocumentDBCollectionSink() : base("DocumentDbCollectionSink")
         {
-            CopySinkType = "DocumentDbCollectionSink";
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionSink"/>. </summary>
@@ -28,18 +27,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="nestingSeparator"> Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string). </param>
         /// <param name="writeBehavior"> Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert. </param>
         internal DocumentDBCollectionSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> nestingSeparator, DataFactoryElement<string> writeBehavior) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             NestingSeparator = nestingSeparator;
             WriteBehavior = writeBehavior;
-            CopySinkType = copySinkType ?? "DocumentDbCollectionSink";
         }
 
         /// <summary> Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> NestingSeparator { get; set; }
+
         /// <summary> Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert. </summary>
         public DataFactoryElement<string> WriteBehavior { get; set; }
     }

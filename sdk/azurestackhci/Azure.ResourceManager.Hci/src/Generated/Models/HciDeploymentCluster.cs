@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> AzureStackHCI Cluster deployment properties. </summary>
     public partial class HciDeploymentCluster
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciDeploymentCluster"/>. </summary>
         public HciDeploymentCluster()
@@ -56,31 +28,47 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="witnessPath"> Specify the fileshare path for the local witness for your Azure Stack HCI cluster. </param>
         /// <param name="cloudAccountName"> Specify the Azure Storage account name for cloud witness for your Azure Stack HCI cluster. </param>
         /// <param name="azureServiceEndpoint"> For Azure blob service endpoint type, select either Default or Custom domain. If you selected **Custom domain, enter the domain for the blob service in this format core.windows.net. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciDeploymentCluster(string name, string witnessType, string witnessPath, string cloudAccountName, string azureServiceEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="hardwareClass"> Hardware class of the cluster. </param>
+        /// <param name="clusterPattern"> Cluster Pattern supported. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciDeploymentCluster(string name, string witnessType, string witnessPath, string cloudAccountName, string azureServiceEndpoint, HardwareClass? hardwareClass, ClusterPattern? clusterPattern, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             WitnessType = witnessType;
             WitnessPath = witnessPath;
             CloudAccountName = cloudAccountName;
             AzureServiceEndpoint = azureServiceEndpoint;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            HardwareClass = hardwareClass;
+            ClusterPattern = clusterPattern;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The cluster name provided when preparing Active Directory. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Use a cloud witness if you have internet access and if you use an Azure Storage account to provide a vote on cluster quorum. A cloud witness uses Azure Blob Storage to read or write a blob file and then uses it to arbitrate in split-brain resolution. Only allowed values are 'Cloud', 'FileShare'. </summary>
         [WirePath("witnessType")]
         public string WitnessType { get; set; }
+
         /// <summary> Specify the fileshare path for the local witness for your Azure Stack HCI cluster. </summary>
         [WirePath("witnessPath")]
         public string WitnessPath { get; set; }
+
         /// <summary> Specify the Azure Storage account name for cloud witness for your Azure Stack HCI cluster. </summary>
         [WirePath("cloudAccountName")]
         public string CloudAccountName { get; set; }
+
         /// <summary> For Azure blob service endpoint type, select either Default or Custom domain. If you selected **Custom domain, enter the domain for the blob service in this format core.windows.net. </summary>
         [WirePath("azureServiceEndpoint")]
         public string AzureServiceEndpoint { get; set; }
+
+        /// <summary> Hardware class of the cluster. </summary>
+        [WirePath("hardwareClass")]
+        public HardwareClass? HardwareClass { get; }
+
+        /// <summary> Cluster Pattern supported. </summary>
+        [WirePath("clusterPattern")]
+        public ClusterPattern? ClusterPattern { get; set; }
     }
 }

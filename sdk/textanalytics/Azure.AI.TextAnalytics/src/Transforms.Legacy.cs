@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics
             var errorDetails = error.Details switch
             {
                 IDictionary<string, string> dictionary => dictionary,
-                _=> error.Details.ToDictionary(x => x.Key, x => x.Value)
+                _ => error.Details.ToDictionary(x => x.Key, x => x.Value)
             };
 
             return new Models.InnerErrorModel(
@@ -164,7 +164,7 @@ namespace Azure.AI.TextAnalytics
                 Legacy.Models.SentenceSentimentValue.Neutral => TextSentiment.Neutral,
                 Legacy.Models.SentenceSentimentValue.Positive => TextSentiment.Positive,
                 Legacy.Models.SentenceSentimentValue.Negative => TextSentiment.Negative,
-                _ => throw new NotSupportedException($"The sentence sentiment, { sentiment }, is not supported for conversion.")
+                _ => throw new NotSupportedException($"The sentence sentiment, {sentiment}, is not supported for conversion.")
             };
 
         internal static TextSentiment ConvertToTextSentiment(Legacy.Models.TokenSentimentValue sentiment) =>
@@ -173,7 +173,7 @@ namespace Azure.AI.TextAnalytics
                 Legacy.Models.TokenSentimentValue.Mixed => TextSentiment.Neutral,
                 Legacy.Models.TokenSentimentValue.Positive => TextSentiment.Positive,
                 Legacy.Models.TokenSentimentValue.Negative => TextSentiment.Negative,
-                _ => throw new NotSupportedException($"The token sentiment, { sentiment }, is not supported for conversion.")
+                _ => throw new NotSupportedException($"The token sentiment, {sentiment}, is not supported for conversion.")
             };
 
         internal static TextSentiment ConvertToTextSentiment(Legacy.Models.DocumentSentimentValue sentiment) =>
@@ -183,7 +183,7 @@ namespace Azure.AI.TextAnalytics
                 Legacy.Models.DocumentSentimentValue.Positive => TextSentiment.Positive,
                 Legacy.Models.DocumentSentimentValue.Negative => TextSentiment.Negative,
                 Legacy.Models.DocumentSentimentValue.Mixed => TextSentiment.Mixed,
-                _ => throw new NotSupportedException($"The document sentiment, { sentiment }, is not supported for conversion.")
+                _ => throw new NotSupportedException($"The document sentiment, {sentiment}, is not supported for conversion.")
             };
 
         internal static List<SentenceOpinion> ConvertToSentenceOpinions(Legacy.SentenceSentiment currentSentence, IReadOnlyList<Legacy.SentenceSentiment> allSentences)

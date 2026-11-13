@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AzureStorageBlobContainerEndpointProperties : IUtf8JsonSerializable, IJsonModel<AzureStorageBlobContainerEndpointProperties>
+    /// <summary> The properties of Azure Storage blob container endpoint. </summary>
+    public partial class AzureStorageBlobContainerEndpointProperties : EndpointBaseProperties, IJsonModel<AzureStorageBlobContainerEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStorageBlobContainerEndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AzureStorageBlobContainerEndpointProperties"/> for deserialization. </summary>
+        internal AzureStorageBlobContainerEndpointProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EndpointBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureStorageBlobContainerEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureStorageBlobContainerEndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureStorageBlobContainerEndpointProperties IPersistableModel<AzureStorageBlobContainerEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureStorageBlobContainerEndpointProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureStorageBlobContainerEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureStorageBlobContainerEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,121 +74,157 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("storageAccountResourceId"u8);
             writer.WriteStringValue(StorageAccountResourceId);
             writer.WritePropertyName("blobContainerName"u8);
             writer.WriteStringValue(BlobContainerName);
+            if (Optional.IsDefined(EnableCrossTenantTransfer))
+            {
+                writer.WritePropertyName("enableCrossTenantTransfer"u8);
+                writer.WriteBooleanValue(EnableCrossTenantTransfer.Value);
+            }
+            if (Optional.IsCollectionDefined(AllowedStorageAccounts))
+            {
+                writer.WritePropertyName("allowedStorageAccounts"u8);
+                writer.WriteStartArray();
+                foreach (string item in AllowedStorageAccounts)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
         }
 
-        AzureStorageBlobContainerEndpointProperties IJsonModel<AzureStorageBlobContainerEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureStorageBlobContainerEndpointProperties IJsonModel<AzureStorageBlobContainerEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureStorageBlobContainerEndpointProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EndpointBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureStorageBlobContainerEndpointProperties(document.RootElement, options);
         }
 
-        internal static AzureStorageBlobContainerEndpointProperties DeserializeAzureStorageBlobContainerEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureStorageBlobContainerEndpointProperties DeserializeAzureStorageBlobContainerEndpointProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string storageAccountResourceId = default;
-            string blobContainerName = default;
             EndpointType endpointType = default;
             string description = default;
+            StorageMoverEndpointKind? endpointKind = default;
             StorageMoverProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string storageAccountResourceId = default;
+            string blobContainerName = default;
+            bool? enableCrossTenantTransfer = default;
+            IList<string> allowedStorageAccounts = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountResourceId"u8))
+                if (prop.NameEquals("endpointType"u8))
                 {
-                    storageAccountResourceId = property.Value.GetString();
+                    endpointType = new EndpointType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("blobContainerName"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    blobContainerName = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointType"u8))
+                if (prop.NameEquals("endpointKind"u8))
                 {
-                    endpointType = new EndpointType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new StorageMoverProvisioningState(property.Value.GetString());
+                    endpointKind = new StorageMoverEndpointKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new StorageMoverProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("storageAccountResourceId"u8))
+                {
+                    storageAccountResourceId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("blobContainerName"u8))
+                {
+                    blobContainerName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("enableCrossTenantTransfer"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableCrossTenantTransfer = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("allowedStorageAccounts"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    allowedStorageAccounts = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AzureStorageBlobContainerEndpointProperties(
                 endpointType,
                 description,
+                endpointKind,
                 provisioningState,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 storageAccountResourceId,
-                blobContainerName);
+                blobContainerName,
+                enableCrossTenantTransfer,
+                allowedStorageAccounts ?? new ChangeTrackingList<string>());
         }
-
-        BinaryData IPersistableModel<AzureStorageBlobContainerEndpointProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureStorageBlobContainerEndpointProperties IPersistableModel<AzureStorageBlobContainerEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureStorageBlobContainerEndpointProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureStorageBlobContainerEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StorageSync
 {
+    /// <summary></summary>
     public partial class StorageSyncServerEndpointResource : IJsonModel<StorageSyncServerEndpointData>
     {
-        private static StorageSyncServerEndpointData s_dataDeserializationInstance;
-        private static StorageSyncServerEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageSyncServerEndpointData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageSyncServerEndpointData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageSyncServerEndpointData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageSyncServerEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncServerEndpointData>)Data).Write(writer, options);
 
-        StorageSyncServerEndpointData IJsonModel<StorageSyncServerEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncServerEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageSyncServerEndpointData IJsonModel<StorageSyncServerEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageSyncServerEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageSyncServerEndpointData>(Data, options, AzureResourceManagerStorageSyncContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageSyncServerEndpointData IPersistableModel<StorageSyncServerEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageSyncServerEndpointData>(data, options, AzureResourceManagerStorageSyncContext.Default);
 
-        string IPersistableModel<StorageSyncServerEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageSyncServerEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageSyncServerEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

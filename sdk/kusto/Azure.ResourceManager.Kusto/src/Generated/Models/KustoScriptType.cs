@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> The type of resource, Microsoft.Kusto/clusters/databases/scripts. </summary>
+    /// <summary></summary>
     public readonly partial struct KustoScriptType : IEquatable<KustoScriptType>
     {
         private readonly string _value;
+        /// <summary> Microsoft.Kusto/clusters/databases/scripts. </summary>
+        private const string MicrosoftKustoClustersDatabasesScriptsValue = "Microsoft.Kusto/clusters/databases/scripts";
 
         /// <summary> Initializes a new instance of <see cref="KustoScriptType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoScriptType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftKustoClustersDatabasesScriptsValue = "Microsoft.Kusto/clusters/databases/scripts";
+            _value = value;
+        }
 
         /// <summary> Microsoft.Kusto/clusters/databases/scripts. </summary>
         public static KustoScriptType MicrosoftKustoClustersDatabasesScripts { get; } = new KustoScriptType(MicrosoftKustoClustersDatabasesScriptsValue);
+
         /// <summary> Determines if two <see cref="KustoScriptType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoScriptType left, KustoScriptType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoScriptType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoScriptType left, KustoScriptType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoScriptType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoScriptType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoScriptType(string value) => new KustoScriptType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoScriptType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoScriptType?(string value) => value == null ? null : new KustoScriptType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoScriptType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoScriptType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

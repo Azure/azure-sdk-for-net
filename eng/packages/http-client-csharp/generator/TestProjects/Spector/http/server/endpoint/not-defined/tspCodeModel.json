@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "NotDefinedClient",
+      "isExactName": false,
       "namespace": "Server.Endpoint.NotDefined",
       "doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
       "methods": [
@@ -16,12 +17,13 @@
           "$id": "2",
           "kind": "basic",
           "name": "valid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "3",
             "name": "valid",
-            "resourceName": "NotDefined",
+            "isExactName": false,
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -30,7 +32,8 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "HEAD",
@@ -40,7 +43,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Endpoint.NotDefined"
           },
           "parameters": [],
           "response": {},
@@ -70,12 +74,15 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.endpoint"
+          "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Endpoint.NotDefined",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

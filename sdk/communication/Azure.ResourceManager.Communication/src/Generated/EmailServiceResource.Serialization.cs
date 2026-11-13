@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Communication
 {
+    /// <summary></summary>
     public partial class EmailServiceResource : IJsonModel<EmailServiceResourceData>
     {
-        private static EmailServiceResourceData s_dataDeserializationInstance;
-        private static EmailServiceResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EmailServiceResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EmailServiceResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EmailServiceResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EmailServiceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EmailServiceResourceData>)Data).Write(writer, options);
 
-        EmailServiceResourceData IJsonModel<EmailServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EmailServiceResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EmailServiceResourceData IJsonModel<EmailServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EmailServiceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EmailServiceResourceData>(Data, options, AzureResourceManagerCommunicationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EmailServiceResourceData IPersistableModel<EmailServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EmailServiceResourceData>(data, options, AzureResourceManagerCommunicationContext.Default);
 
-        string IPersistableModel<EmailServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EmailServiceResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EmailServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

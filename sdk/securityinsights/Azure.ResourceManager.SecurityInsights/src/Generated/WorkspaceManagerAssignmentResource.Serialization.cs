@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class WorkspaceManagerAssignmentResource : IJsonModel<WorkspaceManagerAssignmentData>
     {
-        private static WorkspaceManagerAssignmentData s_dataDeserializationInstance;
-        private static WorkspaceManagerAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkspaceManagerAssignmentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkspaceManagerAssignmentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkspaceManagerAssignmentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkspaceManagerAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerAssignmentData>)Data).Write(writer, options);
 
-        WorkspaceManagerAssignmentData IJsonModel<WorkspaceManagerAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkspaceManagerAssignmentData IJsonModel<WorkspaceManagerAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkspaceManagerAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkspaceManagerAssignmentData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkspaceManagerAssignmentData IPersistableModel<WorkspaceManagerAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkspaceManagerAssignmentData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<WorkspaceManagerAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceManagerAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkspaceManagerAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

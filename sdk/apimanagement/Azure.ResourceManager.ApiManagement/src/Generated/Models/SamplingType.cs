@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct SamplingType : IEquatable<SamplingType>
     {
         private readonly string _value;
+        /// <summary> Fixed-rate sampling. </summary>
+        private const string FixedValue = "fixed";
 
         /// <summary> Initializes a new instance of <see cref="SamplingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SamplingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FixedValue = "fixed";
+            _value = value;
+        }
 
         /// <summary> Fixed-rate sampling. </summary>
         public static SamplingType Fixed { get; } = new SamplingType(FixedValue);
+
         /// <summary> Determines if two <see cref="SamplingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SamplingType left, SamplingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SamplingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SamplingType left, SamplingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SamplingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SamplingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SamplingType(string value) => new SamplingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SamplingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SamplingType?(string value) => value == null ? null : new SamplingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SamplingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SamplingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

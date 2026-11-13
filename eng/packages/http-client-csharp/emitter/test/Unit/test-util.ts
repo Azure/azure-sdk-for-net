@@ -59,7 +59,6 @@ export async function typeSpecCompile(
     namespace Azure.Csharp.Testing;
 
     enum Versions {
-    ${"@useDependency(Azure.Core.Versions.v1_0_Preview_1)"}
     "2023-01-01-preview"
     }
 

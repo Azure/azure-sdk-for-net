@@ -13,64 +13,37 @@ namespace Azure.ResourceManager.LargeInstance.Models
     /// <summary> Specifies the disk information fo the Azure Large Instance. </summary>
     public partial class LargeInstanceDisk
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceDisk"/>. </summary>
-        internal LargeInstanceDisk()
+        public LargeInstanceDisk()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceDisk"/>. </summary>
         /// <param name="name"> The disk name. </param>
-        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. </param>
+        /// <param name="diskSizeInGB"> Specifies the size of an empty data disk in gigabytes. </param>
         /// <param name="lun">
         /// Specifies the logical unit number of the data disk. This value is used to
         /// identify data disks within the VM and therefore must be unique for each data
         /// disk attached to a VM.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LargeInstanceDisk(string name, int? diskSizeGB, int? lun, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LargeInstanceDisk(string name, int? diskSizeInGB, int? lun, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            DiskSizeGB = diskSizeGB;
+            DiskSizeInGB = diskSizeInGB;
             Lun = lun;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The disk name. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
+
         /// <summary> Specifies the size of an empty data disk in gigabytes. </summary>
-        public int? DiskSizeGB { get; }
+        public int? DiskSizeInGB { get; set; }
+
         /// <summary>
         /// Specifies the logical unit number of the data disk. This value is used to
         /// identify data disks within the VM and therefore must be unique for each data

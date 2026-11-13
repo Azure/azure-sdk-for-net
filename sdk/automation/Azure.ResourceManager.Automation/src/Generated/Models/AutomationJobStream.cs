@@ -14,107 +14,74 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the job stream. </summary>
     public partial class AutomationJobStream
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobStream"/>. </summary>
         internal AutomationJobStream()
         {
-            Value = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobStream"/>. </summary>
         /// <param name="id"> Gets or sets the id of the resource. </param>
-        /// <param name="jobStreamId"> Gets or sets the id of the job stream. </param>
-        /// <param name="time"> Gets or sets the creation time of the job. </param>
-        /// <param name="streamType"> Gets or sets the stream type. </param>
-        /// <param name="streamText"> Gets or sets the stream text. </param>
-        /// <param name="summary"> Gets or sets the summary. </param>
-        /// <param name="value"> Gets or sets the values of the job stream. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationJobStream(ResourceIdentifier id, string jobStreamId, DateTimeOffset? time, AutomationJobStreamType? streamType, string streamText, string summary, IReadOnlyDictionary<string, BinaryData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Gets or sets the id of the job stream. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationJobStream(ResourceIdentifier id, JobStreamProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            JobStreamId = jobStreamId;
-            Time = time;
-            StreamType = streamType;
-            StreamText = streamText;
-            Summary = summary;
-            Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the id of the resource. </summary>
         public ResourceIdentifier Id { get; }
+
         /// <summary> Gets or sets the id of the job stream. </summary>
-        public string JobStreamId { get; }
+        internal JobStreamProperties Properties { get; }
+
+        /// <summary> Gets or sets the id of the job stream. </summary>
+        public string JobStreamId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobStreamId;
+            }
+        }
+
         /// <summary> Gets or sets the creation time of the job. </summary>
-        public DateTimeOffset? Time { get; }
+        public DateTimeOffset? Time
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Time;
+            }
+        }
+
         /// <summary> Gets or sets the stream type. </summary>
-        public AutomationJobStreamType? StreamType { get; }
+        public AutomationJobStreamType? StreamType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StreamType;
+            }
+        }
+
         /// <summary> Gets or sets the stream text. </summary>
-        public string StreamText { get; }
+        public string StreamText
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StreamText;
+            }
+        }
+
         /// <summary> Gets or sets the summary. </summary>
-        public string Summary { get; }
-        /// <summary>
-        /// Gets or sets the values of the job stream.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Value { get; }
+        public string Summary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Summary;
+            }
+        }
     }
 }

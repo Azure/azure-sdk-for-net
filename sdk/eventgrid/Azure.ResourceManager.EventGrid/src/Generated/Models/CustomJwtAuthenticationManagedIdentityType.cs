@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct CustomJwtAuthenticationManagedIdentityType : IEquatable<CustomJwtAuthenticationManagedIdentityType>
     {
         private readonly string _value;
+        /// <summary> SystemAssigned. </summary>
+        private const string SystemAssignedValue = "SystemAssigned";
+        /// <summary> UserAssigned. </summary>
+        private const string UserAssignedValue = "UserAssigned";
 
         /// <summary> Initializes a new instance of <see cref="CustomJwtAuthenticationManagedIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CustomJwtAuthenticationManagedIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SystemAssignedValue = "SystemAssigned";
-        private const string UserAssignedValue = "UserAssigned";
+            _value = value;
+        }
 
         /// <summary> SystemAssigned. </summary>
         public static CustomJwtAuthenticationManagedIdentityType SystemAssigned { get; } = new CustomJwtAuthenticationManagedIdentityType(SystemAssignedValue);
+
         /// <summary> UserAssigned. </summary>
         public static CustomJwtAuthenticationManagedIdentityType UserAssigned { get; } = new CustomJwtAuthenticationManagedIdentityType(UserAssignedValue);
+
         /// <summary> Determines if two <see cref="CustomJwtAuthenticationManagedIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomJwtAuthenticationManagedIdentityType left, CustomJwtAuthenticationManagedIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CustomJwtAuthenticationManagedIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomJwtAuthenticationManagedIdentityType left, CustomJwtAuthenticationManagedIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomJwtAuthenticationManagedIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CustomJwtAuthenticationManagedIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CustomJwtAuthenticationManagedIdentityType(string value) => new CustomJwtAuthenticationManagedIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CustomJwtAuthenticationManagedIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomJwtAuthenticationManagedIdentityType?(string value) => value == null ? null : new CustomJwtAuthenticationManagedIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomJwtAuthenticationManagedIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CustomJwtAuthenticationManagedIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

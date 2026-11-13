@@ -7,85 +7,95 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the WorkspaceManagerGroup data model.
-    /// The workspace manager group
-    /// </summary>
+    /// <summary> The workspace manager group. </summary>
     public partial class WorkspaceManagerGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerGroupData"/>. </summary>
         public WorkspaceManagerGroupData()
         {
-            MemberResourceNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of the workspace manager group. </param>
-        /// <param name="displayName"> The display name of the workspace manager group. </param>
-        /// <param name="memberResourceNames"> The names of the workspace manager members participating in this group. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string displayName, IList<string> memberResourceNames, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The workspace manager group object. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceManagerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkspaceManagerGroupProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            DisplayName = displayName;
-            MemberResourceNames = memberResourceNames;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The description of the workspace manager group. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> The display name of the workspace manager group. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
-        /// <summary> The names of the workspace manager members participating in this group. </summary>
-        [WirePath("properties.memberResourceNames")]
-        public IList<string> MemberResourceNames { get; }
+        /// <summary> The workspace manager group object. </summary>
+        [WirePath("properties")]
+        internal WorkspaceManagerGroupProperties Properties { get; set; }
+
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> The description of the workspace manager group. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceManagerGroupProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The display name of the workspace manager group. </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceManagerGroupProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> The names of the workspace manager members participating in this group. </summary>
+        [WirePath("properties.memberResourceNames")]
+        public IList<string> MemberResourceNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceManagerGroupProperties();
+                }
+                return Properties.MemberResourceNames;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class ApiManagementSkuRestrictionsTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ApiManagementSkuRestrictionsType value) => value switch
         {
             ApiManagementSkuRestrictionsType.Location => "Location",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementSkuRestrictionsType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ApiManagementSkuRestrictionsType ToApiManagementSkuRestrictionsType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location")) return ApiManagementSkuRestrictionsType.Location;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone")) return ApiManagementSkuRestrictionsType.Zone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location"))
+            {
+                return ApiManagementSkuRestrictionsType.Location;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone"))
+            {
+                return ApiManagementSkuRestrictionsType.Zone;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementSkuRestrictionsType value.");
         }
     }

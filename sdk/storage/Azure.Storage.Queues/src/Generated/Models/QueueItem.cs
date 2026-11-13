@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -15,19 +14,16 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueItem
     {
         /// <summary> Initializes a new instance of <see cref="QueueItem"/>. </summary>
-        /// <param name="name"> The name of the Queue. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <param name="name"> The name of the queue. </param>
         internal QueueItem(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QueueItem"/>. </summary>
-        /// <param name="name"> The name of the Queue. </param>
-        /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="name"> The name of the queue. </param>
+        /// <param name="metadata"> The metadata of the queue. </param>
         internal QueueItem(string name, IDictionary<string, string> metadata)
         {
             Name = name;

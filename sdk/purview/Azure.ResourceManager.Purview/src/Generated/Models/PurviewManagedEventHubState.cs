@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Purview.Models
     public readonly partial struct PurviewManagedEventHubState : IEquatable<PurviewManagedEventHubState>
     {
         private readonly string _value;
+        /// <summary> NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="PurviewManagedEventHubState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PurviewManagedEventHubState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> NotSpecified. </summary>
         public static PurviewManagedEventHubState NotSpecified { get; } = new PurviewManagedEventHubState(NotSpecifiedValue);
+
         /// <summary> Disabled. </summary>
         public static PurviewManagedEventHubState Disabled { get; } = new PurviewManagedEventHubState(DisabledValue);
+
         /// <summary> Enabled. </summary>
         public static PurviewManagedEventHubState Enabled { get; } = new PurviewManagedEventHubState(EnabledValue);
+
         /// <summary> Determines if two <see cref="PurviewManagedEventHubState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PurviewManagedEventHubState left, PurviewManagedEventHubState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PurviewManagedEventHubState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PurviewManagedEventHubState left, PurviewManagedEventHubState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewManagedEventHubState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PurviewManagedEventHubState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PurviewManagedEventHubState(string value) => new PurviewManagedEventHubState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PurviewManagedEventHubState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PurviewManagedEventHubState?(string value) => value == null ? null : new PurviewManagedEventHubState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PurviewManagedEventHubState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PurviewManagedEventHubState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

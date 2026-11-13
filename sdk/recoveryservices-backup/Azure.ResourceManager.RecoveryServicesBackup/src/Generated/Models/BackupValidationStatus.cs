@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupValidationStatus : IEquatable<BackupValidationStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupValidationStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupValidationStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupValidationStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupValidationStatus Invalid { get; } = new BackupValidationStatus(InvalidValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static BackupValidationStatus Succeeded { get; } = new BackupValidationStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static BackupValidationStatus Failed { get; } = new BackupValidationStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="BackupValidationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupValidationStatus left, BackupValidationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupValidationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupValidationStatus left, BackupValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupValidationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupValidationStatus(string value) => new BackupValidationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupValidationStatus?(string value) => value == null ? null : new BackupValidationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupValidationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

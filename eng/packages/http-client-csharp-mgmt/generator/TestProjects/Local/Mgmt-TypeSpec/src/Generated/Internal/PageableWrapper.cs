@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class PageableWrapper<T, U> : Pageable<U>
     {

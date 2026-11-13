@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SourceControlDeploymentResult : IEquatable<SourceControlDeploymentResult>
     {
         private readonly string _value;
+        /// <summary> Success. </summary>
+        private const string SuccessValue = "Success";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlDeploymentResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlDeploymentResult(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SuccessValue = "Success";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Success. </summary>
         public static SourceControlDeploymentResult Success { get; } = new SourceControlDeploymentResult(SuccessValue);
+
         /// <summary> Canceled. </summary>
         public static SourceControlDeploymentResult Canceled { get; } = new SourceControlDeploymentResult(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static SourceControlDeploymentResult Failed { get; } = new SourceControlDeploymentResult(FailedValue);
+
         /// <summary> Determines if two <see cref="SourceControlDeploymentResult"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlDeploymentResult left, SourceControlDeploymentResult right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlDeploymentResult"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlDeploymentResult left, SourceControlDeploymentResult right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlDeploymentResult"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlDeploymentResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlDeploymentResult(string value) => new SourceControlDeploymentResult(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlDeploymentResult"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlDeploymentResult?(string value) => value == null ? null : new SourceControlDeploymentResult(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlDeploymentResult other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlDeploymentResult other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

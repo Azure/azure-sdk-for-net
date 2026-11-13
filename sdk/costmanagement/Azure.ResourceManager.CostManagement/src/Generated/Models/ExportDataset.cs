@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition for data in the export. </summary>
     public partial class ExportDataset
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExportDataset"/>. </summary>
         public ExportDataset()
@@ -51,28 +22,62 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportDataset"/>. </summary>
-        /// <param name="granularity"> The granularity of rows in the export. Currently only 'Daily' is supported. </param>
+        /// <param name="granularity"> The granularity of rows in the export. Currently 'Daily' is supported for most cases. </param>
         /// <param name="configuration"> The export dataset configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDataset(GranularityType? granularity, ExportDatasetConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExportDataset(GranularityType? granularity, ExportDatasetConfiguration configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Granularity = granularity;
             Configuration = configuration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The granularity of rows in the export. Currently only 'Daily' is supported. </summary>
+        /// <summary> The granularity of rows in the export. Currently 'Daily' is supported for most cases. </summary>
         public GranularityType? Granularity { get; set; }
+
         /// <summary> The export dataset configuration. </summary>
         internal ExportDatasetConfiguration Configuration { get; set; }
+
         /// <summary> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </summary>
         public IList<string> Columns
         {
             get
             {
                 if (Configuration is null)
+                {
                     Configuration = new ExportDatasetConfiguration();
+                }
                 return Configuration.Columns;
+            }
+        }
+
+        /// <summary> The data version for the selected for the export. If not provided then the export will default to latest data version. </summary>
+        public string DataVersion
+        {
+            get
+            {
+                return Configuration is null ? default : Configuration.DataVersion;
+            }
+            set
+            {
+                if (Configuration is null)
+                {
+                    Configuration = new ExportDatasetConfiguration();
+                }
+                Configuration.DataVersion = value;
+            }
+        }
+
+        /// <summary> Filters associated with the data sets. </summary>
+        public IList<FilterItems> Filters
+        {
+            get
+            {
+                if (Configuration is null)
+                {
+                    Configuration = new ExportDatasetConfiguration();
+                }
+                return Configuration.Filters;
             }
         }
     }

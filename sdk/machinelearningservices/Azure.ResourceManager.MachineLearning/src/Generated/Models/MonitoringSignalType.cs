@@ -7,54 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MonitoringSignalType. </summary>
+    /// <summary></summary>
     internal readonly partial struct MonitoringSignalType : IEquatable<MonitoringSignalType>
     {
         private readonly string _value;
+        /// <summary> Tracks model input data distribution change, comparing against training data or past production data. </summary>
+        private const string DataDriftValue = "DataDrift";
+        /// <summary> Tracks prediction result data distribution change, comparing against validation/test label data or past production data. </summary>
+        private const string PredictionDriftValue = "PredictionDrift";
+        /// <summary> Tracks model input data integrity. </summary>
+        private const string DataQualityValue = "DataQuality";
+        /// <summary> Tracks feature importance change in production, comparing against feature importance at training time. </summary>
+        private const string FeatureAttributionDriftValue = "FeatureAttributionDrift";
+        /// <summary> Tracks a custom signal provided by users. </summary>
+        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="MonitoringSignalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitoringSignalType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DataDriftValue = "DataDrift";
-        private const string PredictionDriftValue = "PredictionDrift";
-        private const string DataQualityValue = "DataQuality";
-        private const string FeatureAttributionDriftValue = "FeatureAttributionDrift";
-        private const string CustomValue = "Custom";
+            _value = value;
+        }
 
         /// <summary> Tracks model input data distribution change, comparing against training data or past production data. </summary>
         public static MonitoringSignalType DataDrift { get; } = new MonitoringSignalType(DataDriftValue);
+
         /// <summary> Tracks prediction result data distribution change, comparing against validation/test label data or past production data. </summary>
         public static MonitoringSignalType PredictionDrift { get; } = new MonitoringSignalType(PredictionDriftValue);
+
         /// <summary> Tracks model input data integrity. </summary>
         public static MonitoringSignalType DataQuality { get; } = new MonitoringSignalType(DataQualityValue);
+
         /// <summary> Tracks feature importance change in production, comparing against feature importance at training time. </summary>
         public static MonitoringSignalType FeatureAttributionDrift { get; } = new MonitoringSignalType(FeatureAttributionDriftValue);
+
         /// <summary> Tracks a custom signal provided by users. </summary>
         public static MonitoringSignalType Custom { get; } = new MonitoringSignalType(CustomValue);
+
         /// <summary> Determines if two <see cref="MonitoringSignalType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitoringSignalType left, MonitoringSignalType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitoringSignalType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitoringSignalType left, MonitoringSignalType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoringSignalType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitoringSignalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitoringSignalType(string value) => new MonitoringSignalType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitoringSignalType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitoringSignalType?(string value) => value == null ? null : new MonitoringSignalType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitoringSignalType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitoringSignalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct ExportJobOutputSerializationType : IEquatable<ExportJobOutputSerializationType>
     {
         private readonly string _value;
+        /// <summary> Json. </summary>
+        private const string JsonValue = "Json";
+        /// <summary> Xml. </summary>
+        private const string XmlValue = "Xml";
+        /// <summary> Excel. </summary>
+        private const string ExcelValue = "Excel";
 
         /// <summary> Initializes a new instance of <see cref="ExportJobOutputSerializationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExportJobOutputSerializationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string JsonValue = "Json";
-        private const string XmlValue = "Xml";
-        private const string ExcelValue = "Excel";
+            _value = value;
+        }
 
         /// <summary> Json. </summary>
         public static ExportJobOutputSerializationType Json { get; } = new ExportJobOutputSerializationType(JsonValue);
+
         /// <summary> Xml. </summary>
         public static ExportJobOutputSerializationType Xml { get; } = new ExportJobOutputSerializationType(XmlValue);
+
         /// <summary> Excel. </summary>
         public static ExportJobOutputSerializationType Excel { get; } = new ExportJobOutputSerializationType(ExcelValue);
+
         /// <summary> Determines if two <see cref="ExportJobOutputSerializationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExportJobOutputSerializationType left, ExportJobOutputSerializationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExportJobOutputSerializationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExportJobOutputSerializationType left, ExportJobOutputSerializationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportJobOutputSerializationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExportJobOutputSerializationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExportJobOutputSerializationType(string value) => new ExportJobOutputSerializationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExportJobOutputSerializationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExportJobOutputSerializationType?(string value) => value == null ? null : new ExportJobOutputSerializationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExportJobOutputSerializationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExportJobOutputSerializationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class AppServiceIPModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AppServiceIPMode value) => value switch
         {
             AppServiceIPMode.IPv4 => "IPv4",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceIPMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AppServiceIPMode ToAppServiceIPMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IPv4")) return AppServiceIPMode.IPv4;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IPv6")) return AppServiceIPMode.IPv6;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IPv4AndIPv6")) return AppServiceIPMode.IPv4AndIPv6;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IPv4"))
+            {
+                return AppServiceIPMode.IPv4;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IPv6"))
+            {
+                return AppServiceIPMode.IPv6;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IPv4AndIPv6"))
+            {
+                return AppServiceIPMode.IPv4AndIPv6;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceIPMode value.");
         }
     }

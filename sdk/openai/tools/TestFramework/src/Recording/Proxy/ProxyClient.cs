@@ -627,7 +627,7 @@ public class ProxyClient
 
                         error = $"{parsed.Status}: {parsed.Message}";
                     }
-                    catch 
+                    catch
                     {
                         error = response.Content.ToString();
                     }

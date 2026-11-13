@@ -52,7 +52,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
                 serviceProvider.GetService<IQueueProcessorFactory>(),
                 new SharedQueueWatcher());
 
-            QueueServiceClient serviceClient = queueServiceClientProvider.Get(_queueMetadata.Connection, serviceProvider.GetService<INameResolver>());
+            // Scale metrics read the queue raw so that PeekMessages is never filtered by decode
+            // failures; see QueueServiceClientProvider.GetRaw. Message processing is unaffected and
+            // continues to use the configured encoding.
+            QueueServiceClient serviceClient = queueServiceClientProvider.GetRaw(_queueMetadata.Connection, serviceProvider.GetService<INameResolver>());
             _queueClient = serviceClient.GetQueueClient(_queueMetadata.QueueName);
         }
 
@@ -86,6 +89,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
                 if (resolver != null)
                 {
                     QueueName = resolver.ResolveWholeString(QueueName);
+                }
+                // Always normalize after token resolution
+                NormalizeQueueName();
+            }
+
+            /// <summary>
+            /// Coerces the resolved queue name to lowercase.
+            /// Azure Queue Storage requires lowercase names; normalization here also
+            /// ensures consistent hashing/identity when used by scaling components.
+            /// </summary>
+            private void NormalizeQueueName()
+            {
+                if (!string.IsNullOrEmpty(QueueName))
+                {
+                    QueueName = QueueName.ToLowerInvariant(); // must be lowercase. coerce here to be nice.
                 }
             }
         }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update automation account operation. </summary>
     public partial class AutomationAccountPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationAccountPatch"/>. </summary>
         public AutomationAccountPatch()
@@ -54,43 +26,103 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationAccountPatch"/>. </summary>
+        /// <param name="properties"> Gets or sets account update properties. </param>
         /// <param name="name"> Gets or sets the name of the resource. </param>
         /// <param name="location"> Gets or sets the location of the resource. </param>
         /// <param name="identity"> Sets the identity property for automation account. </param>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
-        /// <param name="sku"> Gets or sets account SKU. </param>
-        /// <param name="encryption"> Set the encryption properties for the automation account. </param>
-        /// <param name="isPublicNetworkAccessAllowed"> Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet. </param>
-        /// <param name="isLocalAuthDisabled"> Indicates whether requests using non-AAD authentication are blocked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationAccountPatch(string name, AzureLocation? location, ManagedServiceIdentity identity, IDictionary<string, string> tags, AutomationSku sku, AutomationEncryptionProperties encryption, bool? isPublicNetworkAccessAllowed, bool? isLocalAuthDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAccountPatch(AutomationAccountUpdateProperties properties, string name, AzureLocation? location, ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Name = name;
             Location = location;
             Identity = identity;
             Tags = tags;
-            Sku = sku;
-            Encryption = encryption;
-            IsPublicNetworkAccessAllowed = isPublicNetworkAccessAllowed;
-            IsLocalAuthDisabled = isLocalAuthDisabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets or sets account update properties. </summary>
+        internal AutomationAccountUpdateProperties Properties { get; set; }
 
         /// <summary> Gets or sets the name of the resource. </summary>
         public string Name { get; set; }
+
         /// <summary> Gets or sets the location of the resource. </summary>
         public AzureLocation? Location { get; set; }
+
         /// <summary> Sets the identity property for automation account. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Gets or sets account SKU. </summary>
-        public AutomationSku Sku { get; set; }
+        public AutomationSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountUpdateProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
         /// <summary> Set the encryption properties for the automation account. </summary>
-        public AutomationEncryptionProperties Encryption { get; set; }
+        public AutomationEncryptionProperties Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountUpdateProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary> Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet. </summary>
-        public bool? IsPublicNetworkAccessAllowed { get; set; }
+        public bool? IsPublicNetworkAccessAllowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPublicNetworkAccessAllowed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountUpdateProperties();
+                }
+                Properties.IsPublicNetworkAccessAllowed = value;
+            }
+        }
+
         /// <summary> Indicates whether requests using non-AAD authentication are blocked. </summary>
-        public bool? IsLocalAuthDisabled { get; set; }
+        public bool? IsLocalAuthDisabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLocalAuthDisabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountUpdateProperties();
+                }
+                Properties.IsLocalAuthDisabled = value;
+            }
+        }
     }
 }

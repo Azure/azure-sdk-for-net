@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct ScriptParameterType : IEquatable<ScriptParameterType>
     {
         private readonly string _value;
+        /// <summary> is string. </summary>
+        private const string StringValue = "String";
+        /// <summary> is secure string. </summary>
+        private const string SecureStringValue = "SecureString";
+        /// <summary> is credential. </summary>
+        private const string CredentialValue = "Credential";
+        /// <summary> is int. </summary>
+        private const string IntValue = "Int";
+        /// <summary> is bool. </summary>
+        private const string BoolValue = "Bool";
+        /// <summary> is float. </summary>
+        private const string FloatValue = "Float";
 
         /// <summary> Initializes a new instance of <see cref="ScriptParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScriptParameterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "String";
-        private const string SecureStringValue = "SecureString";
-        private const string CredentialValue = "Credential";
-        private const string IntValue = "Int";
-        private const string BoolValue = "Bool";
-        private const string FloatValue = "Float";
+            _value = value;
+        }
 
         /// <summary> is string. </summary>
         public static ScriptParameterType String { get; } = new ScriptParameterType(StringValue);
+
         /// <summary> is secure string. </summary>
         public static ScriptParameterType SecureString { get; } = new ScriptParameterType(SecureStringValue);
+
         /// <summary> is credential. </summary>
         public static ScriptParameterType Credential { get; } = new ScriptParameterType(CredentialValue);
+
         /// <summary> is int. </summary>
         public static ScriptParameterType Int { get; } = new ScriptParameterType(IntValue);
+
         /// <summary> is bool. </summary>
         public static ScriptParameterType Bool { get; } = new ScriptParameterType(BoolValue);
+
         /// <summary> is float. </summary>
         public static ScriptParameterType Float { get; } = new ScriptParameterType(FloatValue);
+
         /// <summary> Determines if two <see cref="ScriptParameterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScriptParameterType left, ScriptParameterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScriptParameterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScriptParameterType left, ScriptParameterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptParameterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScriptParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScriptParameterType(string value) => new ScriptParameterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScriptParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScriptParameterType?(string value) => value == null ? null : new ScriptParameterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScriptParameterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScriptParameterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

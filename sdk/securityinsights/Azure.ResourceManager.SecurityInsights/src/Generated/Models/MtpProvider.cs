@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct MtpProvider : IEquatable<MtpProvider>
     {
         private readonly string _value;
+        /// <summary> microsoftDefenderForCloudApps. </summary>
+        private const string MicrosoftDefenderForCloudAppsValue = "microsoftDefenderForCloudApps";
+        /// <summary> microsoftDefenderForIdentity. </summary>
+        private const string MicrosoftDefenderForIdentityValue = "microsoftDefenderForIdentity";
 
         /// <summary> Initializes a new instance of <see cref="MtpProvider"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MtpProvider(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftDefenderForCloudAppsValue = "microsoftDefenderForCloudApps";
-        private const string MicrosoftDefenderForIdentityValue = "microsoftDefenderForIdentity";
+            _value = value;
+        }
 
         /// <summary> microsoftDefenderForCloudApps. </summary>
         public static MtpProvider MicrosoftDefenderForCloudApps { get; } = new MtpProvider(MicrosoftDefenderForCloudAppsValue);
+
         /// <summary> microsoftDefenderForIdentity. </summary>
         public static MtpProvider MicrosoftDefenderForIdentity { get; } = new MtpProvider(MicrosoftDefenderForIdentityValue);
+
         /// <summary> Determines if two <see cref="MtpProvider"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MtpProvider left, MtpProvider right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MtpProvider"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MtpProvider left, MtpProvider right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MtpProvider"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MtpProvider"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MtpProvider(string value) => new MtpProvider(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MtpProvider"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MtpProvider?(string value) => value == null ? null : new MtpProvider(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MtpProvider other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MtpProvider other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

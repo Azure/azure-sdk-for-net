@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Models
             // We are calling GetPageRangeDiff
             if (_diff)
             {
-                ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response;
+                Response<PageList> response;
                 if (async)
                 {
                     response = await _client.GetAllPageRangesDiffInternal(
@@ -92,7 +92,7 @@ namespace Azure.Storage.Blobs.Models
             // We are calling GetPageRange
             else
             {
-                ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
+                Response<PageList> response;
                 if (async)
                 {
                     response = await _client.GetAllPageRangesInteral(

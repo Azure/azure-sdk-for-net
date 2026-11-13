@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct StorageCacheFirmwareStatusType : IEquatable<StorageCacheFirmwareStatusType>
     {
         private readonly string _value;
+        /// <summary> available. </summary>
+        private const string AvailableValue = "available";
+        /// <summary> unavailable. </summary>
+        private const string UnavailableValue = "unavailable";
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheFirmwareStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageCacheFirmwareStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvailableValue = "available";
-        private const string UnavailableValue = "unavailable";
+            _value = value;
+        }
 
         /// <summary> available. </summary>
         public static StorageCacheFirmwareStatusType Available { get; } = new StorageCacheFirmwareStatusType(AvailableValue);
+
         /// <summary> unavailable. </summary>
         public static StorageCacheFirmwareStatusType Unavailable { get; } = new StorageCacheFirmwareStatusType(UnavailableValue);
+
         /// <summary> Determines if two <see cref="StorageCacheFirmwareStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageCacheFirmwareStatusType left, StorageCacheFirmwareStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageCacheFirmwareStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageCacheFirmwareStatusType left, StorageCacheFirmwareStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheFirmwareStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageCacheFirmwareStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageCacheFirmwareStatusType(string value) => new StorageCacheFirmwareStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageCacheFirmwareStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageCacheFirmwareStatusType?(string value) => value == null ? null : new StorageCacheFirmwareStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageCacheFirmwareStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageCacheFirmwareStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,257 +1,117 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Threading;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
     public partial class NetworkVirtualApplianceSkuResource
     {
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        // 1.15.0 supplied this obsolete method through ARM's tag resource, not a SKU update operation.
+        /// <summary> Adds a tag using the ARM tag resource and refreshes the SKU resource. </summary>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<NetworkVirtualApplianceSkuResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
-
-            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var tagResource = GetTagResource();
+            var originalTags = tagResource.Get(cancellationToken);
+            originalTags.Value.Data.TagValues[key] = value;
+            tagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+            return Get(cancellationToken);
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        // Preserve the asynchronous 1.15.0 ARM tag-resource implementation and released metadata.
+        /// <summary> Adds a tag using the ARM tag resource and refreshes the SKU resource. </summary>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.SetTags");
-            scope.Start();
-            try
-            {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<NetworkVirtualApplianceSkuResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.SetTags");
-            scope.Start();
-            try
-            {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
-
-            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNull(value, nameof(value));
+            var tagResource = GetTagResource();
+            var originalTags = await tagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+            originalTags.Value.Data.TagValues[key] = value;
+            await tagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+            return await GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        // 1.15.0 removed tags through ARM's tag resource even though the SKU itself has no update operation.
+        /// <summary> Removes a tag using the ARM tag resource and refreshes the SKU resource. </summary>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<NetworkVirtualApplianceSkuResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
+            var tagResource = GetTagResource();
+            var originalTags = tagResource.Get(cancellationToken);
+            originalTags.Value.Data.TagValues.Remove(key);
+            tagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+            return Get(cancellationToken);
+        }
 
-            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.RemoveTag");
-            scope.Start();
-            try
+        // Preserve the asynchronous 1.15.0 tag-removal contract without inventing a SKU update endpoint.
+        /// <summary> Removes a tag using the ARM tag resource and refreshes the SKU resource. </summary>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            var tagResource = GetTagResource();
+            var originalTags = await tagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+            originalTags.Value.Data.TagValues.Remove(key);
+            await tagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+            return await GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        // Preserve the 1.15.0 delete/read/replace sequence on the separate ARM tag resource.
+        /// <summary> Replaces the resource tags using the ARM tag resource and refreshes the SKU resource. </summary>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<NetworkVirtualApplianceSkuResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+            var tagResource = GetTagResource();
+            tagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+            var originalTags = tagResource.Get(cancellationToken);
+            originalTags.Value.Data.TagValues.Clear();
+            foreach (KeyValuePair<string, string> tag in tags)
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                originalTags.Value.Data.TagValues.Add(tag);
             }
-            catch (Exception e)
+            tagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+            return Get(cancellationToken);
+        }
+
+        // Preserve the asynchronous 1.15.0 tag-replacement sequence and final native resource response.
+        /// <summary> Replaces the resource tags using the ARM tag resource and refreshes the SKU resource. </summary>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+            var tagResource = GetTagResource();
+            await tagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+            var originalTags = await tagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+            originalTags.Value.Data.TagValues.Clear();
+            foreach (KeyValuePair<string, string> tag in tags)
             {
-                scope.Failed(e);
-                throw;
+                originalTags.Value.Data.TagValues.Add(tag);
             }
+            await tagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+            return await GetAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

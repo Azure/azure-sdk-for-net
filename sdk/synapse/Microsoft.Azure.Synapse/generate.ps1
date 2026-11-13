@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "synapse/data-plane" -AutoRestVersion "latest"

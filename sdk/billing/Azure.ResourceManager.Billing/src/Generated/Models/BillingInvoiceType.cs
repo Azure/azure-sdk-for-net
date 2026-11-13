@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingInvoiceType : IEquatable<BillingInvoiceType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> AzureServices. </summary>
+        private const string AzureServicesValue = "AzureServices";
+        /// <summary> AzureMarketplace. </summary>
+        private const string AzureMarketplaceValue = "AzureMarketplace";
+        /// <summary> AzureSupport. </summary>
+        private const string AzureSupportValue = "AzureSupport";
 
         /// <summary> Initializes a new instance of <see cref="BillingInvoiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingInvoiceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string AzureServicesValue = "AzureServices";
-        private const string AzureMarketplaceValue = "AzureMarketplace";
-        private const string AzureSupportValue = "AzureSupport";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingInvoiceType Other { get; } = new BillingInvoiceType(OtherValue);
+
         /// <summary> AzureServices. </summary>
         public static BillingInvoiceType AzureServices { get; } = new BillingInvoiceType(AzureServicesValue);
+
         /// <summary> AzureMarketplace. </summary>
         public static BillingInvoiceType AzureMarketplace { get; } = new BillingInvoiceType(AzureMarketplaceValue);
+
         /// <summary> AzureSupport. </summary>
         public static BillingInvoiceType AzureSupport { get; } = new BillingInvoiceType(AzureSupportValue);
+
         /// <summary> Determines if two <see cref="BillingInvoiceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingInvoiceType left, BillingInvoiceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingInvoiceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingInvoiceType left, BillingInvoiceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingInvoiceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingInvoiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingInvoiceType(string value) => new BillingInvoiceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingInvoiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingInvoiceType?(string value) => value == null ? null : new BillingInvoiceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingInvoiceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingInvoiceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

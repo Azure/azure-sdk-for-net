@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct NetworkSecurityPerimeterAssociationAccessMode : IEquatable<NetworkSecurityPerimeterAssociationAccessMode>
     {
         private readonly string _value;
+        /// <summary> Learning. </summary>
+        private const string LearningValue = "Learning";
+        /// <summary> Enforced. </summary>
+        private const string EnforcedValue = "Enforced";
+        /// <summary> Audit. </summary>
+        private const string AuditValue = "Audit";
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkSecurityPerimeterAssociationAccessMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LearningValue = "Learning";
-        private const string EnforcedValue = "Enforced";
-        private const string AuditValue = "Audit";
+            _value = value;
+        }
 
         /// <summary> Learning. </summary>
         public static NetworkSecurityPerimeterAssociationAccessMode Learning { get; } = new NetworkSecurityPerimeterAssociationAccessMode(LearningValue);
+
         /// <summary> Enforced. </summary>
         public static NetworkSecurityPerimeterAssociationAccessMode Enforced { get; } = new NetworkSecurityPerimeterAssociationAccessMode(EnforcedValue);
+
         /// <summary> Audit. </summary>
         public static NetworkSecurityPerimeterAssociationAccessMode Audit { get; } = new NetworkSecurityPerimeterAssociationAccessMode(AuditValue);
+
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterAssociationAccessMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkSecurityPerimeterAssociationAccessMode left, NetworkSecurityPerimeterAssociationAccessMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterAssociationAccessMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkSecurityPerimeterAssociationAccessMode left, NetworkSecurityPerimeterAssociationAccessMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityPerimeterAssociationAccessMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterAssociationAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkSecurityPerimeterAssociationAccessMode(string value) => new NetworkSecurityPerimeterAssociationAccessMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterAssociationAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkSecurityPerimeterAssociationAccessMode?(string value) => value == null ? null : new NetworkSecurityPerimeterAssociationAccessMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkSecurityPerimeterAssociationAccessMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkSecurityPerimeterAssociationAccessMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

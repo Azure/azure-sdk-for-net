@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class GremlinDatabaseResource : IJsonModel<GremlinDatabaseData>
     {
-        private static GremlinDatabaseData s_dataDeserializationInstance;
-        private static GremlinDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GremlinDatabaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GremlinDatabaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GremlinDatabaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GremlinDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GremlinDatabaseData>)Data).Write(writer, options);
 
-        GremlinDatabaseData IJsonModel<GremlinDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GremlinDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GremlinDatabaseData IJsonModel<GremlinDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GremlinDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GremlinDatabaseData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GremlinDatabaseData IPersistableModel<GremlinDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GremlinDatabaseData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<GremlinDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GremlinDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GremlinDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

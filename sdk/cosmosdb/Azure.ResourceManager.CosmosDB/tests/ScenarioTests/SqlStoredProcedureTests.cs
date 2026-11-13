@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlStoredProcedureCreateAndUpdate()
         {
@@ -103,7 +102,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlStoredProcedureList()
         {
@@ -116,7 +114,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlStoredProcedures(storedProcedures[0], storedProcedure);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlStoredProcedureDelete()
         {

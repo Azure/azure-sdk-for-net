@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class AppServicePlanStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AppServicePlanStatus value) => value switch
         {
             AppServicePlanStatus.Ready => "Ready",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServicePlanStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AppServicePlanStatus ToAppServicePlanStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ready")) return AppServicePlanStatus.Ready;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return AppServicePlanStatus.Pending;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return AppServicePlanStatus.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ready"))
+            {
+                return AppServicePlanStatus.Ready;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending"))
+            {
+                return AppServicePlanStatus.Pending;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating"))
+            {
+                return AppServicePlanStatus.Creating;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServicePlanStatus value.");
         }
     }

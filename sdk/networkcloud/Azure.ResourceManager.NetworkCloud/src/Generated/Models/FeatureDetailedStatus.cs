@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct FeatureDetailedStatus : IEquatable<FeatureDetailedStatus>
     {
         private readonly string _value;
+        /// <summary> The Running status. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> The Failed status. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The Unknown status. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="FeatureDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FeatureDetailedStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string RunningValue = "Running";
-        private const string FailedValue = "Failed";
-        private const string UnknownValue = "Unknown";
-
-        /// <summary> Running. </summary>
+        /// <summary> The Running status. </summary>
         public static FeatureDetailedStatus Running { get; } = new FeatureDetailedStatus(RunningValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The Failed status. </summary>
         public static FeatureDetailedStatus Failed { get; } = new FeatureDetailedStatus(FailedValue);
-        /// <summary> Unknown. </summary>
+
+        /// <summary> The Unknown status. </summary>
         public static FeatureDetailedStatus Unknown { get; } = new FeatureDetailedStatus(UnknownValue);
+
         /// <summary> Determines if two <see cref="FeatureDetailedStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FeatureDetailedStatus left, FeatureDetailedStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FeatureDetailedStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FeatureDetailedStatus left, FeatureDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FeatureDetailedStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FeatureDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FeatureDetailedStatus(string value) => new FeatureDetailedStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FeatureDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FeatureDetailedStatus?(string value) => value == null ? null : new FeatureDetailedStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FeatureDetailedStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FeatureDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

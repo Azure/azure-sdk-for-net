@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AzureFirewallRCActionType : IEquatable<AzureFirewallRCActionType>
     {
         private readonly string _value;
+        /// <summary> Allow. </summary>
+        private const string AllowValue = "Allow";
+        /// <summary> Deny. </summary>
+        private const string DenyValue = "Deny";
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallRCActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureFirewallRCActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowValue = "Allow";
-        private const string DenyValue = "Deny";
+            _value = value;
+        }
 
         /// <summary> Allow. </summary>
         public static AzureFirewallRCActionType Allow { get; } = new AzureFirewallRCActionType(AllowValue);
+
         /// <summary> Deny. </summary>
         public static AzureFirewallRCActionType Deny { get; } = new AzureFirewallRCActionType(DenyValue);
+
         /// <summary> Determines if two <see cref="AzureFirewallRCActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureFirewallRCActionType left, AzureFirewallRCActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureFirewallRCActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureFirewallRCActionType left, AzureFirewallRCActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallRCActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureFirewallRCActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureFirewallRCActionType(string value) => new AzureFirewallRCActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureFirewallRCActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureFirewallRCActionType?(string value) => value == null ? null : new AzureFirewallRCActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureFirewallRCActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureFirewallRCActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

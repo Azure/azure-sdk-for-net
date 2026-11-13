@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The response body returned for a request to Bot Service Management to check per subscription hostSettings. </summary>
     public partial class BotServiceHostSettingsResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BotServiceHostSettingsResult"/>. </summary>
         internal BotServiceHostSettingsResult()
@@ -59,8 +30,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="toChannelFromBotOAuthScope"> For getting access token to channels from bot host. </param>
         /// <param name="validateAuthority"> Per cloud OAuth setting on whether authority is validated. </param>
         /// <param name="botOpenIdMetadata"> Same as toBotFromChannelOpenIdMetadataUrl, used by SDK &lt; v4.12. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotServiceHostSettingsResult(Uri oAuthUri, Uri toBotFromChannelOpenIdMetadataUri, string toBotFromChannelTokenIssuer, Uri toBotFromEmulatorOpenIdMetadataUri, Uri toChannelFromBotLoginUri, string toChannelFromBotOAuthScope, bool? validateAuthority, string botOpenIdMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BotServiceHostSettingsResult(Uri oAuthUri, Uri toBotFromChannelOpenIdMetadataUri, string toBotFromChannelTokenIssuer, Uri toBotFromEmulatorOpenIdMetadataUri, Uri toChannelFromBotLoginUri, string toChannelFromBotOAuthScope, bool? validateAuthority, string botOpenIdMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OAuthUri = oAuthUri;
             ToBotFromChannelOpenIdMetadataUri = toBotFromChannelOpenIdMetadataUri;
@@ -70,23 +41,30 @@ namespace Azure.ResourceManager.BotService.Models
             ToChannelFromBotOAuthScope = toChannelFromBotOAuthScope;
             ValidateAuthority = validateAuthority;
             BotOpenIdMetadata = botOpenIdMetadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> For in-conversation bot user authentication. </summary>
         public Uri OAuthUri { get; }
+
         /// <summary> For verifying incoming tokens from the channels. </summary>
         public Uri ToBotFromChannelOpenIdMetadataUri { get; }
+
         /// <summary> For verifying incoming tokens from the channels. </summary>
         public string ToBotFromChannelTokenIssuer { get; }
+
         /// <summary> For verifying incoming tokens from bot emulator. </summary>
         public Uri ToBotFromEmulatorOpenIdMetadataUri { get; }
+
         /// <summary> For getting access token to channels from bot host. </summary>
         public Uri ToChannelFromBotLoginUri { get; }
+
         /// <summary> For getting access token to channels from bot host. </summary>
         public string ToChannelFromBotOAuthScope { get; }
+
         /// <summary> Per cloud OAuth setting on whether authority is validated. </summary>
         public bool? ValidateAuthority { get; }
+
         /// <summary> Same as toBotFromChannelOpenIdMetadataUrl, used by SDK &lt; v4.12. </summary>
         public string BotOpenIdMetadata { get; }
     }

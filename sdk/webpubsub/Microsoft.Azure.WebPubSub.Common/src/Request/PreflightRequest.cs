@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         /// <param name="isValid"></param>
         public PreflightRequest(bool isValid)
-            :base(null)
+            : base(null)
         {
             IsValid = isValid;
         }

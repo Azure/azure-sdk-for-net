@@ -18,7 +18,7 @@ namespace Azure.Verticals.AgriFood.Farming.Tests
         public async Task PartiesSmokeTest()
         {
             FarmBeatsClient client = GetFarmBeatsClient();
-            var partiesClient = client.GetPartiesClient();
+            var partiesClient = client.GetFarmingPartiesClient();
             const string partyId = "smoke-test-parties-4754";
 
             Response createdResponse = await partiesClient.CreateOrUpdateAsync(partyId, RequestContent.Create(new object()));

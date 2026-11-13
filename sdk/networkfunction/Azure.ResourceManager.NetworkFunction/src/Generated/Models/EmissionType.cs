@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     public readonly partial struct EmissionType : IEquatable<EmissionType>
     {
         private readonly string _value;
+        /// <summary> IPFIX. </summary>
+        private const string IpfixValue = "IPFIX";
 
         /// <summary> Initializes a new instance of <see cref="EmissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EmissionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IpfixValue = "IPFIX";
+            _value = value;
+        }
 
         /// <summary> IPFIX. </summary>
         public static EmissionType Ipfix { get; } = new EmissionType(IpfixValue);
+
         /// <summary> Determines if two <see cref="EmissionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EmissionType left, EmissionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EmissionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EmissionType left, EmissionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EmissionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EmissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EmissionType(string value) => new EmissionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EmissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EmissionType?(string value) => value == null ? null : new EmissionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EmissionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EmissionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

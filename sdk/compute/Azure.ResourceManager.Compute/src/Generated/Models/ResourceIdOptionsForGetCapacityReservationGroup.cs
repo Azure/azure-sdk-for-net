@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The ResourceIdOptionsForGetCapacityReservationGroup. </summary>
+    /// <summary></summary>
     public readonly partial struct ResourceIdOptionsForGetCapacityReservationGroup : IEquatable<ResourceIdOptionsForGetCapacityReservationGroup>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceIdOptionsForGetCapacityReservationGroup"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceIdOptionsForGetCapacityReservationGroup(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatedInSubscriptionValue = "CreatedInSubscription";
         private const string SharedWithSubscriptionValue = "SharedWithSubscription";
         private const string AllValue = "All";
 
-        /// <summary> CreatedInSubscription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceIdOptionsForGetCapacityReservationGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceIdOptionsForGetCapacityReservationGroup(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the CreatedInSubscription. </summary>
         public static ResourceIdOptionsForGetCapacityReservationGroup CreatedInSubscription { get; } = new ResourceIdOptionsForGetCapacityReservationGroup(CreatedInSubscriptionValue);
-        /// <summary> SharedWithSubscription. </summary>
+
+        /// <summary> Gets the SharedWithSubscription. </summary>
         public static ResourceIdOptionsForGetCapacityReservationGroup SharedWithSubscription { get; } = new ResourceIdOptionsForGetCapacityReservationGroup(SharedWithSubscriptionValue);
-        /// <summary> All. </summary>
+
+        /// <summary> Gets the All. </summary>
         public static ResourceIdOptionsForGetCapacityReservationGroup All { get; } = new ResourceIdOptionsForGetCapacityReservationGroup(AllValue);
+
         /// <summary> Determines if two <see cref="ResourceIdOptionsForGetCapacityReservationGroup"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceIdOptionsForGetCapacityReservationGroup left, ResourceIdOptionsForGetCapacityReservationGroup right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceIdOptionsForGetCapacityReservationGroup"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceIdOptionsForGetCapacityReservationGroup left, ResourceIdOptionsForGetCapacityReservationGroup right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceIdOptionsForGetCapacityReservationGroup"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceIdOptionsForGetCapacityReservationGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceIdOptionsForGetCapacityReservationGroup(string value) => new ResourceIdOptionsForGetCapacityReservationGroup(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceIdOptionsForGetCapacityReservationGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceIdOptionsForGetCapacityReservationGroup?(string value) => value == null ? null : new ResourceIdOptionsForGetCapacityReservationGroup(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceIdOptionsForGetCapacityReservationGroup other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceIdOptionsForGetCapacityReservationGroup other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

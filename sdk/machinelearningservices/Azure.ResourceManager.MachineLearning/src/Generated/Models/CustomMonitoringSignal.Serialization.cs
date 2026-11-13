@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class CustomMonitoringSignal : IUtf8JsonSerializable, IJsonModel<CustomMonitoringSignal>
+    /// <summary> The CustomMonitoringSignal. </summary>
+    public partial class CustomMonitoringSignal : MonitoringSignalBase, IJsonModel<CustomMonitoringSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomMonitoringSignal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CustomMonitoringSignal"/> for deserialization. </summary>
+        internal CustomMonitoringSignal()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitoringSignalBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomMonitoringSignal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomMonitoringSignal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomMonitoringSignal IPersistableModel<CustomMonitoringSignal>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomMonitoringSignal)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomMonitoringSignal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomMonitoringSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,13 +74,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("componentId"u8);
+            writer.WriteStringValue(ComponentId);
             if (Optional.IsCollectionDefined(InputAssets))
             {
                 if (InputAssets != null)
@@ -52,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("inputAssets");
+                    writer.WriteNull("inputAssets"u8);
                 }
             }
             if (Optional.IsCollectionDefined(Inputs))
@@ -70,360 +115,154 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("inputs");
+                    writer.WriteNull("inputs"u8);
                 }
             }
-            writer.WritePropertyName("componentId"u8);
-            writer.WriteStringValue(ComponentId);
             writer.WritePropertyName("metricThresholds"u8);
             writer.WriteStartArray();
-            foreach (var item in MetricThresholds)
+            foreach (CustomMetricThreshold item in MetricThresholds)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
         }
 
-        CustomMonitoringSignal IJsonModel<CustomMonitoringSignal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomMonitoringSignal IJsonModel<CustomMonitoringSignal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomMonitoringSignal)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitoringSignalBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCustomMonitoringSignal(document.RootElement, options);
         }
 
-        internal static CustomMonitoringSignal DeserializeCustomMonitoringSignal(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CustomMonitoringSignal DeserializeCustomMonitoringSignal(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, MonitoringInputDataBase> inputAssets = default;
-            IDictionary<string, MachineLearningJobInput> inputs = default;
-            string componentId = default;
-            IList<CustomMetricThreshold> metricThresholds = default;
+            IList<MonitoringNotificationType> notificationTypes = new ChangeTrackingList<MonitoringNotificationType>();
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
             MonitoringSignalType signalType = default;
-            IList<MonitoringNotificationType> notificationTypes = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string componentId = default;
+            IDictionary<string, MonitoringInputDataBase> inputAssets = new ChangeTrackingDictionary<string, MonitoringInputDataBase>();
+            IDictionary<string, MachineLearningJobInput> inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
+            IList<CustomMetricThreshold> metricThresholds = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("inputAssets"u8))
+                if (prop.NameEquals("notificationTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        inputAssets = null;
-                        continue;
-                    }
-                    Dictionary<string, MonitoringInputDataBase> dictionary = new Dictionary<string, MonitoringInputDataBase>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property0.Value, options));
-                    }
-                    inputAssets = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("inputs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        inputs = null;
-                        continue;
-                    }
-                    Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value, options));
-                    }
-                    inputs = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("componentId"u8))
-                {
-                    componentId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("metricThresholds"u8))
-                {
-                    List<CustomMetricThreshold> array = new List<CustomMetricThreshold>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CustomMetricThreshold.DeserializeCustomMetricThreshold(item, options));
-                    }
-                    metricThresholds = array;
-                    continue;
-                }
-                if (property.NameEquals("signalType"u8))
-                {
-                    signalType = new MonitoringSignalType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("notificationTypes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         notificationTypes = null;
                         continue;
                     }
                     List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new MonitoringNotificationType(item.GetString()));
                     }
                     notificationTypes = array;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     properties = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("signalType"u8))
+                {
+                    signalType = new MonitoringSignalType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("componentId"u8))
+                {
+                    componentId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("inputAssets"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        inputAssets = null;
+                        continue;
+                    }
+                    Dictionary<string, MonitoringInputDataBase> dictionary = new Dictionary<string, MonitoringInputDataBase>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, MonitoringInputDataBase.DeserializeMonitoringInputDataBase(prop0.Value, options));
+                    }
+                    inputAssets = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("inputs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        inputs = null;
+                        continue;
+                    }
+                    Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(prop0.Value, options));
+                    }
+                    inputs = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("metricThresholds"u8))
+                {
+                    List<CustomMetricThreshold> array = new List<CustomMetricThreshold>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(CustomMetricThreshold.DeserializeCustomMetricThreshold(item, options));
+                    }
+                    metricThresholds = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CustomMonitoringSignal(
+                notificationTypes,
+                properties,
                 signalType,
-                notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(),
-                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                additionalBinaryDataProperties,
                 componentId,
-                metricThresholds);
+                inputAssets,
+                inputs,
+                metricThresholds ?? new ChangeTrackingList<CustomMetricThreshold>());
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InputAssets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  inputAssets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(InputAssets))
-                {
-                    if (InputAssets.Any())
-                    {
-                        builder.Append("  inputAssets: ");
-                        builder.AppendLine("{");
-                        foreach (var item in InputAssets)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  inputAssets: ");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Inputs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  inputs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Inputs))
-                {
-                    if (Inputs.Any())
-                    {
-                        builder.Append("  inputs: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Inputs)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  inputs: ");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComponentId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  componentId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ComponentId))
-                {
-                    builder.Append("  componentId: ");
-                    if (ComponentId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ComponentId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ComponentId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricThresholds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  metricThresholds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(MetricThresholds))
-                {
-                    if (MetricThresholds.Any())
-                    {
-                        builder.Append("  metricThresholds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in MetricThresholds)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  metricThresholds: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignalType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  signalType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  signalType: ");
-                builder.AppendLine($"'{SignalType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationTypes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  notificationTypes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NotificationTypes))
-                {
-                    if (NotificationTypes.Any())
-                    {
-                        builder.Append("  notificationTypes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NotificationTypes)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  properties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Properties))
-                {
-                    if (Properties.Any())
-                    {
-                        builder.Append("  properties: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Properties)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CustomMonitoringSignal>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CustomMonitoringSignal IPersistableModel<CustomMonitoringSignal>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCustomMonitoringSignal(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CustomMonitoringSignal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

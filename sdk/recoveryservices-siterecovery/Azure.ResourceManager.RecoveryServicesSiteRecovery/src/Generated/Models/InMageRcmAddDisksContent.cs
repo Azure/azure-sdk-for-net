@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,27 +18,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="InMageRcmAddDisksContent"/>. </summary>
         /// <param name="disks"> The list of disk details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="disks"/> is null. </exception>
-        public InMageRcmAddDisksContent(IEnumerable<InMageRcmDiskContent> disks)
+        public InMageRcmAddDisksContent(IEnumerable<InMageRcmDiskContent> disks) : base("InMageRcm")
         {
             Argument.AssertNotNull(disks, nameof(disks));
 
             Disks = disks.ToList();
-            InstanceType = "InMageRcm";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmAddDisksContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="disks"> The list of disk details. </param>
-        internal InMageRcmAddDisksContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<InMageRcmDiskContent> disks) : base(instanceType, serializedAdditionalRawData)
+        internal InMageRcmAddDisksContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<InMageRcmDiskContent> disks) : base(instanceType, additionalBinaryDataProperties)
         {
             Disks = disks;
-            InstanceType = instanceType ?? "InMageRcm";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InMageRcmAddDisksContent"/> for deserialization. </summary>
-        internal InMageRcmAddDisksContent()
-        {
         }
 
         /// <summary> The list of disk details. </summary>

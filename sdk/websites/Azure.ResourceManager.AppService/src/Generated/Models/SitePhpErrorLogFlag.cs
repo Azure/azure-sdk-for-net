@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Used for getting PHP error logging flag. </summary>
     public partial class SitePhpErrorLogFlag : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SitePhpErrorLogFlag"/>. </summary>
         public SitePhpErrorLogFlag()
@@ -53,40 +25,98 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SitePhpErrorLogFlag"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="localLogErrors"> Local log_errors setting. </param>
-        /// <param name="masterLogErrors"> Master log_errors setting. </param>
-        /// <param name="localLogErrorsMaxLength"> Local log_errors_max_len setting. </param>
-        /// <param name="masterLogErrorsMaxLength"> Master log_errors_max_len setting. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SitePhpErrorLogFlag resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string localLogErrors, string masterLogErrors, string localLogErrorsMaxLength, string masterLogErrorsMaxLength, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SitePhpErrorLogFlagProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            LocalLogErrors = localLogErrors;
-            MasterLogErrors = masterLogErrors;
-            LocalLogErrorsMaxLength = localLogErrorsMaxLength;
-            MasterLogErrorsMaxLength = masterLogErrorsMaxLength;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Local log_errors setting. </summary>
-        [WirePath("properties.localLogErrors")]
-        public string LocalLogErrors { get; set; }
-        /// <summary> Master log_errors setting. </summary>
-        [WirePath("properties.masterLogErrors")]
-        public string MasterLogErrors { get; set; }
-        /// <summary> Local log_errors_max_len setting. </summary>
-        [WirePath("properties.localLogErrorsMaxLength")]
-        public string LocalLogErrorsMaxLength { get; set; }
-        /// <summary> Master log_errors_max_len setting. </summary>
-        [WirePath("properties.masterLogErrorsMaxLength")]
-        public string MasterLogErrorsMaxLength { get; set; }
+        /// <summary> SitePhpErrorLogFlag resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SitePhpErrorLogFlagProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Local log_errors setting. </summary>
+        [WirePath("properties.localLogErrors")]
+        public string LocalLogErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalLogErrors;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePhpErrorLogFlagProperties();
+                }
+                Properties.LocalLogErrors = value;
+            }
+        }
+
+        /// <summary> Master log_errors setting. </summary>
+        [WirePath("properties.masterLogErrors")]
+        public string MasterLogErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MasterLogErrors;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePhpErrorLogFlagProperties();
+                }
+                Properties.MasterLogErrors = value;
+            }
+        }
+
+        /// <summary> Local log_errors_max_len setting. </summary>
+        [WirePath("properties.localLogErrorsMaxLength")]
+        public string LocalLogErrorsMaxLength
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalLogErrorsMaxLength;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePhpErrorLogFlagProperties();
+                }
+                Properties.LocalLogErrorsMaxLength = value;
+            }
+        }
+
+        /// <summary> Master log_errors_max_len setting. </summary>
+        [WirePath("properties.masterLogErrorsMaxLength")]
+        public string MasterLogErrorsMaxLength
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MasterLogErrorsMaxLength;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePhpErrorLogFlagProperties();
+                }
+                Properties.MasterLogErrorsMaxLength = value;
+            }
+        }
     }
 }

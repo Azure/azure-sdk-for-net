@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
@@ -12,16 +11,19 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal class BlobErrors : Errors
     {
-        public static ArgumentOutOfRangeException BlobConditionsMustBeDefault(params string[] conditions) =>
-            new ArgumentOutOfRangeException($"The {string.Join(" and ", conditions)} conditions must have their default values because they are ignored by the blob service");
-
         public static InvalidOperationException BlobOrContainerMissing(string leaseClient,
             string blobBaseClient,
             string blobContainerClient) =>
             new InvalidOperationException($"{leaseClient} requires either a {blobBaseClient} or {blobContainerClient}");
 
-        public static ArgumentException InvalidDateTimeUtc(string dateTime) =>
-            new ArgumentException($"{dateTime} must be UTC");
+        public static RequestFailedException InvalidRangeWithNonEmptyBlob(RequestFailedException ex) =>
+            new RequestFailedException("Invalid range exception during ranged download despite non-empty blob", ex);
+
+        public static InvalidOperationException AccountNameRequiredForSessionSigning(Uri endpoint)
+            => new InvalidOperationException(
+                    $"{nameof(SessionMode)}.{nameof(SessionMode.Enabled)} requires the storage account name, " +
+                    $"which could not be determined from the URL: {endpoint.GetLeftPart(UriPartial.Path)}. " +
+                    $"Set BlobClientOptions.{nameof(SessionOptions)}.{nameof(SessionOptions.AccountName)} when using a custom endpoint URL.");
 
         internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)
         {
@@ -39,7 +41,20 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        public static ArgumentException ParsingFullHttpRangeFailed(string range)
-            => new ArgumentException("Could not obtain the total length from HTTP range " + range);
+        public static void VerifyParallelismGreaterThanOne(int parallelism)
+        {
+            if (parallelism <= 1)
+            {
+                throw new ArgumentException("Parallel must be greater than 1 for parallel download.", nameof(parallelism));
+            }
+        }
+
+        public static void VerifyNoExtraData(int extraDataLength)
+        {
+            if (extraDataLength > 0)
+            {
+                throw new InvalidOperationException("The response contained more data than was indicated by the Content-Length header.");
+            }
+        }
     }
 }

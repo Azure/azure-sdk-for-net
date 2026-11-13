@@ -52,10 +52,27 @@ namespace Azure.Test.PerfStress
                 var baseOptionsType = t.GetConstructors().First().GetParameters()[0].ParameterType;
                 var tb = mb.DefineType(t.Name + "Options", TypeAttributes.Public, baseOptionsType);
 
-                var attrCtor = typeof(VerbAttribute).GetConstructor(new Type[] { typeof(string), typeof(bool) });
+                // CustomAttributeBuilder requires a value for every constructor parameter, so select the
+                // VerbAttribute constructor with the fewest parameters whose first parameter is the verb name.
+                // We pass the verb name for that first parameter and the compiler-provided default value for any
+                // remaining parameter. Preferring the smallest constructor keeps this working if CommandLineParser
+                // changes its constructor signatures (e.g. the 'aliases' parameter added in 2.9.1), since the
+                // minimal constructor is the least likely to change.
+               var attrCtorAndParams = typeof(VerbAttribute).GetConstructors()
+                   .Select(c => (Ctor: c, Parameters: c.GetParameters()))
+                   .Where(x => x.Parameters.Length >= 1 && x.Parameters[0].ParameterType == typeof(string))
+                   .OrderBy(x => x.Parameters.Length)
+                   .First();
+               var attrCtor = attrCtorAndParams.Ctor;
+               var ctorParameters = attrCtorAndParams.Parameters;
                 var verbName = GetVerbName(t.Name);
-                tb.SetCustomAttribute(new CustomAttributeBuilder(attrCtor,
-                    new object[] { verbName, attrCtor.GetParameters()[1].DefaultValue }));
+                var attrArgs = new object[ctorParameters.Length];
+                attrArgs[0] = verbName;
+                for (var i = 1; i < ctorParameters.Length; i++)
+                {
+                    attrArgs[i] = ctorParameters[i].DefaultValue;
+                }
+                tb.SetCustomAttribute(new CustomAttributeBuilder(attrCtor, attrArgs));
 
                 optionTypes.Add(tb.CreateType());
             }

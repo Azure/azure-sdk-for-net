@@ -1,14 +1,17 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (2026-11-10)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded the service API version to 2026-11-01.
 
-### Bugs Fixed
+## 1.3.1 (2026-04-29)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.54.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.3.0 (2025-05-09)
 

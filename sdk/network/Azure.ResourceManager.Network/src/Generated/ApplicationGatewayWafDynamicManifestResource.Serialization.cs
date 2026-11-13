@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class ApplicationGatewayWafDynamicManifestResource : IJsonModel<ApplicationGatewayWafDynamicManifestData>
     {
-        private static ApplicationGatewayWafDynamicManifestData s_dataDeserializationInstance;
-        private static ApplicationGatewayWafDynamicManifestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApplicationGatewayWafDynamicManifestData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApplicationGatewayWafDynamicManifestData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApplicationGatewayWafDynamicManifestData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationGatewayWafDynamicManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)Data).Write(writer, options);
 
-        ApplicationGatewayWafDynamicManifestData IJsonModel<ApplicationGatewayWafDynamicManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewayWafDynamicManifestData IJsonModel<ApplicationGatewayWafDynamicManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationGatewayWafDynamicManifestData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApplicationGatewayWafDynamicManifestData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayWafDynamicManifestData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ApplicationGatewayWafDynamicManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayWafDynamicManifestData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationGatewayWafDynamicManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

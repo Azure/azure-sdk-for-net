@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedInstanceLongTermRetentionPolicyResource : IJsonModel<ManagedInstanceLongTermRetentionPolicyData>
     {
-        private static ManagedInstanceLongTermRetentionPolicyData s_dataDeserializationInstance;
-        private static ManagedInstanceLongTermRetentionPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedInstanceLongTermRetentionPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedInstanceLongTermRetentionPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedInstanceLongTermRetentionPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstanceLongTermRetentionPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceLongTermRetentionPolicyData>)Data).Write(writer, options);
 
-        ManagedInstanceLongTermRetentionPolicyData IJsonModel<ManagedInstanceLongTermRetentionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceLongTermRetentionPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstanceLongTermRetentionPolicyData IJsonModel<ManagedInstanceLongTermRetentionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedInstanceLongTermRetentionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceLongTermRetentionPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedInstanceLongTermRetentionPolicyData IPersistableModel<ManagedInstanceLongTermRetentionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceLongTermRetentionPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceLongTermRetentionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceLongTermRetentionPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstanceLongTermRetentionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class LedgerDigestUploadResource : IJsonModel<LedgerDigestUploadData>
     {
-        private static LedgerDigestUploadData s_dataDeserializationInstance;
-        private static LedgerDigestUploadData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LedgerDigestUploadData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LedgerDigestUploadData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LedgerDigestUploadData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LedgerDigestUploadData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LedgerDigestUploadData>)Data).Write(writer, options);
 
-        LedgerDigestUploadData IJsonModel<LedgerDigestUploadData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LedgerDigestUploadData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LedgerDigestUploadData IJsonModel<LedgerDigestUploadData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LedgerDigestUploadData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LedgerDigestUploadData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LedgerDigestUploadData IPersistableModel<LedgerDigestUploadData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LedgerDigestUploadData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<LedgerDigestUploadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LedgerDigestUploadData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LedgerDigestUploadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

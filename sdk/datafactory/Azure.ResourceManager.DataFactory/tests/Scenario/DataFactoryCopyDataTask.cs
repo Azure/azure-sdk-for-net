@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task CreatePipeline()
         {
             string pipelineName = Recording.GenerateAssetName("pipeline-");
-            var pipeline = await CreateCopyDataPipeline(_dataFactory, pipelineName, _dataSetAzureSqlSourceName, _dataSetAzureSqlSinkName, _azureBlobStorageSourceName, _azureBlobStorageSinkName,_azureDataLakeGen2SourceName,_azureDataLakeGen2SinkName);
+            var pipeline = await CreateCopyDataPipeline(_dataFactory, pipelineName, _dataSetAzureSqlSourceName, _dataSetAzureSqlSinkName, _azureBlobStorageSourceName, _azureBlobStorageSinkName, _azureDataLakeGen2SourceName, _azureDataLakeGen2SinkName);
             Assert.IsNotNull(pipeline);
             Assert.AreEqual(pipelineName, pipeline.Data.Name);
             _pipelineName = pipeline.Data.Name;
@@ -119,14 +120,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task ExecutePipelineAndVerify()
         {
             DataFactoryPipelineResource pipelineResource = await _dataFactory.GetDataFactoryPipelineAsync(_pipelineName);
-            var pipelineTrigger = await pipelineResource.CreateRunAsync();
+            var pipelineTrigger = await pipelineResource.CreateRunAsync(new Dictionary<string, BinaryData>());
             Assert.IsNotNull(pipelineTrigger);
             var result = await _dataFactory.GetPipelineRunAsync(pipelineTrigger.Value.RunId.ToString());
             Assert.AreNotEqual("Failed", result.Value.Status);
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task CreateCopyDataTask()
         {
             await CreateLinkedService();

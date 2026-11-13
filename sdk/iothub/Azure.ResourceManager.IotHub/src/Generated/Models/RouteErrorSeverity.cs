@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct RouteErrorSeverity : IEquatable<RouteErrorSeverity>
     {
         private readonly string _value;
+        /// <summary> error. </summary>
+        private const string ErrorValue = "error";
+        /// <summary> warning. </summary>
+        private const string WarningValue = "warning";
 
         /// <summary> Initializes a new instance of <see cref="RouteErrorSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RouteErrorSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ErrorValue = "error";
-        private const string WarningValue = "warning";
+            _value = value;
+        }
 
         /// <summary> error. </summary>
         public static RouteErrorSeverity Error { get; } = new RouteErrorSeverity(ErrorValue);
+
         /// <summary> warning. </summary>
         public static RouteErrorSeverity Warning { get; } = new RouteErrorSeverity(WarningValue);
+
         /// <summary> Determines if two <see cref="RouteErrorSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RouteErrorSeverity left, RouteErrorSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RouteErrorSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RouteErrorSeverity left, RouteErrorSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RouteErrorSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RouteErrorSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RouteErrorSeverity(string value) => new RouteErrorSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RouteErrorSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RouteErrorSeverity?(string value) => value == null ? null : new RouteErrorSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RouteErrorSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RouteErrorSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2ACrossClusterMigrationApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationApplyRecoveryPointContent"/>. </summary>
-        public A2ACrossClusterMigrationApplyRecoveryPointContent()
+        public A2ACrossClusterMigrationApplyRecoveryPointContent() : base("A2ACrossClusterMigration")
         {
-            InstanceType = "A2ACrossClusterMigration";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationApplyRecoveryPointContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal A2ACrossClusterMigrationApplyRecoveryPointContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal A2ACrossClusterMigrationApplyRecoveryPointContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType, additionalBinaryDataProperties)
         {
-            InstanceType = instanceType ?? "A2ACrossClusterMigration";
         }
     }
 }

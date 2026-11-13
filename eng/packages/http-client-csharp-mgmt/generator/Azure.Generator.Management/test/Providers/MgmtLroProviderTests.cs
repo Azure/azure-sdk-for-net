@@ -26,7 +26,7 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var exptected = Helpers.GetExpectedFromFile();
 
-            Assert.AreEqual(exptected, result);
+            Assert.That(result, Is.EqualTo(exptected));
         }
 
         [TestCase]
@@ -38,7 +38,7 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var exptected = Helpers.GetExpectedFromFile();
 
-            Assert.AreEqual(exptected, result);
+            Assert.That(result, Is.EqualTo(exptected));
         }
     }
 }

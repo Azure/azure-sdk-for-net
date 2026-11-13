@@ -1,0 +1,4 @@
+directory: specification/attestation/resource-manager/Microsoft.Attestation/Attestation
+commit: b2d340c177d7799062de05a81431a4a792292530
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

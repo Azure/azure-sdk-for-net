@@ -6,8 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent;
 
 /*
@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent;
  * This file restores substantial portions of generated model factory surface lost via type customization and
  * visibility adjustments.
  */
-[CodeGenClient("AIAgentsPersistentModelFactory")]
+[CodeGenType("AIAgentsPersistentModelFactory")]
 public static partial class PersistentAgentsModelFactory
 {
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentAgent"/>. </summary>
@@ -66,7 +66,7 @@ public static partial class PersistentAgentsModelFactory
             topP,
             responseFormat,
             metadata,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="o:PersistentAgentThread"/>. </summary>
@@ -89,7 +89,7 @@ public static partial class PersistentAgentsModelFactory
             createdAt,
             toolResources,
             metadata,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.ThreadRun"/>. </summary>
@@ -134,7 +134,7 @@ public static partial class PersistentAgentsModelFactory
         tools ??= new List<ToolDefinition>();
         metadata ??= new Dictionary<string, string>();
 
-        return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls ?? true, serializedAdditionalRawData: null);
+        return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls ?? true, additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentAgentFileInfo"/>. </summary>
@@ -170,7 +170,7 @@ public static partial class PersistentAgentsModelFactory
     {
         metadata ??= new Dictionary<string, string>();
 
-        return new RunStep(id, @object: null, type, agentId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, usage, metadata, serializedAdditionalRawData: null);
+        return new RunStep(id, @object: null, type, agentId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, usage, metadata, additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentThreadMessage"/>. </summary>
@@ -194,19 +194,34 @@ public static partial class PersistentAgentsModelFactory
         attachments ??= new List<MessageAttachment>();
         metadata ??= new Dictionary<string, string>();
 
-        return new PersistentThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), (IReadOnlyDictionary<string, string>)metadata, serializedAdditionalRawData: null);
+        return new PersistentThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), (IReadOnlyDictionary<string, string>)metadata, additionalBinaryDataProperties: null);
     }
 
+    /// <summary> Initializes a new instance of <see cref="Persistent.RequiredFunctionToolCall"/> for mocking. </summary>
+    /// <param name="toolCallId"> The identifier of the tool call. </param>
+    /// <param name="functionName"> The name of the function. </param>
+    /// <param name="functionArguments"> The arguments to call the function with. </param>
+    /// <returns> A new <see cref="Persistent.RequiredFunctionToolCall"/> instance for mocking. </returns>
     public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, string functionArguments)
     {
         return new RequiredFunctionToolCall(toolCallId, new InternalRequiredFunctionToolCallDetails(functionName, functionArguments));
     }
 
+    /// <summary> Initializes a new instance of <see cref="Persistent.RunStepFunctionToolCall"/> for mocking. </summary>
+    /// <param name="id"> The identifier of the tool call. </param>
+    /// <param name="name"> The name of the function. </param>
+    /// <param name="arguments"> The arguments to call the function with. </param>
+    /// <returns> A new <see cref="Persistent.RunStepFunctionToolCall"/> instance for mocking. </returns>
     public static RunStepFunctionToolCall RunStepFunctionToolCall(string id, string name, string arguments)
     {
         return new RunStepFunctionToolCall(id, new InternalRunStepFunctionToolCallDetails(name, arguments));
     }
 
+    /// <summary> Initializes a new instance of <see cref="Persistent.RunStepCodeInterpreterToolCall"/> for mocking. </summary>
+    /// <param name="id"> The identifier of the tool call. </param>
+    /// <param name="input"> The input provided to the code interpreter. </param>
+    /// <param name="outputs"> The outputs produced by the code interpreter. </param>
+    /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterToolCall"/> instance for mocking. </returns>
     public static RunStepCodeInterpreterToolCall RunStepCodeInterpreterToolCall(string id, string input, IReadOnlyList<RunStepCodeInterpreterToolCallOutput> outputs)
     {
         return new RunStepCodeInterpreterToolCall(id, new InternalCodeInterpreterToolCallDetails(input, outputs));

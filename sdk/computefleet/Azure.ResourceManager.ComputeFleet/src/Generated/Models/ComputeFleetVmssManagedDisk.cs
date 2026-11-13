@@ -8,44 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Describes the parameters of a ScaleSet managed disk. </summary>
     public partial class ComputeFleetVmssManagedDisk
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssManagedDisk"/>. </summary>
         public ComputeFleetVmssManagedDisk()
@@ -62,13 +32,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// disk.
         /// </param>
         /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssManagedDisk(ComputeFleetStorageAccountType? storageAccountType, WritableSubResource diskEncryptionSet, ComputeFleetVmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssManagedDisk(ComputeFleetStorageAccountType? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, ComputeFleetVmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;
             SecurityProfile = securityProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -76,24 +46,31 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// only be used with data disks, it cannot be used with OS Disk.
         /// </summary>
         public ComputeFleetStorageAccountType? StorageAccountType { get; set; }
+
         /// <summary>
         /// Specifies the customer managed disk encryption set resource id for the managed
         /// disk.
         /// </summary>
-        internal WritableSubResource DiskEncryptionSet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId
-        {
-            get => DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
-            set
-            {
-                if (DiskEncryptionSet is null)
-                    DiskEncryptionSet = new WritableSubResource();
-                DiskEncryptionSet.Id = value;
-            }
-        }
+        internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
 
         /// <summary> Specifies the security profile for the managed disk. </summary>
         public ComputeFleetVmDiskSecurityProfile SecurityProfile { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier DiskEncryptionSetId
+        {
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
+            set
+            {
+                if (DiskEncryptionSet is null)
+                {
+                    DiskEncryptionSet = new DiskEncryptionSetParameters();
+                }
+                DiskEncryptionSet.Id = value;
+            }
+        }
     }
 }

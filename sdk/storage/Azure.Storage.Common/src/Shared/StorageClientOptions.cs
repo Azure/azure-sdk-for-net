@@ -116,9 +116,15 @@ namespace Azure.Storage
             StorageResponseClassifier classifier = new();
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerCallPolicies = { StorageServerTimeoutPolicy.Shared },
+                PerCallPolicies =
+                {
+                    StorageServerTimeoutPolicy.Shared, RangeHeaderPolicy.Shared, new StorageClassifierPolicy(classifier),
+                },
                 // needed *after* core applies the user agent; can't have that without going per-retry
-                PerRetryPolicies = { StorageTelemetryPolicy.Shared },
+                PerRetryPolicies =
+                {
+                    StorageTelemetryPolicy.Shared, RangeHeaderPolicy.Shared
+                },
                 ResponseClassifier = classifier,
                 RequestFailedDetailsParser = new StorageRequestFailedDetailsParser()
             };
@@ -134,14 +140,14 @@ namespace Azure.Storage
                 switch (expectContinue.Mode)
                 {
                     case Request100ContinueMode.Auto:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy()
+                        pipelineOptions.PerRetryPolicies.Add(new ExpectContinueOnThrottlePolicy()
                         {
                             ThrottleInterval = expectContinue.AutoInterval,
                             ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
                         });
                         break;
                     case Request100ContinueMode.Always:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy()
+                        pipelineOptions.PerRetryPolicies.Add(new ExpectContinuePolicy()
                         {
                             ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
                         });

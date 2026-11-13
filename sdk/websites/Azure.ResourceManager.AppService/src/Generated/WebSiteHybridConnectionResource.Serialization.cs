@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WebSiteHybridConnectionResource : IJsonModel<RelayServiceConnectionEntityData>
     {
-        private static RelayServiceConnectionEntityData s_dataDeserializationInstance;
-        private static RelayServiceConnectionEntityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RelayServiceConnectionEntityData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RelayServiceConnectionEntityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RelayServiceConnectionEntityData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RelayServiceConnectionEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayServiceConnectionEntityData>)Data).Write(writer, options);
 
-        RelayServiceConnectionEntityData IJsonModel<RelayServiceConnectionEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayServiceConnectionEntityData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RelayServiceConnectionEntityData IJsonModel<RelayServiceConnectionEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RelayServiceConnectionEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayServiceConnectionEntityData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RelayServiceConnectionEntityData IPersistableModel<RelayServiceConnectionEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayServiceConnectionEntityData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<RelayServiceConnectionEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayServiceConnectionEntityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RelayServiceConnectionEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

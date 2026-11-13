@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct EnqueueReplicationServerType : IEquatable<EnqueueReplicationServerType>
     {
         private readonly string _value;
+        /// <summary> Enqueue Replication server type 1. </summary>
+        private const string EnqueueReplicator1Value = "EnqueueReplicator1";
+        /// <summary> Enqueue Replication server type 2. </summary>
+        private const string EnqueueReplicator2Value = "EnqueueReplicator2";
 
         /// <summary> Initializes a new instance of <see cref="EnqueueReplicationServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnqueueReplicationServerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnqueueReplicator1Value = "EnqueueReplicator1";
-        private const string EnqueueReplicator2Value = "EnqueueReplicator2";
+            _value = value;
+        }
 
         /// <summary> Enqueue Replication server type 1. </summary>
         public static EnqueueReplicationServerType EnqueueReplicator1 { get; } = new EnqueueReplicationServerType(EnqueueReplicator1Value);
+
         /// <summary> Enqueue Replication server type 2. </summary>
         public static EnqueueReplicationServerType EnqueueReplicator2 { get; } = new EnqueueReplicationServerType(EnqueueReplicator2Value);
+
         /// <summary> Determines if two <see cref="EnqueueReplicationServerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnqueueReplicationServerType left, EnqueueReplicationServerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnqueueReplicationServerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnqueueReplicationServerType left, EnqueueReplicationServerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnqueueReplicationServerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnqueueReplicationServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnqueueReplicationServerType(string value) => new EnqueueReplicationServerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnqueueReplicationServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnqueueReplicationServerType?(string value) => value == null ? null : new EnqueueReplicationServerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnqueueReplicationServerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnqueueReplicationServerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

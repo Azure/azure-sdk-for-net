@@ -1,4 +1,6 @@
-directory: specification/deviceprovisioningservices/DeviceProvisioningServices.Management
+directory: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/DeviceProvisioningServices
+commit: 1cd6a5cae7ce742d186a182fd482b2f592b8f97b
 repo: Azure/azure-rest-api-specs
-commit: 1454325dc8e8d8ba5414ae6a5a5b354320190193
-additionalDirectories: []
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

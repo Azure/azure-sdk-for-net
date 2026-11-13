@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AzureFirewallPacketCaptureFlagsType : IEquatable<AzureFirewallPacketCaptureFlagsType>
     {
         private readonly string _value;
+        /// <summary> fin. </summary>
+        private const string FinValue = "fin";
+        /// <summary> syn. </summary>
+        private const string SynValue = "syn";
+        /// <summary> rst. </summary>
+        private const string RstValue = "rst";
+        /// <summary> push. </summary>
+        private const string PushValue = "push";
+        /// <summary> ack. </summary>
+        private const string AckValue = "ack";
+        /// <summary> urg. </summary>
+        private const string UrgValue = "urg";
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureFlagsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureFirewallPacketCaptureFlagsType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FinValue = "fin";
-        private const string SynValue = "syn";
-        private const string RstValue = "rst";
-        private const string PushValue = "push";
-        private const string AckValue = "ack";
-        private const string UrgValue = "urg";
+            _value = value;
+        }
 
         /// <summary> fin. </summary>
         public static AzureFirewallPacketCaptureFlagsType Fin { get; } = new AzureFirewallPacketCaptureFlagsType(FinValue);
+
         /// <summary> syn. </summary>
         public static AzureFirewallPacketCaptureFlagsType Syn { get; } = new AzureFirewallPacketCaptureFlagsType(SynValue);
+
         /// <summary> rst. </summary>
         public static AzureFirewallPacketCaptureFlagsType Rst { get; } = new AzureFirewallPacketCaptureFlagsType(RstValue);
+
         /// <summary> push. </summary>
         public static AzureFirewallPacketCaptureFlagsType Push { get; } = new AzureFirewallPacketCaptureFlagsType(PushValue);
+
         /// <summary> ack. </summary>
         public static AzureFirewallPacketCaptureFlagsType Ack { get; } = new AzureFirewallPacketCaptureFlagsType(AckValue);
+
         /// <summary> urg. </summary>
         public static AzureFirewallPacketCaptureFlagsType Urg { get; } = new AzureFirewallPacketCaptureFlagsType(UrgValue);
+
         /// <summary> Determines if two <see cref="AzureFirewallPacketCaptureFlagsType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureFirewallPacketCaptureFlagsType left, AzureFirewallPacketCaptureFlagsType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureFirewallPacketCaptureFlagsType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureFirewallPacketCaptureFlagsType left, AzureFirewallPacketCaptureFlagsType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallPacketCaptureFlagsType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureFirewallPacketCaptureFlagsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureFirewallPacketCaptureFlagsType(string value) => new AzureFirewallPacketCaptureFlagsType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureFirewallPacketCaptureFlagsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureFirewallPacketCaptureFlagsType?(string value) => value == null ? null : new AzureFirewallPacketCaptureFlagsType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureFirewallPacketCaptureFlagsType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureFirewallPacketCaptureFlagsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

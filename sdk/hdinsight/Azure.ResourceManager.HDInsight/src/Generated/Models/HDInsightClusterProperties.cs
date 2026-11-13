@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The properties of cluster. </summary>
     public partial class HDInsightClusterProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterProperties"/>. </summary>
         /// <param name="clusterDefinition"> The cluster definition. </param>
@@ -84,8 +57,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="computeIsolationProperties"> The compute isolation properties. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, DateTimeOffset? createdOn, string clusterState, QuotaInfo quotaInfo, IList<ResponseError> errors, IList<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, DateTimeOffset? createdOn, string clusterState, QuotaInfo quotaInfo, IList<ResponseError> errors, IList<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterVersion = clusterVersion;
             ClusterHdpVersion = clusterHdpVersion;
@@ -111,107 +84,139 @@ namespace Azure.ResourceManager.HDInsight.Models
             ComputeIsolationProperties = computeIsolationProperties;
             PrivateLinkConfigurations = privateLinkConfigurations;
             PrivateEndpointConnections = privateEndpointConnections;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HDInsightClusterProperties"/> for deserialization. </summary>
-        internal HDInsightClusterProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The version of the cluster. </summary>
         public string ClusterVersion { get; set; }
+
         /// <summary> The hdp version of the cluster. </summary>
         public string ClusterHdpVersion { get; set; }
+
         /// <summary> The type of operating system. </summary>
         public HDInsightOSType? OSType { get; set; }
+
         /// <summary> The cluster tier. </summary>
         public HDInsightTier? Tier { get; set; }
+
         /// <summary> The cluster id. </summary>
         public string ClusterId { get; set; }
+
         /// <summary> The cluster definition. </summary>
         public HDInsightClusterDefinition ClusterDefinition { get; set; }
+
         /// <summary> The cluster kafka rest proxy configuration. </summary>
         public KafkaRestProperties KafkaRestProperties { get; set; }
+
         /// <summary> The security profile. </summary>
         public HDInsightSecurityProfile SecurityProfile { get; set; }
+
         /// <summary> The compute profile. </summary>
         internal ComputeProfile ComputeProfile { get; set; }
+
+        /// <summary> The provisioning state, which only appears in the response. </summary>
+        public HDInsightClusterProvisioningState? ProvisioningState { get; set; }
+
+        /// <summary> The date on which the cluster was created. </summary>
+        public DateTimeOffset? CreatedOn { get; set; }
+
+        /// <summary> The state of the cluster. </summary>
+        public string ClusterState { get; set; }
+
+        /// <summary> The quota information. </summary>
+        internal QuotaInfo QuotaInfo { get; set; }
+
+        /// <summary> The list of errors. </summary>
+        public IList<ResponseError> Errors { get; }
+
+        /// <summary> The list of connectivity endpoints. </summary>
+        public IList<ConnectivityEndpoint> ConnectivityEndpoints { get; }
+
+        /// <summary> The disk encryption properties. </summary>
+        public HDInsightDiskEncryptionProperties DiskEncryptionProperties { get; set; }
+
+        /// <summary> The encryption-in-transit properties. </summary>
+        internal EncryptionInTransitProperties EncryptionInTransitProperties { get; set; }
+
+        /// <summary> The storage profile. </summary>
+        internal StorageProfile StorageProfile { get; set; }
+
+        /// <summary> The minimal supported tls version. </summary>
+        public string MinSupportedTlsVersion { get; set; }
+
+        /// <summary> The excluded services config. </summary>
+        public ExcludedServicesConfig ExcludedServicesConfig { get; set; }
+
+        /// <summary> The network properties. </summary>
+        public HDInsightClusterNetworkProperties NetworkProperties { get; set; }
+
+        /// <summary> The compute isolation properties. </summary>
+        public HDInsightComputeIsolationProperties ComputeIsolationProperties { get; set; }
+
+        /// <summary> The private link configurations. </summary>
+        public IList<HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
+
+        /// <summary> The list of private endpoint connections. </summary>
+        public IReadOnlyList<HDInsightPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+
         /// <summary> The list of roles in the cluster. </summary>
         public IList<HDInsightClusterRole> ComputeRoles
         {
             get
             {
                 if (ComputeProfile is null)
+                {
                     ComputeProfile = new ComputeProfile();
+                }
                 return ComputeProfile.Roles;
             }
         }
 
-        /// <summary> The provisioning state, which only appears in the response. </summary>
-        public HDInsightClusterProvisioningState? ProvisioningState { get; set; }
-        /// <summary> The date on which the cluster was created. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The state of the cluster. </summary>
-        public string ClusterState { get; set; }
-        /// <summary> The quota information. </summary>
-        internal QuotaInfo QuotaInfo { get; set; }
         /// <summary> The cores used by the cluster. </summary>
         public int? QuotaInfoCoresUsed
         {
-            get => QuotaInfo is null ? default : QuotaInfo.CoresUsed;
+            get
+            {
+                return QuotaInfo is null ? default : QuotaInfo.CoresUsed;
+            }
             set
             {
                 if (QuotaInfo is null)
+                {
                     QuotaInfo = new QuotaInfo();
+                }
                 QuotaInfo.CoresUsed = value;
             }
         }
 
-        /// <summary> The list of errors. </summary>
-        public IList<ResponseError> Errors { get; }
-        /// <summary> The list of connectivity endpoints. </summary>
-        public IList<ConnectivityEndpoint> ConnectivityEndpoints { get; }
-        /// <summary> The disk encryption properties. </summary>
-        public HDInsightDiskEncryptionProperties DiskEncryptionProperties { get; set; }
-        /// <summary> The encryption-in-transit properties. </summary>
-        internal EncryptionInTransitProperties EncryptionInTransitProperties { get; set; }
         /// <summary> Indicates whether or not inter cluster node communication is encrypted in transit. </summary>
         public bool? IsEncryptionInTransitEnabled
         {
-            get => EncryptionInTransitProperties is null ? default : EncryptionInTransitProperties.IsEncryptionInTransitEnabled;
+            get
+            {
+                return EncryptionInTransitProperties is null ? default : EncryptionInTransitProperties.IsEncryptionInTransitEnabled;
+            }
             set
             {
                 if (EncryptionInTransitProperties is null)
+                {
                     EncryptionInTransitProperties = new EncryptionInTransitProperties();
+                }
                 EncryptionInTransitProperties.IsEncryptionInTransitEnabled = value;
             }
         }
 
-        /// <summary> The storage profile. </summary>
-        internal StorageProfile StorageProfile { get; set; }
         /// <summary> The list of storage accounts in the cluster. </summary>
         public IList<HDInsightStorageAccountInfo> StorageAccounts
         {
             get
             {
                 if (StorageProfile is null)
+                {
                     StorageProfile = new StorageProfile();
-                return StorageProfile.StorageAccounts;
+                }
+                return StorageProfile.Accounts;
             }
         }
-
-        /// <summary> The minimal supported tls version. </summary>
-        public string MinSupportedTlsVersion { get; set; }
-        /// <summary> The excluded services config. </summary>
-        public ExcludedServicesConfig ExcludedServicesConfig { get; set; }
-        /// <summary> The network properties. </summary>
-        public HDInsightClusterNetworkProperties NetworkProperties { get; set; }
-        /// <summary> The compute isolation properties. </summary>
-        public HDInsightComputeIsolationProperties ComputeIsolationProperties { get; set; }
-        /// <summary> The private link configurations. </summary>
-        public IList<HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
-        /// <summary> The list of private endpoint connections. </summary>
-        public IReadOnlyList<HDInsightPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

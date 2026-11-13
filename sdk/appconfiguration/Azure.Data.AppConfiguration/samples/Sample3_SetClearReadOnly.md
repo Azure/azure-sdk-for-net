@@ -9,7 +9,7 @@ To interact with Azure App Configuration, you need to instantiate a `Configurati
 For the sample below, you can set `connectionString` in an environment variable, a configuration setting, or any way that works for your application. The connection string is available from the App Configuration Access Keys view in the Azure Portal.
 
 ```C# Snippet:AzConfigSample3_CreateConfigurationClient
-var client = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Create a configuration setting

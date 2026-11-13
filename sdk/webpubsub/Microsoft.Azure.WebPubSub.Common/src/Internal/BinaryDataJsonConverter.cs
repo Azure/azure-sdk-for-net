@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace System
         {
             if (reader.TokenType == JsonTokenType.String)
             {
-                return BinaryData.FromString(JsonSerializer.Deserialize<string>(ref reader));
+                return BinaryData.FromString(reader.GetString());
             }
 
             if (TryLoadBinary(ref reader, out var bytes))
@@ -36,9 +36,22 @@ namespace System
             if (doc.RootElement.TryGetProperty("type", out var value) && value.GetString().Equals("Buffer", StringComparison.OrdinalIgnoreCase)
                 && doc.RootElement.TryGetProperty("data", out var data))
             {
-                output = JsonSerializer.Deserialize<List<byte>>(data.GetRawText()).ToArray();
+                if (data.ValueKind != JsonValueKind.Array)
+                {
+                    output = null;
+                    return false;
+                }
+
+                List<byte> values = [];
+                foreach (JsonElement element in data.EnumerateArray())
+                {
+                    values.Add(element.GetByte());
+                }
+
+                output = [.. values];
                 return true;
             }
+
             output = null;
             return false;
         }

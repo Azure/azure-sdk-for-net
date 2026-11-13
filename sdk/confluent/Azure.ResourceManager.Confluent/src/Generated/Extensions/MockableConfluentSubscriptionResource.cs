@@ -6,216 +6,95 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Confluent.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Confluent.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableConfluentSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _marketplaceAgreementsClientDiagnostics;
-        private MarketplaceAgreementsRestOperations _marketplaceAgreementsRestClient;
-        private ClientDiagnostics _confluentOrganizationOrganizationClientDiagnostics;
-        private OrganizationRestOperations _confluentOrganizationOrganizationRestClient;
+        private ClientDiagnostics _confluentOrganizationClientDiagnostics;
+        private ConfluentOrganization _confluentOrganizationRestClient;
+        private ClientDiagnostics _saaSOperationGroupClientDiagnostics;
+        private SaaSOperationGroup _saaSOperationGroupRestClient;
+        private ClientDiagnostics _marketplaceAgreementsOperationGroupClientDiagnostics;
+        private MarketplaceAgreementsOperationGroup _marketplaceAgreementsOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConfluentSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableConfluentSubscriptionResource for mocking. </summary>
         protected MockableConfluentSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConfluentSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableConfluentSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableConfluentSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics MarketplaceAgreementsClientDiagnostics => _marketplaceAgreementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MarketplaceAgreementsRestOperations MarketplaceAgreementsRestClient => _marketplaceAgreementsRestClient ??= new MarketplaceAgreementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ConfluentOrganizationOrganizationClientDiagnostics => _confluentOrganizationOrganizationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationRestOperations ConfluentOrganizationOrganizationRestClient => _confluentOrganizationOrganizationRestClient ??= new OrganizationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfluentOrganizationResource.ResourceType));
+        private ClientDiagnostics ConfluentOrganizationClientDiagnostics => _confluentOrganizationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ConfluentOrganization ConfluentOrganizationRestClient => _confluentOrganizationRestClient ??= new ConfluentOrganization(ConfluentOrganizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Confluent/organizations", out string apiVersion) ? apiVersion : "2026-06-02-preview");
 
-        /// <summary>
-        /// List Confluent marketplace agreements in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceAgreements_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfluentAgreement"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfluentAgreement> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConfluentAgreement.DeserializeConfluentAgreement(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
-        }
+        private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// List Confluent marketplace agreements in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceAgreements_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentAgreement"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfluentAgreement> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConfluentAgreement.DeserializeConfluentAgreement(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
-        }
+        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
 
-        /// <summary>
-        /// Create Confluent Marketplace agreement in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceAgreements_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="body"> Confluent Marketplace Agreement resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(ConfluentAgreement body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("MockableConfluentSubscriptionResource.CreateMarketplaceAgreement");
-            scope.Start();
-            try
-            {
-                var response = await MarketplaceAgreementsRestClient.CreateAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        private ClientDiagnostics MarketplaceAgreementsOperationGroupClientDiagnostics => _marketplaceAgreementsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Create Confluent Marketplace agreement in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceAgreements_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="body"> Confluent Marketplace Agreement resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfluentAgreement> CreateMarketplaceAgreement(ConfluentAgreement body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("MockableConfluentSubscriptionResource.CreateMarketplaceAgreement");
-            scope.Start();
-            try
-            {
-                var response = MarketplaceAgreementsRestClient.Create(Id.SubscriptionId, body, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        private MarketplaceAgreementsOperationGroup MarketplaceAgreementsOperationGroupRestClient => _marketplaceAgreementsOperationGroupRestClient ??= new MarketplaceAgreementsOperationGroup(MarketplaceAgreementsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
 
         /// <summary>
         /// List all organizations under the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organization_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrganizationResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), ConfluentOrganizationOrganizationClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetConfluentOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationDataAsync0CollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConfluentSubscriptionResource.GetConfluentOrganizations"), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>
         /// List all organizations under the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organization_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrganizationResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,9 +102,317 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), ConfluentOrganizationOrganizationClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetConfluentOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationData0CollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConfluentSubscriptionResource.GetConfluentOrganizations"), data => new ConfluentOrganizationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/activateSaaS. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SaaSOperationGroup_ActivateResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SaaSResourceDetailsResult>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableConfluentSubscriptionResource.ActivateResource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ConfluentArmOperation<SaaSResourceDetailsResult> operation = new ConfluentArmOperation<SaaSResourceDetailsResult>(
+                    new SaaSResourceDetailsResultOperationSource(),
+                    SaaSOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/activateSaaS. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SaaSOperationGroup_ActivateResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SaaSResourceDetailsResult> ActivateResource(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableConfluentSubscriptionResource.ActivateResource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ConfluentArmOperation<SaaSResourceDetailsResult> operation = new ConfluentArmOperation<SaaSResourceDetailsResult>(
+                    new SaaSResourceDetailsResultOperationSource(),
+                    SaaSOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List Confluent marketplace agreements in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConfluentAgreement"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfluentAgreement> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfluentAgreementAsyncCollectionResultOfT(MarketplaceAgreementsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements");
+        }
+
+        /// <summary>
+        /// List Confluent marketplace agreements in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConfluentAgreement"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfluentAgreement> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfluentAgreementCollectionResultOfT(MarketplaceAgreementsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements");
+        }
+
+        /// <summary>
+        /// Create Confluent Marketplace agreement in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(ConfluentAgreement body, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = MarketplaceAgreementsOperationGroupClientDiagnostics.CreateScope("MockableConfluentSubscriptionResource.CreateMarketplaceAgreement");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MarketplaceAgreementsOperationGroupRestClient.CreateCreateMarketplaceAgreementRequest(Guid.Parse(Id.SubscriptionId), ConfluentAgreement.ToRequestContent(body), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConfluentAgreement> response = Response.FromValue(ConfluentAgreement.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create Confluent Marketplace agreement in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConfluentAgreement> CreateMarketplaceAgreement(ConfluentAgreement body, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = MarketplaceAgreementsOperationGroupClientDiagnostics.CreateScope("MockableConfluentSubscriptionResource.CreateMarketplaceAgreement");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MarketplaceAgreementsOperationGroupRestClient.CreateCreateMarketplaceAgreementRequest(Guid.Parse(Id.SubscriptionId), ConfluentAgreement.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConfluentAgreement> response = Response.FromValue(ConfluentAgreement.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create Confluent Marketplace agreement in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(CancellationToken cancellationToken = default)
+        {
+            return CreateMarketplaceAgreementAsync(body: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Create Confluent Marketplace agreement in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<ConfluentAgreement> CreateMarketplaceAgreement(CancellationToken cancellationToken = default)
+        {
+            return CreateMarketplaceAgreement(body: default, cancellationToken: cancellationToken);
         }
     }
 }

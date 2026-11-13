@@ -9,6 +9,7 @@ using System.Threading;
 using Azure;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             _loggerFactory.AddProvider(_loggerProvider);
             _mockQueue = new Mock<QueueClient>(new Uri("https://test.queue.core.windows.net/testqueue"), new QueueClientOptions());
             _mockQueue.Setup(x => x.Name).Returns("testqueue");
-            _metricsProvider = new QueueMetricsProvider(_mockQueue.Object, _loggerFactory);
+            _metricsProvider = new QueueMetricsProvider("testFunctionId", _mockQueue.Object, _loggerFactory);
         }
 
         [OneTimeSetUp]
@@ -54,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
         [Test]
         public async Task GetMetrics_ReturnsExpectedResult()
         {
-            QueueMetricsProvider _provider = new QueueMetricsProvider(Fixture.Queue, _loggerFactory);
+            QueueMetricsProvider _provider = new QueueMetricsProvider("testFunctionId", Fixture.Queue, _loggerFactory);
             var metrics = await _provider.GetMetricsAsync();
 
             Assert.AreEqual(0, metrics.QueueLength);
@@ -99,6 +100,81 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Microsoft.Extensions.Logging.LogLevel.Warning);
             Assert.AreEqual("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
+        }
+
+        [Test]
+        public async Task GetMetrics_NoVisibleMessages_ReturnsZeroQueueLength()
+        {
+            // GetProperties reports 5 messages but nothing can be peeked. Because the metrics client
+            // reads raw, decoding cannot fail, so this means the messages are not visible: scheduled
+            // with a visibility delay, in-flight on another worker, or a stale count after a drain.
+            // None are dequeueable, so scaling out for them would not reduce the backlog.
+            var queueProperties = QueuesModelFactory.QueueProperties(metadata: null, approximateMessagesCount: 5);
+
+            _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
+
+            _mockQueue.Setup(p => p.PeekMessagesAsync(
+                It.IsAny<int?>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(Array.Empty<PeekedMessage>(), Mock.Of<Response>())));
+
+            var metrics = await _metricsProvider.GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.QueueLength);
+            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
+        }
+
+        [Test]
+        public async Task GetMetrics_VisibleMessage_ReturnsApproximateMessageCount()
+        {
+            // A message is visible, so the full ApproximateMessagesCount represents dequeueable work.
+            // Undecodable messages land here too: the raw client returns them, and scaling out lets the
+            // listener receive them and move them to the poison queue.
+            var queueProperties = QueuesModelFactory.QueueProperties(metadata: null, approximateMessagesCount: 5);
+            var peeked = QueuesModelFactory.PeekedMessage(
+                messageId: "1",
+                messageText: "<<<not-base64>>>",
+                dequeueCount: 0,
+                insertedOn: DateTimeOffset.UtcNow.AddMinutes(-2));
+
+            _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
+
+            _mockQueue.Setup(p => p.PeekMessagesAsync(
+                It.IsAny<int?>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(new[] { peeked }, Mock.Of<Response>())));
+
+            var metrics = await _metricsProvider.GetMetricsAsync();
+
+            Assert.AreEqual(5, metrics.QueueLength);
+            Assert.Greater(metrics.QueueTime, TimeSpan.Zero);
+        }
+
+        [Test]
+        public async Task GetMetrics_VisibleMessageWithoutInsertedOn_ReturnsApproximateMessageCount()
+        {
+            // A message without a timestamp is still dequeueable work, so only QueueTime is unknown.
+            var queueProperties = QueuesModelFactory.QueueProperties(metadata: null, approximateMessagesCount: 5);
+            var peeked = QueuesModelFactory.PeekedMessage(
+                messageId: "1",
+                messageText: "message",
+                dequeueCount: 0,
+                insertedOn: null);
+
+            _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
+
+            _mockQueue.Setup(p => p.PeekMessagesAsync(
+                It.IsAny<int?>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(new[] { peeked }, Mock.Of<Response>())));
+
+            var metrics = await _metricsProvider.GetMetricsAsync();
+
+            Assert.AreEqual(5, metrics.QueueLength);
+            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
         }
 
         public class TestFixture : IDisposable

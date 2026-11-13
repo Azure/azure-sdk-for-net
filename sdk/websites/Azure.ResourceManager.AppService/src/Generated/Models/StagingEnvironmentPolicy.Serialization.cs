@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class StagingEnvironmentPolicyExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StagingEnvironmentPolicy value) => value switch
         {
             StagingEnvironmentPolicy.Enabled => "Enabled",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StagingEnvironmentPolicy value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StagingEnvironmentPolicy ToStagingEnvironmentPolicy(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return StagingEnvironmentPolicy.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return StagingEnvironmentPolicy.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return StagingEnvironmentPolicy.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return StagingEnvironmentPolicy.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StagingEnvironmentPolicy value.");
         }
     }

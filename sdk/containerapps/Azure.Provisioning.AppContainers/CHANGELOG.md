@@ -1,0 +1,79 @@
+# Release History
+
+## 1.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0 (2026-11-11)
+
+### Features Added
+
+- Upgraded api-version to 2026-07-01.
+- Added support for Container App private endpoint connections, Azure Functions, Dapr component resiliency policies, .NET components, label history, sandbox groups, and sandbox group virtual network connections.
+- Added support for managed environment migration eligibility checks and OpenTelemetry configuration.
+
+### Bugs Fixed
+
+- Corrected default names for Container Apps managed environments to use 2–60 lowercase letters, numbers, or hyphens.
+  Expect automatically generated managed environment names to change when upgrading if explicit names are not set.
+
+### Other Changes
+
+- Migrated library generation to the TypeSpec provisioning emitter.
+
+## 1.3.0-beta.2 (2026-09-24)
+
+### Bugs Fixed
+
+- Corrected default names for Container Apps managed environments to use 2–60 lowercase letters, numbers, or hyphens.
+  Expect automatically generated managed environment names to change when upgrading if explicit names are not set.
+
+## 1.3.0-beta.1 (2026-09-15)
+
+### Features Added
+
+- Upgraded api-version to 2026-07-01.
+- Added support for Container App private endpoint connections, Azure Functions, Dapr component resiliency policies, .NET components, label history, sandbox groups, and sandbox group virtual network connections.
+- Added support for managed environment migration eligibility checks and OpenTelemetry configuration.
+
+### Other Changes
+
+- Migrated library generation to the TypeSpec provisioning emitter.
+
+## 1.2.0 (2026-03-13)
+
+### Other Changes
+
+- Refreshed provisioning library with latest resource model updates.
+
+## 1.2.0-beta.1 (2026-02-05)
+
+### Features Added
+
+- Added new resource versions including `V2025_07_01` and `V2026_01_01`.
+- Added `Auto` value to `ContainerAppCustomDomainBindingType` enum for automatic certificate binding.
+- Added new resources: `ContainerAppHttpRouteConfig`, `ContainerAppMaintenanceConfiguration`, `ContainerAppPrivateEndpointConnection`, and `LogicApp`.
+
+## 1.1.0 (2025-06-16)
+
+### Features Added
+
+- Updated to use latest API version.
+
+## 1.0.0 (2024-10-25)
+
+### Features Added
+
+- The new Azure.Provisioning experience.
+
+## 1.0.0-beta.1 (2024-10-04)
+
+### Features Added
+
+- Preview of the new Azure.Provisioning experience.

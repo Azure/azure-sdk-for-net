@@ -30,31 +30,56 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.Search.AsciiFoldingTokenFilter": return AsciiFoldingTokenFilter.DeserializeAsciiFoldingTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.CjkBigramTokenFilter": return CjkBigramTokenFilter.DeserializeCjkBigramTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.CommonGramTokenFilter": return CommonGramTokenFilter.DeserializeCommonGramTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.DictionaryDecompounderTokenFilter": return DictionaryDecompounderTokenFilter.DeserializeDictionaryDecompounderTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.EdgeNGramTokenFilter": return EdgeNGramTokenFilter.DeserializeEdgeNGramTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.EdgeNGramTokenFilterV2": return EdgeNGramTokenFilter.DeserializeEdgeNGramTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.ElisionTokenFilter": return ElisionTokenFilter.DeserializeElisionTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.KeepTokenFilter": return KeepTokenFilter.DeserializeKeepTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.KeywordMarkerTokenFilter": return KeywordMarkerTokenFilter.DeserializeKeywordMarkerTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.LengthTokenFilter": return LengthTokenFilter.DeserializeLengthTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.LimitTokenFilter": return LimitTokenFilter.DeserializeLimitTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.NGramTokenFilter": return NGramTokenFilter.DeserializeNGramTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.NGramTokenFilterV2": return NGramTokenFilter.DeserializeNGramTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.PatternCaptureTokenFilter": return PatternCaptureTokenFilter.DeserializePatternCaptureTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.PatternReplaceTokenFilter": return PatternReplaceTokenFilter.DeserializePatternReplaceTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.PhoneticTokenFilter": return PhoneticTokenFilter.DeserializePhoneticTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.ShingleTokenFilter": return ShingleTokenFilter.DeserializeShingleTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.SnowballTokenFilter": return SnowballTokenFilter.DeserializeSnowballTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.StemmerOverrideTokenFilter": return StemmerOverrideTokenFilter.DeserializeStemmerOverrideTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.StemmerTokenFilter": return StemmerTokenFilter.DeserializeStemmerTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.StopwordsTokenFilter": return StopwordsTokenFilter.DeserializeStopwordsTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.SynonymTokenFilter": return SynonymTokenFilter.DeserializeSynonymTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.TruncateTokenFilter": return TruncateTokenFilter.DeserializeTruncateTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.UniqueTokenFilter": return UniqueTokenFilter.DeserializeUniqueTokenFilter(element, options);
-                    case "#Microsoft.Azure.Search.WordDelimiterTokenFilter": return WordDelimiterTokenFilter.DeserializeWordDelimiterTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.AsciiFoldingTokenFilter":
+                        return AsciiFoldingTokenFilter.DeserializeAsciiFoldingTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.CjkBigramTokenFilter":
+                        return CjkBigramTokenFilter.DeserializeCjkBigramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.CommonGramTokenFilter":
+                        return CommonGramTokenFilter.DeserializeCommonGramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.DictionaryDecompounderTokenFilter":
+                        return DictionaryDecompounderTokenFilter.DeserializeDictionaryDecompounderTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.EdgeNGramTokenFilter":
+                        return EdgeNGramTokenFilter.DeserializeEdgeNGramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.EdgeNGramTokenFilterV2":
+                        return EdgeNGramTokenFilter.DeserializeEdgeNGramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.ElisionTokenFilter":
+                        return ElisionTokenFilter.DeserializeElisionTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.KeepTokenFilter":
+                        return KeepTokenFilter.DeserializeKeepTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.KeywordMarkerTokenFilter":
+                        return KeywordMarkerTokenFilter.DeserializeKeywordMarkerTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.LengthTokenFilter":
+                        return LengthTokenFilter.DeserializeLengthTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.LimitTokenFilter":
+                        return LimitTokenFilter.DeserializeLimitTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.NGramTokenFilter":
+                        return NGramTokenFilter.DeserializeNGramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.NGramTokenFilterV2":
+                        return NGramTokenFilter.DeserializeNGramTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.PatternCaptureTokenFilter":
+                        return PatternCaptureTokenFilter.DeserializePatternCaptureTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.PatternReplaceTokenFilter":
+                        return PatternReplaceTokenFilter.DeserializePatternReplaceTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.PhoneticTokenFilter":
+                        return PhoneticTokenFilter.DeserializePhoneticTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.ShingleTokenFilter":
+                        return ShingleTokenFilter.DeserializeShingleTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.SnowballTokenFilter":
+                        return SnowballTokenFilter.DeserializeSnowballTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.StemmerOverrideTokenFilter":
+                        return StemmerOverrideTokenFilter.DeserializeStemmerOverrideTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.StemmerTokenFilter":
+                        return StemmerTokenFilter.DeserializeStemmerTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.StopwordsTokenFilter":
+                        return StopwordsTokenFilter.DeserializeStopwordsTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.SynonymTokenFilter":
+                        return SynonymTokenFilter.DeserializeSynonymTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.TruncateTokenFilter":
+                        return TruncateTokenFilter.DeserializeTruncateTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.UniqueTokenFilter":
+                        return UniqueTokenFilter.DeserializeUniqueTokenFilter(element, options);
+                    case "#Microsoft.Azure.Search.WordDelimiterTokenFilter":
+                        return WordDelimiterTokenFilter.DeserializeWordDelimiterTokenFilter(element, options);
                 }
             }
             return UnknownTokenFilter.DeserializeUnknownTokenFilter(element, options);

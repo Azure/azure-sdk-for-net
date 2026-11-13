@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         [Test]
         public async Task SendSingleDelegatesToSendList()
         {
-           var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object, new ServiceBusSenderOptions())
+            var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object, new ServiceBusSenderOptions())
             {
                 CallBase = true
             };

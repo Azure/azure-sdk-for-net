@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct SendAllEvent : IEquatable<SendAllEvent>
     {
         private readonly string _value;
+        /// <summary> Need send notification under any event. </summary>
+        private const string TrueValue = "true";
+        /// <summary> No need to send notification under any event. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="SendAllEvent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SendAllEvent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrueValue = "true";
-        private const string FalseValue = "false";
+            _value = value;
+        }
 
         /// <summary> Need send notification under any event. </summary>
         public static SendAllEvent True { get; } = new SendAllEvent(TrueValue);
+
         /// <summary> No need to send notification under any event. </summary>
         public static SendAllEvent False { get; } = new SendAllEvent(FalseValue);
+
         /// <summary> Determines if two <see cref="SendAllEvent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SendAllEvent left, SendAllEvent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SendAllEvent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SendAllEvent left, SendAllEvent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SendAllEvent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SendAllEvent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SendAllEvent(string value) => new SendAllEvent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SendAllEvent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SendAllEvent?(string value) => value == null ? null : new SendAllEvent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SendAllEvent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SendAllEvent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

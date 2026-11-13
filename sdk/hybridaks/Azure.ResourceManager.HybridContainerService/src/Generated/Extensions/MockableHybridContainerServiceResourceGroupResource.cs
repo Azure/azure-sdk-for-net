@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HybridContainerService;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridContainerService.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHybridContainerServiceResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridContainerServiceResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHybridContainerServiceResourceGroupResource for mocking. </summary>
         protected MockableHybridContainerServiceResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridContainerServiceResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHybridContainerServiceResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHybridContainerServiceResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of HybridContainerServiceVirtualNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
+        /// <summary> Gets a collection of HybridContainerServiceVirtualNetworks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of HybridContainerServiceVirtualNetworks and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
         public virtual HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks()
         {
             return GetCachedClient(client => new HybridContainerServiceVirtualNetworkCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// Gets the specified virtual network resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>virtualNetworks_Retrieve</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
             return await GetHybridContainerServiceVirtualNetworks().GetAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// Gets the specified virtual network resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>virtualNetworks_Retrieve</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         [ForwardsClientCalls]
         public virtual Response<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
             return GetHybridContainerServiceVirtualNetworks().Get(virtualNetworkName, cancellationToken);
         }
     }

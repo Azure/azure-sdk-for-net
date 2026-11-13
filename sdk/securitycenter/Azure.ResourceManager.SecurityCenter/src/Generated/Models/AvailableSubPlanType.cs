@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct AvailableSubPlanType : IEquatable<AvailableSubPlanType>
     {
         private readonly string _value;
+        /// <summary> P1. </summary>
+        private const string P1Value = "P1";
+        /// <summary> P2. </summary>
+        private const string P2Value = "P2";
 
         /// <summary> Initializes a new instance of <see cref="AvailableSubPlanType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvailableSubPlanType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string P1Value = "P1";
-        private const string P2Value = "P2";
+            _value = value;
+        }
 
         /// <summary> P1. </summary>
         public static AvailableSubPlanType P1 { get; } = new AvailableSubPlanType(P1Value);
+
         /// <summary> P2. </summary>
         public static AvailableSubPlanType P2 { get; } = new AvailableSubPlanType(P2Value);
+
         /// <summary> Determines if two <see cref="AvailableSubPlanType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvailableSubPlanType left, AvailableSubPlanType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvailableSubPlanType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvailableSubPlanType left, AvailableSubPlanType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailableSubPlanType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvailableSubPlanType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvailableSubPlanType(string value) => new AvailableSubPlanType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvailableSubPlanType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvailableSubPlanType?(string value) => value == null ? null : new AvailableSubPlanType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvailableSubPlanType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvailableSubPlanType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

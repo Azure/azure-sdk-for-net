@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ConsumerCloseExceptionTestCases()
         {
-            yield return new object[] {  new EventHubsException("fake", "Close called", EventHubsException.FailureReason.ClientClosed) };
+            yield return new object[] { new EventHubsException("fake", "Close called", EventHubsException.FailureReason.ClientClosed) };
             yield return new object[] { new ObjectDisposedException("fake") };
         }
 

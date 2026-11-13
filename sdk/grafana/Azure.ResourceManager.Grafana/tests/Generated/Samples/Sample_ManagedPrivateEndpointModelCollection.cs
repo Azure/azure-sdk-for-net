@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ManagedPrivateEndpointCreate()
         {
-            // Generated from example definition: 2024-11-01-preview/ManagedPrivateEndpoints_Create.json
+            // Generated from example definition: 2025-08-01/ManagedPrivateEndpoints_Create.json
             // this example is just showing the usage of "ManagedPrivateEndpointModel_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedPrivateEndpointGet()
         {
-            // Generated from example definition: 2024-11-01-preview/ManagedPrivateEndpoints_Get.json
+            // Generated from example definition: 2025-08-01/ManagedPrivateEndpoints_Get.json
             // this example is just showing the usage of "ManagedPrivateEndpointModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ManagedPrivateEndpointList()
         {
-            // Generated from example definition: 2024-11-01-preview/ManagedPrivateEndpoints_List.json
+            // Generated from example definition: 2025-08-01/ManagedPrivateEndpoints_List.json
             // this example is just showing the usage of "ManagedPrivateEndpointModel_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ManagedPrivateEndpointGet()
         {
-            // Generated from example definition: 2024-11-01-preview/ManagedPrivateEndpoints_Get.json
+            // Generated from example definition: 2025-08-01/ManagedPrivateEndpoints_Get.json
             // this example is just showing the usage of "ManagedPrivateEndpointModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ManagedPrivateEndpointGet()
         {
-            // Generated from example definition: 2024-11-01-preview/ManagedPrivateEndpoints_Get.json
+            // Generated from example definition: 2025-08-01/ManagedPrivateEndpoints_Get.json
             // this example is just showing the usage of "ManagedPrivateEndpointModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

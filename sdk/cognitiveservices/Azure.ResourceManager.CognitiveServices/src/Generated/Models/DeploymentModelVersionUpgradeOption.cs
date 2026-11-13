@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct DeploymentModelVersionUpgradeOption : IEquatable<DeploymentModelVersionUpgradeOption>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DeploymentModelVersionUpgradeOption"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeploymentModelVersionUpgradeOption(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string OnceNewDefaultVersionAvailableValue = "OnceNewDefaultVersionAvailable";
         private const string OnceCurrentVersionExpiredValue = "OnceCurrentVersionExpired";
         private const string NoAutoUpgradeValue = "NoAutoUpgrade";
 
-        /// <summary> OnceNewDefaultVersionAvailable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentModelVersionUpgradeOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DeploymentModelVersionUpgradeOption(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the OnceNewDefaultVersionAvailable. </summary>
         public static DeploymentModelVersionUpgradeOption OnceNewDefaultVersionAvailable { get; } = new DeploymentModelVersionUpgradeOption(OnceNewDefaultVersionAvailableValue);
-        /// <summary> OnceCurrentVersionExpired. </summary>
+
+        /// <summary> Gets the OnceCurrentVersionExpired. </summary>
         public static DeploymentModelVersionUpgradeOption OnceCurrentVersionExpired { get; } = new DeploymentModelVersionUpgradeOption(OnceCurrentVersionExpiredValue);
-        /// <summary> NoAutoUpgrade. </summary>
+
+        /// <summary> Gets the NoAutoUpgrade. </summary>
         public static DeploymentModelVersionUpgradeOption NoAutoUpgrade { get; } = new DeploymentModelVersionUpgradeOption(NoAutoUpgradeValue);
+
         /// <summary> Determines if two <see cref="DeploymentModelVersionUpgradeOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeploymentModelVersionUpgradeOption left, DeploymentModelVersionUpgradeOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeploymentModelVersionUpgradeOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeploymentModelVersionUpgradeOption left, DeploymentModelVersionUpgradeOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeploymentModelVersionUpgradeOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeploymentModelVersionUpgradeOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeploymentModelVersionUpgradeOption(string value) => new DeploymentModelVersionUpgradeOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeploymentModelVersionUpgradeOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeploymentModelVersionUpgradeOption?(string value) => value == null ? null : new DeploymentModelVersionUpgradeOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeploymentModelVersionUpgradeOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeploymentModelVersionUpgradeOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,16 +20,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceGroupName"> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </param>
         /// <param name="mlWorkspaceName"> Azure ML Service workspace name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mlWorkspaceName"/> is null. </exception>
-        public AzureMLServiceLinkedService(DataFactoryElement<string> subscriptionId, DataFactoryElement<string> resourceGroupName, DataFactoryElement<string> mlWorkspaceName)
+        public AzureMLServiceLinkedService(DataFactoryElement<string> subscriptionId, DataFactoryElement<string> resourceGroupName, DataFactoryElement<string> mlWorkspaceName) : base("AzureMLService")
         {
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(mlWorkspaceName, nameof(mlWorkspaceName));
 
-            SubscriptionId = subscriptionId;
-            ResourceGroupName = resourceGroupName;
-            MLWorkspaceName = mlWorkspaceName;
-            LinkedServiceType = "AzureMLService";
+            TypeProperties = new AzureMLServiceLinkedServiceTypeProperties(subscriptionId, resourceGroupName, mlWorkspaceName);
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMLServiceLinkedService"/>. </summary>
@@ -38,48 +36,135 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="subscriptionId"> Azure ML Service workspace subscription ID. Type: string (or Expression with resultType string). </param>
-        /// <param name="resourceGroupName"> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </param>
-        /// <param name="mlWorkspaceName"> Azure ML Service workspace name. Type: string (or Expression with resultType string). </param>
-        /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AzureMLServiceLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> subscriptionId, DataFactoryElement<string> resourceGroupName, DataFactoryElement<string> mlWorkspaceName, DataFactoryElement<string> authentication, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure ML Service linked service properties. </param>
+        /// <param name="servicePrincipalKey"></param>
+        internal AzureMLServiceLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureMLServiceLinkedServiceTypeProperties typeProperties, DataFactorySecret servicePrincipalKey) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            SubscriptionId = subscriptionId;
-            ResourceGroupName = resourceGroupName;
-            MLWorkspaceName = mlWorkspaceName;
-            Authentication = authentication;
-            ServicePrincipalId = servicePrincipalId;
+            TypeProperties = typeProperties;
             ServicePrincipalKey = servicePrincipalKey;
-            Tenant = tenant;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "AzureMLService";
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureMLServiceLinkedService"/> for deserialization. </summary>
-        internal AzureMLServiceLinkedService()
-        {
-        }
+        /// <summary> Azure ML Service linked service properties. </summary>
+        internal AzureMLServiceLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> Azure ML Service workspace subscription ID. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SubscriptionId { get; set; }
+        public DataFactoryElement<string> SubscriptionId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SubscriptionId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLServiceLinkedServiceTypeProperties();
+                }
+                TypeProperties.SubscriptionId = value;
+            }
+        }
+
         /// <summary> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ResourceGroupName { get; set; }
+        public DataFactoryElement<string> ResourceGroupName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ResourceGroupName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLServiceLinkedServiceTypeProperties();
+                }
+                TypeProperties.ResourceGroupName = value;
+            }
+        }
+
         /// <summary> Azure ML Service workspace name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MLWorkspaceName { get; set; }
+        public DataFactoryElement<string> MLWorkspaceName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MLWorkspaceName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLServiceLinkedServiceTypeProperties();
+                }
+                TypeProperties.MLWorkspaceName = value;
+            }
+        }
+
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Authentication { get; set; }
+        public DataFactoryElement<string> Authentication
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Authentication;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLServiceLinkedServiceTypeProperties();
+                }
+                TypeProperties.Authentication = value;
+            }
+        }
+
         /// <summary> The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary> The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLServiceLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Tenant { get; set; }
+        public DataFactoryElement<string> Tenant
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Tenant;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLServiceLinkedServiceTypeProperties();
+                }
+                TypeProperties.Tenant = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLServiceLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

@@ -13,103 +13,83 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the DeviceSecurityGroup data model.
-    /// The device security group resource
-    /// </summary>
+    /// <summary> The device security group resource. </summary>
     public partial class DeviceSecurityGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupData"/>. </summary>
         public DeviceSecurityGroupData()
         {
-            ThresholdRules = new ChangeTrackingList<ThresholdCustomAlertRule>();
-            TimeWindowRules = new ChangeTrackingList<TimeWindowCustomAlertRule>();
-            AllowlistRules = new ChangeTrackingList<AllowlistCustomAlertRule>();
-            DenylistRules = new ChangeTrackingList<DenylistCustomAlertRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="thresholdRules">
-        /// The list of custom alert threshold rules.
-        /// Please note <see cref="ThresholdCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TimeWindowCustomAlertRule"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
-        /// </param>
-        /// <param name="timeWindowRules">
-        /// The list of custom alert time-window rules.
-        /// Please note <see cref="TimeWindowCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
-        /// </param>
-        /// <param name="allowlistRules">
-        /// The allow-list custom alert rules.
-        /// Please note <see cref="AllowlistCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConnectionFromIPNotAllowed"/>, <see cref="ConnectionToIPNotAllowed"/>, <see cref="LocalUserNotAllowed"/> and <see cref="ProcessNotAllowed"/>.
-        /// </param>
-        /// <param name="denylistRules"> The deny-list custom alert rules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceSecurityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ThresholdCustomAlertRule> thresholdRules, IList<TimeWindowCustomAlertRule> timeWindowRules, IList<AllowlistCustomAlertRule> allowlistRules, IList<DenylistCustomAlertRule> denylistRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Device Security group data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceSecurityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceSecurityGroupProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ThresholdRules = thresholdRules;
-            TimeWindowRules = timeWindowRules;
-            AllowlistRules = allowlistRules;
-            DenylistRules = denylistRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The list of custom alert threshold rules.
-        /// Please note <see cref="ThresholdCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TimeWindowCustomAlertRule"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
-        /// </summary>
-        public IList<ThresholdCustomAlertRule> ThresholdRules { get; }
-        /// <summary>
-        /// The list of custom alert time-window rules.
-        /// Please note <see cref="TimeWindowCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
-        /// </summary>
-        public IList<TimeWindowCustomAlertRule> TimeWindowRules { get; }
-        /// <summary>
-        /// The allow-list custom alert rules.
-        /// Please note <see cref="AllowlistCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConnectionFromIPNotAllowed"/>, <see cref="ConnectionToIPNotAllowed"/>, <see cref="LocalUserNotAllowed"/> and <see cref="ProcessNotAllowed"/>.
-        /// </summary>
-        public IList<AllowlistCustomAlertRule> AllowlistRules { get; }
+        /// <summary> Device Security group data. </summary>
+        internal DeviceSecurityGroupProperties Properties { get; set; }
+
+        /// <summary> The list of custom alert threshold rules. </summary>
+        public IList<ThresholdCustomAlertRule> ThresholdRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeviceSecurityGroupProperties();
+                }
+                return Properties.ThresholdRules;
+            }
+        }
+
+        /// <summary> The list of custom alert time-window rules. </summary>
+        public IList<TimeWindowCustomAlertRule> TimeWindowRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeviceSecurityGroupProperties();
+                }
+                return Properties.TimeWindowRules;
+            }
+        }
+
+        /// <summary> The allow-list custom alert rules. </summary>
+        public IList<AllowlistCustomAlertRule> AllowlistRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeviceSecurityGroupProperties();
+                }
+                return Properties.AllowlistRules;
+            }
+        }
+
         /// <summary> The deny-list custom alert rules. </summary>
-        public IList<DenylistCustomAlertRule> DenylistRules { get; }
+        public IList<DenylistCustomAlertRule> DenylistRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeviceSecurityGroupProperties();
+                }
+                return Properties.DenylistRules;
+            }
+        }
     }
 }

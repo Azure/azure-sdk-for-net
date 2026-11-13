@@ -7,56 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines a managed rule set.
-    /// Serialized Name: ManagedRuleSet
-    /// </summary>
+    /// <summary> Defines a managed rule set. </summary>
     public partial class WafPolicyManagedRuleSet
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WafPolicyManagedRuleSet"/>. </summary>
-        /// <param name="ruleSetType">
-        /// Defines the rule set type to use.
-        /// Serialized Name: ManagedRuleSet.ruleSetType
-        /// </param>
-        /// <param name="ruleSetVersion">
-        /// Defines the version of the rule set to use.
-        /// Serialized Name: ManagedRuleSet.ruleSetVersion
-        /// </param>
+        /// <param name="ruleSetType"> Defines the rule set type to use. </param>
+        /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
         public WafPolicyManagedRuleSet(string ruleSetType, string ruleSetVersion)
         {
@@ -69,56 +32,34 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WafPolicyManagedRuleSet"/>. </summary>
-        /// <param name="ruleSetType">
-        /// Defines the rule set type to use.
-        /// Serialized Name: ManagedRuleSet.ruleSetType
-        /// </param>
-        /// <param name="ruleSetVersion">
-        /// Defines the version of the rule set to use.
-        /// Serialized Name: ManagedRuleSet.ruleSetVersion
-        /// </param>
-        /// <param name="anomalyScore">
-        /// Verizon only : If the rule set supports anomaly detection mode, this describes the threshold for blocking requests.
-        /// Serialized Name: ManagedRuleSet.anomalyScore
-        /// </param>
-        /// <param name="ruleGroupOverrides">
-        /// Defines the rule overrides to apply to the rule set.
-        /// Serialized Name: ManagedRuleSet.ruleGroupOverrides
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WafPolicyManagedRuleSet(string ruleSetType, string ruleSetVersion, int? anomalyScore, IList<ManagedRuleGroupOverrideSetting> ruleGroupOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="ruleSetType"> Defines the rule set type to use. </param>
+        /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
+        /// <param name="anomalyScore"> Verizon only : If the rule set supports anomaly detection mode, this describes the threshold for blocking requests. </param>
+        /// <param name="ruleGroupOverrides"> Defines the rule overrides to apply to the rule set. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WafPolicyManagedRuleSet(string ruleSetType, string ruleSetVersion, int? anomalyScore, IList<ManagedRuleGroupOverrideSetting> ruleGroupOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             AnomalyScore = anomalyScore;
             RuleGroupOverrides = ruleGroupOverrides;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WafPolicyManagedRuleSet"/> for deserialization. </summary>
-        internal WafPolicyManagedRuleSet()
-        {
-        }
-
-        /// <summary>
-        /// Defines the rule set type to use.
-        /// Serialized Name: ManagedRuleSet.ruleSetType
-        /// </summary>
+        /// <summary> Defines the rule set type to use. </summary>
+        [WirePath("ruleSetType")]
         public string RuleSetType { get; set; }
-        /// <summary>
-        /// Defines the version of the rule set to use.
-        /// Serialized Name: ManagedRuleSet.ruleSetVersion
-        /// </summary>
+
+        /// <summary> Defines the version of the rule set to use. </summary>
+        [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; set; }
-        /// <summary>
-        /// Verizon only : If the rule set supports anomaly detection mode, this describes the threshold for blocking requests.
-        /// Serialized Name: ManagedRuleSet.anomalyScore
-        /// </summary>
+
+        /// <summary> Verizon only : If the rule set supports anomaly detection mode, this describes the threshold for blocking requests. </summary>
+        [WirePath("anomalyScore")]
         public int? AnomalyScore { get; set; }
-        /// <summary>
-        /// Defines the rule overrides to apply to the rule set.
-        /// Serialized Name: ManagedRuleSet.ruleGroupOverrides
-        /// </summary>
+
+        /// <summary> Defines the rule overrides to apply to the rule set. </summary>
+        [WirePath("ruleGroupOverrides")]
         public IList<ManagedRuleGroupOverrideSetting> RuleGroupOverrides { get; }
     }
 }

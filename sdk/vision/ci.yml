@@ -12,19 +12,6 @@ trigger:
     - sdk/vision/ci.yml
     - sdk/vision/Azure.AI.Vision.ImageAnalysis
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/vision
-    - sdk/vision/ci.yml
-    - sdk/vision/Azure.AI.Vision.ImageAnalysis
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedInstanceEncryptionProtectorResource : IJsonModel<ManagedInstanceEncryptionProtectorData>
     {
-        private static ManagedInstanceEncryptionProtectorData s_dataDeserializationInstance;
-        private static ManagedInstanceEncryptionProtectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedInstanceEncryptionProtectorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedInstanceEncryptionProtectorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedInstanceEncryptionProtectorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstanceEncryptionProtectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceEncryptionProtectorData>)Data).Write(writer, options);
 
-        ManagedInstanceEncryptionProtectorData IJsonModel<ManagedInstanceEncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceEncryptionProtectorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstanceEncryptionProtectorData IJsonModel<ManagedInstanceEncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedInstanceEncryptionProtectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceEncryptionProtectorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedInstanceEncryptionProtectorData IPersistableModel<ManagedInstanceEncryptionProtectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceEncryptionProtectorData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceEncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceEncryptionProtectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstanceEncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ApiManagementAuthorizationServerResource : IJsonModel<ApiManagementAuthorizationServerData>
     {
-        private static ApiManagementAuthorizationServerData s_dataDeserializationInstance;
-        private static ApiManagementAuthorizationServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiManagementAuthorizationServerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiManagementAuthorizationServerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiManagementAuthorizationServerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementAuthorizationServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementAuthorizationServerData>)Data).Write(writer, options);
 
-        ApiManagementAuthorizationServerData IJsonModel<ApiManagementAuthorizationServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementAuthorizationServerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementAuthorizationServerData IJsonModel<ApiManagementAuthorizationServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiManagementAuthorizationServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementAuthorizationServerData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiManagementAuthorizationServerData IPersistableModel<ApiManagementAuthorizationServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementAuthorizationServerData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementAuthorizationServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementAuthorizationServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementAuthorizationServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

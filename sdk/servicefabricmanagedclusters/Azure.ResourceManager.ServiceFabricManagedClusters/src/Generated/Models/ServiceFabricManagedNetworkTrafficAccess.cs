@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ServiceFabricManagedNetworkTrafficAccess : IEquatable<ServiceFabricManagedNetworkTrafficAccess>
     {
         private readonly string _value;
+        /// <summary> The network traffic is allowed. </summary>
+        private const string AllowValue = "allow";
+        /// <summary> The network traffic is denied. </summary>
+        private const string DenyValue = "deny";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkTrafficAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricManagedNetworkTrafficAccess(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowValue = "allow";
-        private const string DenyValue = "deny";
+            _value = value;
+        }
 
         /// <summary> The network traffic is allowed. </summary>
         public static ServiceFabricManagedNetworkTrafficAccess Allow { get; } = new ServiceFabricManagedNetworkTrafficAccess(AllowValue);
+
         /// <summary> The network traffic is denied. </summary>
         public static ServiceFabricManagedNetworkTrafficAccess Deny { get; } = new ServiceFabricManagedNetworkTrafficAccess(DenyValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkTrafficAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricManagedNetworkTrafficAccess left, ServiceFabricManagedNetworkTrafficAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkTrafficAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricManagedNetworkTrafficAccess left, ServiceFabricManagedNetworkTrafficAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedNetworkTrafficAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedNetworkTrafficAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricManagedNetworkTrafficAccess(string value) => new ServiceFabricManagedNetworkTrafficAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedNetworkTrafficAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricManagedNetworkTrafficAccess?(string value) => value == null ? null : new ServiceFabricManagedNetworkTrafficAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricManagedNetworkTrafficAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricManagedNetworkTrafficAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

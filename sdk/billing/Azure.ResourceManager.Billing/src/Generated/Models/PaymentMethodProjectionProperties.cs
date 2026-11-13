@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The properties of a payment method. </summary>
     public partial class PaymentMethodProjectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PaymentMethodProjectionProperties"/>. </summary>
         public PaymentMethodProjectionProperties()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="logos"> The list of logos for the payment method. </param>
         /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PaymentMethodProjectionProperties(ResourceIdentifier paymentMethodId, string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IList<PaymentMethodLogo> logos, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PaymentMethodProjectionProperties(ResourceIdentifier paymentMethodId, string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IList<PaymentMethodLogo> logos, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PaymentMethodId = paymentMethodId;
             AccountHolderName = accountHolderName;
@@ -74,33 +46,41 @@ namespace Azure.ResourceManager.Billing.Models
             Logos = logos;
             PaymentMethodType = paymentMethodType;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of payment method. </summary>
         [WirePath("id")]
         public ResourceIdentifier PaymentMethodId { get; }
+
         /// <summary> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </summary>
         [WirePath("accountHolderName")]
         public string AccountHolderName { get; }
+
         /// <summary> The display name of the payment method. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
+
         /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
         [WirePath("expiration")]
         public string Expiration { get; }
+
         /// <summary> The family of payment method. </summary>
         [WirePath("family")]
         public PaymentMethodFamily? Family { get; set; }
+
         /// <summary> Last four digits of payment method. </summary>
         [WirePath("lastFourDigits")]
         public string LastFourDigits { get; }
+
         /// <summary> The list of logos for the payment method. </summary>
         [WirePath("logos")]
-        public IList<PaymentMethodLogo> Logos { get; }
+        public IList<PaymentMethodLogo> Logos { get; } = new ChangeTrackingList<PaymentMethodLogo>();
+
         /// <summary> The type of payment method. </summary>
         [WirePath("paymentMethodType")]
         public string PaymentMethodType { get; }
+
         /// <summary> Status of the payment method. </summary>
         [WirePath("status")]
         public PaymentMethodStatus? Status { get; set; }

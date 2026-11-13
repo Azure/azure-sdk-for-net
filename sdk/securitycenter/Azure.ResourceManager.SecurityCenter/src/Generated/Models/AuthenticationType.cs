@@ -7,48 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </summary>
+    /// <summary> The authentication type. </summary>
     internal readonly partial struct AuthenticationType : IEquatable<AuthenticationType>
     {
         private readonly string _value;
+        /// <summary> AccessToken. </summary>
+        private const string AccessTokenValue = "AccessToken";
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AwsCredsValue = "awsCreds";
-        private const string AwsAssumeRoleValue = "awsAssumeRole";
-        private const string GcpCredentialsValue = "gcpCredentials";
+        /// <summary> AccessToken. </summary>
+        public static AuthenticationType AccessToken { get; } = new AuthenticationType(AccessTokenValue);
 
-        /// <summary> AWS cloud account connector user credentials authentication. </summary>
-        public static AuthenticationType AwsCreds { get; } = new AuthenticationType(AwsCredsValue);
-        /// <summary> AWS account connector assume role authentication. </summary>
-        public static AuthenticationType AwsAssumeRole { get; } = new AuthenticationType(AwsAssumeRoleValue);
-        /// <summary> GCP account connector service to service authentication. </summary>
-        public static AuthenticationType GcpCredentials { get; } = new AuthenticationType(GcpCredentialsValue);
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuthenticationType left, AuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuthenticationType(string value) => new AuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuthenticationType?(string value) => value == null ? null : new AuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

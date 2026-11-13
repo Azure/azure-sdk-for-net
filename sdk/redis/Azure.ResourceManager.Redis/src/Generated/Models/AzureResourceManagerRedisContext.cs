@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Redis
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ExportRdbContent))]
     [ModelReaderWriterBuildable(typeof(ImportRdbContent))]
@@ -58,7 +59,6 @@ namespace Azure.ResourceManager.Redis
     [ModelReaderWriterBuildable(typeof(RedisResource))]
     [ModelReaderWriterBuildable(typeof(RedisSku))]
     [ModelReaderWriterBuildable(typeof(RedisUpgradeNotification))]
-    [ModelReaderWriterBuildable(typeof(RedisUpgradeNotificationListResponse))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

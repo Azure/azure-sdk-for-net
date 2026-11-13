@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI.Images;
 using System.ClientModel.Primitives;
+using OpenAI.Images;
 
 namespace Azure.AI.OpenAI.Images;
 
@@ -32,5 +32,5 @@ internal partial class AzureImageClient : ImageClient
     }
 
     protected AzureImageClient()
-    {}
+    { }
 }

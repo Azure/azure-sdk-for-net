@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Threading.Tasks;
-using NUnit.Framework;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.Core;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Storage.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task CreatePrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.Storage.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetAllPrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
@@ -70,6 +72,7 @@ namespace Azure.ResourceManager.Storage.Tests
         }
 
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task StoragePrivateEndpointConnectionDelete()
         {
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();

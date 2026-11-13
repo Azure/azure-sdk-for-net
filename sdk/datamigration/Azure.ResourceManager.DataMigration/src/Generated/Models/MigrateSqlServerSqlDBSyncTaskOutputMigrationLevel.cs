@@ -14,15 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel : MigrateSqlServerSqlDBSyncTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/>. </summary>
-        internal MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel()
+        internal MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel() : base("MigrationLevelOutput")
         {
-            ResultType = "MigrationLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="sourceServerVersion"> Source server version. </param>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServer"> Target server name. </param>
         /// <param name="databaseCount"> Count of databases. </param>
-        internal MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer, int? databaseCount) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer, int? databaseCount) : base(id, resultType, additionalBinaryDataProperties)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
@@ -39,21 +38,26 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetServerVersion = targetServerVersion;
             TargetServer = targetServer;
             DatabaseCount = databaseCount;
-            ResultType = resultType ?? "MigrationLevelOutput";
         }
 
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Source server version. </summary>
         public string SourceServerVersion { get; }
+
         /// <summary> Source server name. </summary>
         public string SourceServer { get; }
+
         /// <summary> Target server version. </summary>
         public string TargetServerVersion { get; }
+
         /// <summary> Target server name. </summary>
         public string TargetServer { get; }
+
         /// <summary> Count of databases. </summary>
         public int? DatabaseCount { get; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct TeamDeskAuthenticationType : IEquatable<TeamDeskAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Token. </summary>
+        private const string TokenValue = "Token";
 
         /// <summary> Initializes a new instance of <see cref="TeamDeskAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TeamDeskAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string TokenValue = "Token";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static TeamDeskAuthenticationType Basic { get; } = new TeamDeskAuthenticationType(BasicValue);
+
         /// <summary> Token. </summary>
         public static TeamDeskAuthenticationType Token { get; } = new TeamDeskAuthenticationType(TokenValue);
+
         /// <summary> Determines if two <see cref="TeamDeskAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TeamDeskAuthenticationType left, TeamDeskAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TeamDeskAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TeamDeskAuthenticationType left, TeamDeskAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TeamDeskAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TeamDeskAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TeamDeskAuthenticationType(string value) => new TeamDeskAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TeamDeskAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TeamDeskAuthenticationType?(string value) => value == null ? null : new TeamDeskAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TeamDeskAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TeamDeskAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

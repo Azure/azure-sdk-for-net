@@ -69,6 +69,31 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("cveName"u8);
                 writer.WriteStringValue(CveName);
             }
+            if (Optional.IsDefined(Component))
+            {
+                writer.WritePropertyName("component"u8);
+                writer.WriteObjectValue<CveComponent>(Component, options);
+            }
+            if (Optional.IsDefined(CvssScore))
+            {
+                writer.WritePropertyName("cvssScore"u8);
+                writer.WriteStringValue(CvssScore);
+            }
+            if (Optional.IsDefined(CvssV2Score))
+            {
+                writer.WritePropertyName("cvssV2Score"u8);
+                writer.WriteStringValue(CvssV2Score);
+            }
+            if (Optional.IsDefined(CvssV3Score))
+            {
+                writer.WritePropertyName("cvssV3Score"u8);
+                writer.WriteStringValue(CvssV3Score);
+            }
+            if (Optional.IsDefined(CvssVersion))
+            {
+                writer.WritePropertyName("cvssVersion"u8);
+                writer.WriteStringValue(CvssVersion);
+            }
             if (Optional.IsDefined(EffectiveCvssScore))
             {
                 writer.WritePropertyName("effectiveCvssScore"u8);
@@ -142,6 +167,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             string componentVersion = default;
             string severity = default;
             string cveName = default;
+            CveComponent component = default;
+            string cvssScore = default;
+            string cvssV2Score = default;
+            string cvssV3Score = default;
+            string cvssVersion = default;
             float? effectiveCvssScore = default;
             int? effectiveCvssVersion = default;
             IList<CvssScore> cvssScores = default;
@@ -213,6 +243,35 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         if (property0.NameEquals("cveName"u8))
                         {
                             cveName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("component"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            component = CveComponent.DeserializeCveComponent(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("cvssScore"u8))
+                        {
+                            cvssScore = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("cvssV2Score"u8))
+                        {
+                            cvssV2Score = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("cvssV3Score"u8))
+                        {
+                            cvssV3Score = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("cvssVersion"u8))
+                        {
+                            cvssVersion = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("effectiveCvssScore"u8))
@@ -295,6 +354,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 componentVersion,
                 severity,
                 cveName,
+                component,
+                cvssScore,
+                cvssV2Score,
+                cvssV3Score,
+                cvssVersion,
                 effectiveCvssScore,
                 effectiveCvssVersion,
                 cvssScores ?? new ChangeTrackingList<CvssScore>(),

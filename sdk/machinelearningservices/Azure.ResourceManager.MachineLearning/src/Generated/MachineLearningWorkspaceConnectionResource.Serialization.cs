@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningWorkspaceConnectionResource : IJsonModel<MachineLearningWorkspaceConnectionData>
+    /// <summary></summary>
+    public partial class MachineLearningWorkspaceConnectionResource : ArmResource, IJsonModel<MachineLearningWorkspaceConnectionData>
     {
-        private static MachineLearningWorkspaceConnectionData s_dataDeserializationInstance;
-        private static MachineLearningWorkspaceConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MachineLearningWorkspaceConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MachineLearningWorkspaceConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MachineLearningWorkspaceConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningWorkspaceConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningWorkspaceConnectionData>)Data).Write(writer, options);
 
-        MachineLearningWorkspaceConnectionData IJsonModel<MachineLearningWorkspaceConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningWorkspaceConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningWorkspaceConnectionData IJsonModel<MachineLearningWorkspaceConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MachineLearningWorkspaceConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningWorkspaceConnectionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MachineLearningWorkspaceConnectionData IPersistableModel<MachineLearningWorkspaceConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningWorkspaceConnectionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningWorkspaceConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningWorkspaceConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningWorkspaceConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

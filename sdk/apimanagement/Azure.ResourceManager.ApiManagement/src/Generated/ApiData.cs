@@ -13,170 +13,426 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the Api data model.
-    /// API details.
-    /// </summary>
+    /// <summary> API details. </summary>
     public partial class ApiData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiData"/>. </summary>
         public ApiData()
         {
-            Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
-        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
-        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
-        /// <param name="apiType"> Type of API. </param>
-        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
-        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
-        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
-        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
-        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
-        /// <param name="apiVersionDescription"> Description of the API Version. </param>
-        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
-        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
-        /// <param name="contact"> Contact information for the API. </param>
-        /// <param name="license"> License information for the API. </param>
-        /// <param name="sourceApiId"> API identifier of the source API. </param>
-        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
-        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
-        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
-        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
-        /// <param name="apiVersionSet"> Version set details. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> API entity contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            AuthenticationSettings = authenticationSettings;
-            SubscriptionKeyParameterNames = subscriptionKeyParameterNames;
-            ApiType = apiType;
-            ApiRevision = apiRevision;
-            ApiVersion = apiVersion;
-            IsCurrent = isCurrent;
-            IsOnline = isOnline;
-            ApiRevisionDescription = apiRevisionDescription;
-            ApiVersionDescription = apiVersionDescription;
-            ApiVersionSetId = apiVersionSetId;
-            IsSubscriptionRequired = isSubscriptionRequired;
-            TermsOfServiceLink = termsOfServiceLink;
-            Contact = contact;
-            License = license;
-            SourceApiId = sourceApiId;
-            DisplayName = displayName;
-            ServiceLink = serviceLink;
-            Path = path;
-            Protocols = protocols;
-            ApiVersionSet = apiVersionSet;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> API entity contract properties. </summary>
+        [WirePath("properties")]
+        internal ApiContractProperties Properties { get; set; }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Collection of authentication settings included into this API. </summary>
         [WirePath("properties.authenticationSettings")]
-        public AuthenticationSettingsContract AuthenticationSettings { get; set; }
+        public AuthenticationSettingsContract AuthenticationSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthenticationSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.AuthenticationSettings = value;
+            }
+        }
+
         /// <summary> Protocols over which API is made available. </summary>
         [WirePath("properties.subscriptionKeyParameterNames")]
-        public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; set; }
+        public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionKeyParameterNames;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.SubscriptionKeyParameterNames = value;
+            }
+        }
+
         /// <summary> Type of API. </summary>
         [WirePath("properties.type")]
-        public ApiType? ApiType { get; set; }
+        public ApiType? ApiType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiType = value;
+            }
+        }
+
         /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
         [WirePath("properties.apiRevision")]
-        public string ApiRevision { get; set; }
+        public string ApiRevision
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiRevision;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiRevision = value;
+            }
+        }
+
         /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
         [WirePath("properties.apiVersion")]
-        public string ApiVersion { get; set; }
+        public string ApiVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiVersion = value;
+            }
+        }
+
         /// <summary> Indicates if API revision is current api revision. </summary>
         [WirePath("properties.isCurrent")]
-        public bool? IsCurrent { get; set; }
+        public bool? IsCurrent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsCurrent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.IsCurrent = value;
+            }
+        }
+
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>
         [WirePath("properties.isOnline")]
-        public bool? IsOnline { get; }
+        public bool? IsOnline
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsOnline;
+            }
+        }
+
         /// <summary> Description of the API Revision. </summary>
         [WirePath("properties.apiRevisionDescription")]
-        public string ApiRevisionDescription { get; set; }
+        public string ApiRevisionDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiRevisionDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiRevisionDescription = value;
+            }
+        }
+
         /// <summary> Description of the API Version. </summary>
         [WirePath("properties.apiVersionDescription")]
-        public string ApiVersionDescription { get; set; }
+        public string ApiVersionDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiVersionDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiVersionDescription = value;
+            }
+        }
+
         /// <summary> A resource identifier for the related ApiVersionSet. </summary>
         [WirePath("properties.apiVersionSetId")]
-        public ResourceIdentifier ApiVersionSetId { get; set; }
+        public ResourceIdentifier ApiVersionSetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiVersionSetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiVersionSetId = value;
+            }
+        }
+
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
         [WirePath("properties.subscriptionRequired")]
-        public bool? IsSubscriptionRequired { get; set; }
+        public bool? IsSubscriptionRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSubscriptionRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.IsSubscriptionRequired = value;
+            }
+        }
+
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
         [WirePath("properties.termsOfServiceUrl")]
-        public string TermsOfServiceLink { get; set; }
+        public string TermsOfServiceLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TermsOfServiceLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.TermsOfServiceLink = value;
+            }
+        }
+
         /// <summary> Contact information for the API. </summary>
         [WirePath("properties.contact")]
-        public ApiContactInformation Contact { get; set; }
+        public ApiContactInformation Contact
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Contact;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.Contact = value;
+            }
+        }
+
         /// <summary> License information for the API. </summary>
         [WirePath("properties.license")]
-        public ApiLicenseInformation License { get; set; }
+        public ApiLicenseInformation License
+        {
+            get
+            {
+                return Properties is null ? default : Properties.License;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.License = value;
+            }
+        }
+
+        /// <summary> Properties specific to MCP API type. </summary>
+        [WirePath("properties.mcpProperties")]
+        public McpProperties McpProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.McpProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.McpProperties = value;
+            }
+        }
+
         /// <summary> API identifier of the source API. </summary>
         [WirePath("properties.sourceApiId")]
-        public ResourceIdentifier SourceApiId { get; set; }
+        public ResourceIdentifier SourceApiId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceApiId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.SourceApiId = value;
+            }
+        }
+
         /// <summary> API name. Must be 1 to 300 characters long. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
         [WirePath("properties.serviceUrl")]
-        public string ServiceLink { get; set; }
+        public string ServiceLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ServiceLink = value;
+            }
+        }
+
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
         [WirePath("properties.path")]
-        public string Path { get; set; }
+        public string Path
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Path;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.Path = value;
+            }
+        }
+
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
         [WirePath("properties.protocols")]
-        public IList<ApiOperationInvokableProtocol> Protocols { get; }
+        public IList<ApiOperationInvokableProtocol> Protocols
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                return Properties.Protocols;
+            }
+        }
+
         /// <summary> Version set details. </summary>
         [WirePath("properties.apiVersionSet")]
-        public ApiVersionSetContractDetails ApiVersionSet { get; set; }
+        public ApiVersionSetContractDetails ApiVersionSet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiVersionSet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiVersionSet = value;
+            }
+        }
+
         /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

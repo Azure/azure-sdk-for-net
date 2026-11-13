@@ -30,10 +30,19 @@ class AzureEngSemanticVersion : IComparable {
   [bool] $IsSemVerFormat
   [string] $DefaultPrereleaseLabel
   [string] $DefaultAlphaReleaseLabel
+  # For Python PEP440 post-release support only
+  [bool] $IsPostRelease
+  [int] $PostReleaseNumber
+  [string] $PostReleaseSeparator
 
   # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
   # Validation: https://regex101.com/r/vkijKf/426
   static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z]+)(?:(?<prenumsep>\.?)(?<prenumber>[0-9]{1,8})(?:(?<buildnumsep>\.?)(?<buildnumber>\d{1,3}))?)?)?"
+
+  # Python PEP 440 post-release extension
+  # Handles all PEP 440 alternate formats: .postN, -postN, _postN, postN, .post.N, .post (implicit 0) (case-insensitive)
+  # Validation: https://regex101.com/r/rAdOg0/2
+  static [string] $PYTHON_SEMVER_REGEX = [AzureEngSemanticVersion]::SEMVER_REGEX + "(?:(?<postsep>[.\-_]?)(?<postword>(?i:post))\.?(?<postnum>\d{1,8})?)?"
 
   static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
   {
@@ -47,19 +56,34 @@ class AzureEngSemanticVersion : IComparable {
 
   static [AzureEngSemanticVersion] ParsePythonVersionString([string] $versionString)
   {
-    $version = [AzureEngSemanticVersion]::ParseVersionString($versionString)
-
-    if (!$version) {
-      return $null
+    $previousLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+    $global:Language = "python"
+    $version = $null
+    try {
+      $version = [AzureEngSemanticVersion]::new($versionString)
+    }
+    finally {
+      $global:Language = $previousLanguage
     }
 
-    $version.SetupPythonConventions()
+    if (!$version.IsSemVerFormat) {
+      return $null
+    }
     return $version
   }
   
   AzureEngSemanticVersion([string] $versionString)
   {
-    if ($versionString -match "^$([AzureEngSemanticVersion]::SEMVER_REGEX)$")
+    $parseLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+
+    if ($parseLanguage -eq "python") {
+      $parseRegex = $this.SetupPythonConventions()
+    }
+    else {
+      $parseRegex = $this.SetupDefaultConventions()
+    }
+
+    if ($versionString -match "^${parseRegex}$")
     {
       $this.IsSemVerFormat = $true
       $this.RawVersion = $versionString
@@ -67,16 +91,24 @@ class AzureEngSemanticVersion : IComparable {
       $this.Minor = [int]$matches.Minor
       $this.Patch = [int]$matches.Patch
 
-      # If Language exists and is set to python setup the python conventions.
-      $parseLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+      $skipPrelabel = $false
       if ($parseLanguage -eq "python") {
-        $this.SetupPythonConventions()
-      }
-      else {
-        $this.SetupDefaultConventions()
+        if ($matches['postword']) {
+          $this.IsPostRelease = $true
+          $this.PostReleaseNumber = if ($matches['postnum']) { [int]$matches['postnum'] } else { 0 }
+          $this.PostReleaseSeparator = ".post"
+        }
+        elseif ($matches['prelabel'] -and $matches['prelabel'] -ieq 'post') {
+          # Alternate PEP 440 forms like "1.0.0-post1" or "1.0.0post1" where the regex
+          # matched "post" as a prerelease label — reinterpret as post-release.
+          $this.IsPostRelease = $true
+          $this.PostReleaseNumber = [int]$matches['prenumber']
+          $this.PostReleaseSeparator = ".post"
+          $skipPrelabel = $true
+        }
       }
 
-      if ($null -eq $matches['prelabel'])
+      if ($skipPrelabel -or $null -eq $matches['prelabel'])
       {
         $this.IsPrerelease = $false
         $this.VersionType = "GA"
@@ -141,6 +173,9 @@ class AzureEngSemanticVersion : IComparable {
           $versionString += $this.BuildNumberSeparator + $this.BuildNumber
       }
     }
+    if ($this.IsPostRelease) {
+      $versionString += $this.PostReleaseSeparator + $this.PostReleaseNumber
+    }
     return $versionString;
   }
 
@@ -148,6 +183,13 @@ class AzureEngSemanticVersion : IComparable {
     if ($this.BuildNumber)
     {
       throw "Cannot increment releases tagged with azure pipelines build numbers"
+    }
+
+    # Clear post-release state before incrementing
+    if ($this.IsPostRelease) {
+      $this.IsPostRelease = $false
+      $this.PostReleaseNumber = 0
+      $this.PostReleaseSeparator = ""
     }
 
     if ($this.PrereleaseLabel)
@@ -180,15 +222,47 @@ class AzureEngSemanticVersion : IComparable {
     $this.IncrementAndSetToPrerelease("Minor")
   }
 
-  [void] SetupPythonConventions()
+  [void] IncrementAndSetToPostRelease() {
+    if ($this.BuildNumber)
+    {
+      throw "Cannot increment releases tagged with azure pipelines build numbers"
+    }
+
+    if ($this.IsPostRelease) {
+      $this.PostReleaseNumber++
+    }
+    else {
+      $this.IsPostRelease = $true
+      $this.PostReleaseNumber = 1
+      $this.PostReleaseSeparator = ".post"
+    }
+  }
+
+  # Sets the version to a prerelease state with the specified label and number.
+  # This clears any post-release state to ensure a clean prerelease version.
+  [void] SetPrerelease([string] $Label, [int] $Number) {
+    # Clear post-release state
+    if ($this.IsPostRelease) {
+      $this.IsPostRelease = $false
+      $this.PostReleaseNumber = 0
+      $this.PostReleaseSeparator = ""
+    }
+
+    $this.PrereleaseLabel = $Label
+    $this.PrereleaseNumber = $Number
+    $this.IsPrerelease = $true
+  }
+
+  [string] SetupPythonConventions()
   {
     # Python uses no separators and "b" for beta so this sets up the the object to work with those conventions
     $this.PrereleaseLabelSeparator = $this.PrereleaseNumberSeparator = $this.BuildNumberSeparator = ""
     $this.DefaultPrereleaseLabel = "b"
     $this.DefaultAlphaReleaseLabel = "a"
+    return [AzureEngSemanticVersion]::PYTHON_SEMVER_REGEX
   }
 
-  [void] SetupDefaultConventions()
+  [string] SetupDefaultConventions()
   {
     # Use the default common conventions
     $this.PrereleaseLabelSeparator = "-"
@@ -196,6 +270,7 @@ class AzureEngSemanticVersion : IComparable {
     $this.BuildNumberSeparator = "."
     $this.DefaultPrereleaseLabel = "beta"
     $this.DefaultAlphaReleaseLabel = "alpha"
+    return [AzureEngSemanticVersion]::SEMVER_REGEX
   }
 
   [int] CompareTo($other)
@@ -239,12 +314,29 @@ class AzureEngSemanticVersion : IComparable {
     $ret = $thisPrereleaseNumber.CompareTo($otherPrereleaseNumber)
     if ($ret) { return $ret }
 
-    return ([int] $this.BuildNumber).CompareTo([int] $other.BuildNumber)
+    $thisBuildNumber = if ($this.BuildNumber) { [int] $this.BuildNumber } else { 0 }
+    $otherBuildNumber = if ($other.BuildNumber) { [int] $other.BuildNumber } else { 0 }
+    $ret = $thisBuildNumber.CompareTo($otherBuildNumber)
+    if ($ret) { return $ret }
+
+    # Post-release versions sort after their base version
+    $thisPost = if ($this.IsPostRelease) { 1 } else { 0 }
+    $otherPost = if ($other.IsPostRelease) { 1 } else { 0 }
+    $ret = $thisPost.CompareTo($otherPost)
+    if ($ret) { return $ret }
+
+    return $this.PostReleaseNumber.CompareTo($other.PostReleaseNumber)
   }
 
   static [string[]] SortVersionStrings([string[]] $versionStrings)
   {
-    $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParseVersionString($_) }
+    $parseLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+    if ($parseLanguage -eq "python") {
+      $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParsePythonVersionString($_) }
+    }
+    else {
+      $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParseVersionString($_) }
+    }
     $sortedVersions = [AzureEngSemanticVersion]::SortVersions($versions)
     return ($sortedVersions | ForEach-Object { $_.RawVersion })
   }
@@ -427,6 +519,80 @@ class AzureEngSemanticVersion : IComparable {
     $expected = "1.0.0-beta.2"
     if ($expected -ne $version.ToString()) {
       Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
+    }
+
+    # Python post-release parsing tests
+    $postVerString = "1.0.0.post1"
+    $postVer = [AzureEngSemanticVersion]::ParsePythonVersionString($postVerString)
+    if ($postVer.Major -ne 1 -or $postVer.Minor -ne 0 -or $postVer.Patch -ne 0 -or `
+        !$postVer.IsPostRelease -or $postVer.PostReleaseNumber -ne 1 -or $postVer.IsPrerelease) {
+      Write-Host "Error: Didn't correctly parse python post-release string $postVerString"
+    }
+    if ($postVerString -ne $postVer.ToString()) {
+      Write-Host "Error: post-release string did not correctly round trip with ToString. Expected: $($postVerString), Actual: $($postVer)"
+    }
+
+    # Implicit post-release number (PEP 440: 1.0.0.post == 1.0.0.post0)
+    $implicitPostVerString = "1.0.0.post"
+    $implicitPostVer = [AzureEngSemanticVersion]::ParsePythonVersionString($implicitPostVerString)
+    if ($null -eq $implicitPostVer -or !$implicitPostVer.IsSemVerFormat) {
+      Write-Host "Error: Failed to parse implicit post-release string $implicitPostVerString"
+    }
+    elseif ($implicitPostVer.Major -ne 1 -or $implicitPostVer.Minor -ne 0 -or $implicitPostVer.Patch -ne 0 -or `
+            !$implicitPostVer.IsPostRelease -or $implicitPostVer.PostReleaseNumber -ne 0) {
+      Write-Host "Error: Didn't correctly parse implicit post-release string $implicitPostVerString"
+    }
+    $expected = "1.0.0.post0"
+    if ($expected -ne $implicitPostVer.ToString()) {
+      Write-Host "Error: implicit post-release did not normalize. Expected: $expected, Actual: $($implicitPostVer)"
+    }
+
+    # Prerelease + post-release
+    $preBetaPostString = "1.0.0b2.post1"
+    $preBetaPost = [AzureEngSemanticVersion]::ParsePythonVersionString($preBetaPostString)
+    if ($preBetaPost.Major -ne 1 -or $preBetaPost.Minor -ne 0 -or $preBetaPost.Patch -ne 0 -or `
+        $preBetaPost.PrereleaseLabel -ne "b" -or $preBetaPost.PrereleaseNumber -ne 2 -or `
+        !$preBetaPost.IsPostRelease -or $preBetaPost.PostReleaseNumber -ne 1) {
+      Write-Host "Error: Didn't correctly parse python prerelease post-release string $preBetaPostString"
+    }
+    if ($preBetaPostString -ne $preBetaPost.ToString()) {
+      Write-Host "Error: prerelease post-release string did not correctly round trip with ToString. Expected: $($preBetaPostString), Actual: $($preBetaPost)"
+    }
+
+    # Post-release alternate separators normalize to canonical form
+    $expectedNormalized = "1.0.0.post1"
+    foreach ($altVerString in @("1.0.0-post1", "1.0.0_post1", "1.0.0post1")) {
+      $parsed = [AzureEngSemanticVersion]::ParsePythonVersionString($altVerString)
+      if ($null -eq $parsed -or !$parsed.IsPostRelease -or $parsed.PostReleaseNumber -ne 1) {
+        Write-Host "Error: Failed to parse alternate post-release format $altVerString"
+      }
+      if ($expectedNormalized -ne $parsed.ToString()) {
+        Write-Host "Error: Alternate post-release '$altVerString' did not normalize. Expected: $expectedNormalized, Actual: $($parsed)"
+      }
+    }
+
+    # Post-release increment clears post state
+    $postIncVer = [AzureEngSemanticVersion]::ParsePythonVersionString("1.0.0.post1")
+    $postIncVer.IncrementAndSetToPrerelease()
+    $expected = "1.1.0b1"
+    if ($expected -ne $postIncVer.ToString()) {
+      Write-Host "Error: post-release increment did not produce expected result. Expected: $expected, Actual: $($postIncVer)"
+    }
+
+    # Post-release increment stays in post state
+    $postBumpVer = [AzureEngSemanticVersion]::ParsePythonVersionString("1.0.0.post1")
+    $postBumpVer.IncrementAndSetToPostRelease()
+    $expected = "1.0.0.post2"
+    if ($expected -ne $postBumpVer.ToString()) {
+      Write-Host "Error: post-release bump did not produce expected result. Expected: $expected, Actual: $($postBumpVer)"
+    }
+
+    # Non-post version enters post state
+    $gaToPost = [AzureEngSemanticVersion]::ParsePythonVersionString("1.0.0")
+    $gaToPost.IncrementAndSetToPostRelease()
+    $expected = "1.0.0.post1"
+    if ($expected -ne $gaToPost.ToString()) {
+      Write-Host "Error: GA to post-release did not produce expected result. Expected: $expected, Actual: $($gaToPost)"
     }
 
     Write-Host "QuickTests done"

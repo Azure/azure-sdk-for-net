@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal readonly partial struct WebAuthenticationType : IEquatable<WebAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Anonymous. </summary>
+        private const string AnonymousValue = "Anonymous";
+        /// <summary> ClientCertificate. </summary>
+        private const string ClientCertificateValue = "ClientCertificate";
 
         /// <summary> Initializes a new instance of <see cref="WebAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string AnonymousValue = "Anonymous";
-        private const string ClientCertificateValue = "ClientCertificate";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static WebAuthenticationType Basic { get; } = new WebAuthenticationType(BasicValue);
+
         /// <summary> Anonymous. </summary>
         public static WebAuthenticationType Anonymous { get; } = new WebAuthenticationType(AnonymousValue);
+
         /// <summary> ClientCertificate. </summary>
         public static WebAuthenticationType ClientCertificate { get; } = new WebAuthenticationType(ClientCertificateValue);
+
         /// <summary> Determines if two <see cref="WebAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebAuthenticationType left, WebAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebAuthenticationType left, WebAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebAuthenticationType(string value) => new WebAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebAuthenticationType?(string value) => value == null ? null : new WebAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

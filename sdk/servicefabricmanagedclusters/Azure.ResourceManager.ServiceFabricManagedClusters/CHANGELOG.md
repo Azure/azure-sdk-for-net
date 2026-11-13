@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.4 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,48 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.1 (2026-09-03)
+
+### Features Added
+- Upgraded to API version `2026-05-01-preview`.
+- Added cluster-level and node-type fault simulation operations.
+- Added zone fault simulation models and constraints.
+- Added `ScaleInMode` and `ProxyAgentSettings` to `ServiceFabricManagedNodeTypeData`.
+
+### Breaking Changes
+- Renamed `ServiceFabricManagedDataDiskType` values to match .NET naming guidelines and their wire values: `PremiumV2LRS` to `PremiumV2Lrs`, `PremiumZRS` to `PremiumZrs`, and the previous `PremiumZrs` value to `StandardSsdZrs`.
+
+## 1.3.0 (2026-03-13)
+
+### Features Added
+- Upgraded to API version 2026-02-01 (stable).
+- Added `SkipManagedNsgAssignment` property to `ServiceFabricManagedClusterData`.
+- Added `EnableResilientEphemeralOsDisk` property to `ServiceFabricManagedNodeTypeData`
+
+### Breaking Changes
+- Removed preview-only fault simulation types (`NodeTypeFaultSimulation`, `FaultSimulationStatus`, `SfmcOperationStatus`).
+
+## 1.3.0-beta.5 (2025-11-19)
+
+### Features Added
+
+- Upgraded to api-version 2025-10-01-preview.
+
+## 1.3.0-beta.4 (2025-10-16)
+
+### Features Added
+
+- Upgraded to api-version 2025-06-01-preview.
+
+Cluster features
+- EnableOutboundOnlyNodeTypes
+
+Nodetype features
+- IsOutboundOnly
+
+Service Endpoint
+- NetworkIdentifier
 
 ## 1.3.0-beta.3 (2025-06-23)
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     public readonly partial struct MccCacheNodeConfigurationState : IEquatable<MccCacheNodeConfigurationState>
     {
         private readonly string _value;
+        /// <summary> connected cache setup configured. </summary>
+        private const string ConfiguredValue = "Configured";
+        /// <summary> connected cache setup not configured. </summary>
+        private const string NotConfiguredIPValue = "NotConfigured_Ip";
 
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeConfigurationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MccCacheNodeConfigurationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ConfiguredValue = "Configured";
-        private const string NotConfiguredIPValue = "NotConfigured_Ip";
+            _value = value;
+        }
 
         /// <summary> connected cache setup configured. </summary>
         public static MccCacheNodeConfigurationState Configured { get; } = new MccCacheNodeConfigurationState(ConfiguredValue);
+
         /// <summary> connected cache setup not configured. </summary>
         public static MccCacheNodeConfigurationState NotConfiguredIP { get; } = new MccCacheNodeConfigurationState(NotConfiguredIPValue);
+
         /// <summary> Determines if two <see cref="MccCacheNodeConfigurationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MccCacheNodeConfigurationState left, MccCacheNodeConfigurationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MccCacheNodeConfigurationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MccCacheNodeConfigurationState left, MccCacheNodeConfigurationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MccCacheNodeConfigurationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MccCacheNodeConfigurationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MccCacheNodeConfigurationState(string value) => new MccCacheNodeConfigurationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MccCacheNodeConfigurationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MccCacheNodeConfigurationState?(string value) => value == null ? null : new MccCacheNodeConfigurationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MccCacheNodeConfigurationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MccCacheNodeConfigurationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

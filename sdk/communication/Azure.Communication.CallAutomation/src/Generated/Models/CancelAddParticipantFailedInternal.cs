@@ -20,16 +20,16 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
-        internal CancelAddParticipantFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, string invitationId)
+        /// <param name="resultInformation"></param>
+        internal CancelAddParticipantFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, string invitationId, ResultInformation resultInformation)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             OperationContext = operationContext;
-            ResultInformation = resultInformation;
             InvitationId = invitationId;
+            ResultInformation = resultInformation;
         }
 
         /// <summary> Call connection ID. </summary>
@@ -40,9 +40,9 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
-        public ResultInformation ResultInformation { get; }
         /// <summary> Invitation ID used to cancel the request. </summary>
         public string InvitationId { get; }
+        /// <summary> Gets the result information. </summary>
+        public ResultInformation ResultInformation { get; }
     }
 }

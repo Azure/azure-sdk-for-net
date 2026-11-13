@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Purview
 {
+    /// <summary></summary>
     public partial class PurviewAccountResource : IJsonModel<PurviewAccountData>
     {
-        private static PurviewAccountData s_dataDeserializationInstance;
-        private static PurviewAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PurviewAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PurviewAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PurviewAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PurviewAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PurviewAccountData>)Data).Write(writer, options);
 
-        PurviewAccountData IJsonModel<PurviewAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PurviewAccountData IJsonModel<PurviewAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PurviewAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewAccountData>(Data, options, AzureResourceManagerPurviewContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PurviewAccountData IPersistableModel<PurviewAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewAccountData>(data, options, AzureResourceManagerPurviewContext.Default);
 
-        string IPersistableModel<PurviewAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PurviewAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

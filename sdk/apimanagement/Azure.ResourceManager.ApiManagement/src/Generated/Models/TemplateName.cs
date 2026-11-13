@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The TemplateName. </summary>
+    /// <summary></summary>
     public readonly partial struct TemplateName : IEquatable<TemplateName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TemplateName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TemplateName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ApplicationApprovedNotificationMessageValue = "applicationApprovedNotificationMessage";
         private const string AccountClosedDeveloperValue = "accountClosedDeveloper";
         private const string QuotaLimitApproachingDeveloperNotificationMessageValue = "quotaLimitApproachingDeveloperNotificationMessage";
@@ -37,51 +30,88 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string RejectDeveloperNotificationMessageValue = "rejectDeveloperNotificationMessage";
         private const string RequestDeveloperNotificationMessageValue = "requestDeveloperNotificationMessage";
 
-        /// <summary> applicationApprovedNotificationMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TemplateName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ApplicationApprovedNotificationMessage. </summary>
         public static TemplateName ApplicationApprovedNotificationMessage { get; } = new TemplateName(ApplicationApprovedNotificationMessageValue);
-        /// <summary> accountClosedDeveloper. </summary>
+
+        /// <summary> Gets the AccountClosedDeveloper. </summary>
         public static TemplateName AccountClosedDeveloper { get; } = new TemplateName(AccountClosedDeveloperValue);
-        /// <summary> quotaLimitApproachingDeveloperNotificationMessage. </summary>
+
+        /// <summary> Gets the QuotaLimitApproachingDeveloperNotificationMessage. </summary>
         public static TemplateName QuotaLimitApproachingDeveloperNotificationMessage { get; } = new TemplateName(QuotaLimitApproachingDeveloperNotificationMessageValue);
-        /// <summary> newDeveloperNotificationMessage. </summary>
+
+        /// <summary> Gets the NewDeveloperNotificationMessage. </summary>
         public static TemplateName NewDeveloperNotificationMessage { get; } = new TemplateName(NewDeveloperNotificationMessageValue);
-        /// <summary> emailChangeIdentityDefault. </summary>
+
+        /// <summary> Gets the EmailChangeIdentityDefault. </summary>
         public static TemplateName EmailChangeIdentityDefault { get; } = new TemplateName(EmailChangeIdentityDefaultValue);
-        /// <summary> inviteUserNotificationMessage. </summary>
+
+        /// <summary> Gets the InviteUserNotificationMessage. </summary>
         public static TemplateName InviteUserNotificationMessage { get; } = new TemplateName(InviteUserNotificationMessageValue);
-        /// <summary> newCommentNotificationMessage. </summary>
+
+        /// <summary> Gets the NewCommentNotificationMessage. </summary>
         public static TemplateName NewCommentNotificationMessage { get; } = new TemplateName(NewCommentNotificationMessageValue);
-        /// <summary> confirmSignUpIdentityDefault. </summary>
+
+        /// <summary> Gets the ConfirmSignUpIdentityDefault. </summary>
         public static TemplateName ConfirmSignUpIdentityDefault { get; } = new TemplateName(ConfirmSignUpIdentityDefaultValue);
-        /// <summary> newIssueNotificationMessage. </summary>
+
+        /// <summary> Gets the NewIssueNotificationMessage. </summary>
         public static TemplateName NewIssueNotificationMessage { get; } = new TemplateName(NewIssueNotificationMessageValue);
-        /// <summary> purchaseDeveloperNotificationMessage. </summary>
+
+        /// <summary> Gets the PurchaseDeveloperNotificationMessage. </summary>
         public static TemplateName PurchaseDeveloperNotificationMessage { get; } = new TemplateName(PurchaseDeveloperNotificationMessageValue);
-        /// <summary> passwordResetIdentityDefault. </summary>
+
+        /// <summary> Gets the PasswordResetIdentityDefault. </summary>
         public static TemplateName PasswordResetIdentityDefault { get; } = new TemplateName(PasswordResetIdentityDefaultValue);
-        /// <summary> passwordResetByAdminNotificationMessage. </summary>
+
+        /// <summary> Gets the PasswordResetByAdminNotificationMessage. </summary>
         public static TemplateName PasswordResetByAdminNotificationMessage { get; } = new TemplateName(PasswordResetByAdminNotificationMessageValue);
-        /// <summary> rejectDeveloperNotificationMessage. </summary>
+
+        /// <summary> Gets the RejectDeveloperNotificationMessage. </summary>
         public static TemplateName RejectDeveloperNotificationMessage { get; } = new TemplateName(RejectDeveloperNotificationMessageValue);
-        /// <summary> requestDeveloperNotificationMessage. </summary>
+
+        /// <summary> Gets the RequestDeveloperNotificationMessage. </summary>
         public static TemplateName RequestDeveloperNotificationMessage { get; } = new TemplateName(RequestDeveloperNotificationMessageValue);
+
         /// <summary> Determines if two <see cref="TemplateName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TemplateName left, TemplateName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TemplateName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TemplateName left, TemplateName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TemplateName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TemplateName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TemplateName(string value) => new TemplateName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TemplateName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TemplateName?(string value) => value == null ? null : new TemplateName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TemplateName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TemplateName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

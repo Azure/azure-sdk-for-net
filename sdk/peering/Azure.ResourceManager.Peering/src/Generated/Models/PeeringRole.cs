@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Peering.Models
     public readonly partial struct PeeringRole : IEquatable<PeeringRole>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PeeringRole"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PeeringRole(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NocValue = "Noc";
         private const string PolicyValue = "Policy";
         private const string TechnicalValue = "Technical";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.Peering.Models
         private const string EscalationValue = "Escalation";
         private const string OtherValue = "Other";
 
-        /// <summary> Noc. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PeeringRole(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Noc. </summary>
         public static PeeringRole Noc { get; } = new PeeringRole(NocValue);
-        /// <summary> Policy. </summary>
+
+        /// <summary> Gets the Policy. </summary>
         public static PeeringRole Policy { get; } = new PeeringRole(PolicyValue);
-        /// <summary> Technical. </summary>
+
+        /// <summary> Gets the Technical. </summary>
         public static PeeringRole Technical { get; } = new PeeringRole(TechnicalValue);
-        /// <summary> Service. </summary>
+
+        /// <summary> Gets the Service. </summary>
         public static PeeringRole Service { get; } = new PeeringRole(ServiceValue);
-        /// <summary> Escalation. </summary>
+
+        /// <summary> Gets the Escalation. </summary>
         public static PeeringRole Escalation { get; } = new PeeringRole(EscalationValue);
-        /// <summary> Other. </summary>
+
+        /// <summary> Gets the Other. </summary>
         public static PeeringRole Other { get; } = new PeeringRole(OtherValue);
+
         /// <summary> Determines if two <see cref="PeeringRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeeringRole left, PeeringRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PeeringRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeeringRole left, PeeringRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PeeringRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PeeringRole(string value) => new PeeringRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PeeringRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PeeringRole?(string value) => value == null ? null : new PeeringRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeeringRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PeeringRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

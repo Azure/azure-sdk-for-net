@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ReportGranularityType : IEquatable<ReportGranularityType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ReportGranularityType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReportGranularityType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DailyValue = "Daily";
         private const string MonthlyValue = "Monthly";
 
-        /// <summary> Daily. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportGranularityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ReportGranularityType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Daily. </summary>
         public static ReportGranularityType Daily { get; } = new ReportGranularityType(DailyValue);
-        /// <summary> Monthly. </summary>
+
+        /// <summary> Gets the Monthly. </summary>
         public static ReportGranularityType Monthly { get; } = new ReportGranularityType(MonthlyValue);
+
         /// <summary> Determines if two <see cref="ReportGranularityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReportGranularityType left, ReportGranularityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReportGranularityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReportGranularityType left, ReportGranularityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportGranularityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReportGranularityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReportGranularityType(string value) => new ReportGranularityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReportGranularityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReportGranularityType?(string value) => value == null ? null : new ReportGranularityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReportGranularityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReportGranularityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

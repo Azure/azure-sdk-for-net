@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
+    /// <summary></summary>
     public partial class SiteResource : IJsonModel<SiteData>
     {
-        private static SiteData s_dataDeserializationInstance;
-        private static SiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SiteData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SiteData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SiteData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteData>)Data).Write(writer, options);
 
-        SiteData IJsonModel<SiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteData IJsonModel<SiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SiteData IPersistableModel<SiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<SiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

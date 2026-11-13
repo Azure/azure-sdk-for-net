@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using Azure.ResourceManager.StreamAnalytics.Models;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
-using NUnit.Framework;
-using Azure.Core;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StreamAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         #endregion
 
         #region StreamingJobInput
-        public static void AssertInput(StreamingJobInputData input1, StreamingJobInputData  input2)
+        public static void AssertInput(StreamingJobInputData input1, StreamingJobInputData input2)
         {
             Assert.AreEqual(input1.Name, input2.Name);
             Assert.AreEqual(input1.Id, input2.Id);

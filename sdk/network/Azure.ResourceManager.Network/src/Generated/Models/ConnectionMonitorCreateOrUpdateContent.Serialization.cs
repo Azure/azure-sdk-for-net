@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorCreateOrUpdateContent>
+    /// <summary> Parameters that define the operation to create a connection monitor. </summary>
+    public partial class ConnectionMonitorCreateOrUpdateContent : IJsonModel<ConnectionMonitorCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectionMonitorCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConnectionMonitorCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectionMonitorCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectionMonitorCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectionMonitorCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectionMonitorCreateOrUpdateContent IPersistableModel<ConnectionMonitorCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectionMonitorCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="connectionMonitorCreateOrUpdateContent"> The <see cref="ConnectionMonitorCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConnectionMonitorCreateOrUpdateContent connectionMonitorCreateOrUpdateContent)
+        {
+            if (connectionMonitorCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(connectionMonitorCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectionMonitorCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectionMonitorCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -46,87 +97,26 @@ namespace Azure.ResourceManager.Network.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
-            }
-            if (Optional.IsDefined(Destination))
-            {
-                writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
-            }
-            if (Optional.IsDefined(AutoStart))
-            {
-                writer.WritePropertyName("autoStart"u8);
-                writer.WriteBooleanValue(AutoStart.Value);
-            }
-            if (Optional.IsDefined(MonitoringIntervalInSeconds))
-            {
-                writer.WritePropertyName("monitoringIntervalInSeconds"u8);
-                writer.WriteNumberValue(MonitoringIntervalInSeconds.Value);
-            }
-            if (Optional.IsCollectionDefined(Endpoints))
-            {
-                writer.WritePropertyName("endpoints"u8);
-                writer.WriteStartArray();
-                foreach (var item in Endpoints)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TestConfigurations))
-            {
-                writer.WritePropertyName("testConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in TestConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TestGroups))
-            {
-                writer.WritePropertyName("testGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in TestGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Outputs))
-            {
-                writer.WritePropertyName("outputs"u8);
-                writer.WriteStartArray();
-                foreach (var item in Outputs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Notes))
-            {
-                writer.WritePropertyName("notes"u8);
-                writer.WriteStringValue(Notes);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -135,223 +125,78 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        ConnectionMonitorCreateOrUpdateContent IJsonModel<ConnectionMonitorCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectionMonitorCreateOrUpdateContent IJsonModel<ConnectionMonitorCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectionMonitorCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectionMonitorCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectionMonitorCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static ConnectionMonitorCreateOrUpdateContent DeserializeConnectionMonitorCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectionMonitorCreateOrUpdateContent DeserializeConnectionMonitorCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            ConnectionMonitorSource source = default;
-            ConnectionMonitorDestination destination = default;
-            bool? autoStart = default;
-            int? monitoringIntervalInSeconds = default;
-            IList<ConnectionMonitorEndpoint> endpoints = default;
-            IList<ConnectionMonitorTestConfiguration> testConfigurations = default;
-            IList<ConnectionMonitorTestGroup> testGroups = default;
-            IList<ConnectionMonitorOutput> outputs = default;
-            string notes = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ConnectionMonitorParameters properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("source"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("destination"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("autoStart"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoStart = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("monitoringIntervalInSeconds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            monitoringIntervalInSeconds = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("endpoints"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ConnectionMonitorEndpoint> array = new List<ConnectionMonitorEndpoint>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ConnectionMonitorEndpoint.DeserializeConnectionMonitorEndpoint(item, options));
-                            }
-                            endpoints = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("testConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ConnectionMonitorTestConfiguration> array = new List<ConnectionMonitorTestConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ConnectionMonitorTestConfiguration.DeserializeConnectionMonitorTestConfiguration(item, options));
-                            }
-                            testConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("testGroups"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ConnectionMonitorTestGroup> array = new List<ConnectionMonitorTestGroup>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ConnectionMonitorTestGroup.DeserializeConnectionMonitorTestGroup(item, options));
-                            }
-                            testGroups = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("outputs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ConnectionMonitorOutput> array = new List<ConnectionMonitorOutput>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ConnectionMonitorOutput.DeserializeConnectionMonitorOutput(item, options));
-                            }
-                            outputs = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("notes"u8))
-                        {
-                            notes = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = ConnectionMonitorParameters.DeserializeConnectionMonitorParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionMonitorCreateOrUpdateContent(
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                source,
-                destination,
-                autoStart,
-                monitoringIntervalInSeconds,
-                endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(),
-                testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(),
-                testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(),
-                outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(),
-                notes,
-                serializedAdditionalRawData);
+            return new ConnectionMonitorCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ConnectionMonitorCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConnectionMonitorCreateOrUpdateContent IPersistableModel<ConnectionMonitorCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectionMonitorCreateOrUpdateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConnectionMonitorCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

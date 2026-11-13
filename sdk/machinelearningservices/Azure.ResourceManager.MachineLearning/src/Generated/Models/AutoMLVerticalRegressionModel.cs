@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,76 +15,125 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct AutoMLVerticalRegressionModel : IEquatable<AutoMLVerticalRegressionModel>
     {
         private readonly string _value;
+        /// <summary> Elastic net is a popular type of regularized linear regression that combines two popular penalties, specifically the L1 and L2 penalty functions. </summary>
+        private const string ElasticNetValue = "ElasticNet";
+        /// <summary> The technique of transiting week learners into a strong learner is called Boosting. The gradient boosting algorithm process works on this theory of execution. </summary>
+        private const string GradientBoostingValue = "GradientBoosting";
+        /// <summary>
+        /// Decision Trees are a non-parametric supervised learning method used for both classification and regression tasks.
+        /// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features.
+        /// </summary>
+        private const string DecisionTreeValue = "DecisionTree";
+        /// <summary>
+        /// K-nearest neighbors (KNN) algorithm uses 'feature similarity' to predict the values of new datapoints
+        /// which further means that the new data point will be assigned a value based on how closely it matches the points in the training set.
+        /// </summary>
+        private const string KNNValue = "KNN";
+        /// <summary> Lasso model fit with Least Angle Regression a.k.a. Lars. It is a Linear Model trained with an L1 prior as regularizer. </summary>
+        private const string LassoLarsValue = "LassoLars";
+        /// <summary>
+        /// SGD: Stochastic gradient descent is an optimization algorithm often used in machine learning applications
+        /// to find the model parameters that correspond to the best fit between predicted and actual outputs.
+        /// It's an inexact but powerful technique.
+        /// </summary>
+        private const string SGDValue = "SGD";
+        /// <summary>
+        /// Random forest is a supervised learning algorithm.
+        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the "bagging" method.
+        /// The general idea of the bagging method is that a combination of learning models increases the overall result.
+        /// </summary>
+        private const string RandomForestValue = "RandomForest";
+        /// <summary> Extreme Trees is an ensemble machine learning algorithm that combines the predictions from many decision trees. It is related to the widely used random forest algorithm. </summary>
+        private const string ExtremeRandomTreesValue = "ExtremeRandomTrees";
+        /// <summary> LightGBM is a gradient boosting framework that uses tree based learning algorithms. </summary>
+        private const string LightGBMValue = "LightGBM";
+        /// <summary> XGBoostRegressor: Extreme Gradient Boosting Regressor is a supervised machine learning model using ensemble of base learners. </summary>
+        private const string XGBoostRegressorValue = "XGBoostRegressor";
 
         /// <summary> Initializes a new instance of <see cref="AutoMLVerticalRegressionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoMLVerticalRegressionModel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ElasticNetValue = "ElasticNet";
-        private const string GradientBoostingValue = "GradientBoosting";
-        private const string DecisionTreeValue = "DecisionTree";
-        private const string KNNValue = "KNN";
-        private const string LassoLarsValue = "LassoLars";
-        private const string SGDValue = "SGD";
-        private const string RandomForestValue = "RandomForest";
-        private const string ExtremeRandomTreesValue = "ExtremeRandomTrees";
-        private const string LightGBMValue = "LightGBM";
-        private const string XGBoostRegressorValue = "XGBoostRegressor";
+            _value = value;
+        }
 
         /// <summary> Elastic net is a popular type of regularized linear regression that combines two popular penalties, specifically the L1 and L2 penalty functions. </summary>
         public static AutoMLVerticalRegressionModel ElasticNet { get; } = new AutoMLVerticalRegressionModel(ElasticNetValue);
+
         /// <summary> The technique of transiting week learners into a strong learner is called Boosting. The gradient boosting algorithm process works on this theory of execution. </summary>
         public static AutoMLVerticalRegressionModel GradientBoosting { get; } = new AutoMLVerticalRegressionModel(GradientBoostingValue);
+
         /// <summary>
         /// Decision Trees are a non-parametric supervised learning method used for both classification and regression tasks.
         /// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features.
         /// </summary>
         public static AutoMLVerticalRegressionModel DecisionTree { get; } = new AutoMLVerticalRegressionModel(DecisionTreeValue);
+
         /// <summary>
         /// K-nearest neighbors (KNN) algorithm uses 'feature similarity' to predict the values of new datapoints
         /// which further means that the new data point will be assigned a value based on how closely it matches the points in the training set.
         /// </summary>
         public static AutoMLVerticalRegressionModel KNN { get; } = new AutoMLVerticalRegressionModel(KNNValue);
+
         /// <summary> Lasso model fit with Least Angle Regression a.k.a. Lars. It is a Linear Model trained with an L1 prior as regularizer. </summary>
         public static AutoMLVerticalRegressionModel LassoLars { get; } = new AutoMLVerticalRegressionModel(LassoLarsValue);
+
         /// <summary>
         /// SGD: Stochastic gradient descent is an optimization algorithm often used in machine learning applications
         /// to find the model parameters that correspond to the best fit between predicted and actual outputs.
         /// It's an inexact but powerful technique.
         /// </summary>
         public static AutoMLVerticalRegressionModel SGD { get; } = new AutoMLVerticalRegressionModel(SGDValue);
+
         /// <summary>
         /// Random forest is a supervised learning algorithm.
-        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
+        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the "bagging" method.
         /// The general idea of the bagging method is that a combination of learning models increases the overall result.
         /// </summary>
         public static AutoMLVerticalRegressionModel RandomForest { get; } = new AutoMLVerticalRegressionModel(RandomForestValue);
+
         /// <summary> Extreme Trees is an ensemble machine learning algorithm that combines the predictions from many decision trees. It is related to the widely used random forest algorithm. </summary>
         public static AutoMLVerticalRegressionModel ExtremeRandomTrees { get; } = new AutoMLVerticalRegressionModel(ExtremeRandomTreesValue);
+
         /// <summary> LightGBM is a gradient boosting framework that uses tree based learning algorithms. </summary>
         public static AutoMLVerticalRegressionModel LightGBM { get; } = new AutoMLVerticalRegressionModel(LightGBMValue);
+
         /// <summary> XGBoostRegressor: Extreme Gradient Boosting Regressor is a supervised machine learning model using ensemble of base learners. </summary>
         public static AutoMLVerticalRegressionModel XGBoostRegressor { get; } = new AutoMLVerticalRegressionModel(XGBoostRegressorValue);
+
         /// <summary> Determines if two <see cref="AutoMLVerticalRegressionModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoMLVerticalRegressionModel left, AutoMLVerticalRegressionModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoMLVerticalRegressionModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoMLVerticalRegressionModel left, AutoMLVerticalRegressionModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoMLVerticalRegressionModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoMLVerticalRegressionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoMLVerticalRegressionModel(string value) => new AutoMLVerticalRegressionModel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoMLVerticalRegressionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoMLVerticalRegressionModel?(string value) => value == null ? null : new AutoMLVerticalRegressionModel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoMLVerticalRegressionModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoMLVerticalRegressionModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

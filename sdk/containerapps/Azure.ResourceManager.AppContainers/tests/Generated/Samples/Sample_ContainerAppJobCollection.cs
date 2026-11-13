@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Job_CreateorUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Job_CreateorUpdate.json
             // this example is just showing the usage of "Jobs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +136,7 @@ StorageName = "nfsStorage",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateContainerAppsJobWithEventDrivenTrigger()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Job_CreateorUpdate_EventTrigger.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Job_CreateorUpdate_EventTrigger.json
             // this example is just showing the usage of "Jobs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -226,7 +226,7 @@ Name = "testcontainerappsjob0",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Job_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Job_Get.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -259,7 +259,7 @@ Name = "testcontainerappsjob0",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListContainerAppsJobsByResourceGroup()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Jobs_ListByResourceGroup.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Jobs_ListByResourceGroup.json
             // this example is just showing the usage of "Jobs_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -294,7 +294,7 @@ Name = "testcontainerappsjob0",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Job_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Job_Get.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -323,7 +323,7 @@ Name = "testcontainerappsjob0",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Job_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Job_Get.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The managed database's restore details backup set properties. </summary>
     public partial class ManagedDatabaseRestoreDetailBackupSetProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailBackupSetProperties"/>. </summary>
         internal ManagedDatabaseRestoreDetailBackupSetProperties()
@@ -57,8 +29,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="backupSizeInMB"> Backup size. </param>
         /// <param name="restoreStartedOn"> Last restored file time. </param>
         /// <param name="restoreFinishedOn"> Last restored file time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDatabaseRestoreDetailBackupSetProperties(string status, string firstStripeName, int? numberOfStripes, int? backupSizeInMB, DateTimeOffset? restoreStartedOn, DateTimeOffset? restoreFinishedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDatabaseRestoreDetailBackupSetProperties(string status, string firstStripeName, int? numberOfStripes, int? backupSizeInMB, DateTimeOffset? restoreStartedOn, DateTimeOffset? restoreFinishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             FirstStripeName = firstStripeName;
@@ -66,24 +38,29 @@ namespace Azure.ResourceManager.Sql.Models
             BackupSizeInMB = backupSizeInMB;
             RestoreStartedOn = restoreStartedOn;
             RestoreFinishedOn = restoreFinishedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Backup set status. </summary>
         [WirePath("status")]
         public string Status { get; }
+
         /// <summary> First stripe name. </summary>
         [WirePath("firstStripeName")]
         public string FirstStripeName { get; }
+
         /// <summary> Number of stripes. </summary>
         [WirePath("numberOfStripes")]
         public int? NumberOfStripes { get; }
+
         /// <summary> Backup size. </summary>
         [WirePath("backupSizeMB")]
         public int? BackupSizeInMB { get; }
+
         /// <summary> Last restored file time. </summary>
         [WirePath("restoreStartedTimestampUtc")]
         public DateTimeOffset? RestoreStartedOn { get; }
+
         /// <summary> Last restored file time. </summary>
         [WirePath("restoreFinishedTimestampUtc")]
         public DateTimeOffset? RestoreFinishedOn { get; }

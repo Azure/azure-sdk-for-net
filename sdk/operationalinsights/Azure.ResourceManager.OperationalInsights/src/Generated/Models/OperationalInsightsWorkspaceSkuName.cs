@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsWorkspaceSkuName : IEquatable<OperationalInsightsWorkspaceSkuName>
     {
         private readonly string _value;
+        /// <summary> Free. </summary>
+        private const string FreeValue = "Free";
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Premium. </summary>
+        private const string PremiumValue = "Premium";
+        /// <summary> PerNode. </summary>
+        private const string PerNodeValue = "PerNode";
+        /// <summary> PerGB2018. </summary>
+        private const string PerGB2018Value = "PerGB2018";
+        /// <summary> Standalone. </summary>
+        private const string StandaloneValue = "Standalone";
+        /// <summary> CapacityReservation. </summary>
+        private const string CapacityReservationValue = "CapacityReservation";
+        /// <summary> LACluster. </summary>
+        private const string LAClusterValue = "LACluster";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsWorkspaceSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FreeValue = "Free";
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
-        private const string PerNodeValue = "PerNode";
-        private const string PerGB2018Value = "PerGB2018";
-        private const string StandaloneValue = "Standalone";
-        private const string CapacityReservationValue = "CapacityReservation";
-        private const string LAClusterValue = "LACluster";
+            _value = value;
+        }
 
         /// <summary> Free. </summary>
         public static OperationalInsightsWorkspaceSkuName Free { get; } = new OperationalInsightsWorkspaceSkuName(FreeValue);
+
         /// <summary> Standard. </summary>
         public static OperationalInsightsWorkspaceSkuName Standard { get; } = new OperationalInsightsWorkspaceSkuName(StandardValue);
+
         /// <summary> Premium. </summary>
         public static OperationalInsightsWorkspaceSkuName Premium { get; } = new OperationalInsightsWorkspaceSkuName(PremiumValue);
+
         /// <summary> PerNode. </summary>
         public static OperationalInsightsWorkspaceSkuName PerNode { get; } = new OperationalInsightsWorkspaceSkuName(PerNodeValue);
+
         /// <summary> PerGB2018. </summary>
         public static OperationalInsightsWorkspaceSkuName PerGB2018 { get; } = new OperationalInsightsWorkspaceSkuName(PerGB2018Value);
+
         /// <summary> Standalone. </summary>
         public static OperationalInsightsWorkspaceSkuName Standalone { get; } = new OperationalInsightsWorkspaceSkuName(StandaloneValue);
+
         /// <summary> CapacityReservation. </summary>
         public static OperationalInsightsWorkspaceSkuName CapacityReservation { get; } = new OperationalInsightsWorkspaceSkuName(CapacityReservationValue);
+
         /// <summary> LACluster. </summary>
         public static OperationalInsightsWorkspaceSkuName LACluster { get; } = new OperationalInsightsWorkspaceSkuName(LAClusterValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspaceSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsWorkspaceSkuName left, OperationalInsightsWorkspaceSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspaceSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsWorkspaceSkuName left, OperationalInsightsWorkspaceSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsWorkspaceSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsWorkspaceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsWorkspaceSkuName(string value) => new OperationalInsightsWorkspaceSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsWorkspaceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsWorkspaceSkuName?(string value) => value == null ? null : new OperationalInsightsWorkspaceSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsWorkspaceSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsWorkspaceSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

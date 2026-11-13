@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,20 +15,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct ClassificationMultilabelPrimaryMetric : IEquatable<ClassificationMultilabelPrimaryMetric>
     {
         private readonly string _value;
+        /// <summary>
+        /// AUC is the Area under the curve.
+        /// This metric represents arithmetic mean of the score for each class,
+        /// weighted by the number of true instances in each class.
+        /// </summary>
+        private const string AUCWeightedValue = "AUCWeighted";
+        /// <summary> Accuracy is the ratio of predictions that exactly match the true class labels. </summary>
+        private const string AccuracyValue = "Accuracy";
+        /// <summary>
+        /// Normalized macro recall is recall macro-averaged and normalized, so that random
+        /// performance has a score of 0, and perfect performance has a score of 1.
+        /// </summary>
+        private const string NormMacroRecallValue = "NormMacroRecall";
+        /// <summary>
+        /// The arithmetic mean of the average precision score for each class, weighted by
+        /// the number of true instances in each class.
+        /// </summary>
+        private const string AveragePrecisionScoreWeightedValue = "AveragePrecisionScoreWeighted";
+        /// <summary> The arithmetic mean of precision for each class, weighted by number of true instances in each class. </summary>
+        private const string PrecisionScoreWeightedValue = "PrecisionScoreWeighted";
+        /// <summary> Intersection Over Union. Intersection of predictions divided by union of predictions. </summary>
+        private const string IOUValue = "IOU";
 
         /// <summary> Initializes a new instance of <see cref="ClassificationMultilabelPrimaryMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClassificationMultilabelPrimaryMetric(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AUCWeightedValue = "AUCWeighted";
-        private const string AccuracyValue = "Accuracy";
-        private const string NormMacroRecallValue = "NormMacroRecall";
-        private const string AveragePrecisionScoreWeightedValue = "AveragePrecisionScoreWeighted";
-        private const string PrecisionScoreWeightedValue = "PrecisionScoreWeighted";
-        private const string IOUValue = "IOU";
+            _value = value;
+        }
 
         /// <summary>
         /// AUC is the Area under the curve.
@@ -35,39 +54,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// weighted by the number of true instances in each class.
         /// </summary>
         public static ClassificationMultilabelPrimaryMetric AUCWeighted { get; } = new ClassificationMultilabelPrimaryMetric(AUCWeightedValue);
+
         /// <summary> Accuracy is the ratio of predictions that exactly match the true class labels. </summary>
         public static ClassificationMultilabelPrimaryMetric Accuracy { get; } = new ClassificationMultilabelPrimaryMetric(AccuracyValue);
+
         /// <summary>
         /// Normalized macro recall is recall macro-averaged and normalized, so that random
         /// performance has a score of 0, and perfect performance has a score of 1.
         /// </summary>
         public static ClassificationMultilabelPrimaryMetric NormMacroRecall { get; } = new ClassificationMultilabelPrimaryMetric(NormMacroRecallValue);
+
         /// <summary>
         /// The arithmetic mean of the average precision score for each class, weighted by
         /// the number of true instances in each class.
         /// </summary>
         public static ClassificationMultilabelPrimaryMetric AveragePrecisionScoreWeighted { get; } = new ClassificationMultilabelPrimaryMetric(AveragePrecisionScoreWeightedValue);
+
         /// <summary> The arithmetic mean of precision for each class, weighted by number of true instances in each class. </summary>
         public static ClassificationMultilabelPrimaryMetric PrecisionScoreWeighted { get; } = new ClassificationMultilabelPrimaryMetric(PrecisionScoreWeightedValue);
+
         /// <summary> Intersection Over Union. Intersection of predictions divided by union of predictions. </summary>
         public static ClassificationMultilabelPrimaryMetric IOU { get; } = new ClassificationMultilabelPrimaryMetric(IOUValue);
+
         /// <summary> Determines if two <see cref="ClassificationMultilabelPrimaryMetric"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClassificationMultilabelPrimaryMetric left, ClassificationMultilabelPrimaryMetric right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClassificationMultilabelPrimaryMetric"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClassificationMultilabelPrimaryMetric left, ClassificationMultilabelPrimaryMetric right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClassificationMultilabelPrimaryMetric"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClassificationMultilabelPrimaryMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClassificationMultilabelPrimaryMetric(string value) => new ClassificationMultilabelPrimaryMetric(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClassificationMultilabelPrimaryMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClassificationMultilabelPrimaryMetric?(string value) => value == null ? null : new ClassificationMultilabelPrimaryMetric(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClassificationMultilabelPrimaryMetric other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClassificationMultilabelPrimaryMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

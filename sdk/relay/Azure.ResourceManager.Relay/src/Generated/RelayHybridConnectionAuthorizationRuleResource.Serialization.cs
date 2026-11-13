@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Relay
 {
+    /// <summary></summary>
     public partial class RelayHybridConnectionAuthorizationRuleResource : IJsonModel<RelayAuthorizationRuleData>
     {
-        private static RelayAuthorizationRuleData s_dataDeserializationInstance;
-        private static RelayAuthorizationRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RelayAuthorizationRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RelayAuthorizationRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RelayAuthorizationRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RelayAuthorizationRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayAuthorizationRuleData>)Data).Write(writer, options);
 
-        RelayAuthorizationRuleData IJsonModel<RelayAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayAuthorizationRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RelayAuthorizationRuleData IJsonModel<RelayAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RelayAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayAuthorizationRuleData>(Data, options, AzureResourceManagerRelayContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RelayAuthorizationRuleData IPersistableModel<RelayAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayAuthorizationRuleData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<RelayAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayAuthorizationRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RelayAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

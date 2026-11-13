@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageDnsEndpointType : IEquatable<StorageDnsEndpointType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageDnsEndpointType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageDnsEndpointType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardValue = "Standard";
         private const string AzureDnsZoneValue = "AzureDnsZone";
 
-        /// <summary> Standard. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageDnsEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageDnsEndpointType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Standard. </summary>
         public static StorageDnsEndpointType Standard { get; } = new StorageDnsEndpointType(StandardValue);
-        /// <summary> AzureDnsZone. </summary>
+
+        /// <summary> Gets the AzureDnsZone. </summary>
         public static StorageDnsEndpointType AzureDnsZone { get; } = new StorageDnsEndpointType(AzureDnsZoneValue);
+
         /// <summary> Determines if two <see cref="StorageDnsEndpointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageDnsEndpointType left, StorageDnsEndpointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageDnsEndpointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageDnsEndpointType left, StorageDnsEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageDnsEndpointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageDnsEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageDnsEndpointType(string value) => new StorageDnsEndpointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageDnsEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageDnsEndpointType?(string value) => value == null ? null : new StorageDnsEndpointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageDnsEndpointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageDnsEndpointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

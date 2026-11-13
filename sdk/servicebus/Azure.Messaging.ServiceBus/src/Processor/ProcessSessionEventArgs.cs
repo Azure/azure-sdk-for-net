@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus
             _manager = manager;
 
             // manager would be null in scenarios where customers are using the public constructor for testing purposes.
-            _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
+            _sessionReceiver = (ServiceBusSessionReceiver)_manager?.Receiver;
             CancellationToken = cancellationToken;
         }
 

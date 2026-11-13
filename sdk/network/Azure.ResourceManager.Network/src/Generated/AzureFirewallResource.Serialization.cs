@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class AzureFirewallResource : IJsonModel<AzureFirewallData>
     {
-        private static AzureFirewallData s_dataDeserializationInstance;
-        private static AzureFirewallData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AzureFirewallData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AzureFirewallData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AzureFirewallData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureFirewallData>)Data).Write(writer, options);
 
-        AzureFirewallData IJsonModel<AzureFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureFirewallData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureFirewallData IJsonModel<AzureFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureFirewallData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AzureFirewallData IPersistableModel<AzureFirewallData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureFirewallData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<AzureFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureFirewallData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

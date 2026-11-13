@@ -7,62 +7,113 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that extracts content and layout information, via Azure AI Services, from files within the enrichment pipeline. </summary>
     public partial class DocumentIntelligenceLayoutSkill : SearchIndexerSkill
     {
+        private DocumentIntelligenceLayoutSkillOutputFormat? _outputFormat;
+        private bool _outputFormatIsDefined;
+        private DocumentIntelligenceLayoutSkillOutputMode? _outputMode;
+        private bool _outputModeIsDefined;
+        private DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? _markdownHeaderDepth;
+        private bool _markdownHeaderDepthIsDefined;
+        private DocumentIntelligenceLayoutSkillChunkingProperties _chunkingProperties;
+        private bool _chunkingPropertiesIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public DocumentIntelligenceLayoutSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
+        public DocumentIntelligenceLayoutSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill", inputs, outputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
             ExtractionOptions = new ChangeTrackingList<DocumentIntelligenceLayoutSkillExtractionOptions>();
-            ODataType = "#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill";
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkill"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of skill. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="outputFormat"> Controls the cardinality of the output format. Default is 'markdown'. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="outputFormat"> Controls the output format. Default is 'markdown'. </param>
         /// <param name="outputMode"> Controls the cardinality of the output produced by the skill. Default is 'oneToMany'. </param>
         /// <param name="markdownHeaderDepth"> The depth of headers in the markdown output. Default is h6. </param>
         /// <param name="extractionOptions"> Controls the cardinality of the content extracted from the document by the skill. </param>
         /// <param name="chunkingProperties"> Controls the cardinality for chunking the content. </param>
-        internal DocumentIntelligenceLayoutSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, DocumentIntelligenceLayoutSkillOutputFormat? outputFormat, DocumentIntelligenceLayoutSkillOutputMode? outputMode, DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? markdownHeaderDepth, IList<DocumentIntelligenceLayoutSkillExtractionOptions> extractionOptions, DocumentIntelligenceLayoutSkillChunkingProperties chunkingProperties) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
+        internal DocumentIntelligenceLayoutSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, DocumentIntelligenceLayoutSkillOutputFormat? outputFormat, DocumentIntelligenceLayoutSkillOutputMode? outputMode, DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? markdownHeaderDepth, IList<DocumentIntelligenceLayoutSkillExtractionOptions> extractionOptions, DocumentIntelligenceLayoutSkillChunkingProperties chunkingProperties) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
-            OutputFormat = outputFormat;
-            OutputMode = outputMode;
-            MarkdownHeaderDepth = markdownHeaderDepth;
+            _outputFormat = outputFormat;
+            _outputMode = outputMode;
+            _markdownHeaderDepth = markdownHeaderDepth;
             ExtractionOptions = extractionOptions;
-            ChunkingProperties = chunkingProperties;
-            ODataType = oDataType ?? "#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill";
+            _chunkingProperties = chunkingProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkill"/> for deserialization. </summary>
-        internal DocumentIntelligenceLayoutSkill()
+        /// <summary> Controls the output format. Default is 'markdown'. </summary>
+        public DocumentIntelligenceLayoutSkillOutputFormat? OutputFormat
         {
+            get
+            {
+                return _outputFormat;
+            }
+            set
+            {
+                _outputFormat = value;
+                _outputFormatIsDefined = true;
+            }
         }
 
-        /// <summary> Controls the cardinality of the output format. Default is 'markdown'. </summary>
-        public DocumentIntelligenceLayoutSkillOutputFormat? OutputFormat { get; set; }
         /// <summary> Controls the cardinality of the output produced by the skill. Default is 'oneToMany'. </summary>
-        public DocumentIntelligenceLayoutSkillOutputMode? OutputMode { get; set; }
+        public DocumentIntelligenceLayoutSkillOutputMode? OutputMode
+        {
+            get
+            {
+                return _outputMode;
+            }
+            set
+            {
+                _outputMode = value;
+                _outputModeIsDefined = true;
+            }
+        }
+
         /// <summary> The depth of headers in the markdown output. Default is h6. </summary>
-        public DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? MarkdownHeaderDepth { get; set; }
+        public DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? MarkdownHeaderDepth
+        {
+            get
+            {
+                return _markdownHeaderDepth;
+            }
+            set
+            {
+                _markdownHeaderDepth = value;
+                _markdownHeaderDepthIsDefined = true;
+            }
+        }
+
         /// <summary> Controls the cardinality of the content extracted from the document by the skill. </summary>
         public IList<DocumentIntelligenceLayoutSkillExtractionOptions> ExtractionOptions { get; set; }
+
         /// <summary> Controls the cardinality for chunking the content. </summary>
-        public DocumentIntelligenceLayoutSkillChunkingProperties ChunkingProperties { get; set; }
+        public DocumentIntelligenceLayoutSkillChunkingProperties ChunkingProperties
+        {
+            get
+            {
+                return _chunkingProperties;
+            }
+            set
+            {
+                _chunkingProperties = value;
+                _chunkingPropertiesIsDefined = true;
+            }
+        }
     }
 }

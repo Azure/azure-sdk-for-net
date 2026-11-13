@@ -1,0 +1,9 @@
+# Azure.AI.Agents.Persistent approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# 'Threads' is a sub-client accessor for the agent threads operations and 'Truncation'
+# names the run truncation strategy defined by the service contract. Both shipped in the
+# GA 1.0.0 public API, so renaming them would be breaking, and the Azure.AI.Agents.Persistent
+# namespace already disambiguates them from same-named types elsewhere.
+nowarn:AZC0012 T:Azure.AI.Agents.Persistent.Threads
+nowarn:AZC0012 T:Azure.AI.Agents.Persistent.Truncation

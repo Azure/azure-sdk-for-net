@@ -1,0 +1,11 @@
+# Azure.Developer.LoadTesting approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# These model names shipped in the 1.0.0 GA release; renaming them would be a
+# breaking change.
+nowarn:AZC0034 T:Azure.Developer.LoadTesting.ErrorDetails
+nowarn:AZC0034 T:Azure.Developer.LoadTesting.MetricAvailability
+nowarn:AZC0034 T:Azure.Developer.LoadTesting.MetricDefinition
+nowarn:AZC0034 T:Azure.Developer.LoadTesting.MetricNamespace
+nowarn:AZC0034 T:Azure.Developer.LoadTesting.MetricUnit
+nowarn:AZC0034 T:Azure.Developer.LoadTesting.MetricValue

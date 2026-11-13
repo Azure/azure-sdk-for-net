@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> A partner's customer. </summary>
     public partial class BillingCustomerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingCustomerProperties"/>. </summary>
         public BillingCustomerProperties()
@@ -63,8 +35,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="enabledAzurePlans"> Azure plans enabled for the customer. </param>
         /// <param name="resellers"> The list of resellers for which an Azure plan is enabled for the customer. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingCustomerProperties(string billingProfileDisplayName, ResourceIdentifier billingProfileId, string displayName, string systemId, BillingCustomerStatus? status, IList<BillingAzurePlan> enabledAzurePlans, IList<CreatedSubscriptionReseller> resellers, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingCustomerProperties(string billingProfileDisplayName, ResourceIdentifier billingProfileId, string displayName, string systemId, BillingCustomerStatus? status, IList<BillingAzurePlan> enabledAzurePlans, IList<CreatedSubscriptionReseller> resellers, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingProfileDisplayName = billingProfileDisplayName;
             BillingProfileId = billingProfileId;
@@ -74,30 +46,37 @@ namespace Azure.ResourceManager.Billing.Models
             EnabledAzurePlans = enabledAzurePlans;
             Resellers = resellers;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the billing profile. </summary>
         [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
+
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
         [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
+
         /// <summary> The name of the customer. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
+
         /// <summary> The system generated unique identifier for a customer. </summary>
         [WirePath("systemId")]
         public string SystemId { get; }
+
         /// <summary> Identifies the status of an customer. This is an upcoming property that will be populated in the future. </summary>
         [WirePath("status")]
         public BillingCustomerStatus? Status { get; }
+
         /// <summary> Azure plans enabled for the customer. </summary>
         [WirePath("enabledAzurePlans")]
         public IList<BillingAzurePlan> EnabledAzurePlans { get; }
+
         /// <summary> The list of resellers for which an Azure plan is enabled for the customer. </summary>
         [WirePath("resellers")]
         public IList<CreatedSubscriptionReseller> Resellers { get; }
+
         /// <summary> Dictionary of metadata associated with the resource. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }

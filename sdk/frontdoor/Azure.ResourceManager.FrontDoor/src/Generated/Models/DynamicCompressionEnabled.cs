@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct DynamicCompressionEnabled : IEquatable<DynamicCompressionEnabled>
     {
         private readonly string _value;
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="DynamicCompressionEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicCompressionEnabled(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enabled. </summary>
         public static DynamicCompressionEnabled Enabled { get; } = new DynamicCompressionEnabled(EnabledValue);
+
         /// <summary> Disabled. </summary>
         public static DynamicCompressionEnabled Disabled { get; } = new DynamicCompressionEnabled(DisabledValue);
+
         /// <summary> Determines if two <see cref="DynamicCompressionEnabled"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynamicCompressionEnabled left, DynamicCompressionEnabled right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynamicCompressionEnabled"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynamicCompressionEnabled left, DynamicCompressionEnabled right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicCompressionEnabled"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynamicCompressionEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynamicCompressionEnabled(string value) => new DynamicCompressionEnabled(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DynamicCompressionEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DynamicCompressionEnabled?(string value) => value == null ? null : new DynamicCompressionEnabled(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynamicCompressionEnabled other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynamicCompressionEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ExportRunExecutionStatus : IEquatable<ExportRunExecutionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ExportRunExecutionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExportRunExecutionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string QueuedValue = "Queued";
         private const string InProgressValue = "InProgress";
         private const string CompletedValue = "Completed";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string NewDataNotAvailableValue = "NewDataNotAvailable";
         private const string DataNotAvailableValue = "DataNotAvailable";
 
-        /// <summary> Queued. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRunExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExportRunExecutionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Queued. </summary>
         public static ExportRunExecutionStatus Queued { get; } = new ExportRunExecutionStatus(QueuedValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> Gets the InProgress. </summary>
         public static ExportRunExecutionStatus InProgress { get; } = new ExportRunExecutionStatus(InProgressValue);
-        /// <summary> Completed. </summary>
+
+        /// <summary> Gets the Completed. </summary>
         public static ExportRunExecutionStatus Completed { get; } = new ExportRunExecutionStatus(CompletedValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ExportRunExecutionStatus Failed { get; } = new ExportRunExecutionStatus(FailedValue);
-        /// <summary> Timeout. </summary>
+
+        /// <summary> Gets the Timeout. </summary>
         public static ExportRunExecutionStatus Timeout { get; } = new ExportRunExecutionStatus(TimeoutValue);
-        /// <summary> NewDataNotAvailable. </summary>
+
+        /// <summary> Gets the NewDataNotAvailable. </summary>
         public static ExportRunExecutionStatus NewDataNotAvailable { get; } = new ExportRunExecutionStatus(NewDataNotAvailableValue);
-        /// <summary> DataNotAvailable. </summary>
+
+        /// <summary> Gets the DataNotAvailable. </summary>
         public static ExportRunExecutionStatus DataNotAvailable { get; } = new ExportRunExecutionStatus(DataNotAvailableValue);
+
         /// <summary> Determines if two <see cref="ExportRunExecutionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExportRunExecutionStatus left, ExportRunExecutionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExportRunExecutionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExportRunExecutionStatus left, ExportRunExecutionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportRunExecutionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExportRunExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExportRunExecutionStatus(string value) => new ExportRunExecutionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExportRunExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExportRunExecutionStatus?(string value) => value == null ? null : new ExportRunExecutionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExportRunExecutionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExportRunExecutionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

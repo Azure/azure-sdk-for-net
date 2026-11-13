@@ -1,18 +1,17 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
-pr:
+trigger:
   branches:
     include:
     - main
-    - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/compute/ci.mgmt.yml
-    - sdk/compute/Azure.ResourceManager.Compute/
-
+    - sdk/compute/Azure.ResourceManager.Compute
+    - sdk/compute/Azure.Provisioning.Compute
+    - sdk/compute/Azure.ResourceManager.Compute.BulkActions
+    - sdk/compute/Azure.ResourceManager.Compute.WorkloadManager
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -22,7 +21,9 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Compute
       safeName: AzureResourceManagerCompute
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Compute
-      ExpectedWarningsFilepath: None
+    - name: Azure.Provisioning.Compute
+      safeName: AzureProvisioningCompute
+    - name: Azure.ResourceManager.Compute.BulkActions
+      safeName: AzureResourceManagerComputeBulkActions
+    - name: Azure.ResourceManager.Compute.WorkloadManager
+      safeName: AzureResourceManagerComputeWorkloadManager

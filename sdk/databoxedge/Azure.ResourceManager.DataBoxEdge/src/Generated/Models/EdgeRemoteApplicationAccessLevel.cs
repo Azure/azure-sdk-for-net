@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct EdgeRemoteApplicationAccessLevel : IEquatable<EdgeRemoteApplicationAccessLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EdgeRemoteApplicationAccessLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EdgeRemoteApplicationAccessLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string ReadOnlyValue = "ReadOnly";
         private const string ReadWriteValue = "ReadWrite";
         private const string FullAccessValue = "FullAccess";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeRemoteApplicationAccessLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EdgeRemoteApplicationAccessLevel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static EdgeRemoteApplicationAccessLevel None { get; } = new EdgeRemoteApplicationAccessLevel(NoneValue);
-        /// <summary> ReadOnly. </summary>
+
+        /// <summary> Gets the ReadOnly. </summary>
         public static EdgeRemoteApplicationAccessLevel ReadOnly { get; } = new EdgeRemoteApplicationAccessLevel(ReadOnlyValue);
-        /// <summary> ReadWrite. </summary>
+
+        /// <summary> Gets the ReadWrite. </summary>
         public static EdgeRemoteApplicationAccessLevel ReadWrite { get; } = new EdgeRemoteApplicationAccessLevel(ReadWriteValue);
-        /// <summary> FullAccess. </summary>
+
+        /// <summary> Gets the FullAccess. </summary>
         public static EdgeRemoteApplicationAccessLevel FullAccess { get; } = new EdgeRemoteApplicationAccessLevel(FullAccessValue);
+
         /// <summary> Determines if two <see cref="EdgeRemoteApplicationAccessLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeRemoteApplicationAccessLevel left, EdgeRemoteApplicationAccessLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeRemoteApplicationAccessLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeRemoteApplicationAccessLevel left, EdgeRemoteApplicationAccessLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeRemoteApplicationAccessLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeRemoteApplicationAccessLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeRemoteApplicationAccessLevel(string value) => new EdgeRemoteApplicationAccessLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeRemoteApplicationAccessLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeRemoteApplicationAccessLevel?(string value) => value == null ? null : new EdgeRemoteApplicationAccessLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeRemoteApplicationAccessLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeRemoteApplicationAccessLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

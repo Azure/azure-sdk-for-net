@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type.Property.Nullable
 {
     public partial class NullableClientOptions : ClientOptions
     {
+        public NullableClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal NullableClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

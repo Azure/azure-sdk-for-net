@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SignalR
 {
+    /// <summary></summary>
     public partial class SignalRSharedPrivateLinkResource : IJsonModel<SignalRSharedPrivateLinkResourceData>
     {
-        private static SignalRSharedPrivateLinkResourceData s_dataDeserializationInstance;
-        private static SignalRSharedPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SignalRSharedPrivateLinkResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SignalRSharedPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SignalRSharedPrivateLinkResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRSharedPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SignalRSharedPrivateLinkResourceData>)Data).Write(writer, options);
 
-        SignalRSharedPrivateLinkResourceData IJsonModel<SignalRSharedPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRSharedPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SignalRSharedPrivateLinkResourceData IJsonModel<SignalRSharedPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRSharedPrivateLinkResourceData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SignalRSharedPrivateLinkResourceData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(data, options, AzureResourceManagerSignalRContext.Default);
 
-        string IPersistableModel<SignalRSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRSharedPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SignalRSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

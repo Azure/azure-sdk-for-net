@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    /// <summary></summary>
     public partial class NetworkFabricNeighborGroupResource : IJsonModel<NetworkFabricNeighborGroupData>
     {
-        private static NetworkFabricNeighborGroupData s_dataDeserializationInstance;
-        private static NetworkFabricNeighborGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkFabricNeighborGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkFabricNeighborGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFabricNeighborGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricNeighborGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricNeighborGroupData>)Data).Write(writer, options);
 
-        NetworkFabricNeighborGroupData IJsonModel<NetworkFabricNeighborGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricNeighborGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricNeighborGroupData IJsonModel<NetworkFabricNeighborGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkFabricNeighborGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricNeighborGroupData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFabricNeighborGroupData IPersistableModel<NetworkFabricNeighborGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricNeighborGroupData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricNeighborGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricNeighborGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricNeighborGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseBlobs;
-
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test.Shared;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     BaseBlobs::Azure.Storage.Blobs.BlobServiceClient,
     BaseBlobs::Azure.Storage.Blobs.BlobClientOptions>;
-using BaseBlobs::Azure.Storage.Blobs;
-using BaseBlobs::Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -62,6 +61,26 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             containerName ??= clientBuilder.GetNewContainerName();
             service ??= premium ? clientBuilder.GetServiceClient_Premium() : clientBuilder.GetServiceClient_SharedKey();
+
+            if (publicAccessType == default)
+            {
+                publicAccessType = PublicAccessType.None;
+            }
+
+            BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
+            return new DisposingBlobContainer(container);
+        }
+
+        public static async Task<DisposingBlobContainer> GetAzureSasCredentialTestContainerAsync(
+            this BlobsClientBuilder clientBuilder,
+            BlobServiceClient service = default,
+            string containerName = default,
+            IDictionary<string, string> metadata = default,
+            PublicAccessType? publicAccessType = default)
+        {
+            containerName ??= clientBuilder.GetNewContainerName();
+            service ??= clientBuilder.GetServiceClientFromAzureSasCredentialConfig(clientBuilder.Tenants.TestConfigDefault, default);
 
             if (publicAccessType == default)
             {

@@ -127,5 +127,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
         [Event(13, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
         public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(13, typeName, exceptionMessage);
+
+        [Event(14, Message = "Invalid sampler type '{0}'. Supported values: microsoft.rate_limited, microsoft.fixed_percentage", Level = EventLevel.Warning)]
+        public void InvalidSamplerType(string samplerType) => WriteEvent(14, samplerType);
+
+        [Event(15, Message = "Invalid sampler argument '{1}' for sampler '{0}'. Ignoring.", Level = EventLevel.Warning)]
+        public void InvalidSamplerArgument(string samplerType, string samplerArg) => WriteEvent(15, samplerType, samplerArg);
     }
 }

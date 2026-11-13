@@ -13,7 +13,7 @@ namespace Azure.Core.Diagnostics
     /// <summary>
     /// Implementation of <see cref="EventListener"/> that listens to events produced by Azure SDK client libraries.
     /// </summary>
-    public class AzureEventSourceListener: EventListener
+    public class AzureEventSourceListener : EventListener
     {
         /// <summary>
         /// The trait name that has to be present on all event sources collected by this listener.

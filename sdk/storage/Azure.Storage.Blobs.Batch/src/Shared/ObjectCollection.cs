@@ -16,6 +16,7 @@ namespace Azure.Core.Http.Multipart
     // type to throw if 'null' gets added. Collection<T> internally uses List<T> which comes at some cost. In addition
     // Collection<T>.Add() calls List<T>.InsertItem() which is an O(n) operation (compared to O(1) for List<T>.Add()).
     // This type is only used for very small collections (1-2 items) to keep the impact of using Collection<T> small.
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal sealed class ObjectCollection<T> : Collection<T>
     {
         internal static readonly Action<T> DefaultValidator = CheckNotNull;

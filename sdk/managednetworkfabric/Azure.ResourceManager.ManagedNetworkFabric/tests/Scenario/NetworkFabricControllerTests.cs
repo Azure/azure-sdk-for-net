@@ -42,17 +42,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 Annotation = "annotation",
                 InfrastructureExpressRouteConnections =
                 {
-                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
-                    {
-                        ExpressRouteAuthorizationKey = "1234ABCD-0A1B-1234-5678-123456ABCDEF",
-                    }
+                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"), "1234ABCD-0A1B-1234-5678-123456ABCDEF")
                 },
                 WorkloadExpressRouteConnections =
                 {
-                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
-                    {
-                        ExpressRouteAuthorizationKey = "1234ABCD-0A1B-1234-5678-123456ABCDEF",
-                    }
+                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"), "1234ABCD-0A1B-1234-5678-123456ABCDEF")
                 },
                 ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration()
                 {

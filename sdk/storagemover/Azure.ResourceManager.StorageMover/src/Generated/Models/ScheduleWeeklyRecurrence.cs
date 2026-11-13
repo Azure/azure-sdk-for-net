@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -31,16 +32,11 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of <see cref="ScheduleWeeklyRecurrence"/>. </summary>
         /// <param name="startTime"> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="endTime"> The end time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="days"> The set of days of week for the schedule recurrence. A day must not be specified more than once in a recurrence. </param>
-        internal ScheduleWeeklyRecurrence(ScheduleTime startTime, ScheduleTime endTime, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ScheduleDayOfWeek> days) : base(startTime, endTime, serializedAdditionalRawData)
+        internal ScheduleWeeklyRecurrence(ScheduleTime startTime, ScheduleTime endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ScheduleDayOfWeek> days) : base(startTime, endTime, additionalBinaryDataProperties)
         {
             Days = days;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScheduleWeeklyRecurrence"/> for deserialization. </summary>
-        internal ScheduleWeeklyRecurrence()
-        {
         }
 
         /// <summary> The set of days of week for the schedule recurrence. A day must not be specified more than once in a recurrence. </summary>

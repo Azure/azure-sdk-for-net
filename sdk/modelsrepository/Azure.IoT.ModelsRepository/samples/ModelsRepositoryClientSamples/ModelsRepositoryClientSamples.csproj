@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Azure.IoT.ModelsRepository.Samples</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -17,7 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.DigitalTwins.Parser" Version="3.12.5" />
+    <PackageReference Include="Microsoft.Azure.DigitalTwins.Parser" />
+  </ItemGroup>
+
+  <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
+  <ItemGroup Condition="'$(IsSamplesProject)' != 'true'">
+    <PackageReference Update="Microsoft.Azure.DigitalTwins.Parser" Version="3.12.5" />
   </ItemGroup>
 
   <ItemGroup>

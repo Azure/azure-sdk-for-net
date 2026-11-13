@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.TrafficManager
 {
+    /// <summary></summary>
     public partial class TrafficManagerGeographicHierarchyResource : IJsonModel<TrafficManagerGeographicHierarchyData>
     {
-        private static TrafficManagerGeographicHierarchyData s_dataDeserializationInstance;
-        private static TrafficManagerGeographicHierarchyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TrafficManagerGeographicHierarchyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TrafficManagerGeographicHierarchyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TrafficManagerGeographicHierarchyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerGeographicHierarchyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerGeographicHierarchyData>)Data).Write(writer, options);
 
-        TrafficManagerGeographicHierarchyData IJsonModel<TrafficManagerGeographicHierarchyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerGeographicHierarchyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerGeographicHierarchyData IJsonModel<TrafficManagerGeographicHierarchyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TrafficManagerGeographicHierarchyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficManagerGeographicHierarchyData>(Data, options, AzureResourceManagerTrafficManagerContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TrafficManagerGeographicHierarchyData IPersistableModel<TrafficManagerGeographicHierarchyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerGeographicHierarchyData>(data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        string IPersistableModel<TrafficManagerGeographicHierarchyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerGeographicHierarchyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrafficManagerGeographicHierarchyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

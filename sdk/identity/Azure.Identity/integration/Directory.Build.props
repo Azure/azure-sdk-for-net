@@ -1,10 +1,11 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
     <!-- Signal that integration projects are building in the repo -->
     <IsClientLibrary>true</IsClientLibrary>
     <IsPackable>true</IsPackable>
+    <IsTestProject>true</IsTestProject>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <NoWarn>
       $(NoWarn);

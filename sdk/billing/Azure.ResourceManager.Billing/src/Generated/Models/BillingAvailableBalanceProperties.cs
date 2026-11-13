@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The Available Credit or Payment on Account Balance. The credit balance can be used to settle due or past due invoices. </summary>
     public partial class BillingAvailableBalanceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingAvailableBalanceProperties"/>. </summary>
         public BillingAvailableBalanceProperties()
@@ -55,23 +27,25 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="amount"> Credit amount for immediate payment. </param>
         /// <param name="paymentsOnAccount"> The list of payments on accounts. </param>
         /// <param name="totalPaymentsOnAccount"> Total amount of payments on accounts. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAvailableBalanceProperties(BillingAmount amount, IReadOnlyList<BillingPaymentOnAccount> paymentsOnAccount, BillingAmount totalPaymentsOnAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingAvailableBalanceProperties(BillingAmount amount, IReadOnlyList<BillingPaymentOnAccount> paymentsOnAccount, BillingAmount totalPaymentsOnAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Amount = amount;
             PaymentsOnAccount = paymentsOnAccount;
             TotalPaymentsOnAccount = totalPaymentsOnAccount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Credit amount for immediate payment. </summary>
         [WirePath("amount")]
-        public BillingAmount Amount { get; }
+        public BillingAmount Amount { get; set; }
+
         /// <summary> The list of payments on accounts. </summary>
         [WirePath("paymentsOnAccount")]
         public IReadOnlyList<BillingPaymentOnAccount> PaymentsOnAccount { get; }
+
         /// <summary> Total amount of payments on accounts. </summary>
         [WirePath("totalPaymentsOnAccount")]
-        public BillingAmount TotalPaymentsOnAccount { get; }
+        public BillingAmount TotalPaymentsOnAccount { get; set; }
     }
 }

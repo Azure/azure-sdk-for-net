@@ -16,31 +16,26 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="InformationResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The information (data) Unit of measurement. </param>
-        internal InformationResolution(double value, InformationUnit unit)
+        internal InformationResolution(double value, InformationUnit unit) : base(ResolutionKind.InformationResolution)
         {
-            ResolutionKind = ResolutionKind.InformationResolution;
             Value = value;
             Unit = unit;
         }
 
         /// <summary> Initializes a new instance of <see cref="InformationResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The information (data) Unit of measurement. </param>
-        internal InformationResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, InformationUnit unit) : base(resolutionKind, serializedAdditionalRawData)
+        internal InformationResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, InformationUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InformationResolution"/> for deserialization. </summary>
-        internal InformationResolution()
-        {
-        }
-
         /// <summary> The numeric value that the extracted text denotes. </summary>
         public double Value { get; }
+
         /// <summary> The information (data) Unit of measurement. </summary>
         public InformationUnit Unit { get; }
     }

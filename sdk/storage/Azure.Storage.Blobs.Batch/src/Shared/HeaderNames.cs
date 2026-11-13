@@ -7,6 +7,7 @@
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal static class HeaderNames
     {
         // Use readonly statics rather than constants so ReferenceEquals works

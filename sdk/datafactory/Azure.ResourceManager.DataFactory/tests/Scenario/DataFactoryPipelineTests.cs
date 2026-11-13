@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var pipeline = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             return pipeline.Value;
         }
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Create_Exists_Get_List_Delete_Create()
         {
             // Get the Resource Group
@@ -1416,8 +1416,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return integrationRuntime.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzureDatabricksDeltaLake_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1459,8 +1459,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_MongoDbAtlas_CosmosDbMongoDbApi_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1506,8 +1506,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_MongoDbAtlas_MongoDbV2_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1553,8 +1553,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SqlService_SqlDW_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1589,8 +1589,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_HDInsightHive_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1610,8 +1610,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1677,8 +1677,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Blob_Expression_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1774,8 +1774,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Web_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1810,8 +1810,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SqlServerStoredProcedure_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1831,8 +1831,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzureSql_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1886,8 +1886,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SqlServer_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1933,8 +1933,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AmazonRdsFOrSqlServer_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -1980,8 +1980,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Relational_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2022,8 +2022,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_HDInsightPig_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2051,8 +2051,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_HDInsightHive_StorageLinkedService_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2077,8 +2077,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_HDInsightMapReduce_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2114,8 +2114,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_HDInsightSpark_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2145,8 +2145,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Cassandra_AzureTable_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2180,8 +2180,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_MongoDb_AzureBlob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2219,8 +2219,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SqlServer_Blob_StoredProcedure_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2267,8 +2267,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Hdfs_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2308,8 +2308,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Lookup_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2328,8 +2328,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Lookup_SqlServer_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2351,8 +2351,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Lookup_AzureSqlServer_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2374,8 +2374,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Lookup_FileSystem_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2393,8 +2393,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_GetMetadata_AzureSqlServer_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2417,8 +2417,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Web_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2436,8 +2436,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Web_Authentication_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2461,8 +2461,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Custom_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2506,8 +2506,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_IfCondition_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2536,8 +2536,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Switch_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2573,8 +2573,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Foreach_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2600,8 +2600,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Until_Create()
         {
             string untilTaskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2630,8 +2630,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzureMLUpdateResource_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2650,8 +2650,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzureMLBatchExecution_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2678,8 +2678,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DataLakeAnalyticsUSQL_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2695,8 +2695,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzureMySql_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2729,8 +2729,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Salesforce_Salesforce_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2766,8 +2766,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Dynamics_Dynamics_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2802,8 +2802,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SAPCloudForCustomer_AzureDataLakeStore_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2844,8 +2844,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AmazonMWS_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2878,8 +2878,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzurePostgreSql_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2912,8 +2912,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Concur_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2946,8 +2946,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Couchbase_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -2980,8 +2980,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Drill_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3014,8 +3014,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Eloqua_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3048,8 +3048,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_GoogleBigQuery_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3082,8 +3082,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Greenplum_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3116,8 +3116,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_HBase_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3150,8 +3150,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Hive_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3184,8 +3184,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Hubspot_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3218,8 +3218,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Impala_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3252,8 +3252,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Jira_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3286,8 +3286,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Magento_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3320,8 +3320,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_MariaDB_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3354,8 +3354,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzureMariaDB_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3388,8 +3388,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Marketo_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3422,8 +3422,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Paypal_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3456,8 +3456,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Phoenix_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3490,8 +3490,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Presto_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3524,8 +3524,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_QuickBooks_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3558,8 +3558,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_ServiceNow_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3592,8 +3592,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Shopify_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3626,8 +3626,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Spark_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3660,8 +3660,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Square_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3694,8 +3694,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Xero_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3728,8 +3728,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Zoho_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3762,8 +3762,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SAPECC_AzureDataLakeStore_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3804,8 +3804,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DynamicsAX_AzureDataLakeStore_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3846,8 +3846,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Netezza_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3880,8 +3880,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Vertica_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3914,8 +3914,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Databricks_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3938,8 +3938,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Blob_UserProperties_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -3975,8 +3975,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Blob_UserProperties_Empty_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4011,8 +4011,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SapOpenHub_AzureDataLakeStore_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4055,8 +4055,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_WebHook_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4079,8 +4079,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Validation_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4101,8 +4101,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SapTable_AzureDataLakeStore_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4142,8 +4142,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Avro_Settings_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4190,8 +4190,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Excel_Settings_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4238,8 +4238,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Orc_Settings_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4281,8 +4281,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_Settings_LogStorageSettings_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4351,8 +4351,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_Settings_LogSettings_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4427,8 +4427,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_UnZip_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4519,8 +4519,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_AzureBlobFS_AzureDataLakeStorage_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4576,8 +4576,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_FileSystem_AzureDataLakeStorage_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4635,8 +4635,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_FTPServer_AzureDataLakeStorage_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4694,8 +4694,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_Hdfs_AzureDataLakeStorage_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4754,8 +4754,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_Http_AzureDataLakeStorage_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4811,8 +4811,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_AmazonS3_AzureDataLakeStorage_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4869,8 +4869,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_SftpServer_AzureDataLakeStorage_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4928,8 +4928,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_CosmosDbSqlApi_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -4970,8 +4970,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Json_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5061,8 +5061,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Xml_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5156,8 +5156,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Binary_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5342,8 +5342,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Teradata_Binary_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5385,8 +5385,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SqlMI_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5423,8 +5423,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SalesforceServiceCloud_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5459,8 +5459,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_CommonDataServiceForApps_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5496,8 +5496,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Informix_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5530,8 +5530,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_MicrosoftAccess_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5564,8 +5564,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SapTable_AzureDataLakeStorage_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5617,8 +5617,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Db2_AzurePostgreSql_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5657,8 +5657,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AmazonRdsForOracle_AzurePostgreSql_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5697,8 +5697,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Oracle_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5738,8 +5738,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_NetezzaPartition_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5783,8 +5783,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_OData_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5825,8 +5825,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Sybase_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5866,8 +5866,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_MySql_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5907,8 +5907,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DB2_AzureMysql_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5947,8 +5947,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Odbc_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -5988,8 +5988,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AmazonRedshift_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6029,8 +6029,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzureDataExplorer_AzureDataExplorer_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6072,8 +6072,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzureDataExplorer_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6091,8 +6091,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_AzureDataExplorer_TimeOut_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6111,8 +6111,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SapBw_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6152,8 +6152,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_ExecuteDataFlow_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6198,8 +6198,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_ExecuteDataFlow_Compute_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6243,8 +6243,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_GoogleCloud_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6305,8 +6305,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_AmazonS3Compatible_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6372,8 +6372,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_OracleCloud_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6439,8 +6439,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_AzureFile_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6503,8 +6503,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_ExecuteSSISPacakge_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6531,8 +6531,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_SqlDW_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6591,8 +6591,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SapHana_DelimitedText_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6643,8 +6643,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Binary_Binary_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6688,8 +6688,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SharePointOnlineList_Blob_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6730,8 +6730,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_DelimitedText_SqlServer_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6777,8 +6777,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_SQLMI_SQLMI_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6835,8 +6835,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_ExecuteWarnglingDataflow_Sinks_Create()
         {
             await PowerQueryCreate((DataFactoryResource dataFactory, string linkedServiceSourceName, string linkedServiceSinkName, string integrationRuntimeName) =>
@@ -6881,8 +6881,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_ExecuteWarnglingDataflow_Queries_Create()
         {
             await PowerQueryCreate((DataFactoryResource dataFactory, string linkedServiceSourceName, string linkedServiceSinkName, string integrationRuntimeName) =>
@@ -6919,8 +6919,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Script_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6948,8 +6948,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Pipeline_Office365_AzureDataLakeStorage_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");

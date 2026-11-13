@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Type of the Azure resource the hostname is assigned to. </summary>
+    /// <summary> Azure resource type. </summary>
     public enum AppServiceResourceType
     {
         /// <summary> Website. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VpnNatRuleMode : IEquatable<VpnNatRuleMode>
     {
         private readonly string _value;
+        /// <summary> EgressSnat. </summary>
+        private const string EgressSnatValue = "EgressSnat";
+        /// <summary> IngressSnat. </summary>
+        private const string IngressSnatValue = "IngressSnat";
 
         /// <summary> Initializes a new instance of <see cref="VpnNatRuleMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VpnNatRuleMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EgressSnatValue = "EgressSnat";
-        private const string IngressSnatValue = "IngressSnat";
+            _value = value;
+        }
 
         /// <summary> EgressSnat. </summary>
         public static VpnNatRuleMode EgressSnat { get; } = new VpnNatRuleMode(EgressSnatValue);
+
         /// <summary> IngressSnat. </summary>
         public static VpnNatRuleMode IngressSnat { get; } = new VpnNatRuleMode(IngressSnatValue);
+
         /// <summary> Determines if two <see cref="VpnNatRuleMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VpnNatRuleMode left, VpnNatRuleMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VpnNatRuleMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VpnNatRuleMode left, VpnNatRuleMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnNatRuleMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VpnNatRuleMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VpnNatRuleMode(string value) => new VpnNatRuleMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VpnNatRuleMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VpnNatRuleMode?(string value) => value == null ? null : new VpnNatRuleMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VpnNatRuleMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VpnNatRuleMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

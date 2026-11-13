@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataflowEndpointKafkaPartitionStrategy : IEquatable<DataflowEndpointKafkaPartitionStrategy>
     {
         private readonly string _value;
+        /// <summary> Default: Assigns messages to random partitions, using a round-robin algorithm. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Static: Assigns messages to a fixed partition number that's derived from the instance ID of the dataflow. </summary>
+        private const string StaticValue = "Static";
+        /// <summary> TOPIC Option. </summary>
+        private const string TopicValue = "Topic";
+        /// <summary> PROPERTY Option. </summary>
+        private const string PropertyValue = "Property";
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointKafkaPartitionStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowEndpointKafkaPartitionStrategy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string StaticValue = "Static";
-        private const string TopicValue = "Topic";
-        private const string PropertyValue = "Property";
+            _value = value;
+        }
 
         /// <summary> Default: Assigns messages to random partitions, using a round-robin algorithm. </summary>
         public static DataflowEndpointKafkaPartitionStrategy Default { get; } = new DataflowEndpointKafkaPartitionStrategy(DefaultValue);
+
         /// <summary> Static: Assigns messages to a fixed partition number that's derived from the instance ID of the dataflow. </summary>
         public static DataflowEndpointKafkaPartitionStrategy Static { get; } = new DataflowEndpointKafkaPartitionStrategy(StaticValue);
+
         /// <summary> TOPIC Option. </summary>
         public static DataflowEndpointKafkaPartitionStrategy Topic { get; } = new DataflowEndpointKafkaPartitionStrategy(TopicValue);
+
         /// <summary> PROPERTY Option. </summary>
         public static DataflowEndpointKafkaPartitionStrategy Property { get; } = new DataflowEndpointKafkaPartitionStrategy(PropertyValue);
+
         /// <summary> Determines if two <see cref="DataflowEndpointKafkaPartitionStrategy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowEndpointKafkaPartitionStrategy left, DataflowEndpointKafkaPartitionStrategy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataflowEndpointKafkaPartitionStrategy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowEndpointKafkaPartitionStrategy left, DataflowEndpointKafkaPartitionStrategy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowEndpointKafkaPartitionStrategy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataflowEndpointKafkaPartitionStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataflowEndpointKafkaPartitionStrategy(string value) => new DataflowEndpointKafkaPartitionStrategy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataflowEndpointKafkaPartitionStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataflowEndpointKafkaPartitionStrategy?(string value) => value == null ? null : new DataflowEndpointKafkaPartitionStrategy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowEndpointKafkaPartitionStrategy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataflowEndpointKafkaPartitionStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

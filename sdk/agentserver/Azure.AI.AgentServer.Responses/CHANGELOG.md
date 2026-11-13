@@ -1,0 +1,341 @@
+# Release History
+
+## 1.0.0-beta.10 (Unreleased)
+
+### Features Added
+- Either `ResilientBackground` or `SteerableConversations` now activates the Core
+  durable task runtime without a separate `SetResilientTasksEnabled()` call. Steering-only
+  deployments retain durable task bookkeeping but mark interrupted background responses
+  failed instead of re-invoking their handlers.
+
+### Breaking Changes
+
+- Core's `SetResilientTasksEnabled()` no longer activates Responses when both
+  Responses feature flags are disabled. Configure `ResilientBackground` or
+  `SteerableConversations` to opt in to task-backed Responses execution.
+
+### Bugs Fixed
+
+- Preserved asynchronously replayed SSE events before reporting a resilient task's
+  terminal persistence failure. The HTTP relay drains retained events through the
+  failure-time watermark without closing the task stream needed for recovery.
+- Do not reclaim, delete, or dispatch Responses tasks during startup or inline
+  recovery when Responses task execution is disabled, even if Invocations
+  enables the shared Core runtime. Tasks started from a Responses request retain
+  Responses ownership across restart.
+
+### Other Changes
+
+## 1.0.0-beta.9 (2026-10-15)
+
+### Features Added
+- Hosted durable multi-turn task IDs are now scoped by `FOUNDRY_AGENT_SESSION_GUID`, preventing
+  recreated sessions from reusing name-derived IDs that refer to tombstoned tasks from an earlier
+  incarnation and can cause a service precondition failure (HTTP 412).
+  Public `ResponseContext.ConversationChainId` values and one-shot task IDs are unchanged, and
+  pending, in-progress, or suspended pre-rollout chains continue under their legacy task IDs.
+- Added `AddResponsesServer(IHostApplicationBuilder host, string sectionName)` and
+  `AddResponsesServer(IHostApplicationBuilder host, string sectionName, Action<ResponsesServerSettings>)`,
+  which bind a new `ResponsesServerSettings : ClientSettings` (the Foundry credential, `Endpoint`,
+  and option flags) from a single configuration section. Because response storage and
+  resilient-task storage bind the same identity and endpoint from one section, the two cannot
+  diverge. This is the required entry point in hosted Foundry environments. In a hosted
+  container, values the section does not provide default to the platform: `Endpoint` to
+  `FOUNDRY_PROJECT_ENDPOINT`, and an absent `Credential` section to a `DefaultAzureCredential`
+  limited by default to the production credentials (environment, workload identity and managed
+  identity; `AZURE_TOKEN_CREDENTIALS` overrides the selection), so
+  `ResponsesServer.Run<THandler>()` needs no configuration. A `Credential` section that does not
+  resolve still fails startup.
+- Added `ResponseContext.ClientCancellation` (a `CancellationToken`) alongside
+  `ResponseContext.Shutdown`, so an explicit client cancel is composable as a token.
+
+### Breaking Changes
+- Stored responses use Core durable tasks only when the resilient-task runtime is enabled.
+  `ResilientBackground=true` enables it automatically; otherwise `store=true` requests execute
+  in-process and are not recovered after an ungraceful crash.
+- The local file-backed response provider now uses a new `responses/partitions-v1` namespace.
+  Previously persisted responses and their history are not visible after upgrade, including
+  for anonymous requests and crash recovery. Legacy files remain unchanged; there is no
+  automatic migration or legacy read fallback. Restoring old data requires an explicit,
+  operator-controlled migration with independently verified ownership. Newly persisted
+  partitioned data continues to survive restarts.
+- Hosted registration now uses the `ClientSettings` pattern. The
+  `AddResponsesServer(IServiceCollection, Action<ResponsesServerOptions>)` overload remains for
+  local / non-hosted scenarios and now throws in a hosted Foundry environment (use the
+  `IHostApplicationBuilder` overload there). The internal `DEFAULT_FETCH_HISTORY_ITEM_COUNT`
+  environment-variable read and the ambient `TokenCredential` registration were removed
+  (`FOUNDRY_PROJECT_ENDPOINT` is now only the fallback for an unconfigured
+  `ResponsesServer:Endpoint`); the HTTPS-in-non-development check now honors
+  `IHostEnvironment.IsDevelopment()` rather than reading `ASPNETCORE_ENVIRONMENT` /
+  `DOTNET_ENVIRONMENT` directly.
+- `ResponseEventStream.Checkpoint()` was renamed to the virtual `CreateCheckpointEvent()`, and
+  `ResponseEventStream.InternalMetadata` was renamed to `PersistedMetadata`.
+- `ResponseContext.ClientCancelled` was renamed to `IsClientCancelled`. `IsShutdownRequested` and
+  `IsClientCancelled` are now get-only virtual passthroughs over the `Shutdown` /
+  `ClientCancellation` tokens; the settable `IsShutdownRequested` was removed.
+
+### Bugs Fixed
+
+- Legacy-chain migration now atomically requires the selected legacy task to still exist. If
+  deletion wins after the compatibility probe, Responses starts the session-instance-scoped task
+  instead of recreating the tombstoned legacy ID, including when the legacy chain is active and
+  accepting steering input.
+- Scope local in-memory and file-backed response envelopes, items, history, and conversation
+  indexes to `PlatformContext.UserIdKey`. Anonymous requests use a separate local partition.
+- Require an existing response in the caller's partition for updates, and retain deletion
+  semantics without allowing updates to recreate deleted responses.
+- Changed the default history fetch limit from 100 to `-1` (unlimited), avoiding
+  automatic truncation of conversation history. Positive limits remain supported.
+- Hosted `ResponsesServer.Run` and `AgentHostBuilder.AddResponses` now bind through the
+  `ResponsesServer` settings section instead of routing through the local-only service-collection
+  registration path.
+- Hosted `ResponsesServer.Run<THandler>()` and `AgentHostBuilder.AddResponses` no longer fail at
+  startup in a hosted Foundry container that provides only the platform environment
+  (`FOUNDRY_PROJECT_ENDPOINT` and a managed identity). Unconfigured values fall back to the
+  platform, and the fallback is logged at startup. A configured but unresolvable `Credential`
+  section still fails startup.
+- The Foundry response-storage HTTP pipeline is now private to its provider, preventing unrelated
+  ambient pipeline registrations from replacing the configured credential-bound pipeline.
+- Task-bound SSE relays now observe durable task completion failures, emit the existing SSE error
+  event instead of hanging, and leave the underlying stream open for recovery.
+
+### Other Changes
+
+- Registered the Responses event-stream backing as a protocol default so an explicit
+  application selection takes precedence regardless of registration order.
+- Hosted settings now reject malformed endpoint, count, and boolean values instead of silently
+  falling back to defaults, and reject unsupported authentication-provider types with the actual
+  configured type in the error.
+- Hosted response storage and resilient-task storage now receive the same resolved project endpoint
+  as well as the same credential.
+- Explicit client-cancel and shutdown signals are replayed when a task context attaches after the
+  signal, closing the multi-turn dispatch race.
+- Resilient streaming publishes and subscribes through Core's task-owned stream path; observer
+  errors propagate to the task owner while normal completion leaves transport closure to Core.
+
+## 1.0.0-beta.8 (2026-08-12)
+
+### Features Added
+- Resilient responses. Resilient background responses (`ResponsesServerOptions.ResilientBackground`)
+  are composed directly on the `Azure.AI.AgentServer.Core` durable-task and event-stream primitives
+  rather than a bespoke Responses-owned recovery stack, matching the Python implementation.
+  Interrupted background responses are automatically recovered and re-invoked in the next process
+  lifetime.
+  - Resilient streaming with checkpoint/resumption: handlers persist durable snapshots at safe
+    boundaries via `ResponseEventStream.Checkpoint()` and, on a recovered entry, reconstruct the
+    resumption response from `ResponseContext.IsRecovery` / `ResponseContext.PersistedResponse`.
+  - Steerable conversations (`ResponsesServerOptions.SteerableConversations`) with in-turn steering:
+    a superseding turn enqueues and drains against the active turn, observable through
+    `ResponseContext.IsSteeredTurn` and `ResponseContext.PendingInputCount`; fork, lock, and
+    queue-full conflicts map to `409 Conflict`.
+  - Internal metadata is persisted for recovery and stripped on egress so it never leaks to clients.
+  - Fail-loud composition validation: misconfigured resilient setups fail at startup with actionable
+    errors instead of silently degrading.
+  - The local default response provider is now file-based (durable) when resilient background is
+    enabled outside a hosted environment.
+  - Every stored (`store=true`) request now runs its handler inside a Core resilient task —
+    foreground or background, streaming or non-streaming — so a crashed turn is task-tracked and
+    recovered/marked-failed by the next-lifetime recovery scan (matching the Python resilience
+    contract; only `store=false` runs inline). Streaming relays the per-response event stream
+    immediately, preserving standalone SSE `error` semantics for pre-creation failures and
+    `response.failed` (not `response.completed`) for terminal persistence failures.
+  - A streaming turn superseded by steering that reaches its terminal via the framework
+    completion fallback (a non-cooperative handler that lets its token trip without emitting its
+    own terminal) is now durably persisted as `completed`, so the client-visible
+    `response.completed` matches the stored record and the turn is valid conversation context for
+    the draining steered turn (FR-053).
+
+### Breaking Changes
+- Removed `ConversationChainMetadata`, `ConversationChainMetadataNamespace`,
+  `ResponseContext.ConversationChainMetadata`, and `ResponseContextExtensions.MetadataNamespace`.
+  Durable application state now belongs in an explicit
+  `Azure.AI.AgentServer.Core.Storage.FoundryStateStore` scoped with
+  `ResponseContext.ConversationChainId`.
+- Removed the public `ResponsesStreamProvider` abstract class and the public `IAsyncObserver<T>`
+  interface. SSE streaming is now composed on the `Azure.AI.AgentServer.Core` event-stream
+  primitive (`AgentEventStreamRegistry` / `AgentEventStream`) rather than a Responses-owned stream
+  provider, matching the Python implementation. The local default event-stream backing is
+  in-memory replay, upgraded automatically to durable file-backed replay when resilient
+  background is enabled outside a hosted environment.
+
+### Other Changes
+- Retired the interim .NET ↔ Python resilience parity reports now that the port has
+  converged.
+
+## 1.0.0-beta.7 (2026-07-07)
+
+### Features Added
+- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state. The value follows the native id convention: `cchain_<partition><scope>` for a conversation-scoped chain, or `rchain_<partition><scope>` for a response-linkage chain. It embeds the chain's partition key for co-location and carries a deterministic `(agent, session)` scope. When no explicit session ID is supplied, the derived agent session scope now falls back to the response's own partition key instead of a random value, so the chain id is stable from the first turn of a conversation onward.
+
+## 1.0.0-beta.6 (2026-06-28)
+
+### Features Added
+- Container protocol version `2.0.0` support: the per-request call ID (`x-agent-foundry-call-id`) and global user ID (`x-agent-user-id`) are read from inbound requests and exposed on `ResponseContext.PlatformContext`. The per-request call ID is forwarded on all outbound Foundry Storage calls; `x-agent-user-id` is used only for container-side partitioning and is not forwarded to 1P services.
+
+### Breaking Changes
+- `ResponseContext.Isolation` is now `ResponseContext.PlatformContext` (type `PlatformContext` with `UserIdKey` / `CallId`).
+- `ResponsesProvider` methods now take a `PlatformContext context` parameter (previously `IsolationContext isolation`).
+- In-process partition enforcement is now keyed on the user ID (`x-agent-user-id`) instead of the chat isolation key.
+
+## 1.0.0-beta.5 (2026-05-21)
+
+### Features Added
+
+- Replaced `invoke_agent` SERVER span with baggage-only propagation. W3C trace context propagation is now handled automatically by ASP.NET Core, so handler spans are parented directly under the caller's span.
+- Response ID, conversation ID, and streaming mode are propagated as Activity baggage for downstream correlation.
+- Simplified `ResponsesActivitySource` to focus on baggage propagation rather than span creation.
+- All error responses (4xx/5xx) now include the `x-platform-error-source` header classifying
+  error origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or
+  `upstream` (developer handler failure) per container-image-spec §8.
+- Platform errors include the `x-platform-error-detail` header with full exception context
+  (type, message, stack trace) for diagnostic telemetry. `AggregateException` wrappers are
+  unwrapped and the detail is truncated to 2048 characters.
+- Foundry storage pipeline exceptions are now tagged as platform errors at the source, enabling
+  accurate classification of storage transport, authentication, and service failures regardless
+  of exception type.
+
+### Bugs Fixed
+
+- Enabled automatic gzip/deflate/brotli decompression on the Foundry storage HTTP pipeline.
+  Intermediary gateways or load-balancers that return compressed responses are now handled
+  transparently, preventing JSON parse failures on raw gzip bytes. The pipeline also
+  advertises `Accept-Encoding` support so servers can compress responses proactively.
+
+## 1.0.0-beta.4 (2026-04-22)
+
+### Features Added
+
+- Foundry storage logging now includes the `traceparent` header (W3C distributed trace ID) in all
+  log messages, enabling correlation between SDK log entries and backend distributed traces.
+- All endpoints now return the `x-request-id` response header for request correlation (via Core
+  `RequestIdMiddleware`). Value is resolved from OTEL trace ID → incoming `x-request-id` header → GUID.
+- Error responses (`ApiErrorResponse`) are automatically enriched with `error.additionalInfo.request_id`
+  matching the `x-request-id` response header value, enabling client-side error correlation.
+- Persistence failure resilience — when storage operations fail, responses now complete gracefully
+  with `status: "failed"` and `error.code: "storage_error"` instead of crashing or leaving responses
+  permanently stuck at `in_progress`. Covers all execution modes (streaming, background+streaming,
+  background+non-streaming, synchronous). For streaming responses, terminal SSE events are buffered,
+  persistence is attempted, and on failure the terminal event is replaced with `response.failed`
+  carrying `error_code="storage_error"`. Synchronous persistence failures return HTTP 500 with the
+  storage error details.
+
+### Bugs Fixed
+
+- Fixed `InvalidOperationException: Response was not set` crash in `FoundryStorageLoggingPolicy` when
+  a transport-level failure (DNS resolution, connection refused, timeout) occurs before any HTTP
+  response is received. These failures are now logged at `Error` level without triggering the
+  logging crash, and the original transport exception continues to propagate.
+- Fixed `GetInputExpanded` not normalizing string content shorthand on `ItemMessage`. When
+  `content` is a plain JSON string (e.g., `"Hello"`), it is now auto-expanded to the canonical
+  array form (`[{"type":"input_text","text":"Hello"}]`) so that `ItemMessage.Content` BinaryData
+  is always consistent regardless of input format.
+
+### Other Changes
+
+- Removed `x-ms-request-id` from Foundry storage logging (unused service header).
+- Migrated header name constants to use `PlatformHeaders` from Core package instead of
+  local `private const` declarations.
+
+## 1.0.0-beta.3 (2026-04-20)
+
+### Features Added
+
+- `previous_response_id` and `conversation.id` are now validated against the provider before
+  the handler is invoked. Invalid references return HTTP 404/400 immediately instead of being
+  silently ignored. The resolved history item IDs are cached — handlers calling
+  `GetHistoryAsync()` reuse the prefetched result without a second storage lookup.
+
+### Bugs Fixed
+
+- Foundry storage error responses now preserve the full error body (`code`, `message`, `param`, `type`)
+  when returned to the client. Previously only the `message` field was forwarded; `param` was lost.
+- Non-400/404/409 error status codes from Foundry storage are no longer proxied as-is; they are
+  normalized to HTTP 500 to avoid leaking upstream infrastructure details.
+
+## 1.0.0-beta.2 (2026-04-17)
+
+### Features Added
+
+- Added chat isolation key enforcement across all endpoints. When a response is created with
+  `x-agent-chat-isolation-key`, all subsequent GET, Cancel, DELETE, and InputItems calls must
+  include the same key. Mismatched or missing keys return 404 (indistinguishable from not-found)
+  to ensure tenant isolation.
+- Added `x-agent-session-id` response header on all protocol endpoints (POST, GET, Cancel,
+  Delete, InputItems). The resolved session ID is echoed as a response header per spec §8,
+  with fallback to the `FOUNDRY_AGENT_SESSION_ID` environment variable for error responses.
+- Added validation for malformed response IDs in both the `response_id` path parameter and the
+  `previous_response_id` request body field. IDs that do not match the expected format (prefix
+  and length) are rejected with 400 and a descriptive error message.
+- Added metadata constraint validation: metadata maps are limited to 16 keys with key length ≤ 64
+  and value length ≤ 512 characters, enforced via the validator pipeline.
+- Added deterministic `agent_session_id` derivation: SHA-256 hash of
+  `"{agent_name}:{agent_version}:{partition_hint}"` truncated to 63 lowercase hex chars.
+  Falls back to random hex when no conversational context is available.
+- Added eager eviction of completed `ResponseExecution` entries from the in-flight tracker,
+  reducing memory pressure for long-running servers.
+- Added `FoundryStorageLoggingPolicy` — an Azure.Core per-retry pipeline policy that logs every
+  outbound Foundry storage API call with HTTP method, URI, status code, duration, and correlation
+  headers (`x-ms-client-request-id`, `x-ms-request-id`, `x-request-id`, `apim-request-id`).
+- Added structured `Information`-level logging to all Responses API endpoints (GET, Cancel, Delete,
+  InputItems) with response ID context. The POST `/responses` creation log now includes response ID,
+  conversation ID, previous response ID, and store flag for full request traceability.
+- Added isolation key presence logging (`HasUserIsolationKey`, `HasChatIsolationKey`) to all
+  endpoint handler logs and outbound Foundry storage request logs. Key values are never logged.
+- Added startup configuration logging: storage provider type, default model, fetch history count,
+  and event stream TTL are logged at `Information` level when the host starts.
+- Added server version `User-Agent` header on all outbound Foundry storage API requests. The
+  composed identity from `ServerVersionRegistry` (including developer-registered segments) is
+  prepended to the standard Azure.Core user-agent, read lazily per-request.
+- Added Foundry storage URL masking in diagnostic logs: everything before `/storage` is redacted
+  and query parameters are stripped (except `api-version`) to prevent leaking account and project
+  information.
+- Added inbound request logging for Tier 1 and Tier 2 setups (via `ResponsesServer.Run()` or
+  `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status
+  code, duration, and correlation headers (`x-request-id`, `x-ms-client-request-id`).
+
+### Breaking Changes
+
+- Made `ResponsesActivitySource` internal. The activity source is managed by
+  the framework; handlers do not need to create tracing activities directly.
+- Made `ResponsesTracingConstants` internal. The tracing tag, baggage, and log scope
+  constants are implementation details not needed by handler authors.
+
+### Bugs Fixed
+
+- Fixed error response shapes to match the container specification: `invalid_request_error` type
+  for 400 errors and `not_found` message format.
+- Fixed cancel-after-terminal to return `invalid_request_error` type with the correct error shape
+  per the specification.
+- Fixed DELETE endpoint to return 404 (not 400) when the response ID does not exist, aligning
+  with the specification.
+- Fixed cancel-after-delete to return 404 (not-found) per the specification.
+
+## 1.0.0-beta.1 (2026-04-14)
+
+### Features Added
+
+- Initial release of the Azure.AI.AgentServer.Responses library.
+- ASP.NET Core server library implementing the Azure AI Responses API.
+- `ResponseHandler` abstract class for custom response handling with `CreateAsync` returning `IAsyncEnumerable<ResponseStreamEvent>`.
+- `TextResponse` convenience class for simple text-only responses with a single delegate.
+- `ResponseEventStream` builder for full control over SSE event generation with automatic `sequenceNumber`, `outputIndex`, `contentIndex`, and `itemId` tracking.
+- `ResponseEventStream` convenience generators for emitting complete output items in one call:
+  - `OutputItemMessage(string text)` — emits a full text message output item (handles all inner SSE events automatically)
+  - `OutputItemMessage(string text, IEnumerable<Annotation> annotations)` — emits a text message with file annotations
+  - `OutputItemMessage(IAsyncEnumerable<string> tokens, CancellationToken)` — streams tokens as `response.output_text.delta` events
+  - `OutputItemFunctionCall(name, callId, arguments)` — emits a complete function call output item
+  - `OutputItemFunctionCallOutput(callId, output)` — emits a function call output (no deltas)
+  - `OutputItemReasoningItem(...)` — emits a reasoning output item
+  - `OutputItemImageGenCall(resultBase64)` — emits an image generation result with status transitions
+  - `OutputItemStructuredOutputs(output)` — emits an arbitrary structured JSON output item
+  - One-liner convenience generators for all remaining simple output item types: computer calls, local shell calls, function shell calls, apply-patch calls, custom tool call outputs, MCP approval requests/responses, and compaction
+- `ResponseContext` with `GetInputItemsAsync()` (returns `IReadOnlyList<Item>`) and `GetInputTextAsync()` convenience for accessing resolved input items and text content.
+- `IEnumerable<Item>.GetInputText()` extension method for extracting text from any sequence of input items.
+- `CreateResponse.GetInputExpanded()` extension for advanced access to expanded input items as `OutputItem` types.
+- Built-in in-memory response provider and execution tracking.
+- Support for default, streaming, background, and streaming+background response modes.
+- `AgentHostBuilder` convenience methods for zero-config server startup via `ResponsesServer.Run<T>()`.
+- Protocol identity registration with `ServerVersionRegistry` during route mapping.
+- `x-agent-response-id` header validation matching the Responses API specification.
+- Conversation ID round-trip support in both synchronous and SSE streaming modes.
+- OpenTelemetry distributed tracing via `Azure.AI.AgentServer.Responses` activity source.

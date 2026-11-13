@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> The connection string profile to allow clients to group, filter and select connection string values based on structured metadata. </summary>
     public partial class AutonomousDatabaseConnectionStringProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseConnectionStringProfile"/>. </summary>
         /// <param name="displayName"> A user-friendly name for the connection. </param>
@@ -52,12 +23,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="sessionMode"> Specifies whether the listener performs a direct hand-off of the session, or redirects the session. </param>
         /// <param name="syntaxFormat"> Specifies whether the connection string is using the long (LONG), Easy Connect (EZCONNECT), or Easy Connect Plus (EZCONNECTPLUS) format. </param>
         /// <param name="value"> Connection string value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="value"/> is null. </exception>
         internal AutonomousDatabaseConnectionStringProfile(string displayName, ConnectionHostFormatType hostFormat, ConnectionProtocolType protocol, ConnectionSessionModeType sessionMode, SyntaxFormatType syntaxFormat, string value)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(value, nameof(value));
-
             DisplayName = displayName;
             HostFormat = hostFormat;
             Protocol = protocol;
@@ -76,8 +43,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="syntaxFormat"> Specifies whether the connection string is using the long (LONG), Easy Connect (EZCONNECT), or Easy Connect Plus (EZCONNECTPLUS) format. </param>
         /// <param name="tlsAuthentication"> Specifies whether the TLS handshake is using one-way (SERVER) or mutual (MUTUAL) authentication. </param>
         /// <param name="value"> Connection string value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseConnectionStringProfile(ConnectionConsumerGroup? consumerGroup, string displayName, ConnectionHostFormatType hostFormat, bool? isRegional, ConnectionProtocolType protocol, ConnectionSessionModeType sessionMode, SyntaxFormatType syntaxFormat, ConnectionTlsAuthenticationType? tlsAuthentication, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutonomousDatabaseConnectionStringProfile(ConnectionConsumerGroup? consumerGroup, string displayName, ConnectionHostFormatType hostFormat, bool? isRegional, ConnectionProtocolType protocol, ConnectionSessionModeType sessionMode, SyntaxFormatType syntaxFormat, ConnectionTlsAuthenticationType? tlsAuthentication, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConsumerGroup = consumerGroup;
             DisplayName = displayName;
@@ -88,30 +55,33 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             SyntaxFormat = syntaxFormat;
             TlsAuthentication = tlsAuthentication;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseConnectionStringProfile"/> for deserialization. </summary>
-        internal AutonomousDatabaseConnectionStringProfile()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Consumer group used by the connection. </summary>
         public ConnectionConsumerGroup? ConsumerGroup { get; }
+
         /// <summary> A user-friendly name for the connection. </summary>
         public string DisplayName { get; }
+
         /// <summary> Host format used in connection string. </summary>
         public ConnectionHostFormatType HostFormat { get; }
+
         /// <summary> True for a regional connection string, applicable to cross-region DG only. </summary>
         public bool? IsRegional { get; }
+
         /// <summary> Protocol used by the connection. </summary>
         public ConnectionProtocolType Protocol { get; }
+
         /// <summary> Specifies whether the listener performs a direct hand-off of the session, or redirects the session. </summary>
         public ConnectionSessionModeType SessionMode { get; }
+
         /// <summary> Specifies whether the connection string is using the long (LONG), Easy Connect (EZCONNECT), or Easy Connect Plus (EZCONNECTPLUS) format. </summary>
         public SyntaxFormatType SyntaxFormat { get; }
+
         /// <summary> Specifies whether the TLS handshake is using one-way (SERVER) or mutual (MUTUAL) authentication. </summary>
         public ConnectionTlsAuthenticationType? TlsAuthentication { get; }
+
         /// <summary> Connection string value. </summary>
         public string Value { get; }
     }

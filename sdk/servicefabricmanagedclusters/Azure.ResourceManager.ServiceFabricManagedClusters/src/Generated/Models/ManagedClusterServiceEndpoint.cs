@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The service endpoint properties. </summary>
     public partial class ManagedClusterServiceEndpoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterServiceEndpoint"/>. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
@@ -60,22 +32,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterServiceEndpoint"/>. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
         /// <param name="locations"> A list of locations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterServiceEndpoint(string service, IList<AzureLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="networkIdentifier"> Specifies the resource id of the service endpoint to be used in the cluster. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterServiceEndpoint(string service, IList<AzureLocation> locations, ResourceIdentifier networkIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Service = service;
             Locations = locations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterServiceEndpoint"/> for deserialization. </summary>
-        internal ManagedClusterServiceEndpoint()
-        {
+            NetworkIdentifier = networkIdentifier;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of the endpoint service. </summary>
         public string Service { get; set; }
+
         /// <summary> A list of locations. </summary>
         public IList<AzureLocation> Locations { get; }
+
+        /// <summary> Specifies the resource id of the service endpoint to be used in the cluster. </summary>
+        public ResourceIdentifier NetworkIdentifier { get; set; }
     }
 }

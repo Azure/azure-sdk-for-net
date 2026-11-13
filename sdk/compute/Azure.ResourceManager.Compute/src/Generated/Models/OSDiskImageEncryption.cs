@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="OSDiskImageEncryption"/>. </summary>
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityProfile"> This property specifies the security profile of an OS disk image. </param>
-        internal OSDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> serializedAdditionalRawData, OSDiskImageSecurityProfile securityProfile) : base(diskEncryptionSetId, serializedAdditionalRawData)
+        internal OSDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OSDiskImageSecurityProfile securityProfile) : base(diskEncryptionSetId, additionalBinaryDataProperties)
         {
             SecurityProfile = securityProfile;
         }

@@ -15,25 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2ACrossClusterMigrationEnableProtectionContent : EnableProtectionProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationEnableProtectionContent"/>. </summary>
-        public A2ACrossClusterMigrationEnableProtectionContent()
+        public A2ACrossClusterMigrationEnableProtectionContent() : base("A2ACrossClusterMigration")
         {
-            InstanceType = "A2ACrossClusterMigration";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationEnableProtectionContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="recoveryContainerId"> The recovery container Id. </param>
-        internal A2ACrossClusterMigrationEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId) : base(instanceType, serializedAdditionalRawData)
+        internal A2ACrossClusterMigrationEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId) : base(instanceType, additionalBinaryDataProperties)
         {
             FabricObjectId = fabricObjectId;
             RecoveryContainerId = recoveryContainerId;
-            InstanceType = instanceType ?? "A2ACrossClusterMigration";
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>
         public ResourceIdentifier FabricObjectId { get; set; }
+
         /// <summary> The recovery container Id. </summary>
         public ResourceIdentifier RecoveryContainerId { get; set; }
     }

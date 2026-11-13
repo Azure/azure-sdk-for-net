@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlServerVirtualNetworkRuleState : IEquatable<SqlServerVirtualNetworkRuleState>
     {
         private readonly string _value;
+        /// <summary> Initializing. </summary>
+        private const string InitializingValue = "Initializing";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Ready. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="SqlServerVirtualNetworkRuleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlServerVirtualNetworkRuleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InitializingValue = "Initializing";
-        private const string InProgressValue = "InProgress";
-        private const string ReadyValue = "Ready";
-        private const string FailedValue = "Failed";
-        private const string DeletingValue = "Deleting";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> Initializing. </summary>
         public static SqlServerVirtualNetworkRuleState Initializing { get; } = new SqlServerVirtualNetworkRuleState(InitializingValue);
+
         /// <summary> InProgress. </summary>
         public static SqlServerVirtualNetworkRuleState InProgress { get; } = new SqlServerVirtualNetworkRuleState(InProgressValue);
+
         /// <summary> Ready. </summary>
         public static SqlServerVirtualNetworkRuleState Ready { get; } = new SqlServerVirtualNetworkRuleState(ReadyValue);
+
         /// <summary> Failed. </summary>
         public static SqlServerVirtualNetworkRuleState Failed { get; } = new SqlServerVirtualNetworkRuleState(FailedValue);
+
         /// <summary> Deleting. </summary>
         public static SqlServerVirtualNetworkRuleState Deleting { get; } = new SqlServerVirtualNetworkRuleState(DeletingValue);
+
         /// <summary> Unknown. </summary>
         public static SqlServerVirtualNetworkRuleState Unknown { get; } = new SqlServerVirtualNetworkRuleState(UnknownValue);
+
         /// <summary> Determines if two <see cref="SqlServerVirtualNetworkRuleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlServerVirtualNetworkRuleState left, SqlServerVirtualNetworkRuleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlServerVirtualNetworkRuleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlServerVirtualNetworkRuleState left, SqlServerVirtualNetworkRuleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlServerVirtualNetworkRuleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlServerVirtualNetworkRuleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlServerVirtualNetworkRuleState(string value) => new SqlServerVirtualNetworkRuleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlServerVirtualNetworkRuleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlServerVirtualNetworkRuleState?(string value) => value == null ? null : new SqlServerVirtualNetworkRuleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlServerVirtualNetworkRuleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlServerVirtualNetworkRuleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

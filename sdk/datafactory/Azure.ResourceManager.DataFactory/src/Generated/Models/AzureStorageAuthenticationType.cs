@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct AzureStorageAuthenticationType : IEquatable<AzureStorageAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Anonymous. </summary>
+        private const string AnonymousValue = "Anonymous";
+        /// <summary> AccountKey. </summary>
+        private const string AccountKeyValue = "AccountKey";
+        /// <summary> SasUri. </summary>
+        private const string SasUriValue = "SasUri";
+        /// <summary> ServicePrincipal. </summary>
+        private const string ServicePrincipalValue = "ServicePrincipal";
+        /// <summary> Msi. </summary>
+        private const string MsiValue = "Msi";
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureStorageAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnonymousValue = "Anonymous";
-        private const string AccountKeyValue = "AccountKey";
-        private const string SasUriValue = "SasUri";
-        private const string ServicePrincipalValue = "ServicePrincipal";
-        private const string MsiValue = "Msi";
+            _value = value;
+        }
 
         /// <summary> Anonymous. </summary>
         public static AzureStorageAuthenticationType Anonymous { get; } = new AzureStorageAuthenticationType(AnonymousValue);
+
         /// <summary> AccountKey. </summary>
         public static AzureStorageAuthenticationType AccountKey { get; } = new AzureStorageAuthenticationType(AccountKeyValue);
+
         /// <summary> SasUri. </summary>
         public static AzureStorageAuthenticationType SasUri { get; } = new AzureStorageAuthenticationType(SasUriValue);
+
         /// <summary> ServicePrincipal. </summary>
         public static AzureStorageAuthenticationType ServicePrincipal { get; } = new AzureStorageAuthenticationType(ServicePrincipalValue);
+
         /// <summary> Msi. </summary>
         public static AzureStorageAuthenticationType Msi { get; } = new AzureStorageAuthenticationType(MsiValue);
+
         /// <summary> Determines if two <see cref="AzureStorageAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureStorageAuthenticationType left, AzureStorageAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureStorageAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureStorageAuthenticationType left, AzureStorageAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureStorageAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureStorageAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureStorageAuthenticationType(string value) => new AzureStorageAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureStorageAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureStorageAuthenticationType?(string value) => value == null ? null : new AzureStorageAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureStorageAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureStorageAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

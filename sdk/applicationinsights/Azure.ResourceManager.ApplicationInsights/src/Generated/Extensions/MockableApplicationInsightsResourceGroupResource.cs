@@ -8,102 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ApplicationInsights;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApplicationInsights.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableApplicationInsightsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableApplicationInsightsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableApplicationInsightsResourceGroupResource for mocking. </summary>
         protected MockableApplicationInsightsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApplicationInsightsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableApplicationInsightsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableApplicationInsightsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ApplicationInsightsComponentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationInsightsComponentResources and their operations over a ApplicationInsightsComponentResource. </returns>
-        public virtual ApplicationInsightsComponentCollection GetApplicationInsightsComponents()
-        {
-            return GetCachedClient(client => new ApplicationInsightsComponentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns an Application Insights component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationInsightsComponentResource>> GetApplicationInsightsComponentAsync(string resourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetApplicationInsightsComponents().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns an Application Insights component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApplicationInsightsComponentResource> GetApplicationInsightsComponent(string resourceName, CancellationToken cancellationToken = default)
-        {
-            return GetApplicationInsightsComponents().Get(resourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApplicationInsightsWebTestResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationInsightsWebTestResources and their operations over a ApplicationInsightsWebTestResource. </returns>
+        /// <summary> Gets a collection of ApplicationInsightsWebTests in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApplicationInsightsWebTests and their operations over a ApplicationInsightsWebTestResource. </returns>
         public virtual ApplicationInsightsWebTestCollection GetApplicationInsightsWebTests()
         {
             return GetCachedClient(client => new ApplicationInsightsWebTestCollection(client, Id));
@@ -113,20 +42,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// Get a specific Application Insights web test definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +62,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ApplicationInsightsWebTestResource>> GetApplicationInsightsWebTestAsync(string webTestName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
+
             return await GetApplicationInsightsWebTests().GetAsync(webTestName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +71,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// Get a specific Application Insights web test definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,11 +91,80 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         [ForwardsClientCalls]
         public virtual Response<ApplicationInsightsWebTestResource> GetApplicationInsightsWebTest(string webTestName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
+
             return GetApplicationInsightsWebTests().Get(webTestName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationInsightsWorkbookTemplateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationInsightsWorkbookTemplateResources and their operations over a ApplicationInsightsWorkbookTemplateResource. </returns>
+        /// <summary> Gets a collection of ApplicationInsightsWorkbooks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApplicationInsightsWorkbooks and their operations over a ApplicationInsightsWorkbookResource. </returns>
+        public virtual ApplicationInsightsWorkbookCollection GetApplicationInsightsWorkbooks()
+        {
+            return GetCachedClient(client => new ApplicationInsightsWorkbookCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a single workbook by its resourceName.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
+        /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApplicationInsightsWorkbookResource>> GetApplicationInsightsWorkbookAsync(string resourceName, bool? canFetchContent = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetApplicationInsightsWorkbooks().GetAsync(resourceName, canFetchContent, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a single workbook by its resourceName.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
+        /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApplicationInsightsWorkbookResource> GetApplicationInsightsWorkbook(string resourceName, bool? canFetchContent = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetApplicationInsightsWorkbooks().Get(resourceName, canFetchContent, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApplicationInsightsWorkbookTemplates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApplicationInsightsWorkbookTemplates and their operations over a ApplicationInsightsWorkbookTemplateResource. </returns>
         public virtual ApplicationInsightsWorkbookTemplateCollection GetApplicationInsightsWorkbookTemplates()
         {
             return GetCachedClient(client => new ApplicationInsightsWorkbookTemplateCollection(client, Id));
@@ -182,20 +174,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// Get a single workbook template by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-11-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +194,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ApplicationInsightsWorkbookTemplateResource>> GetApplicationInsightsWorkbookTemplateAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return await GetApplicationInsightsWorkbookTemplates().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -213,20 +203,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// Get a single workbook template by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-11-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,78 +223,74 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         [ForwardsClientCalls]
         public virtual Response<ApplicationInsightsWorkbookTemplateResource> GetApplicationInsightsWorkbookTemplate(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return GetApplicationInsightsWorkbookTemplates().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationInsightsWorkbookResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationInsightsWorkbookResources and their operations over a ApplicationInsightsWorkbookResource. </returns>
-        public virtual ApplicationInsightsWorkbookCollection GetApplicationInsightsWorkbooks()
+        /// <summary> Gets a collection of ApplicationInsightsComponents in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApplicationInsightsComponents and their operations over a ApplicationInsightsComponentResource. </returns>
+        public virtual ApplicationInsightsComponentCollection GetApplicationInsightsComponents()
         {
-            return GetCachedClient(client => new ApplicationInsightsWorkbookCollection(client, Id));
+            return GetCachedClient(client => new ApplicationInsightsComponentCollection(client, Id));
         }
 
         /// <summary>
-        /// Get a single workbook by its resourceName.
+        /// Returns an Application Insights component.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
-        /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationInsightsWorkbookResource>> GetApplicationInsightsWorkbookAsync(string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentResource>> GetApplicationInsightsComponentAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetApplicationInsightsWorkbooks().GetAsync(resourceName, canFetchContent, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetApplicationInsightsComponents().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a single workbook by its resourceName.
+        /// Returns an Application Insights component.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
-        /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApplicationInsightsWorkbookResource> GetApplicationInsightsWorkbook(string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentResource> GetApplicationInsightsComponent(string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsWorkbooks().Get(resourceName, canFetchContent, cancellationToken);
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetApplicationInsightsComponents().Get(resourceName, cancellationToken);
         }
     }
 }

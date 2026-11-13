@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A VM Family and its associated core quota for the Batch account. </summary>
     public partial class BatchVmFamilyCoreQuota
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchVmFamilyCoreQuota"/>. </summary>
         internal BatchVmFamilyCoreQuota()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="BatchVmFamilyCoreQuota"/>. </summary>
         /// <param name="name"> The Virtual Machine family name. </param>
         /// <param name="coreQuota"> The core quota for the VM family for the Batch account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchVmFamilyCoreQuota(string name, int? coreQuota, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchVmFamilyCoreQuota(string name, int? coreQuota, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             CoreQuota = coreQuota;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Virtual Machine family name. </summary>
         public string Name { get; }
+
         /// <summary> The core quota for the VM family for the Batch account. </summary>
         public int? CoreQuota { get; }
     }

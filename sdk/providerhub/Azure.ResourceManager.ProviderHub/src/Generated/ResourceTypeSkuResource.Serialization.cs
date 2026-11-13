@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ProviderHub
 {
+    /// <summary></summary>
     public partial class ResourceTypeSkuResource : IJsonModel<ResourceTypeSkuData>
     {
-        private static ResourceTypeSkuData s_dataDeserializationInstance;
-        private static ResourceTypeSkuData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ResourceTypeSkuData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ResourceTypeSkuData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ResourceTypeSkuData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceTypeSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceTypeSkuData>)Data).Write(writer, options);
 
-        ResourceTypeSkuData IJsonModel<ResourceTypeSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceTypeSkuData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceTypeSkuData IJsonModel<ResourceTypeSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResourceTypeSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceTypeSkuData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ResourceTypeSkuData IPersistableModel<ResourceTypeSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceTypeSkuData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<ResourceTypeSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceTypeSkuData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceTypeSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

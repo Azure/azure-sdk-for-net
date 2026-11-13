@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Fabric;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Fabric.Models
     public readonly partial struct FabricProvisioningState : IEquatable<FabricProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Resource is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Resource is provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Resource is updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="FabricProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FabricProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeletingValue = "Deleting";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static FabricProvisioningState Succeeded { get; } = new FabricProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static FabricProvisioningState Failed { get; } = new FabricProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static FabricProvisioningState Canceled { get; } = new FabricProvisioningState(CanceledValue);
+
         /// <summary> Resource is deleting. </summary>
         public static FabricProvisioningState Deleting { get; } = new FabricProvisioningState(DeletingValue);
+
         /// <summary> Resource is provisioning. </summary>
         public static FabricProvisioningState Provisioning { get; } = new FabricProvisioningState(ProvisioningValue);
+
         /// <summary> Resource is updating. </summary>
         public static FabricProvisioningState Updating { get; } = new FabricProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="FabricProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FabricProvisioningState left, FabricProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FabricProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FabricProvisioningState left, FabricProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FabricProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FabricProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FabricProvisioningState(string value) => new FabricProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FabricProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FabricProvisioningState?(string value) => value == null ? null : new FabricProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FabricProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FabricProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

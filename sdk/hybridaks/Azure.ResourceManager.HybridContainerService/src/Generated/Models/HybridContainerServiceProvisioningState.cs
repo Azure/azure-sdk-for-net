@@ -7,63 +7,95 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The HybridContainerServiceProvisioningState. </summary>
+    /// <summary> Provisioning state used by the shipped C# virtual network model. </summary>
     public readonly partial struct HybridContainerServiceProvisioningState : IEquatable<HybridContainerServiceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The request was accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The operation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The resource is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The resource is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The operation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The operation is pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> The operation succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridContainerServiceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string PendingValue = "Pending";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string UpdatingValue = "Updating";
-        private const string AcceptedValue = "Accepted";
-
-        /// <summary> Succeeded. </summary>
-        public static HybridContainerServiceProvisioningState Succeeded { get; } = new HybridContainerServiceProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
-        public static HybridContainerServiceProvisioningState Failed { get; } = new HybridContainerServiceProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
-        public static HybridContainerServiceProvisioningState Canceled { get; } = new HybridContainerServiceProvisioningState(CanceledValue);
-        /// <summary> Pending. </summary>
-        public static HybridContainerServiceProvisioningState Pending { get; } = new HybridContainerServiceProvisioningState(PendingValue);
-        /// <summary> Creating. </summary>
-        public static HybridContainerServiceProvisioningState Creating { get; } = new HybridContainerServiceProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
-        public static HybridContainerServiceProvisioningState Deleting { get; } = new HybridContainerServiceProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static HybridContainerServiceProvisioningState Updating { get; } = new HybridContainerServiceProvisioningState(UpdatingValue);
-        /// <summary> Accepted. </summary>
+        /// <summary> The request was accepted. </summary>
         public static HybridContainerServiceProvisioningState Accepted { get; } = new HybridContainerServiceProvisioningState(AcceptedValue);
+
+        /// <summary> The operation was canceled. </summary>
+        public static HybridContainerServiceProvisioningState Canceled { get; } = new HybridContainerServiceProvisioningState(CanceledValue);
+
+        /// <summary> The resource is being created. </summary>
+        public static HybridContainerServiceProvisioningState Creating { get; } = new HybridContainerServiceProvisioningState(CreatingValue);
+
+        /// <summary> The resource is being deleted. </summary>
+        public static HybridContainerServiceProvisioningState Deleting { get; } = new HybridContainerServiceProvisioningState(DeletingValue);
+
+        /// <summary> The operation failed. </summary>
+        public static HybridContainerServiceProvisioningState Failed { get; } = new HybridContainerServiceProvisioningState(FailedValue);
+
+        /// <summary> The operation is pending. </summary>
+        public static HybridContainerServiceProvisioningState Pending { get; } = new HybridContainerServiceProvisioningState(PendingValue);
+
+        /// <summary> The operation succeeded. </summary>
+        public static HybridContainerServiceProvisioningState Succeeded { get; } = new HybridContainerServiceProvisioningState(SucceededValue);
+
+        /// <summary> The resource is being updated. </summary>
+        public static HybridContainerServiceProvisioningState Updating { get; } = new HybridContainerServiceProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="HybridContainerServiceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridContainerServiceProvisioningState left, HybridContainerServiceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridContainerServiceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridContainerServiceProvisioningState left, HybridContainerServiceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridContainerServiceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridContainerServiceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridContainerServiceProvisioningState(string value) => new HybridContainerServiceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridContainerServiceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridContainerServiceProvisioningState?(string value) => value == null ? null : new HybridContainerServiceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridContainerServiceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridContainerServiceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

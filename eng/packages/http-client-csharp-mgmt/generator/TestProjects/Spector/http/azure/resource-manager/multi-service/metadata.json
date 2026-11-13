@@ -1,0 +1,6 @@
+{
+  "apiVersions": {
+    "Azure.ResourceManager.MultiService.Compute": "2025-04-01",
+    "Azure.ResourceManager.MultiService.ComputeDisk": "2025-01-02"
+  }
+}

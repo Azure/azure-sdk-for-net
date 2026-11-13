@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,83 +15,157 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsKind : IEquatable<SecurityInsightsKind>
     {
         private readonly string _value;
+        /// <summary> DataConnector. </summary>
+        private const string DataConnectorValue = "DataConnector";
+        /// <summary> DataType. </summary>
+        private const string DataTypeValue = "DataType";
+        /// <summary> Workbook. </summary>
+        private const string WorkbookValue = "Workbook";
+        /// <summary> WorkbookTemplate. </summary>
+        private const string WorkbookTemplateValue = "WorkbookTemplate";
+        /// <summary> Playbook. </summary>
+        private const string PlaybookValue = "Playbook";
+        /// <summary> PlaybookTemplate. </summary>
+        private const string PlaybookTemplateValue = "PlaybookTemplate";
+        /// <summary> AnalyticsRuleTemplate. </summary>
+        private const string AnalyticsRuleTemplateValue = "AnalyticsRuleTemplate";
+        /// <summary> AnalyticsRule. </summary>
+        private const string AnalyticsRuleValue = "AnalyticsRule";
+        /// <summary> HuntingQuery. </summary>
+        private const string HuntingQueryValue = "HuntingQuery";
+        /// <summary> InvestigationQuery. </summary>
+        private const string InvestigationQueryValue = "InvestigationQuery";
+        /// <summary> Parser. </summary>
+        private const string ParserValue = "Parser";
+        /// <summary> Watchlist. </summary>
+        private const string WatchlistValue = "Watchlist";
+        /// <summary> WatchlistTemplate. </summary>
+        private const string WatchlistTemplateValue = "WatchlistTemplate";
+        /// <summary> Solution. </summary>
+        private const string SolutionValue = "Solution";
+        /// <summary> AzureFunction. </summary>
+        private const string AzureFunctionValue = "AzureFunction";
+        /// <summary> LogicAppsCustomConnector. </summary>
+        private const string LogicAppsCustomConnectorValue = "LogicAppsCustomConnector";
+        /// <summary> AutomationRule. </summary>
+        private const string AutomationRuleValue = "AutomationRule";
+        /// <summary> ResourcesDataConnector. </summary>
+        private const string ResourcesDataConnectorValue = "ResourcesDataConnector";
+        /// <summary> Notebook. </summary>
+        private const string NotebookValue = "Notebook";
+        /// <summary> Standalone. </summary>
+        private const string StandaloneValue = "Standalone";
+        /// <summary> SummaryRule. </summary>
+        private const string SummaryRuleValue = "SummaryRule";
+        /// <summary> Custom detections enable proactive monitoring and automated response actions for various events and system states across your tenant. </summary>
+        private const string CustomDetectionValue = "CustomDetection";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DataConnectorValue = "DataConnector";
-        private const string DataTypeValue = "DataType";
-        private const string WorkbookValue = "Workbook";
-        private const string WorkbookTemplateValue = "WorkbookTemplate";
-        private const string PlaybookValue = "Playbook";
-        private const string PlaybookTemplateValue = "PlaybookTemplate";
-        private const string AnalyticsRuleTemplateValue = "AnalyticsRuleTemplate";
-        private const string AnalyticsRuleValue = "AnalyticsRule";
-        private const string HuntingQueryValue = "HuntingQuery";
-        private const string InvestigationQueryValue = "InvestigationQuery";
-        private const string ParserValue = "Parser";
-        private const string WatchlistValue = "Watchlist";
-        private const string WatchlistTemplateValue = "WatchlistTemplate";
-        private const string SolutionValue = "Solution";
-        private const string AzureFunctionValue = "AzureFunction";
-        private const string LogicAppsCustomConnectorValue = "LogicAppsCustomConnector";
-        private const string AutomationRuleValue = "AutomationRule";
+            _value = value;
+        }
 
         /// <summary> DataConnector. </summary>
         public static SecurityInsightsKind DataConnector { get; } = new SecurityInsightsKind(DataConnectorValue);
+
         /// <summary> DataType. </summary>
         public static SecurityInsightsKind DataType { get; } = new SecurityInsightsKind(DataTypeValue);
+
         /// <summary> Workbook. </summary>
         public static SecurityInsightsKind Workbook { get; } = new SecurityInsightsKind(WorkbookValue);
+
         /// <summary> WorkbookTemplate. </summary>
         public static SecurityInsightsKind WorkbookTemplate { get; } = new SecurityInsightsKind(WorkbookTemplateValue);
+
         /// <summary> Playbook. </summary>
         public static SecurityInsightsKind Playbook { get; } = new SecurityInsightsKind(PlaybookValue);
+
         /// <summary> PlaybookTemplate. </summary>
         public static SecurityInsightsKind PlaybookTemplate { get; } = new SecurityInsightsKind(PlaybookTemplateValue);
+
         /// <summary> AnalyticsRuleTemplate. </summary>
         public static SecurityInsightsKind AnalyticsRuleTemplate { get; } = new SecurityInsightsKind(AnalyticsRuleTemplateValue);
+
         /// <summary> AnalyticsRule. </summary>
         public static SecurityInsightsKind AnalyticsRule { get; } = new SecurityInsightsKind(AnalyticsRuleValue);
+
         /// <summary> HuntingQuery. </summary>
         public static SecurityInsightsKind HuntingQuery { get; } = new SecurityInsightsKind(HuntingQueryValue);
+
         /// <summary> InvestigationQuery. </summary>
         public static SecurityInsightsKind InvestigationQuery { get; } = new SecurityInsightsKind(InvestigationQueryValue);
+
         /// <summary> Parser. </summary>
         public static SecurityInsightsKind Parser { get; } = new SecurityInsightsKind(ParserValue);
+
         /// <summary> Watchlist. </summary>
         public static SecurityInsightsKind Watchlist { get; } = new SecurityInsightsKind(WatchlistValue);
+
         /// <summary> WatchlistTemplate. </summary>
         public static SecurityInsightsKind WatchlistTemplate { get; } = new SecurityInsightsKind(WatchlistTemplateValue);
+
         /// <summary> Solution. </summary>
         public static SecurityInsightsKind Solution { get; } = new SecurityInsightsKind(SolutionValue);
+
         /// <summary> AzureFunction. </summary>
         public static SecurityInsightsKind AzureFunction { get; } = new SecurityInsightsKind(AzureFunctionValue);
+
         /// <summary> LogicAppsCustomConnector. </summary>
         public static SecurityInsightsKind LogicAppsCustomConnector { get; } = new SecurityInsightsKind(LogicAppsCustomConnectorValue);
+
         /// <summary> AutomationRule. </summary>
         public static SecurityInsightsKind AutomationRule { get; } = new SecurityInsightsKind(AutomationRuleValue);
+
+        /// <summary> ResourcesDataConnector. </summary>
+        public static SecurityInsightsKind ResourcesDataConnector { get; } = new SecurityInsightsKind(ResourcesDataConnectorValue);
+
+        /// <summary> Notebook. </summary>
+        public static SecurityInsightsKind Notebook { get; } = new SecurityInsightsKind(NotebookValue);
+
+        /// <summary> Standalone. </summary>
+        public static SecurityInsightsKind Standalone { get; } = new SecurityInsightsKind(StandaloneValue);
+
+        /// <summary> SummaryRule. </summary>
+        public static SecurityInsightsKind SummaryRule { get; } = new SecurityInsightsKind(SummaryRuleValue);
+
+        /// <summary> Custom detections enable proactive monitoring and automated response actions for various events and system states across your tenant. </summary>
+        public static SecurityInsightsKind CustomDetection { get; } = new SecurityInsightsKind(CustomDetectionValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsKind left, SecurityInsightsKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsKind left, SecurityInsightsKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsKind(string value) => new SecurityInsightsKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsKind?(string value) => value == null ? null : new SecurityInsightsKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

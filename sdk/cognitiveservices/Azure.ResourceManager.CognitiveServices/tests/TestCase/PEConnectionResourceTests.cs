@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CognitiveServices.Tests.Helpers;
 using NUnit.Framework;
-using System.Linq;
 
 namespace Azure.ResourceManager.CognitiveServices.Tests
 {

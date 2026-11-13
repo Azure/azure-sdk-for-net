@@ -7,10 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
 
-            circuit = await UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroup,circuitName);
+            circuit = await UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroup, circuitName);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));

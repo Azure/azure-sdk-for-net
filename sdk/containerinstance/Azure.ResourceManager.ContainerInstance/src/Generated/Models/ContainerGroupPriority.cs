@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public readonly partial struct ContainerGroupPriority : IEquatable<ContainerGroupPriority>
     {
         private readonly string _value;
+        /// <summary> Regular. </summary>
+        private const string RegularValue = "Regular";
+        /// <summary> Spot. </summary>
+        private const string SpotValue = "Spot";
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerGroupPriority(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RegularValue = "Regular";
-        private const string SpotValue = "Spot";
+            _value = value;
+        }
 
         /// <summary> Regular. </summary>
         public static ContainerGroupPriority Regular { get; } = new ContainerGroupPriority(RegularValue);
+
         /// <summary> Spot. </summary>
         public static ContainerGroupPriority Spot { get; } = new ContainerGroupPriority(SpotValue);
+
         /// <summary> Determines if two <see cref="ContainerGroupPriority"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerGroupPriority left, ContainerGroupPriority right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerGroupPriority"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerGroupPriority left, ContainerGroupPriority right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupPriority"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerGroupPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerGroupPriority(string value) => new ContainerGroupPriority(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerGroupPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerGroupPriority?(string value) => value == null ? null : new ContainerGroupPriority(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerGroupPriority other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerGroupPriority other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

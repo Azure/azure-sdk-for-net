@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal static partial class PathLeaseActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PathLeaseAction value) => value switch
         {
             PathLeaseAction.Acquire => "acquire",
@@ -21,13 +22,29 @@ namespace Azure.Storage.Files.DataLake.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathLeaseAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PathLeaseAction ToPathLeaseAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "acquire")) return PathLeaseAction.Acquire;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "break")) return PathLeaseAction.Break;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "change")) return PathLeaseAction.Change;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "renew")) return PathLeaseAction.Renew;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "release")) return PathLeaseAction.Release;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "acquire"))
+            {
+                return PathLeaseAction.Acquire;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "break"))
+            {
+                return PathLeaseAction.Break;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "change"))
+            {
+                return PathLeaseAction.Change;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "renew"))
+            {
+                return PathLeaseAction.Renew;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "release"))
+            {
+                return PathLeaseAction.Release;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathLeaseAction value.");
         }
     }

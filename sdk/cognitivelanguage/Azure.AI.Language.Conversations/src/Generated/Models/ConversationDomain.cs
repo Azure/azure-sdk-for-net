@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct ConversationDomain : IEquatable<ConversationDomain>
     {
         private readonly string _value;
+        /// <summary> Enumeration of supported conversational domains. </summary>
+        private const string FinanceValue = "finance";
+        /// <summary> Enumeration of supported conversational domains. </summary>
+        private const string HealthcareValue = "healthcare";
+        /// <summary> Enumeration of supported conversational domains. </summary>
+        private const string GenericValue = "generic";
 
         /// <summary> Initializes a new instance of <see cref="ConversationDomain"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversationDomain(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FinanceValue = "finance";
-        private const string HealthcareValue = "healthcare";
-        private const string GenericValue = "generic";
+            _value = value;
+        }
 
         /// <summary> Enumeration of supported conversational domains. </summary>
         public static ConversationDomain Finance { get; } = new ConversationDomain(FinanceValue);
+
         /// <summary> Enumeration of supported conversational domains. </summary>
         public static ConversationDomain Healthcare { get; } = new ConversationDomain(HealthcareValue);
+
         /// <summary> Enumeration of supported conversational domains. </summary>
         public static ConversationDomain Generic { get; } = new ConversationDomain(GenericValue);
+
         /// <summary> Determines if two <see cref="ConversationDomain"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConversationDomain left, ConversationDomain right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConversationDomain"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConversationDomain left, ConversationDomain right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConversationDomain"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConversationDomain"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConversationDomain(string value) => new ConversationDomain(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConversationDomain"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConversationDomain?(string value) => value == null ? null : new ConversationDomain(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConversationDomain other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConversationDomain other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

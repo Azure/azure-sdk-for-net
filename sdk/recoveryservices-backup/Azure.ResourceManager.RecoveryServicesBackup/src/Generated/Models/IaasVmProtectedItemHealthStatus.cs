@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct IaasVmProtectedItemHealthStatus : IEquatable<IaasVmProtectedItemHealthStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItemHealthStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IaasVmProtectedItemHealthStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PassedValue = "Passed";
         private const string ActionRequiredValue = "ActionRequired";
         private const string ActionSuggestedValue = "ActionSuggested";
         private const string InvalidValue = "Invalid";
 
-        /// <summary> Passed. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItemHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IaasVmProtectedItemHealthStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Passed. </summary>
         public static IaasVmProtectedItemHealthStatus Passed { get; } = new IaasVmProtectedItemHealthStatus(PassedValue);
-        /// <summary> ActionRequired. </summary>
+
+        /// <summary> Gets the ActionRequired. </summary>
         public static IaasVmProtectedItemHealthStatus ActionRequired { get; } = new IaasVmProtectedItemHealthStatus(ActionRequiredValue);
-        /// <summary> ActionSuggested. </summary>
+
+        /// <summary> Gets the ActionSuggested. </summary>
         public static IaasVmProtectedItemHealthStatus ActionSuggested { get; } = new IaasVmProtectedItemHealthStatus(ActionSuggestedValue);
-        /// <summary> Invalid. </summary>
+
+        /// <summary> Gets the Invalid. </summary>
         public static IaasVmProtectedItemHealthStatus Invalid { get; } = new IaasVmProtectedItemHealthStatus(InvalidValue);
+
         /// <summary> Determines if two <see cref="IaasVmProtectedItemHealthStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IaasVmProtectedItemHealthStatus left, IaasVmProtectedItemHealthStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IaasVmProtectedItemHealthStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IaasVmProtectedItemHealthStatus left, IaasVmProtectedItemHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IaasVmProtectedItemHealthStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IaasVmProtectedItemHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IaasVmProtectedItemHealthStatus(string value) => new IaasVmProtectedItemHealthStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IaasVmProtectedItemHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IaasVmProtectedItemHealthStatus?(string value) => value == null ? null : new IaasVmProtectedItemHealthStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IaasVmProtectedItemHealthStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IaasVmProtectedItemHealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,55 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The durability level of the node type. Learn about [DurabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-    ///
-    ///   - Bronze - No privileges. This is the default.
-    ///   - Silver - The infrastructure jobs can be paused for a duration of 10 minutes per UD.
-    ///   - Gold - The infrastructure jobs can be paused for a duration of 2 hours per UD. Gold durability can be enabled only on full node VM skus like D15_V2, G5 etc.
-    ///
-    /// </summary>
+    /// <summary> The durability level of the node type. Learn about [DurabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity). </summary>
     public readonly partial struct ClusterDurabilityLevel : IEquatable<ClusterDurabilityLevel>
     {
         private readonly string _value;
+        /// <summary> No privileges. This is the default. </summary>
+        private const string BronzeValue = "Bronze";
+        /// <summary> The infrastructure jobs can be paused for a duration of 10 minutes per UD. </summary>
+        private const string SilverValue = "Silver";
+        /// <summary> The infrastructure jobs can be paused for a duration of 2 hours per UD. Gold durability can be enabled only on full node VM skus like D15_V2, G5 etc. </summary>
+        private const string GoldValue = "Gold";
 
         /// <summary> Initializes a new instance of <see cref="ClusterDurabilityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterDurabilityLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BronzeValue = "Bronze";
-        private const string SilverValue = "Silver";
-        private const string GoldValue = "Gold";
-
-        /// <summary> Bronze. </summary>
+        /// <summary> No privileges. This is the default. </summary>
         public static ClusterDurabilityLevel Bronze { get; } = new ClusterDurabilityLevel(BronzeValue);
-        /// <summary> Silver. </summary>
+
+        /// <summary> The infrastructure jobs can be paused for a duration of 10 minutes per UD. </summary>
         public static ClusterDurabilityLevel Silver { get; } = new ClusterDurabilityLevel(SilverValue);
-        /// <summary> Gold. </summary>
+
+        /// <summary> The infrastructure jobs can be paused for a duration of 2 hours per UD. Gold durability can be enabled only on full node VM skus like D15_V2, G5 etc. </summary>
         public static ClusterDurabilityLevel Gold { get; } = new ClusterDurabilityLevel(GoldValue);
+
         /// <summary> Determines if two <see cref="ClusterDurabilityLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterDurabilityLevel left, ClusterDurabilityLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterDurabilityLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterDurabilityLevel left, ClusterDurabilityLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterDurabilityLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterDurabilityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterDurabilityLevel(string value) => new ClusterDurabilityLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterDurabilityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterDurabilityLevel?(string value) => value == null ? null : new ClusterDurabilityLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterDurabilityLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterDurabilityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

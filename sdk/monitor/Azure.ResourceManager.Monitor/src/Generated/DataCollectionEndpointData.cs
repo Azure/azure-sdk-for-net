@@ -7,156 +7,179 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary>
-    /// A class representing the DataCollectionEndpoint data model.
-    /// Definition of ARM tracked top level resource.
-    /// </summary>
+    /// <summary> Definition of ARM tracked top level resource. </summary>
     public partial class DataCollectionEndpointData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DataCollectionEndpointData(AzureLocation location) : base(location)
         {
-            PrivateLinkScopedResources = new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"></param>
         /// <param name="kind"> The kind of the resource. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="identity"> Managed service identity of the resource. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        /// <param name="description"> Description of the data collection endpoint. </param>
-        /// <param name="immutableId"> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </param>
-        /// <param name="configurationAccess"> The endpoint used by clients to access their configuration. </param>
-        /// <param name="logsIngestion"> The endpoint used by clients to ingest logs. </param>
-        /// <param name="metricsIngestion"> The endpoint used by clients to ingest metrics. </param>
-        /// <param name="networkAcls"> Network access control rules for the endpoints. </param>
-        /// <param name="provisioningState"> The resource provisioning state. This property is READ-ONLY. </param>
-        /// <param name="privateLinkScopedResources"> List of Azure Monitor Private Link Scope Resources to which this data collection endpoint resource is associated. This property is READ-ONLY. </param>
-        /// <param name="failoverConfiguration"> Failover configuration on this endpoint. This property is READ-ONLY. </param>
-        /// <param name="metadata"> Metadata for the resource. This property is READ-ONLY. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, DataCollectionEndpointConfigurationAccess configurationAccess, DataCollectionEndpointLogsIngestion logsIngestion, DataCollectionEndpointMetricsIngestion metricsIngestion, DataCollectionEndpointNetworkAcls networkAcls, DataCollectionEndpointProvisioningState? provisioningState, IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources, DataCollectionEndpointFailoverConfiguration failoverConfiguration, DataCollectionEndpointMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointResourceProperties properties, DataCollectionEndpointResourceKind? kind, DataCollectionEndpointResourceSku sku, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Kind = kind;
+            Sku = sku;
             Identity = identity;
-            ETag = etag;
-            Description = description;
-            ImmutableId = immutableId;
-            ConfigurationAccess = configurationAccess;
-            LogsIngestion = logsIngestion;
-            MetricsIngestion = metricsIngestion;
-            NetworkAcls = networkAcls;
-            ProvisioningState = provisioningState;
-            PrivateLinkScopedResources = privateLinkScopedResources;
-            FailoverConfiguration = failoverConfiguration;
-            Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointData"/> for deserialization. </summary>
-        internal DataCollectionEndpointData()
-        {
-        }
+        /// <summary> Gets or sets the Properties. </summary>
+        internal DataCollectionEndpointResourceProperties Properties { get; set; }
 
         /// <summary> The kind of the resource. </summary>
         public DataCollectionEndpointResourceKind? Kind { get; set; }
+
+        /// <summary> The SKU of the resource. </summary>
+        public DataCollectionEndpointResourceSku Sku { get; set; }
+
         /// <summary> Managed service identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Resource entity tag (ETag). </summary>
         public ETag? ETag { get; }
+
         /// <summary> Description of the data collection endpoint. </summary>
-        public string Description { get; set; }
-        /// <summary> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </summary>
-        public string ImmutableId { get; set; }
-        /// <summary> The endpoint used by clients to access their configuration. </summary>
-        internal DataCollectionEndpointConfigurationAccess ConfigurationAccess { get; set; }
-        /// <summary> The endpoint. This property is READ-ONLY. </summary>
-        public string ConfigurationAccessEndpoint
+        public string Description
         {
-            get => ConfigurationAccess is null ? default : ConfigurationAccess.Endpoint;
-        }
-
-        /// <summary> The endpoint used by clients to ingest logs. </summary>
-        internal DataCollectionEndpointLogsIngestion LogsIngestion { get; set; }
-        /// <summary> The endpoint. This property is READ-ONLY. </summary>
-        public string LogsIngestionEndpoint
-        {
-            get => LogsIngestion is null ? default : LogsIngestion.Endpoint;
-        }
-
-        /// <summary> The endpoint used by clients to ingest metrics. </summary>
-        internal DataCollectionEndpointMetricsIngestion MetricsIngestion { get; set; }
-        /// <summary> The endpoint. This property is READ-ONLY. </summary>
-        public string MetricsIngestionEndpoint
-        {
-            get => MetricsIngestion is null ? default : MetricsIngestion.Endpoint;
-        }
-
-        /// <summary> Network access control rules for the endpoints. </summary>
-        internal DataCollectionEndpointNetworkAcls NetworkAcls { get; set; }
-        /// <summary> The configuration to set whether network access from public internet to the endpoints are allowed. </summary>
-        public MonitorPublicNetworkAccess? PublicNetworkAccess
-        {
-            get => NetworkAcls is null ? default : NetworkAcls.PublicNetworkAccess;
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
             set
             {
-                if (NetworkAcls is null)
-                    NetworkAcls = new DataCollectionEndpointNetworkAcls();
-                NetworkAcls.PublicNetworkAccess = value;
+                if (Properties is null)
+                {
+                    Properties = new DataCollectionEndpointResourceProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </summary>
+        public string ImmutableId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImmutableId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataCollectionEndpointResourceProperties();
+                }
+                Properties.ImmutableId = value;
             }
         }
 
         /// <summary> The resource provisioning state. This property is READ-ONLY. </summary>
-        public DataCollectionEndpointProvisioningState? ProvisioningState { get; }
+        public DataCollectionEndpointProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> List of Azure Monitor Private Link Scope Resources to which this data collection endpoint resource is associated. This property is READ-ONLY. </summary>
-        public IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get; }
-        /// <summary> Failover configuration on this endpoint. This property is READ-ONLY. </summary>
-        public DataCollectionEndpointFailoverConfiguration FailoverConfiguration { get; }
-        /// <summary> Metadata for the resource. This property is READ-ONLY. </summary>
-        public DataCollectionEndpointMetadata Metadata { get; }
+        public IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> PrivateLinkScopedResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataCollectionEndpointResourceProperties();
+                }
+                return Properties.PrivateLinkScopedResources;
+            }
+        }
+
+        /// <summary> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </summary>
+        public DataCollectionEndpointFailoverConfiguration FailoverConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailoverConfiguration;
+            }
+        }
+
+        /// <summary> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </summary>
+        public DataCollectionEndpointMetadata Metadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metadata;
+            }
+        }
+
+        /// <summary> The endpoint. This property is READ-ONLY. </summary>
+        public string ConfigurationAccessEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationAccessEndpoint;
+            }
+        }
+
+        /// <summary> The endpoint. This property is READ-ONLY. </summary>
+        public string LogsIngestionEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogsIngestionEndpoint;
+            }
+        }
+
+        /// <summary> The endpoint. This property is READ-ONLY. </summary>
+        public string MetricsIngestionEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetricsIngestionEndpoint;
+            }
+        }
+
+        /// <summary> The configuration to set whether network access from public internet to the endpoints are allowed. </summary>
+        public MonitorPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataCollectionEndpointResourceProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
     }
 }

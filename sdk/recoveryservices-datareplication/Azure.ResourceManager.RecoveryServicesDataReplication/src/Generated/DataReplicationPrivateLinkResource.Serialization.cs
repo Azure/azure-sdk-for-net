@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
+    /// <summary></summary>
     public partial class DataReplicationPrivateLinkResource : IJsonModel<DataReplicationPrivateLinkResourceData>
     {
-        private static DataReplicationPrivateLinkResourceData s_dataDeserializationInstance;
-        private static DataReplicationPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataReplicationPrivateLinkResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataReplicationPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataReplicationPrivateLinkResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationPrivateLinkResourceData>)Data).Write(writer, options);
 
-        DataReplicationPrivateLinkResourceData IJsonModel<DataReplicationPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataReplicationPrivateLinkResourceData IJsonModel<DataReplicationPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataReplicationPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationPrivateLinkResourceData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationPrivateLinkResourceData IPersistableModel<DataReplicationPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationPrivateLinkResourceData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        string IPersistableModel<DataReplicationPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataReplicationPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

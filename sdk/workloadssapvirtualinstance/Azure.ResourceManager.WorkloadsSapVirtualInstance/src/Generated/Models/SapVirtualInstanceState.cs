@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct SapVirtualInstanceState : IEquatable<SapVirtualInstanceState>
     {
         private readonly string _value;
+        /// <summary> Infrastructure is not yet deployed. </summary>
+        private const string InfrastructureDeploymentPendingValue = "InfrastructureDeploymentPending";
+        /// <summary> Infrastructure deployment is in progress. </summary>
+        private const string InfrastructureDeploymentInProgressValue = "InfrastructureDeploymentInProgress";
+        /// <summary> Infrastructure deployment has failed. </summary>
+        private const string InfrastructureDeploymentFailedValue = "InfrastructureDeploymentFailed";
+        /// <summary> Infrastructure deployment is successful. Software installation is pending. </summary>
+        private const string SoftwareInstallationPendingValue = "SoftwareInstallationPending";
+        /// <summary> Software installation is in progress. </summary>
+        private const string SoftwareInstallationInProgressValue = "SoftwareInstallationInProgress";
+        /// <summary> Software installation failed. </summary>
+        private const string SoftwareInstallationFailedValue = "SoftwareInstallationFailed";
+        /// <summary> Software detection is in progress. </summary>
+        private const string SoftwareDetectionInProgressValue = "SoftwareDetectionInProgress";
+        /// <summary> Software detection failed. </summary>
+        private const string SoftwareDetectionFailedValue = "SoftwareDetectionFailed";
+        /// <summary> Registration has not started. </summary>
+        private const string DiscoveryPendingValue = "DiscoveryPending";
+        /// <summary> Registration is in progress. </summary>
+        private const string DiscoveryInProgressValue = "DiscoveryInProgress";
+        /// <summary> Registration has failed. </summary>
+        private const string DiscoveryFailedValue = "DiscoveryFailed";
+        /// <summary> Registration is complete. </summary>
+        private const string RegistrationCompleteValue = "RegistrationComplete";
+        /// <summary> ACSS installation cannot proceed. </summary>
+        private const string AcssInstallationBlockedValue = "ACSSInstallationBlocked";
 
         /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapVirtualInstanceState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InfrastructureDeploymentPendingValue = "InfrastructureDeploymentPending";
-        private const string InfrastructureDeploymentInProgressValue = "InfrastructureDeploymentInProgress";
-        private const string InfrastructureDeploymentFailedValue = "InfrastructureDeploymentFailed";
-        private const string SoftwareInstallationPendingValue = "SoftwareInstallationPending";
-        private const string SoftwareInstallationInProgressValue = "SoftwareInstallationInProgress";
-        private const string SoftwareInstallationFailedValue = "SoftwareInstallationFailed";
-        private const string SoftwareDetectionInProgressValue = "SoftwareDetectionInProgress";
-        private const string SoftwareDetectionFailedValue = "SoftwareDetectionFailed";
-        private const string DiscoveryPendingValue = "DiscoveryPending";
-        private const string DiscoveryInProgressValue = "DiscoveryInProgress";
-        private const string DiscoveryFailedValue = "DiscoveryFailed";
-        private const string RegistrationCompleteValue = "RegistrationComplete";
-        private const string AcssInstallationBlockedValue = "ACSSInstallationBlocked";
+            _value = value;
+        }
 
         /// <summary> Infrastructure is not yet deployed. </summary>
         public static SapVirtualInstanceState InfrastructureDeploymentPending { get; } = new SapVirtualInstanceState(InfrastructureDeploymentPendingValue);
+
         /// <summary> Infrastructure deployment is in progress. </summary>
         public static SapVirtualInstanceState InfrastructureDeploymentInProgress { get; } = new SapVirtualInstanceState(InfrastructureDeploymentInProgressValue);
+
         /// <summary> Infrastructure deployment has failed. </summary>
         public static SapVirtualInstanceState InfrastructureDeploymentFailed { get; } = new SapVirtualInstanceState(InfrastructureDeploymentFailedValue);
+
         /// <summary> Infrastructure deployment is successful. Software installation is pending. </summary>
         public static SapVirtualInstanceState SoftwareInstallationPending { get; } = new SapVirtualInstanceState(SoftwareInstallationPendingValue);
+
         /// <summary> Software installation is in progress. </summary>
         public static SapVirtualInstanceState SoftwareInstallationInProgress { get; } = new SapVirtualInstanceState(SoftwareInstallationInProgressValue);
+
         /// <summary> Software installation failed. </summary>
         public static SapVirtualInstanceState SoftwareInstallationFailed { get; } = new SapVirtualInstanceState(SoftwareInstallationFailedValue);
+
         /// <summary> Software detection is in progress. </summary>
         public static SapVirtualInstanceState SoftwareDetectionInProgress { get; } = new SapVirtualInstanceState(SoftwareDetectionInProgressValue);
+
         /// <summary> Software detection failed. </summary>
         public static SapVirtualInstanceState SoftwareDetectionFailed { get; } = new SapVirtualInstanceState(SoftwareDetectionFailedValue);
+
         /// <summary> Registration has not started. </summary>
         public static SapVirtualInstanceState DiscoveryPending { get; } = new SapVirtualInstanceState(DiscoveryPendingValue);
+
         /// <summary> Registration is in progress. </summary>
         public static SapVirtualInstanceState DiscoveryInProgress { get; } = new SapVirtualInstanceState(DiscoveryInProgressValue);
+
         /// <summary> Registration has failed. </summary>
         public static SapVirtualInstanceState DiscoveryFailed { get; } = new SapVirtualInstanceState(DiscoveryFailedValue);
+
         /// <summary> Registration is complete. </summary>
         public static SapVirtualInstanceState RegistrationComplete { get; } = new SapVirtualInstanceState(RegistrationCompleteValue);
+
         /// <summary> ACSS installation cannot proceed. </summary>
         public static SapVirtualInstanceState AcssInstallationBlocked { get; } = new SapVirtualInstanceState(AcssInstallationBlockedValue);
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapVirtualInstanceState left, SapVirtualInstanceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapVirtualInstanceState left, SapVirtualInstanceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapVirtualInstanceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapVirtualInstanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapVirtualInstanceState(string value) => new SapVirtualInstanceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapVirtualInstanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapVirtualInstanceState?(string value) => value == null ? null : new SapVirtualInstanceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapVirtualInstanceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapVirtualInstanceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

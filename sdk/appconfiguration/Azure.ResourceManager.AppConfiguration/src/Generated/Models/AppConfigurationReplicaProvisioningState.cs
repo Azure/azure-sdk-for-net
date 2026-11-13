@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public readonly partial struct AppConfigurationReplicaProvisioningState : IEquatable<AppConfigurationReplicaProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationReplicaProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppConfigurationReplicaProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string SucceededValue = "Succeeded";
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationReplicaProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppConfigurationReplicaProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static AppConfigurationReplicaProvisioningState Creating { get; } = new AppConfigurationReplicaProvisioningState(CreatingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static AppConfigurationReplicaProvisioningState Succeeded { get; } = new AppConfigurationReplicaProvisioningState(SucceededValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static AppConfigurationReplicaProvisioningState Deleting { get; } = new AppConfigurationReplicaProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static AppConfigurationReplicaProvisioningState Failed { get; } = new AppConfigurationReplicaProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static AppConfigurationReplicaProvisioningState Canceled { get; } = new AppConfigurationReplicaProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="AppConfigurationReplicaProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppConfigurationReplicaProvisioningState left, AppConfigurationReplicaProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppConfigurationReplicaProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppConfigurationReplicaProvisioningState left, AppConfigurationReplicaProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppConfigurationReplicaProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppConfigurationReplicaProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppConfigurationReplicaProvisioningState(string value) => new AppConfigurationReplicaProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppConfigurationReplicaProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppConfigurationReplicaProvisioningState?(string value) => value == null ? null : new AppConfigurationReplicaProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppConfigurationReplicaProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppConfigurationReplicaProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

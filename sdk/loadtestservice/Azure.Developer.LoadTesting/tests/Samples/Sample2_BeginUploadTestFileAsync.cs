@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests.Samples
 {
-    public partial class LoadTestingSamples: SamplesBase<LoadTestingClientTestEnvironment>
+    public partial class LoadTestingSamples : SamplesBase<LoadTestingClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]

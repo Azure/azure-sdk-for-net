@@ -56,6 +56,7 @@ Given an input text, the de-identification service can perform three main operat
 - `Tag` returns the category and location within the text of detected PHI entities.
 - `Redact` returns output text where detected PHI entities are replaced with placeholder text. For example `John` replaced with `[name]`.
 - `Surrogate` returns output text where detected PHI entities are replaced with realistic replacement values. For example, `My name is John Smith` could become `My name is Tom Jones`.
+- `SurrogateOnly` returns output test where user-defined PHI entities are replaced with realistic replacement values.
 
 For more information about customizing the redaction format, see [Tutorial: Use a custom redaction format with the de-identification service][deid_redaction_format].
 
@@ -106,14 +107,16 @@ Your target Azure Storage account and container where documents will be written 
 
 Create a job to de-identify documents:
 ```C# Snippet:AzHealthDeidSample2_CreateJob
+// Job names must be unique within the service.
+string jobName = "my-job-" + Guid.NewGuid().ToString("N").Substring(0, 12);
 DeidentificationJob job = new()
 {
-    SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/"),
-    TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/"),
+    SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "example_patient_1/"),
+    TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/") { Overwrite = true },
     OperationType = DeidentificationOperationType.Redact,
 };
 
-job = client.DeidentifyDocuments(WaitUntil.Started, "my-job-1", job).Value;
+job = client.DeidentifyDocuments(WaitUntil.Started, jobName, job).Value;
 Console.WriteLine($"Job status: {job.Status}"); // Job status: NotStarted
 ```
 
@@ -168,7 +171,7 @@ additional questions or comments.
 [product_documentation]: https://learn.microsoft.com/azure/healthcare-apis/deidentification/
 [docs]: https://learn.microsoft.com/dotnet/api/azure.health.deidentification
 [deid_nuget]: https://www.nuget.org/packages/Azure.Health.Deidentification
-[string_index]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/StringIndex.cs
+[string_index]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/Models/StringIndex.cs
 [character_encoding]: https://learn.microsoft.com/dotnet/standard/base-types/character-encoding-introduction
 [deid_redaction_format]: https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format
 [azure_subscription]: https://azure.microsoft.com/free/

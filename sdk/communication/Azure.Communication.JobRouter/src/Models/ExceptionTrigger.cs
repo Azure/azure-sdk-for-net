@@ -5,6 +5,9 @@ namespace Azure.Communication.JobRouter
 {
     public abstract partial class ExceptionTrigger
     {
+        /// <summary> Initializes a new instance of ExceptionTrigger for deserialization. </summary>
+        protected ExceptionTrigger() { }
+
         /// <summary> The type discriminator describing a sub-type of ExceptionTrigger. </summary>
         public ExceptionTriggerKind Kind { get; protected set; }
     }

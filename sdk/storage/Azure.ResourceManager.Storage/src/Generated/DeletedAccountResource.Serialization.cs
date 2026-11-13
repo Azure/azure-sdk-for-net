@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class DeletedAccountResource : IJsonModel<DeletedAccountData>
     {
-        private static DeletedAccountData s_dataDeserializationInstance;
-        private static DeletedAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeletedAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeletedAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeletedAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeletedAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedAccountData>)Data).Write(writer, options);
 
-        DeletedAccountData IJsonModel<DeletedAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeletedAccountData IJsonModel<DeletedAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeletedAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedAccountData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeletedAccountData IPersistableModel<DeletedAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedAccountData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<DeletedAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeletedAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

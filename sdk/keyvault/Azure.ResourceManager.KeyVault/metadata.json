@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.KeyVault": "2026-05-15"
+  }
+}

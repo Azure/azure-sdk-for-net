@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DataFactoryTriggerRunStatus : IEquatable<DataFactoryTriggerRunStatus>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Inprogress. </summary>
+        private const string InprogressValue = "Inprogress";
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerRunStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFactoryTriggerRunStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string InprogressValue = "Inprogress";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static DataFactoryTriggerRunStatus Succeeded { get; } = new DataFactoryTriggerRunStatus(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static DataFactoryTriggerRunStatus Failed { get; } = new DataFactoryTriggerRunStatus(FailedValue);
+
         /// <summary> Inprogress. </summary>
         public static DataFactoryTriggerRunStatus Inprogress { get; } = new DataFactoryTriggerRunStatus(InprogressValue);
+
         /// <summary> Determines if two <see cref="DataFactoryTriggerRunStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFactoryTriggerRunStatus left, DataFactoryTriggerRunStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFactoryTriggerRunStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFactoryTriggerRunStatus left, DataFactoryTriggerRunStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryTriggerRunStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFactoryTriggerRunStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFactoryTriggerRunStatus(string value) => new DataFactoryTriggerRunStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFactoryTriggerRunStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFactoryTriggerRunStatus?(string value) => value == null ? null : new DataFactoryTriggerRunStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFactoryTriggerRunStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFactoryTriggerRunStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

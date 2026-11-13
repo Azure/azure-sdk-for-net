@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Trace;
@@ -201,6 +202,38 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Theory]
+        [InlineData(true, true)]
+        [InlineData(false, true)]
+        [InlineData(true, false)]
+        [InlineData(false, false)]
+        public async Task VerifySamplingOptions(bool isRateLimitedSampler, bool useExporter)
+        {
+            var serviceCollection = new ServiceCollection();
+            if (useExporter)
+            {
+                serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitorExporter(options =>
+                {
+                    options.ConnectionString = TestConnectionString;
+                    options.TracesPerSecond = isRateLimitedSampler ? 10 : null;
+                });
+            }
+            else // use distro
+            {
+                serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(options => {
+                    options.ConnectionString = TestConnectionString;
+                    options.TracesPerSecond = isRateLimitedSampler ? 10 : null;
+                });
+            }
+
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            await StartHostedServicesAsync(serviceProvider);
+
+            EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, isRateLimitedSampler);
+        }
+
+        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public async Task VerifyUseAzureMonitorExporter(bool enableLiveMetrics)
@@ -243,6 +276,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 public bool foundAzureMonitorTraceExporter;
                 public bool foundLiveMetricsProcessor;
                 public bool foundStandardMetricsExtractionProcessor;
+                public bool foundMainAgentAttributionSpanProcessor;
             }
 
             public static void EvaluateTracerProvider(IServiceProvider serviceProvider, bool expectedLiveMetricsProcessor, bool expectedProfilingSessionTraceProcessor, bool hasInstrumentations)
@@ -265,13 +299,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 Assert.True(variables.foundStandardMetricsExtractionProcessor);
                 Assert.True(variables.foundAzureMonitorTraceExporter);
                 Assert.Equal(expectedProfilingSessionTraceProcessor, variables.foundProfilingSessionTraceProcessor);
+                Assert.True(variables.foundMainAgentAttributionSpanProcessor);
 
                 // Validate Sampler
-                var samplerProperty = tracerProviderSdkType.GetProperty("Sampler", BindingFlags.NonPublic | BindingFlags.Instance);
-                Assert.NotNull(samplerProperty);
-                var sampler = samplerProperty.GetValue(tracerProvider);
-                Assert.NotNull(sampler);
-                Assert.Equal(nameof(Exporter.Internals.ApplicationInsightsSampler), sampler.GetType().Name);
+                // The default TracesPerSecond is 5.0, so we expect RateLimitedSampler by default
+                EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, true);
 
                 // Validate Instrumentations
                 var instrumentationsProperty = tracerProvider.GetType().GetProperty("Instrumentations", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -297,6 +329,22 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 {
                     Assert.Empty(instrumentations);
                 }
+            }
+
+            public static void EvaluateTracerProviderSampler(IServiceProvider serviceProvider, bool isExpectedSamplerRateLimited)
+            {
+                var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
+                Assert.NotNull(tracerProvider);
+
+                // Get TracerProviderSdk
+                var tracerProviderSdkType = tracerProvider.GetType();
+
+                 // Validate Sampler
+                var samplerProperty = tracerProviderSdkType.GetProperty("Sampler", BindingFlags.NonPublic | BindingFlags.Instance);
+                Assert.NotNull(samplerProperty);
+                var sampler = samplerProperty.GetValue(tracerProvider);
+                Assert.NotNull(sampler);
+                Assert.Equal(isExpectedSamplerRateLimited ? nameof(Exporter.Internals.RateLimitedSampler) : nameof(Exporter.Internals.ApplicationInsightsSampler), sampler.GetType().Name);
             }
 
             public static void EvaluateMeterProvider(IServiceProvider serviceProvider)
@@ -333,49 +381,65 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 var processor = processorProperty.GetValue(loggerProvider);
                 Assert.NotNull(processor);
 
-                if (liveMetricsEnabled)
+                // Walk the processor chain to find expected processors.
+                bool foundMainAgentAttributionLogProcessor = false;
+                bool foundLiveMetricsLogProcessor = false;
+                bool foundAzureMonitorLogExporter = false;
+
+                WalkLogProcessorChain(processor, ref foundMainAgentAttributionLogProcessor, ref foundLiveMetricsLogProcessor, ref foundAzureMonitorLogExporter);
+
+                Assert.True(foundMainAgentAttributionLogProcessor, "MainAgentAttributionLogProcessor not found");
+                Assert.True(foundAzureMonitorLogExporter, "AzureMonitorLogExporter not found");
+                Assert.Equal(liveMetricsEnabled, foundLiveMetricsLogProcessor);
+            }
+
+            private static void WalkLogProcessorChain(object processor, ref bool foundMainAgent, ref bool foundLiveMetrics, ref bool foundExporter)
+            {
+                var processorType = processor.GetType();
+
+                if (processorType.Name.Contains("MainAgentAttributionLogProcessor"))
                 {
-                    // When LiveMetrics is enabled, processor should be a CompositeProcessor
-                    Assert.Contains("CompositeProcessor", processor.GetType().Name);
-
-                    // Get the first processor (LiveMetricsLogProcessor)
-                    var headField = processor.GetType().GetField("Head", BindingFlags.NonPublic | BindingFlags.Instance);
-                    Assert.NotNull(headField);
-                    var firstNode = headField.GetValue(processor);
-                    Assert.NotNull(firstNode);
-
-                    var valueField = firstNode.GetType().GetField("Value", BindingFlags.Public | BindingFlags.Instance);
-                    var firstProcessor = valueField!.GetValue(firstNode);
-                    Assert.NotNull(firstProcessor);
-                    Assert.Contains(nameof(LiveMetrics.LiveMetricsLogProcessor), firstProcessor.GetType().Name);
-
-                    // Get the second processor (BatchLogRecordExportProcessor & AzureMonitorLogExporter)
-                    var nextProperty = firstNode.GetType().GetProperty("Next", BindingFlags.Public | BindingFlags.Instance);
-                    var secondNode = nextProperty!.GetValue(firstNode);
-                    Assert.NotNull(secondNode);
-
-                    var secondProcessor = valueField.GetValue(secondNode);
-                    Assert.NotNull(secondProcessor);
-                    Assert.Contains("BatchLogRecordExportProcessor", secondProcessor.GetType().Name);
-
-                    var exporterProperty = secondProcessor.GetType().GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
-                    Assert.NotNull(exporterProperty);
-
-                    var exporter = exporterProperty.GetValue(secondProcessor);
-                    Assert.NotNull(exporter);
-                    Assert.Contains(nameof(AzureMonitorLogExporter), exporter.GetType().Name);
+                    foundMainAgent = true;
+                    return;
                 }
-                else
+                else if (processorType.Name.Contains(nameof(LiveMetrics.LiveMetricsLogProcessor)))
                 {
-                    // When LiveMetrics is disabled, processor should be a BatchLogRecordExportProcessor
-                    Assert.Contains("BatchLogRecordExportProcessor", processor.GetType().Name);
+                    foundLiveMetrics = true;
+                    return;
+                }
+                else if (processorType.Name.Contains("CompositeProcessor"))
+                {
+                    // Walk the linked list inside the CompositeProcessor
+                    var headField = processorType.GetField("Head", BindingFlags.NonPublic | BindingFlags.Instance);
+                    Assert.NotNull(headField);
+                    var currentNode = headField.GetValue(processor);
 
-                    var exporterProperty = processor.GetType().GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
-                    Assert.NotNull(exporterProperty);
+                    while (currentNode != null)
+                    {
+                        var valueField = currentNode.GetType().GetField("Value", BindingFlags.Public | BindingFlags.Instance);
+                        var nextProperty = currentNode.GetType().GetProperty("Next", BindingFlags.Public | BindingFlags.Instance);
 
+                        var childProcessor = valueField!.GetValue(currentNode);
+                        if (childProcessor != null)
+                        {
+                            WalkLogProcessorChain(childProcessor, ref foundMainAgent, ref foundLiveMetrics, ref foundExporter);
+                        }
+
+                        currentNode = nextProperty!.GetValue(currentNode);
+                    }
+
+                    return;
+                }
+
+                // Check if this processor wraps an exporter
+                var exporterProperty = processorType.GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (exporterProperty != null)
+                {
                     var exporter = exporterProperty.GetValue(processor);
-                    Assert.NotNull(exporter);
-                    Assert.Contains(nameof(AzureMonitorLogExporter), exporter.GetType().Name);
+                    if (exporter != null && exporter.GetType().Name.Contains(nameof(AzureMonitorLogExporter)))
+                    {
+                        foundExporter = true;
+                    }
                 }
             }
 
@@ -403,6 +467,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                         if (processorType.Name.Contains(nameof(Internals.Profiling.ProfilingSessionTraceProcessor)))
                         {
                             variables.foundProfilingSessionTraceProcessor = true;
+                        }
+                        else if (processorType.Name.Contains("MainAgentAttributionSpanProcessor"))
+                        {
+                            variables.foundMainAgentAttributionSpanProcessor = true;
                         }
                         else if (processorType.Name.Contains(nameof(LiveMetrics.LiveMetricsActivityProcessor)))
                         {

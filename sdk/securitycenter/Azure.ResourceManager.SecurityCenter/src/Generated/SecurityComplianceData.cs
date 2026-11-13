@@ -13,72 +13,57 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecurityCompliance data model.
-    /// Compliance of a scope
-    /// </summary>
+    /// <summary> Compliance of a scope. </summary>
     public partial class SecurityComplianceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityComplianceData"/>. </summary>
-        public SecurityComplianceData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Compliance data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityComplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComplianceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            AssessmentResult = new ChangeTrackingList<ComplianceSegment>();
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityComplianceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="assessedOn"> The timestamp when the Compliance calculation was conducted. </param>
-        /// <param name="resourceCount"> The resource count of the given subscription for which the Compliance calculation was conducted (needed for Management Group Compliance calculation). </param>
-        /// <param name="assessmentResult"> An array of segment, which is the actually the compliance assessment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityComplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? assessedOn, int? resourceCount, IReadOnlyList<ComplianceSegment> assessmentResult, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            AssessedOn = assessedOn;
-            ResourceCount = resourceCount;
-            AssessmentResult = assessmentResult;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Compliance data. </summary>
+        internal ComplianceProperties Properties { get; set; }
 
         /// <summary> The timestamp when the Compliance calculation was conducted. </summary>
-        public DateTimeOffset? AssessedOn { get; }
+        public DateTimeOffset? AssessmentTimestampUtcOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssessmentTimestampUtcOn;
+            }
+        }
+
         /// <summary> The resource count of the given subscription for which the Compliance calculation was conducted (needed for Management Group Compliance calculation). </summary>
-        public int? ResourceCount { get; }
+        public int? ResourceCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceCount;
+            }
+        }
+
         /// <summary> An array of segment, which is the actually the compliance assessment. </summary>
-        public IReadOnlyList<ComplianceSegment> AssessmentResult { get; }
+        public IReadOnlyList<ComplianceSegment> AssessmentResult
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ComplianceProperties();
+                }
+                return Properties.AssessmentResult;
+            }
+        }
     }
 }

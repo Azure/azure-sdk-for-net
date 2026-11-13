@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            return new FormRecognizerClient(fakeEndpoint, fakeCredential, new FormRecognizerClientOptions(){ Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed}});
+            return new FormRecognizerClient(fakeEndpoint, fakeCredential, new FormRecognizerClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } });
         }
 
         /// <summary>
@@ -102,6 +102,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
         public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
         {
             var client = CreateInstrumentedClient();

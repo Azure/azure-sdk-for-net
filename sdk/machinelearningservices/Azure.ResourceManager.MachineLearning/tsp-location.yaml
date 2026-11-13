@@ -1,0 +1,6 @@
+directory: specification/machinelearningservices/MachineLearningServices.Management
+commit: 762cf0bba62eeff477700627a6e67f709793390c
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

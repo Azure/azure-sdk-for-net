@@ -39,6 +39,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _timer = new TaskSeriesTimer(_strategy, exceptionHandler, initialWait: Task.Delay(0));
         }
 
+        // This constructor is used for injecting custom strategy in unit tests.
+        internal SharedBlobListener(IBlobListenerStrategy strategy, IWebJobsExceptionHandler exceptionHandler)
+        {
+            _strategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
+
+            // Start the first iteration immediately.
+            _timer = new TaskSeriesTimer(_strategy, exceptionHandler, initialWait: Task.Delay(0));
+        }
+
         public IBlobWrittenWatcher BlobWritterWatcher
         {
             get { return _strategy; }

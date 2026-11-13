@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Client.Structure.RenamedOperation
 {
     public partial class RenamedOperationClientOptions : ClientOptions
     {
+        public RenamedOperationClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal RenamedOperationClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

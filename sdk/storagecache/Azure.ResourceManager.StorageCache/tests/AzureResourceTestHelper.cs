@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
 {
     internal static class AzureResourceTestHelper
     {
-        public static async Task TestGetAll<T>(int count, Func<int, Task<T>> createFunc, Func<AsyncPageable<T>> getAllFunc) where T:ArmResource
+        public static async Task TestGetAll<T>(int count, Func<int, Task<T>> createFunc, Func<AsyncPageable<T>> getAllFunc) where T : ArmResource
         {
             List<T> created = new List<T>();
             for (int i = 0; i < count; i++)

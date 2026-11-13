@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorRedirectProtocol : IEquatable<FrontDoorRedirectProtocol>
     {
         private readonly string _value;
+        /// <summary> HttpOnly. </summary>
+        private const string HttpOnlyValue = "HttpOnly";
+        /// <summary> HttpsOnly. </summary>
+        private const string HttpsOnlyValue = "HttpsOnly";
+        /// <summary> MatchRequest. </summary>
+        private const string MatchRequestValue = "MatchRequest";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRedirectProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorRedirectProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HttpOnlyValue = "HttpOnly";
-        private const string HttpsOnlyValue = "HttpsOnly";
-        private const string MatchRequestValue = "MatchRequest";
+            _value = value;
+        }
 
         /// <summary> HttpOnly. </summary>
         public static FrontDoorRedirectProtocol HttpOnly { get; } = new FrontDoorRedirectProtocol(HttpOnlyValue);
+
         /// <summary> HttpsOnly. </summary>
         public static FrontDoorRedirectProtocol HttpsOnly { get; } = new FrontDoorRedirectProtocol(HttpsOnlyValue);
+
         /// <summary> MatchRequest. </summary>
         public static FrontDoorRedirectProtocol MatchRequest { get; } = new FrontDoorRedirectProtocol(MatchRequestValue);
+
         /// <summary> Determines if two <see cref="FrontDoorRedirectProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorRedirectProtocol left, FrontDoorRedirectProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorRedirectProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorRedirectProtocol left, FrontDoorRedirectProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorRedirectProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorRedirectProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorRedirectProtocol(string value) => new FrontDoorRedirectProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorRedirectProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorRedirectProtocol?(string value) => value == null ? null : new FrontDoorRedirectProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorRedirectProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorRedirectProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

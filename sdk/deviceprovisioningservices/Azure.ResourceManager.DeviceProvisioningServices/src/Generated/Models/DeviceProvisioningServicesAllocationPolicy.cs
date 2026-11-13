@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     public readonly partial struct DeviceProvisioningServicesAllocationPolicy : IEquatable<DeviceProvisioningServicesAllocationPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesAllocationPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeviceProvisioningServicesAllocationPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string HashedValue = "Hashed";
         private const string GeoLatencyValue = "GeoLatency";
         private const string StaticValue = "Static";
 
-        /// <summary> Hashed. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesAllocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DeviceProvisioningServicesAllocationPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Hashed. </summary>
         public static DeviceProvisioningServicesAllocationPolicy Hashed { get; } = new DeviceProvisioningServicesAllocationPolicy(HashedValue);
-        /// <summary> GeoLatency. </summary>
+
+        /// <summary> Gets the GeoLatency. </summary>
         public static DeviceProvisioningServicesAllocationPolicy GeoLatency { get; } = new DeviceProvisioningServicesAllocationPolicy(GeoLatencyValue);
-        /// <summary> Static. </summary>
+
+        /// <summary> Gets the Static. </summary>
         public static DeviceProvisioningServicesAllocationPolicy Static { get; } = new DeviceProvisioningServicesAllocationPolicy(StaticValue);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAllocationPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceProvisioningServicesAllocationPolicy left, DeviceProvisioningServicesAllocationPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAllocationPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceProvisioningServicesAllocationPolicy left, DeviceProvisioningServicesAllocationPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesAllocationPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesAllocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceProvisioningServicesAllocationPolicy(string value) => new DeviceProvisioningServicesAllocationPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesAllocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceProvisioningServicesAllocationPolicy?(string value) => value == null ? null : new DeviceProvisioningServicesAllocationPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceProvisioningServicesAllocationPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceProvisioningServicesAllocationPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

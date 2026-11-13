@@ -14,37 +14,20 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A telephone number for the Telephony channel. </summary>
     public partial class TelephonyPhoneNumbers
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _acsEndpoint;
+        private bool _acsEndpointIsDefined;
+        private string _acsSecret;
+        private bool _acsSecretIsDefined;
+        private string _cognitiveServiceSubscriptionKey;
+        private bool _cognitiveServiceSubscriptionKeyIsDefined;
+        private string _cognitiveServiceRegion;
+        private bool _cognitiveServiceRegionIsDefined;
+        private string _defaultLocale;
+        private bool _defaultLocaleIsDefined;
+        private string _offerType;
+        private bool _offerTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TelephonyPhoneNumbers"/>. </summary>
         public TelephonyPhoneNumbers()
@@ -62,41 +45,116 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="cognitiveServiceResourceId"> The resource id of cognitive service. </param>
         /// <param name="defaultLocale"> The default locale of the phone number. </param>
         /// <param name="offerType"> Optional Property that will determine the offering type of the phone. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyPhoneNumbers(string id, string phoneNumber, string acsEndpoint, string acsSecret, ResourceIdentifier acsResourceId, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale, string offerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TelephonyPhoneNumbers(string id, string phoneNumber, string acsEndpoint, string acsSecret, ResourceIdentifier acsResourceId, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale, string offerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PhoneNumber = phoneNumber;
-            AcsEndpoint = acsEndpoint;
-            AcsSecret = acsSecret;
+            _acsEndpoint = acsEndpoint;
+            _acsSecret = acsSecret;
             AcsResourceId = acsResourceId;
-            CognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
-            CognitiveServiceRegion = cognitiveServiceRegion;
+            _cognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
+            _cognitiveServiceRegion = cognitiveServiceRegion;
             CognitiveServiceResourceId = cognitiveServiceResourceId;
-            DefaultLocale = defaultLocale;
-            OfferType = offerType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _defaultLocale = defaultLocale;
+            _offerType = offerType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The element id. </summary>
         public string Id { get; set; }
+
         /// <summary> The phone number. </summary>
         public string PhoneNumber { get; set; }
+
         /// <summary> The endpoint of ACS. </summary>
-        public string AcsEndpoint { get; set; }
+        public string AcsEndpoint
+        {
+            get
+            {
+                return _acsEndpoint;
+            }
+            set
+            {
+                _acsEndpoint = value;
+                _acsEndpointIsDefined = true;
+            }
+        }
+
         /// <summary> The secret of ACS. </summary>
-        public string AcsSecret { get; set; }
+        public string AcsSecret
+        {
+            get
+            {
+                return _acsSecret;
+            }
+            set
+            {
+                _acsSecret = value;
+                _acsSecretIsDefined = true;
+            }
+        }
+
         /// <summary> The resource id of ACS. </summary>
         public ResourceIdentifier AcsResourceId { get; set; }
+
         /// <summary> The subscription key of cognitive service. </summary>
-        public string CognitiveServiceSubscriptionKey { get; set; }
+        public string CognitiveServiceSubscriptionKey
+        {
+            get
+            {
+                return _cognitiveServiceSubscriptionKey;
+            }
+            set
+            {
+                _cognitiveServiceSubscriptionKey = value;
+                _cognitiveServiceSubscriptionKeyIsDefined = true;
+            }
+        }
+
         /// <summary> The service region of cognitive service. </summary>
-        public string CognitiveServiceRegion { get; set; }
+        public string CognitiveServiceRegion
+        {
+            get
+            {
+                return _cognitiveServiceRegion;
+            }
+            set
+            {
+                _cognitiveServiceRegion = value;
+                _cognitiveServiceRegionIsDefined = true;
+            }
+        }
+
         /// <summary> The resource id of cognitive service. </summary>
         public ResourceIdentifier CognitiveServiceResourceId { get; set; }
+
         /// <summary> The default locale of the phone number. </summary>
-        public string DefaultLocale { get; set; }
+        public string DefaultLocale
+        {
+            get
+            {
+                return _defaultLocale;
+            }
+            set
+            {
+                _defaultLocale = value;
+                _defaultLocaleIsDefined = true;
+            }
+        }
+
         /// <summary> Optional Property that will determine the offering type of the phone. </summary>
-        public string OfferType { get; set; }
+        public string OfferType
+        {
+            get
+            {
+                return _offerType;
+            }
+            set
+            {
+                _offerType = value;
+                _offerTypeIsDefined = true;
+            }
+        }
     }
 }

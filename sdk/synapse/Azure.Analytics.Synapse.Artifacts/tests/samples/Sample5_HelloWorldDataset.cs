@@ -3,9 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Artifacts.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 

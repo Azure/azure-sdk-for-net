@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The storage Account. </summary>
     public partial class HDInsightStorageAccountInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightStorageAccountInfo"/>. </summary>
         public HDInsightStorageAccountInfo()
@@ -62,8 +33,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="sasKey"> The shared access signature key. </param>
         /// <param name="fileshare"> The file share name. </param>
         /// <param name="enableSecureChannel"> Enable secure channel or not, it's an optional field. Default value is false when cluster version &lt; 5.1 and true when cluster version &gt;= 5.1 ,. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightStorageAccountInfo(string name, bool? isDefault, string container, string fileSystem, string key, ResourceIdentifier resourceId, ResourceIdentifier msiResourceId, string sasKey, string fileshare, bool? enableSecureChannel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightStorageAccountInfo(string name, bool? isDefault, string container, string fileSystem, string key, ResourceIdentifier resourceId, ResourceIdentifier msiResourceId, string sasKey, string fileshare, bool? enableSecureChannel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsDefault = isDefault;
@@ -75,27 +46,36 @@ namespace Azure.ResourceManager.HDInsight.Models
             SasKey = sasKey;
             Fileshare = fileshare;
             EnableSecureChannel = enableSecureChannel;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the storage account. </summary>
         public string Name { get; set; }
+
         /// <summary> Whether or not the storage account is the default storage account. </summary>
         public bool? IsDefault { get; set; }
+
         /// <summary> The container in the storage account, only to be specified for WASB storage accounts. </summary>
         public string Container { get; set; }
+
         /// <summary> The filesystem, only to be specified for Azure Data Lake Storage Gen 2. </summary>
         public string FileSystem { get; set; }
+
         /// <summary> The storage account access key. </summary>
         public string Key { get; set; }
+
         /// <summary> The resource ID of storage account, only to be specified for Azure Data Lake Storage Gen 2. </summary>
         public ResourceIdentifier ResourceId { get; set; }
+
         /// <summary> The managed identity (MSI) that is allowed to access the storage account, only to be specified for Azure Data Lake Storage Gen 2. </summary>
         public ResourceIdentifier MsiResourceId { get; set; }
+
         /// <summary> The shared access signature key. </summary>
         public string SasKey { get; set; }
+
         /// <summary> The file share name. </summary>
         public string Fileshare { get; set; }
+
         /// <summary> Enable secure channel or not, it's an optional field. Default value is false when cluster version &lt; 5.1 and true when cluster version &gt;= 5.1 ,. </summary>
         public bool? EnableSecureChannel { get; set; }
     }

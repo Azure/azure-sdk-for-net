@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Authentication.ApiKey
 {
     public partial class ApiKeyClientOptions : ClientOptions
     {
+        public ApiKeyClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal ApiKeyClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

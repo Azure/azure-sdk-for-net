@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingRelationshipType : IEquatable<BillingRelationshipType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Direct. </summary>
+        private const string DirectValue = "Direct";
+        /// <summary> IndirectCustomer. </summary>
+        private const string IndirectCustomerValue = "IndirectCustomer";
+        /// <summary> IndirectPartner. </summary>
+        private const string IndirectPartnerValue = "IndirectPartner";
+        /// <summary> CSPPartner. </summary>
+        private const string CspPartnerValue = "CSPPartner";
+        /// <summary> CSPCustomer. </summary>
+        private const string CspCustomerValue = "CSPCustomer";
 
         /// <summary> Initializes a new instance of <see cref="BillingRelationshipType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingRelationshipType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string DirectValue = "Direct";
-        private const string IndirectCustomerValue = "IndirectCustomer";
-        private const string IndirectPartnerValue = "IndirectPartner";
-        private const string CspPartnerValue = "CSPPartner";
-        private const string CspCustomerValue = "CSPCustomer";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingRelationshipType Other { get; } = new BillingRelationshipType(OtherValue);
+
         /// <summary> Direct. </summary>
         public static BillingRelationshipType Direct { get; } = new BillingRelationshipType(DirectValue);
+
         /// <summary> IndirectCustomer. </summary>
         public static BillingRelationshipType IndirectCustomer { get; } = new BillingRelationshipType(IndirectCustomerValue);
+
         /// <summary> IndirectPartner. </summary>
         public static BillingRelationshipType IndirectPartner { get; } = new BillingRelationshipType(IndirectPartnerValue);
+
         /// <summary> CSPPartner. </summary>
         public static BillingRelationshipType CspPartner { get; } = new BillingRelationshipType(CspPartnerValue);
+
         /// <summary> CSPCustomer. </summary>
         public static BillingRelationshipType CspCustomer { get; } = new BillingRelationshipType(CspCustomerValue);
+
         /// <summary> Determines if two <see cref="BillingRelationshipType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingRelationshipType left, BillingRelationshipType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingRelationshipType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingRelationshipType left, BillingRelationshipType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingRelationshipType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingRelationshipType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingRelationshipType(string value) => new BillingRelationshipType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingRelationshipType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingRelationshipType?(string value) => value == null ? null : new BillingRelationshipType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingRelationshipType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingRelationshipType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

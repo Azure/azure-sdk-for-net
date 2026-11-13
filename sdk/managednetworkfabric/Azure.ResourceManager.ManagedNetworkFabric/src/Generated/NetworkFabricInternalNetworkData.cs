@@ -13,140 +13,318 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkFabricInternalNetwork data model.
-    /// Defines the Internal Network resource.
-    /// </summary>
+    /// <summary> Defines the Internal Network resource. </summary>
     public partial class NetworkFabricInternalNetworkData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkData"/>. </summary>
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
         public NetworkFabricInternalNetworkData(int vlanId)
         {
-            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
-            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
-            VlanId = vlanId;
+
+            Properties = new InternalNetworkProperties(vlanId);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
-        /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
-        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
-        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
-        /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
-        /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
-        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, StaticRouteConfigurationExtension? extension, int vlanId, InternalNetworkBgpConfiguration bgpConfiguration, InternalNetworkStaticRouteConfiguration staticRouteConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The Internal Network Properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, InternalNetworkProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Annotation = annotation;
-            Mtu = mtu;
-            ConnectedIPv4Subnets = connectedIPv4Subnets;
-            ConnectedIPv6Subnets = connectedIPv6Subnets;
-            ImportRoutePolicyId = importRoutePolicyId;
-            ExportRoutePolicyId = exportRoutePolicyId;
-            ImportRoutePolicy = importRoutePolicy;
-            ExportRoutePolicy = exportRoutePolicy;
-            IngressAclId = ingressAclId;
-            EgressAclId = egressAclId;
-            IsMonitoringEnabled = isMonitoringEnabled;
-            Extension = extension;
-            VlanId = vlanId;
-            BgpConfiguration = bgpConfiguration;
-            StaticRouteConfiguration = staticRouteConfiguration;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkData"/> for deserialization. </summary>
-        internal NetworkFabricInternalNetworkData()
-        {
-        }
+        /// <summary> The Internal Network Properties. </summary>
+        internal InternalNetworkProperties Properties { get; set; }
 
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> Maximum transmission unit. Default value is 1500. </summary>
-        public int? Mtu { get; set; }
-        /// <summary> List of Connected IPv4 Subnets. </summary>
-        public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
-        /// <summary> List of connected IPv6 Subnets. </summary>
-        public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ImportRoutePolicyId { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ExportRoutePolicyId { get; set; }
-        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicy ImportRoutePolicy { get; set; }
-        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicy ExportRoutePolicy { get; set; }
-        /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier IngressAclId { get; set; }
-        /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier EgressAclId { get; set; }
-        /// <summary> To check whether monitoring of internal network is enabled or not. </summary>
-        public IsMonitoringEnabled? IsMonitoringEnabled { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> Extension. Example: NoExtension | NPB. </summary>
-        public StaticRouteConfigurationExtension? Extension { get; set; }
+        public StaticRouteConfigurationExtension? Extension
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Extension;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.Extension = value;
+            }
+        }
+
+        /// <summary> Maximum transmission unit. Default value is 1500. </summary>
+        public int? Mtu
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mtu;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.Mtu = value;
+            }
+        }
+
+        /// <summary> List of Connected IPv4 Subnets. </summary>
+        public IList<ConnectedSubnet> ConnectedIPv4Subnets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                return Properties.ConnectedIPv4Subnets;
+            }
+        }
+
+        /// <summary> List of connected IPv6 Subnets. </summary>
+        public IList<ConnectedSubnet> ConnectedIPv6Subnets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                return Properties.ConnectedIPv6Subnets;
+            }
+        }
+
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
+        public ImportRoutePolicy ImportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.ImportRoutePolicy = value;
+            }
+        }
+
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
+        public ExportRoutePolicy ExportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.ExportRoutePolicy = value;
+            }
+        }
+
+        /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier IngressAclId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngressAclId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.IngressAclId = value;
+            }
+        }
+
+        /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier EgressAclId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EgressAclId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.EgressAclId = value;
+            }
+        }
+
+        /// <summary> To check whether monitoring of internal network is enabled or not. </summary>
+        public IsMonitoringEnabled? IsMonitoringEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsMonitoringEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.IsMonitoringEnabled = value;
+            }
+        }
+
         /// <summary> Vlan identifier. Example: 1001. </summary>
-        public int VlanId { get; set; }
+        public int VlanId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VlanId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.VlanId = value;
+            }
+        }
+
         /// <summary> BGP configuration properties. </summary>
-        public InternalNetworkBgpConfiguration BgpConfiguration { get; set; }
+        public BgpConfiguration BgpSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BgpSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.BgpSettings = value;
+            }
+        }
+
         /// <summary> Static Route Configuration properties. </summary>
-        public InternalNetworkStaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        public StaticRouteConfiguration StaticRouteSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticRouteSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                Properties.StaticRouteSettings = value;
+            }
+        }
+
+        /// <summary> Associated Network Fabric Resource ID. </summary>
+        public ResourceIdentifier NetworkFabricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkFabricId;
+            }
+        }
+
         /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitProperties> NativeIPv4PrefixLimits
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                return Properties.NativeIPv4PrefixLimits;
+            }
+        }
+
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitProperties> NativeIPv6PrefixLimits
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkProperties();
+                }
+                return Properties.NativeIPv6PrefixLimits;
+            }
+        }
+
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
     }
 }

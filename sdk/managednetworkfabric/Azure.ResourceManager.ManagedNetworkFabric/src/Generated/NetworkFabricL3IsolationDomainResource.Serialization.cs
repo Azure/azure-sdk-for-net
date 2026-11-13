@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    /// <summary></summary>
     public partial class NetworkFabricL3IsolationDomainResource : IJsonModel<NetworkFabricL3IsolationDomainData>
     {
-        private static NetworkFabricL3IsolationDomainData s_dataDeserializationInstance;
-        private static NetworkFabricL3IsolationDomainData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkFabricL3IsolationDomainData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkFabricL3IsolationDomainData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFabricL3IsolationDomainData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricL3IsolationDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricL3IsolationDomainData>)Data).Write(writer, options);
 
-        NetworkFabricL3IsolationDomainData IJsonModel<NetworkFabricL3IsolationDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricL3IsolationDomainData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricL3IsolationDomainData IJsonModel<NetworkFabricL3IsolationDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkFabricL3IsolationDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricL3IsolationDomainData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFabricL3IsolationDomainData IPersistableModel<NetworkFabricL3IsolationDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricL3IsolationDomainData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricL3IsolationDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricL3IsolationDomainData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricL3IsolationDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,56 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> The definition of a scoping question. </summary>
     public partial class ScopingQuestion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScopingQuestion"/>. </summary>
-        /// <param name="questionId"> Question id. </param>
-        /// <param name="inputType"> Input type of the question answer. </param>
-        /// <param name="optionIds"> Option id list. </param>
-        /// <param name="rules"> The rule of the question. </param>
-        internal ScopingQuestion(string questionId, ScopingQuestionInputType inputType, IEnumerable<string> optionIds, IEnumerable<QuestionRuleItem> rules)
+        internal ScopingQuestion()
         {
-            QuestionId = questionId;
-            InputType = inputType;
-            OptionIds = optionIds.ToList();
-            Rules = rules.ToList();
+            OptionIds = new ChangeTrackingList<string>();
+            Rules = new ChangeTrackingList<QuestionRuleItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScopingQuestion"/>. </summary>
@@ -66,8 +31,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="optionIds"> Option id list. </param>
         /// <param name="rules"> The rule of the question. </param>
         /// <param name="showSubQuestionsValue"> The answer value to show the sub questions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScopingQuestion(string questionId, string superiorQuestionId, ScopingQuestionInputType inputType, IReadOnlyList<string> optionIds, IReadOnlyList<QuestionRuleItem> rules, string showSubQuestionsValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScopingQuestion(string questionId, string superiorQuestionId, ScopingQuestionInputType inputType, IReadOnlyList<string> optionIds, IReadOnlyList<QuestionRuleItem> rules, string showSubQuestionsValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuestionId = questionId;
             SuperiorQuestionId = superiorQuestionId;
@@ -75,24 +40,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             OptionIds = optionIds;
             Rules = rules;
             ShowSubQuestionsValue = showSubQuestionsValue;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScopingQuestion"/> for deserialization. </summary>
-        internal ScopingQuestion()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Question id. </summary>
         public string QuestionId { get; }
+
         /// <summary> Superior question id. </summary>
         public string SuperiorQuestionId { get; }
+
         /// <summary> Input type of the question answer. </summary>
         public ScopingQuestionInputType InputType { get; }
+
         /// <summary> Option id list. </summary>
         public IReadOnlyList<string> OptionIds { get; }
+
         /// <summary> The rule of the question. </summary>
         public IReadOnlyList<QuestionRuleItem> Rules { get; }
+
         /// <summary> The answer value to show the sub questions. </summary>
         public string ShowSubQuestionsValue { get; }
     }

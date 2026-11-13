@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct VmResourceFeatureSupportStatus : IEquatable<VmResourceFeatureSupportStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VmResourceFeatureSupportStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string SupportedValue = "Supported";
         private const string DefaultOffValue = "DefaultOFF";
         private const string DefaultOnValue = "DefaultON";
         private const string NotSupportedValue = "NotSupported";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VmResourceFeatureSupportStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static VmResourceFeatureSupportStatus Invalid { get; } = new VmResourceFeatureSupportStatus(InvalidValue);
-        /// <summary> Supported. </summary>
+
+        /// <summary> Gets the Supported. </summary>
         public static VmResourceFeatureSupportStatus Supported { get; } = new VmResourceFeatureSupportStatus(SupportedValue);
-        /// <summary> DefaultOFF. </summary>
+
+        /// <summary> Gets the DefaultOff. </summary>
         public static VmResourceFeatureSupportStatus DefaultOff { get; } = new VmResourceFeatureSupportStatus(DefaultOffValue);
-        /// <summary> DefaultON. </summary>
+
+        /// <summary> Gets the DefaultOn. </summary>
         public static VmResourceFeatureSupportStatus DefaultOn { get; } = new VmResourceFeatureSupportStatus(DefaultOnValue);
-        /// <summary> NotSupported. </summary>
+
+        /// <summary> Gets the NotSupported. </summary>
         public static VmResourceFeatureSupportStatus NotSupported { get; } = new VmResourceFeatureSupportStatus(NotSupportedValue);
+
         /// <summary> Determines if two <see cref="VmResourceFeatureSupportStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VmResourceFeatureSupportStatus left, VmResourceFeatureSupportStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VmResourceFeatureSupportStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VmResourceFeatureSupportStatus left, VmResourceFeatureSupportStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VmResourceFeatureSupportStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VmResourceFeatureSupportStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VmResourceFeatureSupportStatus(string value) => new VmResourceFeatureSupportStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VmResourceFeatureSupportStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VmResourceFeatureSupportStatus?(string value) => value == null ? null : new VmResourceFeatureSupportStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VmResourceFeatureSupportStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VmResourceFeatureSupportStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

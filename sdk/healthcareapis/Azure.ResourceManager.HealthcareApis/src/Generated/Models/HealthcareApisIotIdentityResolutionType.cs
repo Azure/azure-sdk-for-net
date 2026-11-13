@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     public readonly partial struct HealthcareApisIotIdentityResolutionType : IEquatable<HealthcareApisIotIdentityResolutionType>
     {
         private readonly string _value;
+        /// <summary> Create. </summary>
+        private const string CreateValue = "Create";
+        /// <summary> Lookup. </summary>
+        private const string LookupValue = "Lookup";
 
         /// <summary> Initializes a new instance of <see cref="HealthcareApisIotIdentityResolutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HealthcareApisIotIdentityResolutionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreateValue = "Create";
-        private const string LookupValue = "Lookup";
+            _value = value;
+        }
 
         /// <summary> Create. </summary>
         public static HealthcareApisIotIdentityResolutionType Create { get; } = new HealthcareApisIotIdentityResolutionType(CreateValue);
+
         /// <summary> Lookup. </summary>
         public static HealthcareApisIotIdentityResolutionType Lookup { get; } = new HealthcareApisIotIdentityResolutionType(LookupValue);
+
         /// <summary> Determines if two <see cref="HealthcareApisIotIdentityResolutionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HealthcareApisIotIdentityResolutionType left, HealthcareApisIotIdentityResolutionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HealthcareApisIotIdentityResolutionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HealthcareApisIotIdentityResolutionType left, HealthcareApisIotIdentityResolutionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthcareApisIotIdentityResolutionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HealthcareApisIotIdentityResolutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HealthcareApisIotIdentityResolutionType(string value) => new HealthcareApisIotIdentityResolutionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HealthcareApisIotIdentityResolutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HealthcareApisIotIdentityResolutionType?(string value) => value == null ? null : new HealthcareApisIotIdentityResolutionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HealthcareApisIotIdentityResolutionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HealthcareApisIotIdentityResolutionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

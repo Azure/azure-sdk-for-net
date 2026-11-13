@@ -231,9 +231,9 @@ namespace Azure.Search.Documents.Batching
             }
             else
             {
-                #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 flushCompletion.GetAwaiter().GetResult();
-                #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
         }
         #endregion
@@ -359,9 +359,9 @@ namespace Azure.Search.Documents.Batching
                 }
                 else
                 {
-                    #pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+#pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
                     _readerLoop.EnsureCompleted();
-                    #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+#pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
                 }
                 _flushCompletionSource.SetCanceled();
             }
@@ -432,7 +432,7 @@ namespace Azure.Search.Documents.Batching
                     cancellationToken)
                     .ConfigureAwait(false);
 
-            // Keep going if we have more full batches ready to submit
+                // Keep going if we have more full batches ready to submit
             } while (HasBatch(flush));
 
             // Fill as much of the batch as possible from the given queue.

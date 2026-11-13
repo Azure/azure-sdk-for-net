@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class DetectorIssueTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DetectorIssueType value) => value switch
         {
             DetectorIssueType.ServiceIncident => "ServiceIncident",
@@ -24,16 +25,41 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorIssueType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DetectorIssueType ToDetectorIssueType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceIncident")) return DetectorIssueType.ServiceIncident;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppDeployment")) return DetectorIssueType.AppDeployment;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppCrash")) return DetectorIssueType.AppCrash;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RuntimeIssueDetected")) return DetectorIssueType.RuntimeIssueDetected;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AseDeployment")) return DetectorIssueType.AseDeployment;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserIssue")) return DetectorIssueType.UserIssue;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PlatformIssue")) return DetectorIssueType.PlatformIssue;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Other")) return DetectorIssueType.Other;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceIncident"))
+            {
+                return DetectorIssueType.ServiceIncident;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppDeployment"))
+            {
+                return DetectorIssueType.AppDeployment;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppCrash"))
+            {
+                return DetectorIssueType.AppCrash;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RuntimeIssueDetected"))
+            {
+                return DetectorIssueType.RuntimeIssueDetected;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AseDeployment"))
+            {
+                return DetectorIssueType.AseDeployment;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserIssue"))
+            {
+                return DetectorIssueType.UserIssue;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PlatformIssue"))
+            {
+                return DetectorIssueType.PlatformIssue;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Other"))
+            {
+                return DetectorIssueType.Other;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorIssueType value.");
         }
     }

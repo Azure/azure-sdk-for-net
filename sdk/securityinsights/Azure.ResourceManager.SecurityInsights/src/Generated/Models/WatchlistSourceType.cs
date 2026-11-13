@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct WatchlistSourceType : IEquatable<WatchlistSourceType>
     {
         private readonly string _value;
+        /// <summary> The source from local file. </summary>
+        private const string LocalValue = "Local";
+        /// <summary> The source from Azure storage. </summary>
+        private const string AzureStorageValue = "AzureStorage";
 
         /// <summary> Initializes a new instance of <see cref="WatchlistSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WatchlistSourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string LocalFileValue = "Local file";
-        private const string RemoteStorageValue = "Remote storage";
+        /// <summary> The source from local file. </summary>
+        public static WatchlistSourceType Local { get; } = new WatchlistSourceType(LocalValue);
 
-        /// <summary> Local file. </summary>
-        public static WatchlistSourceType LocalFile { get; } = new WatchlistSourceType(LocalFileValue);
-        /// <summary> Remote storage. </summary>
-        public static WatchlistSourceType RemoteStorage { get; } = new WatchlistSourceType(RemoteStorageValue);
+        /// <summary> The source from Azure storage. </summary>
+        public static WatchlistSourceType AzureStorage { get; } = new WatchlistSourceType(AzureStorageValue);
+
         /// <summary> Determines if two <see cref="WatchlistSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WatchlistSourceType left, WatchlistSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WatchlistSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WatchlistSourceType left, WatchlistSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WatchlistSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WatchlistSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WatchlistSourceType(string value) => new WatchlistSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WatchlistSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WatchlistSourceType?(string value) => value == null ? null : new WatchlistSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WatchlistSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WatchlistSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

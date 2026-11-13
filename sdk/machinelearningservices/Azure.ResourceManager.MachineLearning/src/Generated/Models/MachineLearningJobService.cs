@@ -7,43 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Job endpoint definition. </summary>
     public partial class MachineLearningJobService
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _endpoint;
+        private bool _endpointIsDefined;
+        private string _errorMessage;
+        private bool _errorMessageIsDefined;
+        private string _jobServiceType;
+        private bool _jobServiceTypeIsDefined;
+        private JobNodes _nodes;
+        private bool _nodesIsDefined;
+        private int? _port;
+        private bool _portIsDefined;
+        private string _status;
+        private bool _statusIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
         public MachineLearningJobService()
@@ -52,56 +36,114 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
-        /// <param name="jobServiceType"> Endpoint type. </param>
-        /// <param name="port"> Port for endpoint. </param>
         /// <param name="endpoint"> Url for endpoint. </param>
-        /// <param name="status"> Status of endpoint. </param>
         /// <param name="errorMessage"> Any error in the service. </param>
-        /// <param name="properties"> Additional properties to set on the endpoint. </param>
+        /// <param name="jobServiceType"> Endpoint type. </param>
         /// <param name="nodes">
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
-        /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningJobService(string jobServiceType, int? port, string endpoint, string status, string errorMessage, IDictionary<string, string> properties, JobNodes nodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="port"> Port for endpoint. </param>
+        /// <param name="properties"> Additional properties to set on the endpoint. </param>
+        /// <param name="status"> Status of endpoint. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningJobService(string endpoint, string errorMessage, string jobServiceType, JobNodes nodes, int? port, IDictionary<string, string> properties, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            JobServiceType = jobServiceType;
-            Port = port;
-            Endpoint = endpoint;
-            Status = status;
-            ErrorMessage = errorMessage;
+            _endpoint = endpoint;
+            _errorMessage = errorMessage;
+            _jobServiceType = jobServiceType;
+            _nodes = nodes;
+            _port = port;
             Properties = properties;
-            Nodes = nodes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _status = status;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Url for endpoint. </summary>
+        [WirePath("endpoint")]
+        public string Endpoint
+        {
+            get
+            {
+                return _endpoint;
+            }
+            set
+            {
+                _endpoint = value;
+                _endpointIsDefined = true;
+            }
+        }
+
+        /// <summary> Any error in the service. </summary>
+        [WirePath("errorMessage")]
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
         }
 
         /// <summary> Endpoint type. </summary>
         [WirePath("jobServiceType")]
-        public string JobServiceType { get; set; }
-        /// <summary> Port for endpoint. </summary>
-        [WirePath("port")]
-        public int? Port { get; set; }
-        /// <summary> Url for endpoint. </summary>
-        [WirePath("endpoint")]
-        public string Endpoint { get; set; }
-        /// <summary> Status of endpoint. </summary>
-        [WirePath("status")]
-        public string Status { get; }
-        /// <summary> Any error in the service. </summary>
-        [WirePath("errorMessage")]
-        public string ErrorMessage { get; }
-        /// <summary> Additional properties to set on the endpoint. </summary>
-        [WirePath("properties")]
-        public IDictionary<string, string> Properties { get; set; }
+        public string JobServiceType
+        {
+            get
+            {
+                return _jobServiceType;
+            }
+            set
+            {
+                _jobServiceType = value;
+                _jobServiceTypeIsDefined = true;
+            }
+        }
+
         /// <summary>
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
-        /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </summary>
         [WirePath("nodes")]
-        public JobNodes Nodes { get; set; }
+        public JobNodes Nodes
+        {
+            get
+            {
+                return _nodes;
+            }
+            set
+            {
+                _nodes = value;
+                _nodesIsDefined = true;
+            }
+        }
+
+        /// <summary> Port for endpoint. </summary>
+        [WirePath("port")]
+        public int? Port
+        {
+            get
+            {
+                return _port;
+            }
+            set
+            {
+                _port = value;
+                _portIsDefined = true;
+            }
+        }
+
+        /// <summary> Additional properties to set on the endpoint. </summary>
+        [WirePath("properties")]
+        public IDictionary<string, string> Properties { get; set; }
+
+        /// <summary> Status of endpoint. </summary>
+        [WirePath("status")]
+        public string Status
+        {
+            get
+            {
+                return _status;
+            }
+        }
     }
 }

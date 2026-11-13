@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct PreferredAppGroupType : IEquatable<PreferredAppGroupType>
     {
         private readonly string _value;
+        /// <summary> Internal Use Only. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Use Desktop Application Group. </summary>
+        private const string DesktopValue = "Desktop";
+        /// <summary> Use RailApplications (RemoteApp). </summary>
+        private const string RailApplicationsValue = "RailApplications";
 
         /// <summary> Initializes a new instance of <see cref="PreferredAppGroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PreferredAppGroupType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string DesktopValue = "Desktop";
-        private const string RailApplicationsValue = "RailApplications";
-
-        /// <summary> None. </summary>
+        /// <summary> Internal Use Only. </summary>
         public static PreferredAppGroupType None { get; } = new PreferredAppGroupType(NoneValue);
-        /// <summary> Desktop. </summary>
+
+        /// <summary> Use Desktop Application Group. </summary>
         public static PreferredAppGroupType Desktop { get; } = new PreferredAppGroupType(DesktopValue);
-        /// <summary> RailApplications. </summary>
+
+        /// <summary> Use RailApplications (RemoteApp). </summary>
         public static PreferredAppGroupType RailApplications { get; } = new PreferredAppGroupType(RailApplicationsValue);
+
         /// <summary> Determines if two <see cref="PreferredAppGroupType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PreferredAppGroupType left, PreferredAppGroupType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PreferredAppGroupType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PreferredAppGroupType left, PreferredAppGroupType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PreferredAppGroupType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PreferredAppGroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PreferredAppGroupType(string value) => new PreferredAppGroupType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PreferredAppGroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PreferredAppGroupType?(string value) => value == null ? null : new PreferredAppGroupType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PreferredAppGroupType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PreferredAppGroupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

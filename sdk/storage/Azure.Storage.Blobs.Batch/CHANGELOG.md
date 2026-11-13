@@ -1,14 +1,69 @@
 # Release History
 
-## 12.23.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 12.28.0-beta.1 (2026-11-05)
 
 ### Other Changes
+- Upgraded `Azure.Storage.Blobs` package dependency to 12.31.0-beta.1
+
+## 12.27.1 (2026-10-05)
+
+### Other Changes
+- Upgraded `Azure.Storage.Blobs` package dependency to 12.30.1
+
+## 12.27.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.27.0-beta.1 and 12.27.0-beta.2.
+
+## 12.27.0-beta.2 (2026-09-14)
+
+### Bugs Fixed
+- Fixed bug where header values were not being sanitized for CR or LF characters when using `BlobBatchClient` APIs.
+
+## 12.26.1 (2026-09-14)
+
+### Bugs Fixed
+- Fixed bug where header values were not being sanitized for CR or LF characters when using `BlobBatchClient` APIs.
+
+## 12.27.0-beta.1 (2026-07-22)
+
+### Features Added
+- Added support for service version 2026-10-06.
+
+## 12.26.0 (2026-06-04)
+
+### Features Added
+- Includes all features from 12.26.0-beta.1
+
+## 12.25.0 (2026-05-12)
+
+### Features Added
+- Includes all features from 12.25.0-beta.1
+
+## 12.26.0-beta.1 (2026-03-24)
+
+### Features Added
+- Added support for service version 2026-06-06.
+
+## 12.25.0-beta.1 (2026-01-20)
+
+### Features Added
+- Added support for service version 2026-04-06.
+
+## 12.24.0 (2026-01-08)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
+
+## 12.24.0-beta.1 (2025-11-17)
+
+### Features Added
+- Added support for service version 2026-02-06.
+
+## 12.23.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.23.0-beta.1
 
 ## 12.22.0 (2025-07-14)
 

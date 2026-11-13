@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Messaging.WebPubSub.Clients
 {
-    internal class WebSocketClientFactory: IWebSocketClientFactory
+    internal class WebSocketClientFactory : IWebSocketClientFactory
     {
         public IWebSocketClient CreateWebSocketClient(Uri uri, string protocol)
         {

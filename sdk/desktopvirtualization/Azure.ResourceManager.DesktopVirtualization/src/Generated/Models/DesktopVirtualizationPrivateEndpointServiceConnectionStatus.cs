@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct DesktopVirtualizationPrivateEndpointServiceConnectionStatus : IEquatable<DesktopVirtualizationPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Connection is Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Connection was Approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Connection was rejected. </summary>
+        private const string RejectedValue = "Rejected";
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DesktopVirtualizationPrivateEndpointServiceConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
-
-        /// <summary> Pending. </summary>
+        /// <summary> Connection is Pending. </summary>
         public static DesktopVirtualizationPrivateEndpointServiceConnectionStatus Pending { get; } = new DesktopVirtualizationPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Connection was Approved. </summary>
         public static DesktopVirtualizationPrivateEndpointServiceConnectionStatus Approved { get; } = new DesktopVirtualizationPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Connection was rejected. </summary>
         public static DesktopVirtualizationPrivateEndpointServiceConnectionStatus Rejected { get; } = new DesktopVirtualizationPrivateEndpointServiceConnectionStatus(RejectedValue);
+
         /// <summary> Determines if two <see cref="DesktopVirtualizationPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DesktopVirtualizationPrivateEndpointServiceConnectionStatus left, DesktopVirtualizationPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DesktopVirtualizationPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DesktopVirtualizationPrivateEndpointServiceConnectionStatus left, DesktopVirtualizationPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DesktopVirtualizationPrivateEndpointServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DesktopVirtualizationPrivateEndpointServiceConnectionStatus(string value) => new DesktopVirtualizationPrivateEndpointServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DesktopVirtualizationPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new DesktopVirtualizationPrivateEndpointServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DesktopVirtualizationPrivateEndpointServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DesktopVirtualizationPrivateEndpointServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

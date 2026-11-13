@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataBoxValidationInputDiscriminatorExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataBoxValidationInputDiscriminator value) => value switch
         {
             DataBoxValidationInputDiscriminator.ValidateAddress => "ValidateAddress",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxValidationInputDiscriminator value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataBoxValidationInputDiscriminator ToDataBoxValidationInputDiscriminator(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateAddress")) return DataBoxValidationInputDiscriminator.ValidateAddress;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSubscriptionIsAllowedToCreateJob")) return DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidatePreferences")) return DataBoxValidationInputDiscriminator.ValidatePreferences;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateCreateOrderLimit")) return DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSkuAvailability")) return DataBoxValidationInputDiscriminator.ValidateSkuAvailability;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateDataTransferDetails")) return DataBoxValidationInputDiscriminator.ValidateDataTransferDetails;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateAddress"))
+            {
+                return DataBoxValidationInputDiscriminator.ValidateAddress;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSubscriptionIsAllowedToCreateJob"))
+            {
+                return DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidatePreferences"))
+            {
+                return DataBoxValidationInputDiscriminator.ValidatePreferences;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateCreateOrderLimit"))
+            {
+                return DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSkuAvailability"))
+            {
+                return DataBoxValidationInputDiscriminator.ValidateSkuAvailability;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateDataTransferDetails"))
+            {
+                return DataBoxValidationInputDiscriminator.ValidateDataTransferDetails;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxValidationInputDiscriminator value.");
         }
     }

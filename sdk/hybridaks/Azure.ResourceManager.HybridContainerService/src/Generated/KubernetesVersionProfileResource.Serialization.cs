@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
+    /// <summary></summary>
     public partial class KubernetesVersionProfileResource : IJsonModel<KubernetesVersionProfileData>
     {
-        private static KubernetesVersionProfileData s_dataDeserializationInstance;
-        private static KubernetesVersionProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<KubernetesVersionProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<KubernetesVersionProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new KubernetesVersionProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesVersionProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesVersionProfileData>)Data).Write(writer, options);
 
-        KubernetesVersionProfileData IJsonModel<KubernetesVersionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesVersionProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesVersionProfileData IJsonModel<KubernetesVersionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<KubernetesVersionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesVersionProfileData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         KubernetesVersionProfileData IPersistableModel<KubernetesVersionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesVersionProfileData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<KubernetesVersionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesVersionProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KubernetesVersionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

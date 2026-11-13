@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct FirewallPolicyRuleApplicationProtocolType : IEquatable<FirewallPolicyRuleApplicationProtocolType>
     {
         private readonly string _value;
+        /// <summary> Http. </summary>
+        private const string HttpValue = "Http";
+        /// <summary> Https. </summary>
+        private const string HttpsValue = "Https";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleApplicationProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyRuleApplicationProtocolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HttpValue = "Http";
-        private const string HttpsValue = "Https";
+            _value = value;
+        }
 
         /// <summary> Http. </summary>
         public static FirewallPolicyRuleApplicationProtocolType Http { get; } = new FirewallPolicyRuleApplicationProtocolType(HttpValue);
+
         /// <summary> Https. </summary>
         public static FirewallPolicyRuleApplicationProtocolType Https { get; } = new FirewallPolicyRuleApplicationProtocolType(HttpsValue);
+
         /// <summary> Determines if two <see cref="FirewallPolicyRuleApplicationProtocolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallPolicyRuleApplicationProtocolType left, FirewallPolicyRuleApplicationProtocolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallPolicyRuleApplicationProtocolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallPolicyRuleApplicationProtocolType left, FirewallPolicyRuleApplicationProtocolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyRuleApplicationProtocolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallPolicyRuleApplicationProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallPolicyRuleApplicationProtocolType(string value) => new FirewallPolicyRuleApplicationProtocolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallPolicyRuleApplicationProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallPolicyRuleApplicationProtocolType?(string value) => value == null ? null : new FirewallPolicyRuleApplicationProtocolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallPolicyRuleApplicationProtocolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallPolicyRuleApplicationProtocolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class FileServiceUsageResource : IJsonModel<FileServiceUsageData>
     {
-        private static FileServiceUsageData s_dataDeserializationInstance;
-        private static FileServiceUsageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FileServiceUsageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FileServiceUsageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FileServiceUsageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FileServiceUsageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FileServiceUsageData>)Data).Write(writer, options);
 
-        FileServiceUsageData IJsonModel<FileServiceUsageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FileServiceUsageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FileServiceUsageData IJsonModel<FileServiceUsageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FileServiceUsageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FileServiceUsageData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FileServiceUsageData IPersistableModel<FileServiceUsageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FileServiceUsageData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<FileServiceUsageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FileServiceUsageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FileServiceUsageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

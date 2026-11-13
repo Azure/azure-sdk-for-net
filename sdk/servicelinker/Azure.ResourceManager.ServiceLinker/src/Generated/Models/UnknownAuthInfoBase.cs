@@ -10,19 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> Unknown version of AuthInfoBase. </summary>
     internal partial class UnknownAuthInfoBase : AuthBaseInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAuthInfoBase"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAuthInfoBase(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
-        {
-            AuthType = authType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAuthInfoBase"/> for deserialization. </summary>
-        internal UnknownAuthInfoBase()
+        /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAuthInfoBase(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(authType != default ? authType : "unknown", authMode, additionalBinaryDataProperties)
         {
         }
     }

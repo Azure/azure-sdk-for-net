@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Depends on profile definition. </summary>
     public partial class DependsOnProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DependsOnProfile"/>. </summary>
         public DependsOnProfile()
@@ -57,19 +29,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="installDependsOn"> Application installation operation dependency. </param>
         /// <param name="uninstallDependsOn"> Application deletion operation dependency. </param>
         /// <param name="updateDependsOn"> Application update operation dependency. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DependsOnProfile(IList<string> installDependsOn, IList<string> uninstallDependsOn, IList<string> updateDependsOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DependsOnProfile(IList<string> installDependsOn, IList<string> uninstallDependsOn, IList<string> updateDependsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstallDependsOn = installDependsOn;
             UninstallDependsOn = uninstallDependsOn;
             UpdateDependsOn = updateDependsOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Application installation operation dependency. </summary>
         public IList<string> InstallDependsOn { get; }
+
         /// <summary> Application deletion operation dependency. </summary>
         public IList<string> UninstallDependsOn { get; }
+
         /// <summary> Application update operation dependency. </summary>
         public IList<string> UpdateDependsOn { get; }
     }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> Server name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
-        public SybaseLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> database)
+        public SybaseLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> database) : base("Sybase")
         {
             Argument.AssertNotNull(server, nameof(server));
             Argument.AssertNotNull(database, nameof(database));
 
-            Server = server;
-            Database = database;
-            LinkedServiceType = "Sybase";
+            TypeProperties = new SybaseLinkedServiceTypeProperties(server, database);
         }
 
         /// <summary> Initializes a new instance of <see cref="SybaseLinkedService"/>. </summary>
@@ -35,44 +34,118 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="server"> Server name for connection. Type: string (or Expression with resultType string). </param>
-        /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
-        /// <param name="schema"> Schema name for connection. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> AuthenticationType to be used for connection. </param>
-        /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password for authentication. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SybaseLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> schema, SybaseAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Sybase linked service properties. </param>
+        /// <param name="password"></param>
+        internal SybaseLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SybaseLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Server = server;
-            Database = database;
-            Schema = schema;
-            AuthenticationType = authenticationType;
-            Username = username;
+            TypeProperties = typeProperties;
             Password = password;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Sybase";
         }
 
-        /// <summary> Initializes a new instance of <see cref="SybaseLinkedService"/> for deserialization. </summary>
-        internal SybaseLinkedService()
-        {
-        }
+        /// <summary> Sybase linked service properties. </summary>
+        internal SybaseLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Server { get; set; }
+        public DataFactoryElement<string> Server
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Server;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SybaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.Server = value;
+            }
+        }
+
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Database { get; set; }
+        public DataFactoryElement<string> Database
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Database;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SybaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.Database = value;
+            }
+        }
+
         /// <summary> Schema name for connection. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Schema { get; set; }
+        public DataFactoryElement<string> Schema
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Schema;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SybaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.Schema = value;
+            }
+        }
+
         /// <summary> AuthenticationType to be used for connection. </summary>
-        public SybaseAuthenticationType? AuthenticationType { get; set; }
+        public SybaseAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SybaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> Password for authentication. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SybaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SybaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

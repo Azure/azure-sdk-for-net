@@ -141,5 +141,33 @@ namespace Azure.Security.KeyVault.Keys
             EncryptedKey = key,
             Algorithm = algorithm,
         };
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Cryptography.SecureWrapResult"/> class for mocking purposes.
+        /// </summary>
+        /// <param name="keyId">Sets the <see cref="SecureWrapResult.KeyId"/> property.</param>
+        /// <param name="encryptedKey">Sets the <see cref="SecureWrapResult.EncryptedKey"/> property.</param>
+        /// <param name="algorithm">Sets the <see cref="SecureWrapResult.Algorithm"/> property.</param>
+        /// <returns>A new instance of the <see cref="Cryptography.SecureWrapResult"/> class for mocking purposes.</returns>
+        public static SecureWrapResult SecureWrapResult(string keyId = default, byte[] encryptedKey = default, SecureKeyWrapAlgorithm algorithm = default) => new SecureWrapResult
+        {
+            KeyId = keyId,
+            EncryptedKey = encryptedKey,
+            Algorithm = algorithm,
+        };
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Cryptography.SecureUnwrapResult"/> class for mocking purposes.
+        /// </summary>
+        /// <param name="keyId">Sets the <see cref="SecureUnwrapResult.KeyId"/> property.</param>
+        /// <param name="key">Sets the <see cref="SecureUnwrapResult.Key"/> property.</param>
+        /// <param name="algorithm">Sets the <see cref="SecureUnwrapResult.Algorithm"/> property.</param>
+        /// <returns>A new instance of the <see cref="Cryptography.SecureUnwrapResult"/> class for mocking purposes.</returns>
+        public static SecureUnwrapResult SecureUnwrapResult(string keyId = default, byte[] key = default, SecureKeyWrapAlgorithm algorithm = default) => new SecureUnwrapResult
+        {
+            KeyId = keyId,
+            Key = key,
+            Algorithm = algorithm,
+        };
     }
 }

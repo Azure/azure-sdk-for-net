@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     /// <summary> AVS VM properties. </summary>
     public partial class PureStorageAvsVmProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PureStorageAvsVmProperties"/>. </summary>
         internal PureStorageAvsVmProperties()
@@ -61,8 +32,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="avs"> AVS VM details. </param>
         /// <param name="space"> Contains properties related to used Flash space. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageAvsVmProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string displayName, DateTimeOffset? createdOn, PureStorageSoftDeletionState softDeletion, PureStorageAvsVmVolumeContainerType? volumeContainerType, PureStorageAvsVmDetails avs, PureStorageSpaceUsage space, PureStorageResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PureStorageAvsVmProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string displayName, DateTimeOffset? createdOn, PureStorageSoftDeletionState softDeletion, PureStorageAvsVmVolumeContainerType? volumeContainerType, PureStorageAvsVmDetails avs, PureStorageSpaceUsage space, PureStorageResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StoragePoolInternalId = storagePoolInternalId;
             StoragePoolResourceId = storagePoolResourceId;
@@ -73,25 +44,33 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             Avs = avs;
             Space = space;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Pure Storage's internal ID for the storage pool. </summary>
         public string StoragePoolInternalId { get; }
+
         /// <summary> Azure resource ID of the storage pool. </summary>
         public ResourceIdentifier StoragePoolResourceId { get; }
+
         /// <summary> Human-readable name of the AVS VM. </summary>
         public string DisplayName { get; }
+
         /// <summary> Date at which the AVS VM was created, as an RFC 3339 timestamp. </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> AVS VM's soft-deletion state. </summary>
         public PureStorageSoftDeletionState SoftDeletion { get; }
+
         /// <summary> Specify which control plane handles the lifecycle of the volume container. </summary>
         public PureStorageAvsVmVolumeContainerType? VolumeContainerType { get; }
+
         /// <summary> AVS VM details. </summary>
         public PureStorageAvsVmDetails Avs { get; }
+
         /// <summary> Contains properties related to used Flash space. </summary>
         public PureStorageSpaceUsage Space { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public PureStorageResourceProvisioningState? ProvisioningState { get; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoPrincipalAssignmentType : IEquatable<KustoPrincipalAssignmentType>
     {
         private readonly string _value;
+        /// <summary> App. </summary>
+        private const string AppValue = "App";
+        /// <summary> Group. </summary>
+        private const string GroupValue = "Group";
+        /// <summary> User. </summary>
+        private const string UserValue = "User";
 
         /// <summary> Initializes a new instance of <see cref="KustoPrincipalAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoPrincipalAssignmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AppValue = "App";
-        private const string GroupValue = "Group";
-        private const string UserValue = "User";
+            _value = value;
+        }
 
         /// <summary> App. </summary>
         public static KustoPrincipalAssignmentType App { get; } = new KustoPrincipalAssignmentType(AppValue);
+
         /// <summary> Group. </summary>
         public static KustoPrincipalAssignmentType Group { get; } = new KustoPrincipalAssignmentType(GroupValue);
+
         /// <summary> User. </summary>
         public static KustoPrincipalAssignmentType User { get; } = new KustoPrincipalAssignmentType(UserValue);
+
         /// <summary> Determines if two <see cref="KustoPrincipalAssignmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoPrincipalAssignmentType left, KustoPrincipalAssignmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoPrincipalAssignmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoPrincipalAssignmentType left, KustoPrincipalAssignmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoPrincipalAssignmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoPrincipalAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoPrincipalAssignmentType(string value) => new KustoPrincipalAssignmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoPrincipalAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoPrincipalAssignmentType?(string value) => value == null ? null : new KustoPrincipalAssignmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoPrincipalAssignmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoPrincipalAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

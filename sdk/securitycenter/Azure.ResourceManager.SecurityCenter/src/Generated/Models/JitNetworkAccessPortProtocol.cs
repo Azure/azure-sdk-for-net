@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The JitNetworkAccessPortProtocol. </summary>
+    /// <summary></summary>
     public readonly partial struct JitNetworkAccessPortProtocol : IEquatable<JitNetworkAccessPortProtocol>
     {
         private readonly string _value;
+        /// <summary> TCP. </summary>
+        private const string TcpValue = "TCP";
+        /// <summary> UDP. </summary>
+        private const string UdpValue = "UDP";
+        /// <summary> *. </summary>
+        private const string AllValue = "*";
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPortProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JitNetworkAccessPortProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
-        private const string AllValue = "*";
+            _value = value;
+        }
 
         /// <summary> TCP. </summary>
         public static JitNetworkAccessPortProtocol Tcp { get; } = new JitNetworkAccessPortProtocol(TcpValue);
+
         /// <summary> UDP. </summary>
         public static JitNetworkAccessPortProtocol Udp { get; } = new JitNetworkAccessPortProtocol(UdpValue);
+
         /// <summary> *. </summary>
         public static JitNetworkAccessPortProtocol All { get; } = new JitNetworkAccessPortProtocol(AllValue);
+
         /// <summary> Determines if two <see cref="JitNetworkAccessPortProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JitNetworkAccessPortProtocol left, JitNetworkAccessPortProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JitNetworkAccessPortProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JitNetworkAccessPortProtocol left, JitNetworkAccessPortProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JitNetworkAccessPortProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JitNetworkAccessPortProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JitNetworkAccessPortProtocol(string value) => new JitNetworkAccessPortProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JitNetworkAccessPortProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JitNetworkAccessPortProtocol?(string value) => value == null ? null : new JitNetworkAccessPortProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JitNetworkAccessPortProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JitNetworkAccessPortProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Automation
 {
+    /// <summary></summary>
     public partial class AutomationAccountResource : IJsonModel<AutomationAccountData>
     {
-        private static AutomationAccountData s_dataDeserializationInstance;
-        private static AutomationAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutomationAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutomationAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutomationAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutomationAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationAccountData>)Data).Write(writer, options);
 
-        AutomationAccountData IJsonModel<AutomationAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationAccountData IJsonModel<AutomationAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutomationAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationAccountData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutomationAccountData IPersistableModel<AutomationAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationAccountData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutomationAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

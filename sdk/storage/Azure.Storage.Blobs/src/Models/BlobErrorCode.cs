@@ -1,19 +1,21 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ComponentModel;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Error codes returned by the service.
     /// </summary>
-    [CodeGenModel("ErrorCode")]
+    [CodeGenType("ErrorCode")]
     public partial struct BlobErrorCode
     {
         private const string SnaphotOperationRateExceededValue = "SnaphotOperationRateExceeded";
         private const string IncrementalCopyOfEralierVersionSnapshotNotAllowedValue = "IncrementalCopyOfEralierVersionSnapshotNotAllowed";
+        private const string IncrementalCopyOfEarlierVersionSnapshotNotAllowedValue = "IncrementalCopyOfEarlierVersionSnapshotNotAllowed";
 
         /// <summary> SnaphotOperationRateExceeded. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -22,6 +24,10 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> IncrementalCopyOfEralierVersionSnapshotNotAllowed. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get; } = new BlobErrorCode(IncrementalCopyOfEralierVersionSnapshotNotAllowedValue);
+
+        /// <summary> IncrementalCopyOfEarlierVersionSnapshotNotAllowed. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobErrorCode IncrementalCopyOfEarlierVersionSnapshotNotAllowed { get; } = new BlobErrorCode(IncrementalCopyOfEarlierVersionSnapshotNotAllowedValue);
 
         /// <summary> Overloading equality for BlobErrorCode==string </summary>
         public static bool operator ==(BlobErrorCode code, string value) => code.Equals(value);

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> Unknown version of PartnerDestinationInfo. </summary>
     internal partial class UnknownPartnerDestinationInfo : PartnerDestinationInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPartnerDestinationInfo"/>. </summary>
@@ -26,14 +25,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
         /// <param name="endpointServiceContext"> Additional context of the partner destination endpoint. </param>
         /// <param name="resourceMoveChangeHistory"> Change history of the resource move. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownPartnerDestinationInfo(string azureSubscriptionId, string resourceGroupName, string name, PartnerEndpointType endpointType, string endpointServiceContext, IList<ResourceMoveChangeHistory> resourceMoveChangeHistory, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(azureSubscriptionId, resourceGroupName, name, endpointType, endpointServiceContext, resourceMoveChangeHistory, serializedAdditionalRawData)
-        {
-            EndpointType = endpointType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownPartnerDestinationInfo"/> for deserialization. </summary>
-        internal UnknownPartnerDestinationInfo()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownPartnerDestinationInfo(string azureSubscriptionId, string resourceGroupName, string name, PartnerEndpointType endpointType, string endpointServiceContext, IList<ResourceMoveChangeHistory> resourceMoveChangeHistory, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(azureSubscriptionId, resourceGroupName, name, endpointType != default ? endpointType : "unknown", endpointServiceContext, resourceMoveChangeHistory, additionalBinaryDataProperties)
         {
         }
     }

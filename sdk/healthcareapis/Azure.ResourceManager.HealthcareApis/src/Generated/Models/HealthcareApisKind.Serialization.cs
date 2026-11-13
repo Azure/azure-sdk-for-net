@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     internal static partial class HealthcareApisKindExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HealthcareApisKind value) => value switch
         {
             HealthcareApisKind.Fhir => "fhir",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareApisKind value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static HealthcareApisKind ToHealthcareApisKind(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fhir")) return HealthcareApisKind.Fhir;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fhir-Stu3")) return HealthcareApisKind.FhirStu3;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fhir-R4")) return HealthcareApisKind.FhirR4;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fhir"))
+            {
+                return HealthcareApisKind.Fhir;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fhir-Stu3"))
+            {
+                return HealthcareApisKind.FhirStu3;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fhir-R4"))
+            {
+                return HealthcareApisKind.FhirR4;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareApisKind value.");
         }
     }

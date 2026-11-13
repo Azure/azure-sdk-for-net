@@ -7,43 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ssl configuration for scoring. </summary>
     public partial class MachineLearningSslConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _cert;
+        private bool _certIsDefined;
+        private string _key;
+        private bool _keyIsDefined;
+        private string _cname;
+        private bool _cnameIsDefined;
+        private string _leafDomainLabel;
+        private bool _leafDomainLabelIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSslConfiguration"/>. </summary>
         public MachineLearningSslConfiguration()
@@ -57,33 +37,82 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="cname"> CNAME of the cert. </param>
         /// <param name="leafDomainLabel"> Leaf domain label of public endpoint. </param>
         /// <param name="overwriteExistingDomain"> Indicates whether to overwrite existing domain label. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningSslConfiguration(MachineLearningSslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSslConfiguration(MachineLearningSslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            Cert = cert;
-            Key = key;
-            Cname = cname;
-            LeafDomainLabel = leafDomainLabel;
+            _cert = cert;
+            _key = key;
+            _cname = cname;
+            _leafDomainLabel = leafDomainLabel;
             OverwriteExistingDomain = overwriteExistingDomain;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable or disable ssl for scoring. </summary>
         [WirePath("status")]
         public MachineLearningSslConfigStatus? Status { get; set; }
+
         /// <summary> Cert data. </summary>
         [WirePath("cert")]
-        public string Cert { get; set; }
+        public string Cert
+        {
+            get
+            {
+                return _cert;
+            }
+            set
+            {
+                _cert = value;
+                _certIsDefined = true;
+            }
+        }
+
         /// <summary> Key data. </summary>
         [WirePath("key")]
-        public string Key { get; set; }
+        public string Key
+        {
+            get
+            {
+                return _key;
+            }
+            set
+            {
+                _key = value;
+                _keyIsDefined = true;
+            }
+        }
+
         /// <summary> CNAME of the cert. </summary>
         [WirePath("cname")]
-        public string Cname { get; set; }
+        public string Cname
+        {
+            get
+            {
+                return _cname;
+            }
+            set
+            {
+                _cname = value;
+                _cnameIsDefined = true;
+            }
+        }
+
         /// <summary> Leaf domain label of public endpoint. </summary>
         [WirePath("leafDomainLabel")]
-        public string LeafDomainLabel { get; set; }
+        public string LeafDomainLabel
+        {
+            get
+            {
+                return _leafDomainLabel;
+            }
+            set
+            {
+                _leafDomainLabel = value;
+                _leafDomainLabelIsDefined = true;
+            }
+        }
+
         /// <summary> Indicates whether to overwrite existing domain label. </summary>
         [WirePath("overwriteExistingDomain")]
         public bool? OverwriteExistingDomain { get; set; }

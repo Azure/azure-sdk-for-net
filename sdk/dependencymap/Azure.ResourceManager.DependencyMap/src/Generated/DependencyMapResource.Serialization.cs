@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DependencyMap
 {
+    /// <summary></summary>
     public partial class DependencyMapResource : IJsonModel<DependencyMapData>
     {
-        private static DependencyMapData s_dataDeserializationInstance;
-        private static DependencyMapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DependencyMapData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DependencyMapData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DependencyMapData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DependencyMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DependencyMapData>)Data).Write(writer, options);
 
-        DependencyMapData IJsonModel<DependencyMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DependencyMapData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DependencyMapData IJsonModel<DependencyMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DependencyMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DependencyMapData>(Data, options, AzureResourceManagerDependencyMapContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DependencyMapData IPersistableModel<DependencyMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DependencyMapData>(data, options, AzureResourceManagerDependencyMapContext.Default);
 
-        string IPersistableModel<DependencyMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DependencyMapData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DependencyMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

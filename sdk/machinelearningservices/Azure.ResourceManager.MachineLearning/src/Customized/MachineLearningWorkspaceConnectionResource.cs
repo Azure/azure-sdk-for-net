@@ -7,7 +7,10 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -40,14 +43,29 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
+            // Customized: preserve the shipped resource-instance WorkspaceConnections_Create method shape.
+            // The generator emits the full-resource PUT only on the collection, so this shim reuses the
+            // generated PUT RestOperation instead of sending the PATCH-shaped generated Update request.
+            // TODO: tracked in https://github.com/Azure/azure-sdk-for-net/issues/60130 - remove when the
+            // generator supports resource-instance PUT-based update overloads.
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response), response.GetRawResponse()));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -78,14 +96,27 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
+            // Customized: preserve the shipped resource-instance WorkspaceConnections_Create method shape.
+            // The generator emits the full-resource PUT only on the collection, so this shim reuses the
+            // generated PUT RestOperation instead of sending the PATCH-shaped generated Update request.
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response), response.GetRawResponse()));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
             string type = default;
             ConfidenceEnum? confidence = default;
             IReadOnlyList<MatchCodesEnum> matchCodes = default;
-            Address address = default;
+            SearchAddress address = default;
             IReadOnlyList<GeocodePointsItem> geocodePoints = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.Maps.Search.Models
                     {
                         continue;
                     }
-                    address = Address.DeserializeAddress(property.Value);
+                    address = SearchAddress.DeserializeSearchAddress(property.Value);
                     continue;
                 }
                 if (property.NameEquals("geocodePoints"u8))

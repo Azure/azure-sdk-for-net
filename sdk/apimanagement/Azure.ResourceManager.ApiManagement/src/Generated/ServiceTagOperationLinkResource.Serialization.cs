@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ServiceTagOperationLinkResource : IJsonModel<TagOperationLinkContractData>
     {
-        private static TagOperationLinkContractData s_dataDeserializationInstance;
-        private static TagOperationLinkContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TagOperationLinkContractData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TagOperationLinkContractData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TagOperationLinkContractData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TagOperationLinkContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TagOperationLinkContractData>)Data).Write(writer, options);
 
-        TagOperationLinkContractData IJsonModel<TagOperationLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagOperationLinkContractData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TagOperationLinkContractData IJsonModel<TagOperationLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TagOperationLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TagOperationLinkContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TagOperationLinkContractData IPersistableModel<TagOperationLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagOperationLinkContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<TagOperationLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagOperationLinkContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TagOperationLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -14,37 +14,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2APolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="A2APolicyDetails"/>. </summary>
-        internal A2APolicyDetails()
+        internal A2APolicyDetails() : base("A2A")
         {
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2APolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
         /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
-        internal A2APolicyDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? appConsistentFrequencyInMinutes, string multiVmSyncStatus, int? crashConsistentFrequencyInMinutes) : base(instanceType, serializedAdditionalRawData)
+        internal A2APolicyDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? appConsistentFrequencyInMinutes, string multiVmSyncStatus, int? crashConsistentFrequencyInMinutes) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutes;
             RecoveryPointHistory = recoveryPointHistory;
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
             MultiVmSyncStatus = multiVmSyncStatus;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
-            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> The recovery point threshold in minutes. </summary>
         public int? RecoveryPointThresholdInMinutes { get; }
+
         /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
         public int? RecoveryPointHistory { get; }
+
         /// <summary> The app consistent snapshot frequency in minutes. </summary>
         public int? AppConsistentFrequencyInMinutes { get; }
+
         /// <summary> A value indicating whether multi-VM sync has to be enabled. </summary>
         public string MultiVmSyncStatus { get; }
+
         /// <summary> The crash consistent snapshot frequency in minutes. </summary>
         public int? CrashConsistentFrequencyInMinutes { get; }
     }

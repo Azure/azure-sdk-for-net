@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = eventHubScope.ConsumerGroups.First();
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                     string partition = args.Partition.PartitionId;
                     byte[] eventBody = args.Data.EventBody.ToArray();
-                    Debug.WriteLine($"Event from partition { partition } with length { eventBody.Length }.");
+                    Debug.WriteLine($"Event from partition {partition} with length {eventBody.Length}.");
                 }
                 catch
                 {
@@ -105,8 +105,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 try
                 {
                     Debug.WriteLine("Error in the EventProcessorClient");
-                    Debug.WriteLine($"\tOperation: { args.Operation }");
-                    Debug.WriteLine($"\tException: { args.Exception }");
+                    Debug.WriteLine($"\tOperation: {args.Operation}");
+                    Debug.WriteLine($"\tException: {args.Exception}");
                     Debug.WriteLine("");
                 }
                 catch (Exception ex)
@@ -204,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = eventHubScope.ConsumerGroups.First();
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
@@ -336,7 +336,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = eventHubScope.ConsumerGroups.First();
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
@@ -459,7 +459,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = eventHubScope.ConsumerGroups.First();
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 

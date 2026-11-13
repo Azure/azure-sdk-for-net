@@ -11,6 +11,8 @@ namespace OpenTelemetry.Resources;
 /// </summary>
 internal static class AzureResourceBuilderExtensions
 {
+    internal static readonly Version SemanticConventionsVersion = new(1, 44, 0);
+
     /// <summary>
     /// Enables Azure App Service resource detector.
     /// </summary>

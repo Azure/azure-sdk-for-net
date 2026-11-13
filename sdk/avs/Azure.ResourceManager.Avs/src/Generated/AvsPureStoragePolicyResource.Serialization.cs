@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class AvsPureStoragePolicyResource : IJsonModel<AvsPureStoragePolicyData>
     {
-        private static AvsPureStoragePolicyData s_dataDeserializationInstance;
-        private static AvsPureStoragePolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AvsPureStoragePolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AvsPureStoragePolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AvsPureStoragePolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsPureStoragePolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvsPureStoragePolicyData>)Data).Write(writer, options);
 
-        AvsPureStoragePolicyData IJsonModel<AvsPureStoragePolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsPureStoragePolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsPureStoragePolicyData IJsonModel<AvsPureStoragePolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AvsPureStoragePolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsPureStoragePolicyData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AvsPureStoragePolicyData IPersistableModel<AvsPureStoragePolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsPureStoragePolicyData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<AvsPureStoragePolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsPureStoragePolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsPureStoragePolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

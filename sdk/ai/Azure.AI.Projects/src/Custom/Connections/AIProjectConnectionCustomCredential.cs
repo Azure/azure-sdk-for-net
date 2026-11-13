@@ -1,0 +1,16 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace Azure.AI.Projects
+{
+    [CodeGenType("AIProjectConnectionCustomCredential")]
+    public partial class AIProjectConnectionCustomCredential
+    {
+        /// <summary> Gets the set of custom credential key/value pairs. </summary>
+        [CodeGenMember("AdditionalProperties")]
+        public IReadOnlyDictionary<string, string> Keys => new ReadOnlyDictionary<string, string>(_additionalStringProperties);
+    }
+}

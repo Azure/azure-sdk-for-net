@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 {
     public class WorkspaceTest : IotFirmwareDefenseManagementTestBase
     {
-        private static readonly string rgName = "testRg";
         private static ResourceGroupResource rg;
 
         public WorkspaceTest(bool isAsync)
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             var retrievedWorkspace = await rg.GetFirmwareAnalysisWorkspaceAsync(resourceName);
             await retrievedWorkspace.Value.DeleteAsync(WaitUntil.Completed);
             var action = async () => await rg.GetFirmwareAnalysisWorkspaceAsync(resourceName);
-            await action.Should ().ThrowAsync<Exception> ();
+            await action.Should().ThrowAsync<Exception>();
         }
     }
 }

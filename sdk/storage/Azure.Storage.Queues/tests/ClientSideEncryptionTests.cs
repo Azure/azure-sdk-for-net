@@ -22,9 +22,9 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
-using static Moq.It;
 using static Azure.Storage.Constants.ClientSideEncryption;
 using static Azure.Storage.Test.Shared.ClientSideEncryptionTestExtensions;
+using static Moq.It;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -271,7 +271,8 @@ namespace Azure.Storage.Queues.Test
                             explicitlyUnwrappedKey);
                         versionInternal = ClientSideEncryptionVersionInternal.V2_0;
                         break;
-                    default: throw new ArgumentException("Test does not support clientside encryption version");
+                    default:
+                        throw new ArgumentException("Test does not support clientside encryption version");
                 }
 
                 // compare data

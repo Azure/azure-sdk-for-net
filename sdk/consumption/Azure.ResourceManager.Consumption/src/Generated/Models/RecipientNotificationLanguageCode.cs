@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Consumption.Models
     public readonly partial struct RecipientNotificationLanguageCode : IEquatable<RecipientNotificationLanguageCode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RecipientNotificationLanguageCode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RecipientNotificationLanguageCode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnglishUnitedStatesValue = "en-us";
         private const string JapaneseJapanValue = "ja-jp";
         private const string ChinesePrcValue = "zh-cn";
@@ -44,65 +37,109 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string PortuguesePortugalValue = "pt-pt";
         private const string SwedishSwedenValue = "sv-se";
 
-        /// <summary> en-us. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientNotificationLanguageCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecipientNotificationLanguageCode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the EnglishUnitedStates. </summary>
         public static RecipientNotificationLanguageCode EnglishUnitedStates { get; } = new RecipientNotificationLanguageCode(EnglishUnitedStatesValue);
-        /// <summary> ja-jp. </summary>
+
+        /// <summary> Gets the JapaneseJapan. </summary>
         public static RecipientNotificationLanguageCode JapaneseJapan { get; } = new RecipientNotificationLanguageCode(JapaneseJapanValue);
-        /// <summary> zh-cn. </summary>
+
+        /// <summary> Gets the ChinesePrc. </summary>
         public static RecipientNotificationLanguageCode ChinesePrc { get; } = new RecipientNotificationLanguageCode(ChinesePrcValue);
-        /// <summary> de-de. </summary>
+
+        /// <summary> Gets the GermanGermany. </summary>
         public static RecipientNotificationLanguageCode GermanGermany { get; } = new RecipientNotificationLanguageCode(GermanGermanyValue);
-        /// <summary> es-es. </summary>
+
+        /// <summary> Gets the SpanishSpain. </summary>
         public static RecipientNotificationLanguageCode SpanishSpain { get; } = new RecipientNotificationLanguageCode(SpanishSpainValue);
-        /// <summary> fr-fr. </summary>
+
+        /// <summary> Gets the FrenchFrance. </summary>
         public static RecipientNotificationLanguageCode FrenchFrance { get; } = new RecipientNotificationLanguageCode(FrenchFranceValue);
-        /// <summary> it-it. </summary>
+
+        /// <summary> Gets the ItalianItaly. </summary>
         public static RecipientNotificationLanguageCode ItalianItaly { get; } = new RecipientNotificationLanguageCode(ItalianItalyValue);
-        /// <summary> ko-kr. </summary>
+
+        /// <summary> Gets the KoreanKorea. </summary>
         public static RecipientNotificationLanguageCode KoreanKorea { get; } = new RecipientNotificationLanguageCode(KoreanKoreaValue);
-        /// <summary> pt-br. </summary>
+
+        /// <summary> Gets the PortugueseBrazil. </summary>
         public static RecipientNotificationLanguageCode PortugueseBrazil { get; } = new RecipientNotificationLanguageCode(PortugueseBrazilValue);
-        /// <summary> ru-ru. </summary>
+
+        /// <summary> Gets the RussianRussia. </summary>
         public static RecipientNotificationLanguageCode RussianRussia { get; } = new RecipientNotificationLanguageCode(RussianRussiaValue);
-        /// <summary> zh-tw. </summary>
+
+        /// <summary> Gets the ChineseTaiwan. </summary>
         public static RecipientNotificationLanguageCode ChineseTaiwan { get; } = new RecipientNotificationLanguageCode(ChineseTaiwanValue);
-        /// <summary> cs-cz. </summary>
+
+        /// <summary> Gets the CzechCzechRepublic. </summary>
         public static RecipientNotificationLanguageCode CzechCzechRepublic { get; } = new RecipientNotificationLanguageCode(CzechCzechRepublicValue);
-        /// <summary> pl-pl. </summary>
+
+        /// <summary> Gets the PolishPoland. </summary>
         public static RecipientNotificationLanguageCode PolishPoland { get; } = new RecipientNotificationLanguageCode(PolishPolandValue);
-        /// <summary> tr-tr. </summary>
+
+        /// <summary> Gets the TurkishTurkey. </summary>
         public static RecipientNotificationLanguageCode TurkishTurkey { get; } = new RecipientNotificationLanguageCode(TurkishTurkeyValue);
-        /// <summary> da-dk. </summary>
+
+        /// <summary> Gets the DanishDenmark. </summary>
         public static RecipientNotificationLanguageCode DanishDenmark { get; } = new RecipientNotificationLanguageCode(DanishDenmarkValue);
-        /// <summary> en-gb. </summary>
+
+        /// <summary> Gets the EnglishUnitedKingdom. </summary>
         public static RecipientNotificationLanguageCode EnglishUnitedKingdom { get; } = new RecipientNotificationLanguageCode(EnglishUnitedKingdomValue);
-        /// <summary> hu-hu. </summary>
+
+        /// <summary> Gets the HungarianHungary. </summary>
         public static RecipientNotificationLanguageCode HungarianHungary { get; } = new RecipientNotificationLanguageCode(HungarianHungaryValue);
-        /// <summary> nb-no. </summary>
+
+        /// <summary> Gets the NorwegianNorway. </summary>
         public static RecipientNotificationLanguageCode NorwegianNorway { get; } = new RecipientNotificationLanguageCode(NorwegianNorwayValue);
-        /// <summary> nl-nl. </summary>
+
+        /// <summary> Gets the DutchNetherlands. </summary>
         public static RecipientNotificationLanguageCode DutchNetherlands { get; } = new RecipientNotificationLanguageCode(DutchNetherlandsValue);
-        /// <summary> pt-pt. </summary>
+
+        /// <summary> Gets the PortuguesePortugal. </summary>
         public static RecipientNotificationLanguageCode PortuguesePortugal { get; } = new RecipientNotificationLanguageCode(PortuguesePortugalValue);
-        /// <summary> sv-se. </summary>
+
+        /// <summary> Gets the SwedishSweden. </summary>
         public static RecipientNotificationLanguageCode SwedishSweden { get; } = new RecipientNotificationLanguageCode(SwedishSwedenValue);
+
         /// <summary> Determines if two <see cref="RecipientNotificationLanguageCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecipientNotificationLanguageCode left, RecipientNotificationLanguageCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecipientNotificationLanguageCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecipientNotificationLanguageCode left, RecipientNotificationLanguageCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecipientNotificationLanguageCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecipientNotificationLanguageCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecipientNotificationLanguageCode(string value) => new RecipientNotificationLanguageCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecipientNotificationLanguageCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecipientNotificationLanguageCode?(string value) => value == null ? null : new RecipientNotificationLanguageCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecipientNotificationLanguageCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecipientNotificationLanguageCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

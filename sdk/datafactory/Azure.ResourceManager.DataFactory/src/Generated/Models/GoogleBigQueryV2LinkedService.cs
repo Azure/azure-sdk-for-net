@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,13 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="projectId"> The default BigQuery project id to query against. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectId"/> is null. </exception>
-        public GoogleBigQueryV2LinkedService(DataFactoryElement<string> projectId, GoogleBigQueryV2AuthenticationType authenticationType)
+        public GoogleBigQueryV2LinkedService(DataFactoryElement<string> projectId, GoogleBigQueryV2AuthenticationType authenticationType) : base("GoogleBigQueryV2")
         {
             Argument.AssertNotNull(projectId, nameof(projectId));
 
-            ProjectId = projectId;
-            AuthenticationType = authenticationType;
-            LinkedServiceType = "GoogleBigQueryV2";
+            TypeProperties = new GoogleBigQueryV2LinkedServiceTypeProperties(projectId, authenticationType);
         }
 
         /// <summary> Initializes a new instance of <see cref="GoogleBigQueryV2LinkedService"/>. </summary>
@@ -34,44 +33,82 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="projectId"> The default BigQuery project id to query against. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. </param>
-        /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
-        /// <param name="clientSecret"> The client secret of the google application used to acquire the refresh token. </param>
-        /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </param>
-        /// <param name="keyFileContent"> The content of the .json key file that is used to authenticate the service account. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal GoogleBigQueryV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> projectId, GoogleBigQueryV2AuthenticationType authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactorySecret refreshToken, DataFactorySecret keyFileContent, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Google BigQuery service linked service properties. </param>
+        internal GoogleBigQueryV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, GoogleBigQueryV2LinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ProjectId = projectId;
-            AuthenticationType = authenticationType;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            RefreshToken = refreshToken;
-            KeyFileContent = keyFileContent;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "GoogleBigQueryV2";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryV2LinkedService"/> for deserialization. </summary>
-        internal GoogleBigQueryV2LinkedService()
-        {
-        }
+        /// <summary> Google BigQuery service linked service properties. </summary>
+        internal GoogleBigQueryV2LinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The default BigQuery project id to query against. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ProjectId { get; set; }
+        public DataFactoryElement<string> ProjectId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ProjectId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleBigQueryV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.ProjectId = value;
+            }
+        }
+
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. </summary>
-        public GoogleBigQueryV2AuthenticationType AuthenticationType { get; set; }
+        public GoogleBigQueryV2AuthenticationType AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleBigQueryV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClientId { get; set; }
-        /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
-        public DataFactorySecret ClientSecret { get; set; }
-        /// <summary> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </summary>
-        public DataFactorySecret RefreshToken { get; set; }
-        /// <summary> The content of the .json key file that is used to authenticate the service account. Type: string (or Expression with resultType string). </summary>
-        public DataFactorySecret KeyFileContent { get; set; }
+        public DataFactoryElement<string> ClientId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleBigQueryV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientId = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleBigQueryV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

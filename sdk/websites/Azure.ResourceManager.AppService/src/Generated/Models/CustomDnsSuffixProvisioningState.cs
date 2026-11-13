@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The CustomDnsSuffixProvisioningState. </summary>
+    /// <summary></summary>
     public enum CustomDnsSuffixProvisioningState
     {
         /// <summary> Succeeded. </summary>

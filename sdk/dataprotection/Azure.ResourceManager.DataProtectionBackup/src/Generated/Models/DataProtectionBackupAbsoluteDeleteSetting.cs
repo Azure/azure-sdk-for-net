@@ -15,22 +15,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
-        public DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration) : base(duration)
+        public DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration) : base(duration, "AbsoluteDeleteOption")
         {
-            ObjectType = "AbsoluteDeleteOption";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(duration, objectType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "AbsoluteDeleteOption";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAbsoluteDeleteSetting"/> for deserialization. </summary>
-        internal DataProtectionBackupAbsoluteDeleteSetting()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(duration, objectType, additionalBinaryDataProperties)
         {
         }
     }

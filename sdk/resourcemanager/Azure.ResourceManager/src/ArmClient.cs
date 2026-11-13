@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -86,6 +87,17 @@ namespace Azure.ResourceManager
             _tenant = new TenantResource(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
+        /// </summary>
+        /// <param name="settings"> The settings used to configure the client. </param>
+        /// <exception cref="ArgumentNullException"> If <paramref name="settings"/> is null. </exception>
+        [Experimental("SCME0002")]
+        public ArmClient(ArmClientSettings settings)
+            : this(settings?.CredentialProvider as TokenCredential, settings?.DefaultSubscriptionId, settings?.Options)
+        {
         }
 
         internal virtual bool CanUseTagResource(CancellationToken cancellationToken = default)

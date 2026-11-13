@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct CoverageLevel : IEquatable<CoverageLevel>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Low. </summary>
+        private const string LowValue = "Low";
+        /// <summary> BelowAverage. </summary>
+        private const string BelowAverageValue = "BelowAverage";
+        /// <summary> Average. </summary>
+        private const string AverageValue = "Average";
+        /// <summary> AboveAverage. </summary>
+        private const string AboveAverageValue = "AboveAverage";
+        /// <summary> Full. </summary>
+        private const string FullValue = "Full";
 
         /// <summary> Initializes a new instance of <see cref="CoverageLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CoverageLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string LowValue = "Low";
-        private const string BelowAverageValue = "BelowAverage";
-        private const string AverageValue = "Average";
-        private const string AboveAverageValue = "AboveAverage";
-        private const string FullValue = "Full";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static CoverageLevel Default { get; } = new CoverageLevel(DefaultValue);
+
         /// <summary> Low. </summary>
         public static CoverageLevel Low { get; } = new CoverageLevel(LowValue);
+
         /// <summary> BelowAverage. </summary>
         public static CoverageLevel BelowAverage { get; } = new CoverageLevel(BelowAverageValue);
+
         /// <summary> Average. </summary>
         public static CoverageLevel Average { get; } = new CoverageLevel(AverageValue);
+
         /// <summary> AboveAverage. </summary>
         public static CoverageLevel AboveAverage { get; } = new CoverageLevel(AboveAverageValue);
+
         /// <summary> Full. </summary>
         public static CoverageLevel Full { get; } = new CoverageLevel(FullValue);
+
         /// <summary> Determines if two <see cref="CoverageLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CoverageLevel left, CoverageLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CoverageLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CoverageLevel left, CoverageLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CoverageLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CoverageLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CoverageLevel(string value) => new CoverageLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CoverageLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CoverageLevel?(string value) => value == null ? null : new CoverageLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CoverageLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CoverageLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

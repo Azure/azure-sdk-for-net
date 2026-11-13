@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
+    /// <summary></summary>
     public partial class RaiBlocklistItemResource : IJsonModel<RaiBlocklistItemData>
     {
-        private static RaiBlocklistItemData s_dataDeserializationInstance;
-        private static RaiBlocklistItemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RaiBlocklistItemData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RaiBlocklistItemData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RaiBlocklistItemData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RaiBlocklistItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiBlocklistItemData>)Data).Write(writer, options);
 
-        RaiBlocklistItemData IJsonModel<RaiBlocklistItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiBlocklistItemData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RaiBlocklistItemData IJsonModel<RaiBlocklistItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RaiBlocklistItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiBlocklistItemData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RaiBlocklistItemData IPersistableModel<RaiBlocklistItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiBlocklistItemData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<RaiBlocklistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiBlocklistItemData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RaiBlocklistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

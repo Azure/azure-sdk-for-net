@@ -3,21 +3,21 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The AIProjectClient. </summary>
-    public partial class AIProjectClient
+    public partial class AIProjectClient : ClientConnectionProvider
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential provider used to authenticate to the service. </summary>
-        private readonly AuthenticationTokenProvider _tokenProvider;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
         {
             new Dictionary<string, object>
             {
@@ -26,44 +26,50 @@ namespace Azure.AI.Projects
             }
         };
         private readonly string _apiVersion;
-        private ConnectionsOperations _cachedConnectionsOperations;
-        private Evaluations _cachedEvaluations;
-        private DatasetsOperations _cachedDatasetsOperations;
-        private IndexesOperations _cachedIndexesOperations;
-        private DeploymentsOperations _cachedDeploymentsOperations;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        private AgentInsightMonitors _cachedAgentInsightMonitors;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+        private AIProjectConnectionsOperations _cachedAIProjectConnectionsOperations;
+        private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
+        private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        private AIProjectModels _cachedAIProjectModels;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+        private AIProjectDeploymentsOperations _cachedAIProjectDeploymentsOperations;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private RedTeams _cachedRedTeams;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+        private EvaluationRules _cachedEvaluationRules;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        private EvaluationTaxonomies _cachedEvaluationTaxonomies;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+        private ProjectEvaluators _cachedProjectEvaluators;
+        private EvaluatorGenerationJobs _cachedEvaluatorGenerationJobs;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        private ProjectInsights _cachedProjectInsights;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        private ProjectSchedules _cachedProjectSchedules;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        private AIProjectMemoryStores _cachedAIProjectMemoryStores;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        private AIProjectRoutines _cachedAIProjectRoutines;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+        private DataGenerationJobs _cachedDataGenerationJobs;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
-        /// <summary> Initializes a new instance of ConnectionsOperations. </summary>
-        public virtual ConnectionsOperations GetConnectionsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedConnectionsOperations, new ConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConnectionsOperations;
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of Evaluations. </summary>
-        public virtual Evaluations GetEvaluationsClient()
+        /// <summary> Initializes a new instance of AIProjectMemoryStores. </summary>
+        [Experimental("AAIP001")]
+        public virtual AIProjectMemoryStores GetAIProjectMemoryStoresClient()
         {
-            return Volatile.Read(ref _cachedEvaluations) ?? Interlocked.CompareExchange(ref _cachedEvaluations, new Evaluations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluations;
-        }
-
-        /// <summary> Initializes a new instance of IndexesOperations. </summary>
-        public virtual IndexesOperations GetIndexesOperationsClient()
-        {
-            return Volatile.Read(ref _cachedIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedIndexesOperations, new IndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedIndexesOperations;
-        }
-
-        /// <summary> Initializes a new instance of DeploymentsOperations. </summary>
-        public virtual DeploymentsOperations GetDeploymentsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedDeploymentsOperations, new DeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDeploymentsOperations;
-        }
-
-        /// <summary> Initializes a new instance of RedTeams. </summary>
-        public virtual RedTeams GetRedTeamsClient()
-        {
-            return Volatile.Read(ref _cachedRedTeams) ?? Interlocked.CompareExchange(ref _cachedRedTeams, new RedTeams(Pipeline, _endpoint, _apiVersion), null) ?? _cachedRedTeams;
+            return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
         }
     }
 }

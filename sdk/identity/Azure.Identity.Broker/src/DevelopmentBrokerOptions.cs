@@ -48,6 +48,23 @@ namespace Azure.Identity.Broker
 
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => _beforeBuildClient;
 
+        internal override void CopyMsalSettableProperties(TokenCredentialOptions source)
+        {
+            base.CopyMsalSettableProperties(source);
+
+#pragma warning disable AZC0112 // Accessing internal property via InternalsVisibleTo
+            bool? value = source switch
+            {
+                DefaultAzureCredentialOptions dac => dac.IsLegacyMsaPassthroughEnabled,
+                DevelopmentBrokerOptions dbo => dbo.IsLegacyMsaPassthroughEnabled,
+                _ => null
+            };
+#pragma warning restore AZC0112
+
+            if (value.HasValue)
+                IsLegacyMsaPassthroughEnabled = value;
+        }
+
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
             builder.WithParentActivityOrWindow(() => IntPtr.Zero);

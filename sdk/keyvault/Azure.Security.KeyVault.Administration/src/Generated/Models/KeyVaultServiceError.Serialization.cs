@@ -15,6 +15,46 @@ namespace Azure.Security.KeyVault.Administration.Models
 {
     internal partial class KeyVaultServiceError : IJsonModel<KeyVaultServiceError>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KeyVaultServiceError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultServiceError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKeyVaultServiceError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultServiceError)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultServiceError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultServiceError)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KeyVaultServiceError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeyVaultServiceError IPersistableModel<KeyVaultServiceError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KeyVaultServiceError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeyVaultServiceError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -43,10 +83,17 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(InnerError))
+            if (options.Format != "W" && Optional.IsDefined(InnerError, _innerErrorIsDefined))
             {
-                writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(InnerError, options);
+                if (InnerError != null)
+                {
+                    writer.WritePropertyName("innererror"u8);
+                    writer.WriteObjectValue(InnerError, options);
+                }
+                else
+                {
+                    writer.WriteNull("innererror"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -92,6 +139,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
             string code = default;
             string message = default;
+            bool innerErrorIsDefined = false;
             KeyVaultServiceError innerError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -108,6 +156,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (prop.NameEquals("innererror"u8))
                 {
+                    innerErrorIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         innerError = null;
@@ -118,50 +167,13 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyVaultServiceError(code, message, innerError, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KeyVaultServiceError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultServiceError>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
+            return new KeyVaultServiceError(code, message, innerError, additionalBinaryDataProperties)
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultServiceError)} does not support writing '{options.Format}' format.");
-            }
+                _innerErrorIsDefined = innerErrorIsDefined
+            };
         }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KeyVaultServiceError IPersistableModel<KeyVaultServiceError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyVaultServiceError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultServiceError>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeKeyVaultServiceError(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultServiceError)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KeyVaultServiceError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

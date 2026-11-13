@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StandbyPool;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.StandbyPool.Models
     public readonly partial struct PoolVirtualMachineState : IEquatable<PoolVirtualMachineState>
     {
         private readonly string _value;
+        /// <summary> The virtual machine is up and running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> The virtual machine is creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The virtual machine is starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> The virtual machine is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The virtual machine has released the lease on the underlying hardware and is powered off. </summary>
+        private const string DeallocatedValue = "Deallocated";
+        /// <summary> The virtual machine is releasing the lease on the underlying hardware and is powered off. </summary>
+        private const string DeallocatingValue = "Deallocating";
+        /// <summary> The virtual machine has released the lease on the underlying hardware and is powered off. Memory contents of the VM are stored in the OS disk. When started again, applications and processes that were previously running in your VM resume from the state prior to hibernation. </summary>
+        private const string HibernatedValue = "Hibernated";
+        /// <summary> The virtual machine is hibernating. </summary>
+        private const string HibernatingValue = "Hibernating";
 
         /// <summary> Initializes a new instance of <see cref="PoolVirtualMachineState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PoolVirtualMachineState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RunningValue = "Running";
-        private const string CreatingValue = "Creating";
-        private const string StartingValue = "Starting";
-        private const string DeletingValue = "Deleting";
-        private const string DeallocatedValue = "Deallocated";
-        private const string DeallocatingValue = "Deallocating";
-        private const string HibernatedValue = "Hibernated";
-        private const string HibernatingValue = "Hibernating";
+            _value = value;
+        }
 
         /// <summary> The virtual machine is up and running. </summary>
         public static PoolVirtualMachineState Running { get; } = new PoolVirtualMachineState(RunningValue);
+
         /// <summary> The virtual machine is creating. </summary>
         public static PoolVirtualMachineState Creating { get; } = new PoolVirtualMachineState(CreatingValue);
+
         /// <summary> The virtual machine is starting. </summary>
         public static PoolVirtualMachineState Starting { get; } = new PoolVirtualMachineState(StartingValue);
+
         /// <summary> The virtual machine is deleting. </summary>
         public static PoolVirtualMachineState Deleting { get; } = new PoolVirtualMachineState(DeletingValue);
+
         /// <summary> The virtual machine has released the lease on the underlying hardware and is powered off. </summary>
         public static PoolVirtualMachineState Deallocated { get; } = new PoolVirtualMachineState(DeallocatedValue);
+
         /// <summary> The virtual machine is releasing the lease on the underlying hardware and is powered off. </summary>
         public static PoolVirtualMachineState Deallocating { get; } = new PoolVirtualMachineState(DeallocatingValue);
+
         /// <summary> The virtual machine has released the lease on the underlying hardware and is powered off. Memory contents of the VM are stored in the OS disk. When started again, applications and processes that were previously running in your VM resume from the state prior to hibernation. </summary>
         public static PoolVirtualMachineState Hibernated { get; } = new PoolVirtualMachineState(HibernatedValue);
+
         /// <summary> The virtual machine is hibernating. </summary>
         public static PoolVirtualMachineState Hibernating { get; } = new PoolVirtualMachineState(HibernatingValue);
+
         /// <summary> Determines if two <see cref="PoolVirtualMachineState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PoolVirtualMachineState left, PoolVirtualMachineState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PoolVirtualMachineState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PoolVirtualMachineState left, PoolVirtualMachineState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PoolVirtualMachineState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PoolVirtualMachineState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PoolVirtualMachineState(string value) => new PoolVirtualMachineState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PoolVirtualMachineState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PoolVirtualMachineState?(string value) => value == null ? null : new PoolVirtualMachineState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PoolVirtualMachineState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PoolVirtualMachineState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

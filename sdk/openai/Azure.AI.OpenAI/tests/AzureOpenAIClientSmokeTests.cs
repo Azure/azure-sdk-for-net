@@ -3,9 +3,9 @@
 
 #nullable disable
 
+using System;
 using Azure.AI.OpenAI.Tests.Utils.Config;
 using OpenAI;
-using System;
 
 namespace Azure.AI.OpenAI.Tests;
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,55 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2026-07-01)
+
+### Features Added
+
+Upgraded to api-version 2026-07-01:
+- Added `AkriServiceResource` and its collection/operations for managing Akri services under an instance.
+- Added `AkriConnectorTemplateReadinessProbe` support for connector template readiness probes.
+- Added high priority messages backpressure handling for broker configuration.
+- Added `ResourceHealthStatus` and status health state projections for resource health reporting.
+
+## 1.1.0 (2026-06-13)
+
+### Features Added
+
+Upgraded to api-version 2025-10-01.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.1.0-beta.1 (2025-09-09)
+
+### Features Added
+
+Upgraded to api-version 2025-07-01-preview:
+- Connector Templates: Create reusable templates to streamline connector configuration and deployment across Azure IoT Operations clusters.
+- ADR Namespaces: Enable logical isolation and security boundaries for managing assets and devices at scale.
+- Devices: Support for devices with inbound endpoints, including cross-connector capabilities.
+- ONVIF Connector: Integrate ONVIF-compliant cameras and devices for video and surveillance scenarios.
+- Media Connector: Ingest and process media streams from diverse sources with enhanced flexibility.
+- REST Connector: Connect to any RESTful endpoint, enabling seamless integration with external systems and APIs.
+- Enrich: Enhance incoming data with contextual metadata from REST endpoints to support advanced analytics.
+- Discovery of Devices and Assets: Automatically detect and onboard devices and assets, reducing manual configuration.
+- Regional Expansion: Azure IoT Operations is now deployable to Arc-connected clusters in the Germany West Central region. This support is available in the latest preview and backported to GA version 1.1.59
+- Advanced Dataflow Operations: Dataflow graphs allow for definitions of custom workflows and transformations. Custom operations can now be performed using WASMmodules provided by customers .
+ 
+
+### Other Changes
+
+ExtendedLocation is now optional in the following resources: 
+- IotOperationsBroker
+- IotOperationsBrokerListener
+- IotOperationsBrokerAuthentication
+- IotOperationsBrokerAuthorization
+- IotOperationsDataflowEndpoint
+- IotOperationsDataflowProfile
+- IotOperationsDataflow
 
 ## 1.0.0 (2024-11-01)
 

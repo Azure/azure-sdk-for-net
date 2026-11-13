@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -23,6 +23,7 @@ public class Resource(Specification spec, Type armType)
     public NameRequirements? NameRequirements { get; set; }
     public bool GenerateRoleAssignment { get; set; } = false;
     public Resource? ParentResource { get; set; }
+    public bool HasScope { get; set; } = false;
     public SimpleModel? GetKeysType { get; set; }
     public bool GetKeysIsList { get; set; }
 
@@ -53,9 +54,11 @@ public class Resource(Specification spec, Type armType)
 
                 // Add the usings
                 HashSet<string> namespaces = CollectNamespaces();
+                if (ParentResource is not null || HasScope) { namespaces.Add(Spec!.LibraryNamespace); }
                 if (FromExpression || GenerateRoleAssignment || GetKeysType is not null) { namespaces.Add("Azure.Provisioning.Expressions"); }
                 if (FromExpression || NameRequirements is not null || GetKeysType is not null || HiddenResourceVersions is not null) { namespaces.Add("System.ComponentModel"); }
                 if (GenerateRoleAssignment) { namespaces.Add("Azure.Provisioning.Authorization"); namespaces.Add("Azure.Provisioning.Roles"); }
+                if (IsExperimental) { namespaces.Add("System.Diagnostics.CodeAnalysis"); }
                 namespaces.Remove(Namespace!);
                 foreach (string ns in namespaces.Order())
                 {
@@ -68,6 +71,10 @@ public class Resource(Specification spec, Type armType)
                 writer.WriteLine($"/// <summary>");
                 writer.WriteWrapped(Description ?? (Name + "."));
                 writer.WriteLine($"/// </summary>");
+                if (IsExperimental)
+                {
+                    writer.WriteLine($"[Experimental(\"AZPROVISION001\")]");
+                }
                 writer.WriteLine($"public partial class {Name} : {(BaseType is not null ? BaseType.Name : "ProvisionableResource")}");
                 using (writer.Scope("{", "}"))
                 {
@@ -117,7 +124,22 @@ public class Resource(Specification spec, Type armType)
                             writer.WriteLine($"get {{ Initialize(); return _parent!.Value; }}");
                             writer.WriteLine($"set {{ Initialize(); _parent!.Value = value; }}");
                         }
-                        writer.WriteLine($"private ResourceReference<{ParentResource.Name}>? _parent;");
+                        writer.WriteLine($"private ProvisioningResourceReference<{ParentResource.Name}>? _parent;");
+                    }
+
+                    if (HasScope)
+                    {
+                        if (fence.RequiresSeparator) { writer.WriteLine(); }
+                        writer.WriteLine("/// <summary>");
+                        writer.WriteLine("/// Gets or sets the Scope.");
+                        writer.WriteLine("/// </summary>");
+                        writer.WriteLine("public ProvisionableResource? Scope");
+                        using (writer.Scope("{", "}"))
+                        {
+                            writer.WriteLine("get { Initialize(); return _scope!.Value; }");
+                            writer.WriteLine("set { Initialize(); _scope!.Value = value; }");
+                        }
+                        writer.WriteLine("private ProvisioningResourceReference<ProvisionableResource>? _scope;");
                     }
 
                     // Write the default value partial methods
@@ -190,6 +212,10 @@ public class Resource(Specification spec, Type armType)
                             }
                             writer.Write($"<{property.BicepPropertyTypeReference}>(\"{property.Name}\", ");
                             writer.Write($"[{string.Join(", ", (property.Path ?? [property.Name]).Select(s => $"\"{s}\""))}]");
+                            if (property.PropertyType is Resource r)
+                            {
+                                writer.Write($", new {r.Name}(\"{r.Name.ToCamelCase()}\")");
+                            }
                             if (property.IsRequired) { writer.Write($", isRequired: true"); }
                             if (property.IsReadOnly) { writer.Write($", isOutput: true"); }
                             if (property.IsSecure) { writer.Write($", isSecure: true"); }
@@ -197,14 +223,28 @@ public class Resource(Specification spec, Type armType)
                             if (property.Format is not null) { writer.Write($", format: \"{property.Format}\""); }
                             writer.WriteLine($");");
                         }
+                        if (GeneratePartialPropertyDefinition)
+                        {
+                            writer.WriteLine("DefineAdditionalProperties();");
+                        }
                         if (ParentResource is not null)
                         {
-                            writer.WriteLine($"_parent = DefineResource<{ParentResource.Name}>(\"Parent\", [\"parent\"], isRequired: true);");
+                            writer.WriteLine("_parent = new(DefineProperty<string>(nameof(Parent), [\"parent\"], isRequired: true));");
+                        }
+                        if (HasScope)
+                        {
+                            writer.WriteLine("_scope = new(DefineProperty<string>(nameof(Scope), [\"scope\"]));");
                         }
                     }
 
+                    if (GeneratePartialPropertyDefinition)
+                    {
+                        writer.WriteLine();
+                        writer.WriteLine("private partial void DefineAdditionalProperties();");
+                    }
+
                     // Add the well known versions
-                    if (ResourceVersions is not null)
+                    if (ResourceVersions is not null && ResourceVersions.Count > 0)
                     {
                         fence = new IndentWriter.Fenceposter();
                         writer.WriteLine();

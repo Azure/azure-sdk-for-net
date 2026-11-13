@@ -33,22 +33,22 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
            var serializer = new SchemaRegistryAvroSerializer(mockClient.Object, "groupName");
            var content = await serializer.SerializeAsync(new Employee {Age = 42, Name = "Caketown"});
-           Assert.AreEqual("schemaId", content.ContentType.ToString().Split('+')[1]);
+            Assert.That(content.ContentType.ToString().Split('+')[1], Is.EqualTo("schemaId"));
 
            // also validate explicitly passing null
            serializer = new SchemaRegistryAvroSerializer(mockClient.Object, "groupName", null);
            content = await serializer.SerializeAsync(new Employee {Age = 42, Name = "Caketown"});
-           Assert.AreEqual("schemaId", content.ContentType.ToString().Split('+')[1]);
+            Assert.That(content.ContentType.ToString().Split('+')[1], Is.EqualTo("schemaId"));
         }
 
         [Test]
         public void CloneCopiesAllProperties()
         {
             var options = new SchemaRegistryAvroSerializerOptions() { AutoRegisterSchemas = true };
-            Assert.True(options.AutoRegisterSchemas);
+            Assert.That(options.AutoRegisterSchemas, Is.True);
 
             var cloned = options.Clone();
-            Assert.AreEqual(options.AutoRegisterSchemas, cloned.AutoRegisterSchemas);
+            Assert.That(cloned.AutoRegisterSchemas, Is.EqualTo(options.AutoRegisterSchemas));
         }
     }
 }

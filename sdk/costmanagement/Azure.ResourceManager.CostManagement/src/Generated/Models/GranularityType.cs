@@ -7,42 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The granularity of rows in the export. Currently only 'Daily' is supported. </summary>
+    /// <summary> The granularity of rows in the export. Currently 'Daily' is supported for most cases. </summary>
     public readonly partial struct GranularityType : IEquatable<GranularityType>
     {
         private readonly string _value;
+        private const string DailyValue = "Daily";
+        private const string MonthlyValue = "Monthly";
 
         /// <summary> Initializes a new instance of <see cref="GranularityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GranularityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DailyValue = "Daily";
-
-        /// <summary> Daily. </summary>
+        /// <summary> Gets the Daily. </summary>
         public static GranularityType Daily { get; } = new GranularityType(DailyValue);
+
+        /// <summary> Gets the Monthly. </summary>
+        public static GranularityType Monthly { get; } = new GranularityType(MonthlyValue);
+
         /// <summary> Determines if two <see cref="GranularityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GranularityType left, GranularityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GranularityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GranularityType left, GranularityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GranularityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GranularityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GranularityType(string value) => new GranularityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GranularityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GranularityType?(string value) => value == null ? null : new GranularityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GranularityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GranularityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

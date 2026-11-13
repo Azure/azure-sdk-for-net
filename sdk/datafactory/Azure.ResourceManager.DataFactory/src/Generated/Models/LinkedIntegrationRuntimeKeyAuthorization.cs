@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,30 +18,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="key"> The key used for authorization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public LinkedIntegrationRuntimeKeyAuthorization(DataFactorySecretString key)
+        public LinkedIntegrationRuntimeKeyAuthorization(DataFactorySecretString key) : base("Key")
         {
             Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
-            AuthorizationType = "Key";
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key used for authorization. </param>
-        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactorySecretString key) : base(authorizationType, serializedAdditionalRawData)
+        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactorySecretString key) : base(authorizationType, additionalBinaryDataProperties)
         {
             Key = key;
-            AuthorizationType = authorizationType ?? "Key";
         }
-
-        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> for deserialization. </summary>
-        internal LinkedIntegrationRuntimeKeyAuthorization()
-        {
-        }
-
-        /// <summary> The key used for authorization. </summary>
-        public DataFactorySecretString Key { get; set; }
     }
 }

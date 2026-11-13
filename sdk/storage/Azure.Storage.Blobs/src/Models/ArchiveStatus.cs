@@ -11,6 +11,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> rehydrate-pending-to-cool. </summary>
         RehydratePendingToCool,
         /// <summary> rehydrate-pending-to-cold. </summary>
-        RehydratePendingToCold
+        RehydratePendingToCold,
+        /// <summary> rehydrate-pending-to-smart. </summary>
+        RehydratePendingToSmart
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The request for reservation patch. </summary>
     public partial class BillingReservationPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingReservationPatch"/>. </summary>
         public BillingReservationPatch()
@@ -52,62 +24,164 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingReservationPatch"/>. </summary>
+        /// <param name="properties"> Properties for reservation patch. </param>
         /// <param name="sku"> The sku information associated to this reservation. </param>
         /// <param name="tags"> Tags for this reservation. </param>
-        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
-        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
-        /// <param name="instanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </param>
-        /// <param name="displayName"> Display name of the reservation. </param>
-        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
-        /// <param name="reviewOn"> This is the date-time when the Azure hybrid benefit needs to be reviewed. </param>
-        /// <param name="purchaseProperties"> The request for reservation purchase. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingReservationPatch(ReservationSkuProperty sku, IDictionary<string, string> tags, BillingAppliedScopeType? appliedScopeType, ReservationAppliedScopeProperties appliedScopeProperties, InstanceFlexibility? instanceFlexibility, string displayName, bool? isRenewed, DateTimeOffset? reviewOn, ReservationPurchaseRequest purchaseProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingReservationPatch(PatchProperties properties, ReservationSkuProperty sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Sku = sku;
             Tags = tags;
-            AppliedScopeType = appliedScopeType;
-            AppliedScopeProperties = appliedScopeProperties;
-            InstanceFlexibility = instanceFlexibility;
-            DisplayName = displayName;
-            IsRenewed = isRenewed;
-            ReviewOn = reviewOn;
-            PurchaseProperties = purchaseProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties for reservation patch. </summary>
+        [WirePath("properties")]
+        internal PatchProperties Properties { get; set; }
+
         /// <summary> The sku information associated to this reservation. </summary>
+        [WirePath("sku")]
         internal ReservationSkuProperty Sku { get; set; }
-        /// <summary> The name of the reservation sku. </summary>
-        [WirePath("sku.name")]
-        public string SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-        }
 
         /// <summary> Tags for this reservation. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Type of the Applied Scope. </summary>
         [WirePath("properties.appliedScopeType")]
-        public BillingAppliedScopeType? AppliedScopeType { get; set; }
+        public BillingAppliedScopeType? AppliedScopeType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PatchProperties();
+                }
+                Properties.AppliedScopeType = value;
+            }
+        }
+
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
         [WirePath("properties.appliedScopeProperties")]
-        public ReservationAppliedScopeProperties AppliedScopeProperties { get; set; }
+        public ReservationAppliedScopeProperties AppliedScopeProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PatchProperties();
+                }
+                Properties.AppliedScopeProperties = value;
+            }
+        }
+
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
         [WirePath("properties.instanceFlexibility")]
-        public InstanceFlexibility? InstanceFlexibility { get; set; }
+        public InstanceFlexibility? InstanceFlexibility
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceFlexibility;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PatchProperties();
+                }
+                Properties.InstanceFlexibility = value;
+            }
+        }
+
         /// <summary> Display name of the reservation. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PatchProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
         [WirePath("properties.renew")]
-        public bool? IsRenewed { get; set; }
+        public bool? IsRenewed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRenewed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PatchProperties();
+                }
+                Properties.IsRenewed = value;
+            }
+        }
+
         /// <summary> This is the date-time when the Azure hybrid benefit needs to be reviewed. </summary>
         [WirePath("properties.reviewDateTime")]
-        public DateTimeOffset? ReviewOn { get; set; }
+        public DateTimeOffset? ReviewOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReviewOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PatchProperties();
+                }
+                Properties.ReviewOn = value;
+            }
+        }
+
         /// <summary> The request for reservation purchase. </summary>
-        [WirePath("properties.purchaseProperties")]
-        public ReservationPurchaseRequest PurchaseProperties { get; set; }
+        [WirePath("properties.renewProperties.purchaseProperties")]
+        public ReservationPurchaseRequest PurchaseProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PurchaseProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PatchProperties();
+                }
+                Properties.PurchaseProperties = value;
+            }
+        }
+
+        /// <summary> The name of the reservation sku. </summary>
+        [WirePath("sku.name")]
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+        }
     }
 }

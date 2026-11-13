@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Represents a throughput pool resource for updates. </summary>
     public partial class CosmosDBThroughputPoolPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolPatch"/>. </summary>
         public CosmosDBThroughputPoolPatch()
@@ -51,21 +23,52 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolPatch"/>. </summary>
-        /// <param name="provisioningState"> A provisioning state of the ThroughputPool. </param>
-        /// <param name="maxThroughput"> Value for throughput to be shared among CosmosDB resources in the pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBThroughputPoolPatch(CosmosDBStatus? provisioningState, int? maxThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the throughput pool. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBThroughputPoolPatch(ThroughputPoolProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
-            MaxThroughput = maxThroughput;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the throughput pool. </summary>
+        [WirePath("properties")]
+        internal ThroughputPoolProperties Properties { get; set; }
 
         /// <summary> A provisioning state of the ThroughputPool. </summary>
         [WirePath("properties.provisioningState")]
-        public CosmosDBStatus? ProvisioningState { get; set; }
+        public CosmosDBStatus? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThroughputPoolProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
+
         /// <summary> Value for throughput to be shared among CosmosDB resources in the pool. </summary>
         [WirePath("properties.maxThroughput")]
-        public int? MaxThroughput { get; set; }
+        public int? MaxThroughput
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxThroughput;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThroughputPoolProperties();
+                }
+                Properties.MaxThroughput = value;
+            }
+        }
     }
 }

@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing a DiagnosticSettingsCategory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticSettingsCategoryResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDiagnosticSettingsCategoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDiagnosticSettingsCategory method.
+    /// A class representing a DiagnosticSettingsCategory along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticSettingsCategoryResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDiagnosticSettingsCategories method.
     /// </summary>
     public partial class DiagnosticSettingsCategoryResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DiagnosticSettingsCategoryResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
         private readonly ClientDiagnostics _diagnosticSettingsCategoryClientDiagnostics;
-        private readonly DiagnosticSettingsCategoryRestOperations _diagnosticSettingsCategoryRestClient;
+        private readonly DiagnosticSettingsCategory _diagnosticSettingsCategoryRestClient;
         private readonly DiagnosticSettingsCategoryData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/diagnosticSettingsCategories";
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCategoryResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResource for mocking. </summary>
         protected DiagnosticSettingsCategoryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCategoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiagnosticSettingsCategoryResource(ArmClient client, DiagnosticSettingsCategoryData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.Monitor
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCategoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiagnosticSettingsCategoryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diagnosticSettingsCategoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string diagnosticSettingsCategoryApiVersion);
-            _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategoryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diagnosticSettingsCategoryApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _diagnosticSettingsCategoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategory(_diagnosticSettingsCategoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diagnosticSettingsCategoryApiVersion ?? "2021-05-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DiagnosticSettingsCategoryData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the diagnostic settings category for the specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettingsCategory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticSettingsCategoryResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingsCategoryResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingsCategoryResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DiagnosticSettingsCategoryResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResource.Get");
+            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResource.Get");
             scope.Start();
             try
             {
-                var response = await _diagnosticSettingsCategoryRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsCategoryRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiagnosticSettingsCategoryData> response = Response.FromValue(DiagnosticSettingsCategoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiagnosticSettingsCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.Monitor
         /// Gets the diagnostic settings category for the specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettingsCategory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticSettingsCategoryResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingsCategoryResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingsCategoryResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DiagnosticSettingsCategoryResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResource.Get");
+            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResource.Get");
             scope.Start();
             try
             {
-                var response = _diagnosticSettingsCategoryRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsCategoryRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiagnosticSettingsCategoryData> response = Response.FromValue(DiagnosticSettingsCategoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiagnosticSettingsCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

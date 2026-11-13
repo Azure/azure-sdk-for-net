@@ -8,8 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 using NUnit.Framework;
 using static Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.TelemetryValidationHelper;
 
@@ -23,6 +23,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         protected string? _testStartTimeStamp;
         private LogsQueryClient? _logsQueryClient = null;
         protected bool? _useTimestampInQuery;
+
+        protected LogsQueryClient QueryClient => _logsQueryClient!;
 
         [SetUp] // SetUp is run before every individual test method.
         public void Setup()

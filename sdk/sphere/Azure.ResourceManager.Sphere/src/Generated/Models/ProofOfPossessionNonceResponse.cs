@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="expiryUtc"> The certificate expiry date. </param>
         /// <param name="notBeforeUtc"> The certificate not before date. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProofOfPossessionNonceResponse(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProofOfPossessionNonceResponse(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState, additionalBinaryDataProperties)
         {
         }
     }

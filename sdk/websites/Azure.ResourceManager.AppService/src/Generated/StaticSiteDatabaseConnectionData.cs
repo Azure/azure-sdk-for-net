@@ -13,90 +13,124 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the StaticSiteDatabaseConnection data model.
-    /// Static Site Database Connection resource.
-    /// </summary>
+    /// <summary> Static Site Database Connection resource. </summary>
     public partial class StaticSiteDatabaseConnectionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteDatabaseConnectionData"/>. </summary>
         public StaticSiteDatabaseConnectionData()
         {
-            ConfigurationFiles = new ChangeTrackingList<StaticSiteDatabaseConnectionConfigurationFileOverview>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteDatabaseConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resourceId"> The resource id of the database. </param>
-        /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
-        /// <param name="connectionString"> The connection string to use to connect to the database. </param>
-        /// <param name="region"> The region of the database resource. </param>
-        /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> DatabaseConnection resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteDatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteDatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseConnectionProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ResourceId = resourceId;
-            ConnectionIdentity = connectionIdentity;
-            ConnectionString = connectionString;
-            Region = region;
-            ConfigurationFiles = configurationFiles;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The resource id of the database. </summary>
-        [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
-        [WirePath("properties.connectionIdentity")]
-        public string ConnectionIdentity { get; set; }
-        /// <summary> The connection string to use to connect to the database. </summary>
-        [WirePath("properties.connectionString")]
-        public string ConnectionString { get; set; }
-        /// <summary> The region of the database resource. </summary>
-        [WirePath("properties.region")]
-        public string Region { get; set; }
-        /// <summary> A list of configuration files associated with this database connection. </summary>
-        [WirePath("properties.configurationFiles")]
-        public IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles { get; }
+        /// <summary> DatabaseConnection resource specific properties. </summary>
+        [WirePath("properties")]
+        internal DatabaseConnectionProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> The resource id of the database. </summary>
+        [WirePath("properties.resourceId")]
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseConnectionProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
+
+        /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
+        [WirePath("properties.connectionIdentity")]
+        public string ConnectionIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseConnectionProperties();
+                }
+                Properties.ConnectionIdentity = value;
+            }
+        }
+
+        /// <summary> The connection string to use to connect to the database. </summary>
+        [WirePath("properties.connectionString")]
+        public string ConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseConnectionProperties();
+                }
+                Properties.ConnectionString = value;
+            }
+        }
+
+        /// <summary> The region of the database resource. </summary>
+        [WirePath("properties.region")]
+        public string Region
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Region;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseConnectionProperties();
+                }
+                Properties.Region = value;
+            }
+        }
+
+        /// <summary> A list of configuration files associated with this database connection. </summary>
+        [WirePath("properties.configurationFiles")]
+        public IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseConnectionProperties();
+                }
+                return Properties.ConfigurationFiles;
+            }
+        }
     }
 }

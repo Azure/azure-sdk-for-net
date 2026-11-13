@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure.Analytics.OnlineExperimentation.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Analytics.OnlineExperimentation.Tests;
-using System;
 
 namespace Azure.Analytics.OnlineExperimentation.Samples
 {

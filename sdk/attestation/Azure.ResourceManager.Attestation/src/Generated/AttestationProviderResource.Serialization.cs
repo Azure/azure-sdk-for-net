@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Attestation
 {
+    /// <summary></summary>
     public partial class AttestationProviderResource : IJsonModel<AttestationProviderData>
     {
-        private static AttestationProviderData s_dataDeserializationInstance;
-        private static AttestationProviderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AttestationProviderData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AttestationProviderData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AttestationProviderData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AttestationProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AttestationProviderData>)Data).Write(writer, options);
 
-        AttestationProviderData IJsonModel<AttestationProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AttestationProviderData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AttestationProviderData IJsonModel<AttestationProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AttestationProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AttestationProviderData>(Data, options, AzureResourceManagerAttestationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AttestationProviderData IPersistableModel<AttestationProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AttestationProviderData>(data, options, AzureResourceManagerAttestationContext.Default);
 
-        string IPersistableModel<AttestationProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AttestationProviderData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AttestationProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The BlobContainerState. </summary>
+    /// <summary></summary>
     public readonly partial struct BlobContainerState : IEquatable<BlobContainerState>
     {
         private readonly string _value;
+        private const string DeletedValue = "deleted";
 
         /// <summary> Initializes a new instance of <see cref="BlobContainerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobContainerState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DeletedValue = "deleted";
-
-        /// <summary> deleted. </summary>
+        /// <summary> Gets the Deleted. </summary>
         public static BlobContainerState Deleted { get; } = new BlobContainerState(DeletedValue);
+
         /// <summary> Determines if two <see cref="BlobContainerState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobContainerState left, BlobContainerState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlobContainerState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobContainerState left, BlobContainerState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobContainerState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlobContainerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlobContainerState(string value) => new BlobContainerState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BlobContainerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BlobContainerState?(string value) => value == null ? null : new BlobContainerState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlobContainerState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlobContainerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

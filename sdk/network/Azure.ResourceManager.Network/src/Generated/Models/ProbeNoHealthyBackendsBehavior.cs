@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ProbeNoHealthyBackendsBehavior : IEquatable<ProbeNoHealthyBackendsBehavior>
     {
         private readonly string _value;
+        /// <summary> No new flows will be sent to the backend pool. </summary>
+        private const string AllProbedDownValue = "AllProbedDown";
+        /// <summary> When all backend instances are probed down, incoming packets will be sent to all instances. </summary>
+        private const string AllProbedUpValue = "AllProbedUp";
 
         /// <summary> Initializes a new instance of <see cref="ProbeNoHealthyBackendsBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProbeNoHealthyBackendsBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllProbedDownValue = "AllProbedDown";
-        private const string AllProbedUpValue = "AllProbedUp";
+            _value = value;
+        }
 
         /// <summary> No new flows will be sent to the backend pool. </summary>
         public static ProbeNoHealthyBackendsBehavior AllProbedDown { get; } = new ProbeNoHealthyBackendsBehavior(AllProbedDownValue);
+
         /// <summary> When all backend instances are probed down, incoming packets will be sent to all instances. </summary>
         public static ProbeNoHealthyBackendsBehavior AllProbedUp { get; } = new ProbeNoHealthyBackendsBehavior(AllProbedUpValue);
+
         /// <summary> Determines if two <see cref="ProbeNoHealthyBackendsBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProbeNoHealthyBackendsBehavior left, ProbeNoHealthyBackendsBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProbeNoHealthyBackendsBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProbeNoHealthyBackendsBehavior left, ProbeNoHealthyBackendsBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProbeNoHealthyBackendsBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProbeNoHealthyBackendsBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProbeNoHealthyBackendsBehavior(string value) => new ProbeNoHealthyBackendsBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProbeNoHealthyBackendsBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProbeNoHealthyBackendsBehavior?(string value) => value == null ? null : new ProbeNoHealthyBackendsBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProbeNoHealthyBackendsBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProbeNoHealthyBackendsBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

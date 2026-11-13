@@ -30,37 +30,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByLocation");
-                scope.Start();
-                try
-                {
-                    var response = await LongTermRetentionBackupsRestClient.ListByLocationAsync(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SubscriptionLongTermRetentionBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByLocation");
-                scope.Start();
-                try
-                {
-                    var response = await LongTermRetentionBackupsRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return new AsyncPageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
+                GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
         /// <summary>
@@ -76,37 +48,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByLocation");
-                scope.Start();
-                try
-                {
-                    var response = LongTermRetentionBackupsRestClient.ListByLocation(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SubscriptionLongTermRetentionBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByLocation");
-                scope.Start();
-                try
-                {
-                    var response = LongTermRetentionBackupsRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return new PageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
+                GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
         /// <summary>
@@ -124,38 +68,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-
-            async Task<Page<SubscriptionLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByServer");
-                scope.Start();
-                try
-                {
-                    var response = await LongTermRetentionBackupsRestClient.ListByServerAsync(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SubscriptionLongTermRetentionBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByServer");
-                scope.Start();
-                try
-                {
-                    var response = await LongTermRetentionBackupsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return new AsyncPageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
+                GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
         /// <summary>
@@ -173,38 +88,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-
-            Page<SubscriptionLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByServer");
-                scope.Start();
-                try
-                {
-                    var response = LongTermRetentionBackupsRestClient.ListByServer(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SubscriptionLongTermRetentionBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByServer");
-                scope.Start();
-                try
-                {
-                    var response = LongTermRetentionBackupsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return new PageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
+                GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
         /// <summary>
@@ -222,38 +108,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-
-            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
-                scope.Start();
-                try
-                {
-                    var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByInstanceAsync(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
-                scope.Start();
-                try
-                {
-                    var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return new AsyncPageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                data => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data));
         }
 
         /// <summary>
@@ -271,38 +128,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-
-            Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
-                scope.Start();
-                try
-                {
-                    var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByInstance(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
-                scope.Start();
-                try
-                {
-                    var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return new PageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                data => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data));
         }
 
         /// <summary>
@@ -318,37 +146,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
-                scope.Start();
-                try
-                {
-                    var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByLocationAsync(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
-                scope.Start();
-                try
-                {
-                    var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return new AsyncPageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                data => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data));
         }
 
         /// <summary>
@@ -364,37 +164,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
-                scope.Start();
-                try
-                {
-                    var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByLocation(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
-                scope.Start();
-                try
-                {
-                    var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return new PageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                data => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data));
         }
 
         /// <summary>
@@ -407,10 +179,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,10 +189,53 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+            => GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, default, default, default, cancellationToken);
+
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given lo cation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+            => GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, default, default, default, cancellationToken);
+
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, null, null, null);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, null, null, null);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(options.LocationName, options.OnlyLatestPerDatabase, options.DatabaseState, options.Skip, options.Top, options.Filter, cancellationToken);
         }
 
         /// <summary>
@@ -438,23 +249,18 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
-        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, null, null, null);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, null, null, null);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetLongTermRetentionManagedInstanceBackupsWithLocation(options.LocationName, options.OnlyLatestPerDatabase, options.DatabaseState, options.Skip, options.Top, options.Filter, cancellationToken);
         }
     }
 }

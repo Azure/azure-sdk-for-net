@@ -17,10 +17,10 @@ namespace Azure.Compute.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateTasksResult"/> class.
         /// </summary>
-        /// <param name="batchTaskAddResults"></param>
-        public CreateTasksResult(List<BatchTaskCreateResult> batchTaskAddResults)
+        /// <param name="batchTaskCreateResults"></param>
+        public CreateTasksResult(List<BatchTaskCreateResult> batchTaskCreateResults)
         {
-            BatchTaskCreateResults = batchTaskAddResults;
+            BatchTaskCreateResults = batchTaskCreateResults;
         }
 
         /// <summary> The results of the CreateTasks operation. This list will

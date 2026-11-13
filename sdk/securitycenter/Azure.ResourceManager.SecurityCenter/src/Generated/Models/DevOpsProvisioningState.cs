@@ -7,12 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The provisioning state of the resource.
-    ///
     /// Pending - Provisioning pending.
     /// Failed - Provisioning failed.
     /// Succeeded - Successful provisioning.
@@ -24,53 +24,82 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct DevOpsProvisioningState : IEquatable<DevOpsProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> PendingDeletion. </summary>
+        private const string PendingDeletionValue = "PendingDeletion";
+        /// <summary> DeletionSuccess. </summary>
+        private const string DeletionSuccessValue = "DeletionSuccess";
+        /// <summary> DeletionFailure. </summary>
+        private const string DeletionFailureValue = "DeletionFailure";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevOpsProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string PendingValue = "Pending";
-        private const string PendingDeletionValue = "PendingDeletion";
-        private const string DeletionSuccessValue = "DeletionSuccess";
-        private const string DeletionFailureValue = "DeletionFailure";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static DevOpsProvisioningState Succeeded { get; } = new DevOpsProvisioningState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static DevOpsProvisioningState Failed { get; } = new DevOpsProvisioningState(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static DevOpsProvisioningState Canceled { get; } = new DevOpsProvisioningState(CanceledValue);
+
         /// <summary> Pending. </summary>
         public static DevOpsProvisioningState Pending { get; } = new DevOpsProvisioningState(PendingValue);
+
         /// <summary> PendingDeletion. </summary>
         public static DevOpsProvisioningState PendingDeletion { get; } = new DevOpsProvisioningState(PendingDeletionValue);
+
         /// <summary> DeletionSuccess. </summary>
         public static DevOpsProvisioningState DeletionSuccess { get; } = new DevOpsProvisioningState(DeletionSuccessValue);
+
         /// <summary> DeletionFailure. </summary>
         public static DevOpsProvisioningState DeletionFailure { get; } = new DevOpsProvisioningState(DeletionFailureValue);
+
         /// <summary> Determines if two <see cref="DevOpsProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevOpsProvisioningState left, DevOpsProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevOpsProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevOpsProvisioningState left, DevOpsProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevOpsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevOpsProvisioningState(string value) => new DevOpsProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevOpsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevOpsProvisioningState?(string value) => value == null ? null : new DevOpsProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevOpsProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevOpsProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

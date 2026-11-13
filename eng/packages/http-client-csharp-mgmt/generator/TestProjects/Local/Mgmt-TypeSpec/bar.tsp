@@ -31,6 +31,8 @@ model BarProperties {
 
 @armResourceOperations
 interface Bars {
+  list is ArmResourceListByParent<Bar>;
+
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Bar>;
 
   get is ArmResourceRead<Bar>;
@@ -38,9 +40,9 @@ interface Bars {
   delete is ArmResourceDeleteWithoutOkAsync<Bar>;
 
   update is ArmCustomPatchSync<Bar, Bar>;
-
-  list is ArmResourceListByParent<Bar>;
 }
+
+@@Azure.ResourceManager.Legacy.renamePathParameter(Bars.list, "fooName", "name");
 
 @singleton("current")
 @parentResource(Bar)
@@ -50,11 +52,60 @@ model BarSettingsResource is ProxyResource<BarSettingsProperties> {
   stringArray?: string[];
   property: BarQuotaProperties;
   anotherProperty: BarQuotaProperties;
+  flattenedNestedProperty: BarNestedQuotaProperties;
+  /**
+   * Optional single-property model used to verify generated flattened collection
+   * getters initialize the nested collection wrapper instead of returning null.
+   */
+  optionalFlattenProperty?: optionalFlattenPropertyType;
+  discriminatorProperty: LimitJsonObject;
 }
 
 @parentResource(Bar)
 model BarQuotaResource is ProxyResource<BarQuotaProperties> {
   ...ResourceNameParameter<BarQuotaResource, SegmentName = "quotas", Type = QuotaName>;
+}
+
+model BarNestedQuotaProperties extends BarMiddleNestedQuotaProperties {
+  prop1: string[];
+  prop2: int32;
+}
+
+model BarMiddleNestedQuotaProperties extends BarDeeplyNestedQuotaProperties {
+  middleProp1: int32;
+  middleProp2: Record<string>;
+}
+
+model optionalFlattenPropertyType {
+  /**
+   * Required collection used by the optional flattened model scenario.
+   */
+  randomCollectionProp: string[];
+}
+
+model BarDeeplyNestedQuotaProperties {
+  innerProp1?: int32;
+  innerProp2: string;
+}
+
+/**
+ * LimitJson abstract class.
+ */
+@discriminator("limitObjectType")
+model LimitJsonObject {
+  /**
+   * The limit object type.
+   */
+  limitObjectType: LimitType;
+}
+
+/**
+ * The limit object type.
+ */
+union LimitType {
+  string,
+  #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+  LimitValue: "LimitValue",
 }
 
 model BarQuotaProperties {
@@ -87,4 +138,24 @@ interface BarSettingsOperations {
 interface BarQuotaOperations {
   get is ArmResourceRead<BarQuotaResource>;
   update is ArmCustomPatchAsync<BarQuotaResource, BarQuotaResource>;
+}
+
+/** An Employee resource */
+@parentResource(Bar)
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+
+  /** City of employee */
+  city?: string;
+}
+
+@armResourceOperations
+interface Employees {
+  listByParent is ArmResourceListByParent<Employee>;
 }

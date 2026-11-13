@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2026-11-06)
+
+### Features Added
+
+- Upgraded the service API version to `2026-11-01`.
+
+## 1.5.0 (2026-09-09)
+
+### Features Added
+
+- Upgraded the service API version to `2026-08-01`.
+- Added support for retrieving the iSCSI mount scripts of an instant item recovery operation via the new `InstantItemRecoveryOperationResult` API, including the `InstantItemRecoveryTarget` and `ClientScriptForConnect` models.
+
+## 1.4.0 (2026-08-26)
+
+### Features Added
+
+- Upgraded the service API version to `2026-07-01`.
+
+## 1.4.0-beta.1 (2026-05-07)
+
+### Features Added
+
+- Upgraded api-version to 2026-01-31-preview.
+
+## 1.3.1 (2026-03-20)
+
+### Features Added
+
+- Make `Azure.ResourceManager.RecoveryServicesBackup` AOT-compatible.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.51.1.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.3.0 (2025-04-24)
 

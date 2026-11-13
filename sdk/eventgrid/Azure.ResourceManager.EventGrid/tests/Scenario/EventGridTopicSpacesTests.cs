@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
         {
             string topicSpaceName = Recording.GenerateAssetName("topicspace-");
 
-            var topicSpaceData = new TopicSpaceData {
+            var topicSpaceData = new TopicSpaceData
+            {
                 Description = "Test Topic Space",
                 TopicTemplates = { "Microsoft.Resources.ResourceWriteSuccess" },
             };

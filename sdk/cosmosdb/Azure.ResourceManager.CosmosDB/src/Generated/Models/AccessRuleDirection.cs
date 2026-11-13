@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct AccessRuleDirection : IEquatable<AccessRuleDirection>
     {
         private readonly string _value;
+        /// <summary> Applies to inbound network traffic to the secured resources. </summary>
+        private const string InboundValue = "Inbound";
+        /// <summary> Applies to outbound network traffic from the secured resources. </summary>
+        private const string OutboundValue = "Outbound";
 
         /// <summary> Initializes a new instance of <see cref="AccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AccessRuleDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InboundValue = "Inbound";
-        private const string OutboundValue = "Outbound";
+            _value = value;
+        }
 
         /// <summary> Applies to inbound network traffic to the secured resources. </summary>
         public static AccessRuleDirection Inbound { get; } = new AccessRuleDirection(InboundValue);
+
         /// <summary> Applies to outbound network traffic from the secured resources. </summary>
         public static AccessRuleDirection Outbound { get; } = new AccessRuleDirection(OutboundValue);
+
         /// <summary> Determines if two <see cref="AccessRuleDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AccessRuleDirection left, AccessRuleDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AccessRuleDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AccessRuleDirection left, AccessRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessRuleDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AccessRuleDirection(string value) => new AccessRuleDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AccessRuleDirection?(string value) => value == null ? null : new AccessRuleDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AccessRuleDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AccessRuleDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

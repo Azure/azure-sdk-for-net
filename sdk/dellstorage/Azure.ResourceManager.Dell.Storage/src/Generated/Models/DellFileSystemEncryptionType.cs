@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dell.Storage;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
@@ -14,41 +15,63 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     public readonly partial struct DellFileSystemEncryptionType : IEquatable<DellFileSystemEncryptionType>
     {
         private readonly string _value;
+        /// <summary> Microsoft managed keys (Default). </summary>
+        private const string MicrosoftManagedKeysMmkValue = "Microsoft-managed keys (MMK)";
+        /// <summary>
+        /// Customer managed keys
+        /// (CMK) - Only UserAssigned identity is supported
+        /// </summary>
+        private const string CustomerManagedKeysCmkValue = "Customer-managed keys (CMK)";
 
         /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DellFileSystemEncryptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftManagedKeysMmkValue = "Microsoft-managed keys (MMK)";
-        private const string CustomerManagedKeysCmkValue = "Customer-managed keys (CMK)";
+            _value = value;
+        }
 
         /// <summary> Microsoft managed keys (Default). </summary>
         public static DellFileSystemEncryptionType MicrosoftManagedKeysMmk { get; } = new DellFileSystemEncryptionType(MicrosoftManagedKeysMmkValue);
+
         /// <summary>
         /// Customer managed keys
         /// (CMK) - Only UserAssigned identity is supported
         /// </summary>
         public static DellFileSystemEncryptionType CustomerManagedKeysCmk { get; } = new DellFileSystemEncryptionType(CustomerManagedKeysCmkValue);
+
         /// <summary> Determines if two <see cref="DellFileSystemEncryptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DellFileSystemEncryptionType left, DellFileSystemEncryptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DellFileSystemEncryptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DellFileSystemEncryptionType left, DellFileSystemEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DellFileSystemEncryptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DellFileSystemEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DellFileSystemEncryptionType(string value) => new DellFileSystemEncryptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DellFileSystemEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DellFileSystemEncryptionType?(string value) => value == null ? null : new DellFileSystemEncryptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DellFileSystemEncryptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DellFileSystemEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

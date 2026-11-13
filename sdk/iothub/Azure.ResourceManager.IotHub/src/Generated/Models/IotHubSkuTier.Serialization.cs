@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     internal static partial class IotHubSkuTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IotHubSkuTier value) => value switch
         {
             IotHubSkuTier.Free => "Free",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.IotHub.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubSkuTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static IotHubSkuTier ToIotHubSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return IotHubSkuTier.Free;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return IotHubSkuTier.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return IotHubSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free"))
+            {
+                return IotHubSkuTier.Free;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return IotHubSkuTier.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic"))
+            {
+                return IotHubSkuTier.Basic;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubSkuTier value.");
         }
     }

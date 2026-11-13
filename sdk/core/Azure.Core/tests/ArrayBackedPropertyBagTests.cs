@@ -82,13 +82,13 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase(1, true, new[]{2,3,5,6})]
-        [TestCase(2, true, new[]{1,3,5,6})]
-        [TestCase(3, true, new[]{1,2,5,6})]
-        [TestCase(4, false, new[]{1,2,3,5,6})]
-        [TestCase(5, true, new[]{1,2,3,6})]
-        [TestCase(6, true, new[]{1,2,3,5})]
-        [TestCase(7, false, new[]{1,2,3,5,6})]
+        [TestCase(1, true, new[] { 2, 3, 5, 6 })]
+        [TestCase(2, true, new[] { 1, 3, 5, 6 })]
+        [TestCase(3, true, new[] { 1, 2, 5, 6 })]
+        [TestCase(4, false, new[] { 1, 2, 3, 5, 6 })]
+        [TestCase(5, true, new[] { 1, 2, 3, 6 })]
+        [TestCase(6, true, new[] { 1, 2, 3, 5 })]
+        [TestCase(7, false, new[] { 1, 2, 3, 5, 6 })]
         public void Delete(int keyToDelete, bool isDeleted, int[] expectedKeys)
         {
             var target = new ArrayBackedPropertyBag<int, int>();
@@ -124,11 +124,11 @@ namespace Azure.Core.Tests
         public void DeleteMultiple(int total, int increment)
         {
             var target = new ArrayBackedPropertyBag<int, int>();
-            var expected = new Dictionary<int,int>();
+            var expected = new Dictionary<int, int>();
             for (var key = 0; key < total; key++)
             {
                 target.Set(key, key);
-                expected.Add(key,key);
+                expected.Add(key, key);
             }
 
             for (var key = 0; key < total; key += increment)

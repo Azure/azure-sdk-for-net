@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of RecoveryResourceGroupCustomDetails. </summary>
     internal partial class UnknownRecoveryResourceGroupCustomDetails : RecoveryResourceGroupCustomDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRecoveryResourceGroupCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRecoveryResourceGroupCustomDetails(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, serializedAdditionalRawData)
-        {
-            ResourceType = resourceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryResourceGroupCustomDetails"/> for deserialization. </summary>
-        internal UnknownRecoveryResourceGroupCustomDetails()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRecoveryResourceGroupCustomDetails(string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

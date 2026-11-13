@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,74 +15,114 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct RedactionCharacter : IEquatable<RedactionCharacter>
     {
         private readonly string _value;
+        /// <summary> Exclamation point character. </summary>
+        private const string ExclamationPointValue = "!";
+        /// <summary> Number sign character. </summary>
+        private const string NumberSignValue = "#";
+        /// <summary> Dollar sign character. </summary>
+        private const string DollarValue = "$";
+        /// <summary> Percent sign character. </summary>
+        private const string PercentValue = "%";
+        /// <summary> Ampersand character. </summary>
+        private const string AmpersandValue = "&";
+        /// <summary> Asterisk character. </summary>
+        private const string AsteriskValue = "*";
+        /// <summary> Plus sign character. </summary>
+        private const string PlusValue = "+";
+        /// <summary> Minus sign character. </summary>
+        private const string MinusValue = "-";
+        /// <summary> Equals sign character. </summary>
+        private const string EqualsValue = "=";
+        /// <summary> Question mark character. </summary>
+        private const string QuestionMarkValue = "?";
+        /// <summary> At sign character. </summary>
+        private const string AtSignValue = "@";
+        /// <summary> Caret character. </summary>
+        private const string CaretValue = "^";
+        /// <summary> Underscore character. </summary>
+        private const string UnderscoreValue = "_";
+        /// <summary> Tilde character. </summary>
+        private const string TildeValue = "~";
 
         /// <summary> Initializes a new instance of <see cref="RedactionCharacter"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedactionCharacter(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExclamationPointValue = "!";
-        private const string NumberSignValue = "#";
-        private const string DollarValue = "$";
-        private const string PercentValue = "%";
-        private const string AmpersandValue = "&";
-        private const string AsteriskValue = "*";
-        private const string PlusValue = "+";
-        private const string MinusValue = "-";
-        private const string EqualsValueValue = "=";
-        private const string QuestionMarkValue = "?";
-        private const string AtSignValue = "@";
-        private const string CaretValue = "^";
-        private const string UnderscoreValue = "_";
-        private const string TildeValue = "~";
+            _value = value;
+        }
 
         /// <summary> Exclamation point character. </summary>
         public static RedactionCharacter ExclamationPoint { get; } = new RedactionCharacter(ExclamationPointValue);
+
         /// <summary> Number sign character. </summary>
         public static RedactionCharacter NumberSign { get; } = new RedactionCharacter(NumberSignValue);
+
         /// <summary> Dollar sign character. </summary>
         public static RedactionCharacter Dollar { get; } = new RedactionCharacter(DollarValue);
+
         /// <summary> Percent sign character. </summary>
         public static RedactionCharacter Percent { get; } = new RedactionCharacter(PercentValue);
+
         /// <summary> Ampersand character. </summary>
         public static RedactionCharacter Ampersand { get; } = new RedactionCharacter(AmpersandValue);
+
         /// <summary> Asterisk character. </summary>
         public static RedactionCharacter Asterisk { get; } = new RedactionCharacter(AsteriskValue);
+
         /// <summary> Plus sign character. </summary>
         public static RedactionCharacter Plus { get; } = new RedactionCharacter(PlusValue);
+
         /// <summary> Minus sign character. </summary>
         public static RedactionCharacter Minus { get; } = new RedactionCharacter(MinusValue);
-        /// <summary> Equals sign character. </summary>
-        public static RedactionCharacter EqualsValue { get; } = new RedactionCharacter(EqualsValueValue);
+
         /// <summary> Question mark character. </summary>
         public static RedactionCharacter QuestionMark { get; } = new RedactionCharacter(QuestionMarkValue);
+
         /// <summary> At sign character. </summary>
         public static RedactionCharacter AtSign { get; } = new RedactionCharacter(AtSignValue);
+
         /// <summary> Caret character. </summary>
         public static RedactionCharacter Caret { get; } = new RedactionCharacter(CaretValue);
+
         /// <summary> Underscore character. </summary>
         public static RedactionCharacter Underscore { get; } = new RedactionCharacter(UnderscoreValue);
+
         /// <summary> Tilde character. </summary>
         public static RedactionCharacter Tilde { get; } = new RedactionCharacter(TildeValue);
+
         /// <summary> Determines if two <see cref="RedactionCharacter"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedactionCharacter left, RedactionCharacter right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedactionCharacter"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedactionCharacter left, RedactionCharacter right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedactionCharacter"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedactionCharacter"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedactionCharacter(string value) => new RedactionCharacter(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedactionCharacter"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedactionCharacter?(string value) => value == null ? null : new RedactionCharacter(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedactionCharacter other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedactionCharacter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

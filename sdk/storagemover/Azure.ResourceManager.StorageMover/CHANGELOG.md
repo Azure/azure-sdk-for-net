@@ -1,10 +1,57 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
 
-- Genearte SDK from typespec
+## 1.5.0 (2026-09-10)
+
+### Features Added
+
+- Upgraded the API version to 2026-05-01.
+
+### Other Changes
+
+- Upgraded Azure.Core to 1.62.0.
+- Upgraded Azure.ResourceManager to 1.14.0.
+
+## 1.4.1 (2026-06-15)
+
+### Bugs Fixed
+
+- Fixed `JobRunProperties` deserialization to handle empty-string `AgentResourceId`, `SourceResourceId`, and `TargetResourceId` values returned by the service (for example, for cloud-to-cloud jobs that have no agent, or resources in transient states). These previously threw an `ArgumentException` while polling job runs.
+
+### Other Changes
+
+- Added model factory methods in `ArmStorageMoverModelFactory` for existing models (for example, `JobDefinitionPatch`, `ScheduleRecurrence`, `StorageMoverCredentials`, and the endpoint update-property models) to support mocking.
+
+## 1.4.0 (2026-04-17)
+
+### Features Added
+
+- Upgraded to API version 2025-12-01.
+  - Added support for S3 with HMAC authentication endpoints (`S3WithHmacEndpointProperties`).
+  - Added support for Azure Multi-Cloud Connector endpoints (`AzureMultiCloudConnectorEndpointProperties`).
+  - Added support for Azure Storage NFS File Share endpoints (`AzureStorageNfsFileShareEndpointProperties`).
+  - Added job definition scheduling support (`StorageMoverScheduleInfo`, `StorageMoverScheduleFrequency`).
+  - Added data integrity validation for job definitions (`StorageMoverDataIntegrityValidation`).
+  - Added `IsPermissionsPreserved` property on job definitions.
+  - Added `StorageMoverJobTriggerType` and `ScheduledExecutionOn` properties on job runs.
+  - Added `StorageMoverEndpointKind` property on endpoints.
+  - Added `Connections` property on job definitions.
+
+## 1.3.0 (2025-10-09)
+
+### Features Added
+
+- Upgraded to API version 2025-07-01.
+    - Added new endpoint type `AzureStorageNFSFileShare` for NFS V3 Support.
 
 ## 1.2.1 (2025-03-11)
 
@@ -21,7 +68,7 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
 
@@ -32,7 +79,7 @@
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -42,20 +89,20 @@
 
 ### Features Added
 
-- Upgrade to API version 2023-10-01
+- Upgraded to API version 2023-10-01.
 
 ## 1.1.0-beta.2 (2023-08-08)
 
 ### Features Added
 
-- Upgrade to API version 2023-07-01-preview
+- Upgraded to API version 2023-07-01-preview
 - Added support for SMB endpoint and SMB file share endpoint.
 
 ## 1.1.0-beta.1 (2023-05-31)
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

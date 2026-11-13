@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct PlatformVersion : IEquatable<PlatformVersion>
     {
         private readonly string _value;
+        /// <summary> Platform version cannot be determined, as compute platform is not deployed. </summary>
+        private const string UndeterminedValue = "undetermined";
+        /// <summary> Platform running the service on Single Tenant V1 platform. </summary>
+        private const string Stv1Value = "stv1";
+        /// <summary> Platform running the service on Single Tenant V2 platform. </summary>
+        private const string Stv2Value = "stv2";
+        /// <summary> Platform running the service on Multi Tenant V1 platform. </summary>
+        private const string Mtv1Value = "mtv1";
+        /// <summary> Platform running the service on Single Tenant V2 platform on newer Hardware. </summary>
+        private const string Stv21Value = "stv2.1";
 
         /// <summary> Initializes a new instance of <see cref="PlatformVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PlatformVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UndeterminedValue = "undetermined";
-        private const string Stv1Value = "stv1";
-        private const string Stv2Value = "stv2";
-        private const string Mtv1Value = "mtv1";
-        private const string Stv21Value = "stv2.1";
+            _value = value;
+        }
 
         /// <summary> Platform version cannot be determined, as compute platform is not deployed. </summary>
         public static PlatformVersion Undetermined { get; } = new PlatformVersion(UndeterminedValue);
+
         /// <summary> Platform running the service on Single Tenant V1 platform. </summary>
         public static PlatformVersion Stv1 { get; } = new PlatformVersion(Stv1Value);
+
         /// <summary> Platform running the service on Single Tenant V2 platform. </summary>
         public static PlatformVersion Stv2 { get; } = new PlatformVersion(Stv2Value);
+
         /// <summary> Platform running the service on Multi Tenant V1 platform. </summary>
         public static PlatformVersion Mtv1 { get; } = new PlatformVersion(Mtv1Value);
+
         /// <summary> Platform running the service on Single Tenant V2 platform on newer Hardware. </summary>
         public static PlatformVersion Stv21 { get; } = new PlatformVersion(Stv21Value);
+
         /// <summary> Determines if two <see cref="PlatformVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PlatformVersion left, PlatformVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PlatformVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PlatformVersion left, PlatformVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PlatformVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PlatformVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PlatformVersion(string value) => new PlatformVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PlatformVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PlatformVersion?(string value) => value == null ? null : new PlatformVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PlatformVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PlatformVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

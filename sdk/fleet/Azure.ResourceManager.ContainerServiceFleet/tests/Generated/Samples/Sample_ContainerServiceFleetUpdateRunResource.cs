@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ContainerServiceFleetUpdateRunResource containerServiceFleetUpdateRun = client.GetContainerServiceFleetUpdateRunResource(containerServiceFleetUpdateRunResourceId);
 
             // invoke the operation
-            await containerServiceFleetUpdateRun.DeleteAsync(WaitUntil.Completed);
+            await containerServiceFleetUpdateRun.DeleteAsync(WaitUntil.Completed, ifMatch: (ETag?)null);
 
             Console.WriteLine("Succeeded");
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ContainerServiceFleetUpdateRunResource containerServiceFleetUpdateRun = client.GetContainerServiceFleetUpdateRunResource(containerServiceFleetUpdateRunResourceId);
 
             // invoke the operation
-            string ifMatch = "xnbwucfeufeagpa";
+            ETag ifMatch = new ETag("xnbwucfeufeagpa");
             await containerServiceFleetUpdateRun.DeleteAsync(WaitUntil.Completed, ifMatch: ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -189,7 +189,7 @@ DisplayName = "gate after stage1",
                     NodeImageSelection = new NodeImageSelection(NodeImageSelectionType.Latest),
                 },
             };
-            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.UpdateAsync(WaitUntil.Completed, data, matchConditions: null);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -240,9 +240,12 @@ AfterStageWaitInSeconds = 3600,
                     },
                 },
             };
-            string ifMatch = "wyolpuaxgybeygcbz";
-            string ifNoneMatch = "rwrhonlormgshamadufoo";
-            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.UpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch);
+            MatchConditions matchConditions = new MatchConditions
+            {
+                IfMatch = new ETag("wyolpuaxgybeygcbz"),
+                IfNoneMatch = new ETag("rwrhonlormgshamadufoo")
+            };
+            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.UpdateAsync(WaitUntil.Completed, data, matchConditions: matchConditions);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -279,7 +282,7 @@ AfterStageWaitInSeconds = 3600,
 new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.Member, "member-one"),
 new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.AfterStageWait, "stage1")
             });
-            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.SkipAsync(WaitUntil.Completed, body);
+            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.SkipAsync(WaitUntil.Completed, body, ifMatch: (ETag?)null);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -316,7 +319,7 @@ new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.AfterStageWa
 new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.Member, "member-one"),
 new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.AfterStageWait, "stage1")
             });
-            string ifMatch = "rncfubdzrhcihvpqflbsjvoau";
+            ETag ifMatch = new ETag("rncfubdzrhcihvpqflbsjvoau");
             ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.SkipAsync(WaitUntil.Completed, body, ifMatch: ifMatch);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 
@@ -349,7 +352,7 @@ new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.AfterStageWa
             ContainerServiceFleetUpdateRunResource containerServiceFleetUpdateRun = client.GetContainerServiceFleetUpdateRunResource(containerServiceFleetUpdateRunResourceId);
 
             // invoke the operation
-            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.StartAsync(WaitUntil.Completed);
+            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.StartAsync(WaitUntil.Completed, ifMatch: (ETag?)null);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -381,7 +384,7 @@ new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.AfterStageWa
             ContainerServiceFleetUpdateRunResource containerServiceFleetUpdateRun = client.GetContainerServiceFleetUpdateRunResource(containerServiceFleetUpdateRunResourceId);
 
             // invoke the operation
-            string ifMatch = "bvhjlqeindkmljbbiypbqiaqgtkhlu";
+            ETag ifMatch = new ETag("bvhjlqeindkmljbbiypbqiaqgtkhlu");
             ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.StartAsync(WaitUntil.Completed, ifMatch: ifMatch);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 
@@ -414,7 +417,7 @@ new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.AfterStageWa
             ContainerServiceFleetUpdateRunResource containerServiceFleetUpdateRun = client.GetContainerServiceFleetUpdateRunResource(containerServiceFleetUpdateRunResourceId);
 
             // invoke the operation
-            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.StopAsync(WaitUntil.Completed);
+            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.StopAsync(WaitUntil.Completed, ifMatch: (ETag?)null);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -446,7 +449,7 @@ new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.AfterStageWa
             ContainerServiceFleetUpdateRunResource containerServiceFleetUpdateRun = client.GetContainerServiceFleetUpdateRunResource(containerServiceFleetUpdateRunResourceId);
 
             // invoke the operation
-            string ifMatch = "jb";
+            ETag ifMatch = new ETag("jb");
             ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.StopAsync(WaitUntil.Completed, ifMatch: ifMatch);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerAppsConfiguration. </summary>
     public partial class ContainerAppsConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppsConfiguration"/>. </summary>
         public ContainerAppsConfiguration()
@@ -57,8 +29,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="controlPlaneSubnetResourceId"> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </param>
         /// <param name="appSubnetResourceId"> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </param>
         /// <param name="dockerBridgeCidr"> CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the IP range defined in platformReservedCidr, if defined. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppsConfiguration(string daprAIInstrumentationKey, string platformReservedCidr, string platformReservedDnsIP, string controlPlaneSubnetResourceId, string appSubnetResourceId, string dockerBridgeCidr, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppsConfiguration(string daprAIInstrumentationKey, string platformReservedCidr, string platformReservedDnsIP, string controlPlaneSubnetResourceId, string appSubnetResourceId, string dockerBridgeCidr, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DaprAIInstrumentationKey = daprAIInstrumentationKey;
             PlatformReservedCidr = platformReservedCidr;
@@ -66,24 +38,29 @@ namespace Azure.ResourceManager.AppService.Models
             ControlPlaneSubnetResourceId = controlPlaneSubnetResourceId;
             AppSubnetResourceId = appSubnetResourceId;
             DockerBridgeCidr = dockerBridgeCidr;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </summary>
         [WirePath("daprAIInstrumentationKey")]
         public string DaprAIInstrumentationKey { get; set; }
+
         /// <summary> IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. It must not overlap with any other Subnet IP ranges. </summary>
         [WirePath("platformReservedCidr")]
         public string PlatformReservedCidr { get; set; }
+
         /// <summary> An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server. </summary>
         [WirePath("platformReservedDnsIP")]
         public string PlatformReservedDnsIP { get; set; }
+
         /// <summary> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </summary>
         [WirePath("controlPlaneSubnetResourceId")]
         public string ControlPlaneSubnetResourceId { get; set; }
+
         /// <summary> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </summary>
         [WirePath("appSubnetResourceId")]
         public string AppSubnetResourceId { get; set; }
+
         /// <summary> CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the IP range defined in platformReservedCidr, if defined. </summary>
         [WirePath("dockerBridgeCidr")]
         public string DockerBridgeCidr { get; set; }

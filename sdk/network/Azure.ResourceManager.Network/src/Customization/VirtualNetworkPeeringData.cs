@@ -4,56 +4,62 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualNetworkPeering data model.
-    /// Peerings in a virtual network resource.
-    /// </summary>
-    public partial class VirtualNetworkPeeringData : NetworkWritableResourceData
+    public partial class VirtualNetworkPeeringData
     {
+        // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.localAddressSpace.addressPrefixes")]
         public IList<string> LocalAddressPrefixes
         {
             get
             {
-                if (LocalAddressSpace is null)
-                    LocalAddressSpace = new VirtualNetworkAddressSpace();
+                LocalAddressSpace ??= new VirtualNetworkAddressSpace();
                 return LocalAddressSpace.AddressPrefixes;
             }
         }
 
+        // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.localVirtualNetworkAddressSpace.addressPrefixes")]
         public IList<string> LocalVirtualNetworkAddressPrefixes
         {
             get
             {
-                if (LocalVirtualNetworkAddressSpace is null)
-                    LocalVirtualNetworkAddressSpace = new VirtualNetworkAddressSpace();
+                LocalVirtualNetworkAddressSpace ??= new VirtualNetworkAddressSpace();
                 return LocalVirtualNetworkAddressSpace.AddressPrefixes;
             }
         }
 
+        // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.remoteAddressSpace.addressPrefixes")]
         public IList<string> RemoteAddressPrefixes
         {
             get
             {
-                if (RemoteAddressSpace is null)
-                    RemoteAddressSpace = new VirtualNetworkAddressSpace();
+                RemoteAddressSpace ??= new VirtualNetworkAddressSpace();
                 return RemoteAddressSpace.AddressPrefixes;
             }
         }
 
+        // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.remoteVirtualNetworkAddressSpace.addressPrefixes")]
         public IList<string> RemoteVirtualNetworkAddressPrefixes
         {
             get
             {
-                if (RemoteVirtualNetworkAddressSpace is null)
-                    RemoteVirtualNetworkAddressSpace = new VirtualNetworkAddressSpace();
+                RemoteVirtualNetworkAddressSpace ??= new VirtualNetworkAddressSpace();
                 return RemoteVirtualNetworkAddressSpace.AddressPrefixes;
             }
         }

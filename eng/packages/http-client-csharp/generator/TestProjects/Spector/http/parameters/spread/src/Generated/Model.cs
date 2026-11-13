@@ -5,18 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Parameters.Spread.Models;
 
-namespace Parameters.Spread
+namespace Parameters.Spread._Model
 {
     public partial class Model
     {
         protected Model() => throw null;
+
+        internal Model(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Tests
     public class BlobAccessConditionConfigs : AccessConditionConfigs
     {
         public BlobAccessConditionConfigs(RecordedTestBase recordedTestBase)
-            :base(recordedTestBase)
+            : base(recordedTestBase)
         {
         }
 

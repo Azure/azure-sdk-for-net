@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,9 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(dataset, nameof(dataset));
 
-            Dataset = dataset;
-            FieldList = new ChangeTrackingList<BinaryData>();
-            ActivityType = "GetMetadata";
+            TypeProperties = new GetMetadataActivityTypeProperties(dataset);
         }
 
         /// <summary> Initializes a new instance of <see cref="GetDatasetMetadataActivity"/>. </summary>
@@ -36,79 +35,80 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="dataset"> GetMetadata activity dataset reference. </param>
-        /// <param name="fieldList"> Fields of metadata to get from dataset. </param>
-        /// <param name="storeSettings">
-        /// GetMetadata activity store settings.
-        /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="LakeHouseReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
-        /// </param>
-        /// <param name="formatSettings">
-        /// GetMetadata activity format settings.
-        /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="ParquetReadSettings"/> and <see cref="XmlReadSettings"/>.
-        /// </param>
-        internal GetDatasetMetadataActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DatasetReference dataset, IList<BinaryData> fieldList, StoreReadSettings storeSettings, FormatReadSettings formatSettings) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="typeProperties"> GetMetadata activity properties. </param>
+        internal GetDatasetMetadataActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, GetMetadataActivityTypeProperties typeProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
-            Dataset = dataset;
-            FieldList = fieldList;
-            StoreSettings = storeSettings;
-            FormatSettings = formatSettings;
-            ActivityType = activityType ?? "GetMetadata";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetDatasetMetadataActivity"/> for deserialization. </summary>
-        internal GetDatasetMetadataActivity()
-        {
-        }
+        /// <summary> GetMetadata activity properties. </summary>
+        internal GetMetadataActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> GetMetadata activity dataset reference. </summary>
-        public DatasetReference Dataset { get; set; }
-        /// <summary>
-        /// Fields of metadata to get from dataset.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> FieldList { get; }
-        /// <summary>
-        /// GetMetadata activity store settings.
-        /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="LakeHouseReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
-        /// </summary>
-        public StoreReadSettings StoreSettings { get; set; }
-        /// <summary>
-        /// GetMetadata activity format settings.
-        /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="ParquetReadSettings"/> and <see cref="XmlReadSettings"/>.
-        /// </summary>
-        public FormatReadSettings FormatSettings { get; set; }
+        public DatasetReference Dataset
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Dataset;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GetMetadataActivityTypeProperties();
+                }
+                TypeProperties.Dataset = value;
+            }
+        }
+
+        /// <summary> Fields of metadata to get from dataset. </summary>
+        public IList<BinaryData> FieldList
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GetMetadataActivityTypeProperties();
+                }
+                return TypeProperties.FieldList;
+            }
+        }
+
+        /// <summary> GetMetadata activity store settings. </summary>
+        public StoreReadSettings StoreSettings
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.StoreSettings;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GetMetadataActivityTypeProperties();
+                }
+                TypeProperties.StoreSettings = value;
+            }
+        }
+
+        /// <summary> GetMetadata activity format settings. </summary>
+        public FormatReadSettings FormatSettings
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FormatSettings;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GetMetadataActivityTypeProperties();
+                }
+                TypeProperties.FormatSettings = value;
+            }
+        }
     }
 }

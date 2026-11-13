@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class FirewallPolicyRuleCollectionGroupDraftResource : IJsonModel<FirewallPolicyRuleCollectionGroupDraftData>
     {
-        private static FirewallPolicyRuleCollectionGroupDraftData s_dataDeserializationInstance;
-        private static FirewallPolicyRuleCollectionGroupDraftData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FirewallPolicyRuleCollectionGroupDraftData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FirewallPolicyRuleCollectionGroupDraftData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FirewallPolicyRuleCollectionGroupDraftData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FirewallPolicyRuleCollectionGroupDraftData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FirewallPolicyRuleCollectionGroupDraftData>)Data).Write(writer, options);
 
-        FirewallPolicyRuleCollectionGroupDraftData IJsonModel<FirewallPolicyRuleCollectionGroupDraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirewallPolicyRuleCollectionGroupDraftData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallPolicyRuleCollectionGroupDraftData IJsonModel<FirewallPolicyRuleCollectionGroupDraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FirewallPolicyRuleCollectionGroupDraftData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FirewallPolicyRuleCollectionGroupDraftData IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirewallPolicyRuleCollectionGroupDraftData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FirewallPolicyRuleCollectionGroupDraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

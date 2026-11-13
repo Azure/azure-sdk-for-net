@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class ShareFileRangeWriteTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ShareFileRangeWriteType value) => value switch
         {
             ShareFileRangeWriteType.Update => "update",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareFileRangeWriteType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ShareFileRangeWriteType ToShareFileRangeWriteType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "update")) return ShareFileRangeWriteType.Update;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "clear")) return ShareFileRangeWriteType.Clear;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "update"))
+            {
+                return ShareFileRangeWriteType.Update;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "clear"))
+            {
+                return ShareFileRangeWriteType.Clear;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareFileRangeWriteType value.");
         }
     }

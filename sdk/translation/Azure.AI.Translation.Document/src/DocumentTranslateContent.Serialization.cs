@@ -7,15 +7,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class DocumentTranslateContent : IUtf8JsonSerializable, IJsonModel<DocumentTranslateContent>
+    public partial class DocumentTranslateContent
     {
-        internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
+        internal virtual MultiPartFormDataRequestContent ToMultipartRequestContent()
         {
-            MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
+            MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             content.Add(MultipartDocument.Content, "document", MultipartDocument.Name, MultipartDocument.ContentType);
             if (Optional.IsCollectionDefined(MultipartGlossary))
             {
@@ -63,9 +63,9 @@ namespace Azure.AI.Translation.Document
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 

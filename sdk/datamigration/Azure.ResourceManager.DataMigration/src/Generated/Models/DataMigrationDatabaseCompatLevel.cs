@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationDatabaseCompatLevel : IEquatable<DataMigrationDatabaseCompatLevel>
     {
         private readonly string _value;
+        /// <summary> CompatLevel80. </summary>
+        private const string CompatLevel80Value = "CompatLevel80";
+        /// <summary> CompatLevel90. </summary>
+        private const string CompatLevel90Value = "CompatLevel90";
+        /// <summary> CompatLevel100. </summary>
+        private const string CompatLevel100Value = "CompatLevel100";
+        /// <summary> CompatLevel110. </summary>
+        private const string CompatLevel110Value = "CompatLevel110";
+        /// <summary> CompatLevel120. </summary>
+        private const string CompatLevel120Value = "CompatLevel120";
+        /// <summary> CompatLevel130. </summary>
+        private const string CompatLevel130Value = "CompatLevel130";
+        /// <summary> CompatLevel140. </summary>
+        private const string CompatLevel140Value = "CompatLevel140";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationDatabaseCompatLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationDatabaseCompatLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CompatLevel80Value = "CompatLevel80";
-        private const string CompatLevel90Value = "CompatLevel90";
-        private const string CompatLevel100Value = "CompatLevel100";
-        private const string CompatLevel110Value = "CompatLevel110";
-        private const string CompatLevel120Value = "CompatLevel120";
-        private const string CompatLevel130Value = "CompatLevel130";
-        private const string CompatLevel140Value = "CompatLevel140";
+            _value = value;
+        }
 
         /// <summary> CompatLevel80. </summary>
         public static DataMigrationDatabaseCompatLevel CompatLevel80 { get; } = new DataMigrationDatabaseCompatLevel(CompatLevel80Value);
+
         /// <summary> CompatLevel90. </summary>
         public static DataMigrationDatabaseCompatLevel CompatLevel90 { get; } = new DataMigrationDatabaseCompatLevel(CompatLevel90Value);
+
         /// <summary> CompatLevel100. </summary>
         public static DataMigrationDatabaseCompatLevel CompatLevel100 { get; } = new DataMigrationDatabaseCompatLevel(CompatLevel100Value);
+
         /// <summary> CompatLevel110. </summary>
         public static DataMigrationDatabaseCompatLevel CompatLevel110 { get; } = new DataMigrationDatabaseCompatLevel(CompatLevel110Value);
+
         /// <summary> CompatLevel120. </summary>
         public static DataMigrationDatabaseCompatLevel CompatLevel120 { get; } = new DataMigrationDatabaseCompatLevel(CompatLevel120Value);
+
         /// <summary> CompatLevel130. </summary>
         public static DataMigrationDatabaseCompatLevel CompatLevel130 { get; } = new DataMigrationDatabaseCompatLevel(CompatLevel130Value);
+
         /// <summary> CompatLevel140. </summary>
         public static DataMigrationDatabaseCompatLevel CompatLevel140 { get; } = new DataMigrationDatabaseCompatLevel(CompatLevel140Value);
+
         /// <summary> Determines if two <see cref="DataMigrationDatabaseCompatLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationDatabaseCompatLevel left, DataMigrationDatabaseCompatLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationDatabaseCompatLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationDatabaseCompatLevel left, DataMigrationDatabaseCompatLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationDatabaseCompatLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationDatabaseCompatLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationDatabaseCompatLevel(string value) => new DataMigrationDatabaseCompatLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationDatabaseCompatLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationDatabaseCompatLevel?(string value) => value == null ? null : new DataMigrationDatabaseCompatLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationDatabaseCompatLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationDatabaseCompatLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

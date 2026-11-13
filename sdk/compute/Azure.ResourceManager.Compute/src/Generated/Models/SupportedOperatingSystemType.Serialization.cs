@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class SupportedOperatingSystemTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SupportedOperatingSystemType value) => value switch
         {
             SupportedOperatingSystemType.Windows => "Windows",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SupportedOperatingSystemType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SupportedOperatingSystemType ToSupportedOperatingSystemType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return SupportedOperatingSystemType.Windows;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return SupportedOperatingSystemType.Linux;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows"))
+            {
+                return SupportedOperatingSystemType.Windows;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux"))
+            {
+                return SupportedOperatingSystemType.Linux;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SupportedOperatingSystemType value.");
         }
     }

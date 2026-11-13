@@ -1,0 +1,7 @@
+# Azure.Developer.DevCenter approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# 'SkuName' is part of the GA'd public API (shipped in 1.0.0); renaming the
+# generated enum to avoid the collision with Azure.Storage.Blobs.Models.SkuName
+# would be a breaking change.
+nowarn:AZC0034 T:Azure.Developer.DevCenter.Models.SkuName

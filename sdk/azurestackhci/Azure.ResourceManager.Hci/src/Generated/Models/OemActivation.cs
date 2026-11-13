@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct OemActivation : IEquatable<OemActivation>
     {
         private readonly string _value;
+        /// <summary> OEM activation is disabled for the cluster. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> OEM activation is enabled for the cluster. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="OemActivation"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OemActivation(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
-
-        /// <summary> Disabled. </summary>
+        /// <summary> OEM activation is disabled for the cluster. </summary>
         public static OemActivation Disabled { get; } = new OemActivation(DisabledValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> OEM activation is enabled for the cluster. </summary>
         public static OemActivation Enabled { get; } = new OemActivation(EnabledValue);
+
         /// <summary> Determines if two <see cref="OemActivation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OemActivation left, OemActivation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OemActivation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OemActivation left, OemActivation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OemActivation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OemActivation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OemActivation(string value) => new OemActivation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OemActivation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OemActivation?(string value) => value == null ? null : new OemActivation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OemActivation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OemActivation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

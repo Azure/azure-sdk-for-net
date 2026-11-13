@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public readonly partial struct FleetUpdateStrategyProvisioningState : IEquatable<FleetUpdateStrategyProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="FleetUpdateStrategyProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FleetUpdateStrategyProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static FleetUpdateStrategyProvisioningState Succeeded { get; } = new FleetUpdateStrategyProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static FleetUpdateStrategyProvisioningState Failed { get; } = new FleetUpdateStrategyProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static FleetUpdateStrategyProvisioningState Canceled { get; } = new FleetUpdateStrategyProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="FleetUpdateStrategyProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FleetUpdateStrategyProvisioningState left, FleetUpdateStrategyProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FleetUpdateStrategyProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FleetUpdateStrategyProvisioningState left, FleetUpdateStrategyProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FleetUpdateStrategyProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FleetUpdateStrategyProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FleetUpdateStrategyProvisioningState(string value) => new FleetUpdateStrategyProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FleetUpdateStrategyProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FleetUpdateStrategyProvisioningState?(string value) => value == null ? null : new FleetUpdateStrategyProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FleetUpdateStrategyProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FleetUpdateStrategyProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

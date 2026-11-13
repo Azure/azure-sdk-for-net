@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Defines a stage which contains the groups to update and the steps to take (e.g., wait for a time period) before starting the next stage. </summary>
     public partial class ContainerServiceFleetUpdateStage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStage"/>. </summary>
         /// <param name="name"> The name of the stage. Must be unique within the UpdateRun. </param>
@@ -61,34 +33,119 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStage"/>. </summary>
         /// <param name="name"> The name of the stage. Must be unique within the UpdateRun. </param>
         /// <param name="groups"> Defines the groups to be executed in parallel in this stage. Duplicate groups are not allowed. Min size: 1. </param>
+        /// <param name="memberSelector">
+        /// Select the members of the stage.
+        ///   * If specified without UpdateGroup, one implicit group containing the selected members will be created.
+        ///   * If specified with UpdateGroup, members will be pre-filtered before group-level selection logic is applied.
+        ///   * If not specified, group-level selection logic will be used.
+        /// </param>
         /// <param name="afterStageWaitInSeconds"> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </param>
+        /// <param name="maxAllowedFailures">
+        /// Limits the number of member (cluster) upgrade failures tolerated within this stage.
+        /// Failures are evaluated over all members within all groups within this stage. 
+        /// Accepts either:
+        ///   • A fixed count n, where n &gt;= 0
+        ///   • A percentage p%, where 0 &lt;= p &lt;= 100
+        ///     Percentage resolves at stage start using: resolvedThreshold = ceil(p * N), 
+        ///     where p is the percentage as a decimal and N is the number of members in this stage at scope start.
+        /// Examples:
+        ///   • "3"   --&gt; up to 3 member upgrade failures are tolerated within this stage. The 4th failure would cause the entire stage to fail.
+        ///   • "25%" --&gt; up to 25% of the members in this stage can fail their upgrade before the stage is considered failed.
+        /// </param>
+        /// <param name="maxConcurrency">
+        /// The max number of upgrades that can run concurrently across all groups in this stage.
+        /// Acts as a ceiling (and not a quota) for the number of concurrent upgrades within the stage you want to tolerate at a time.
+        /// Actual concurrency may be lower depending on group-level concurrency limits or individual member conditions.
+        /// Stage maxConcurrency has a min value of "1".
+        /// Accepts either:
+        ///     • A fixed count, e.g., "3"
+        ///     • A percentage, e.g., "25%" (range 1–100). Percentage is of the total number of clusters across all groups in the stage.
+        ///       Fractional results are rounded down. A minimum of 1 upgrade is enforced.
+        /// Examples:
+        ///     • "3"     --&gt; up to 3 clusters from this stage upgrade at once (across all groups).
+        ///     • "100%"  --&gt; “all at once”; up to all clusters in this stage upgrade at the same time.
+        ///     • "25%"   --&gt; up to 25% of the stage’s total clusters upgrade at the same time.
+        /// </param>
         /// <param name="beforeGates"> A list of Gates that will be created before this Stage is executed. </param>
         /// <param name="afterGates"> A list of Gates that will be created after this Stage is executed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, MemberSelector memberSelector, int? afterStageWaitInSeconds, string maxAllowedFailures, string maxConcurrency, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Groups = groups;
+            MemberSelector = memberSelector;
             AfterStageWaitInSeconds = afterStageWaitInSeconds;
+            MaxAllowedFailures = maxAllowedFailures;
+            MaxConcurrency = maxConcurrency;
             BeforeGates = beforeGates;
             AfterGates = afterGates;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStage"/> for deserialization. </summary>
-        internal ContainerServiceFleetUpdateStage()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the stage. Must be unique within the UpdateRun. </summary>
         public string Name { get; set; }
+
         /// <summary> Defines the groups to be executed in parallel in this stage. Duplicate groups are not allowed. Min size: 1. </summary>
         public IList<ContainerServiceFleetUpdateGroup> Groups { get; }
+
+        /// <summary>
+        /// Select the members of the stage.
+        ///   * If specified without UpdateGroup, one implicit group containing the selected members will be created.
+        ///   * If specified with UpdateGroup, members will be pre-filtered before group-level selection logic is applied.
+        ///   * If not specified, group-level selection logic will be used.
+        /// </summary>
+        internal MemberSelector MemberSelector { get; set; }
+
         /// <summary> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </summary>
         public int? AfterStageWaitInSeconds { get; set; }
+
+        /// <summary>
+        /// Limits the number of member (cluster) upgrade failures tolerated within this stage.
+        /// Failures are evaluated over all members within all groups within this stage. 
+        /// Accepts either:
+        ///   • A fixed count n, where n &gt;= 0
+        ///   • A percentage p%, where 0 &lt;= p &lt;= 100
+        ///     Percentage resolves at stage start using: resolvedThreshold = ceil(p * N), 
+        ///     where p is the percentage as a decimal and N is the number of members in this stage at scope start.
+        /// Examples:
+        ///   • "3"   --&gt; up to 3 member upgrade failures are tolerated within this stage. The 4th failure would cause the entire stage to fail.
+        ///   • "25%" --&gt; up to 25% of the members in this stage can fail their upgrade before the stage is considered failed.
+        /// </summary>
+        public string MaxAllowedFailures { get; set; }
+
+        /// <summary>
+        /// The max number of upgrades that can run concurrently across all groups in this stage.
+        /// Acts as a ceiling (and not a quota) for the number of concurrent upgrades within the stage you want to tolerate at a time.
+        /// Actual concurrency may be lower depending on group-level concurrency limits or individual member conditions.
+        /// Stage maxConcurrency has a min value of "1".
+        /// Accepts either:
+        ///     • A fixed count, e.g., "3"
+        ///     • A percentage, e.g., "25%" (range 1–100). Percentage is of the total number of clusters across all groups in the stage.
+        ///       Fractional results are rounded down. A minimum of 1 upgrade is enforced.
+        /// Examples:
+        ///     • "3"     --&gt; up to 3 clusters from this stage upgrade at once (across all groups).
+        ///     • "100%"  --&gt; “all at once”; up to all clusters in this stage upgrade at the same time.
+        ///     • "25%"   --&gt; up to 25% of the stage’s total clusters upgrade at the same time.
+        /// </summary>
+        public string MaxConcurrency { get; set; }
+
         /// <summary> A list of Gates that will be created before this Stage is executed. </summary>
         public IList<ContainerServiceFleetGateConfiguration> BeforeGates { get; }
+
         /// <summary> A list of Gates that will be created after this Stage is executed. </summary>
         public IList<ContainerServiceFleetGateConfiguration> AfterGates { get; }
+
+        /// <summary> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </summary>
+        public string MemberSelectorByLabel
+        {
+            get
+            {
+                return MemberSelector is null ? default : MemberSelector.ByLabel;
+            }
+            set
+            {
+                MemberSelector = new MemberSelector(value);
+            }
+        }
     }
 }

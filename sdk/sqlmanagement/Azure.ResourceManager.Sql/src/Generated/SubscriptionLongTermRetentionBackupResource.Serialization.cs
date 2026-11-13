@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SubscriptionLongTermRetentionBackupResource : IJsonModel<LongTermRetentionBackupData>
     {
-        private static LongTermRetentionBackupData s_dataDeserializationInstance;
-        private static LongTermRetentionBackupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LongTermRetentionBackupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LongTermRetentionBackupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LongTermRetentionBackupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LongTermRetentionBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LongTermRetentionBackupData>)Data).Write(writer, options);
 
-        LongTermRetentionBackupData IJsonModel<LongTermRetentionBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LongTermRetentionBackupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LongTermRetentionBackupData IJsonModel<LongTermRetentionBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LongTermRetentionBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LongTermRetentionBackupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LongTermRetentionBackupData IPersistableModel<LongTermRetentionBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LongTermRetentionBackupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<LongTermRetentionBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LongTermRetentionBackupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LongTermRetentionBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

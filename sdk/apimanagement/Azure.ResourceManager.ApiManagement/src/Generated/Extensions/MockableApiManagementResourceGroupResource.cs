@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ApiManagement;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableApiManagementResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableApiManagementResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableApiManagementResourceGroupResource for mocking. </summary>
         protected MockableApiManagementResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApiManagementResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableApiManagementResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableApiManagementResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ApiGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApiGatewayResources and their operations over a ApiGatewayResource. </returns>
+        /// <summary> Gets a collection of ApiGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiGateways and their operations over a ApiGatewayResource. </returns>
         public virtual ApiGatewayCollection GetApiGateways()
         {
             return GetCachedClient(client => new ApiGatewayCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// Gets an API Management gateway resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGateway_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiGatewayResource>> GetApiGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
             return await GetApiGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// Gets an API Management gateway resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGateway_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +91,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         [ForwardsClientCalls]
         public virtual Response<ApiGatewayResource> GetApiGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
             return GetApiGateways().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApiManagementServiceResources and their operations over a ApiManagementServiceResource. </returns>
+        /// <summary> Gets a collection of ApiManagementServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementServices and their operations over a ApiManagementServiceResource. </returns>
         public virtual ApiManagementServiceCollection GetApiManagementServices()
         {
             return GetCachedClient(client => new ApiManagementServiceCollection(client, Id));
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// Gets an API Management service resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiManagementServiceResource>> GetApiManagementServiceAsync(string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             return await GetApiManagementServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// Gets an API Management service resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +156,8 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         [ForwardsClientCalls]
         public virtual Response<ApiManagementServiceResource> GetApiManagementService(string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             return GetApiManagementServices().Get(serviceName, cancellationToken);
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct WebApplicationFirewallTransform : IEquatable<WebApplicationFirewallTransform>
     {
         private readonly string _value;
+        /// <summary> Uppercase. </summary>
+        private const string UppercaseValue = "Uppercase";
+        /// <summary> Lowercase. </summary>
+        private const string LowercaseValue = "Lowercase";
+        /// <summary> Trim. </summary>
+        private const string TrimValue = "Trim";
+        /// <summary> UrlDecode. </summary>
+        private const string UrlDecodeValue = "UrlDecode";
+        /// <summary> UrlEncode. </summary>
+        private const string UrlEncodeValue = "UrlEncode";
+        /// <summary> RemoveNulls. </summary>
+        private const string RemoveNullsValue = "RemoveNulls";
+        /// <summary> HtmlEntityDecode. </summary>
+        private const string HtmlEntityDecodeValue = "HtmlEntityDecode";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallTransform"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationFirewallTransform(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UppercaseValue = "Uppercase";
-        private const string LowercaseValue = "Lowercase";
-        private const string TrimValue = "Trim";
-        private const string UrlDecodeValue = "UrlDecode";
-        private const string UrlEncodeValue = "UrlEncode";
-        private const string RemoveNullsValue = "RemoveNulls";
-        private const string HtmlEntityDecodeValue = "HtmlEntityDecode";
+            _value = value;
+        }
 
         /// <summary> Uppercase. </summary>
         public static WebApplicationFirewallTransform Uppercase { get; } = new WebApplicationFirewallTransform(UppercaseValue);
+
         /// <summary> Lowercase. </summary>
         public static WebApplicationFirewallTransform Lowercase { get; } = new WebApplicationFirewallTransform(LowercaseValue);
+
         /// <summary> Trim. </summary>
         public static WebApplicationFirewallTransform Trim { get; } = new WebApplicationFirewallTransform(TrimValue);
+
         /// <summary> UrlDecode. </summary>
         public static WebApplicationFirewallTransform UrlDecode { get; } = new WebApplicationFirewallTransform(UrlDecodeValue);
+
         /// <summary> UrlEncode. </summary>
         public static WebApplicationFirewallTransform UrlEncode { get; } = new WebApplicationFirewallTransform(UrlEncodeValue);
+
         /// <summary> RemoveNulls. </summary>
         public static WebApplicationFirewallTransform RemoveNulls { get; } = new WebApplicationFirewallTransform(RemoveNullsValue);
+
         /// <summary> HtmlEntityDecode. </summary>
         public static WebApplicationFirewallTransform HtmlEntityDecode { get; } = new WebApplicationFirewallTransform(HtmlEntityDecodeValue);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallTransform"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebApplicationFirewallTransform left, WebApplicationFirewallTransform right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallTransform"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebApplicationFirewallTransform left, WebApplicationFirewallTransform right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallTransform"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallTransform"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebApplicationFirewallTransform(string value) => new WebApplicationFirewallTransform(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallTransform"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebApplicationFirewallTransform?(string value) => value == null ? null : new WebApplicationFirewallTransform(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebApplicationFirewallTransform other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebApplicationFirewallTransform other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

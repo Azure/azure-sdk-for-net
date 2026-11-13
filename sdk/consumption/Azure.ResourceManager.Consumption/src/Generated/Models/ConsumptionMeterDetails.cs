@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The properties of the meter detail. </summary>
     public partial class ConsumptionMeterDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionMeterDetails"/>. </summary>
         internal ConsumptionMeterDetails()
@@ -60,8 +31,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="pretaxStandardRate"> The pretax listing price. </param>
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="serviceTier"> The service tier. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionMeterDetails(string meterName, string meterCategory, string meterSubCategory, string unit, string meterLocation, decimal? totalIncludedQuantity, decimal? pretaxStandardRate, string serviceName, string serviceTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionMeterDetails(string meterName, string meterCategory, string meterSubCategory, string unit, string meterLocation, decimal? totalIncludedQuantity, decimal? pretaxStandardRate, string serviceName, string serviceTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MeterName = meterName;
             MeterCategory = meterCategory;
@@ -72,25 +43,33 @@ namespace Azure.ResourceManager.Consumption.Models
             PretaxStandardRate = pretaxStandardRate;
             ServiceName = serviceName;
             ServiceTier = serviceTier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the meter, within the given meter category. </summary>
         public string MeterName { get; }
+
         /// <summary> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </summary>
         public string MeterCategory { get; }
+
         /// <summary> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </summary>
         public string MeterSubCategory { get; }
+
         /// <summary> The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc. </summary>
         public string Unit { get; }
+
         /// <summary> The location in which the Azure service is available. </summary>
         public string MeterLocation { get; }
+
         /// <summary> The total included quantity associated with the offer. </summary>
         public decimal? TotalIncludedQuantity { get; }
+
         /// <summary> The pretax listing price. </summary>
         public decimal? PretaxStandardRate { get; }
+
         /// <summary> The name of the service. </summary>
         public string ServiceName { get; }
+
         /// <summary> The service tier. </summary>
         public string ServiceTier { get; }
     }

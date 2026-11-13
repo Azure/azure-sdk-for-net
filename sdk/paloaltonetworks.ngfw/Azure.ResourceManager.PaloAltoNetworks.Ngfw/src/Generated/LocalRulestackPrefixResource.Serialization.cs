@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
+    /// <summary></summary>
     public partial class LocalRulestackPrefixResource : IJsonModel<LocalRulestackPrefixData>
     {
-        private static LocalRulestackPrefixData s_dataDeserializationInstance;
-        private static LocalRulestackPrefixData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LocalRulestackPrefixData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LocalRulestackPrefixData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LocalRulestackPrefixData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LocalRulestackPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackPrefixData>)Data).Write(writer, options);
 
-        LocalRulestackPrefixData IJsonModel<LocalRulestackPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackPrefixData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LocalRulestackPrefixData IJsonModel<LocalRulestackPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LocalRulestackPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LocalRulestackPrefixData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LocalRulestackPrefixData IPersistableModel<LocalRulestackPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalRulestackPrefixData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<LocalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalRulestackPrefixData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LocalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

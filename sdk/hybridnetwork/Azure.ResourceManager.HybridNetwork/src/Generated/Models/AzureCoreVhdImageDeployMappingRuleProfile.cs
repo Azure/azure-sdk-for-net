@@ -20,23 +20,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreVhdImageDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vhdImageMappingRuleProfile"> The vhd mapping rule profile. </param>
-        internal AzureCoreVhdImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, VhdImageMappingRuleProfile vhdImageMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
+        internal AzureCoreVhdImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> additionalBinaryDataProperties, VhdImageMappingRuleProfile vhdImageMappingRuleProfile) : base(applicationEnablement, additionalBinaryDataProperties)
         {
             VhdImageMappingRuleProfile = vhdImageMappingRuleProfile;
         }
 
         /// <summary> The vhd mapping rule profile. </summary>
         internal VhdImageMappingRuleProfile VhdImageMappingRuleProfile { get; set; }
+
         /// <summary> List of values. </summary>
         public string VhdImageMappingRuleUserConfiguration
         {
-            get => VhdImageMappingRuleProfile is null ? default : VhdImageMappingRuleProfile.UserConfiguration;
+            get
+            {
+                return VhdImageMappingRuleProfile is null ? default : VhdImageMappingRuleProfile.UserConfiguration;
+            }
             set
             {
                 if (VhdImageMappingRuleProfile is null)
+                {
                     VhdImageMappingRuleProfile = new VhdImageMappingRuleProfile();
+                }
                 VhdImageMappingRuleProfile.UserConfiguration = value;
             }
         }

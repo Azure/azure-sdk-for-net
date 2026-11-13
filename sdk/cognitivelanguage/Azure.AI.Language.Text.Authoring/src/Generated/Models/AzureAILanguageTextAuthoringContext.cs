@@ -6,14 +6,14 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(CopyProjectAuthorizationRequest))]
     [ModelReaderWriterBuildable(typeof(CustomEntityRecognitionDocumentEvalResult))]
     [ModelReaderWriterBuildable(typeof(CustomEntityRecognitionEvalSummary))]
     [ModelReaderWriterBuildable(typeof(CustomHealthcareDocumentEvalResult))]
@@ -113,9 +113,6 @@ namespace Azure.AI.Language.Text.Authoring
     [ModelReaderWriterBuildable(typeof(TextAuthoringTrainingState))]
     [ModelReaderWriterBuildable(typeof(TextAuthoringUnassignDeploymentResourcesDetails))]
     [ModelReaderWriterBuildable(typeof(TextSentimentEvalSummary))]
-    [ModelReaderWriterBuildable(typeof(UnknownTextAuthoringDocumentEvalResult))]
-    [ModelReaderWriterBuildable(typeof(UnknownTextAuthoringEvalSummary))]
-    [ModelReaderWriterBuildable(typeof(UnknownTextAuthoringExportedProjectAsset))]
     public partial class AzureAILanguageTextAuthoringContext : ModelReaderWriterContext
     {
     }

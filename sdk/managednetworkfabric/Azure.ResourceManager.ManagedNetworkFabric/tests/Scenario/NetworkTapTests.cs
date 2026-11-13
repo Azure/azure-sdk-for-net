@@ -31,13 +31,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
             NetworkTapData data = new NetworkTapData(new AzureLocation("eastus"),
-                new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkpacketbrokers/default"), new NetworkTapPropertiesDestinationsItem[]
+                new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkpacketbrokers/default"), new NetworkTapDestinationProperties[]
                     {
-                        new NetworkTapPropertiesDestinationsItem()
+                        new NetworkTapDestinationProperties("example-destinaionName", NetworkTapDestinationType.IsolationDomain, new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3isolationdomains/npbl3isd/internalnetworks/npbv4int"))
                         {
-                            Name = "example-destinaionName",
-                            DestinationType = NetworkTapDestinationType.IsolationDomain,
-                            DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3isolationdomains/npbl3isd/internalnetworks/npbv4int"),
                             IsolationDomainProperties = new IsolationDomainProperties()
                             {
                                 Encapsulation = IsolationDomainEncapsulationType.None,
@@ -50,14 +47,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         }
                     }
                  )
-                {
-                    Annotation = "annotation",
-                    PollingType = NetworkTapPollingType.Pull,
-                    Tags =
+            {
+                Annotation = "annotation",
+                PollingType = NetworkTapPollingType.Pull,
+                Tags =
                     {
                     ["key6024"] = "1234",
                     },
-                };
+            };
 
             ArmOperation<NetworkTapResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkTapName, data);
             NetworkTapResource createResult = lro.Value;

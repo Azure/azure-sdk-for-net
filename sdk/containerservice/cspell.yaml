@@ -1,0 +1,43 @@
+import:
+  - ../../.vscode/cspell.json
+words:
+  - cuda
+  - veth
+overrides:
+  - filename: '**/sdk/containerservice/Azure.ResourceManager.ContainerService/**/*.cs'
+    words:
+      - aksadvancednetworking
+      - distros
+      - dranet
+      - iloveyou
+      - inodes
+      - karpenter
+      - krustlet
+      - kubeconfig
+      - kubeletidentity
+      - millicores
+      - numa
+      - reimaging
+      - rmem
+      - snat
+  - filename: '**/sdk/containerservice/Azure.Provisioning.ContainerService/**/*.cs'
+    words:
+      - aksadvancednetworking
+      - aren
+      - doesn
+      - dranet
+      - iloveyou
+      - karpenter
+      - kata
+      - krustlet
+      - kubeletidentity
+      - numa
+      - ossku
+      - reimaged
+      - reimaging
+      - rmem
+      - schedulable
+      - snat
+      - tcpkeepalive
+      - undrainable
+      - vtpm

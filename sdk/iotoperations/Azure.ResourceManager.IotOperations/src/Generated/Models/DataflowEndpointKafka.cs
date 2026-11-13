@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Kafka endpoint properties. </summary>
     public partial class DataflowEndpointKafka
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointKafka"/>. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
@@ -69,8 +41,8 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="partitionStrategy"> Partition handling strategy. Can be default or static. No effect if the endpoint is used as a source. </param>
         /// <param name="tls"> TLS configuration. </param>
         /// <param name="cloudEventAttributes"> Cloud event mapping config. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointKafka(DataflowEndpointKafkaAuthentication authentication, string consumerGroupId, string host, DataflowEndpointKafkaBatching batching, IotOperationsOperationalMode? copyMqttProperties, DataflowEndpointKafkaCompression? compression, DataflowEndpointKafkaAck? kafkaAcks, DataflowEndpointKafkaPartitionStrategy? partitionStrategy, IotOperationsTlsProperties tls, CloudEventAttributeType? cloudEventAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowEndpointKafka(DataflowEndpointKafkaAuthentication authentication, string consumerGroupId, string host, DataflowEndpointKafkaBatching batching, IotOperationsOperationalMode? copyMqttProperties, DataflowEndpointKafkaCompression? compression, DataflowEndpointKafkaAck? kafkaAcks, DataflowEndpointKafkaPartitionStrategy? partitionStrategy, IotOperationsTlsProperties tls, CloudEventAttributeType? cloudEventAttributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Authentication = authentication;
             ConsumerGroupId = consumerGroupId;
@@ -82,32 +54,36 @@ namespace Azure.ResourceManager.IotOperations.Models
             PartitionStrategy = partitionStrategy;
             Tls = tls;
             CloudEventAttributes = cloudEventAttributes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowEndpointKafka"/> for deserialization. </summary>
-        internal DataflowEndpointKafka()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Authentication configuration. NOTE - only authentication property is allowed per entry. </summary>
         public DataflowEndpointKafkaAuthentication Authentication { get; set; }
+
         /// <summary> Consumer group ID. </summary>
         public string ConsumerGroupId { get; set; }
+
         /// <summary> Kafka endpoint host. </summary>
         public string Host { get; set; }
+
         /// <summary> Batching configuration. </summary>
         public DataflowEndpointKafkaBatching Batching { get; set; }
+
         /// <summary> Copy Broker properties. No effect if the endpoint is used as a source or if the dataflow doesn't have an Broker source. </summary>
         public IotOperationsOperationalMode? CopyMqttProperties { get; set; }
+
         /// <summary> Compression. Can be none, gzip, lz4, or snappy. No effect if the endpoint is used as a source. </summary>
         public DataflowEndpointKafkaCompression? Compression { get; set; }
+
         /// <summary> Kafka acks. Can be all, one, or zero. No effect if the endpoint is used as a source. </summary>
         public DataflowEndpointKafkaAck? KafkaAcks { get; set; }
+
         /// <summary> Partition handling strategy. Can be default or static. No effect if the endpoint is used as a source. </summary>
         public DataflowEndpointKafkaPartitionStrategy? PartitionStrategy { get; set; }
+
         /// <summary> TLS configuration. </summary>
         public IotOperationsTlsProperties Tls { get; set; }
+
         /// <summary> Cloud event mapping config. </summary>
         public CloudEventAttributeType? CloudEventAttributes { get; set; }
     }

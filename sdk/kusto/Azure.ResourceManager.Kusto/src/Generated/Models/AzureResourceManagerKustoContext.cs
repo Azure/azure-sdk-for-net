@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AcceptedAudience))]
     [ModelReaderWriterBuildable(typeof(AttachedDatabaseConfigurationListResult))]
@@ -37,6 +38,8 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(DiagnoseVirtualNetworkResult))]
     [ModelReaderWriterBuildable(typeof(EndpointDependency))]
     [ModelReaderWriterBuildable(typeof(EndpointDetail))]
+    [ModelReaderWriterBuildable(typeof(EventGridDataConnectionWithManagedIdentity))]
+    [ModelReaderWriterBuildable(typeof(EventHubDataConnectionWithManagedIdentity))]
     [ModelReaderWriterBuildable(typeof(FollowerDatabaseListResult))]
     [ModelReaderWriterBuildable(typeof(FollowerDatabaseListResultGet))]
     [ModelReaderWriterBuildable(typeof(KustoAttachedDatabaseConfigurationData))]
@@ -112,8 +115,6 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SuspensionDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownDatabase))]
-    [ModelReaderWriterBuildable(typeof(UnknownDataConnection))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerKustoContext : ModelReaderWriterContext
     {

@@ -102,8 +102,8 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_OauthAccount_TenantDiscovery() =>
             GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, true);
 
-        public BlobServiceClient GetServiceClient_OAuth()
-            => BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
+        public BlobServiceClient GetServiceClient_OAuth(BlobClientOptions options = default)
+            => BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential, options);
 
         public BlobClientOptions GetFaultyBlobConnectionOptions(
             int raiseAt = default,
@@ -183,7 +183,7 @@ namespace Azure.Storage.Test.Shared
                 new Uri(config.VaultEndpoint),
                 GetKeyClientTokenCredential(config));
 
-        private  TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+        private TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
             => TestEnvironment.Credential;
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
@@ -630,6 +630,17 @@ namespace Azure.Storage.Test.Shared
                 offsetNow = uploadResponse.Value.LastModified;
             }
             return offsetNow;
+        }
+        public void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
+        {
+            BlobSasQueryParameters sas = new BlobUriBuilder(uri).Sas;
+            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
+            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
+            Assert.AreEqual(key.SignedService, sas.KeyService);
+            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
+            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
+            Assert.AreEqual(key.SignedDelegatedUserTenantId, sas.KeyDelegatedUserTenantId);
+            //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
     }
 }

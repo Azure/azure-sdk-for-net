@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CheckOciDriverTaskInput))]
     [ModelReaderWriterBuildable(typeof(CheckOciDriverTaskOutput))]
@@ -59,9 +59,14 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(ConnectToTargetSqlMITaskProperties))]
     [ModelReaderWriterBuildable(typeof(CopyProgressDetails))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigration))]
+    [ModelReaderWriterBuildable(typeof(DatabaseMigrationBase))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(DatabaseMigrationCosmosDBMongoData))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationListResult))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationProperties))]
+    [ModelReaderWriterBuildable(typeof(DatabaseMigrationPropertiesCosmosDBMongo))]
+    [ModelReaderWriterBuildable(typeof(DatabaseMigrationsMongoToCosmosDBRUMongoResource))]
+    [ModelReaderWriterBuildable(typeof(DatabaseMigrationsMongoToCosmosDbvCoreMongoResource))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationSqlDBData))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationSqlDBProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationSqlDBResource))]
@@ -111,6 +116,7 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(DataMigrationMongoDBShardKeyInfo))]
     [ModelReaderWriterBuildable(typeof(DataMigrationMongoDBShardKeySetting))]
     [ModelReaderWriterBuildable(typeof(DataMigrationMongoDBThrottlingSettings))]
+    [ModelReaderWriterBuildable(typeof(DataMigrationMongoMigrationCollectionInfo))]
     [ModelReaderWriterBuildable(typeof(DataMigrationMySqlConnectionInfo))]
     [ModelReaderWriterBuildable(typeof(DataMigrationMySqlServerProperties))]
     [ModelReaderWriterBuildable(typeof(DataMigrationODataError))]
@@ -271,11 +277,16 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(MigrationEligibilityInfo))]
     [ModelReaderWriterBuildable(typeof(MigrationOperationInput))]
     [ModelReaderWriterBuildable(typeof(MigrationReportResult))]
+    [ModelReaderWriterBuildable(typeof(MigrationServiceData))]
+    [ModelReaderWriterBuildable(typeof(MigrationServicePatch))]
+    [ModelReaderWriterBuildable(typeof(MigrationServiceResource))]
     [ModelReaderWriterBuildable(typeof(MigrationValidationDatabaseSummaryResult))]
     [ModelReaderWriterBuildable(typeof(MigrationValidationError))]
     [ModelReaderWriterBuildable(typeof(MigrationValidationOptions))]
     [ModelReaderWriterBuildable(typeof(MigrationValidationResult))]
     [ModelReaderWriterBuildable(typeof(MigrationValidationWaitStatistics))]
+    [ModelReaderWriterBuildable(typeof(MongoConnectionInformation))]
+    [ModelReaderWriterBuildable(typeof(MongoMigrationProgressDetails))]
     [ModelReaderWriterBuildable(typeof(ProjectList))]
     [ModelReaderWriterBuildable(typeof(QueryAnalysisValidationResult))]
     [ModelReaderWriterBuildable(typeof(QueryExecutionResult))]

@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             var parameters = new ResourceConnectorApplianceData(DefaultLocation)
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
-                Distro = ResourceConnectorDistro.AksEdge,
-                InfrastructureConfig = new AppliancePropertiesInfrastructureConfig("VMWare", null)
+                Distro = ApplianceDistro.AksEdge,
+                InfrastructureConfigProvider = ApplianceProvider.VMware
             };
             var appliance = (await LocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, parameters)).Value;
 

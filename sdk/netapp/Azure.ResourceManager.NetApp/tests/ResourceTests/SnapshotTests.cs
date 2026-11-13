@@ -138,12 +138,13 @@ namespace Azure.ResourceManager.NetApp.Tests
                 else if (snapshot.Id.Name.Equals(snapshotName2))
                     snapshotResource4 = snapshot;
             }
-            snapshotResource3.Should().BeEquivalentTo(snapshotGetResource1);
-            snapshotResource4.Should().BeEquivalentTo(snapshotGetResource2);
+            snapshotResource3.Should().BeEquivalentTo(snapshotGetResource1, options => options.IncludingAllDeclaredProperties());
+            snapshotResource4.Should().BeEquivalentTo(snapshotGetResource2, options => options.IncludingAllDeclaredProperties());
             await LiveDelay(20000);
             //Check deletion
             await snapshotResource2.DeleteAsync(WaitUntil.Completed);
             await LiveDelay(20000);
+
             Assert.IsFalse(await _snapshotCollection.ExistsAsync(snapshotName2));
             snapshotList = await _snapshotCollection.GetAllAsync().ToEnumerableAsync();
             snapshotList.Should().HaveCount(1);
@@ -174,6 +175,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
             Assert.IsNotNull(newVolumeResource2);
             Assert.AreEqual(newVolumeName, newVolumeResource2.Id.Name.Split('/').Last());
+            // Provisioning can succeed before cloning releases the source snapshot.
+            for (int attempt = 0; attempt < 20 && newVolumeResource2.Data.CloneProgress is < 100; attempt++)
+            {
+                await LiveDelay(60000);
+                newVolumeResource2 = await newVolumeResource2.GetAsync();
+            }
+            Assert.That(newVolumeResource2.Data.CloneProgress, Is.Null.Or.EqualTo(100),
+                "Cloning must complete before the source snapshot can be deleted during cleanup.");
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName + "1"); });
             Assert.AreEqual(404, exception.Status);
@@ -200,7 +209,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
 
             //create new clone volume from snapshot, we do this by calling create volume with a snapshotId
-            NetAppVolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id, volumeType: "ShortTermClone", growPool: AcceptGrowCapacityPoolForShortTermCloneSplit.Accepted.ToString());
+            NetAppVolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id,
+                volumeType: "ShortTermClone", growPool: AcceptGrowCapacityPoolForShortTermCloneSplit.Accepted.ToString());
             await LiveDelay(8000);
             //Validate
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);

@@ -1,4 +1,4 @@
-  // Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private readonly DataFlowClient _client;
         public DataFlowResource Resource;
 
-        private DisposableDataFlow (DataFlowClient client, DataFlowResource resource)
+        private DisposableDataFlow(DataFlowClient client, DataFlowResource resource)
         {
             _client = client;
             Resource = resource;
@@ -23,19 +23,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
         public string Name => Resource.Name;
 
-        public static async ValueTask<DisposableDataFlow> Create (DataFlowClient client, TestRecording recording) =>
-            new DisposableDataFlow (client, await CreateResource(client, recording));
+        public static async ValueTask<DisposableDataFlow> Create(DataFlowClient client, TestRecording recording) =>
+            new DisposableDataFlow(client, await CreateResource(client, recording));
 
-        public static async ValueTask<DataFlowResource> CreateResource (DataFlowClient client, TestRecording recording)
+        public static async ValueTask<DataFlowResource> CreateResource(DataFlowClient client, TestRecording recording)
         {
             string name = recording.GenerateAssetName("DataFlow");
-            DataFlowCreateOrUpdateDataFlowOperation create = await client.StartCreateOrUpdateDataFlowAsync (name, new DataFlowResource (new DataFlow ()));
+            DataFlowCreateOrUpdateDataFlowOperation create = await client.StartCreateOrUpdateDataFlowAsync(name, new DataFlowResource(new DataFlow()));
             return await create.WaitForCompletionAsync();
         }
 
         public async ValueTask DisposeAsync()
         {
-            DataFlowDeleteDataFlowOperation operation = await _client.StartDeleteDataFlowAsync (Name);
+            DataFlowDeleteDataFlowOperation operation = await _client.StartDeleteDataFlowAsync(Name);
             await operation.WaitForCompletionResponseAsync();
         }
     }

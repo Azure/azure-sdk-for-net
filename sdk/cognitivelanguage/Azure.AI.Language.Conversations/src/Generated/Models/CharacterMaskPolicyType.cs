@@ -14,16 +14,15 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class CharacterMaskPolicyType : BaseRedactionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="CharacterMaskPolicyType"/>. </summary>
-        public CharacterMaskPolicyType()
+        public CharacterMaskPolicyType() : base(RedactionPolicyKind.CharacterMask)
         {
-            PolicyKind = RedactionPolicyKind.CharacterMask;
         }
 
         /// <summary> Initializes a new instance of <see cref="CharacterMaskPolicyType"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
-        internal CharacterMaskPolicyType(RedactionPolicyKind policyKind, IDictionary<string, BinaryData> serializedAdditionalRawData, RedactionCharacter? redactionCharacter) : base(policyKind, serializedAdditionalRawData)
+        internal CharacterMaskPolicyType(RedactionPolicyKind policyKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedactionCharacter? redactionCharacter) : base(policyKind, additionalBinaryDataProperties)
         {
             RedactionCharacter = redactionCharacter;
         }

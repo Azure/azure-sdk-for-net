@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsAlertDetail : IEquatable<SecurityInsightsAlertDetail>
     {
         private readonly string _value;
+        /// <summary> Alert display name. </summary>
+        private const string DisplayNameValue = "DisplayName";
+        /// <summary> Alert severity. </summary>
+        private const string SeverityValue = "Severity";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertDetail"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsAlertDetail(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisplayNameValue = "DisplayName";
-        private const string SeverityValue = "Severity";
+            _value = value;
+        }
 
         /// <summary> Alert display name. </summary>
         public static SecurityInsightsAlertDetail DisplayName { get; } = new SecurityInsightsAlertDetail(DisplayNameValue);
+
         /// <summary> Alert severity. </summary>
         public static SecurityInsightsAlertDetail Severity { get; } = new SecurityInsightsAlertDetail(SeverityValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertDetail"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsAlertDetail left, SecurityInsightsAlertDetail right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertDetail"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsAlertDetail left, SecurityInsightsAlertDetail right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsAlertDetail"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertDetail"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsAlertDetail(string value) => new SecurityInsightsAlertDetail(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertDetail"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsAlertDetail?(string value) => value == null ? null : new SecurityInsightsAlertDetail(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsAlertDetail other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsAlertDetail other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

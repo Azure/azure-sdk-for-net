@@ -7,21 +7,22 @@
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> the retention policy. </summary>
+    /// <summary> The retention policy. </summary>
     public partial class QueueRetentionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="QueueRetentionPolicy"/>. </summary>
-        /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
-        /// <param name="days"> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </param>
+        /// <param name="enabled"> Whether to enable the retention policy. </param>
+        /// <param name="days"> The number of days to retain the logs. </param>
         internal QueueRetentionPolicy(bool enabled, int? days)
         {
             Enabled = enabled;
             Days = days;
         }
 
-        /// <summary> Indicates whether a retention policy is enabled for the storage service. </summary>
+        /// <summary> Whether to enable the retention policy. </summary>
         public bool Enabled { get; set; }
-        /// <summary> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </summary>
+
+        /// <summary> The number of days to retain the logs. </summary>
         public int? Days { get; set; }
     }
 }

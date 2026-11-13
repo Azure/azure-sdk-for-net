@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct EventSubscriptionProvisioningState : IEquatable<EventSubscriptionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> AwaitingManualAction. </summary>
+        private const string AwaitingManualActionValue = "AwaitingManualAction";
 
         /// <summary> Initializes a new instance of <see cref="EventSubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventSubscriptionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string AwaitingManualActionValue = "AwaitingManualAction";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static EventSubscriptionProvisioningState Creating { get; } = new EventSubscriptionProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static EventSubscriptionProvisioningState Updating { get; } = new EventSubscriptionProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static EventSubscriptionProvisioningState Deleting { get; } = new EventSubscriptionProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static EventSubscriptionProvisioningState Succeeded { get; } = new EventSubscriptionProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static EventSubscriptionProvisioningState Canceled { get; } = new EventSubscriptionProvisioningState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static EventSubscriptionProvisioningState Failed { get; } = new EventSubscriptionProvisioningState(FailedValue);
+
         /// <summary> AwaitingManualAction. </summary>
         public static EventSubscriptionProvisioningState AwaitingManualAction { get; } = new EventSubscriptionProvisioningState(AwaitingManualActionValue);
+
         /// <summary> Determines if two <see cref="EventSubscriptionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventSubscriptionProvisioningState left, EventSubscriptionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventSubscriptionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventSubscriptionProvisioningState left, EventSubscriptionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventSubscriptionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventSubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventSubscriptionProvisioningState(string value) => new EventSubscriptionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventSubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventSubscriptionProvisioningState?(string value) => value == null ? null : new EventSubscriptionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventSubscriptionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventSubscriptionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -343,7 +343,7 @@ namespace Azure.AI.Inference.Tests
                 Id = "1",
                 Model = responseModel,
                 FinishReasons = new string[] { null },
-                Choices = new object[] { new  { index = 0, message = new { content = "first" } } }
+                Choices = new object[] { new { index = 0, message = new { content = "first" } } }
             };
 
             actListener.ValidateResponse(expectedResponse, typeof(TaskCanceledException).FullName, null);

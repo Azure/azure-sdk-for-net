@@ -14,16 +14,15 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ListKey : ConversationEntityExtraInformation
     {
         /// <summary> Initializes a new instance of <see cref="ListKey"/>. </summary>
-        internal ListKey()
+        internal ListKey() : base(ExtraInformationKind.ListKey)
         {
-            ExtraInformationKind = ExtraInformationKind.ListKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="ListKey"/>. </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The canonical form of the extracted entity. </param>
-        internal ListKey(ExtraInformationKind extraInformationKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string key) : base(extraInformationKind, serializedAdditionalRawData)
+        internal ListKey(ExtraInformationKind extraInformationKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key) : base(extraInformationKind, additionalBinaryDataProperties)
         {
             Key = key;
         }

@@ -336,6 +336,6 @@ namespace Azure.Messaging.EventHubs
         ///  instances; this method is needed only for other exception types.
         /// </remarks>
         ///
-        private static string IncludeTroubleshootingGuideLink(string message) => $"{ message }{ Environment.NewLine }{ Resources.TroubleshootingGuideLink }";
+        private static string IncludeTroubleshootingGuideLink(string message) => $"{message}{Environment.NewLine}{Resources.TroubleshootingGuideLink}";
     }
 }

@@ -1,3 +1,4 @@
 directory: specification/informatica/Informatica.DataManagement.Management
-commit: 462574dbd02088c209bb1da3eef0d93f699e8de2
+commit: 1781e31b3c213ff6a9876be78b03f43dece6cf31
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

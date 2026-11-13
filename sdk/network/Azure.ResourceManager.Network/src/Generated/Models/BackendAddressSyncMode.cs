@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct BackendAddressSyncMode : IEquatable<BackendAddressSyncMode>
     {
         private readonly string _value;
+        /// <summary> Automatic. </summary>
+        private const string AutomaticValue = "Automatic";
+        /// <summary> Manual. </summary>
+        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="BackendAddressSyncMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BackendAddressSyncMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutomaticValue = "Automatic";
-        private const string ManualValue = "Manual";
+            _value = value;
+        }
 
         /// <summary> Automatic. </summary>
         public static BackendAddressSyncMode Automatic { get; } = new BackendAddressSyncMode(AutomaticValue);
+
         /// <summary> Manual. </summary>
         public static BackendAddressSyncMode Manual { get; } = new BackendAddressSyncMode(ManualValue);
+
         /// <summary> Determines if two <see cref="BackendAddressSyncMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackendAddressSyncMode left, BackendAddressSyncMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackendAddressSyncMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackendAddressSyncMode left, BackendAddressSyncMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackendAddressSyncMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackendAddressSyncMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackendAddressSyncMode(string value) => new BackendAddressSyncMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackendAddressSyncMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackendAddressSyncMode?(string value) => value == null ? null : new BackendAddressSyncMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackendAddressSyncMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackendAddressSyncMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

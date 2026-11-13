@@ -14,31 +14,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class DefenderForDatabasesAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOffering"/>. </summary>
-        public DefenderForDatabasesAwsOffering()
+        public DefenderForDatabasesAwsOffering() : base(OfferingType.DefenderForDatabasesAws)
         {
-            OfferingType = OfferingType.DefenderForDatabasesAws;
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
         /// <param name="rds"> The RDS configuration. </param>
         /// <param name="databasesDspm"> The databases data security posture management (DSPM) configuration. </param>
-        internal DefenderForDatabasesAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForDatabasesAwsOfferingRds rds, DefenderFoDatabasesAwsOfferingDatabasesDspm databasesDspm) : base(offeringType, description, serializedAdditionalRawData)
+        internal DefenderForDatabasesAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForDatabasesAwsOfferingRds rds, DefenderForDatabasesAwsOfferingDatabasesDspm databasesDspm) : base(offeringType, description, additionalBinaryDataProperties)
         {
             ArcAutoProvisioning = arcAutoProvisioning;
             Rds = rds;
             DatabasesDspm = databasesDspm;
-            OfferingType = offeringType;
         }
 
         /// <summary> The ARC autoprovisioning configuration. </summary>
         public DefenderForDatabasesAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
+
         /// <summary> The RDS configuration. </summary>
         public DefenderForDatabasesAwsOfferingRds Rds { get; set; }
+
         /// <summary> The databases data security posture management (DSPM) configuration. </summary>
-        public DefenderFoDatabasesAwsOfferingDatabasesDspm DatabasesDspm { get; set; }
+        public DefenderForDatabasesAwsOfferingDatabasesDspm DatabasesDspm { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The SensitivityLabelSource. </summary>
+    /// <summary></summary>
     public enum SensitivityLabelSource
     {
         /// <summary> current. </summary>

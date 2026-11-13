@@ -1,0 +1,9 @@
+<Project>
+  <!--
+    Legacy Track 1 storage common package used by the IoT Hub sample for
+    integration scenarios (e.g. file upload to blob storage).
+  -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Azure.Storage.Common" Version="11.2.2" />
+  </ItemGroup>
+</Project>

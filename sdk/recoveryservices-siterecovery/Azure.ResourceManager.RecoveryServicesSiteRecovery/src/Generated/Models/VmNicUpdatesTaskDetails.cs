@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VmNicUpdatesTaskDetails : SiteRecoveryTaskTypeDetails
     {
         /// <summary> Initializes a new instance of <see cref="VmNicUpdatesTaskDetails"/>. </summary>
-        internal VmNicUpdatesTaskDetails()
+        internal VmNicUpdatesTaskDetails() : base("VmNicUpdatesTaskDetails")
         {
-            InstanceType = "VmNicUpdatesTaskDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="VmNicUpdatesTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmId"> Virtual machine Id. </param>
         /// <param name="nicId"> Nic Id. </param>
         /// <param name="name"> Name of the Nic. </param>
-        internal VmNicUpdatesTaskDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string vmId, string nicId, string name) : base(instanceType, serializedAdditionalRawData)
+        internal VmNicUpdatesTaskDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string vmId, string nicId, string name) : base(instanceType, additionalBinaryDataProperties)
         {
             VmId = vmId;
             NicId = nicId;
             Name = name;
-            InstanceType = instanceType ?? "VmNicUpdatesTaskDetails";
         }
 
         /// <summary> Virtual machine Id. </summary>
         public string VmId { get; }
+
         /// <summary> Nic Id. </summary>
         public string NicId { get; }
+
         /// <summary> Name of the Nic. </summary>
         public string Name { get; }
     }

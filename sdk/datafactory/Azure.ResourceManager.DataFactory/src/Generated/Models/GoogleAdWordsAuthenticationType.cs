@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct GoogleAdWordsAuthenticationType : IEquatable<GoogleAdWordsAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> ServiceAuthentication. </summary>
+        private const string ServiceAuthenticationValue = "ServiceAuthentication";
+        /// <summary> UserAuthentication. </summary>
+        private const string UserAuthenticationValue = "UserAuthentication";
 
         /// <summary> Initializes a new instance of <see cref="GoogleAdWordsAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GoogleAdWordsAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ServiceAuthenticationValue = "ServiceAuthentication";
-        private const string UserAuthenticationValue = "UserAuthentication";
+            _value = value;
+        }
 
         /// <summary> ServiceAuthentication. </summary>
         public static GoogleAdWordsAuthenticationType ServiceAuthentication { get; } = new GoogleAdWordsAuthenticationType(ServiceAuthenticationValue);
+
         /// <summary> UserAuthentication. </summary>
         public static GoogleAdWordsAuthenticationType UserAuthentication { get; } = new GoogleAdWordsAuthenticationType(UserAuthenticationValue);
+
         /// <summary> Determines if two <see cref="GoogleAdWordsAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GoogleAdWordsAuthenticationType left, GoogleAdWordsAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GoogleAdWordsAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GoogleAdWordsAuthenticationType left, GoogleAdWordsAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GoogleAdWordsAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GoogleAdWordsAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GoogleAdWordsAuthenticationType(string value) => new GoogleAdWordsAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GoogleAdWordsAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GoogleAdWordsAuthenticationType?(string value) => value == null ? null : new GoogleAdWordsAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GoogleAdWordsAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GoogleAdWordsAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

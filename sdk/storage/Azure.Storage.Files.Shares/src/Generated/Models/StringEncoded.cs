@@ -7,7 +7,6 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The StringEncoded. </summary>
     internal partial class StringEncoded
     {
         /// <summary> Initializes a new instance of <see cref="StringEncoded"/>. </summary>
@@ -16,17 +15,18 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StringEncoded"/>. </summary>
-        /// <param name="encoded"></param>
-        /// <param name="content"></param>
+        /// <param name="encoded"> Whether the value is encoded. </param>
+        /// <param name="content"> The string content. </param>
         internal StringEncoded(bool? encoded, string content)
         {
             Encoded = encoded;
             Content = content;
         }
 
-        /// <summary> Gets the encoded. </summary>
+        /// <summary> Whether the value is encoded. </summary>
         public bool? Encoded { get; }
-        /// <summary> Gets the content. </summary>
+
+        /// <summary> The string content. </summary>
         public string Content { get; }
     }
 }

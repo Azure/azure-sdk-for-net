@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Either a <see cref="Prefix"/> or <see cref="Blob"/> returned from
-    /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>.
+    /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, CancellationToken)"/>.
     /// </summary>
     public class BlobHierarchyItem
     {

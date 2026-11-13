@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,21 +15,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class InlineWorkflowTaskDetails : SiteRecoveryGroupTaskDetails
     {
         /// <summary> Initializes a new instance of <see cref="InlineWorkflowTaskDetails"/>. </summary>
-        internal InlineWorkflowTaskDetails()
+        internal InlineWorkflowTaskDetails() : base("InlineWorkflowTaskDetails")
         {
             WorkflowIds = new ChangeTrackingList<string>();
-            InstanceType = "InlineWorkflowTaskDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="InlineWorkflowTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workflowIds"> The list of child workflow ids. </param>
-        internal InlineWorkflowTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<string> workflowIds) : base(instanceType, childTasks, serializedAdditionalRawData)
+        internal InlineWorkflowTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<string> workflowIds) : base(instanceType, childTasks, additionalBinaryDataProperties)
         {
             WorkflowIds = workflowIds;
-            InstanceType = instanceType ?? "InlineWorkflowTaskDetails";
         }
 
         /// <summary> The list of child workflow ids. </summary>

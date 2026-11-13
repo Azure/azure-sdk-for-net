@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
     {
         private TokenCredential _credential;
 
+        public new string SubscriptionId => Mode == RecordedTestMode.Playback ? base.SubscriptionId.ToUpperInvariant() : base.SubscriptionId;
+
         /// <summary>
         ///   The name of the resource group to be used for playback tests. Recorded.
         /// </summary>

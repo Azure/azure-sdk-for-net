@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct SupportedFilterType : IEquatable<SupportedFilterType>
     {
         private readonly string _value;
+        /// <summary> Ship to country. </summary>
+        private const string ShipToCountriesValue = "ShipToCountries";
+        /// <summary> Double encryption status. </summary>
+        private const string DoubleEncryptionStatusValue = "DoubleEncryptionStatus";
 
         /// <summary> Initializes a new instance of <see cref="SupportedFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SupportedFilterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ShipToCountriesValue = "ShipToCountries";
-        private const string DoubleEncryptionStatusValue = "DoubleEncryptionStatus";
+            _value = value;
+        }
 
         /// <summary> Ship to country. </summary>
         public static SupportedFilterType ShipToCountries { get; } = new SupportedFilterType(ShipToCountriesValue);
+
         /// <summary> Double encryption status. </summary>
         public static SupportedFilterType DoubleEncryptionStatus { get; } = new SupportedFilterType(DoubleEncryptionStatusValue);
+
         /// <summary> Determines if two <see cref="SupportedFilterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SupportedFilterType left, SupportedFilterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SupportedFilterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SupportedFilterType left, SupportedFilterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SupportedFilterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SupportedFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SupportedFilterType(string value) => new SupportedFilterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SupportedFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SupportedFilterType?(string value) => value == null ? null : new SupportedFilterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SupportedFilterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SupportedFilterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsLinkedServiceEntityStatus : IEquatable<OperationalInsightsLinkedServiceEntityStatus>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> ProvisioningAccount. </summary>
+        private const string ProvisioningAccountValue = "ProvisioningAccount";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsLinkedServiceEntityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsLinkedServiceEntityStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string DeletingValue = "Deleting";
-        private const string ProvisioningAccountValue = "ProvisioningAccount";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static OperationalInsightsLinkedServiceEntityStatus Succeeded { get; } = new OperationalInsightsLinkedServiceEntityStatus(SucceededValue);
+
         /// <summary> Deleting. </summary>
         public static OperationalInsightsLinkedServiceEntityStatus Deleting { get; } = new OperationalInsightsLinkedServiceEntityStatus(DeletingValue);
+
         /// <summary> ProvisioningAccount. </summary>
         public static OperationalInsightsLinkedServiceEntityStatus ProvisioningAccount { get; } = new OperationalInsightsLinkedServiceEntityStatus(ProvisioningAccountValue);
+
         /// <summary> Updating. </summary>
         public static OperationalInsightsLinkedServiceEntityStatus Updating { get; } = new OperationalInsightsLinkedServiceEntityStatus(UpdatingValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsLinkedServiceEntityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsLinkedServiceEntityStatus left, OperationalInsightsLinkedServiceEntityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsLinkedServiceEntityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsLinkedServiceEntityStatus left, OperationalInsightsLinkedServiceEntityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsLinkedServiceEntityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsLinkedServiceEntityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsLinkedServiceEntityStatus(string value) => new OperationalInsightsLinkedServiceEntityStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsLinkedServiceEntityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsLinkedServiceEntityStatus?(string value) => value == null ? null : new OperationalInsightsLinkedServiceEntityStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsLinkedServiceEntityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsLinkedServiceEntityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

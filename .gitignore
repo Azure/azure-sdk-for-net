@@ -71,6 +71,9 @@ ipch/
 !.vscode/cspell.json
 !.vscode/mcp.json
 
+# C# Dev Kit language server caches
+*.lscache
+
 # Code analysis
 *.CodeAnalysisLog.xml
 
@@ -178,6 +181,7 @@ artifacts
 
 # Temporary typespec folders for typespec generation
 TempTypeSpecFiles/
+tsp_client_metadata.yaml
 
 # Common toolchain intermediate files
 temp

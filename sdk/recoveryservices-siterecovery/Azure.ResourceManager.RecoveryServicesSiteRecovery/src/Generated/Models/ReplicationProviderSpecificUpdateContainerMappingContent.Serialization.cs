@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    /// <summary>
+    /// Provider specific input for update pairing operations.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="A2AUpdateContainerMappingContent"/> and <see cref="InMageRcmUpdateContainerMappingContent"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownReplicationProviderSpecificUpdateContainerMappingContent))]
-    public partial class ReplicationProviderSpecificUpdateContainerMappingContent : IUtf8JsonSerializable, IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>
+    public abstract partial class ReplicationProviderSpecificUpdateContainerMappingContent : IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReplicationProviderSpecificUpdateContainerMappingContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeReplicationProviderSpecificUpdateContainerMappingContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificUpdateContainerMappingContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificUpdateContainerMappingContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReplicationProviderSpecificUpdateContainerMappingContent IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +72,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReplicationProviderSpecificUpdateContainerMappingContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,66 +96,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        ReplicationProviderSpecificUpdateContainerMappingContent IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReplicationProviderSpecificUpdateContainerMappingContent IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReplicationProviderSpecificUpdateContainerMappingContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReplicationProviderSpecificUpdateContainerMappingContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReplicationProviderSpecificUpdateContainerMappingContent(document.RootElement, options);
         }
 
-        internal static ReplicationProviderSpecificUpdateContainerMappingContent DeserializeReplicationProviderSpecificUpdateContainerMappingContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ReplicationProviderSpecificUpdateContainerMappingContent DeserializeReplicationProviderSpecificUpdateContainerMappingContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AUpdateContainerMappingContent.DeserializeA2AUpdateContainerMappingContent(element, options);
-                    case "InMageRcm": return InMageRcmUpdateContainerMappingContent.DeserializeInMageRcmUpdateContainerMappingContent(element, options);
+                    case "A2A":
+                        return A2AUpdateContainerMappingContent.DeserializeA2AUpdateContainerMappingContent(element, options);
+                    case "InMageRcm":
+                        return InMageRcmUpdateContainerMappingContent.DeserializeInMageRcmUpdateContainerMappingContent(element, options);
                 }
             }
             return UnknownReplicationProviderSpecificUpdateContainerMappingContent.DeserializeUnknownReplicationProviderSpecificUpdateContainerMappingContent(element, options);
         }
-
-        BinaryData IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificUpdateContainerMappingContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ReplicationProviderSpecificUpdateContainerMappingContent IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeReplicationProviderSpecificUpdateContainerMappingContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificUpdateContainerMappingContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

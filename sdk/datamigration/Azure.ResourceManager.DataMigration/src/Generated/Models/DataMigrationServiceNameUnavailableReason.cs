@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationServiceNameUnavailableReason : IEquatable<DataMigrationServiceNameUnavailableReason>
     {
         private readonly string _value;
+        /// <summary> AlreadyExists. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
+        /// <summary> Invalid. </summary>
+        private const string InvalidValue = "Invalid";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationServiceNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationServiceNameUnavailableReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlreadyExistsValue = "AlreadyExists";
-        private const string InvalidValue = "Invalid";
+            _value = value;
+        }
 
         /// <summary> AlreadyExists. </summary>
         public static DataMigrationServiceNameUnavailableReason AlreadyExists { get; } = new DataMigrationServiceNameUnavailableReason(AlreadyExistsValue);
+
         /// <summary> Invalid. </summary>
         public static DataMigrationServiceNameUnavailableReason Invalid { get; } = new DataMigrationServiceNameUnavailableReason(InvalidValue);
+
         /// <summary> Determines if two <see cref="DataMigrationServiceNameUnavailableReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationServiceNameUnavailableReason left, DataMigrationServiceNameUnavailableReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationServiceNameUnavailableReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationServiceNameUnavailableReason left, DataMigrationServiceNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationServiceNameUnavailableReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationServiceNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationServiceNameUnavailableReason(string value) => new DataMigrationServiceNameUnavailableReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationServiceNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationServiceNameUnavailableReason?(string value) => value == null ? null : new DataMigrationServiceNameUnavailableReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationServiceNameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationServiceNameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

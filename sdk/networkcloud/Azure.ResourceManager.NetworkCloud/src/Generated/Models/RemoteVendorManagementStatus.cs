@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct RemoteVendorManagementStatus : IEquatable<RemoteVendorManagementStatus>
     {
         private readonly string _value;
+        /// <summary> Remote vendor management is enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Remote vendor management is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Remote vendor management is unsupported. </summary>
+        private const string UnsupportedValue = "Unsupported";
 
         /// <summary> Initializes a new instance of <see cref="RemoteVendorManagementStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RemoteVendorManagementStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string UnsupportedValue = "Unsupported";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Remote vendor management is enabled. </summary>
         public static RemoteVendorManagementStatus Enabled { get; } = new RemoteVendorManagementStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Remote vendor management is disabled. </summary>
         public static RemoteVendorManagementStatus Disabled { get; } = new RemoteVendorManagementStatus(DisabledValue);
-        /// <summary> Unsupported. </summary>
+
+        /// <summary> Remote vendor management is unsupported. </summary>
         public static RemoteVendorManagementStatus Unsupported { get; } = new RemoteVendorManagementStatus(UnsupportedValue);
+
         /// <summary> Determines if two <see cref="RemoteVendorManagementStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RemoteVendorManagementStatus left, RemoteVendorManagementStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RemoteVendorManagementStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RemoteVendorManagementStatus left, RemoteVendorManagementStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RemoteVendorManagementStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RemoteVendorManagementStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RemoteVendorManagementStatus(string value) => new RemoteVendorManagementStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RemoteVendorManagementStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RemoteVendorManagementStatus?(string value) => value == null ? null : new RemoteVendorManagementStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RemoteVendorManagementStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RemoteVendorManagementStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

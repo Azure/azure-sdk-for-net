@@ -1,12 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
     /// An Azure Data Lake file system.
     /// </summary>
-    public class FileSystemItem
+    [CodeGenSuppress("LastModified", typeof(string))]
+    [CodeGenSuppress("ETag", typeof(string))]
+    public partial class FileSystemItem
     {
         /// <summary>
         /// The name of the file system.

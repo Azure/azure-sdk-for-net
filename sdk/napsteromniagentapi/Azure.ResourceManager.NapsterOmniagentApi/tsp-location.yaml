@@ -1,0 +1,6 @@
+directory: specification/napster/Napster.CompanionAPI.Management
+commit: 62e014fd7bf63f5d4907254a47c291e2d6087e3c
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Update Specific attributes. </summary>
     public partial class DataBoxEdgeUpdateDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateDetails"/>. </summary>
         internal DataBoxEdgeUpdateDetails()
@@ -60,8 +31,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="rebootBehavior"> Indicates if updates are available and at least one of the updates needs a reboot. </param>
         /// <param name="installationImpact"> Impact of Installing an updateType. </param>
         /// <param name="status"> Status of the update. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeUpdateDetails(string updateTitle, double? updateSizeInBytes, DataBoxEdgeUpdateType? updateType, string targetVersion, string friendlyVersionNumber, int? estimatedInstallTimeInMins, InstallRebootBehavior? rebootBehavior, InstallationImpact? installationImpact, DataBoxEdgeUpdateStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeUpdateDetails(string updateTitle, double? updateSizeInBytes, DataBoxEdgeUpdateType? updateType, string targetVersion, string friendlyVersionNumber, int? estimatedInstallTimeInMins, InstallRebootBehavior? rebootBehavior, InstallationImpact? installationImpact, DataBoxEdgeUpdateStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpdateTitle = updateTitle;
             UpdateSizeInBytes = updateSizeInBytes;
@@ -72,25 +43,33 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             RebootBehavior = rebootBehavior;
             InstallationImpact = installationImpact;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Title of the Update. </summary>
         public string UpdateTitle { get; }
+
         /// <summary> Size of the update(In Bytes). </summary>
         public double? UpdateSizeInBytes { get; }
+
         /// <summary> Type of the Update. </summary>
         public DataBoxEdgeUpdateType? UpdateType { get; }
+
         /// <summary> Target Version number. </summary>
         public string TargetVersion { get; }
+
         /// <summary> Friendly Version Number. </summary>
         public string FriendlyVersionNumber { get; }
+
         /// <summary> Estimated Install Time for the update. </summary>
         public int? EstimatedInstallTimeInMins { get; }
+
         /// <summary> Indicates if updates are available and at least one of the updates needs a reboot. </summary>
         public InstallRebootBehavior? RebootBehavior { get; }
+
         /// <summary> Impact of Installing an updateType. </summary>
         public InstallationImpact? InstallationImpact { get; }
+
         /// <summary> Status of the update. </summary>
         public DataBoxEdgeUpdateStatus? Status { get; }
     }

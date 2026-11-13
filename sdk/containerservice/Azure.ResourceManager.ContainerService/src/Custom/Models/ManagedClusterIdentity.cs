@@ -4,114 +4,39 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Core;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
-[assembly: CodeGenSuppressType("ManagedClusterIdentity")]
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Identity for the managed cluster.
-    /// Serialized Name: ManagedClusterIdentity
-    /// </summary>
+    [CodeGenSerialization(nameof(UserAssignedIdentities), DeserializationValueHook = nameof(DeserializeUserAssignedIdentities))]
     public partial class ManagedClusterIdentity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> The type of identity used for the managed cluster. For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity). </summary>
+        [WirePath("type")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ManagedServiceIdentityType ResourceIdentityType { get => IdentityType.Value; set => IdentityType = value; }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentity"/>. </summary>
-        public ManagedClusterIdentity()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeUserAssignedIdentities(JsonProperty property, ref IDictionary<Core.ResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities)
         {
-            DelegatedResources = new ChangeTrackingDictionary<string, ManagedClusterDelegatedIdentity>();
-            UserAssignedIdentities = new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>();
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+            Dictionary<Core.ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<Core.ResourceIdentifier, UserAssignedIdentity>();
+            foreach (var property0 in property.Value.EnumerateObject())
+            {
+                dictionary.Add(new Core.ResourceIdentifier(property0.Name), ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default));
+            }
+            UserAssignedIdentities = dictionary;
         }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentity"/>. </summary>
-        /// <param name="principalId">
-        /// The principal id of the system assigned identity which is used by master components.
-        /// Serialized Name: ManagedClusterIdentity.principalId
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant id of the system assigned identity which is used by master components.
-        /// Serialized Name: ManagedClusterIdentity.tenantId
-        /// </param>
-        /// <param name="resourceIdentityType">
-        /// For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity).
-        /// Serialized Name: ManagedClusterIdentity.type
-        /// </param>
-        /// <param name="delegatedResources">
-        /// The delegated identity resources assigned to this managed cluster. This can only be set by another Azure Resource Provider, and managed cluster only accept one delegated identity resource. Internal use only.
-        /// Serialized Name: ManagedClusterIdentity.delegatedResources
-        /// </param>
-        /// <param name="userAssignedIdentities">
-        /// The keys must be ARM resource IDs in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-        /// Serialized Name: ManagedClusterIdentity.userAssignedIdentities
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType resourceIdentityType, IDictionary<string, ManagedClusterDelegatedIdentity> delegatedResources, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            PrincipalId = principalId;
-            TenantId = tenantId;
-            ResourceIdentityType = resourceIdentityType;
-            DelegatedResources = delegatedResources;
-            UserAssignedIdentities = userAssignedIdentities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary>
-        /// The principal id of the system assigned identity which is used by master components.
-        /// Serialized Name: ManagedClusterIdentity.principalId
-        /// </summary>
-        public Guid? PrincipalId { get; }
-        /// <summary>
-        /// The tenant id of the system assigned identity which is used by master components.
-        /// Serialized Name: ManagedClusterIdentity.tenantId
-        /// </summary>
-        public Guid? TenantId { get; }
-        /// <summary>
-        /// For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity).
-        /// Serialized Name: ManagedClusterIdentity.type
-        /// </summary>
-        public ManagedServiceIdentityType ResourceIdentityType { get; set; }
-        /// <summary>
-        /// The delegated identity resources assigned to this managed cluster. This can only be set by another Azure Resource Provider, and managed cluster only accept one delegated identity resource. Internal use only.
-        /// Serialized Name: ManagedClusterIdentity.delegatedResources
-        /// </summary>
-        public IDictionary<string, ManagedClusterDelegatedIdentity> DelegatedResources { get; }
-        /// <summary>
-        /// The keys must be ARM resource IDs in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-        /// Serialized Name: ManagedClusterIdentity.userAssignedIdentities
-        /// </summary>
-        public IDictionary<ResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

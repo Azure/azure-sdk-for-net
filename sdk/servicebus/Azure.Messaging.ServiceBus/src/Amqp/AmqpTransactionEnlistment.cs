@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Transaction;
-using Azure.Messaging.ServiceBus.Diagnostics;
-using System.Threading;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {

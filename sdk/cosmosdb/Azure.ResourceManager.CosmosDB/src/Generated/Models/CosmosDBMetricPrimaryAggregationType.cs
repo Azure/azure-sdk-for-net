@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBMetricPrimaryAggregationType : IEquatable<CosmosDBMetricPrimaryAggregationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricPrimaryAggregationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBMetricPrimaryAggregationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string AverageValue = "Average";
         private const string TotalValue = "Total";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string MaximumValue = "Maximum";
         private const string LastValue = "Last";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricPrimaryAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBMetricPrimaryAggregationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static CosmosDBMetricPrimaryAggregationType None { get; } = new CosmosDBMetricPrimaryAggregationType(NoneValue);
-        /// <summary> Average. </summary>
+
+        /// <summary> Gets the Average. </summary>
         public static CosmosDBMetricPrimaryAggregationType Average { get; } = new CosmosDBMetricPrimaryAggregationType(AverageValue);
-        /// <summary> Total. </summary>
+
+        /// <summary> Gets the Total. </summary>
         public static CosmosDBMetricPrimaryAggregationType Total { get; } = new CosmosDBMetricPrimaryAggregationType(TotalValue);
-        /// <summary> Minimum. </summary>
+
+        /// <summary> Gets the Minimum. </summary>
         public static CosmosDBMetricPrimaryAggregationType Minimum { get; } = new CosmosDBMetricPrimaryAggregationType(MinimumValue);
-        /// <summary> Maximum. </summary>
+
+        /// <summary> Gets the Maximum. </summary>
         public static CosmosDBMetricPrimaryAggregationType Maximum { get; } = new CosmosDBMetricPrimaryAggregationType(MaximumValue);
-        /// <summary> Last. </summary>
+
+        /// <summary> Gets the Last. </summary>
         public static CosmosDBMetricPrimaryAggregationType Last { get; } = new CosmosDBMetricPrimaryAggregationType(LastValue);
+
         /// <summary> Determines if two <see cref="CosmosDBMetricPrimaryAggregationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBMetricPrimaryAggregationType left, CosmosDBMetricPrimaryAggregationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBMetricPrimaryAggregationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBMetricPrimaryAggregationType left, CosmosDBMetricPrimaryAggregationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBMetricPrimaryAggregationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBMetricPrimaryAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBMetricPrimaryAggregationType(string value) => new CosmosDBMetricPrimaryAggregationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBMetricPrimaryAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBMetricPrimaryAggregationType?(string value) => value == null ? null : new CosmosDBMetricPrimaryAggregationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBMetricPrimaryAggregationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBMetricPrimaryAggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Batch
 {
+    /// <summary></summary>
     public partial class BatchAccountResource : IJsonModel<BatchAccountData>
     {
-        private static BatchAccountData s_dataDeserializationInstance;
-        private static BatchAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BatchAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BatchAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BatchAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BatchAccountData>)Data).Write(writer, options);
 
-        BatchAccountData IJsonModel<BatchAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchAccountData IJsonModel<BatchAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BatchAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchAccountData>(Data, options, AzureResourceManagerBatchContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BatchAccountData IPersistableModel<BatchAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchAccountData>(data, options, AzureResourceManagerBatchContext.Default);
 
-        string IPersistableModel<BatchAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

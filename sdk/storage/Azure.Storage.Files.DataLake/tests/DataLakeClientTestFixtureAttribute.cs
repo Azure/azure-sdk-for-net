@@ -37,6 +37,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeClientOptions.ServiceVersion.V2025_05_05,
                 DataLakeClientOptions.ServiceVersion.V2025_07_05,
                 DataLakeClientOptions.ServiceVersion.V2025_11_05,
+                DataLakeClientOptions.ServiceVersion.V2026_02_06,
+                DataLakeClientOptions.ServiceVersion.V2026_04_06,
+                DataLakeClientOptions.ServiceVersion.V2026_06_06,
+                DataLakeClientOptions.ServiceVersion.V2026_10_06,
+                DataLakeClientOptions.ServiceVersion.V2026_12_06,
+                DataLakeClientOptions.ServiceVersion.V2027_03_07,
                 StorageVersionExtensions.LatestVersion,
                 StorageVersionExtensions.MaxVersion)
         {

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 #nullable disable
-using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [CodeGenModel("UnknownManagedServicePartitionScheme")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownManagedServicePartitionScheme")]
     internal partial class UnknownPartition
     {
     }

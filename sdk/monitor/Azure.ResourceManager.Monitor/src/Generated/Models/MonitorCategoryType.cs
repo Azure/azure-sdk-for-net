@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MonitorCategoryType : IEquatable<MonitorCategoryType>
     {
         private readonly string _value;
+        /// <summary> Metrics. </summary>
+        private const string MetricsValue = "Metrics";
+        /// <summary> Logs. </summary>
+        private const string LogsValue = "Logs";
 
         /// <summary> Initializes a new instance of <see cref="MonitorCategoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorCategoryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MetricsValue = "Metrics";
-        private const string LogsValue = "Logs";
+            _value = value;
+        }
 
         /// <summary> Metrics. </summary>
         public static MonitorCategoryType Metrics { get; } = new MonitorCategoryType(MetricsValue);
+
         /// <summary> Logs. </summary>
         public static MonitorCategoryType Logs { get; } = new MonitorCategoryType(LogsValue);
+
         /// <summary> Determines if two <see cref="MonitorCategoryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorCategoryType left, MonitorCategoryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorCategoryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorCategoryType left, MonitorCategoryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorCategoryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorCategoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorCategoryType(string value) => new MonitorCategoryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorCategoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorCategoryType?(string value) => value == null ? null : new MonitorCategoryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorCategoryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorCategoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

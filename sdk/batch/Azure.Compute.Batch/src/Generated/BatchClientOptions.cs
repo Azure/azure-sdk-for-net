@@ -6,32 +6,57 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Client options for BatchClient. </summary>
+    /// <summary> Client options for <see cref="BatchClient"/>. </summary>
     public partial class BatchClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01_20_0;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_06_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2024-07-01.20.0". </summary>
-            V2024_07_01_20_0 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of BatchClientOptions. </summary>
+        /// <summary> Initializes a new instance of BatchClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public BatchClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2024_07_01_20_0 => "2024-07-01.20.0",
+                ServiceVersion.V2025_06_01 => "2025-06-01",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of BatchClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal BatchClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2025-06-01";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> API Version 2025-06-01. </summary>
+            V2025_06_01 = 1
         }
     }
 }

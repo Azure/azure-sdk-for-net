@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary> Values can be systemAssignedIdentity or userAssignedIdentity. </summary>
+    /// <summary> The type of identity to use. </summary>
     public readonly partial struct MapsIdentityType : IEquatable<MapsIdentityType>
     {
         private readonly string _value;
+        /// <summary> System assigned identity. </summary>
+        private const string SystemAssignedIdentityValue = "systemAssignedIdentity";
+        /// <summary> User assigned identity. </summary>
+        private const string UserAssignedIdentityValue = "userAssignedIdentity";
+        /// <summary> Delegated identity. </summary>
+        private const string DelegatedResourceIdentityValue = "delegatedResourceIdentity";
 
         /// <summary> Initializes a new instance of <see cref="MapsIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MapsIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SystemAssignedIdentityValue = "systemAssignedIdentity";
-        private const string UserAssignedIdentityValue = "userAssignedIdentity";
-        private const string DelegatedResourceIdentityValue = "delegatedResourceIdentity";
-
-        /// <summary> systemAssignedIdentity. </summary>
+        /// <summary> System assigned identity. </summary>
         public static MapsIdentityType SystemAssignedIdentity { get; } = new MapsIdentityType(SystemAssignedIdentityValue);
-        /// <summary> userAssignedIdentity. </summary>
+
+        /// <summary> User assigned identity. </summary>
         public static MapsIdentityType UserAssignedIdentity { get; } = new MapsIdentityType(UserAssignedIdentityValue);
-        /// <summary> delegatedResourceIdentity. </summary>
+
+        /// <summary> Delegated identity. </summary>
         public static MapsIdentityType DelegatedResourceIdentity { get; } = new MapsIdentityType(DelegatedResourceIdentityValue);
+
         /// <summary> Determines if two <see cref="MapsIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MapsIdentityType left, MapsIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MapsIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MapsIdentityType left, MapsIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MapsIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MapsIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MapsIdentityType(string value) => new MapsIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MapsIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MapsIdentityType?(string value) => value == null ? null : new MapsIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MapsIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MapsIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

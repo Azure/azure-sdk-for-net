@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     internal static partial class IotHubJobStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IotHubJobStatus value) => value switch
         {
             IotHubJobStatus.Unknown => "unknown",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.IotHub.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubJobStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static IotHubJobStatus ToIotHubJobStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unknown")) return IotHubJobStatus.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "enqueued")) return IotHubJobStatus.Enqueued;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return IotHubJobStatus.Running;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed")) return IotHubJobStatus.Completed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return IotHubJobStatus.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled")) return IotHubJobStatus.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unknown"))
+            {
+                return IotHubJobStatus.Unknown;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "enqueued"))
+            {
+                return IotHubJobStatus.Enqueued;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running"))
+            {
+                return IotHubJobStatus.Running;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            {
+                return IotHubJobStatus.Completed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            {
+                return IotHubJobStatus.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled"))
+            {
+                return IotHubJobStatus.Cancelled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubJobStatus value.");
         }
     }

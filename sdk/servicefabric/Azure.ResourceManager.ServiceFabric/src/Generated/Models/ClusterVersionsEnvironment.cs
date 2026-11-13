@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The ClusterVersionsEnvironment. </summary>
+    /// <summary> The operating system or environment of the cluster version. </summary>
     public readonly partial struct ClusterVersionsEnvironment : IEquatable<ClusterVersionsEnvironment>
     {
         private readonly string _value;
+        /// <summary> Windows operating system. </summary>
+        private const string WindowsValue = "Windows";
+        /// <summary> Linux operating system. </summary>
+        private const string LinuxValue = "Linux";
 
         /// <summary> Initializes a new instance of <see cref="ClusterVersionsEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterVersionsEnvironment(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string WindowsValue = "Windows";
-        private const string LinuxValue = "Linux";
-
-        /// <summary> Windows. </summary>
+        /// <summary> Windows operating system. </summary>
         public static ClusterVersionsEnvironment Windows { get; } = new ClusterVersionsEnvironment(WindowsValue);
-        /// <summary> Linux. </summary>
+
+        /// <summary> Linux operating system. </summary>
         public static ClusterVersionsEnvironment Linux { get; } = new ClusterVersionsEnvironment(LinuxValue);
+
         /// <summary> Determines if two <see cref="ClusterVersionsEnvironment"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterVersionsEnvironment left, ClusterVersionsEnvironment right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterVersionsEnvironment"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterVersionsEnvironment left, ClusterVersionsEnvironment right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterVersionsEnvironment"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterVersionsEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterVersionsEnvironment(string value) => new ClusterVersionsEnvironment(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterVersionsEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterVersionsEnvironment?(string value) => value == null ? null : new ClusterVersionsEnvironment(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterVersionsEnvironment other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterVersionsEnvironment other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
+    /// <summary></summary>
     public partial class FhirServiceResource : IJsonModel<FhirServiceData>
     {
-        private static FhirServiceData s_dataDeserializationInstance;
-        private static FhirServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FhirServiceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FhirServiceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FhirServiceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FhirServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FhirServiceData>)Data).Write(writer, options);
 
-        FhirServiceData IJsonModel<FhirServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FhirServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FhirServiceData IJsonModel<FhirServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FhirServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FhirServiceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FhirServiceData IPersistableModel<FhirServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FhirServiceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        string IPersistableModel<FhirServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FhirServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FhirServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

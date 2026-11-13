@@ -13,53 +13,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A more specific scope used to identify the alerts to suppress. </summary>
     public partial class SuppressionAlertsScopeElement
     {
-        /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScopeElement"/>. </summary>
-        public SuppressionAlertsScopeElement()
-        {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScopeElement"/>. </summary>
         /// <param name="field"> The alert entity type to suppress by. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SuppressionAlertsScopeElement(string field, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal SuppressionAlertsScopeElement(string @field, IDictionary<string, BinaryData> additionalProperties)
         {
-            Field = field;
-            AdditionalProperties = additionalProperties;
+            Field = @field;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The alert entity type to suppress by. </summary>
         public string Field { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

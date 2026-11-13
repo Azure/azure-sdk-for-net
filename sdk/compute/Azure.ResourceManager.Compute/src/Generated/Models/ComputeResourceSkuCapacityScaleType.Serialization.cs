@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class ComputeResourceSkuCapacityScaleTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ComputeResourceSkuCapacityScaleType value) => value switch
         {
-            ComputeResourceSkuCapacityScaleType.None => "None",
             ComputeResourceSkuCapacityScaleType.Automatic => "Automatic",
             ComputeResourceSkuCapacityScaleType.Manual => "Manual",
+            ComputeResourceSkuCapacityScaleType.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeResourceSkuCapacityScaleType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ComputeResourceSkuCapacityScaleType ToComputeResourceSkuCapacityScaleType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ComputeResourceSkuCapacityScaleType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return ComputeResourceSkuCapacityScaleType.Automatic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return ComputeResourceSkuCapacityScaleType.Manual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic"))
+            {
+                return ComputeResourceSkuCapacityScaleType.Automatic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual"))
+            {
+                return ComputeResourceSkuCapacityScaleType.Manual;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return ComputeResourceSkuCapacityScaleType.None;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeResourceSkuCapacityScaleType value.");
         }
     }

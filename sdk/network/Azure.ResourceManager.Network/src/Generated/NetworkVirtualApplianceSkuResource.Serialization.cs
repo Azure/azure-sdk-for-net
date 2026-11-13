@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class NetworkVirtualApplianceSkuResource : IJsonModel<NetworkVirtualApplianceSkuData>
     {
-        private static NetworkVirtualApplianceSkuData s_dataDeserializationInstance;
-        private static NetworkVirtualApplianceSkuData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkVirtualApplianceSkuData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkVirtualApplianceSkuData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkVirtualApplianceSkuData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkVirtualApplianceSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVirtualApplianceSkuData>)Data).Write(writer, options);
 
-        NetworkVirtualApplianceSkuData IJsonModel<NetworkVirtualApplianceSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVirtualApplianceSkuData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkVirtualApplianceSkuData IJsonModel<NetworkVirtualApplianceSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkVirtualApplianceSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkVirtualApplianceSkuData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkVirtualApplianceSkuData IPersistableModel<NetworkVirtualApplianceSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkVirtualApplianceSkuData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkVirtualApplianceSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkVirtualApplianceSkuData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkVirtualApplianceSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

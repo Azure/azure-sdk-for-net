@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
-        public AmazonRedshiftLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> database)
+        public AmazonRedshiftLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> database) : base("AmazonRedshift")
         {
             Argument.AssertNotNull(server, nameof(server));
             Argument.AssertNotNull(database, nameof(database));
 
-            Server = server;
-            Database = database;
-            LinkedServiceType = "AmazonRedshift";
+            TypeProperties = new AmazonRedshiftLinkedServiceTypeProperties(server, database);
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftLinkedService"/>. </summary>
@@ -35,40 +34,101 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="server"> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </param>
-        /// <param name="username"> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> The password of the Amazon Redshift source. </param>
-        /// <param name="database"> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
-        /// <param name="port"> The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AmazonRedshiftLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> database, DataFactoryElement<int> port, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Amazon Redshift linked service properties. </param>
+        /// <param name="password"></param>
+        internal AmazonRedshiftLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AmazonRedshiftLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Server = server;
-            Username = username;
+            TypeProperties = typeProperties;
             Password = password;
-            Database = database;
-            Port = port;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "AmazonRedshift";
         }
 
-        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftLinkedService"/> for deserialization. </summary>
-        internal AmazonRedshiftLinkedService()
-        {
-        }
+        /// <summary> Amazon Redshift linked service properties. </summary>
+        internal AmazonRedshiftLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Server { get; set; }
+        public DataFactoryElement<string> Server
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Server;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRedshiftLinkedServiceTypeProperties();
+                }
+                TypeProperties.Server = value;
+            }
+        }
+
         /// <summary> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> The password of the Amazon Redshift source. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRedshiftLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Database { get; set; }
+        public DataFactoryElement<string> Database
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Database;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRedshiftLinkedServiceTypeProperties();
+                }
+                TypeProperties.Database = value;
+            }
+        }
+
         /// <summary> The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer). </summary>
-        public DataFactoryElement<int> Port { get; set; }
+        public DataFactoryElement<int> Port
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Port;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRedshiftLinkedServiceTypeProperties();
+                }
+                TypeProperties.Port = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRedshiftLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

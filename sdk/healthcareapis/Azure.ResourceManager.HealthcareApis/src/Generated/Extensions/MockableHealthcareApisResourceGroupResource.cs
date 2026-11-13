@@ -8,102 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HealthcareApis;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthcareApis.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHealthcareApisResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHealthcareApisResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHealthcareApisResourceGroupResource for mocking. </summary>
         protected MockableHealthcareApisResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHealthcareApisResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHealthcareApisResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHealthcareApisResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of HealthcareApisServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HealthcareApisServiceResources and their operations over a HealthcareApisServiceResource. </returns>
-        public virtual HealthcareApisServiceCollection GetHealthcareApisServices()
-        {
-            return GetCachedClient(client => new HealthcareApisServiceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the metadata of a service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HealthcareApisServiceResource>> GetHealthcareApisServiceAsync(string resourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetHealthcareApisServices().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the metadata of a service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HealthcareApisServiceResource> GetHealthcareApisService(string resourceName, CancellationToken cancellationToken = default)
-        {
-            return GetHealthcareApisServices().Get(resourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of HealthcareApisWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HealthcareApisWorkspaceResources and their operations over a HealthcareApisWorkspaceResource. </returns>
+        /// <summary> Gets a collection of HealthcareApisWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of HealthcareApisWorkspaces and their operations over a HealthcareApisWorkspaceResource. </returns>
         public virtual HealthcareApisWorkspaceCollection GetHealthcareApisWorkspaces()
         {
             return GetCachedClient(client => new HealthcareApisWorkspaceCollection(client, Id));
@@ -113,20 +42,16 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// Gets the properties of the specified workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +62,8 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthcareApisWorkspaceResource>> GetHealthcareApisWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
             return await GetHealthcareApisWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +71,16 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// Gets the properties of the specified workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,7 +91,74 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         [ForwardsClientCalls]
         public virtual Response<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
             return GetHealthcareApisWorkspaces().Get(workspaceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HealthcareApisServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of HealthcareApisServices and their operations over a HealthcareApisServiceResource. </returns>
+        public virtual HealthcareApisServiceCollection GetHealthcareApisServices()
+        {
+            return GetCachedClient(client => new HealthcareApisServiceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the metadata of a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServicesDescriptions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HealthcareApisServiceResource>> GetHealthcareApisServiceAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetHealthcareApisServices().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the metadata of a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServicesDescriptions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HealthcareApisServiceResource> GetHealthcareApisService(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetHealthcareApisServices().Get(resourceName, cancellationToken);
         }
     }
 }

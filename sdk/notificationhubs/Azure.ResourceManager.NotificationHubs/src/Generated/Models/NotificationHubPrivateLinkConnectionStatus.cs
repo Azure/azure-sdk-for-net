@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public readonly partial struct NotificationHubPrivateLinkConnectionStatus : IEquatable<NotificationHubPrivateLinkConnectionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NotificationHubPrivateLinkConnectionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NotificationHubPrivateLinkConnectionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DisconnectedValue = "Disconnected";
         private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Disconnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPrivateLinkConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NotificationHubPrivateLinkConnectionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Disconnected. </summary>
         public static NotificationHubPrivateLinkConnectionStatus Disconnected { get; } = new NotificationHubPrivateLinkConnectionStatus(DisconnectedValue);
-        /// <summary> Pending. </summary>
+
+        /// <summary> Gets the Pending. </summary>
         public static NotificationHubPrivateLinkConnectionStatus Pending { get; } = new NotificationHubPrivateLinkConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Gets the Approved. </summary>
         public static NotificationHubPrivateLinkConnectionStatus Approved { get; } = new NotificationHubPrivateLinkConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Gets the Rejected. </summary>
         public static NotificationHubPrivateLinkConnectionStatus Rejected { get; } = new NotificationHubPrivateLinkConnectionStatus(RejectedValue);
+
         /// <summary> Determines if two <see cref="NotificationHubPrivateLinkConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationHubPrivateLinkConnectionStatus left, NotificationHubPrivateLinkConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationHubPrivateLinkConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationHubPrivateLinkConnectionStatus left, NotificationHubPrivateLinkConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubPrivateLinkConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationHubPrivateLinkConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationHubPrivateLinkConnectionStatus(string value) => new NotificationHubPrivateLinkConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationHubPrivateLinkConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationHubPrivateLinkConnectionStatus?(string value) => value == null ? null : new NotificationHubPrivateLinkConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationHubPrivateLinkConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationHubPrivateLinkConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

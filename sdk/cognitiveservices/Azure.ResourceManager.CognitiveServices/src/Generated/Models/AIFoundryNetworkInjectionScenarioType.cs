@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct AIFoundryNetworkInjectionScenarioType : IEquatable<AIFoundryNetworkInjectionScenarioType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AIFoundryNetworkInjectionScenarioType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AIFoundryNetworkInjectionScenarioType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "none";
         private const string AgentValue = "agent";
 
-        /// <summary> none. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIFoundryNetworkInjectionScenarioType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AIFoundryNetworkInjectionScenarioType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static AIFoundryNetworkInjectionScenarioType None { get; } = new AIFoundryNetworkInjectionScenarioType(NoneValue);
-        /// <summary> agent. </summary>
+
+        /// <summary> Gets the Agent. </summary>
         public static AIFoundryNetworkInjectionScenarioType Agent { get; } = new AIFoundryNetworkInjectionScenarioType(AgentValue);
+
         /// <summary> Determines if two <see cref="AIFoundryNetworkInjectionScenarioType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AIFoundryNetworkInjectionScenarioType left, AIFoundryNetworkInjectionScenarioType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AIFoundryNetworkInjectionScenarioType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AIFoundryNetworkInjectionScenarioType left, AIFoundryNetworkInjectionScenarioType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AIFoundryNetworkInjectionScenarioType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AIFoundryNetworkInjectionScenarioType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AIFoundryNetworkInjectionScenarioType(string value) => new AIFoundryNetworkInjectionScenarioType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AIFoundryNetworkInjectionScenarioType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AIFoundryNetworkInjectionScenarioType?(string value) => value == null ? null : new AIFoundryNetworkInjectionScenarioType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AIFoundryNetworkInjectionScenarioType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AIFoundryNetworkInjectionScenarioType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -3,16 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.TestFramework;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.AppService.Models;
-using NUnit.Framework;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Tests.TestsCase
 {
-    public class SyncFunctionTriggersTest: AppServiceTestBase
+    public class SyncFunctionTriggersTest : AppServiceTestBase
     {
         public SyncFunctionTriggersTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         { }

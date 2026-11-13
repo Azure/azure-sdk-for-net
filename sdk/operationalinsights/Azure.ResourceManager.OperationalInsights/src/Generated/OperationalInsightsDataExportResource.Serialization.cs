@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
+    /// <summary></summary>
     public partial class OperationalInsightsDataExportResource : IJsonModel<OperationalInsightsDataExportData>
     {
-        private static OperationalInsightsDataExportData s_dataDeserializationInstance;
-        private static OperationalInsightsDataExportData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OperationalInsightsDataExportData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OperationalInsightsDataExportData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OperationalInsightsDataExportData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OperationalInsightsDataExportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsDataExportData>)Data).Write(writer, options);
 
-        OperationalInsightsDataExportData IJsonModel<OperationalInsightsDataExportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsDataExportData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsDataExportData IJsonModel<OperationalInsightsDataExportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OperationalInsightsDataExportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsDataExportData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OperationalInsightsDataExportData IPersistableModel<OperationalInsightsDataExportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsDataExportData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsDataExportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsDataExportData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OperationalInsightsDataExportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

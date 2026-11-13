@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct WebApplicationFirewallRuleType : IEquatable<WebApplicationFirewallRuleType>
     {
         private readonly string _value;
+        /// <summary> MatchRule. </summary>
+        private const string MatchRuleValue = "MatchRule";
+        /// <summary> RateLimitRule. </summary>
+        private const string RateLimitRuleValue = "RateLimitRule";
+        /// <summary> Invalid. </summary>
+        private const string InvalidValue = "Invalid";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationFirewallRuleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MatchRuleValue = "MatchRule";
-        private const string RateLimitRuleValue = "RateLimitRule";
-        private const string InvalidValue = "Invalid";
+            _value = value;
+        }
 
         /// <summary> MatchRule. </summary>
         public static WebApplicationFirewallRuleType MatchRule { get; } = new WebApplicationFirewallRuleType(MatchRuleValue);
+
         /// <summary> RateLimitRule. </summary>
         public static WebApplicationFirewallRuleType RateLimitRule { get; } = new WebApplicationFirewallRuleType(RateLimitRuleValue);
+
         /// <summary> Invalid. </summary>
         public static WebApplicationFirewallRuleType Invalid { get; } = new WebApplicationFirewallRuleType(InvalidValue);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallRuleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebApplicationFirewallRuleType left, WebApplicationFirewallRuleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallRuleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebApplicationFirewallRuleType left, WebApplicationFirewallRuleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallRuleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebApplicationFirewallRuleType(string value) => new WebApplicationFirewallRuleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebApplicationFirewallRuleType?(string value) => value == null ? null : new WebApplicationFirewallRuleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebApplicationFirewallRuleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebApplicationFirewallRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

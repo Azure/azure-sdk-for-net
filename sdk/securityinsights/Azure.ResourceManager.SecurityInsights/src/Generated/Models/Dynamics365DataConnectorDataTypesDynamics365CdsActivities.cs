@@ -21,13 +21,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="Dynamics365DataConnectorDataTypesDynamics365CdsActivities"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Dynamics365DataConnectorDataTypesDynamics365CdsActivities(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Dynamics365DataConnectorDataTypesDynamics365CdsActivities"/> for deserialization. </summary>
-        internal Dynamics365DataConnectorDataTypesDynamics365CdsActivities()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Dynamics365DataConnectorDataTypesDynamics365CdsActivities(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(state, additionalBinaryDataProperties)
         {
         }
     }

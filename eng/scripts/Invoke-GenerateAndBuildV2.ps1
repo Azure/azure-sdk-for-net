@@ -6,6 +6,8 @@ script for azure-sdk-for-net CI check in Unified Pipeline
 .DESCRIPTION
 Automatically generate and verify the SDK for both management-plane and data-plane.
 Unified pipeline will run this script.
+The optional typespecEmitter input selects an emitter registered in eng/tsp-client-config.yaml.
+Missing or empty values preserve the default emitter selection.
 
 .PARAMETER inputJsonFile
 Path to the input json file to contain all the input paramters.
@@ -42,6 +44,166 @@ $repoHttpsUrl = $inputJson.repoHttpsUrl
 $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
+$typespecEmitter = $inputJson.typespecEmitter
+$apiVersion = $inputJson.apiVersion
+$sdkReleaseType = $inputJson.sdkReleaseType
+
+function Test-MgmtSdkUsingNewGenerator {
+    param(
+        [string]$serviceType,
+        [string]$tspConfigFile,
+        [string]$sdkProjectFolder
+    )
+
+    if ($serviceType -ne 'resource-manager') {
+        return $false
+    }
+
+    $tspLocationFile = Join-Path $sdkProjectFolder "tsp-location.yaml"
+
+    if (-not (Test-Path $tspConfigFile) -or -not (Test-Path $tspLocationFile)) {
+        return $false
+    }
+
+    # Skip if tsp-location.yaml is untracked (i.e. newly created by tsp-client init
+    # during this CI run, not yet committed). This avoids marking SDK validation as
+    # required for migration PRs where the SDK hasn't been fully migrated yet.
+    $untrackedFiles = git -C $sdkProjectFolder ls-files --others --exclude-standard "tsp-location.yaml"
+    if ($untrackedFiles) {
+        return $false
+    }
+
+    $tspConfigContent = Get-Content $tspConfigFile -Raw
+    $isNewMgmtEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt'
+    $tspLocationContent = Get-Content $tspLocationFile -Raw
+    $hasNewEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json'
+    return ($isNewMgmtEmitter -and $hasNewEmitterPackageJson)
+}
+
+function Test-DpgSdkUsingNewGenerator {
+    param(
+        [string]$serviceType,
+        [string]$tspConfigFile,
+        [string]$sdkProjectFolder
+    )
+
+    if ($serviceType -ne 'data-plane') {
+        return $false
+    }
+
+    $tspLocationFile = Join-Path $sdkProjectFolder "tsp-location.yaml"
+
+    if (-not (Test-Path $tspConfigFile) -or -not (Test-Path $tspLocationFile)) {
+        return $false
+    }
+
+    $tspConfigContent = Get-Content $tspConfigFile -Raw
+    $tspLocationContent = Get-Content $tspLocationFile -Raw
+
+    # Check for @azure-typespec/http-client-csharp (Azure-branded emitter)
+    $isAzureDpgEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp'
+    $hasAzureEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/azure-typespec-http-client-csharp-emitter-package\.json"?'
+
+    # Check for @typespec/http-client-csharp (unbranded/core emitter)
+    $isCoreDpgEmitter = $tspConfigContent -match '@typespec/http-client-csharp'
+    $hasCoreEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/http-client-csharp-emitter-package\.json"?'
+
+    return (($isAzureDpgEmitter -and $hasAzureEmitterPackageJson) -or ($isCoreDpgEmitter -and $hasCoreEmitterPackageJson))
+}
+
+function Update-PackageVersionSuffix {
+    param(
+        [string]$csprojPath,
+        [string]$sdkReleaseType
+    )
+    
+    if (-not $sdkReleaseType) {
+        Write-Host "No sdkReleaseType provided, skipping version suffix update"
+        return
+    }
+    
+    if (-not (Test-Path $csprojPath)) {
+        Write-Warning "csproj file not found at $csprojPath"
+        return
+    }
+    
+    Write-Host "Updating package version suffix based on sdkReleaseType: $sdkReleaseType"
+    
+    # Load the csproj file as XML
+    [xml]$csproj = Get-Content $csprojPath
+    
+    # Find the PropertyGroup that contains the Version element
+    $versionElement = $null
+    foreach ($propertyGroup in $csproj.Project.PropertyGroup) {
+        if ($propertyGroup.Version) {
+            $versionElement = $propertyGroup.SelectSingleNode("Version")
+            break
+        }
+    }
+    
+    if (-not $versionElement) {
+        Write-Warning "No Version element found in $csprojPath"
+        return
+    }
+    
+    $currentVersion = $versionElement.InnerText
+    Write-Host "Current version: $currentVersion"
+    
+    $newVersion = $currentVersion
+    $versionChanged = $false
+    
+    if ($sdkReleaseType -eq "beta") {
+        # If release type is beta, ensure version has beta suffix
+        if ($currentVersion -notmatch '-beta\.\d+$') {
+            # Version doesn't have beta suffix, add it
+            $newVersion = "$currentVersion-beta.1"
+            Write-Host "Adding beta suffix. New version: $newVersion"
+            $versionChanged = $true
+        } else {
+            Write-Host "Version already has beta suffix, no change needed"
+        }
+    } elseif ($sdkReleaseType -eq "stable") {
+        # If release type is stable, remove beta suffix if present
+        if ($currentVersion -match '^(.+)-beta\.\d+$') {
+            $newVersion = $matches[1]
+            Write-Host "Removing beta suffix. New version: $newVersion"
+            $versionChanged = $true
+        } else {
+            Write-Host "Version is already stable (no beta suffix), no change needed"
+        }
+    } else {
+        Write-Warning "Unknown sdkReleaseType: $sdkReleaseType. Expected 'beta' or 'stable'"
+        return
+    }
+    
+    # Update and save if version changed
+    if ($versionChanged) {
+        $versionElement.InnerText = $newVersion
+        $csproj.Save($csprojPath)
+        Write-Host "Successfully updated version to $newVersion in $csprojPath"
+    }
+}
+
+function Update-MgmtPackageChangelog {
+    param(
+        [object]$generatedPackage
+    )
+
+    if ([string]::IsNullOrWhiteSpace($generatedPackage.packageName) -or
+        [string]::IsNullOrWhiteSpace($generatedPackage.packageFolder) -or
+        -not $generatedPackage.packageName.StartsWith("Azure.ResourceManager.")) {
+        return
+    }
+
+    Write-Host "Start to update changelog for package: $($generatedPackage.packageName)"
+    pwsh -File (Join-Path $PSScriptRoot "Automation-Sdk-UpdateChangelog.ps1") `
+        -PackagePath $generatedPackage.packageFolder `
+        -SdkRepoPath $sdkPath
+
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Failed to generate changelog for package '$($generatedPackage.packageName)'. Continuing without changelog updates."
+    }
+}
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
@@ -113,10 +275,11 @@ if ($inputFileToGen) {
 $exitCode = 0
 # generate sdk from typespec file
 if ($relatedTypeSpecProjectFolder) {
+    $emitterPackageJsonPath = Get-TypeSpecEmitterPackageJsonPath -typespecEmitter $typespecEmitter -sdkRepoRoot $sdkPath
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
         $typespecFolder = Resolve-Path (Join-Path $swaggerDir $typespecRelativeFolder)
         $tspConfigFile = Resolve-Path (Join-Path $typespecFolder "tspconfig.yaml")
-        $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath
+        $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath -typespecEmitter $typespecEmitter
         $sdkAutorestConfigFile = Join-path $sdkProjectFolder "src" "autorest.md"
         if (Test-Path -Path $sdkAutorestConfigFile) {
             Write-Host "remove $sdkAutorestConfigFile for sdk from typespec."
@@ -124,17 +287,47 @@ if ($relatedTypeSpecProjectFolder) {
         }
         $serviceType = "data-plane"
         $packageName = Split-Path $sdkProjectFolder -Leaf
+        $isNewMgmtPackage = $false
         if ($packageName.StartsWith("Azure.ResourceManager.")) {
             $serviceType = "resource-manager"
+            # Detect whether this is a brand new package (folder doesn't exist yet)
+            if (!(Test-Path -Path $sdkProjectFolder)) {
+                $isNewMgmtPackage = $true
+                Write-Host "Detected new management SDK package: $packageName"
+            }
         }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
-        Write-host "Start to call tsp-client to generate package:$packageName"
-        $tspclientCommand = "npx --package=@azure-tools/typespec-client-generator-cli --yes tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
-        if ($swaggerDir) {
-            $tspclientCommand += " --local-spec-repo $typespecFolder"
+        Write-Host "Start to call tsp-client to generate package: $packageName, serviceType: $serviceType, sdkProjectFolder: $sdkProjectFolder"
+        
+        # Install tsp-client dependencies from eng/common/tsp-client
+        $tspClientDir = Resolve-Path (Join-Path $PSScriptRoot "../common/tsp-client")
+        Push-Location $tspClientDir
+        try {
+            Write-Host "Installing tsp-client dependencies from $tspClientDir"
+            npm ci
+            if ($LASTEXITCODE) {
+                Write-Error "Failed to install tsp-client dependencies"
+                exit $LASTEXITCODE
+            }
         }
-        Write-Host $tspclientCommand
-        Invoke-Expression $tspclientCommand
+        finally {
+            Pop-Location
+        }
+        
+        # Use tsp-client from pinned version by passing --prefix to use tsp-client from that directory
+        $tspclientArguments = @("exec", "--prefix", "$tspClientDir", "--no", "--", "tsp-client", "init", "--update-if-exists", "--tsp-config", "$tspConfigFile", "--repo", $repo, "--commit", $commitid)
+        if ($emitterPackageJsonPath) {
+            $tspclientArguments += @("--emitter-package-json-path", $emitterPackageJsonPath)
+        }
+        if ($swaggerDir) {
+            $tspclientArguments += @("--local-spec-repo", "$typespecFolder")
+        }
+        if ($apiVersion) {
+            Write-Warning "apiVersion '$apiVersion' is not supported for .NET SDK generation. The api-version from tspconfig.yaml will be used instead."
+        }
+        Write-Host "npm $($tspclientArguments -join ' ')"
+        & npm @tspclientArguments
+        
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
           Write-Host "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
@@ -144,6 +337,21 @@ if ($relatedTypeSpecProjectFolder) {
           })
           $exitCode = $LASTEXITCODE
         } else {
+            # For new management SDK packages, create scaffolding files
+            # that the emitter doesn't generate (README, CHANGELOG, ci.mgmt.yml, etc.)
+            if ($isNewMgmtPackage) {
+                New-MgmtPackageScaffolding `
+                    -sdkProjectFolder $sdkProjectFolder `
+                    -packageName $packageName `
+                    -sdkRootPath $sdkPath
+            }
+
+            # Update package version suffix based on sdkReleaseType
+            if ($sdkReleaseType) {
+                $csprojPath = Join-Path $sdkProjectFolder "src" "$packageName.csproj"
+                Update-PackageVersionSuffix -csprojPath $csprojPath -sdkReleaseType $sdkReleaseType
+            }
+            
             $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
             GeneratePackage `
             -projectFolder $sdkProjectFolder `
@@ -155,9 +363,20 @@ if ($relatedTypeSpecProjectFolder) {
             -generatedSDKPackages $generatedSDKPackages `
             -specRepoRoot $swaggerDir
         }
-        $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
+
+        $usesNewMgmtEmitter = Test-MgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder
+        $usesNewDpgEmitter = Test-DpgSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder
+
+        if ($usesNewMgmtEmitter -or $usesNewDpgEmitter) {
+            $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
+        }
     }
 }
+
+foreach ($generatedPackage in $generatedSDKPackages) {
+    Update-MgmtPackageChangelog -generatedPackage $generatedPackage
+}
+
 $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages
 }

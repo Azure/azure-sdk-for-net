@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of ReplicationClusterProviderSpecificSettings. </summary>
     internal partial class UnknownReplicationClusterProviderSpecificSettings : ReplicationClusterProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownReplicationClusterProviderSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownReplicationClusterProviderSpecificSettings(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownReplicationClusterProviderSpecificSettings"/> for deserialization. </summary>
-        internal UnknownReplicationClusterProviderSpecificSettings()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownReplicationClusterProviderSpecificSettings(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

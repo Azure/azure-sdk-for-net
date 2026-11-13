@@ -3,6 +3,7 @@
 
 using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
+using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,11 +13,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     public class ModelWithPersistableOnly : IPersistableModel<ModelWithPersistableOnly>
     {
-        private readonly Dictionary<string, BinaryData> _rawData;
+        private readonly Dictionary<string, BinaryData> _serializedAdditionalRawData;
 
         public ModelWithPersistableOnly()
         {
-            _rawData = new Dictionary<string, BinaryData>();
+            _serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             Fields = new List<string>();
             KeyValuePairs = new Dictionary<string, string>();
         }
@@ -28,7 +29,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             NullProperty = nullProperty;
             Fields = fields;
             KeyValuePairs = keyValuePairs;
-            _rawData = rawData;
+            _serializedAdditionalRawData = rawData;
         }
 
         private void AssertHasValue<T>(T? value, string name)
@@ -109,7 +110,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         private void SerializeRawData(Utf8JsonWriter writer)
         {
             //write out the raw data
-            foreach (var property in _rawData)
+            foreach (var property in _serializedAdditionalRawData)
             {
                 writer.WritePropertyName(property.Key);
 #if NET6_0_OR_GREATER
@@ -175,7 +176,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 if (options.Format == "J")
                 {
                     //this means it's an unknown property we got
-                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawData.Add(property.Name, property.Value.GetUtf8Bytes());
                 }
             }
 

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
+    /// <summary></summary>
     public partial class DatabaseWatcherSharedPrivateLinkResource : IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData>
     {
-        private static DatabaseWatcherSharedPrivateLinkResourceData s_dataDeserializationInstance;
-        private static DatabaseWatcherSharedPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatabaseWatcherSharedPrivateLinkResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData>)Data).Write(writer, options);
 
-        DatabaseWatcherSharedPrivateLinkResourceData IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseWatcherSharedPrivateLinkResourceData IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseWatcherSharedPrivateLinkResourceData>(Data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DatabaseWatcherSharedPrivateLinkResourceData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherSharedPrivateLinkResourceData>(data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
-        string IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -4,8 +4,8 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 using NUnit.Framework;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
     {
         private static TimeSpan s_queryDelay = TimeSpan.FromSeconds(30);
 
-        public static async Task<LogsTable?> QueryTelemetryAsync(this LogsQueryClient client, string workspaceId, string description, string query)
+        public static async Task<LogsTable?> QueryTelemetryAsync(this LogsQueryClient client, string workspaceId, string description, string query, Func<LogsTable, bool>? isComplete = null)
         {
             // Try every 30 secs for total of 10 minutes.
             // This delay should reasonably accomodate known delays:
@@ -29,11 +29,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
                     workspaceId,
                     query,
-                    new QueryTimeRange(TimeSpan.FromMinutes(30)));
+                    new LogsQueryTimeRange(TimeSpan.FromMinutes(30)));
 
-                if (response.Value.Table.Rows.Count > 0)
+                var result = response.Value.Table;
+                if (isComplete?.Invoke(result) ?? result.Rows.Count > 0)
                 {
-                    return response.Value.Table;
+                    return result;
                 }
 
                 Debug.WriteLine($"UnitTest: Query attempt {attempt}/{maxTries} returned no records. Waiting {s_queryDelay.TotalSeconds} seconds...");

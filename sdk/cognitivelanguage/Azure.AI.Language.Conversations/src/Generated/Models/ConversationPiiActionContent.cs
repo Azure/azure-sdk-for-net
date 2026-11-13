@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Supported parameters for a conversational pii task. </summary>
     public partial class ConversationPiiActionContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationPiiActionContent"/>. </summary>
         public ConversationPiiActionContent()
@@ -60,13 +32,9 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="redactionSource"> For transcript conversations, this parameter provides information regarding which content type (ITN, Text, Lexical, Masked ITN) should be used for entity detection. The details of the entities detected - like the offset, length and the text itself - will correspond to the text type selected here. </param>
         /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
         /// <param name="excludePiiCategories"> List of categories that need to be excluded instead of included. </param>
-        /// <param name="redactionPolicy">
-        /// Optional parameter determine what type of redaction to use.
-        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskTypePolicyType"/> and <see cref="NoMaskPolicyType"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationPiiActionContent(bool? loggingOptOut, string modelVersion, IList<ConversationPiiCategories> piiCategories, bool? redactAudioTiming, TranscriptContentType? redactionSource, RedactionCharacter? redactionCharacter, IList<ConversationPiiCategoryExclusions> excludePiiCategories, BaseRedactionPolicy redactionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="redactionPolicy"> Optional parameter determine what type of redaction to use. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationPiiActionContent(bool? loggingOptOut, string modelVersion, IList<ConversationPiiCategories> piiCategories, bool? redactAudioTiming, TranscriptContentType? redactionSource, RedactionCharacter? redactionCharacter, IList<ConversationPiiCategoryExclusions> excludePiiCategories, BaseRedactionPolicy redactionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -76,28 +44,31 @@ namespace Azure.AI.Language.Conversations.Models
             RedactionCharacter = redactionCharacter;
             ExcludePiiCategories = excludePiiCategories;
             RedactionPolicy = redactionPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> logging opt out. </summary>
         public bool? LoggingOptOut { get; set; }
+
         /// <summary> model version. </summary>
         public string ModelVersion { get; set; }
+
         /// <summary> Array of ConversationPIICategories. </summary>
         public IList<ConversationPiiCategories> PiiCategories { get; }
+
         /// <summary> Flag to indicate if response should include audio stream offset and duration for any detected entities to be redacted. By default, audio timing of redacted entities are not included. </summary>
         public bool? RedactAudioTiming { get; set; }
+
         /// <summary> For transcript conversations, this parameter provides information regarding which content type (ITN, Text, Lexical, Masked ITN) should be used for entity detection. The details of the entities detected - like the offset, length and the text itself - will correspond to the text type selected here. </summary>
         public TranscriptContentType? RedactionSource { get; set; }
+
         /// <summary> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </summary>
         public RedactionCharacter? RedactionCharacter { get; set; }
+
         /// <summary> List of categories that need to be excluded instead of included. </summary>
         public IList<ConversationPiiCategoryExclusions> ExcludePiiCategories { get; }
-        /// <summary>
-        /// Optional parameter determine what type of redaction to use.
-        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskTypePolicyType"/> and <see cref="NoMaskPolicyType"/>.
-        /// </summary>
+
+        /// <summary> Optional parameter determine what type of redaction to use. </summary>
         public BaseRedactionPolicy RedactionPolicy { get; set; }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class StorageAccountResource : IJsonModel<StorageAccountData>
     {
-        private static StorageAccountData s_dataDeserializationInstance;
-        private static StorageAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountData>)Data).Write(writer, options);
 
-        StorageAccountData IJsonModel<StorageAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageAccountData IJsonModel<StorageAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageAccountData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageAccountData IPersistableModel<StorageAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageAccountData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<StorageAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

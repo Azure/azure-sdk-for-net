@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct AssessmentModeType : IEquatable<AssessmentModeType>
     {
         private readonly string _value;
+        /// <summary> ImageDefault. </summary>
+        private const string ImageDefaultValue = "ImageDefault";
+        /// <summary> AutomaticByPlatform. </summary>
+        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
 
         /// <summary> Initializes a new instance of <see cref="AssessmentModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AssessmentModeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ImageDefaultValue = "ImageDefault";
-        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
+            _value = value;
+        }
 
         /// <summary> ImageDefault. </summary>
         public static AssessmentModeType ImageDefault { get; } = new AssessmentModeType(ImageDefaultValue);
+
         /// <summary> AutomaticByPlatform. </summary>
         public static AssessmentModeType AutomaticByPlatform { get; } = new AssessmentModeType(AutomaticByPlatformValue);
+
         /// <summary> Determines if two <see cref="AssessmentModeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AssessmentModeType left, AssessmentModeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AssessmentModeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AssessmentModeType left, AssessmentModeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AssessmentModeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AssessmentModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AssessmentModeType(string value) => new AssessmentModeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AssessmentModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AssessmentModeType?(string value) => value == null ? null : new AssessmentModeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AssessmentModeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AssessmentModeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

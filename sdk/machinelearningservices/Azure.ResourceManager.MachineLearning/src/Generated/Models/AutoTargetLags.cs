@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AutoTargetLags : TargetLags
     {
         /// <summary> Initializes a new instance of <see cref="AutoTargetLags"/>. </summary>
-        public AutoTargetLags()
+        public AutoTargetLags() : base(TargetLagsMode.Auto)
         {
-            Mode = TargetLagsMode.Auto;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoTargetLags"/>. </summary>
         /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoTargetLags(TargetLagsMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutoTargetLags(TargetLagsMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(mode, additionalBinaryDataProperties)
         {
-            Mode = mode;
         }
     }
 }

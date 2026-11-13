@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The type of the ScriptActivityScriptBlock. </summary>
     public readonly partial struct DataFactoryScriptType : IEquatable<DataFactoryScriptType>
     {
+        /// <summary> Converts a string to a <see cref="DataFactoryScriptType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFactoryScriptType?(string value) => value == null ? null : new DataFactoryScriptType(value);
     }
 }

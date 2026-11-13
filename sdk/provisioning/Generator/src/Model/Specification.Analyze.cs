@@ -1,18 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Generator.Model;
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Azure.Provisioning.Generator.Model;
 
@@ -20,6 +22,10 @@ public abstract partial class Specification
 {
     private void Analyze()
     {
+        // Cache all existing generated files upfront so version data is preserved
+        // even if a previous spec's Build() cleans the shared output directory.
+        CacheGenerationDirectory();
+
         ContextualException.WithContext(
             $"Analyzing resources of specification {Name}",
             () =>
@@ -45,13 +51,13 @@ public abstract partial class Specification
                         () =>
                         {
                             // Pull properties off the method
-                            resource.Properties = FindProperties(resource, creator);
+                            resource.Properties = FindProperties(resource, creator, IgnorePropertiesWithoutPath);
 
                             // Add anything else off the return type
                             Type? data = creator.ReturnType.GetGenericArguments()?[0]?.GetProperty("Data")?.PropertyType;
                             if (data is not null)
                             {
-                                FlattenType(resource, resource.Properties, data, parameters: false);
+                                FlattenType(resource, resource.Properties, data, IgnorePropertiesWithoutPath, parameters: false);
                             }
 
                             // Sort all the properties with Name/required values first and output values last
@@ -61,14 +67,14 @@ public abstract partial class Specification
                     // Hack in a few special types
                     if (resource.Name == "Generic")
                     {
-                        GetOrCreateModelType(typeof(WritableSubResource), resource);
+                        GetOrCreateModelType(typeof(WritableSubResource), resource, IgnorePropertiesWithoutPath);
                     }
 
                     MethodInfo? getKeys = resource.ArmType.GetMethod("GetKeys") ?? resource.ArmType.GetMethod("GetSharedKeys");
                     Type? keyType = getKeys?.ReturnType.GetGenericArguments()?[0];
                     if (keyType is not null)
                     {
-                        resource.GetKeysType = GetOrCreateModelType(keyType, resource) as SimpleModel;
+                        resource.GetKeysType = GetOrCreateModelType(keyType, resource, IgnorePropertiesWithoutPath) as SimpleModel;
                         resource.GetKeysIsList = getKeys!.ReturnType.GetGenericTypeDefinition() == typeof(Pageable<>);
                         resource.GetKeysType!.FromExpression = true;
                     }
@@ -92,36 +98,22 @@ public abstract partial class Specification
                 }
 
                 /**/
-                // Get the list of valid api-versions via ARM
-                // (it's specific to the subscription, but our dev playground is opted into everything good)
-                string subId = Arm.GetDefaultSubscription().Id.SubscriptionId ??
-                    throw new InvalidOperationException("Failed to find default subscription ID!");
-                foreach (string resourceNamespace in Resources.Select(r => r.ResourceNamespace).Where(ns => ns is not null).Distinct())
+                // Extract api-versions from the CreateOrUpdate method's XML doc comments,
+                // falling back to the Get method if CreateOrUpdate has no version
+                foreach (Resource resource in Resources)
                 {
-                    ResourceProviderResource rp = Arm.GetResourceProviderResource(
-                        ResourceProviderResource.CreateResourceIdentifier(subId, resourceNamespace));
-                    foreach (ProviderResourceType data in rp.Get().Value.Data.ResourceTypes)
+                    if (resource.ResourceType is null) { continue; }
+                    MethodInfo creator = resources[resource.ArmType!];
+                    resource.DefaultResourceVersion = ExtractApiVersionFromXmlDoc(creator);
+
+                    if (resource.DefaultResourceVersion is null)
                     {
-                        ResourceType type = new($"{resourceNamespace}/{data.ResourceType}");
-                        Resource? resource = Resources.FirstOrDefault(r => string.Compare(r.ResourceType?.ToString(), type.ToString(), StringComparison.OrdinalIgnoreCase) == 0);
-                        if (resource is null) { continue; }
-
-                        // Filter out preview releases
-                        resource.ResourceVersions =
-                            [.. data.ApiVersions.OrderDescending().Where((v, i) =>
-                                !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase)
-#if EXPERIMENTAL_PROVISIONING
-                                // Only keep the very latest preview if it's the most
-                                // recent release - otherwise people should use a GAed version
-                                || i == 0
-#endif
-                                )];
-
-                        resource.DefaultResourceVersion =
-                            // The latest versions are first - so let's take the first non-preview as the default
-                            resource.ResourceVersions.FirstOrDefault(v => !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase)) ??
-                            // Otherwise we'll take the latest preview
-                            resource.ResourceVersions.FirstOrDefault();
+                        // Try the Get method on the resource type itself
+                        MethodInfo? getter = resource.ArmType!.GetMethod("Get", BindingFlags.Public | BindingFlags.Instance, null, [typeof(CancellationToken)], null);
+                        if (getter is not null)
+                        {
+                            resource.DefaultResourceVersion = ExtractApiVersionFromXmlDoc(getter);
+                        }
                     }
                 }
 
@@ -219,7 +211,7 @@ public abstract partial class Specification
         return resources;
     }
 
-    private static List<Property> FindProperties(Resource resource, MethodInfo creator)
+    private static List<Property> FindProperties(Resource resource, MethodInfo creator, bool ignorePropertiesWithoutPath)
     {
         List<Property> properties = [];
 
@@ -227,6 +219,8 @@ public abstract partial class Specification
         {
             if (parameter.ParameterType == typeof(WaitUntil)) { continue; }
             if (parameter.ParameterType == typeof(CancellationToken)) { continue; }
+            if (parameter.ParameterType == typeof(Azure.MatchConditions)) { continue; }
+            if (parameter.ParameterType == typeof(Azure.RequestConditions)) { continue; }
             ContextualException.WithContext(
                 $"Analyzing parameter {parameter.ParameterType.Name} {parameter.Name} of creation method {creator.DeclaringType?.Name ?? "????"}::{creator.Name}",
                 () =>
@@ -234,47 +228,47 @@ public abstract partial class Specification
                     if (parameter.ParameterType.IsSimpleType() ||
                         parameter.ParameterType.IsEnumLike())
                     {
-                        Property simple =
-                            new(
-                                resource,
-                                GetOrCreateModelType(parameter.ParameterType, resource),
-                                armMember: null,
-                                parameter)
-                            {
-                                // Method params must be provided
-                                IsRequired = true
-                            };
-
-                        // A number of names are renamed on create methods to things like `AccountName` instead of
-                        // `Name` when used as a parameter vs. a property.  They're always the first parameter.
+                        // The only simple/enum parameter we care about from the creator
+                        // is the resource name (always the first parameter, ending with "Name").
+                        // All other simple parameters are operation-level concerns
+                        // (e.g. HTTP headers like If-Match) and not part of the resource body.
                         if (properties.Count == 0 &&
-                            simple.Name.EndsWith("Name", StringComparison.OrdinalIgnoreCase) &&
-                            simple.PropertyType?.Name == "String" &&
-                            simple.Path is null)
+                            (parameter.ParameterType == typeof(string) || parameter.ParameterType.IsEnumLike()) &&
+                            parameter.Name?.EndsWith("Name", StringComparison.OrdinalIgnoreCase) == true)
                         {
-                            simple.Name = "Name";
-                            simple.Path = ["name"];
+                            // Always use string type for the Name property regardless of
+                            // whether the mgmt library uses a typed enum for the name parameter.
+                            Property simple =
+                                new(
+                                    resource,
+                                    GetOrCreateModelType(typeof(string), resource, ignorePropertiesWithoutPath),
+                                    armMember: null,
+                                    parameter)
+                                {
+                                    IsRequired = true,
+                                    Name = "Name",
+                                    Path = ["name"]
+                                };
+                            properties.Add(simple);
                         }
-
-                        properties.Add(simple);
                     }
                     else if (parameter.ParameterType.IsResourceData())
                     {
-                        FlattenType(resource, properties, parameter.ParameterType);
+                        FlattenType(resource, properties, parameter.ParameterType, ignorePropertiesWithoutPath);
                     }
                     else if (parameter.ParameterType.IsModelType())
                     {
                         if (parameter.ParameterType.Name.Contains("Create") &&
                             parameter.ParameterType.Name.EndsWith("Content"))
                         {
-                            FlattenType(resource, properties, parameter.ParameterType);
+                            FlattenType(resource, properties, parameter.ParameterType, ignorePropertiesWithoutPath);
                         }
                         else
                         {
                             // Which model types should be left as objects?
                             properties.Add(new(
                                 resource,
-                                GetOrCreateModelType(parameter.ParameterType, resource),
+                                GetOrCreateModelType(parameter.ParameterType, resource, ignorePropertiesWithoutPath),
                                 armMember: null,
                                 parameter));
                         }
@@ -289,7 +283,7 @@ public abstract partial class Specification
         return properties;
     }
 
-    static void FlattenType(Resource resource, IList<Property> properties, Type type, bool parameters = true)
+    static void FlattenType(Resource resource, IList<Property> properties, Type type, bool ignorePropertiesWithoutPath, bool parameters = true)
     {
         HashSet<string> required = [];
         if (parameters)
@@ -299,7 +293,11 @@ public abstract partial class Specification
         foreach (PropertyInfo property in type.GetProperties())
         {
             if (property.Name == "ResourceType") { continue; }
-            Property prop = GetProperty(resource, resource, required.Contains(property.Name), property);
+            Property? prop = GetProperty(resource, resource, required.Contains(property.Name), property, ignorePropertyWithoutPath: ignorePropertiesWithoutPath);
+            if (prop is null)
+            {
+                continue;
+            }
             Property? existing = properties.FirstOrDefault(e => prop.Name == e.Name);
             if (existing is null)
             {
@@ -316,7 +314,7 @@ public abstract partial class Specification
                 existing.ArmMember ??= property;
                 if (existing.Path is null)
                 {
-                    string? path = property.GetCustomAttributes().Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
+                    string? path = property.GetCustomAttributes().Where(a => a.GetType().Name == "WirePathAttribute").Select(GetWirePathFromAttribute).FirstOrDefault();
                     if (path is not null)
                     {
                         existing.Path = path.Split('.');
@@ -326,11 +324,11 @@ public abstract partial class Specification
         }
     }
 
-    private static Property GetProperty(Resource resource, TypeModel parent, bool required, PropertyInfo property)
+    private static Property? GetProperty(Resource resource, TypeModel parent, bool required, PropertyInfo property, bool ignorePropertyWithoutPath)
     {
         Property prop = new(
             parent,
-            GetOrCreateModelType(property.PropertyType, resource),
+            GetOrCreateModelType(property.PropertyType, resource, ignorePropertyWithoutPath),
             property,
             armParameter: null)
         {
@@ -341,24 +339,25 @@ public abstract partial class Specification
 
         // Fish out any path attributes
         var attributes = property.GetCustomAttributes();
-        string? path = attributes.Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
-        if (path is not null)
-        {
-            prop.Path = path.Split('.');
-        }
+        string? path = attributes.Where(a => a.GetType().Name == "WirePathAttribute").Select(GetWirePathFromAttribute).FirstOrDefault();
 
         // Patch up the well known id/systemData property paths
         if (path is null)
         {
-            prop.Path = (prop.Name, prop.PropertyType?.Name) switch
+            path = (prop.Name, prop.PropertyType?.Name) switch
             {
-                ("Name", "String") => ["name"],
-                ("Location", "AzureLocation") => ["location"],
-                ("Id", "ResourceIdentifier") => ["id"],
-                ("SystemData", "SystemData") => ["systemData"],
-                ("Tags", "IDictionary<String,String>") => ["tags"],
+                ("Name", "String") => "name",
+                ("Location", "AzureLocation") => "location",
+                ("Id", "ResourceIdentifier") => "id",
+                ("SystemData", "SystemData") => "systemData",
+                ("Tags", "IDictionary<String,String>") => "tags",
                 _ => null
             };
+        }
+
+        if (path is not null)
+        {
+            prop.Path = path.Split('.');
         }
 
         // if the property has `EditorBrowsable` attribute, we should add the same attribute to it as well
@@ -382,24 +381,44 @@ public abstract partial class Specification
         return prop;
     }
 
-    private static ModelBase GetOrCreateModelType(Type armType, Resource resource)
+    private static string? GetWirePathFromAttribute(Attribute wirePathAttr)
+    {
+        // Try ToString() first — works for old AutoRest-generated WirePathAttribute
+        string? path = wirePathAttr.ToString();
+        if (path is not null && !path.Contains("WirePathAttribute"))
+        {
+            return path;
+        }
+        // Fall back to reading the _wirePath field — new TypeSpec-generated WirePathAttribute doesn't override ToString()
+        var field = wirePathAttr.GetType().GetField("_wirePath", BindingFlags.NonPublic | BindingFlags.Instance);
+        return field?.GetValue(wirePathAttr) as string;
+    }
+
+    private static ModelBase GetOrCreateModelType(Type armType, Resource resource, bool ignorePropertiesWithoutPath)
     {
         ModelBase? type = TypeRegistry.Get(armType);
+        if (type is not null) { return type; }
+
+        // Allow specifications to unwrap external generic types (e.g., DataFactoryElement<T> → T)
+        Type? resolved = resource.Spec!.ResolveExternalGenericType(armType);
+        if (resolved is not null) { return GetOrCreateModelType(resolved, resource, ignorePropertiesWithoutPath); }
+
         return
-            type is not null ? type :
-            armType.IsNullableOf(_ => true) ? GetOrCreateModelType(armType.GetGenericArguments()[0], resource) :
+            armType.IsNullableOf(_ => true) ? GetOrCreateModelType(armType.GetGenericArguments()[0], resource, ignorePropertiesWithoutPath) :
             armType == typeof(byte[]) ? TypeRegistry.Get<BinaryData>()! : // do byte[] before IList<T>
-            armType.IsListOf(_ => true) ? new ListModel(GetOrCreateModelType(armType.GetGenericArguments()[0], resource)) :
-            armType.IsDictionary() ? new DictionaryModel(GetOrCreateModelType(armType.GetGenericArguments()[1], resource)) :
+            armType.IsListOf(_ => true) ? new ListModel(GetOrCreateModelType(armType.GetGenericArguments()[0], resource, ignorePropertiesWithoutPath)) :
+            armType.IsDictionary() ? new DictionaryModel(GetOrCreateModelType(armType.GetGenericArguments()[1], resource, ignorePropertiesWithoutPath)) :
             armType.IsEnumLike() ? CreateEnum(armType) :
             CreateSimpleModel(armType);
 
         ModelBase CreateEnum(Type armType)
         {
             // Fail if we're trying to generate a type from a different assembly
-            // (unless we're crossing boundaries in the combined base package)
+            // (unless we're crossing boundaries in the combined base package
+            // or in an explicitly allowed additional assembly)
             if (armType.Assembly != resource.Spec!.ArmAssembly &&
-                armType.Assembly != typeof(ArmClient).Assembly)
+                armType.Assembly != typeof(ArmClient).Assembly &&
+                !resource.Spec.AdditionalAllowedAssemblies.Contains(armType.Assembly))
             {
                 throw new InvalidOperationException($"Could not find enum {armType.FullName} while building {resource.Spec.Namespace}.");
             }
@@ -448,9 +467,11 @@ public abstract partial class Specification
         ModelBase CreateSimpleModel(Type armType)
         {
             // Fail if we're trying to generate a type from a different assembly
-            // (unless we're crossing boundaries in the combined base package)
+            // (unless we're crossing boundaries in the combined base package
+            // or in an explicitly allowed additional assembly)
             if (armType.Assembly != resource.Spec!.ArmAssembly &&
-                armType.Assembly != typeof(ArmClient).Assembly)
+                armType.Assembly != typeof(ArmClient).Assembly &&
+                !resource.Spec.AdditionalAllowedAssemblies.Contains(armType.Assembly))
             {
                 throw new InvalidOperationException($"Could not find model {armType.FullName} while building {resource.Spec.Namespace}.");
             }
@@ -469,7 +490,11 @@ public abstract partial class Specification
                 {
                     foreach (PropertyInfo property in armType.GetProperties())
                     {
-                        model.Properties.Add(GetProperty(resource, model, required: false, property));
+                        var prop = GetProperty(resource, model, required: false, property, ignorePropertyWithoutPath: ignorePropertiesWithoutPath);
+                        if (prop is not null)
+                        {
+                            model.Properties.Add(prop);
+                        }
                     }
                 });
 
@@ -477,7 +502,7 @@ public abstract partial class Specification
             foreach (Type derived in armType.Assembly.GetExportedTypes())
             {
                 if (derived.BaseType != armType) { continue; }
-                if (GetOrCreateModelType(derived, resource) is TypeModel typedModel)
+                if (GetOrCreateModelType(derived, resource, ignorePropertiesWithoutPath) is TypeModel typedModel)
                 {
                     // Associate the models
                     typedModel.BaseType = model;
@@ -527,5 +552,238 @@ public abstract partial class Specification
 
             return model;
         }
+    }
+
+    /// <summary>
+    /// Resolve resource versions by combining existing versions from generated code
+    /// with the api-version extracted from the mgmt library.
+    /// Must be called after Customize() so resource names match generated file names.
+    /// </summary>
+    private void ResolveVersions()
+    {
+        ContextualException.WithContext(
+            $"Resolving versions for {Name}",
+            () =>
+            {
+                foreach (Resource resource in Resources)
+                {
+                    if (resource.ResourceType is null) { continue; }
+
+                    string? mgmtApiVersion = resource.DefaultResourceVersion;
+
+                    // Read existing versions from the generated provisioning code
+                    (List<string> existingVersions, List<string> existingHiddenVersions) = ReadExistingResourceVersions(resource);
+
+                    // Add the mgmt library version to the combined set
+                    if (mgmtApiVersion is not null &&
+                        !existingVersions.Contains(mgmtApiVersion) &&
+                        !existingHiddenVersions.Contains(mgmtApiVersion))
+                    {
+                        existingVersions.Add(mgmtApiVersion);
+                    }
+
+                    // Merge versions added by Customize() via IncludeVersions
+                    if (resource.ResourceVersions is not null)
+                    {
+                        foreach (string v in resource.ResourceVersions)
+                        {
+                            if (!existingVersions.Contains(v))
+                            {
+                                existingVersions.Add(v);
+                            }
+                        }
+                    }
+
+                    // Sort versions descending and exclude preview releases
+                    List<string> orderedVersions = [.. existingVersions.OrderDescending()];
+                    List<string> nonPreviewVersions =
+                        [.. orderedVersions.Where(v => !IsPreviewVersion(v))];
+
+                    // Never include preview api-versions in the resource versions list
+                    resource.ResourceVersions = nonPreviewVersions;
+
+                    // Choose default version: prefer the latest GA version, fall back to mgmt version
+                    string? defaultVersion = nonPreviewVersions.FirstOrDefault() ?? mgmtApiVersion;
+
+                    resource.DefaultResourceVersion = defaultVersion;
+
+                    // Merge existing hidden versions with any added by Customize(),
+                    // excluding preview versions
+                    List<string> filteredHiddenVersions =
+                        [.. existingHiddenVersions.Where(v => !IsPreviewVersion(v))];
+                    if (filteredHiddenVersions.Count > 0)
+                    {
+                        if (resource.HiddenResourceVersions is null)
+                        {
+                            resource.HiddenResourceVersions = filteredHiddenVersions;
+                        }
+                        else
+                        {
+                            foreach (string v in filteredHiddenVersions)
+                            {
+                                if (!resource.HiddenResourceVersions.Contains(v))
+                                {
+                                    resource.HiddenResourceVersions.Add(v);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+    }
+
+    /// <summary>
+    /// Determines whether an API version string is a preview version
+    /// (e.g., "2022-05-01-preview").
+    /// </summary>
+    private static bool IsPreviewVersion(string version) =>
+        version.Contains("preview", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Extract the default api-version from a CreateOrUpdate method's XML doc comment.
+    /// The generated mgmt libraries include a "Default Api Version" item in the
+    /// method's summary XML doc list, e.g.:
+    /// <code>
+    ///   &lt;item&gt;
+    ///     &lt;term&gt;Default Api Version&lt;/term&gt;
+    ///     &lt;description&gt;2025-06-01&lt;/description&gt;
+    ///   &lt;/item&gt;
+    /// </code>
+    /// </summary>
+    private string? ExtractApiVersionFromXmlDoc(MethodInfo method)
+    {
+        // Use the Specification's existing DocComments reader which has
+        // already loaded the XML doc file for the mgmt assembly
+        string? summary = DocComments.GetSummary(method);
+        if (summary is null) { return null; }
+
+        // The summary text contains the flattened content including
+        // "Default Api Version" followed by the version string.
+        const string marker = "Default Api Version";
+        int idx = summary.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+        if (idx < 0) { return null; }
+
+        // Extract the version after the marker - it follows after some whitespace/punctuation
+        string rest = summary[(idx + marker.Length)..].Trim().TrimStart('.').Trim();
+
+        // Match YYYY-MM-DD, optionally followed by a hyphenated suffix like "-preview".
+        // The suffix must start with a hyphen and contain only lowercase letters/digits.
+        // This avoids greedily matching into subsequent text like "Resource" or class names
+        // that immediately follow the version in flattened XML doc comments (no space separator).
+        Match match = Regex.Match(rest, @"(\d{4}-\d{2}-\d{2}(?:-[a-z][a-z0-9]*)?)");
+        return match.Success ? match.Groups[1].Value.TrimEnd('.') : null;
+    }
+
+    /// <summary>
+    /// Static cache of file contents indexed by file path.
+    /// This ensures that when multiple specs share the same output directory,
+    /// version data is preserved even after the directory is cleaned by one spec's Build().
+    /// </summary>
+    private static readonly Dictionary<string, string[]> s_fileContentCache = [];
+    private static readonly HashSet<string> s_cachedDirectories = [];
+
+    /// <summary>
+    /// Cache all .cs files in the generation path directory.
+    /// Called once per directory to ensure shared directories have all files cached
+    /// before any spec cleans the directory.
+    /// </summary>
+    private void CacheGenerationDirectory()
+    {
+        string? generationPath = GetGenerationPath();
+        if (generationPath is null || s_cachedDirectories.Contains(generationPath)) { return; }
+        s_cachedDirectories.Add(generationPath);
+
+        if (!Directory.Exists(generationPath)) { return; }
+        foreach (string file in Directory.GetFiles(generationPath, "*.cs"))
+        {
+            if (!s_fileContentCache.ContainsKey(file))
+            {
+                s_fileContentCache[file] = File.ReadAllLines(file);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Read existing api-versions from the generated provisioning resource file.
+    /// Returns separate lists for regular and hidden versions.
+    /// Uses a static cache to handle shared output directories across specs.
+    /// </summary>
+    private (List<string> versions, List<string> hiddenVersions) ReadExistingResourceVersions(Resource resource)
+    {
+        List<string> versions = [];
+        List<string> hiddenVersions = [];
+
+        string? generationPath = GetGenerationPath();
+        if (generationPath is null) { return (versions, hiddenVersions); }
+
+        string filePath = Path.Combine(generationPath, $"{resource.Name}.cs");
+
+        // Use cached file contents
+        if (!s_fileContentCache.TryGetValue(filePath, out string[]? lines))
+        {
+            return (versions, hiddenVersions);
+        }
+
+        // Find the ResourceVersions class block
+        bool inResourceVersions = false;
+        int braceDepth = 0;
+        bool nextVersionIsHidden = false;
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string line = lines[i].Trim();
+
+            if (!inResourceVersions)
+            {
+                if (line.Contains("class ResourceVersions"))
+                {
+                    inResourceVersions = true;
+                    braceDepth = 0;
+                }
+                continue;
+            }
+
+            // Track brace depth
+            foreach (char c in line)
+            {
+                if (c == '{') braceDepth++;
+                else if (c == '}') braceDepth--;
+            }
+
+            if (braceDepth <= 0 && line.Contains('}'))
+            {
+                break; // End of ResourceVersions class
+            }
+
+            // Check for EditorBrowsable attribute
+            if (line.Contains("[EditorBrowsable(EditorBrowsableState.Never)]"))
+            {
+                nextVersionIsHidden = true;
+                continue;
+            }
+
+            // Match version field declarations
+            Match match = Regex.Match(line, @"public static readonly string \w+ = ""([^""]+)"";");
+            if (match.Success)
+            {
+                string version = match.Groups[1].Value;
+                if (nextVersionIsHidden)
+                {
+                    hiddenVersions.Add(version);
+                }
+                else
+                {
+                    versions.Add(version);
+                }
+                nextVersionIsHidden = false;
+            }
+            else if (!line.StartsWith("///") && !string.IsNullOrEmpty(line) && !line.StartsWith("{"))
+            {
+                // Reset hidden flag if we hit a non-comment, non-version line
+                nextVersionIsHidden = false;
+            }
+        }
+
+        return (versions, hiddenVersions);
     }
 }

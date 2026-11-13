@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class MSDeployProvisioningStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MSDeployProvisioningState value) => value switch
         {
             MSDeployProvisioningState.Accepted => "accepted",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MSDeployProvisioningState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MSDeployProvisioningState ToMSDeployProvisioningState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "accepted")) return MSDeployProvisioningState.Accepted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return MSDeployProvisioningState.Running;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return MSDeployProvisioningState.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return MSDeployProvisioningState.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "canceled")) return MSDeployProvisioningState.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "accepted"))
+            {
+                return MSDeployProvisioningState.Accepted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running"))
+            {
+                return MSDeployProvisioningState.Running;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded"))
+            {
+                return MSDeployProvisioningState.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            {
+                return MSDeployProvisioningState.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "canceled"))
+            {
+                return MSDeployProvisioningState.Canceled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MSDeployProvisioningState value.");
         }
     }

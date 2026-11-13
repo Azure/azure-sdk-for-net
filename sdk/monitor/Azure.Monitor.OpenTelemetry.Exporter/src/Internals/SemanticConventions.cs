@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -69,6 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeNetHostName = "net.host.name";
 
         public const string AttributeEnduserId = "enduser.id";
+        public const string AttributeEnduserPseudoId = "enduser.pseudo.id";
         public const string AttributeEnduserRole = "enduser.role";
         public const string AttributeEnduserScope = "enduser.scope";
 
@@ -163,5 +164,111 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         // Messaging v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/messaging.md
         public const string AttributeMessagingDestinationName = "messaging.destination.name";
         public const string AttributeNetworkProtocolName = "network.protocol.name";
+
+        // Database v1.36.0 https://github.com/open-telemetry/semantic-conventions/tree/v1.36.0/docs/database
+        public const string AttributeDbCollectionName = "db.collection.name";
+        public const string AttributeDbOperationName = "db.operation.name";
+        public const string AttributeDbSystemName = "db.system.name";
+        public const string AttributeDbNamespace = "db.namespace";
+        public const string AttributeDbResponseStatusCode = "db.response.status_code";
+        public const string AttributeDbOperationBatchSize = "db.operation.batch.size";
+        public const string AttributeDbQuerySummary = "db.query.summary";
+        public const string AttributeDbQueryText = "db.query.text";
+        public const string AttributeDbStoredProcedureName = "db.stored_procedure.name";
+
+        // Microsoft Application Insights Override Attributes
+        // These attributes allow explicit mapping from Application Insights fields to OpenTelemetry attributes
+        // When present, these override computed values from standard semantic conventions
+
+        /// <summary>
+        /// Override attribute for dependency data field.
+        /// When present, takes precedence over computed data from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyData = "microsoft.dependency.data";
+
+        /// <summary>
+        /// Override attribute for dependency name field.
+        /// When present, takes precedence over computed name from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyName = "microsoft.dependency.name";
+
+        /// <summary>
+        /// Override attribute for operation name field.
+        /// When present, takes precedence over computed operation name.
+        /// </summary>
+        public const string AttributeMicrosoftOperationName = "microsoft.operation_name";
+
+        /// <summary>
+        /// Override attribute for dependency result code field.
+        /// When present, takes precedence over computed result code from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyResultCode = "microsoft.dependency.resultCode";
+
+        /// <summary>
+        /// Override attribute for dependency target field.
+        /// When present, takes precedence over computed target from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyTarget = "microsoft.dependency.target";
+
+        /// <summary>
+        /// Override attribute for dependency type field.
+        /// When present, takes precedence over computed type from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyType = "microsoft.dependency.type";
+
+        /// <summary>
+        /// Override attribute for request name field.
+        /// When present, takes precedence over Activity.DisplayName.
+        /// </summary>
+        public const string AttributeMicrosoftRequestName = "microsoft.request.name";
+
+        /// <summary>
+        /// Override attribute for request URL field.
+        /// When present, takes precedence over computed URL from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftRequestUrl = "microsoft.request.url";
+
+        /// <summary>
+        /// Override attribute for request source field.
+        /// When present, takes precedence over computed source from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftRequestSource = "microsoft.request.source";
+
+        /// <summary>
+        /// Override attribute for request result code field.
+        /// When present, takes precedence over computed result code from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftRequestResultCode = "microsoft.request.resultCode";
+
+        /// <summary>
+        /// Routing attribute carrying the destination instrumentation key for multi-endpoint routing.
+        /// </summary>
+        public const string AttributeMicrosoftInstrumentationKey = "microsoft.instrumentation_key";
+
+        /// <summary>
+        /// Routing attribute carrying the destination ingestion endpoint for multi-endpoint routing.
+        /// </summary>
+        public const string AttributeMicrosoftIngestionEndpoint = "microsoft.ingestion_endpoint";
+
+        /// <summary>Routing attribute; <see cref="IngestionAuthAad"/> marks a Microsoft Entra ID destination, anything else is ikey-only.</summary>
+        public const string AttributeMicrosoftIngestionAuth = "microsoft.ingestion_auth";
+
+        /// <summary>Value of <see cref="AttributeMicrosoftIngestionAuth"/> that marks a Microsoft Entra ID destination.</summary>
+        public const string IngestionAuthAad = "aad";
+
+        /// <summary>
+        /// Attribute carrying the cloud role to report for routed telemetry.
+        /// </summary>
+        public const string AttributeMicrosoftMultiEndpointCloudRole = "microsoft.multi_endpoint_cloud_role";
+
+        // Context tag attributes set by the Application Insights shim (TelemetryClient.Context)
+        public const string AttributeMicrosoftClientIp = "microsoft.client.ip";
+        public const string AttributeMicrosoftSessionId = "microsoft.session.id";
+        public const string AttributeAiDeviceId = "ai.device.id";
+        public const string AttributeAiDeviceModel = "ai.device.model";
+        public const string AttributeAiDeviceType = "ai.device.type";
+        public const string AttributeAiDeviceOsVersion = "ai.device.osVersion";
+        public const string AttributeMicrosoftSyntheticSource = "microsoft.synthetic_source";
+        public const string AttributeMicrosoftUserAccountId = "microsoft.user.account_id";
     }
 }

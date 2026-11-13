@@ -1,0 +1,4 @@
+directory: specification/agricultureplatform/AgriculturePlatform.Management
+commit: bbe60ce6aa8b8332df55cae6c7ee8183ab48539e
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

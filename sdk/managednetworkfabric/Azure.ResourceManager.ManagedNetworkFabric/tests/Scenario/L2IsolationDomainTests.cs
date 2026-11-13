@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 State = AdministrativeEnableState.Enable
             };
-            ArmOperation<DeviceUpdateCommonPostActionResult> test = await l2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, triggerEnable);
+            ArmOperation<UpdateAdministrativeStateResult> test = await l2IsolationDomain.SetAdministrativeStateAsync(WaitUntil.Completed, triggerEnable);
 
             UpdateAdministrativeStateContent triggerDisable = new UpdateAdministrativeStateContent()
             {
                 State = AdministrativeEnableState.Disable
             };
-            test = await l2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, triggerDisable);
+            test = await l2IsolationDomain.SetAdministrativeStateAsync(WaitUntil.Completed, triggerDisable);
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

@@ -17,13 +17,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="dateTimeSubKind"> The DateTime SubKind. </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timex"/> or <paramref name="value"/> is null. </exception>
-        internal DateTimeResolution(string timex, DateTimeSubKind dateTimeSubKind, string value)
+        internal DateTimeResolution(string timex, DateTimeSubKind dateTimeSubKind, string value) : base(ResolutionKind.DateTimeResolution)
         {
-            Argument.AssertNotNull(timex, nameof(timex));
-            Argument.AssertNotNull(value, nameof(value));
-
-            ResolutionKind = ResolutionKind.DateTimeResolution;
             Timex = timex;
             DateTimeSubKind = dateTimeSubKind;
             Value = value;
@@ -31,12 +26,12 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Initializes a new instance of <see cref="DateTimeResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="dateTimeSubKind"> The DateTime SubKind. </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
-        internal DateTimeResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string timex, DateTimeSubKind dateTimeSubKind, string value, TemporalModifier? modifier) : base(resolutionKind, serializedAdditionalRawData)
+        internal DateTimeResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string timex, DateTimeSubKind dateTimeSubKind, string value, TemporalModifier? modifier) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Timex = timex;
             DateTimeSubKind = dateTimeSubKind;
@@ -44,17 +39,15 @@ namespace Azure.AI.Language.Conversations.Models
             Modifier = modifier;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DateTimeResolution"/> for deserialization. </summary>
-        internal DateTimeResolution()
-        {
-        }
-
         /// <summary> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </summary>
         public string Timex { get; }
+
         /// <summary> The DateTime SubKind. </summary>
         public DateTimeSubKind DateTimeSubKind { get; }
+
         /// <summary> The actual time that the extracted text denote. </summary>
         public string Value { get; }
+
         /// <summary> An optional modifier of a date/time instance. </summary>
         public TemporalModifier? Modifier { get; }
     }

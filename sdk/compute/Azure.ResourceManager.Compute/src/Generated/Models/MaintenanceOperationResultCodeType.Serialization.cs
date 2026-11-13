@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class MaintenanceOperationResultCodeTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MaintenanceOperationResultCodeType value) => value switch
         {
             MaintenanceOperationResultCodeType.None => "None",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MaintenanceOperationResultCodeType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MaintenanceOperationResultCodeType ToMaintenanceOperationResultCodeType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return MaintenanceOperationResultCodeType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RetryLater")) return MaintenanceOperationResultCodeType.RetryLater;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MaintenanceAborted")) return MaintenanceOperationResultCodeType.MaintenanceAborted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MaintenanceCompleted")) return MaintenanceOperationResultCodeType.MaintenanceCompleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return MaintenanceOperationResultCodeType.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RetryLater"))
+            {
+                return MaintenanceOperationResultCodeType.RetryLater;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MaintenanceAborted"))
+            {
+                return MaintenanceOperationResultCodeType.MaintenanceAborted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MaintenanceCompleted"))
+            {
+                return MaintenanceOperationResultCodeType.MaintenanceCompleted;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MaintenanceOperationResultCodeType value.");
         }
     }

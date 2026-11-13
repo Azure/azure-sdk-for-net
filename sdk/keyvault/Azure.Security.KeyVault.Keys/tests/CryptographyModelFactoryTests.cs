@@ -66,5 +66,53 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(buffer, options.Iv);
             CollectionAssert.AreEqual(buffer, options.AdditionalAuthenticatedData);
         }
+
+        [Test]
+        public void SecureWrapResultProperties()
+        {
+            byte[] buffer = new byte[] { 0, 1, 2, 3 };
+            SecureWrapResult result = CryptographyModelFactory.SecureWrapResult(
+                keyId: "https://test.vault.azure.net/keys/test/version",
+                encryptedKey: buffer,
+                algorithm: SecureKeyWrapAlgorithm.A256KW);
+
+            Assert.AreEqual("https://test.vault.azure.net/keys/test/version", result.KeyId);
+            CollectionAssert.AreEqual(buffer, result.EncryptedKey);
+            Assert.AreEqual(SecureKeyWrapAlgorithm.A256KW, result.Algorithm);
+        }
+
+        [Test]
+        public void SecureWrapResultDefaults()
+        {
+            SecureWrapResult result = CryptographyModelFactory.SecureWrapResult();
+
+            Assert.IsNull(result.KeyId);
+            Assert.IsNull(result.EncryptedKey);
+            Assert.AreEqual(default(SecureKeyWrapAlgorithm), result.Algorithm);
+        }
+
+        [Test]
+        public void SecureUnwrapResultProperties()
+        {
+            byte[] buffer = new byte[] { 0, 1, 2, 3 };
+            SecureUnwrapResult result = CryptographyModelFactory.SecureUnwrapResult(
+                keyId: "https://test.vault.azure.net/keys/test/version",
+                key: buffer,
+                algorithm: SecureKeyWrapAlgorithm.A256KW);
+
+            Assert.AreEqual("https://test.vault.azure.net/keys/test/version", result.KeyId);
+            CollectionAssert.AreEqual(buffer, result.Key);
+            Assert.AreEqual(SecureKeyWrapAlgorithm.A256KW, result.Algorithm);
+        }
+
+        [Test]
+        public void SecureUnwrapResultDefaults()
+        {
+            SecureUnwrapResult result = CryptographyModelFactory.SecureUnwrapResult();
+
+            Assert.IsNull(result.KeyId);
+            Assert.IsNull(result.Key);
+            Assert.AreEqual(default(SecureKeyWrapAlgorithm), result.Algorithm);
+        }
     }
 }

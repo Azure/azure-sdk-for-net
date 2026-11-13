@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,47 +15,77 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct AmlFileSystemHealthStateType : IEquatable<AmlFileSystemHealthStateType>
     {
         private readonly string _value;
+        /// <summary> Unavailable. </summary>
+        private const string UnavailableValue = "Unavailable";
+        /// <summary> Available. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Degraded. </summary>
+        private const string DegradedValue = "Degraded";
+        /// <summary> Transitioning. </summary>
+        private const string TransitioningValue = "Transitioning";
+        /// <summary> Maintenance. </summary>
+        private const string MaintenanceValue = "Maintenance";
+        /// <summary> Expanding. </summary>
+        private const string ExpandingValue = "Expanding";
 
         /// <summary> Initializes a new instance of <see cref="AmlFileSystemHealthStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AmlFileSystemHealthStateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnavailableValue = "Unavailable";
-        private const string AvailableValue = "Available";
-        private const string DegradedValue = "Degraded";
-        private const string TransitioningValue = "Transitioning";
-        private const string MaintenanceValue = "Maintenance";
+            _value = value;
+        }
 
         /// <summary> Unavailable. </summary>
         public static AmlFileSystemHealthStateType Unavailable { get; } = new AmlFileSystemHealthStateType(UnavailableValue);
+
         /// <summary> Available. </summary>
         public static AmlFileSystemHealthStateType Available { get; } = new AmlFileSystemHealthStateType(AvailableValue);
+
         /// <summary> Degraded. </summary>
         public static AmlFileSystemHealthStateType Degraded { get; } = new AmlFileSystemHealthStateType(DegradedValue);
+
         /// <summary> Transitioning. </summary>
         public static AmlFileSystemHealthStateType Transitioning { get; } = new AmlFileSystemHealthStateType(TransitioningValue);
+
         /// <summary> Maintenance. </summary>
         public static AmlFileSystemHealthStateType Maintenance { get; } = new AmlFileSystemHealthStateType(MaintenanceValue);
+
+        /// <summary> Expanding. </summary>
+        public static AmlFileSystemHealthStateType Expanding { get; } = new AmlFileSystemHealthStateType(ExpandingValue);
+
         /// <summary> Determines if two <see cref="AmlFileSystemHealthStateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AmlFileSystemHealthStateType left, AmlFileSystemHealthStateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AmlFileSystemHealthStateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AmlFileSystemHealthStateType left, AmlFileSystemHealthStateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AmlFileSystemHealthStateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AmlFileSystemHealthStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AmlFileSystemHealthStateType(string value) => new AmlFileSystemHealthStateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AmlFileSystemHealthStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AmlFileSystemHealthStateType?(string value) => value == null ? null : new AmlFileSystemHealthStateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AmlFileSystemHealthStateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AmlFileSystemHealthStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

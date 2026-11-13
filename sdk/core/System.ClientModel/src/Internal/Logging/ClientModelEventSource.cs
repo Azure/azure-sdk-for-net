@@ -129,6 +129,22 @@ internal sealed class ClientModelEventSource : EventSource
         }
     }
 
+    [NonEvent]
+    public void ResponseContentBlock(string requestId, int blockNumber, byte[] content, int offset, int count, Encoding? textEncoding)
+    {
+        if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+        {
+            if (textEncoding is not null)
+            {
+                ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content, offset, count));
+            }
+            else
+            {
+                ResponseContentBlock(requestId, blockNumber, ToExactSizedArray(content, offset, count));
+            }
+        }
+    }
+
     [Event(LoggingEventIds.ResponseContentBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
     [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with an array with primitive type elements.")]
     private void ResponseContentBlock(string? requestId, int blockNumber, byte[] content)
@@ -206,6 +222,42 @@ internal sealed class ClientModelEventSource : EventSource
                 ErrorResponseContentBlock(requestId, blockNumber, content);
             }
         }
+    }
+
+    [NonEvent]
+    public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, int offset, int count, Encoding? textEncoding)
+    {
+        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+        {
+            if (textEncoding is not null)
+            {
+                ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content, offset, count));
+            }
+            else
+            {
+                ErrorResponseContentBlock(requestId, blockNumber, ToExactSizedArray(content, offset, count));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Copies a slice of <paramref name="content"/> into an array whose length is exactly
+    /// <paramref name="count"/>. The binary events serialize the full length of the array they are
+    /// given, so passing the caller's buffer directly would publish the bytes past the payload —
+    /// which, for a pooled buffer, is unrelated in-process content.
+    /// See https://github.com/Azure/azure-sdk-for-net/issues/61399.
+    /// </summary>
+    [NonEvent]
+    private static byte[] ToExactSizedArray(byte[] content, int offset, int count)
+    {
+        if (offset == 0 && content.Length == count)
+        {
+            return content;
+        }
+
+        byte[] bytes = new byte[count];
+        Array.Copy(content, offset, bytes, 0, count);
+        return bytes;
     }
 
     [Event(LoggingEventIds.ErrorResponseContentBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]

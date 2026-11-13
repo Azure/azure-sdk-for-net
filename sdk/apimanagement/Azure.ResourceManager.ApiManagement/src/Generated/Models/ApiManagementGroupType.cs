@@ -10,11 +10,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Group type. </summary>
     public enum ApiManagementGroupType
     {
-        /// <summary> custom. </summary>
+        /// <summary> Custom. </summary>
         Custom,
-        /// <summary> system. </summary>
+        /// <summary> System. </summary>
         System,
-        /// <summary> external. </summary>
+        /// <summary> External. </summary>
         External
     }
 }

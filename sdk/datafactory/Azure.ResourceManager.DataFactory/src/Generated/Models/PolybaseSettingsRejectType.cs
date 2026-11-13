@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct PolybaseSettingsRejectType : IEquatable<PolybaseSettingsRejectType>
     {
         private readonly string _value;
+        /// <summary> value. </summary>
+        private const string ValueValue = "value";
+        /// <summary> percentage. </summary>
+        private const string PercentageValue = "percentage";
 
         /// <summary> Initializes a new instance of <see cref="PolybaseSettingsRejectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolybaseSettingsRejectType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ValueValue = "value";
-        private const string PercentageValue = "percentage";
+            _value = value;
+        }
 
         /// <summary> value. </summary>
         public static PolybaseSettingsRejectType Value { get; } = new PolybaseSettingsRejectType(ValueValue);
+
         /// <summary> percentage. </summary>
         public static PolybaseSettingsRejectType Percentage { get; } = new PolybaseSettingsRejectType(PercentageValue);
+
         /// <summary> Determines if two <see cref="PolybaseSettingsRejectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolybaseSettingsRejectType left, PolybaseSettingsRejectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolybaseSettingsRejectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolybaseSettingsRejectType left, PolybaseSettingsRejectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolybaseSettingsRejectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolybaseSettingsRejectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolybaseSettingsRejectType(string value) => new PolybaseSettingsRejectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolybaseSettingsRejectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolybaseSettingsRejectType?(string value) => value == null ? null : new PolybaseSettingsRejectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolybaseSettingsRejectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolybaseSettingsRejectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

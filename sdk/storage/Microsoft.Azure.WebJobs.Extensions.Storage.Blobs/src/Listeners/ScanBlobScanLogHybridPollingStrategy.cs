@@ -73,13 +73,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             if (!_scanInfo.TryGetValue(container, out ContainerScanInfo containerScanInfo))
             {
                 // First, try to load serialized scanInfo for this container.
-                DateTime? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(blobServiceClient.AccountName, container.Name).ConfigureAwait(false);
+                DateTimeOffset? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(blobServiceClient.AccountName, container.Name).ConfigureAwait(false);
 
                 containerScanInfo = new ContainerScanInfo()
                 {
                     Registrations = new List<ITriggerExecutor<BlobTriggerExecutorContext>>(),
-                    LastSweepCycleLatestModified = latestStoredScan ?? DateTime.MinValue,
-                    CurrentSweepCycleLatestModified = DateTime.MinValue,
+                    LastSweepCycleLatestModified = latestStoredScan ?? DateTimeOffset.MinValue,
+                    CurrentSweepCycleLatestModified = DateTimeOffset.MinValue,
                     ContinuationToken = null
                 };
 
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             List<BlobNotification> failedNotifications, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            DateTime lastScan = containerScanInfo.LastSweepCycleLatestModified;
+            DateTimeOffset lastScan = containerScanInfo.LastSweepCycleLatestModified;
 
             // For tracking
             string clientRequestId = Guid.NewGuid().ToString();
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // if the 'LatestModified' has changed, update it in the manager
             if (containerScanInfo.LastSweepCycleLatestModified > lastScan)
             {
-                DateTime latestScan = containerScanInfo.LastSweepCycleLatestModified;
+                DateTimeOffset latestScan = containerScanInfo.LastSweepCycleLatestModified;
 
                 // It's possible that we had some blobs that we failed to move to the queue. We want to make sure
                 // we continue to find these if the host needs to restart.
@@ -199,9 +199,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         /// <summary>
         /// This method is called each polling interval for all containers. The method divides the
         /// budget of allocated number of blobs to query, for each container we query a page of
-        /// that size and we keep the continuation token for the next time. AS a curser, we use
-        /// the time stamp when the current cycle on the container started. blobs newer than that
-        /// time will be considered new and registrations will be notified
+        /// that size and we keep the continuation token for the next time. As a cursor, we use
+        /// the time stamp when the current cycle on the container started. On a multi-page scan,
+        /// only blobs with LastModified at or before that time are considered new. On a complete
+        /// single-page listing, concurrently modified blobs are also notified.
         /// </summary>
         /// <param name="container"></param>
         /// <param name="containerScanInfo"> Information that includes the last cycle start
@@ -214,19 +215,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             IEnumerable<BlobItem> currentBlobs;
             int blobPollLimitPerContainer = _scanBlobLimitPerPoll / _scanInfo.Count;
-            string continuationToken = containerScanInfo.ContinuationToken;
+            // Azure.Storage.Blobs can return "" (empty NextMarker) instead of null at end of listing.
+            // Treat both as "no token" so a new sweep cycle actually starts (#61660).
+            string continuationToken = string.IsNullOrEmpty(containerScanInfo.ContinuationToken)
+                ? null
+                : containerScanInfo.ContinuationToken;
             Page<BlobItem> page;
 
-            // if starting the cycle, reset the sweep time
+            // if starting the cycle, reset the sweep time and set start time
             if (continuationToken == null)
             {
-                containerScanInfo.CurrentSweepCycleLatestModified = DateTime.MinValue;
+                containerScanInfo.PollingStartTime = DateTimeOffset.UtcNow;
+                containerScanInfo.CurrentSweepCycleLatestModified = DateTimeOffset.MinValue;
             }
 
             Stopwatch sw = Stopwatch.StartNew();
             try
             {
-                AsyncPageable<BlobItem> blobsAsyncPageable = container.GetBlobsAsync(cancellationToken: cancellationToken);
+                AsyncPageable<BlobItem> blobsAsyncPageable = container.GetBlobsAsync(
+                    traits: BlobTraits.None,
+                    states: BlobStates.None,
+                    prefix: null,
+                    cancellationToken: cancellationToken);
                 IAsyncEnumerable<Page<BlobItem>> pages = blobsAsyncPageable.AsPages(continuationToken: continuationToken, pageSizeHint: blobPollLimitPerContainer);
                 IAsyncEnumerator<Page<BlobItem>> pagesEnumerator = pages.GetAsyncEnumerator(cancellationToken);
                 if (await pagesEnumerator.MoveNextAsync().ConfigureAwait(false))
@@ -254,22 +264,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             List<BlobBaseClient> newBlobs = new List<BlobBaseClient>();
 
+            // A listing with no incoming continuation token and no next page is a complete
+            // scan of the container. Concurrent creates/updates (LastModified after PollingStartTime)
+            // were listed, so they can be notified and used as the high-water mark. On a multi-page
+            // scan, keep the PollingStartTime window from #53767 so blobs that land on a later page
+            // are not skipped forever.
+            bool completeContainerListing = continuationToken == null && string.IsNullOrEmpty(page.ContinuationToken);
+
             // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.
             foreach (BlobItem currentBlob in currentBlobs)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
                 var properties = currentBlob.Properties;
-                DateTime lastModifiedTimestamp = properties.LastModified.Value.UtcDateTime;
+                DateTimeOffset lastModifiedTimestamp = properties.LastModified.Value;
+                bool withinPollWindow = lastModifiedTimestamp <= containerScanInfo.PollingStartTime;
 
-                if (lastModifiedTimestamp > containerScanInfo.CurrentSweepCycleLatestModified)
+                if (lastModifiedTimestamp > containerScanInfo.CurrentSweepCycleLatestModified &&
+                    (completeContainerListing || withinPollWindow))
                 {
                     containerScanInfo.CurrentSweepCycleLatestModified = lastModifiedTimestamp;
                 }
 
                 // Blob timestamps are rounded to the nearest second, so make sure we continue to check
                 // the previous timestamp to catch any blobs that came in slightly after our previous poll.
-                if (lastModifiedTimestamp >= containerScanInfo.LastSweepCycleLatestModified)
+                if (lastModifiedTimestamp >= containerScanInfo.LastSweepCycleLatestModified &&
+                    (completeContainerListing || withinPollWindow))
                 {
                     newBlobs.Add(container.GetBlobClient(currentBlob.Name));
                 }
@@ -278,8 +298,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Logger.PollBlobContainer(_logger, container.Name, containerScanInfo.LastSweepCycleLatestModified, clientRequestId,
                 newBlobs.Count, sw.ElapsedMilliseconds, !string.IsNullOrWhiteSpace(page.ContinuationToken));
 
-            // record continuation token for next chunk retrieval
-            containerScanInfo.ContinuationToken = page.ContinuationToken;
+            // record continuation token for next chunk retrieval; normalize empty marker to null
+            containerScanInfo.ContinuationToken = string.IsNullOrEmpty(page.ContinuationToken) ? null : page.ContinuationToken;
 
             // if ending a cycle then copy currentSweepCycleStartTime to lastSweepCycleStartTime, if changed
             if (string.IsNullOrEmpty(page.ContinuationToken) &&

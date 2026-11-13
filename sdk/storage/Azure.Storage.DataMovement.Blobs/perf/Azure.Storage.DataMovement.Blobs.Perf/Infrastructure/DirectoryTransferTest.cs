@@ -34,6 +34,12 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             _transferManager = new TransferManager(managerOptions);
         }
 
+        public override async Task CleanupAsync()
+        {
+            await ((IAsyncDisposable)_transferManager).DisposeAsync();
+            await base.CleanupAsync();
+        }
+
         protected string CreateLocalDirectory(bool populate = false)
         {
             string directory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());

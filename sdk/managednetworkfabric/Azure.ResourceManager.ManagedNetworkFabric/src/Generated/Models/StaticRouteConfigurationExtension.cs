@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct StaticRouteConfigurationExtension : IEquatable<StaticRouteConfigurationExtension>
     {
         private readonly string _value;
+        /// <summary> Extension-NoExtension. </summary>
+        private const string NoExtensionValue = "NoExtension";
+        /// <summary> Extension-NPB. </summary>
+        private const string NpbValue = "NPB";
 
         /// <summary> Initializes a new instance of <see cref="StaticRouteConfigurationExtension"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StaticRouteConfigurationExtension(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoExtensionValue = "NoExtension";
-        private const string NpbValue = "NPB";
-
-        /// <summary> NoExtension. </summary>
+        /// <summary> Extension-NoExtension. </summary>
         public static StaticRouteConfigurationExtension NoExtension { get; } = new StaticRouteConfigurationExtension(NoExtensionValue);
-        /// <summary> NPB. </summary>
+
+        /// <summary> Extension-NPB. </summary>
         public static StaticRouteConfigurationExtension Npb { get; } = new StaticRouteConfigurationExtension(NpbValue);
+
         /// <summary> Determines if two <see cref="StaticRouteConfigurationExtension"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StaticRouteConfigurationExtension left, StaticRouteConfigurationExtension right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StaticRouteConfigurationExtension"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StaticRouteConfigurationExtension left, StaticRouteConfigurationExtension right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StaticRouteConfigurationExtension"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StaticRouteConfigurationExtension"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StaticRouteConfigurationExtension(string value) => new StaticRouteConfigurationExtension(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StaticRouteConfigurationExtension"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StaticRouteConfigurationExtension?(string value) => value == null ? null : new StaticRouteConfigurationExtension(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StaticRouteConfigurationExtension other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StaticRouteConfigurationExtension other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -20,17 +20,39 @@ namespace Azure.Security.KeyVault.Certificates
     /// certificate <see cref="CertificateIssuer"/>s and <see cref="CertificateContact"/>s. The client also supports listing <see cref="DeletedCertificate"/> for a soft delete
     /// enabled key vault.
     /// </summary>
-    public class CertificateClient
+    /// <remarks>
+    /// Internally, request building, transport, paging continuation, and LRO
+    /// polling for the Certificates endpoint are delegated to the TypeSpec-
+    /// generated <c>KeyVaultCertificatesClient</c> (internal). Request-body
+    /// composition and public model (de)serialization continue to be performed
+    /// by <c>CertificateMapper</c> and the handwritten model types, so the
+    /// wire payload shapes and public model surfaces are unchanged. Public
+    /// method signatures, return types, exception contracts and recorded HTTP
+    /// traffic match every previously shipped 4.x version of this package.
+    /// Reuse clients and call <see cref="Dispose"/> when their lifetime ends. The legacy
+    /// hand-written transport layer (KeyVaultPipeline.SendRequest&lt;T&gt;)
+    /// is retained only for DownloadCertificate because that API hits the
+    /// Secrets endpoint, not the Certificates endpoint.
+    /// </remarks>
+    public class CertificateClient : IDisposable
     {
         internal const string CertificatesPath = "/certificates/";
-        internal const string DeletedCertificatesPath = "/deletedcertificates/";
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-certificates";
         private const string OTelCertificateNameKey = "az.keyvault.certificate.name";
         private const string OTelCertificateVersionKey = "az.keyvault.certificate.version";
         private const string OTelCertificateIssuerNameKey = "az.keyvault.certificate.issuer.name";
-        private const string IssuersPath = "/certificates/issuers/";
-        private const string ContactsPath = "/certificates/contacts/";
 
+        // The generated client owns all transport for the Certificates endpoint.
+        private readonly KeyVaultCertificatesClient _generated;
+        private readonly ClientDiagnostics _diagnostics;
+        private readonly Uri _vaultUri;
+        private DisposableHttpPipeline _ownedPipeline;
+
+        // The hand-written pipeline is preserved purely for DownloadCertificate,
+        // which fetches the managed secret behind the certificate from the Secrets
+        // endpoint (not the Certificates endpoint). Keeping the existing transport
+        // here preserves byte-identical wire behavior for that API while Phase 3
+        // decides whether to route Download through a SecretClient instead.
         private readonly KeyVaultPipeline _pipeline;
 
         /// <summary>
@@ -73,15 +95,51 @@ namespace Azure.Security.KeyVault.Certificates
 
             options ??= new CertificateClientOptions();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
+            _vaultUri = vaultUri;
+            _diagnostics = new ClientDiagnostics(options);
 
-            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline, new ClientDiagnostics(options));
+            // Build the HttpPipeline directly from the customer's CertificateClientOptions
+            // (which extends ClientOptions). This is the same construction path the
+            // legacy hand-written CertificateClient used, so all of AddPolicy entries
+            // (per-call + per-retry), custom RetryPolicy / RetryOptions, Transport,
+            // Diagnostics.LoggedHeaderNames + LoggedQueryParameters and ApplicationId
+            // flow through automatically. No field-by-field copy is needed - future
+            // additions to ClientOptions are picked up for free.
+            var authPolicy = new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification);
+            _ownedPipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                perRetryPolicies: [authPolicy],
+                transportOptions: new HttpPipelineTransportOptions(),
+                responseClassifier: null);
+
+            _generated = new KeyVaultCertificatesClient(vaultUri, MapApiVersion(options.Version), _ownedPipeline, _diagnostics);
+
+            // Reuse the same HttpPipeline (and api-version) for the legacy KeyVaultPipeline
+            // wrapper that DownloadCertificate still depends on - so DownloadCertificate's
+            // wire shape is byte-identical to prior releases.
+            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), _ownedPipeline, _diagnostics);
         }
 
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="CertificateClient"/>.
         /// </summary>
-        public virtual Uri VaultUri => _pipeline.VaultUri;
+        public virtual Uri VaultUri => _vaultUri;
+
+        /// <summary>
+        /// Releases the HTTP pipeline resources owned by this client.
+        /// </summary>
+        /// <remarks>
+        /// Reuse the client for its intended lifetime and dispose it after its operations, including long-running
+        /// operations and pageable enumeration, have completed. Caller-provided transports and credentials are not disposed.
+        /// </remarks>
+        public virtual void Dispose()
+        {
+            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
+            GC.SuppressFinalize(this);
+        }
+
+        #region StartCreateCertificate
 
         /// <summary>
         /// Starts a long running operation to create a <see cref="KeyVaultCertificate"/> in the vault with the specified certificate policy.
@@ -127,17 +185,16 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(policy, nameof(policy));
 
-            var parameters = new CertificateCreateParameters(policy, enabled, tags, preserveCertificateOrder);
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
             {
-                Response<CertificateOperationProperties> response = _pipeline.SendRequest(RequestMethod.Post, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/create");
-
-                return new CertificateOperation(response, this);
+                using RequestContent content = CertificateMapper.ToRequestContent(new CertificateCreateParameters(policy, enabled, tags, preserveCertificateOrder));
+                Response raw = _generated.CreateCertificate(certificateName, content, new RequestContext { CancellationToken = cancellationToken });
+                var properties = CertificateMapper.Deserialize(raw, () => new CertificateOperationProperties());
+                return new CertificateOperation(Response.FromValue(properties, raw), this);
             }
             catch (Exception e)
             {
@@ -190,17 +247,16 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(policy, nameof(policy));
 
-            var parameters = new CertificateCreateParameters(policy, enabled, tags, preserveCertificateOrder);
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
             {
-                Response<CertificateOperationProperties> response = await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/create").ConfigureAwait(false);
-
-                return new CertificateOperation(response, this);
+                using RequestContent content = CertificateMapper.ToRequestContent(new CertificateCreateParameters(policy, enabled, tags, preserveCertificateOrder));
+                Response raw = await _generated.CreateCertificateAsync(certificateName, content, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                var properties = CertificateMapper.Deserialize(raw, () => new CertificateOperationProperties());
+                return new CertificateOperation(Response.FromValue(properties, raw), this);
             }
             catch (Exception e)
             {
@@ -209,7 +265,18 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        #endregion
+
+        #region DownloadCertificate
+        // DownloadCertificate intentionally retains the legacy KeyVaultPipeline-based
+        // transport. The API pulls the PFX/PEM out of the backing managed secret via the
+        // Secrets endpoint (not the Certificates endpoint that _generated targets), so
+        // routing it through _generated would not actually exercise that endpoint.
+        // Behavior, diagnostic scope name, OTel attributes, and the on-the-wire request
+        // shape are preserved exactly as shipped in prior 4.x releases.
+
 #pragma warning disable AZC0015 // Unexpected client method return type.
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken.
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
         /// </summary>
@@ -232,8 +299,39 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
-        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version, CancellationToken cancellationToken) =>
             DownloadCertificate(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken);
+#pragma warning restore AZC0002
+
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// This operation requires the certificates/get and secrets/get permissions.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">(Optional) The version of a certificate to download.</param>
+        /// <param name="outContentType"> The certificate content type in which the certificate will be downloaded. If a supported format is specified,
+        /// the certificate content is converted to the requested format. Currently, only PFX to PEM conversion is supported.
+        /// If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original
+        /// format without conversion.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
+        /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CertificateContentType? outContentType = null, CancellationToken cancellationToken = default) =>
+            DownloadCertificate(new DownloadCertificateOptions(certificateName) { Version = version, OutContentType = outContentType }, cancellationToken);
 
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
@@ -259,15 +357,34 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, options.CertificateName);
             scope.AddAttribute(OTelCertificateVersionKey, options.Version);
             scope.Start();
 
             try
             {
+                // First call uses _pipeline (legacy KeyVaultPipeline) by design,
+                // not oversight: the GET /certificates/{name}/ shape recorded in
+                // existing cassettes (always-trailing-slash) differs from the
+                // shape _generated.GetCertificate emits (no trailing slash when
+                // version is null). Switching the first call to _generated would
+                // require re-recording every DownloadCertificate live test. The
+                // second call (managed-secret fetch) legitimately belongs on
+                // _pipeline because it hits the /secrets/ endpoint and uses an
+                // outContentType query the generated client does not expose for
+                // this path.
                 KeyVaultCertificateWithPolicy certificate = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version);
-                Response<KeyVaultSecret> secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken);
+                Response<KeyVaultSecret> secretResponse;
+                if (options.OutContentType != null)
+                {
+                    var requestUri = _pipeline.CreateUriWithQueryParams(certificate.SecretId, ("outContentType", options.OutContentType.ToString()));
+                    secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), requestUri, appendApiVersion: false, cancellationToken);
+                }
+                else
+                {
+                    secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, appendApiVersion: true, cancellationToken);
+                }
 
                 KeyVaultSecret secret = secretResponse.Value;
                 string value = secret.Value;
@@ -281,7 +398,12 @@ namespace Azure.Security.KeyVault.Certificates
                 {
                     byte[] rawData = Convert.FromBase64String(value);
 
-                    X509Certificate2 x509 = new(rawData, (string)null, options.KeyStorageFlags);
+                    X509Certificate2 x509;
+#if NET9_0_OR_GREATER
+                    x509 = X509CertificateLoader.LoadPkcs12(rawData, (string)null, options.KeyStorageFlags);
+#else
+                    x509 = new(rawData, (string)null, options.KeyStorageFlags);
+#endif
                     return Response.FromValue(x509, secretResponse.GetRawResponse());
                 }
                 else if (secret.ContentType == CertificateContentType.Pem)
@@ -299,6 +421,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken.
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
         /// </summary>
@@ -321,8 +444,39 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
-        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version, CancellationToken cancellationToken) =>
             await DownloadCertificateAsync(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0002
+
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// This operation requires the certificates/get and secrets/get permissions.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">Optional version of a certificate to download.</param>
+        /// <param name="outContentType"> The certificate content type in which the certificate will be downloaded. If a supported format is specified,
+        /// the certificate content is converted to the requested format. Currently, only PFX to PEM conversion is supported.
+        /// If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original
+        /// format without conversion.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
+        /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CertificateContentType? outContentType = null, CancellationToken cancellationToken = default) =>
+            await DownloadCertificateAsync(new DownloadCertificateOptions(certificateName) { Version = version, OutContentType = outContentType }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
@@ -348,15 +502,28 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, options.CertificateName);
             scope.AddAttribute(OTelCertificateVersionKey, options.Version);
             scope.Start();
 
             try
             {
+                // First call uses _pipeline (legacy KeyVaultPipeline) by design,
+                // not oversight: see DownloadCertificate (sync) for the full
+                // explanation. Switching to _generated would require re-recording
+                // every DownloadCertificate live test.
                 KeyVaultCertificateWithPolicy certificate = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version).ConfigureAwait(false);
-                Response<KeyVaultSecret> secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken).ConfigureAwait(false);
+                Response<KeyVaultSecret> secretResponse;
+                if (options.OutContentType != null)
+                {
+                    var requestUri = _pipeline.CreateUriWithQueryParams(certificate.SecretId, ("outContentType", options.OutContentType.ToString()));
+                    secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), requestUri, appendApiVersion: false, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, appendApiVersion: true, cancellationToken).ConfigureAwait(false);
+                }
 
                 KeyVaultSecret secret = secretResponse.Value;
                 string value = secret.Value;
@@ -370,7 +537,12 @@ namespace Azure.Security.KeyVault.Certificates
                 {
                     byte[] rawData = Convert.FromBase64String(value);
 
-                    X509Certificate2 x509 = new(rawData, (string)null, options.KeyStorageFlags);
+                    X509Certificate2 x509;
+#if NET9_0_OR_GREATER
+                    x509 = X509CertificateLoader.LoadPkcs12(rawData, (string)null, options.KeyStorageFlags);
+#else
+                    x509 = new(rawData, (string)null, options.KeyStorageFlags);
+#endif
                     return Response.FromValue(x509, secretResponse.GetRawResponse());
                 }
                 else if (secret.ContentType == CertificateContentType.Pem)
@@ -389,6 +561,10 @@ namespace Azure.Security.KeyVault.Certificates
         }
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
+        #endregion
+
+        #region GetCertificate / GetCertificateVersion / UpdateCertificateProperties
+
         /// <summary>
         /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with its <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
         /// </summary>
@@ -401,19 +577,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName);
+                Response raw = _generated.GetCertificate(certificateName, certificateVersion: null, context: new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -428,19 +600,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName).ConfigureAwait(false);
+                Response raw = await _generated.GetCertificateAsync(certificateName, certificateVersion: null, context: new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -455,21 +623,18 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual Response<KeyVaultCertificate> GetCertificateVersion(string certificateName, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.AddAttribute(OTelCertificateVersionKey, version);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificate(), cancellationToken, CertificatesPath, certificateName, "/", version);
+                Response raw = _generated.GetCertificate(certificateName, version, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificate()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -486,20 +651,16 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.AddAttribute(OTelCertificateVersionKey, version);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificate(), cancellationToken, CertificatesPath, certificateName, "/", version).ConfigureAwait(false);
+                Response raw = await _generated.GetCertificateAsync(certificateName, version, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificate()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -514,22 +675,17 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
-            var parameters = new CertificateUpdateParameters(properties);
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
             scope.AddAttribute(OTelCertificateNameKey, properties.Name);
             scope.AddAttribute(OTelCertificateVersionKey, properties.Version);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Patch, parameters, () => new KeyVaultCertificate(), cancellationToken, CertificatesPath, properties.Name, "/", properties.Version);
+                using RequestContent content = CertificateMapper.WriteUpdateBody(properties);
+                Response raw = _generated.UpdateCertificate(properties.Name, content, properties.Version, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificate()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -544,23 +700,22 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
-            var parameters = new CertificateUpdateParameters(properties);
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
             scope.AddAttribute(OTelCertificateNameKey, properties.Name);
             scope.AddAttribute(OTelCertificateVersionKey, properties.Version);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Patch, parameters, () => new KeyVaultCertificate(), cancellationToken, CertificatesPath, properties.Name, "/", properties.Version).ConfigureAwait(false);
+                using RequestContent content = CertificateMapper.WriteUpdateBody(properties);
+                Response raw = await _generated.UpdateCertificateAsync(properties.Name, content, properties.Version, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificate()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
+
+        #endregion
+
+        #region Delete / Recover / Purge / Backup / Restore / Import
 
         /// <summary>
         /// Deletes all versions of the specified <see cref="KeyVaultCertificate"/>. If the vault is soft delete-enabled, the <see cref="KeyVaultCertificate"/> will be marked for permanent deletion
@@ -580,20 +735,16 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response<DeletedCertificate> response = _pipeline.SendRequest(RequestMethod.Delete, () => new DeletedCertificate(), cancellationToken, CertificatesPath, certificateName);
-                return new DeleteCertificateOperation(_pipeline, response);
+                Response raw = _generated.DeleteCertificate(certificateName, new RequestContext { CancellationToken = cancellationToken });
+                DeletedCertificate deleted = CertificateMapper.Deserialize(raw, () => new DeletedCertificate());
+                return new DeleteCertificateOperation(_generated, _diagnostics, Response.FromValue(deleted, raw));
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -614,20 +765,16 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response<DeletedCertificate> response = await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new DeletedCertificate(), cancellationToken, CertificatesPath, certificateName).ConfigureAwait(false);
-                return new DeleteCertificateOperation(_pipeline, response);
+                Response raw = await _generated.DeleteCertificateAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                DeletedCertificate deleted = CertificateMapper.Deserialize(raw, () => new DeletedCertificate());
+                return new DeleteCertificateOperation(_generated, _diagnostics, Response.FromValue(deleted, raw));
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -643,19 +790,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new DeletedCertificate(), cancellationToken, DeletedCertificatesPath, certificateName);
+                Response raw = _generated.GetDeletedCertificate(certificateName, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new DeletedCertificate()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -671,19 +814,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new DeletedCertificate(), cancellationToken, DeletedCertificatesPath, certificateName).ConfigureAwait(false);
+                Response raw = await _generated.GetDeletedCertificateAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new DeletedCertificate()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -700,20 +839,16 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response<KeyVaultCertificateWithPolicy> response = _pipeline.SendRequest(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, DeletedCertificatesPath, certificateName, "/recover");
-                return new RecoverDeletedCertificateOperation(_pipeline, response);
+                Response raw = _generated.RecoverDeletedCertificate(certificateName, new RequestContext { CancellationToken = cancellationToken });
+                KeyVaultCertificateWithPolicy recovered = CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy());
+                return new RecoverDeletedCertificateOperation(_generated, _diagnostics, Response.FromValue(recovered, raw));
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -730,20 +865,16 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response<KeyVaultCertificateWithPolicy> response = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, DeletedCertificatesPath, certificateName, "/recover").ConfigureAwait(false);
-                return new RecoverDeletedCertificateOperation(_pipeline, response);
+                Response raw = await _generated.RecoverDeletedCertificateAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                KeyVaultCertificateWithPolicy recovered = CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy());
+                return new RecoverDeletedCertificateOperation(_generated, _diagnostics, Response.FromValue(recovered, raw));
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -760,19 +891,12 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
-            {
-                return _pipeline.SendRequest(RequestMethod.Delete, cancellationToken, DeletedCertificatesPath, certificateName);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            { return _generated.PurgeDeletedCertificate(certificateName, new RequestContext { CancellationToken = cancellationToken }); }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -789,19 +913,12 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
-            {
-                return await _pipeline.SendRequestAsync(RequestMethod.Delete, cancellationToken, DeletedCertificatesPath, certificateName).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            { return await _generated.PurgeDeletedCertificateAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false); }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -817,21 +934,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response<CertificateBackup> backup = _pipeline.SendRequest(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, certificateName, "/backup");
-
-                return Response.FromValue(backup.Value.Value, backup.GetRawResponse());
+                Response raw = _generated.BackupCertificate(certificateName, new RequestContext { CancellationToken = cancellationToken });
+                return CertificateMapper.ToBackupResponse(raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -847,21 +958,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response<CertificateBackup> backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new CertificateBackup(), cancellationToken, CertificatesPath, certificateName, "/backup").ConfigureAwait(false);
-
-                return Response.FromValue(backup.Value.Value, backup.GetRawResponse());
+                Response raw = await _generated.BackupCertificateAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return CertificateMapper.ToBackupResponse(raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -877,18 +982,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(RestoreCertificateBackup)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(RestoreCertificateBackup)}");
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "restore");
+                using RequestContent content = CertificateMapper.ToRequestContent(new CertificateBackup { Value = backup });
+                Response raw = _generated.RestoreCertificate(content, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -904,18 +1006,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(RestoreCertificateBackup)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(RestoreCertificateBackup)}");
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "restore").ConfigureAwait(false);
+                using RequestContent content = CertificateMapper.ToRequestContent(new CertificateBackup { Value = backup });
+                Response raw = await _generated.RestoreCertificateAsync(content, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -933,19 +1032,16 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNull(importCertificateOptions, nameof(importCertificateOptions));
             Argument.AssertNotNullOrEmpty(importCertificateOptions.Name, nameof(importCertificateOptions.Name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, importCertificateOptions.Name);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, importCertificateOptions.Name, "/import");
+                using RequestContent content = CertificateMapper.ToRequestContent(importCertificateOptions);
+                Response raw = _generated.ImportCertificate(importCertificateOptions.Name, content, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -963,20 +1059,21 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNull(importCertificateOptions, nameof(importCertificateOptions));
             Argument.AssertNotNullOrEmpty(importCertificateOptions.Name, nameof(importCertificateOptions.Name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, importCertificateOptions.Name);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, importCertificateOptions.Name, "/import").ConfigureAwait(false);
+                using RequestContent content = CertificateMapper.ToRequestContent(importCertificateOptions);
+                Response raw = await _generated.ImportCertificateAsync(importCertificateOptions.Name, content, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
+
+        #endregion
+
+        #region Paging
 
         /// <summary>
         /// Lists the properties of all enabled and disabled certificates in the specified vault. You can use the returned <see cref="CertificateProperties.Name"/> in subsequent calls to <see cref="GetCertificate(string, CancellationToken)"/>.
@@ -987,9 +1084,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of certificate metadata.</returns>
         public virtual Pageable<CertificateProperties> GetPropertiesOfCertificates(bool includePending = default, CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = _pipeline.CreateFirstPageUri(CertificatesPath, ("includePending", includePending.ToString(CultureInfo.InvariantCulture).ToLowerInvariant()));
-
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetPropertiesOfCertificates", cancellationToken));
+            // Use the protocol pageable (Pageable<BinaryData>) so we deserialize each
+            // certificate item with the hand-written CertificateProperties JSON reader -
+            // guaranteeing identical wire-shape parsing to prior releases.
+            var ctx = new RequestContext { CancellationToken = cancellationToken };
+            Pageable<BinaryData> source = _generated.GetCertificates(maxresults: null, includePending: includePending, context: ctx);
+            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()),
+                "Azure.Security.KeyVault.Keys.KeyClient.GetPropertiesOfCertificates");
         }
 
         /// <summary>
@@ -1001,9 +1102,10 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of certificate metadata.</returns>
         public virtual AsyncPageable<CertificateProperties> GetPropertiesOfCertificatesAsync(bool includePending = default, CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = _pipeline.CreateFirstPageUri(CertificatesPath, ("includePending", includePending.ToString(CultureInfo.InvariantCulture).ToLowerInvariant()));
-
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificates", cancellationToken));
+            var ctx = new RequestContext { CancellationToken = cancellationToken };
+            AsyncPageable<BinaryData> source = _generated.GetCertificatesAsync(maxresults: null, includePending: includePending, context: ctx);
+            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificates");
         }
 
         /// <summary>
@@ -1019,9 +1121,10 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{CertificatesPath}{certificateName}/versions");
-
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificateVersions", cancellationToken));
+            var ctx = new RequestContext { CancellationToken = cancellationToken };
+            Pageable<BinaryData> source = _generated.GetCertificateVersions(certificateName, maxresults: null, context: ctx);
+            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificateVersions");
         }
 
         /// <summary>
@@ -1037,9 +1140,10 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{CertificatesPath}{certificateName}/versions");
-
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new CertificateProperties(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificateVersions", cancellationToken));
+            var ctx = new RequestContext { CancellationToken = cancellationToken };
+            AsyncPageable<BinaryData> source = _generated.GetCertificateVersionsAsync(certificateName, maxresults: null, context: ctx);
+            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificateVersions");
         }
 
         /// <summary>
@@ -1050,9 +1154,10 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of deleted certificates.</returns>
         public virtual Pageable<DeletedCertificate> GetDeletedCertificates(bool includePending = default, CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedCertificatesPath, ("includePending", includePending.ToString(CultureInfo.InvariantCulture).ToLowerInvariant()));
-
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedCertificate(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetDeletedCertificates", cancellationToken));
+            var ctx = new RequestContext { CancellationToken = cancellationToken };
+            Pageable<BinaryData> source = _generated.GetDeletedCertificates(maxresults: null, includePending: includePending, context: ctx);
+            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new DeletedCertificate()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetDeletedCertificates");
         }
 
         /// <summary>
@@ -1063,10 +1168,15 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of deleted certificates.</returns>
         public virtual AsyncPageable<DeletedCertificate> GetDeletedCertificatesAsync(bool includePending = default, CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedCertificatesPath, ("includePending", includePending.ToString(CultureInfo.InvariantCulture).ToLowerInvariant()));
-
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedCertificate(), "Azure.Security.KeyVaultCertificates.CertificateClient.GetDeletedCertificates", cancellationToken));
+            var ctx = new RequestContext { CancellationToken = cancellationToken };
+            AsyncPageable<BinaryData> source = _generated.GetDeletedCertificatesAsync(maxresults: null, includePending: includePending, context: ctx);
+            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new DeletedCertificate()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetDeletedCertificates");
         }
+
+        #endregion
+
+        #region CertificatePolicy
 
         /// <summary>
         /// Retrieves the <see cref="CertificatePolicy"/> of the specified certificate. This operation requires the certificate/get permission.
@@ -1081,19 +1191,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new CertificatePolicy(), cancellationToken, CertificatesPath, certificateName, "/policy");
+                Response raw = _generated.GetCertificatePolicy(certificateName, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificatePolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1109,19 +1215,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new CertificatePolicy(), cancellationToken, CertificatesPath, certificateName, "/policy").ConfigureAwait(false);
+                Response raw = await _generated.GetCertificatePolicyAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificatePolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1137,20 +1239,18 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual Response<CertificatePolicy> UpdateCertificatePolicy(string certificateName, CertificatePolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(policy, nameof(policy));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Patch, policy, () => new CertificatePolicy(), cancellationToken, CertificatesPath, certificateName, "/policy");
+                using RequestContent content = CertificateMapper.ToRequestContent(policy);
+                Response raw = _generated.UpdateCertificatePolicy(certificateName, content, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificatePolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1166,21 +1266,23 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual async Task<Response<CertificatePolicy>> UpdateCertificatePolicyAsync(string certificateName, CertificatePolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(policy, nameof(policy));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Patch, policy, () => new CertificatePolicy(), cancellationToken, CertificatesPath, certificateName, "/policy").ConfigureAwait(false);
+                using RequestContent content = CertificateMapper.ToRequestContent(policy);
+                Response raw = await _generated.UpdateCertificatePolicyAsync(certificateName, content, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificatePolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
+
+        #endregion
+
+        #region Issuers
 
         /// <summary>
         /// Creates or replaces a certificate <see cref="CertificateIssuer"/> in the key vault. This operation requires the certificates/setissuers permission.
@@ -1204,19 +1306,16 @@ namespace Azure.Security.KeyVault.Certificates
                 throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Provider)} cannot be null or an empty string.", nameof(issuer));
             }
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
             scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Put, issuer, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuer.Name);
+                using RequestContent content = CertificateMapper.ToRequestContent(issuer);
+                Response raw = _generated.SetCertificateIssuer(issuer.Name, content, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateIssuer()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1241,19 +1340,16 @@ namespace Azure.Security.KeyVault.Certificates
                 throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Provider)} cannot be null or an empty string.", nameof(issuer));
             }
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
             scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Put, issuer, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuer.Name).ConfigureAwait(false);
+                using RequestContent content = CertificateMapper.ToRequestContent(issuer);
+                Response raw = await _generated.SetCertificateIssuerAsync(issuer.Name, content, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateIssuer()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1268,19 +1364,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
             scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuerName);
+                Response raw = _generated.GetCertificateIssuer(issuerName, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateIssuer()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1295,19 +1387,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
             scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuerName).ConfigureAwait(false);
+                Response raw = await _generated.GetCertificateIssuerAsync(issuerName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateIssuer()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1328,19 +1416,20 @@ namespace Azure.Security.KeyVault.Certificates
                 throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Name)} cannot be null or an empty string.", nameof(issuer));
             }
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
             scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Patch, issuer, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuer.Name);
+                // Reuse CertificateIssuer.WriteProperties via ToRequestContent for the
+                // PATCH body. The legacy SendRequest(RequestMethod.Patch, issuer, ...)
+                // serialized the same shape; the protocol overload of UpdateCertificateIssuer
+                // is what the generated client exposes for this shape so we route through it.
+                using RequestContent content = CertificateMapper.ToRequestContent(issuer);
+                Response raw = _generated.UpdateCertificateIssuer(issuer.Name, content, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateIssuer()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1361,19 +1450,16 @@ namespace Azure.Security.KeyVault.Certificates
                 throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Name)} cannot be null or an empty string.", nameof(issuer));
             }
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
             scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Patch, issuer, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuer.Name).ConfigureAwait(false);
+                using RequestContent content = CertificateMapper.ToRequestContent(issuer);
+                Response raw = await _generated.UpdateCertificateIssuerAsync(issuer.Name, content, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateIssuer()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1389,19 +1475,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
             scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Delete, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuerName);
+                Response raw = _generated.DeleteCertificateIssuer(issuerName, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateIssuer()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1417,19 +1499,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
             scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new CertificateIssuer(), cancellationToken, IssuersPath, issuerName).ConfigureAwait(false);
+                Response raw = await _generated.DeleteCertificateIssuerAsync(issuerName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateIssuer()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1440,9 +1518,10 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of certificate issuers' metadata.</returns>
         public virtual Pageable<IssuerProperties> GetPropertiesOfIssuers(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
-
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new IssuerProperties(), $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}", cancellationToken));
+            var ctx = new RequestContext { CancellationToken = cancellationToken };
+            Pageable<BinaryData> source = _generated.GetCertificateIssuers(maxresults: null, context: ctx);
+            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new IssuerProperties()),
+                $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}");
         }
 
         /// <summary>
@@ -1453,10 +1532,15 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of certificate issuers' metadata.</returns>
         public virtual AsyncPageable<IssuerProperties> GetPropertiesOfIssuersAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = _pipeline.CreateFirstPageUri(IssuersPath);
-
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new IssuerProperties(), $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}", cancellationToken));
+            var ctx = new RequestContext { CancellationToken = cancellationToken };
+            AsyncPageable<BinaryData> source = _generated.GetCertificateIssuersAsync(maxresults: null, context: ctx);
+            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new IssuerProperties()),
+                $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}");
         }
+
+        #endregion
+
+        #region GetCertificateOperation / Contacts / Merge
 
         /// <summary>
         /// Gets a pending <see cref="CertificateOperation"/> from the key vault. This operation requires the certificates/get permission.
@@ -1470,21 +1554,16 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response<CertificateOperationProperties> response = _pipeline.SendRequest(RequestMethod.Get, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending");
-
-                return new CertificateOperation(response, this);
+                Response raw = _generated.GetCertificateOperation(certificateName, new RequestContext { CancellationToken = cancellationToken });
+                var properties = CertificateMapper.Deserialize(raw, () => new CertificateOperationProperties());
+                return new CertificateOperation(Response.FromValue(properties, raw), this);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1499,21 +1578,16 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response<CertificateOperationProperties> response = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
-
-                return new CertificateOperation(response, this);
+                Response raw = await _generated.GetCertificateOperationAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                var properties = CertificateMapper.Deserialize(raw, () => new CertificateOperationProperties());
+                return new CertificateOperation(Response.FromValue(properties, raw), this);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1528,20 +1602,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(contacts, nameof(contacts));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(SetContacts)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(SetContacts)}");
             scope.Start();
-
             try
             {
-                Response<ContactList> contactList = _pipeline.SendRequest(RequestMethod.Put, new ContactList(contacts), () => new ContactList(), cancellationToken, ContactsPath);
-
-                return Response.FromValue(contactList.Value.ToList(), contactList.GetRawResponse());
+                using RequestContent content = CertificateMapper.ToRequestContent(new ContactList(contacts));
+                Response raw = _generated.SetCertificateContacts(content, new RequestContext { CancellationToken = cancellationToken });
+                return CertificateMapper.ToContactsResponse(raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1556,20 +1625,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(contacts, nameof(contacts));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(SetContacts)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(SetContacts)}");
             scope.Start();
-
             try
             {
-                Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Put, new ContactList(contacts), () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
-
-                return Response.FromValue(contactList.Value.ToList(), contactList.GetRawResponse());
+                using RequestContent content = CertificateMapper.ToRequestContent(new ContactList(contacts));
+                Response raw = await _generated.SetCertificateContactsAsync(content, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return CertificateMapper.ToContactsResponse(raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1579,20 +1643,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The certificate contacts of the vault.</returns>
         public virtual Response<IList<CertificateContact>> GetContacts(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetContacts)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetContacts)}");
             scope.Start();
-
             try
             {
-                Response<ContactList> contactList = _pipeline.SendRequest(RequestMethod.Get, () => new ContactList(), cancellationToken, ContactsPath);
-
-                return Response.FromValue(contactList.Value.ToList(), contactList.GetRawResponse());
+                Response raw = _generated.GetCertificateContacts(new RequestContext { CancellationToken = cancellationToken });
+                return CertificateMapper.ToContactsResponse(raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1602,20 +1660,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The certificate contacts of the vault.</returns>
         public virtual async Task<Response<IList<CertificateContact>>> GetContactsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetContacts)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetContacts)}");
             scope.Start();
-
             try
             {
-                Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
-
-                return Response.FromValue(contactList.Value.ToList(), contactList.GetRawResponse());
+                Response raw = await _generated.GetCertificateContactsAsync(new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return CertificateMapper.ToContactsResponse(raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1626,20 +1678,14 @@ namespace Azure.Security.KeyVault.Certificates
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<IList<CertificateContact>> DeleteContacts(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteContacts)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteContacts)}");
             scope.Start();
-
             try
             {
-                Response<ContactList> contactList = _pipeline.SendRequest(RequestMethod.Delete, () => new ContactList(), cancellationToken, ContactsPath);
-
-                return Response.FromValue(contactList.Value.ToList(), contactList.GetRawResponse());
+                Response raw = _generated.DeleteCertificateContacts(new RequestContext { CancellationToken = cancellationToken });
+                return CertificateMapper.ToContactsResponse(raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1650,20 +1696,14 @@ namespace Azure.Security.KeyVault.Certificates
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<IList<CertificateContact>>> DeleteContactsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteContacts)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteContacts)}");
             scope.Start();
-
             try
             {
-                Response<ContactList> contactList = await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new ContactList(), cancellationToken, ContactsPath).ConfigureAwait(false);
-
-                return Response.FromValue(contactList.Value.ToList(), contactList.GetRawResponse());
+                Response raw = await _generated.DeleteCertificateContactsAsync(new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return CertificateMapper.ToContactsResponse(raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1678,21 +1718,16 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(mergeCertificateOptions, nameof(mergeCertificateOptions));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, mergeCertificateOptions.Name);
             scope.Start();
-
             try
             {
-                Response<KeyVaultCertificateWithPolicy> certificate = _pipeline.SendRequest(RequestMethod.Post, mergeCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge");
-
-                return Response.FromValue(certificate.Value, certificate.GetRawResponse());
+                using RequestContent content = CertificateMapper.ToRequestContent(mergeCertificateOptions);
+                Response raw = _generated.MergeCertificate(mergeCertificateOptions.Name, content, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         /// <summary>
@@ -1707,163 +1742,247 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Argument.AssertNotNull(mergeCertificateOptions, nameof(mergeCertificateOptions));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, mergeCertificateOptions.Name);
             scope.Start();
-
             try
             {
-                Response<KeyVaultCertificateWithPolicy> certificate = await _pipeline.SendRequestAsync(RequestMethod.Post, mergeCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge").ConfigureAwait(false);
-
-                return Response.FromValue(certificate.Value, certificate.GetRawResponse());
+                using RequestContent content = CertificateMapper.ToRequestContent(mergeCertificateOptions);
+                Response raw = await _generated.MergeCertificateAsync(mergeCertificateOptions.Name, content, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new KeyVaultCertificateWithPolicy()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
+        #endregion
+
+        #region Internal helpers used by CertificateOperation
+
+        // Polls the create-certificate LRO. Soft-delete semantics:
+        //   200/403 -> still creating or already created (CertificateOperation interprets Status)
+        //   404     -> operation has been deleted, surface as a null value response
+        // Mirrors the legacy hand-written GetPendingCertificate, now routed through the
+        // generated client's GetCertificateOperation protocol overload.
         internal virtual Response<CertificateOperationProperties> GetPendingCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificatesPath, certificateName, "/pending");
-                switch (response.Status)
+                var ctx = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
+                Response response = _generated.GetCertificateOperation(certificateName, ctx);
+                return response.Status switch
                 {
-                    case 200:
-                    case 403:
-                        return _pipeline.CreateResponse(response, new CertificateOperationProperties());
-
-                    case 404:
-                        return Response.FromValue<CertificateOperationProperties>(null, response);
-
-                    default:
-                        throw new RequestFailedException(response);
-                }
+                    200 or 403 => Response.FromValue(CertificateMapper.Deserialize(response, () => new CertificateOperationProperties()), response),
+                    404 => Response.FromValue<CertificateOperationProperties>(null, response),
+                    _ => throw new RequestFailedException(response),
+                };
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         internal virtual async Task<Response<CertificateOperationProperties>> GetPendingCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                Response response = await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
-                switch (response.Status)
+                var ctx = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
+                Response response = await _generated.GetCertificateOperationAsync(certificateName, ctx).ConfigureAwait(false);
+                return response.Status switch
                 {
-                    case 200:
-                    case 403:
-                        return _pipeline.CreateResponse(response, new CertificateOperationProperties());
-
-                    case 404:
-                        return Response.FromValue<CertificateOperationProperties>(null, response);
-
-                    default:
-                        throw new RequestFailedException(response);
-                }
+                    200 or 403 => Response.FromValue(CertificateMapper.Deserialize(response, () => new CertificateOperationProperties()), response),
+                    404 => Response.FromValue<CertificateOperationProperties>(null, response),
+                    _ => throw new RequestFailedException(response),
+                };
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         internal virtual Response<CertificateOperationProperties> CancelCertificateOperation(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            var parameters = new CertificateOperationUpdateParameters(true);
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Patch, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending");
+                using RequestContent content = CertificateMapper.WriteCancelOperationBody();
+                Response raw = _generated.UpdateCertificateOperation(certificateName, content, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateOperationProperties()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         internal virtual async Task<Response<CertificateOperationProperties>> CancelCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            var parameters = new CertificateOperationUpdateParameters(true);
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Patch, parameters, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
+                using RequestContent content = CertificateMapper.WriteCancelOperationBody();
+                Response raw = await _generated.UpdateCertificateOperationAsync(certificateName, content, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateOperationProperties()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         internal virtual Response<CertificateOperationProperties> DeleteCertificateOperation(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Delete, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending");
+                Response raw = _generated.DeleteCertificateOperation(certificateName, new RequestContext { CancellationToken = cancellationToken });
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateOperationProperties()), raw);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            catch (Exception e) { scope.Failed(e); throw; }
         }
 
         internal virtual async Task<Response<CertificateOperationProperties>> DeleteCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new CertificateOperationProperties(), cancellationToken, CertificatesPath, certificateName, "/pending").ConfigureAwait(false);
+                Response raw = await _generated.DeleteCertificateOperationAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue(CertificateMapper.Deserialize(raw, () => new CertificateOperationProperties()), raw);
             }
-            catch (Exception e)
+            catch (Exception e) { scope.Failed(e); throw; }
+        }
+
+        #endregion
+
+        #region Plumbing: MapApiVersion / pageable helpers
+
+        // Maps the customer-facing CertificateClientOptions.ServiceVersion enum to the
+        // api-version string the generated client should send. Every enum value listed
+        // on the public type today must continue to construct a working client - no
+        // silent fallback. Unknown enum values throw ArgumentOutOfRangeException.
+        // For Phase 2 we keep this an identity mapping: the wire api-version still
+        // matches GetVersionString() so existing recordings line up. If a future spec
+        // drop removes wire support for an older version, fold it into the nearest
+        // supported one here (mirroring SecretClient.MapApiVersion) rather than
+        // throwing - that's the contract the customer relied on.
+        private static string MapApiVersion(CertificateClientOptions.ServiceVersion version) => version switch
+        {
+            CertificateClientOptions.ServiceVersion.V7_0 => "7.0",
+            CertificateClientOptions.ServiceVersion.V7_1 => "7.1",
+            CertificateClientOptions.ServiceVersion.V7_2 => "7.2",
+            CertificateClientOptions.ServiceVersion.V7_3 => "7.3",
+            CertificateClientOptions.ServiceVersion.V7_4 => "7.4",
+            CertificateClientOptions.ServiceVersion.V7_5 => "7.5",
+            CertificateClientOptions.ServiceVersion.V7_6 => "7.6",
+            CertificateClientOptions.ServiceVersion.V2025_07_01 => "2025-07-01",
+            CertificateClientOptions.ServiceVersion.V2026_04_01 => "2026-04-01",
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(version),
+                version,
+                "Unknown CertificateClientOptions.ServiceVersion. Add a mapping in CertificateClient.MapApiVersion."),
+        };
+
+        // Wrap each PAGE FETCH in a CertificateClient.<op>-named DiagnosticScope
+        // (matching the exact legacy scope name strings, which were sometimes
+        // namespace-qualified and historically inconsistent between sync/async -
+        // preserved verbatim so customers filtering OpenTelemetry / DiagnosticListener
+        // see the same names as on 4.10.0-beta.1). The try/finally per-page-fetch
+        // pattern avoids scope leaks on partial enumeration (`break` after first page).
+        private Pageable<TOut> MapPageable<TIn, TOut>(Pageable<TIn> source, Func<TIn, TOut> map, string scopeName)
+            => new MappedPageable<TIn, TOut>(source, map, _diagnostics, scopeName);
+
+        private AsyncPageable<TOut> MapAsyncPageable<TIn, TOut>(AsyncPageable<TIn> source, Func<TIn, TOut> map, string scopeName)
+            => new MappedAsyncPageable<TIn, TOut>(source, map, _diagnostics, scopeName);
+
+        private sealed class MappedPageable<TIn, TOut> : Pageable<TOut>
+        {
+            private readonly Pageable<TIn> _source;
+            private readonly Func<TIn, TOut> _map;
+            private readonly ClientDiagnostics _diagnostics;
+            private readonly string _scopeName;
+            public MappedPageable(Pageable<TIn> source, Func<TIn, TOut> map, ClientDiagnostics diagnostics, string scopeName)
+            { _source = source; _map = map; _diagnostics = diagnostics; _scopeName = scopeName; }
+            public override IEnumerable<Page<TOut>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
-                scope.Failed(e);
-                throw;
+                using IEnumerator<Page<TIn>> e = _source.AsPages(continuationToken, pageSizeHint).GetEnumerator();
+                while (true)
+                {
+                    Page<TIn> page;
+                    List<TOut> values;
+                    DiagnosticScope scope = _diagnostics.CreateScope(_scopeName);
+                    scope.Start();
+                    try
+                    {
+                        if (!e.MoveNext())
+                        { scope.Dispose(); yield break; }
+                        page = e.Current;
+                        values = new List<TOut>(page.Values.Count);
+                        // Map page items inside the scope so deserialization failures are recorded as Failed.
+                        foreach (TIn v in page.Values)
+                            values.Add(_map(v));
+                    }
+                    catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
+                    scope.Dispose();
+                    yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                }
             }
         }
+
+        private sealed class MappedAsyncPageable<TIn, TOut> : AsyncPageable<TOut>
+        {
+            private readonly AsyncPageable<TIn> _source;
+            private readonly Func<TIn, TOut> _map;
+            private readonly ClientDiagnostics _diagnostics;
+            private readonly string _scopeName;
+            public MappedAsyncPageable(AsyncPageable<TIn> source, Func<TIn, TOut> map, ClientDiagnostics diagnostics, string scopeName)
+            { _source = source; _map = map; _diagnostics = diagnostics; _scopeName = scopeName; }
+            public override async System.Collections.Generic.IAsyncEnumerable<Page<TOut>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                System.Collections.Generic.IAsyncEnumerator<Page<TIn>> e = _source.AsPages(continuationToken, pageSizeHint).GetAsyncEnumerator();
+                try
+                {
+                    while (true)
+                    {
+                        Page<TIn> page;
+                        List<TOut> values;
+                        DiagnosticScope scope = _diagnostics.CreateScope(_scopeName);
+                        scope.Start();
+                        try
+                        {
+                            if (!await e.MoveNextAsync().ConfigureAwait(false))
+                            { scope.Dispose(); yield break; }
+                            page = e.Current;
+                            values = new List<TOut>(page.Values.Count);
+                            foreach (TIn v in page.Values)
+                                values.Add(_map(v));
+                        }
+                        catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
+                        scope.Dispose();
+                        yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                    }
+                }
+                finally
+                {
+                    await e.DisposeAsync().ConfigureAwait(false);
+                }
+            }
+        }
+
+        #endregion
     }
 }

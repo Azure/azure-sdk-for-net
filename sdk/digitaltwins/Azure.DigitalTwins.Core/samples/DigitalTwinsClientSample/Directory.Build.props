@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <IsSamplesProject>true</IsSamplesProject>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+</Project>

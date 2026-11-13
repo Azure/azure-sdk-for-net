@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class IotSecurityAggregatedAlertResource : IJsonModel<IotSecurityAggregatedAlertData>
     {
-        private static IotSecurityAggregatedAlertData s_dataDeserializationInstance;
-        private static IotSecurityAggregatedAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IotSecurityAggregatedAlertData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IotSecurityAggregatedAlertData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IotSecurityAggregatedAlertData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotSecurityAggregatedAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotSecurityAggregatedAlertData>)Data).Write(writer, options);
 
-        IotSecurityAggregatedAlertData IJsonModel<IotSecurityAggregatedAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecurityAggregatedAlertData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotSecurityAggregatedAlertData IJsonModel<IotSecurityAggregatedAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IotSecurityAggregatedAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotSecurityAggregatedAlertData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IotSecurityAggregatedAlertData IPersistableModel<IotSecurityAggregatedAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecurityAggregatedAlertData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<IotSecurityAggregatedAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecurityAggregatedAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotSecurityAggregatedAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

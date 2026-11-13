@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct AgeUnit : IEquatable<AgeUnit>
     {
         private readonly string _value;
+        /// <summary> Unspecified age unit. </summary>
+        private const string UnspecifiedValue = "Unspecified";
+        /// <summary> Year age unit. </summary>
+        private const string YearValue = "Year";
+        /// <summary> Month age unit. </summary>
+        private const string MonthValue = "Month";
+        /// <summary> Week age unit. </summary>
+        private const string WeekValue = "Week";
+        /// <summary> Day age unit. </summary>
+        private const string DayValue = "Day";
 
         /// <summary> Initializes a new instance of <see cref="AgeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgeUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnspecifiedValue = "Unspecified";
-        private const string YearValue = "Year";
-        private const string MonthValue = "Month";
-        private const string WeekValue = "Week";
-        private const string DayValue = "Day";
+            _value = value;
+        }
 
         /// <summary> Unspecified age unit. </summary>
         public static AgeUnit Unspecified { get; } = new AgeUnit(UnspecifiedValue);
+
         /// <summary> Year age unit. </summary>
         public static AgeUnit Year { get; } = new AgeUnit(YearValue);
+
         /// <summary> Month age unit. </summary>
         public static AgeUnit Month { get; } = new AgeUnit(MonthValue);
+
         /// <summary> Week age unit. </summary>
         public static AgeUnit Week { get; } = new AgeUnit(WeekValue);
+
         /// <summary> Day age unit. </summary>
         public static AgeUnit Day { get; } = new AgeUnit(DayValue);
+
         /// <summary> Determines if two <see cref="AgeUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgeUnit left, AgeUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AgeUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgeUnit left, AgeUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AgeUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AgeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AgeUnit(string value) => new AgeUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AgeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AgeUnit?(string value) => value == null ? null : new AgeUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AgeUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AgeUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

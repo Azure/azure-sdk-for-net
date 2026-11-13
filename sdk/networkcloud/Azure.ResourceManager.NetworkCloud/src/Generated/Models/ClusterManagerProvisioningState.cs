@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ClusterManagerProvisioningState : IEquatable<ClusterManagerProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The Succeeded status. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The Failed status. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The Canceled status. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The Provisioning status. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The Accepted status. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The Updating status. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="ClusterManagerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterManagerProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string AcceptedValue = "Accepted";
-        private const string UpdatingValue = "Updating";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> The Succeeded status. </summary>
         public static ClusterManagerProvisioningState Succeeded { get; } = new ClusterManagerProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The Failed status. </summary>
         public static ClusterManagerProvisioningState Failed { get; } = new ClusterManagerProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The Canceled status. </summary>
         public static ClusterManagerProvisioningState Canceled { get; } = new ClusterManagerProvisioningState(CanceledValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> The Provisioning status. </summary>
         public static ClusterManagerProvisioningState Provisioning { get; } = new ClusterManagerProvisioningState(ProvisioningValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> The Accepted status. </summary>
         public static ClusterManagerProvisioningState Accepted { get; } = new ClusterManagerProvisioningState(AcceptedValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> The Updating status. </summary>
         public static ClusterManagerProvisioningState Updating { get; } = new ClusterManagerProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="ClusterManagerProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterManagerProvisioningState left, ClusterManagerProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterManagerProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterManagerProvisioningState left, ClusterManagerProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterManagerProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterManagerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterManagerProvisioningState(string value) => new ClusterManagerProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterManagerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterManagerProvisioningState?(string value) => value == null ? null : new ClusterManagerProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterManagerProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterManagerProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct FileShareAccessTier : IEquatable<FileShareAccessTier>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FileShareAccessTier"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FileShareAccessTier(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TransactionOptimizedValue = "TransactionOptimized";
         private const string HotValue = "Hot";
         private const string CoolValue = "Cool";
         private const string PremiumValue = "Premium";
 
-        /// <summary> TransactionOptimized. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FileShareAccessTier(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the TransactionOptimized. </summary>
         public static FileShareAccessTier TransactionOptimized { get; } = new FileShareAccessTier(TransactionOptimizedValue);
-        /// <summary> Hot. </summary>
+
+        /// <summary> Gets the Hot. </summary>
         public static FileShareAccessTier Hot { get; } = new FileShareAccessTier(HotValue);
-        /// <summary> Cool. </summary>
+
+        /// <summary> Gets the Cool. </summary>
         public static FileShareAccessTier Cool { get; } = new FileShareAccessTier(CoolValue);
-        /// <summary> Premium. </summary>
+
+        /// <summary> Gets the Premium. </summary>
         public static FileShareAccessTier Premium { get; } = new FileShareAccessTier(PremiumValue);
+
         /// <summary> Determines if two <see cref="FileShareAccessTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FileShareAccessTier left, FileShareAccessTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FileShareAccessTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FileShareAccessTier left, FileShareAccessTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FileShareAccessTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FileShareAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FileShareAccessTier(string value) => new FileShareAccessTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FileShareAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FileShareAccessTier?(string value) => value == null ? null : new FileShareAccessTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FileShareAccessTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FileShareAccessTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// </summary>
         public bool IsDuplicated { get; }
 
-        internal WebPubSubResult(): this(null, false)
+        internal WebPubSubResult() : this(null, false)
         {
         }
 

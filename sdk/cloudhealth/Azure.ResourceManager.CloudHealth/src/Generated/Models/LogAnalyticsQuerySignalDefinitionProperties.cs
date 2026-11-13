@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -17,13 +18,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
         /// <param name="queryText"> Query text in KQL syntax. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationRules"/> or <paramref name="queryText"/> is null. </exception>
-        public LogAnalyticsQuerySignalDefinitionProperties(EntitySignalEvaluationRule evaluationRules, string queryText) : base(evaluationRules)
+        public LogAnalyticsQuerySignalDefinitionProperties(EntitySignalEvaluationRule evaluationRules, string queryText) : base(EntitySignalKind.LogAnalyticsQuery, evaluationRules)
         {
             Argument.AssertNotNull(evaluationRules, nameof(evaluationRules));
             Argument.AssertNotNull(queryText, nameof(queryText));
 
             QueryText = queryText;
-            SignalKind = EntitySignalKind.LogAnalyticsQuery;
         }
 
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySignalDefinitionProperties"/>. </summary>
@@ -31,31 +31,26 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="displayName"> Display name. </param>
         /// <param name="signalKind"> Kind of the signal definition. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queryText"> Query text in KQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </param>
         /// <param name="valueColumnName"> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </param>
-        internal LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string queryText, string timeGrain, string valueColumnName) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, serializedAdditionalRawData)
+        internal LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> tags, string dataUnit, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain, string valueColumnName) : base(provisioningState, displayName, signalKind, refreshInterval, tags, dataUnit, evaluationRules, additionalBinaryDataProperties)
         {
             QueryText = queryText;
             TimeGrain = timeGrain;
             ValueColumnName = valueColumnName;
-            SignalKind = signalKind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySignalDefinitionProperties"/> for deserialization. </summary>
-        internal LogAnalyticsQuerySignalDefinitionProperties()
-        {
         }
 
         /// <summary> Query text in KQL syntax. </summary>
         public string QueryText { get; set; }
+
         /// <summary> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </summary>
         public string TimeGrain { get; set; }
+
         /// <summary> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </summary>
         public string ValueColumnName { get; set; }
     }

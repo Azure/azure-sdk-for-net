@@ -7,57 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The SqlCapabilityGroup. </summary>
+    /// <summary></summary>
     public readonly partial struct SqlCapabilityGroup : IEquatable<SqlCapabilityGroup>
     {
         private readonly string _value;
+        /// <summary> supportedEditions. </summary>
+        private const string SupportedEditionsValue = "supportedEditions";
+        /// <summary> supportedElasticPoolEditions. </summary>
+        private const string SupportedElasticPoolEditionsValue = "supportedElasticPoolEditions";
+        /// <summary> supportedManagedInstanceVersions. </summary>
+        private const string SupportedManagedInstanceVersionsValue = "supportedManagedInstanceVersions";
+        /// <summary> supportedInstancePoolEditions. </summary>
+        private const string SupportedInstancePoolEditionsValue = "supportedInstancePoolEditions";
+        /// <summary> supportedManagedInstanceEditions. </summary>
+        private const string SupportedManagedInstanceEditionsValue = "supportedManagedInstanceEditions";
+        /// <summary> supportedJobAgentVersions. </summary>
+        private const string SupportedJobAgentVersionsValue = "supportedJobAgentVersions";
 
         /// <summary> Initializes a new instance of <see cref="SqlCapabilityGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlCapabilityGroup(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SupportedEditionsValue = "supportedEditions";
-        private const string SupportedElasticPoolEditionsValue = "supportedElasticPoolEditions";
-        private const string SupportedManagedInstanceVersionsValue = "supportedManagedInstanceVersions";
-        private const string SupportedInstancePoolEditionsValue = "supportedInstancePoolEditions";
-        private const string SupportedManagedInstanceEditionsValue = "supportedManagedInstanceEditions";
-        private const string SupportedJobAgentVersionsValue = "supportedJobAgentVersions";
+            _value = value;
+        }
 
         /// <summary> supportedEditions. </summary>
         public static SqlCapabilityGroup SupportedEditions { get; } = new SqlCapabilityGroup(SupportedEditionsValue);
+
         /// <summary> supportedElasticPoolEditions. </summary>
         public static SqlCapabilityGroup SupportedElasticPoolEditions { get; } = new SqlCapabilityGroup(SupportedElasticPoolEditionsValue);
+
         /// <summary> supportedManagedInstanceVersions. </summary>
         public static SqlCapabilityGroup SupportedManagedInstanceVersions { get; } = new SqlCapabilityGroup(SupportedManagedInstanceVersionsValue);
+
         /// <summary> supportedInstancePoolEditions. </summary>
         public static SqlCapabilityGroup SupportedInstancePoolEditions { get; } = new SqlCapabilityGroup(SupportedInstancePoolEditionsValue);
+
         /// <summary> supportedManagedInstanceEditions. </summary>
         public static SqlCapabilityGroup SupportedManagedInstanceEditions { get; } = new SqlCapabilityGroup(SupportedManagedInstanceEditionsValue);
+
         /// <summary> supportedJobAgentVersions. </summary>
         public static SqlCapabilityGroup SupportedJobAgentVersions { get; } = new SqlCapabilityGroup(SupportedJobAgentVersionsValue);
+
         /// <summary> Determines if two <see cref="SqlCapabilityGroup"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlCapabilityGroup left, SqlCapabilityGroup right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlCapabilityGroup"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlCapabilityGroup left, SqlCapabilityGroup right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlCapabilityGroup"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlCapabilityGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlCapabilityGroup(string value) => new SqlCapabilityGroup(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlCapabilityGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlCapabilityGroup?(string value) => value == null ? null : new SqlCapabilityGroup(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlCapabilityGroup other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlCapabilityGroup other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

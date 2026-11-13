@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataBoxAccessProtocolExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataBoxAccessProtocol value) => value switch
         {
             DataBoxAccessProtocol.Smb => "SMB",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxAccessProtocol value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataBoxAccessProtocol ToDataBoxAccessProtocol(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SMB")) return DataBoxAccessProtocol.Smb;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NFS")) return DataBoxAccessProtocol.Nfs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SMB"))
+            {
+                return DataBoxAccessProtocol.Smb;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NFS"))
+            {
+                return DataBoxAccessProtocol.Nfs;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxAccessProtocol value.");
         }
     }

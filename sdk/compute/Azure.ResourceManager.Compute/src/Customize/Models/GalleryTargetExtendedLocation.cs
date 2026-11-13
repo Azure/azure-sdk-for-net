@@ -9,25 +9,18 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryTargetExtendedLocation
     {
+        // Customization: the previously-shipped surface exposed two storage-account-type properties:
+        // - GalleryStorageAccountType (EdgeZoneStorageAccountType) — restored via @@clientName rename
+        //   of the new generated `storageAccountType` enum property.
+        // - StorageAccountType (ImageStorageAccountType) — a legacy holdover. Both enums share their
+        //   primary string values (Standard_LRS, Standard_ZRS, Premium_LRS), so this shim bridges
+        //   them through the underlying string representation.
         /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ImageStorageAccountType? StorageAccountType
         {
-            get
-            {
-                return GalleryStorageAccountType.HasValue ? new ImageStorageAccountType(GalleryStorageAccountType.ToString()) : null;
-            }
-            set
-            {
-                if (value == null)
-                {
-                    GalleryStorageAccountType = null;
-                }
-                else
-                {
-                    GalleryStorageAccountType = new EdgeZoneStorageAccountType(value.ToString());
-                }
-            }
+            get => GalleryStorageAccountType?.ToString();
+            set => GalleryStorageAccountType = value?.ToString();
         }
     }
 }

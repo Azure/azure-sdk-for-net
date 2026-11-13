@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -18,38 +19,74 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
         /// <param name="fileShareName"> The name of the Azure Storage file share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountResourceId"/> or <paramref name="fileShareName"/> is null. </exception>
-        public AzureStorageSmbFileShareEndpointProperties(ResourceIdentifier storageAccountResourceId, string fileShareName)
+        public AzureStorageSmbFileShareEndpointProperties(ResourceIdentifier storageAccountResourceId, string fileShareName) : base(EndpointType.AzureStorageSmbFileShare)
         {
             Argument.AssertNotNull(storageAccountResourceId, nameof(storageAccountResourceId));
             Argument.AssertNotNull(fileShareName, nameof(fileShareName));
 
             StorageAccountResourceId = storageAccountResourceId;
             FileShareName = fileShareName;
-            EndpointType = EndpointType.AzureStorageSmbFileShare;
+            AllowedStorageAccounts = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="endpointKind"> The Endpoint resource kind source or target. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
         /// <param name="fileShareName"> The name of the Azure Storage file share. </param>
-        internal AzureStorageSmbFileShareEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier storageAccountResourceId, string fileShareName) : base(endpointType, description, provisioningState, serializedAdditionalRawData)
+        /// <param name="enableCrossTenantTransfer">
+        /// Opt-in flag enabling this endpoint to be used as one side of a cross-tenant
+        /// data transfer pair. When set to true, RBAC for the endpoint's managed
+        /// identity is granted on the customer's storage account so that authorization
+        /// can be performed entirely in the tenant where this endpoint lives. Defaults
+        /// to false. Can be updated via PATCH.
+        /// </param>
+        /// <param name="allowedStorageAccounts">
+        /// Full ARM resource IDs of partner-tenant storage accounts that are allowed
+        /// to be the other side of a cross-tenant data transfer pair with this
+        /// endpoint. For a source endpoint this lists allowed target storage accounts;
+        /// for a target endpoint this lists allowed source storage accounts.
+        /// The full list is replaced on PATCH (omit an entry to remove it; include
+        /// an entry to add it). Mutual presence in both endpoints' allow lists is
+        /// re-validated at every job run start, so removing an entry blocks future
+        /// runs that reference the removed storage account.
+        /// </param>
+        internal AzureStorageSmbFileShareEndpointProperties(EndpointType endpointType, string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier storageAccountResourceId, string fileShareName, bool? enableCrossTenantTransfer, IList<string> allowedStorageAccounts) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
         {
             StorageAccountResourceId = storageAccountResourceId;
             FileShareName = fileShareName;
-            EndpointType = endpointType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointProperties"/> for deserialization. </summary>
-        internal AzureStorageSmbFileShareEndpointProperties()
-        {
+            EnableCrossTenantTransfer = enableCrossTenantTransfer;
+            AllowedStorageAccounts = allowedStorageAccounts;
         }
 
         /// <summary> The Azure Resource ID of the storage account. </summary>
         public ResourceIdentifier StorageAccountResourceId { get; set; }
+
         /// <summary> The name of the Azure Storage file share. </summary>
         public string FileShareName { get; set; }
+
+        /// <summary>
+        /// Opt-in flag enabling this endpoint to be used as one side of a cross-tenant
+        /// data transfer pair. When set to true, RBAC for the endpoint's managed
+        /// identity is granted on the customer's storage account so that authorization
+        /// can be performed entirely in the tenant where this endpoint lives. Defaults
+        /// to false. Can be updated via PATCH.
+        /// </summary>
+        public bool? EnableCrossTenantTransfer { get; set; }
+
+        /// <summary>
+        /// Full ARM resource IDs of partner-tenant storage accounts that are allowed
+        /// to be the other side of a cross-tenant data transfer pair with this
+        /// endpoint. For a source endpoint this lists allowed target storage accounts;
+        /// for a target endpoint this lists allowed source storage accounts.
+        /// The full list is replaced on PATCH (omit an entry to remove it; include
+        /// an entry to add it). Mutual presence in both endpoints' allow lists is
+        /// re-validated at every job run start, so removing an entry blocks future
+        /// runs that reference the removed storage account.
+        /// </summary>
+        public IList<string> AllowedStorageAccounts { get; }
     }
 }

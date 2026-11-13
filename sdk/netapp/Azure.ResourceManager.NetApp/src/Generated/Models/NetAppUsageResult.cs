@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Usages entity model. </summary>
     public partial class NetAppUsageResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppUsageResult"/>. </summary>
         internal NetAppUsageResult()
@@ -53,29 +24,50 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppUsageResult"/>. </summary>
         /// <param name="id"> The id of the usage. </param>
         /// <param name="name"> The name of the usage. </param>
-        /// <param name="currentValue"> The current usage value for the subscription. </param>
-        /// <param name="limit"> The limit of the usage. </param>
-        /// <param name="unit"> The unit of the usage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppUsageResult(string id, NetAppUsageName name, int? currentValue, int? limit, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Usage properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppUsageResult(string id, NetAppUsageName name, UsageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            CurrentValue = currentValue;
-            Limit = limit;
-            Unit = unit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The id of the usage. </summary>
         public string Id { get; }
+
         /// <summary> The name of the usage. </summary>
         public NetAppUsageName Name { get; }
+
+        /// <summary> Usage properties. </summary>
+        internal UsageProperties Properties { get; }
+
         /// <summary> The current usage value for the subscription. </summary>
-        public int? CurrentValue { get; }
+        public int? CurrentValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentValue;
+            }
+        }
+
         /// <summary> The limit of the usage. </summary>
-        public int? Limit { get; }
+        public int? Limit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Limit;
+            }
+        }
+
         /// <summary> The unit of the usage. </summary>
-        public string Unit { get; }
+        public string Unit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Unit;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct CostManagementAlertStatus : IEquatable<CostManagementAlertStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CostManagementAlertStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CostManagementAlertStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string ActiveValue = "Active";
         private const string OverriddenValue = "Overridden";
         private const string ResolvedValue = "Resolved";
         private const string DismissedValue = "Dismissed";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CostManagementAlertStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static CostManagementAlertStatus None { get; } = new CostManagementAlertStatus(NoneValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static CostManagementAlertStatus Active { get; } = new CostManagementAlertStatus(ActiveValue);
-        /// <summary> Overridden. </summary>
+
+        /// <summary> Gets the Overridden. </summary>
         public static CostManagementAlertStatus Overridden { get; } = new CostManagementAlertStatus(OverriddenValue);
-        /// <summary> Resolved. </summary>
+
+        /// <summary> Gets the Resolved. </summary>
         public static CostManagementAlertStatus Resolved { get; } = new CostManagementAlertStatus(ResolvedValue);
-        /// <summary> Dismissed. </summary>
+
+        /// <summary> Gets the Dismissed. </summary>
         public static CostManagementAlertStatus Dismissed { get; } = new CostManagementAlertStatus(DismissedValue);
+
         /// <summary> Determines if two <see cref="CostManagementAlertStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CostManagementAlertStatus left, CostManagementAlertStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CostManagementAlertStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CostManagementAlertStatus left, CostManagementAlertStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CostManagementAlertStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CostManagementAlertStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CostManagementAlertStatus(string value) => new CostManagementAlertStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CostManagementAlertStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CostManagementAlertStatus?(string value) => value == null ? null : new CostManagementAlertStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CostManagementAlertStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CostManagementAlertStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

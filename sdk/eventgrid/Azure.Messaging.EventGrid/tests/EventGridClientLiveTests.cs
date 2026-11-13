@@ -349,11 +349,11 @@ namespace Azure.Messaging.EventGrid.Tests
                         "record",
                         "Microsoft.MockPublisher.TestEvent",
                         null)
-            {
-                Id = Recording.Random.NewGuid().ToString(),
-                Subject = "Subject",
-                Time = Recording.Now
-            });
+                {
+                    Id = Recording.Random.NewGuid().ToString(),
+                    Subject = "Subject",
+                    Time = Recording.Now
+                });
         }
 
         [RecordedTest]
@@ -580,14 +580,14 @@ namespace Azure.Messaging.EventGrid.Tests
                     options));
             await client.SendEventAsync(
                 new BinaryData(new TestEvent()
-            {
-                DataVersion = "1.0",
-                EventTime = Recording.Now,
-                EventType = "Microsoft.MockPublisher.TestEvent",
-                Id = Recording.Random.NewGuid().ToString(),
-                Subject = "Subject",
-                Topic = "Topic"
-            }));
+                {
+                    DataVersion = "1.0",
+                    EventTime = Recording.Now,
+                    EventType = "Microsoft.MockPublisher.TestEvent",
+                    Id = Recording.Random.NewGuid().ToString(),
+                    Subject = "Subject",
+                    Topic = "Topic"
+                }));
         }
 
         [RecordedTest]
@@ -678,11 +678,11 @@ namespace Azure.Messaging.EventGrid.Tests
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
                     new TestPayload("name", 1))
-                {
-                    Id = Recording.Random.NewGuid().ToString(),
-                    Subject = $"Subject-{1}",
-                    Time = Recording.Now
-                };
+            {
+                Id = Recording.Random.NewGuid().ToString(),
+                Subject = $"Subject-{1}",
+                Time = Recording.Now
+            };
             await client.SendEventAsync(cloudEvent, TestEnvironment.PartnerChannelName);
         }
 

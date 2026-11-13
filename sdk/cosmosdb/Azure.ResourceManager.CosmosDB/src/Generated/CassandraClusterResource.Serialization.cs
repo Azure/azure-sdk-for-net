@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class CassandraClusterResource : IJsonModel<CassandraClusterData>
     {
-        private static CassandraClusterData s_dataDeserializationInstance;
-        private static CassandraClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CassandraClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CassandraClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CassandraClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CassandraClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CassandraClusterData>)Data).Write(writer, options);
 
-        CassandraClusterData IJsonModel<CassandraClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CassandraClusterData IJsonModel<CassandraClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CassandraClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraClusterData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CassandraClusterData IPersistableModel<CassandraClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraClusterData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CassandraClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CassandraClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

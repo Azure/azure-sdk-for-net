@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct GreenplumAuthenticationType : IEquatable<GreenplumAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
 
         /// <summary> Initializes a new instance of <see cref="GreenplumAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GreenplumAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static GreenplumAuthenticationType Basic { get; } = new GreenplumAuthenticationType(BasicValue);
+
         /// <summary> Determines if two <see cref="GreenplumAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GreenplumAuthenticationType left, GreenplumAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GreenplumAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GreenplumAuthenticationType left, GreenplumAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GreenplumAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GreenplumAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GreenplumAuthenticationType(string value) => new GreenplumAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GreenplumAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GreenplumAuthenticationType?(string value) => value == null ? null : new GreenplumAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GreenplumAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GreenplumAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

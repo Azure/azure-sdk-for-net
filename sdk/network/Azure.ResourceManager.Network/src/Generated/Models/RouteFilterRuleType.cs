@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct RouteFilterRuleType : IEquatable<RouteFilterRuleType>
     {
         private readonly string _value;
+        /// <summary> Community. </summary>
+        private const string CommunityValue = "Community";
 
         /// <summary> Initializes a new instance of <see cref="RouteFilterRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RouteFilterRuleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CommunityValue = "Community";
+            _value = value;
+        }
 
         /// <summary> Community. </summary>
         public static RouteFilterRuleType Community { get; } = new RouteFilterRuleType(CommunityValue);
+
         /// <summary> Determines if two <see cref="RouteFilterRuleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RouteFilterRuleType left, RouteFilterRuleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RouteFilterRuleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RouteFilterRuleType left, RouteFilterRuleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RouteFilterRuleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RouteFilterRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RouteFilterRuleType(string value) => new RouteFilterRuleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RouteFilterRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RouteFilterRuleType?(string value) => value == null ? null : new RouteFilterRuleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RouteFilterRuleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RouteFilterRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

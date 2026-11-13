@@ -58,11 +58,17 @@ namespace Azure.ResourceManager.StorageActions
         {
             TryGetApiVersion(ResourceType, out string storageTaskApiVersion);
             _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTasksRestClient = new StorageTasks(
+                _storageTasksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                storageTaskApiVersion ?? "2023-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _storageTasksReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             _storageTaskAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            _storageTaskAssignmentRestClient = new StorageTaskAssignment(_storageTaskAssignmentClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTaskAssignmentRestClient = new StorageTaskAssignment(_storageTaskAssignmentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             ValidateResourceId(id);
         }
 
@@ -98,11 +104,31 @@ namespace Azure.ResourceManager.StorageActions
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
-        /// <summary> Get the storage task properties. </summary>
+        /// <summary>
+        /// Get the storage task properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StorageTaskResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -130,7 +156,27 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Get the storage task properties. </summary>
+        /// <summary>
+        /// Get the storage task properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StorageTaskResource> Get(CancellationToken cancellationToken = default)
         {
@@ -158,7 +204,27 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Update storage task properties. </summary>
+        /// <summary>
+        /// Update storage task properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The parameters to provide to update the storage task resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,7 +244,7 @@ namespace Azure.ResourceManager.StorageActions
                 HttpMessage message = _storageTasksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageTaskPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
-                    new StorageTaskOperationSource(Client),
+                    new StorageTaskResourceOperationSource(Client),
                     _storageTasksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -197,7 +263,27 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Update storage task properties. </summary>
+        /// <summary>
+        /// Update storage task properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The parameters to provide to update the storage task resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,7 +303,7 @@ namespace Azure.ResourceManager.StorageActions
                 HttpMessage message = _storageTasksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageTaskPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
-                    new StorageTaskOperationSource(Client),
+                    new StorageTaskResourceOperationSource(Client),
                     _storageTasksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -236,7 +322,27 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Delete the storage task resource. </summary>
+        /// <summary>
+        /// Delete the storage task resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -265,7 +371,27 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Delete the storage task resource. </summary>
+        /// <summary>
+        /// Delete the storage task resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -294,7 +420,27 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Fetch the storage tasks run report summary for each assignment. </summary>
+        /// <summary>
+        /// Fetch the storage tasks run report summary for each assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/reports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -305,17 +451,38 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTasksReportGetStorageTasksReportsAsyncCollectionResultOfT(
+            return new StorageTaskReportInstanceAsyncCollectionResultOfT(
                 _storageTasksReportRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 maxpagesize,
                 filter,
-                context);
+                context,
+                "StorageTaskResource.GetStorageTasksReports");
         }
 
-        /// <summary> Fetch the storage tasks run report summary for each assignment. </summary>
+        /// <summary>
+        /// Fetch the storage tasks run report summary for each assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/reports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -326,17 +493,38 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTasksReportGetStorageTasksReportsCollectionResultOfT(
+            return new StorageTaskReportInstanceCollectionResultOfT(
                 _storageTasksReportRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 maxpagesize,
                 filter,
-                context);
+                context,
+                "StorageTaskResource.GetStorageTasksReports");
         }
 
-        /// <summary> Lists Resource IDs of the Storage Task Assignments associated with this Storage Task. </summary>
+        /// <summary>
+        /// Lists Resource IDs of the Storage Task Assignments associated with this Storage Task.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/storageTaskAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_StorageTaskAssignmentList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
@@ -346,16 +534,37 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTaskAssignmentGetStorageTaskAssignmentsAsyncCollectionResultOfT(
+            return new SubResourceAsyncCollectionResultOfT(
                 _storageTaskAssignmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 maxpagesize,
-                context);
+                context,
+                "StorageTaskResource.GetStorageTaskAssignments");
         }
 
-        /// <summary> Lists Resource IDs of the Storage Task Assignments associated with this Storage Task. </summary>
+        /// <summary>
+        /// Lists Resource IDs of the Storage Task Assignments associated with this Storage Task.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/storageTaskAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_StorageTaskAssignmentList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
@@ -365,13 +574,14 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTaskAssignmentGetStorageTaskAssignmentsCollectionResultOfT(
+            return new SubResourceCollectionResultOfT(
                 _storageTaskAssignmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 maxpagesize,
-                context);
+                context,
+                "StorageTaskResource.GetStorageTaskAssignments");
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -404,14 +614,14 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageTaskData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -452,14 +662,14 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = Get(cancellationToken).Value.Data;
+                    StorageTaskData current = Get(cancellationToken: cancellationToken).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -484,10 +694,9 @@ namespace Azure.ResourceManager.StorageActions
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -499,10 +708,10 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageTaskData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -527,10 +736,9 @@ namespace Azure.ResourceManager.StorageActions
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -542,10 +750,10 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = Get(cancellationToken).Value.Data;
+                    StorageTaskData current = Get(cancellationToken: cancellationToken).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -584,14 +792,14 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageTaskData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -630,14 +838,14 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = Get(cancellationToken).Value.Data;
+                    StorageTaskData current = Get(cancellationToken: cancellationToken).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

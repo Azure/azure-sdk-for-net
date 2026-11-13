@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct HybridSecondaryUsage : IEquatable<HybridSecondaryUsage>
     {
         private readonly string _value;
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Passive. </summary>
+        private const string PassiveValue = "Passive";
 
         /// <summary> Initializes a new instance of <see cref="HybridSecondaryUsage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridSecondaryUsage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string PassiveValue = "Passive";
+            _value = value;
+        }
 
         /// <summary> Active. </summary>
         public static HybridSecondaryUsage Active { get; } = new HybridSecondaryUsage(ActiveValue);
+
         /// <summary> Passive. </summary>
         public static HybridSecondaryUsage Passive { get; } = new HybridSecondaryUsage(PassiveValue);
+
         /// <summary> Determines if two <see cref="HybridSecondaryUsage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridSecondaryUsage left, HybridSecondaryUsage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridSecondaryUsage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridSecondaryUsage left, HybridSecondaryUsage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridSecondaryUsage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridSecondaryUsage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridSecondaryUsage(string value) => new HybridSecondaryUsage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridSecondaryUsage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridSecondaryUsage?(string value) => value == null ? null : new HybridSecondaryUsage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridSecondaryUsage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridSecondaryUsage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

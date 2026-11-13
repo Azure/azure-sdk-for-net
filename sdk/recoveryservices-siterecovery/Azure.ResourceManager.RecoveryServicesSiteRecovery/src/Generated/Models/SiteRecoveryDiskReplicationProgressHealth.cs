@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryDiskReplicationProgressHealth : IEquatable<SiteRecoveryDiskReplicationProgressHealth>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> SlowProgress. </summary>
+        private const string SlowProgressValue = "SlowProgress";
+        /// <summary> NoProgress. </summary>
+        private const string NoProgressValue = "NoProgress";
+        /// <summary> Queued. </summary>
+        private const string QueuedValue = "Queued";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskReplicationProgressHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryDiskReplicationProgressHealth(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string InProgressValue = "InProgress";
-        private const string SlowProgressValue = "SlowProgress";
-        private const string NoProgressValue = "NoProgress";
-        private const string QueuedValue = "Queued";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SiteRecoveryDiskReplicationProgressHealth None { get; } = new SiteRecoveryDiskReplicationProgressHealth(NoneValue);
+
         /// <summary> InProgress. </summary>
         public static SiteRecoveryDiskReplicationProgressHealth InProgress { get; } = new SiteRecoveryDiskReplicationProgressHealth(InProgressValue);
+
         /// <summary> SlowProgress. </summary>
         public static SiteRecoveryDiskReplicationProgressHealth SlowProgress { get; } = new SiteRecoveryDiskReplicationProgressHealth(SlowProgressValue);
+
         /// <summary> NoProgress. </summary>
         public static SiteRecoveryDiskReplicationProgressHealth NoProgress { get; } = new SiteRecoveryDiskReplicationProgressHealth(NoProgressValue);
+
         /// <summary> Queued. </summary>
         public static SiteRecoveryDiskReplicationProgressHealth Queued { get; } = new SiteRecoveryDiskReplicationProgressHealth(QueuedValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryDiskReplicationProgressHealth"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryDiskReplicationProgressHealth left, SiteRecoveryDiskReplicationProgressHealth right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryDiskReplicationProgressHealth"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryDiskReplicationProgressHealth left, SiteRecoveryDiskReplicationProgressHealth right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryDiskReplicationProgressHealth"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryDiskReplicationProgressHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryDiskReplicationProgressHealth(string value) => new SiteRecoveryDiskReplicationProgressHealth(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryDiskReplicationProgressHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryDiskReplicationProgressHealth?(string value) => value == null ? null : new SiteRecoveryDiskReplicationProgressHealth(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryDiskReplicationProgressHealth other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryDiskReplicationProgressHealth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

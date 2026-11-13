@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> A product. </summary>
     public partial class BillingProductProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingProductProperties"/>. </summary>
         public BillingProductProperties()
@@ -74,8 +46,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="status"> The status of the product. </param>
         /// <param name="tenantId"> The id of the tenant in which the product is used. </param>
         /// <param name="reseller"> Reseller for this product. The fields is not available for Microsoft Partner Agreement products. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingProductProperties(BillingSubscriptionAutoRenewState? autoRenew, string availabilityId, string billingFrequency, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier customerId, string customerDisplayName, string displayName, string endDate, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, BillingAmount lastCharge, string lastChargeDate, string productType, string productTypeId, string skuId, string skuDescription, string purchaseDate, long? quantity, BillingProductStatus? status, Guid? tenantId, BillingAmount reseller, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingProductProperties(BillingSubscriptionAutoRenewState? autoRenew, string availabilityId, string billingFrequency, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier customerId, string customerDisplayName, string displayName, string endDate, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, BillingAmount lastCharge, string lastChargeDate, string productType, string productTypeId, string skuId, string skuDescription, string purchaseDate, long? quantity, BillingProductStatus? status, Guid? tenantId, BillingAmount reseller, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoRenew = autoRenew;
             AvailabilityId = availabilityId;
@@ -99,74 +71,95 @@ namespace Azure.ResourceManager.Billing.Models
             Status = status;
             TenantId = tenantId;
             Reseller = reseller;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether auto renewal is turned on or off for a product. </summary>
         [WirePath("autoRenew")]
         public BillingSubscriptionAutoRenewState? AutoRenew { get; set; }
+
         /// <summary> The availability of the product. </summary>
         [WirePath("availabilityId")]
         public string AvailabilityId { get; }
+
         /// <summary> The frequency at which the product will be billed. </summary>
         [WirePath("billingFrequency")]
         public string BillingFrequency { get; }
+
         /// <summary> The ID of the billing profile to which the product is billed. </summary>
         [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
+
         /// <summary> The name of the billing profile to which the product is billed. </summary>
         [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
+
         /// <summary> The ID of the customer for whom the product was purchased. The field is applicable only for Microsoft Partner Agreement billing account. </summary>
         [WirePath("customerId")]
         public ResourceIdentifier CustomerId { get; }
+
         /// <summary> The name of the customer for whom the product was purchased. The field is applicable only for Microsoft Partner Agreement billing account. </summary>
         [WirePath("customerDisplayName")]
         public string CustomerDisplayName { get; }
+
         /// <summary> The display name of the product. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
+
         /// <summary> The date when the product will be renewed or canceled. </summary>
         [WirePath("endDate")]
         public string EndDate { get; }
+
         /// <summary> The ID of the invoice section to which the product is billed. </summary>
         [WirePath("invoiceSectionId")]
         public ResourceIdentifier InvoiceSectionId { get; }
+
         /// <summary> The name of the invoice section to which the product is billed. </summary>
         [WirePath("invoiceSectionDisplayName")]
         public string InvoiceSectionDisplayName { get; }
+
         /// <summary> The last month charges. </summary>
         [WirePath("lastCharge")]
-        public BillingAmount LastCharge { get; }
+        public BillingAmount LastCharge { get; set; }
+
         /// <summary> The date of the last charge. </summary>
         [WirePath("lastChargeDate")]
         public string LastChargeDate { get; }
+
         /// <summary> The description of the type of product. </summary>
         [WirePath("productType")]
         public string ProductType { get; }
+
         /// <summary> The ID of the type of product. </summary>
         [WirePath("productTypeId")]
         public string ProductTypeId { get; }
+
         /// <summary> The sku ID of the product. </summary>
         [WirePath("skuId")]
         public string SkuId { get; }
+
         /// <summary> The sku description of the product. </summary>
         [WirePath("skuDescription")]
         public string SkuDescription { get; }
+
         /// <summary> The date when the product was purchased. </summary>
         [WirePath("purchaseDate")]
         public string PurchaseDate { get; }
+
         /// <summary> The quantity purchased for the product. </summary>
         [WirePath("quantity")]
         public long? Quantity { get; }
+
         /// <summary> The status of the product. </summary>
         [WirePath("status")]
         public BillingProductStatus? Status { get; }
+
         /// <summary> The id of the tenant in which the product is used. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; }
+
         /// <summary> Reseller for this product. The fields is not available for Microsoft Partner Agreement products. </summary>
         [WirePath("reseller")]
-        public BillingAmount Reseller { get; }
+        public BillingAmount Reseller { get; set; }
     }
 }

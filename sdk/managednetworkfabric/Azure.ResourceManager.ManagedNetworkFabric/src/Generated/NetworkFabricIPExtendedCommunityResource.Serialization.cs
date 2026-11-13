@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    /// <summary></summary>
     public partial class NetworkFabricIPExtendedCommunityResource : IJsonModel<NetworkFabricIPExtendedCommunityData>
     {
-        private static NetworkFabricIPExtendedCommunityData s_dataDeserializationInstance;
-        private static NetworkFabricIPExtendedCommunityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkFabricIPExtendedCommunityData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkFabricIPExtendedCommunityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFabricIPExtendedCommunityData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricIPExtendedCommunityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricIPExtendedCommunityData>)Data).Write(writer, options);
 
-        NetworkFabricIPExtendedCommunityData IJsonModel<NetworkFabricIPExtendedCommunityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricIPExtendedCommunityData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricIPExtendedCommunityData IJsonModel<NetworkFabricIPExtendedCommunityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkFabricIPExtendedCommunityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricIPExtendedCommunityData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFabricIPExtendedCommunityData IPersistableModel<NetworkFabricIPExtendedCommunityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricIPExtendedCommunityData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricIPExtendedCommunityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricIPExtendedCommunityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricIPExtendedCommunityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

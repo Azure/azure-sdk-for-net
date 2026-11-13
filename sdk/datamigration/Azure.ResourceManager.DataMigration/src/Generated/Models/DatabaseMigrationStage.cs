@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DatabaseMigrationStage : IEquatable<DatabaseMigrationStage>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Initialize. </summary>
+        private const string InitializeValue = "Initialize";
+        /// <summary> Backup. </summary>
+        private const string BackupValue = "Backup";
+        /// <summary> FileCopy. </summary>
+        private const string FileCopyValue = "FileCopy";
+        /// <summary> Restore. </summary>
+        private const string RestoreValue = "Restore";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatabaseMigrationStage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string InitializeValue = "Initialize";
-        private const string BackupValue = "Backup";
-        private const string FileCopyValue = "FileCopy";
-        private const string RestoreValue = "Restore";
-        private const string CompletedValue = "Completed";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static DatabaseMigrationStage None { get; } = new DatabaseMigrationStage(NoneValue);
+
         /// <summary> Initialize. </summary>
         public static DatabaseMigrationStage Initialize { get; } = new DatabaseMigrationStage(InitializeValue);
+
         /// <summary> Backup. </summary>
         public static DatabaseMigrationStage Backup { get; } = new DatabaseMigrationStage(BackupValue);
+
         /// <summary> FileCopy. </summary>
         public static DatabaseMigrationStage FileCopy { get; } = new DatabaseMigrationStage(FileCopyValue);
+
         /// <summary> Restore. </summary>
         public static DatabaseMigrationStage Restore { get; } = new DatabaseMigrationStage(RestoreValue);
+
         /// <summary> Completed. </summary>
         public static DatabaseMigrationStage Completed { get; } = new DatabaseMigrationStage(CompletedValue);
+
         /// <summary> Determines if two <see cref="DatabaseMigrationStage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatabaseMigrationStage left, DatabaseMigrationStage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatabaseMigrationStage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatabaseMigrationStage left, DatabaseMigrationStage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseMigrationStage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatabaseMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatabaseMigrationStage(string value) => new DatabaseMigrationStage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatabaseMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatabaseMigrationStage?(string value) => value == null ? null : new DatabaseMigrationStage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatabaseMigrationStage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatabaseMigrationStage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

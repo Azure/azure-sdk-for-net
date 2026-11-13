@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,9 +15,10 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AzureFirstPartyManagedCertificateProperties))]
+    [ModelReaderWriterBuildable(typeof(BatchRuleProperties))]
     [ModelReaderWriterBuildable(typeof(CacheConfiguration))]
     [ModelReaderWriterBuildable(typeof(CacheExpirationActionProperties))]
     [ModelReaderWriterBuildable(typeof(CacheKeyQueryStringActionProperties))]
@@ -26,6 +28,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(CdnCustomDomainCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(CdnCustomDomainData))]
     [ModelReaderWriterBuildable(typeof(CdnCustomDomainResource))]
+    [ModelReaderWriterBuildable(typeof(CdnEdgeAction))]
     [ModelReaderWriterBuildable(typeof(CdnEndpointData))]
     [ModelReaderWriterBuildable(typeof(CdnEndpointPatch))]
     [ModelReaderWriterBuildable(typeof(CdnEndpointResource))]
@@ -39,6 +42,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(CdnOriginGroupResource))]
     [ModelReaderWriterBuildable(typeof(CdnOriginPatch))]
     [ModelReaderWriterBuildable(typeof(CdnOriginResource))]
+    [ModelReaderWriterBuildable(typeof(CdnResourceReference))]
     [ModelReaderWriterBuildable(typeof(CdnSku))]
     [ModelReaderWriterBuildable(typeof(CdnUsage))]
     [ModelReaderWriterBuildable(typeof(CdnWebApplicationFirewallPolicyData))]
@@ -47,7 +51,11 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(CdnWebApplicationFirewallPolicyResource))]
     [ModelReaderWriterBuildable(typeof(CertificateSourceProperties))]
     [ModelReaderWriterBuildable(typeof(CidrIPAddress))]
+    [ModelReaderWriterBuildable(typeof(ClientCertificateRequiredAndOriginValidatesAdvancedSettings))]
+    [ModelReaderWriterBuildable(typeof(ClientCertificateRequiredAndValidatedAdvancedSettings))]
+    [ModelReaderWriterBuildable(typeof(ClientCertificateValidatedIfPresentedAdvancedSettings))]
     [ModelReaderWriterBuildable(typeof(ClientPortMatchCondition))]
+    [ModelReaderWriterBuildable(typeof(CompleteMtlsPassthroughToOriginAdvancedSettings))]
     [ModelReaderWriterBuildable(typeof(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems))]
     [ModelReaderWriterBuildable(typeof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems))]
     [ModelReaderWriterBuildable(typeof(ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems))]
@@ -73,6 +81,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(DeliveryRuleCondition))]
     [ModelReaderWriterBuildable(typeof(DeliveryRuleConditionProperties))]
     [ModelReaderWriterBuildable(typeof(DeliveryRuleCookiesCondition))]
+    [ModelReaderWriterBuildable(typeof(DeliveryRuleEdgeActionProperties))]
     [ModelReaderWriterBuildable(typeof(DeliveryRuleHostNameCondition))]
     [ModelReaderWriterBuildable(typeof(DeliveryRuleHttpVersionCondition))]
     [ModelReaderWriterBuildable(typeof(DeliveryRuleIsDeviceCondition))]
@@ -106,19 +115,16 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(FrontDoorCustomDomainData))]
     [ModelReaderWriterBuildable(typeof(FrontDoorCustomDomainHttpsContent))]
     [ModelReaderWriterBuildable(typeof(FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet))]
-    [ModelReaderWriterBuildable(typeof(FrontDoorCustomDomainListResult))]
+    [ModelReaderWriterBuildable(typeof(FrontDoorCustomDomainMtlsSettings))]
     [ModelReaderWriterBuildable(typeof(FrontDoorCustomDomainPatch))]
     [ModelReaderWriterBuildable(typeof(FrontDoorCustomDomainResource))]
     [ModelReaderWriterBuildable(typeof(FrontDoorEndpointData))]
-    [ModelReaderWriterBuildable(typeof(FrontDoorEndpointListResult))]
     [ModelReaderWriterBuildable(typeof(FrontDoorEndpointPatch))]
     [ModelReaderWriterBuildable(typeof(FrontDoorEndpointResource))]
     [ModelReaderWriterBuildable(typeof(FrontDoorOriginData))]
     [ModelReaderWriterBuildable(typeof(FrontDoorOriginGroupData))]
-    [ModelReaderWriterBuildable(typeof(FrontDoorOriginGroupListResult))]
     [ModelReaderWriterBuildable(typeof(FrontDoorOriginGroupPatch))]
     [ModelReaderWriterBuildable(typeof(FrontDoorOriginGroupResource))]
-    [ModelReaderWriterBuildable(typeof(FrontDoorOriginListResult))]
     [ModelReaderWriterBuildable(typeof(FrontDoorOriginPatch))]
     [ModelReaderWriterBuildable(typeof(FrontDoorOriginResource))]
     [ModelReaderWriterBuildable(typeof(FrontDoorPurgeContent))]
@@ -132,6 +138,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(FrontDoorRuleSetData))]
     [ModelReaderWriterBuildable(typeof(FrontDoorRuleSetResource))]
     [ModelReaderWriterBuildable(typeof(FrontDoorSecretData))]
+    [ModelReaderWriterBuildable(typeof(FrontDoorSecretMtlsCertificateChain))]
     [ModelReaderWriterBuildable(typeof(FrontDoorSecretProperties))]
     [ModelReaderWriterBuildable(typeof(FrontDoorSecretResource))]
     [ModelReaderWriterBuildable(typeof(FrontDoorSecurityPolicyData))]

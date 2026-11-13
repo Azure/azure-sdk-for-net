@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct WebAppParameterType : IEquatable<WebAppParameterType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WebAppParameterType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WebAppParameterType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string StringValue = "String";
         private const string SecureStringValue = "SecureString";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.AppService.Models
         private const string ObjectValue = "Object";
         private const string SecureObjectValue = "SecureObject";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WebAppParameterType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static WebAppParameterType NotSpecified { get; } = new WebAppParameterType(NotSpecifiedValue);
-        /// <summary> String. </summary>
+
+        /// <summary> Gets the String. </summary>
         public static WebAppParameterType String { get; } = new WebAppParameterType(StringValue);
-        /// <summary> SecureString. </summary>
+
+        /// <summary> Gets the SecureString. </summary>
         public static WebAppParameterType SecureString { get; } = new WebAppParameterType(SecureStringValue);
-        /// <summary> Int. </summary>
+
+        /// <summary> Gets the Int. </summary>
         public static WebAppParameterType Int { get; } = new WebAppParameterType(IntValue);
-        /// <summary> Float. </summary>
+
+        /// <summary> Gets the Float. </summary>
         public static WebAppParameterType Float { get; } = new WebAppParameterType(FloatValue);
-        /// <summary> Bool. </summary>
+
+        /// <summary> Gets the Bool. </summary>
         public static WebAppParameterType Bool { get; } = new WebAppParameterType(BoolValue);
-        /// <summary> Array. </summary>
+
+        /// <summary> Gets the Array. </summary>
         public static WebAppParameterType Array { get; } = new WebAppParameterType(ArrayValue);
-        /// <summary> Object. </summary>
+
+        /// <summary> Gets the Object. </summary>
         public static WebAppParameterType Object { get; } = new WebAppParameterType(ObjectValue);
-        /// <summary> SecureObject. </summary>
+
+        /// <summary> Gets the SecureObject. </summary>
         public static WebAppParameterType SecureObject { get; } = new WebAppParameterType(SecureObjectValue);
+
         /// <summary> Determines if two <see cref="WebAppParameterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebAppParameterType left, WebAppParameterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebAppParameterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebAppParameterType left, WebAppParameterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebAppParameterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebAppParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebAppParameterType(string value) => new WebAppParameterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebAppParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebAppParameterType?(string value) => value == null ? null : new WebAppParameterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebAppParameterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebAppParameterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

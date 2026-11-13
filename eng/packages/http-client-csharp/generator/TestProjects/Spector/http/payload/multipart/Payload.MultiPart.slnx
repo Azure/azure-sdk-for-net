@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Payload.MultiPart.csproj" />
+  <Project Path="tests/Payload.MultiPart.Tests.csproj" />
+</Solution>

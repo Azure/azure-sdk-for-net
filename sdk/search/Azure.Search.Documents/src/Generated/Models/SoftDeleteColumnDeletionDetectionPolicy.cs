@@ -14,25 +14,24 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SoftDeleteColumnDeletionDetectionPolicy : DataDeletionDetectionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>. </summary>
-        public SoftDeleteColumnDeletionDetectionPolicy()
+        public SoftDeleteColumnDeletionDetectionPolicy() : base("#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy")
         {
-            ODataType = "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy";
         }
 
         /// <summary> Initializes a new instance of <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of data deletion detection policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="softDeleteColumnName"> The name of the column to use for soft-deletion detection. </param>
         /// <param name="softDeleteMarkerValue"> The marker value that identifies an item as deleted. </param>
-        internal SoftDeleteColumnDeletionDetectionPolicy(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData, string softDeleteColumnName, string softDeleteMarkerValue) : base(oDataType, serializedAdditionalRawData)
+        internal SoftDeleteColumnDeletionDetectionPolicy(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string softDeleteColumnName, string softDeleteMarkerValue) : base(odataType, additionalBinaryDataProperties)
         {
             SoftDeleteColumnName = softDeleteColumnName;
             SoftDeleteMarkerValue = softDeleteMarkerValue;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy";
         }
 
         /// <summary> The name of the column to use for soft-deletion detection. </summary>
         public string SoftDeleteColumnName { get; set; }
+
         /// <summary> The marker value that identifies an item as deleted. </summary>
         public string SoftDeleteMarkerValue { get; set; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct OneLakeArtifactType : IEquatable<OneLakeArtifactType>
     {
         private readonly string _value;
+        private const string LakeHouseValue = "LakeHouse";
 
         /// <summary> Initializes a new instance of <see cref="OneLakeArtifactType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OneLakeArtifactType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string LakeHouseValue = "LakeHouse";
-
-        /// <summary> LakeHouse. </summary>
+        /// <summary> Gets the LakeHouse. </summary>
         public static OneLakeArtifactType LakeHouse { get; } = new OneLakeArtifactType(LakeHouseValue);
+
         /// <summary> Determines if two <see cref="OneLakeArtifactType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OneLakeArtifactType left, OneLakeArtifactType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OneLakeArtifactType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OneLakeArtifactType left, OneLakeArtifactType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OneLakeArtifactType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OneLakeArtifactType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OneLakeArtifactType(string value) => new OneLakeArtifactType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OneLakeArtifactType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OneLakeArtifactType?(string value) => value == null ? null : new OneLakeArtifactType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OneLakeArtifactType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OneLakeArtifactType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

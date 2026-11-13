@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Continuation settings for execute data flow activity. </summary>
     public partial class ContinuationSettingsReference
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContinuationSettingsReference"/>. </summary>
         public ContinuationSettingsReference()
@@ -55,19 +26,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="continuationTtlInMinutes"> Continuation TTL in minutes. </param>
         /// <param name="idleCondition"> Idle condition. </param>
         /// <param name="customizedCheckpointKey"> Customized checkpoint key. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContinuationSettingsReference(DataFactoryElement<int> continuationTtlInMinutes, DataFactoryElement<string> idleCondition, DataFactoryElement<string> customizedCheckpointKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContinuationSettingsReference(DataFactoryElement<int> continuationTtlInMinutes, DataFactoryElement<string> idleCondition, DataFactoryElement<string> customizedCheckpointKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContinuationTtlInMinutes = continuationTtlInMinutes;
             IdleCondition = idleCondition;
             CustomizedCheckpointKey = customizedCheckpointKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Continuation TTL in minutes. </summary>
         public DataFactoryElement<int> ContinuationTtlInMinutes { get; set; }
+
         /// <summary> Idle condition. </summary>
         public DataFactoryElement<string> IdleCondition { get; set; }
+
         /// <summary> Customized checkpoint key. </summary>
         public DataFactoryElement<string> CustomizedCheckpointKey { get; set; }
     }

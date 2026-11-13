@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppReplicationSchedule : IEquatable<NetAppReplicationSchedule>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NetAppReplicationSchedule"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetAppReplicationSchedule(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TenMinutelyValue = "_10minutely";
         private const string HourlyValue = "hourly";
         private const string DailyValue = "daily";
 
-        /// <summary> _10minutely. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppReplicationSchedule"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NetAppReplicationSchedule(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the TenMinutely. </summary>
         public static NetAppReplicationSchedule TenMinutely { get; } = new NetAppReplicationSchedule(TenMinutelyValue);
-        /// <summary> hourly. </summary>
+
+        /// <summary> Gets the Hourly. </summary>
         public static NetAppReplicationSchedule Hourly { get; } = new NetAppReplicationSchedule(HourlyValue);
-        /// <summary> daily. </summary>
+
+        /// <summary> Gets the Daily. </summary>
         public static NetAppReplicationSchedule Daily { get; } = new NetAppReplicationSchedule(DailyValue);
+
         /// <summary> Determines if two <see cref="NetAppReplicationSchedule"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppReplicationSchedule left, NetAppReplicationSchedule right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppReplicationSchedule"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppReplicationSchedule left, NetAppReplicationSchedule right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppReplicationSchedule"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppReplicationSchedule"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppReplicationSchedule(string value) => new NetAppReplicationSchedule(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppReplicationSchedule"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppReplicationSchedule?(string value) => value == null ? null : new NetAppReplicationSchedule(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppReplicationSchedule other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppReplicationSchedule other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

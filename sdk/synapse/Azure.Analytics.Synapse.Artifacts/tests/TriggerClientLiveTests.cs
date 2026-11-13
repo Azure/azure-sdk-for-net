@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -47,13 +47,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         public async Task TestGetTrigger()
         {
             TriggerClient client = CreateClient();
-            await using DisposableTrigger singleTrigger = await DisposableTrigger.Create (client, Recording);
+            await using DisposableTrigger singleTrigger = await DisposableTrigger.Create(client, Recording);
 
             await foreach (var trigger in client.GetTriggersByWorkspaceAsync())
             {
                 TriggerResource actualTrigger = await client.GetTriggerAsync(trigger.Name);
-                Assert.AreEqual(trigger.Name, actualTrigger.Name);
-                Assert.AreEqual(trigger.Id, actualTrigger.Id);
+                Assert.That(actualTrigger.Name, Is.EqualTo(trigger.Name));
+                Assert.That(actualTrigger.Id, Is.EqualTo(trigger.Id));
             }
         }
 
@@ -62,9 +62,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             TriggerClient client = CreateClient();
 
-            TriggerResource resource = await DisposableTrigger.CreateResource (client, Recording);
+            TriggerResource resource = await DisposableTrigger.CreateResource(client, Recording);
 
-            TriggerDeleteTriggerOperation deleteOperation = await client.StartDeleteTriggerAsync  (resource.Name);
+            TriggerDeleteTriggerOperation deleteOperation = await client.StartDeleteTriggerAsync(resource.Name);
             await deleteOperation.WaitAndAssertSuccessfulCompletion();
         }
 
@@ -73,17 +73,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         public async Task TestStartStop()
         {
             TriggerClient client = CreateClient();
-            PipelineClient pipelineClient = CreatePipelineClient ();
+            PipelineClient pipelineClient = CreatePipelineClient();
 
-            await using DisposableTrigger trigger = await DisposableTrigger.Create (client, Recording);
-            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, Recording);
+            await using DisposableTrigger trigger = await DisposableTrigger.Create(client, Recording);
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create(pipelineClient, Recording);
             // SYNAPSE_API_ISSUE - How do we point the trigger to our pipeline
 
-            TriggerStartTriggerOperation startOperation = await client.StartStartTriggerAsync (trigger.Name);
+            TriggerStartTriggerOperation startOperation = await client.StartStartTriggerAsync(trigger.Name);
             Response startResponse = await startOperation.WaitForCompletionResponseAsync();
             startResponse.AssertSuccess();
 
-            TriggerStopTriggerOperation stopOperation = await client.StartStopTriggerAsync (trigger.Name);
+            TriggerStopTriggerOperation stopOperation = await client.StartStopTriggerAsync(trigger.Name);
             Response stopResponse = await stopOperation.WaitForCompletionResponseAsync();
             stopResponse.AssertSuccess();
         }
@@ -93,14 +93,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             TriggerClient client = CreateClient();
 
-            await using DisposableTrigger trigger = await DisposableTrigger.Create (client, Recording);
-            TriggerSubscribeTriggerToEventsOperation subOperation = await client.StartSubscribeTriggerToEventsAsync (trigger.Name);
+            await using DisposableTrigger trigger = await DisposableTrigger.Create(client, Recording);
+            TriggerSubscribeTriggerToEventsOperation subOperation = await client.StartSubscribeTriggerToEventsAsync(trigger.Name);
             TriggerSubscriptionOperationStatus subResponse = await subOperation.WaitForCompletionAsync();
-            Assert.AreEqual (EventSubscriptionStatus.Enabled, subResponse.Status);
+            Assert.That(subResponse.Status, Is.EqualTo(EventSubscriptionStatus.Enabled));
 
-            TriggerUnsubscribeTriggerFromEventsOperation unsubOperation = await client.StartUnsubscribeTriggerFromEventsAsync (trigger.Name);
+            TriggerUnsubscribeTriggerFromEventsOperation unsubOperation = await client.StartUnsubscribeTriggerFromEventsAsync(trigger.Name);
             TriggerSubscriptionOperationStatus unsubResponse = await unsubOperation.WaitForCompletionAsync();
-            Assert.AreEqual (EventSubscriptionStatus.Disabled, unsubResponse.Status);
+            Assert.That(unsubResponse.Status, Is.EqualTo(EventSubscriptionStatus.Disabled));
         }
 
         [RecordedTest]
@@ -108,9 +108,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             TriggerClient client = CreateClient();
 
-            await using DisposableTrigger trigger = await DisposableTrigger.Create (client, Recording);
-            TriggerSubscriptionOperationStatus statusOperation = await client.GetEventSubscriptionStatusAsync (trigger.Name);
-            Assert.AreEqual (statusOperation.TriggerName, trigger.Name);
+            await using DisposableTrigger trigger = await DisposableTrigger.Create(client, Recording);
+            TriggerSubscriptionOperationStatus statusOperation = await client.GetEventSubscriptionStatusAsync(trigger.Name);
+            Assert.That(trigger.Name, Is.EqualTo(statusOperation.TriggerName));
         }
     }
 }

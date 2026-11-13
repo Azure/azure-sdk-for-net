@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class ConfluentBootstrapServerInfo : TargetServiceBaseInfo
     {
         /// <summary> Initializes a new instance of <see cref="ConfluentBootstrapServerInfo"/>. </summary>
-        public ConfluentBootstrapServerInfo()
+        public ConfluentBootstrapServerInfo() : base(TargetServiceType.ConfluentBootstrapServer)
         {
-            TargetServiceType = TargetServiceType.ConfluentBootstrapServer;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfluentBootstrapServerInfo"/>. </summary>
-        /// <param name="targetServiceType"> The target service type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The target service type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> The endpoint of service. </param>
-        internal ConfluentBootstrapServerInfo(TargetServiceType targetServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string endpoint) : base(targetServiceType, serializedAdditionalRawData)
+        internal ConfluentBootstrapServerInfo(TargetServiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string endpoint) : base(@type, additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
-            TargetServiceType = targetServiceType;
         }
 
         /// <summary> The endpoint of service. </summary>

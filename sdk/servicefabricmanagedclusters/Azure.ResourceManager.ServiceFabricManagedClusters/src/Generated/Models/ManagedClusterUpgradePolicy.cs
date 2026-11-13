@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the policy used when upgrading the cluster. </summary>
     public partial class ManagedClusterUpgradePolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradePolicy"/>. </summary>
         public ManagedClusterUpgradePolicy()
@@ -61,25 +32,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The timeout is reset at the start of each upgrade domain. The timeout can be in either hh:mm:ss or in d.hh:mm:ss.ms format.
         /// This value must be between 00:00:00 and 49710.06:28:15 (unsigned 32 bit integer for seconds)
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterUpgradePolicy(bool? forceRestart, ManagedClusterHealthPolicy healthPolicy, ManagedClusterUpgradeDeltaHealthPolicy deltaHealthPolicy, ManagedClusterMonitoringPolicy monitoringPolicy, string upgradeReplicaSetCheckTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterUpgradePolicy(bool? forceRestart, ManagedClusterHealthPolicy healthPolicy, ManagedClusterUpgradeDeltaHealthPolicy deltaHealthPolicy, ManagedClusterMonitoringPolicy monitoringPolicy, string upgradeReplicaSetCheckTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForceRestart = forceRestart;
             HealthPolicy = healthPolicy;
             DeltaHealthPolicy = deltaHealthPolicy;
             MonitoringPolicy = monitoringPolicy;
             UpgradeReplicaSetCheckTimeout = upgradeReplicaSetCheckTimeout;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </summary>
         public bool? ForceRestart { get; set; }
+
         /// <summary> The cluster health policy defines a health policy used to evaluate the health of the cluster during a cluster upgrade. </summary>
         public ManagedClusterHealthPolicy HealthPolicy { get; set; }
+
         /// <summary> The cluster delta health policy defines a health policy used to evaluate the health of the cluster during a cluster upgrade. </summary>
         public ManagedClusterUpgradeDeltaHealthPolicy DeltaHealthPolicy { get; set; }
+
         /// <summary> The cluster monitoring policy describes the parameters for monitoring an upgrade in Monitored mode. </summary>
         public ManagedClusterMonitoringPolicy MonitoringPolicy { get; set; }
+
         /// <summary>
         /// The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues.
         /// When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues.

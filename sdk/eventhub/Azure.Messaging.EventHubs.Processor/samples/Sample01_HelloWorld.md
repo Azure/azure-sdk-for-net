@@ -34,7 +34,7 @@ try
 
     for (var counter = 0; counter < int.MaxValue; ++counter)
     {
-        var eventBody = new BinaryData($"Event Number: { counter }");
+        var eventBody = new BinaryData($"Event Number: {counter}");
         var eventData = new EventData(eventBody);
 
         if (!eventBatch.TryAdd(eventData))
@@ -66,7 +66,7 @@ catch
 }
 finally
 {
-   await producer.CloseAsync();
+    await producer.CloseAsync();
 }
 ```
 
@@ -123,7 +123,7 @@ async Task processEventHandler(ProcessEventArgs args)
 
         string partition = args.Partition.PartitionId;
         byte[] eventBody = args.Data.EventBody.ToArray();
-        Debug.WriteLine($"Event from partition { partition } with length { eventBody.Length }.");
+        Debug.WriteLine($"Event from partition {partition} with length {eventBody.Length}.");
 
         int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
             key: partition,
@@ -153,8 +153,8 @@ Task processErrorHandler(ProcessErrorEventArgs args)
     try
     {
         Debug.WriteLine("Error in the EventProcessorClient");
-        Debug.WriteLine($"\tOperation: { args.Operation }");
-        Debug.WriteLine($"\tException: { args.Exception }");
+        Debug.WriteLine($"\tOperation: {args.Operation}");
+        Debug.WriteLine($"\tException: {args.Exception}");
         Debug.WriteLine("");
     }
     catch
@@ -210,12 +210,12 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.  This
-   // is especially important when using lambda expressions or handlers
-   // in any form that may contain closure scopes or hold other references.
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup.  This
+    // is especially important when using lambda expressions or handlers
+    // in any form that may contain closure scopes or hold other references.
 
-   processor.ProcessEventAsync -= processEventHandler;
-   processor.ProcessErrorAsync -= processErrorHandler;
+    processor.ProcessEventAsync -= processEventHandler;
+    processor.ProcessErrorAsync -= processErrorHandler;
 }
 ```

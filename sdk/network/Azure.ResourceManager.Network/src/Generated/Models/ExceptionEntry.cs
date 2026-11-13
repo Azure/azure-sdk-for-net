@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Adds exception to allow a request when the condition is satisfied. </summary>
     public partial class ExceptionEntry
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExceptionEntry"/>. </summary>
         /// <param name="matchVariable"> The variable on which we evaluate the exception condition. </param>
@@ -63,8 +35,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="selectorMatchOperator"> When the matchVariable points to a key-value pair (e.g, RequestHeader), this operates on the selector. </param>
         /// <param name="selector"> When the matchVariable points to a key-value pair (e.g, RequestHeader), this identifies the key. </param>
         /// <param name="exceptionManagedRuleSets"> The managed rule sets that are associated with the exception. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExceptionEntry(ExceptionEntryMatchVariable matchVariable, IList<string> values, ExceptionEntryValueMatchOperator valueMatchOperator, ExceptionEntrySelectorMatchOperator? selectorMatchOperator, string selector, IList<ExclusionManagedRuleSet> exceptionManagedRuleSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExceptionEntry(ExceptionEntryMatchVariable matchVariable, IList<string> values, ExceptionEntryValueMatchOperator valueMatchOperator, ExceptionEntrySelectorMatchOperator? selectorMatchOperator, string selector, IList<ExclusionManagedRuleSet> exceptionManagedRuleSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchVariable = matchVariable;
             Values = values;
@@ -72,29 +44,29 @@ namespace Azure.ResourceManager.Network.Models
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
             ExceptionManagedRuleSets = exceptionManagedRuleSets;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExceptionEntry"/> for deserialization. </summary>
-        internal ExceptionEntry()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The variable on which we evaluate the exception condition. </summary>
         [WirePath("matchVariable")]
         public ExceptionEntryMatchVariable MatchVariable { get; set; }
+
         /// <summary> Allowed values for the matchVariable. </summary>
         [WirePath("values")]
         public IList<string> Values { get; }
+
         /// <summary> Operates on the allowed values for the matchVariable. </summary>
         [WirePath("valueMatchOperator")]
         public ExceptionEntryValueMatchOperator ValueMatchOperator { get; set; }
+
         /// <summary> When the matchVariable points to a key-value pair (e.g, RequestHeader), this operates on the selector. </summary>
         [WirePath("selectorMatchOperator")]
         public ExceptionEntrySelectorMatchOperator? SelectorMatchOperator { get; set; }
+
         /// <summary> When the matchVariable points to a key-value pair (e.g, RequestHeader), this identifies the key. </summary>
         [WirePath("selector")]
         public string Selector { get; set; }
+
         /// <summary> The managed rule sets that are associated with the exception. </summary>
         [WirePath("exceptionManagedRuleSets")]
         public IList<ExclusionManagedRuleSet> ExceptionManagedRuleSets { get; }

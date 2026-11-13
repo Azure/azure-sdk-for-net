@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct IssueSeverity : IEquatable<IssueSeverity>
     {
         private readonly string _value;
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
 
         /// <summary> Initializes a new instance of <see cref="IssueSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IssueSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ErrorValue = "Error";
-        private const string WarningValue = "Warning";
+            _value = value;
+        }
 
         /// <summary> Error. </summary>
         public static IssueSeverity Error { get; } = new IssueSeverity(ErrorValue);
+
         /// <summary> Warning. </summary>
         public static IssueSeverity Warning { get; } = new IssueSeverity(WarningValue);
+
         /// <summary> Determines if two <see cref="IssueSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IssueSeverity left, IssueSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IssueSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IssueSeverity left, IssueSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IssueSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IssueSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IssueSeverity(string value) => new IssueSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IssueSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IssueSeverity?(string value) => value == null ? null : new IssueSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IssueSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IssueSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

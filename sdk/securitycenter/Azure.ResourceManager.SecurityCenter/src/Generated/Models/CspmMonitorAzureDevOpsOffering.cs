@@ -14,18 +14,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class CspmMonitorAzureDevOpsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorAzureDevOpsOffering"/>. </summary>
-        public CspmMonitorAzureDevOpsOffering()
+        public CspmMonitorAzureDevOpsOffering() : base(OfferingType.CspmMonitorAzureDevOps)
         {
-            OfferingType = OfferingType.CspmMonitorAzureDevOps;
         }
 
         /// <summary> Initializes a new instance of <see cref="CspmMonitorAzureDevOpsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CspmMonitorAzureDevOpsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(offeringType, description, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CspmMonitorAzureDevOpsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(offeringType, description, additionalBinaryDataProperties)
         {
-            OfferingType = offeringType;
         }
     }
 }

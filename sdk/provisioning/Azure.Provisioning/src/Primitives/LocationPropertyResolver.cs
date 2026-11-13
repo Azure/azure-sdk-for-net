@@ -93,7 +93,7 @@ public class LocationPropertyResolver : InfrastructureResolver
             // Otherwise add the next available numeric suffix (i.e., location_2)
             if (increment)
             {
-                for (int i = 2;; i++)
+                for (int i = 2; ; i++)
                 {
                     string proposed = $"{name}_{i}";
                     if (!existing.ContainsKey(proposed))

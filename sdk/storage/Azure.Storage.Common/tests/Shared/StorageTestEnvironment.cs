@@ -10,5 +10,10 @@ namespace Azure.Storage.Test.Shared
 {
     public class StorageTestEnvironment : TestEnvironment
     {
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            return new DefaultAzureCredential(
+                new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
+        }
     }
 }

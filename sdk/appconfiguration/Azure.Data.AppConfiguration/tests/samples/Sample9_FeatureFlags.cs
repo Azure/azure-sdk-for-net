@@ -3,17 +3,18 @@
 
 using System;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvironment>
+    public partial class ConfigurationSamples : SamplesBase<AppConfigurationTestEnvironment>
     {
         [Test]
         public void CreateFeatureFlag()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             #region Snippet:Sample_CreateFeatureFlag
             var featureFlagSetting = new FeatureFlagConfigurationSetting("feature_id", isEnabled: true);

@@ -14,9 +14,8 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class SpringCloudConfigComponent : JavaComponentProperties
     {
         /// <summary> Initializes a new instance of <see cref="SpringCloudConfigComponent"/>. </summary>
-        public SpringCloudConfigComponent()
+        public SpringCloudConfigComponent() : base(JavaComponentType.SpringCloudConfig)
         {
-            ComponentType = JavaComponentType.SpringCloudConfig;
         }
 
         /// <summary> Initializes a new instance of <see cref="SpringCloudConfigComponent"/>. </summary>
@@ -25,10 +24,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="configurations"> List of Java Components configuration properties. </param>
         /// <param name="scale"> Java component scaling configurations. </param>
         /// <param name="serviceBinds"> List of Java Components that are bound to the Java component. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SpringCloudConfigComponent(JavaComponentType componentType, JavaComponentProvisioningState? provisioningState, IList<JavaComponentConfigurationProperty> configurations, JavaComponentPropertiesScale scale, IList<JavaComponentServiceBind> serviceBinds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(componentType, provisioningState, configurations, scale, serviceBinds, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SpringCloudConfigComponent(JavaComponentType componentType, JavaComponentProvisioningState? provisioningState, IList<JavaComponentConfigurationProperty> configurations, JavaComponentPropertiesScale scale, IList<JavaComponentServiceBind> serviceBinds, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(componentType, provisioningState, configurations, scale, serviceBinds, additionalBinaryDataProperties)
         {
-            ComponentType = componentType;
         }
     }
 }

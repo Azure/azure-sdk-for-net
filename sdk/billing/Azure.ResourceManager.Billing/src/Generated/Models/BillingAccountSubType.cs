@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingAccountSubType : IEquatable<BillingAccountSubType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Individual. </summary>
+        private const string IndividualValue = "Individual";
+        /// <summary> Professional. </summary>
+        private const string ProfessionalValue = "Professional";
+        /// <summary> Enterprise. </summary>
+        private const string EnterpriseValue = "Enterprise";
 
         /// <summary> Initializes a new instance of <see cref="BillingAccountSubType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingAccountSubType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string NoneValue = "None";
-        private const string IndividualValue = "Individual";
-        private const string ProfessionalValue = "Professional";
-        private const string EnterpriseValue = "Enterprise";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingAccountSubType Other { get; } = new BillingAccountSubType(OtherValue);
+
         /// <summary> None. </summary>
         public static BillingAccountSubType None { get; } = new BillingAccountSubType(NoneValue);
+
         /// <summary> Individual. </summary>
         public static BillingAccountSubType Individual { get; } = new BillingAccountSubType(IndividualValue);
+
         /// <summary> Professional. </summary>
         public static BillingAccountSubType Professional { get; } = new BillingAccountSubType(ProfessionalValue);
+
         /// <summary> Enterprise. </summary>
         public static BillingAccountSubType Enterprise { get; } = new BillingAccountSubType(EnterpriseValue);
+
         /// <summary> Determines if two <see cref="BillingAccountSubType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingAccountSubType left, BillingAccountSubType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingAccountSubType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingAccountSubType left, BillingAccountSubType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingAccountSubType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingAccountSubType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingAccountSubType(string value) => new BillingAccountSubType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingAccountSubType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingAccountSubType?(string value) => value == null ? null : new BillingAccountSubType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingAccountSubType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingAccountSubType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

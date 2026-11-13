@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0 (2026-09-27)
+
+### Bugs Fixed
+
+- Fixed synchronous client access URI generation with Microsoft Entra ID authentication to include the requested initial groups.
+
+### Other Changes
+
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
 
 ## 1.6.0 (2025-05-07)
 

@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureTableSink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="AzureTableSink"/>. </summary>
-        public AzureTableSink()
+        public AzureTableSink() : base("AzureTableSink")
         {
-            CopySinkType = "AzureTableSink";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureTableSink"/>. </summary>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="azureTableDefaultPartitionKeyValue"> Azure Table default partition key value. Type: string (or Expression with resultType string). </param>
         /// <param name="azureTablePartitionKeyName"> Azure Table partition key name. Type: string (or Expression with resultType string). </param>
         /// <param name="azureTableRowKeyName"> Azure Table row key name. Type: string (or Expression with resultType string). </param>
@@ -39,15 +38,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             AzureTablePartitionKeyName = azureTablePartitionKeyName;
             AzureTableRowKeyName = azureTableRowKeyName;
             AzureTableInsertType = azureTableInsertType;
-            CopySinkType = copySinkType ?? "AzureTableSink";
         }
 
         /// <summary> Azure Table default partition key value. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AzureTableDefaultPartitionKeyValue { get; set; }
+
         /// <summary> Azure Table partition key name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AzureTablePartitionKeyName { get; set; }
+
         /// <summary> Azure Table row key name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AzureTableRowKeyName { get; set; }
+
         /// <summary> Azure Table insert type. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AzureTableInsertType { get; set; }
     }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The trigger parameters update for the storage task assignment execution. </summary>
     public partial class ExecutionTriggerParametersUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExecutionTriggerParametersUpdate"/>. </summary>
         public ExecutionTriggerParametersUpdate()
@@ -56,29 +28,33 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="intervalUnit"> Run interval unit of task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </param>
         /// <param name="endBy"> When to end task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </param>
         /// <param name="startOn"> When to start task execution. This is a mutable field when ExecutionTrigger.properties.type is 'RunOnce'; this property should not be present when ExecutionTrigger.properties.type is 'OnSchedule'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionTriggerParametersUpdate(DateTimeOffset? startFrom, int? interval, ExecutionIntervalUnit? intervalUnit, DateTimeOffset? endBy, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExecutionTriggerParametersUpdate(DateTimeOffset? startFrom, int? interval, ExecutionIntervalUnit? intervalUnit, DateTimeOffset? endBy, DateTimeOffset? startOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartFrom = startFrom;
             Interval = interval;
             IntervalUnit = intervalUnit;
             EndBy = endBy;
             StartOn = startOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> When to start task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
         [WirePath("startFrom")]
         public DateTimeOffset? StartFrom { get; set; }
+
         /// <summary> Run interval of task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
         [WirePath("interval")]
         public int? Interval { get; set; }
+
         /// <summary> Run interval unit of task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
         [WirePath("intervalUnit")]
         public ExecutionIntervalUnit? IntervalUnit { get; set; }
+
         /// <summary> When to end task execution. This is a mutable field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
         [WirePath("endBy")]
         public DateTimeOffset? EndBy { get; set; }
+
         /// <summary> When to start task execution. This is a mutable field when ExecutionTrigger.properties.type is 'RunOnce'; this property should not be present when ExecutionTrigger.properties.type is 'OnSchedule'. </summary>
         [WirePath("startOn")]
         public DateTimeOffset? StartOn { get; set; }

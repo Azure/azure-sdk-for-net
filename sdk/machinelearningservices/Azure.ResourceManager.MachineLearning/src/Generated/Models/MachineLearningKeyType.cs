@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningKeyType. </summary>
+    /// <summary></summary>
     public readonly partial struct MachineLearningKeyType : IEquatable<MachineLearningKeyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningKeyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningKeyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
 
-        /// <summary> Primary. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningKeyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Primary. </summary>
         public static MachineLearningKeyType Primary { get; } = new MachineLearningKeyType(PrimaryValue);
-        /// <summary> Secondary. </summary>
+
+        /// <summary> Gets the Secondary. </summary>
         public static MachineLearningKeyType Secondary { get; } = new MachineLearningKeyType(SecondaryValue);
+
         /// <summary> Determines if two <see cref="MachineLearningKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningKeyType left, MachineLearningKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningKeyType left, MachineLearningKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningKeyType(string value) => new MachineLearningKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningKeyType?(string value) => value == null ? null : new MachineLearningKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

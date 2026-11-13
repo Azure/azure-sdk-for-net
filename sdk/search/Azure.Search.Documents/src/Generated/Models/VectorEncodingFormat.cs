@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct VectorEncodingFormat : IEquatable<VectorEncodingFormat>
     {
         private readonly string _value;
+        /// <summary> Encoding format representing bits packed into a wider data type. </summary>
+        private const string PackedBitValue = "packedBit";
 
         /// <summary> Initializes a new instance of <see cref="VectorEncodingFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorEncodingFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PackedBitValue = "packedBit";
+            _value = value;
+        }
 
         /// <summary> Encoding format representing bits packed into a wider data type. </summary>
         public static VectorEncodingFormat PackedBit { get; } = new VectorEncodingFormat(PackedBitValue);
+
         /// <summary> Determines if two <see cref="VectorEncodingFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorEncodingFormat left, VectorEncodingFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VectorEncodingFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorEncodingFormat left, VectorEncodingFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorEncodingFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VectorEncodingFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VectorEncodingFormat(string value) => new VectorEncodingFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VectorEncodingFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VectorEncodingFormat?(string value) => value == null ? null : new VectorEncodingFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VectorEncodingFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VectorEncodingFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

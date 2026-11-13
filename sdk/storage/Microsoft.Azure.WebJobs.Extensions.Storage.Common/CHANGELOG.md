@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixing bug where MaxDequeueCount was being applied to messages in the poison queue itself. leading to poison messages being silently skipped and unprocessed indefinitely.
+
 ### Other Changes
 
 ## 5.0.0-beta.2 (2021-02-09)

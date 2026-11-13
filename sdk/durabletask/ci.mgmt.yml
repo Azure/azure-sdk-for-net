@@ -1,18 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
-pr:
+trigger:
   branches:
     include:
     - main
-    - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/durabletask/ci.mgmt.yml
-    - sdk/durabletask/Azure.ResourceManager.DurableTask/
-
+    - sdk/durabletask/Azure.ResourceManager.DurableTask
+    - sdk/durabletask/Azure.Provisioning.DurableTask
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -21,3 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DurableTask
       safeName: AzureResourceManagerDurableTask
+    - name: Azure.Provisioning.DurableTask
+      safeName: AzureProvisioningDurableTask

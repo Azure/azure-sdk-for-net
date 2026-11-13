@@ -51,8 +51,8 @@ Alternatively, get the connection string from the Azure Portal.
 Once you have the value of the connection string, you can create the ConfigurationClient:
 
 ```C# Snippet:CreateConfigurationClient
-string connectionString = "<connection_string>";
-var client = new ConfigurationClient(connectionString);
+string endpoint = "<endpoint>";
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 #### Create ConfigurationClient with Azure Active Directory Credential
@@ -122,8 +122,8 @@ Create a Configuration Setting to be stored in the Configuration Store. There ar
 * SetConfigurationSetting creates a setting if it doesn't exist or overrides an existing setting.
 
 ```C# Snippet:CreateConfigurationSetting
-string connectionString = "<connection_string>";
-var client = new ConfigurationClient(connectionString);
+string endpoint = "<endpoint>";
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 var settingToCreate = new ConfigurationSetting("some_key", "some_value");
 ConfigurationSetting setting = client.SetConfigurationSetting(settingToCreate);
 ```
@@ -133,8 +133,8 @@ ConfigurationSetting setting = client.SetConfigurationSetting(settingToCreate);
 Retrieve a previously stored Configuration Setting by calling GetConfigurationSetting.  This snippet assumes the setting "some_key" exists in the configuration store.
 
 ```C# Snippet:GetConfigurationSetting
-string connectionString = "<connection_string>";
-var client = new ConfigurationClient(connectionString);
+string endpoint = "<endpoint>";
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
 ```
 
@@ -143,8 +143,8 @@ ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
 Update an existing Configuration Setting by calling SetConfigurationSetting.  This snippet assumes the setting "some_key" exists in the configuration store.
 
 ```C# Snippet:UpdateConfigurationSetting
-string connectionString = "<connection_string>";
-var client = new ConfigurationClient(connectionString);
+string endpoint = "<endpoint>";
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_value");
 ```
 
@@ -153,8 +153,8 @@ ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_v
 Delete an existing Configuration Setting by calling DeleteConfigurationSetting.  This snippet assumes the setting "some_key" exists in the configuration store.
 
 ```C# Snippet:DeleteConfigurationSetting
-string connectionString = "<connection_string>";
-var client = new ConfigurationClient(connectionString);
+string endpoint = "<endpoint>";
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 client.DeleteConfigurationSetting("some_key");
 ```
 

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ScVmm
 {
+    /// <summary></summary>
     public partial class ScVmmGuestAgentResource : IJsonModel<ScVmmGuestAgentData>
     {
-        private static ScVmmGuestAgentData s_dataDeserializationInstance;
-        private static ScVmmGuestAgentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ScVmmGuestAgentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ScVmmGuestAgentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ScVmmGuestAgentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScVmmGuestAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmGuestAgentData>)Data).Write(writer, options);
 
-        ScVmmGuestAgentData IJsonModel<ScVmmGuestAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmGuestAgentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScVmmGuestAgentData IJsonModel<ScVmmGuestAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ScVmmGuestAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmGuestAgentData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ScVmmGuestAgentData IPersistableModel<ScVmmGuestAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmGuestAgentData>(data, options, AzureResourceManagerScVmmContext.Default);
 
-        string IPersistableModel<ScVmmGuestAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmGuestAgentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScVmmGuestAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

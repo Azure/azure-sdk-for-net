@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupEncryptionAtRestType : IEquatable<BackupEncryptionAtRestType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupEncryptionAtRestType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupEncryptionAtRestType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string MicrosoftManagedValue = "MicrosoftManaged";
         private const string CustomerManagedValue = "CustomerManaged";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupEncryptionAtRestType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupEncryptionAtRestType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupEncryptionAtRestType Invalid { get; } = new BackupEncryptionAtRestType(InvalidValue);
-        /// <summary> MicrosoftManaged. </summary>
+
+        /// <summary> Gets the MicrosoftManaged. </summary>
         public static BackupEncryptionAtRestType MicrosoftManaged { get; } = new BackupEncryptionAtRestType(MicrosoftManagedValue);
-        /// <summary> CustomerManaged. </summary>
+
+        /// <summary> Gets the CustomerManaged. </summary>
         public static BackupEncryptionAtRestType CustomerManaged { get; } = new BackupEncryptionAtRestType(CustomerManagedValue);
+
         /// <summary> Determines if two <see cref="BackupEncryptionAtRestType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupEncryptionAtRestType left, BackupEncryptionAtRestType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupEncryptionAtRestType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupEncryptionAtRestType left, BackupEncryptionAtRestType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupEncryptionAtRestType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupEncryptionAtRestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupEncryptionAtRestType(string value) => new BackupEncryptionAtRestType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupEncryptionAtRestType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupEncryptionAtRestType?(string value) => value == null ? null : new BackupEncryptionAtRestType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupEncryptionAtRestType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupEncryptionAtRestType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

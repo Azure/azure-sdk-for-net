@@ -1,0 +1,4 @@
+directory: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/ResourceHealth
+commit: 2f721197be559e0f970f3943dff734b7bc39e29b
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

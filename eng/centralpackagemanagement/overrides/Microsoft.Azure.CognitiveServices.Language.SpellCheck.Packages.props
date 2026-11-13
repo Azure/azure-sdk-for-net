@@ -1,0 +1,9 @@
+<Project>
+  <!--
+    xunit is only approved for legacy use. Azure SDK test projects should use NUnit.
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Include="xunit" Version="$(XunitVersion)" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="$(XunitRunnerVersion)" />
+  </ItemGroup>
+</Project>

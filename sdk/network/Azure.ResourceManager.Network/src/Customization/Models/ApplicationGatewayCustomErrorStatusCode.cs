@@ -8,14 +8,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Status code of the application gateway custom error. </summary>
-    public readonly partial struct ApplicationGatewayCustomErrorStatusCode : IEquatable<ApplicationGatewayCustomErrorStatusCode>
+    public readonly partial struct ApplicationGatewayCustomErrorStatusCode
     {
-        private const string HttpStatus499Value = "HttpStatus499";
-
+        // Shipped in 1.15.0, but not a value in the current service schema.
         /// <summary> HttpStatus499. </summary>
-        [Obsolete("This status is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationGatewayCustomErrorStatusCode HttpStatus499 { get; } = new ApplicationGatewayCustomErrorStatusCode(HttpStatus499Value);
+        [Obsolete("This status is obsolete and will be removed in a future release", false)]
+        public static ApplicationGatewayCustomErrorStatusCode HttpStatus499 { get; } = new ApplicationGatewayCustomErrorStatusCode("HttpStatus499");
     }
 }

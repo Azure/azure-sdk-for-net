@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> Unknown version of EventSubscriptionDestination. </summary>
     internal partial class UnknownEventSubscriptionDestination : EventSubscriptionDestination
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpointType, serializedAdditionalRawData)
-        {
-            EndpointType = endpointType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownEventSubscriptionDestination"/> for deserialization. </summary>
-        internal UnknownEventSubscriptionDestination()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(endpointType != default ? endpointType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

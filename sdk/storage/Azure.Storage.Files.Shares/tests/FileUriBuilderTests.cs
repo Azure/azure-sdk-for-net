@@ -58,6 +58,60 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [TestCase("https://myaccount.file.core.windows.net/")]
+        [TestCase("https://myaccount-secondary.file.core.windows.net/")]
+        [TestCase("https://myaccount-dualstack.file.core.windows.net/")]
+        [TestCase("https://myaccount-ipv6.file.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-dualstack.file.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-ipv6.file.core.windows.net/")]
+        public void FileUriBuilder_Secondary_IPV6_Dualstack(string uriString)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", fileUriBuilder.Scheme);
+            Assert.AreEqual("myaccount", fileUriBuilder.AccountName);
+            Assert.AreEqual("", fileUriBuilder.ShareName);
+            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", fileUriBuilder.Snapshot);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual(443, fileUriBuilder.Port);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(string.Empty, fileUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        [TestCase("https://md-d3rqxhqbxbwq.file.core.windows.net/", "md-d3rqxhqbxbwq")]
+        [TestCase("https://md-ssd-bndub02px100c21.file.core.windows.net/", "md-ssd-bndub02px100c21")]
+        public void FileUriBuilder_InternalAccounts(string uriString, string actualAccountName)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", fileUriBuilder.Scheme);
+            Assert.AreEqual(actualAccountName, fileUriBuilder.AccountName);
+            Assert.AreEqual("", fileUriBuilder.ShareName);
+            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", fileUriBuilder.Snapshot);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual(443, fileUriBuilder.Port);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(string.Empty, fileUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
         public void FileUriBuilder_ShareTest()
         {
             // Arrange
@@ -105,6 +159,149 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNull(fileUriBuilder.Sas);
             Assert.AreEqual("restype=directory&comp=list", fileUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        public void FileUriBuilder_FileIdTest()
+        {
+            // Arrange
+            IList<string> fileIdUris = new List<string>()
+            {
+                "https://account.file.core.windows.net/share?fileid=12384898975283830",
+                "https://account.file.core.windows.net/share?FileId=12384898975283830",
+                "https://account.file.core.windows.net/share?FILEID=12384898975283830",
+            };
+
+            foreach (var uriString in fileIdUris)
+            {
+                var originalUri = new UriBuilder(uriString);
+
+                // Act
+                var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+                Uri newUri = fileUriBuilder.ToUri();
+
+                // Assert
+                Assert.AreEqual("https", fileUriBuilder.Scheme);
+                Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
+                Assert.AreEqual("account", fileUriBuilder.AccountName);
+                Assert.AreEqual(443, fileUriBuilder.Port);
+                Assert.AreEqual("share", fileUriBuilder.ShareName);
+                Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+                Assert.AreEqual("12384898975283830", fileUriBuilder.FileId);
+                Assert.IsNull(fileUriBuilder.Sas);
+                Assert.AreEqual("", fileUriBuilder.Query);
+                Assert.IsTrue(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        [RecordedTest]
+        public void FileUriBuilder_FileIdEmptyForPathBasedUri()
+        {
+            // Arrange
+            var uriString = "https://account.file.core.windows.net/share/directory/file";
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(new Uri(uriString));
+
+            // Assert
+            Assert.IsNotNull(fileUriBuilder.FileId);
+            Assert.AreEqual("", fileUriBuilder.FileId);
+            Assert.AreEqual("directory/file", fileUriBuilder.DirectoryOrFilePath);
+        }
+
+        [RecordedTest]
+        public void FileUriBuilder_FileIdAndSnapshotTest()
+        {
+            // Arrange
+            var uriString = "https://account.file.core.windows.net/share?fileid=12384898975283830&sharesnapshot=2011-03-09T01:42:34.9360000Z";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("share", fileUriBuilder.ShareName);
+            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("2011-03-09T01:42:34.9360000Z", fileUriBuilder.Snapshot);
+            Assert.AreEqual("12384898975283830", fileUriBuilder.FileId);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.IsTrue(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+        }
+
+        [RecordedTest]
+        public void FileUriBuilder_FileIdAndSasTest()
+        {
+            // Arrange
+            var uriString = "https://account.file.core.windows.net/share?fileid=12384898975283830&sv=2015-04-05&spr=https&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sip=168.1.5.60-168.1.5.70&sr=b&sp=rw&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("share", fileUriBuilder.ShareName);
+            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("12384898975283830", fileUriBuilder.FileId);
+            Assert.AreEqual("", fileUriBuilder.Query);
+
+            Assert.AreEqual("rw", fileUriBuilder.Sas.Permissions);
+            Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", fileUriBuilder.Sas.Signature);
+            Assert.AreEqual("2015-04-05", fileUriBuilder.Sas.Version);
+
+            // The file ID is emitted before the SAS.
+            Assert.AreEqual(
+                "https://account.file.core.windows.net/share?fileid=12384898975283830&sv=2015-04-05&spr=https&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sip=168.1.5.60-168.1.5.70&sr=b&sp=rw&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
+                newUri.AbsoluteUri);
+        }
+
+        [RecordedTest]
+        public void FileUriBuilder_SetFileIdTest()
+        {
+            // Arrange
+            var uriString = "https://account.file.core.windows.net/share";
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(new Uri(uriString))
+            {
+                FileId = "12384898975283830"
+            };
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual(
+                "https://account.file.core.windows.net/share?fileid=12384898975283830",
+                newUri.AbsoluteUri);
+        }
+
+        [RecordedTest]
+        public void FileUriBuilder_SetFileIdAfterToUriTest()
+        {
+            // Arrange
+            var fileUriBuilder = new ShareUriBuilder(
+                new Uri("https://account.file.core.windows.net/share?fileid=12384898975283830"));
+
+            // Act - materialize the Uri, then change the file id.
+            Uri firstUri = fileUriBuilder.ToUri();
+            fileUriBuilder.FileId = "99999999999999999";
+            Uri secondUri = fileUriBuilder.ToUri();
+
+            // Assert - the cached Uri was reset by the setter.
+            Assert.AreEqual(
+                "https://account.file.core.windows.net/share?fileid=12384898975283830",
+                firstUri.AbsoluteUri);
+            Assert.AreEqual(
+                "https://account.file.core.windows.net/share?fileid=99999999999999999",
+                secondUri.AbsoluteUri);
+
+            // Act - clearing the file id removes it from the Uri.
+            fileUriBuilder.FileId = null;
+
+            // Assert
+            Assert.AreEqual(
+                "https://account.file.core.windows.net/share",
+                fileUriBuilder.ToUri().AbsoluteUri);
         }
 
         [RecordedTest]

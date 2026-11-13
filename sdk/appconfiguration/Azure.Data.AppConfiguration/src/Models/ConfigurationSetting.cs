@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -36,7 +37,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public ConfigurationSetting(string key, string value, string label = null): this(key, value, label, default)
+        public ConfigurationSetting(string key, string value, string label = null) : this(key, value, label, default)
         {
         }
 

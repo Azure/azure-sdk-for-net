@@ -7,64 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The proxy artifact list result. </summary>
+    /// <summary> The description for page model. </summary>
     internal partial class ProxyArtifactVersionsOverviewListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsOverviewListResult"/>. </summary>
-        internal ProxyArtifactVersionsOverviewListResult()
+        /// <param name="value"> The description for value property. </param>
+        internal ProxyArtifactVersionsOverviewListResult(IEnumerable<ProxyArtifactVersionsListOverview> value)
         {
-            Value = new ChangeTrackingList<ProxyArtifactVersionsListOverview>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsOverviewListResult"/>. </summary>
-        /// <param name="value"> A list of available proxy artifacts. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyArtifactVersionsOverviewListResult(IReadOnlyList<ProxyArtifactVersionsListOverview> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The description for value property. </param>
+        /// <param name="nextLink"> The description for nextLink property. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProxyArtifactVersionsOverviewListResult(IList<ProxyArtifactVersionsListOverview> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A list of available proxy artifacts. </summary>
-        public IReadOnlyList<ProxyArtifactVersionsListOverview> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary> The description for value property. </summary>
+        public IList<ProxyArtifactVersionsListOverview> Value { get; }
+
+        /// <summary> The description for nextLink property. </summary>
         public string NextLink { get; }
     }
 }

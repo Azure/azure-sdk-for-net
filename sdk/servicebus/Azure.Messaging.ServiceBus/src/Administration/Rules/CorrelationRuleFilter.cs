@@ -253,34 +253,36 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <inheritdoc/>
         public override bool Equals(RuleFilter other)
         {
-            if (other is CorrelationRuleFilter correlationRuleFilter)
+            if (other is not CorrelationRuleFilter correlationRuleFilter)
             {
-                if (string.Equals(CorrelationId, correlationRuleFilter.CorrelationId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(MessageId, correlationRuleFilter.MessageId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(To, correlationRuleFilter.To, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(ReplyTo, correlationRuleFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(Subject, correlationRuleFilter.Subject, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(SessionId, correlationRuleFilter.SessionId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(ReplyToSessionId, correlationRuleFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(ContentType, correlationRuleFilter.ContentType, StringComparison.OrdinalIgnoreCase))
+                return false;
+            }
+
+            if (string.Equals(CorrelationId, correlationRuleFilter.CorrelationId, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(MessageId, correlationRuleFilter.MessageId, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(To, correlationRuleFilter.To, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ReplyTo, correlationRuleFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(Subject, correlationRuleFilter.Subject, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(SessionId, correlationRuleFilter.SessionId, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ReplyToSessionId, correlationRuleFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ContentType, correlationRuleFilter.ContentType, StringComparison.OrdinalIgnoreCase))
+            {
+                if (ApplicationProperties.Count != correlationRuleFilter.ApplicationProperties.Count)
                 {
-                    if (ApplicationProperties.Count != correlationRuleFilter.ApplicationProperties.Count)
+                    return false;
+                }
+
+                foreach (var param in ApplicationProperties)
+                {
+                    if (!correlationRuleFilter.ApplicationProperties.TryGetValue(param.Key, out var otherParamValue) ||
+                        (param.Value == null ^ otherParamValue == null) ||
+                        (param.Value != null && !param.Value.Equals(otherParamValue)))
                     {
                         return false;
                     }
-
-                    foreach (var param in ApplicationProperties)
-                    {
-                        if (!correlationRuleFilter.ApplicationProperties.TryGetValue(param.Key, out var otherParamValue) ||
-                            (param.Value == null ^ otherParamValue == null) ||
-                            (param.Value != null && !param.Value.Equals(otherParamValue)))
-                        {
-                            return false;
-                        }
-                    }
-
-                    return true;
                 }
+
+                return true;
             }
 
             return false;

@@ -14,21 +14,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class NetworkFunctionDefinitionResourceElementTemplateDetails : ResourceElementTemplate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>. </summary>
-        public NetworkFunctionDefinitionResourceElementTemplateDetails()
+        public NetworkFunctionDefinitionResourceElementTemplateDetails() : base(Type.NetworkFunctionDefinition)
         {
-            ResourceElementType = Type.NetworkFunctionDefinition;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>. </summary>
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="resourceElementType"> The resource element template type. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configuration"> The resource element template type. </param>
-        internal NetworkFunctionDefinitionResourceElementTemplateDetails(string name, Type resourceElementType, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmResourceDefinitionResourceElementTemplate configuration) : base(name, resourceElementType, dependsOnProfile, serializedAdditionalRawData)
+        internal NetworkFunctionDefinitionResourceElementTemplateDetails(string name, Type resourceElementType, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmResourceDefinitionResourceElementTemplate configuration) : base(name, resourceElementType, dependsOnProfile, additionalBinaryDataProperties)
         {
             Configuration = configuration;
-            ResourceElementType = resourceElementType;
         }
 
         /// <summary> The resource element template type. </summary>

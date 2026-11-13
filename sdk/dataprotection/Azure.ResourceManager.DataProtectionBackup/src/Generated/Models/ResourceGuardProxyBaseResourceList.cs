@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -21,14 +22,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBaseResourceList"/>. </summary>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> List of resources. </param>
-        internal ResourceGuardProxyBaseResourceList(string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<ResourceGuardProxyBaseResourceData> value) : base(nextLink, serializedAdditionalRawData)
+        internal ResourceGuardProxyBaseResourceList(string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ResourceGuardProxyBaseResourceData> value) : base(nextLink, additionalBinaryDataProperties)
         {
             Value = value;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<ResourceGuardProxyBaseResourceData> Value { get; }
+        public IList<ResourceGuardProxyBaseResourceData> Value { get; }
     }
 }

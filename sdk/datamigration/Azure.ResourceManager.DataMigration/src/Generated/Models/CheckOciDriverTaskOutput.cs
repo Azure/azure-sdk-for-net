@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Output for the service task to check for OCI drivers. </summary>
     public partial class CheckOciDriverTaskOutput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskOutput"/>. </summary>
         internal CheckOciDriverTaskOutput()
@@ -54,16 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskOutput"/>. </summary>
         /// <param name="installedDriver"> Information about the installed driver if found and valid. </param>
         /// <param name="validationErrors"> Validation errors. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckOciDriverTaskOutput(DataMigrationOracleOciDriverInfo installedDriver, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CheckOciDriverTaskOutput(DataMigrationOracleOciDriverInfo installedDriver, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstalledDriver = installedDriver;
             ValidationErrors = validationErrors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Information about the installed driver if found and valid. </summary>
         public DataMigrationOracleOciDriverInfo InstalledDriver { get; }
+
         /// <summary> Validation errors. </summary>
         public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }

@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = eventHubScope.ConsumerGroups.First();
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
@@ -110,11 +110,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup.
+                // It is encouraged that you unregister your handlers when you have
+                // finished using the Event Processor to ensure proper cleanup.
 
-               processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+                processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+                processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
             }
 
             #endregion
@@ -148,14 +148,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = eventHubScope.ConsumerGroups.First();
 
-            var resource = $"amqps://{ EventHubsTestEnvironment.Instance.FullyQualifiedNamespace }/{ eventHubScope.EventHubName }".ToLowerInvariant();
+            var resource = $"amqps://{EventHubsTestEnvironment.Instance.FullyQualifiedNamespace}/{eventHubScope.EventHubName}".ToLowerInvariant();
             var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
             var credential = new AzureSasCredential(signature.Value);
 #endif
 
-             var storageClient = new BlobContainerClient(
-                storageConnectionString,
-                blobContainerName);
+            var storageClient = new BlobContainerClient(
+               storageConnectionString,
+               blobContainerName);
 
             var processor = new EventProcessorClient(
                 storageClient,
@@ -202,11 +202,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup.
+                // It is encouraged that you unregister your handlers when you have
+                // finished using the Event Processor to ensure proper cleanup.
 
-               processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+                processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+                processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
             }
 
             #endregion
@@ -242,9 +242,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
 #endif
 
-             var storageClient = new BlobContainerClient(
-                storageConnectionString,
-                blobContainerName);
+            var storageClient = new BlobContainerClient(
+               storageConnectionString,
+               blobContainerName);
 
             var processor = new EventProcessorClient(
                 storageClient,
@@ -291,11 +291,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup.
+                // It is encouraged that you unregister your handlers when you have
+                // finished using the Event Processor to ensure proper cleanup.
 
-               processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+                processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+                processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
             }
 
             #endregion
@@ -389,11 +389,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup.
+                // It is encouraged that you unregister your handlers when you have
+                // finished using the Event Processor to ensure proper cleanup.
 
-               processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+                processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+                processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
             }
 
             #endregion

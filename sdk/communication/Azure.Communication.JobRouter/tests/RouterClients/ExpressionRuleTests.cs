@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             if (languagePropertyInfo is not null)
             {
                 var getSetMethodForLanguage = languagePropertyInfo.GetSetMethod();
-                Assert.IsNull(getSetMethodForLanguage);
+                Assert.That(getSetMethodForLanguage, Is.Null);
             }
         }
     }

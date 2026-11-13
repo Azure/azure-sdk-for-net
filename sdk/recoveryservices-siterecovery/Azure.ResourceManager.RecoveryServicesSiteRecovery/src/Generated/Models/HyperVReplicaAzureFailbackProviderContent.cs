@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class HyperVReplicaAzureFailbackProviderContent : PlannedFailoverProviderSpecificFailoverContent
     {
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureFailbackProviderContent"/>. </summary>
-        public HyperVReplicaAzureFailbackProviderContent()
+        public HyperVReplicaAzureFailbackProviderContent() : base("HyperVReplicaAzureFailback")
         {
-            InstanceType = "HyperVReplicaAzureFailback";
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureFailbackProviderContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataSyncOption"> Data sync option. </param>
         /// <param name="recoveryVmCreationOption"> ALR options to create alternate recovery. </param>
         /// <param name="providerIdForAlternateRecovery"> Provider Id for alternate location. </param>
-        internal HyperVReplicaAzureFailbackProviderContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string dataSyncOption, string recoveryVmCreationOption, string providerIdForAlternateRecovery) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVReplicaAzureFailbackProviderContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string dataSyncOption, string recoveryVmCreationOption, string providerIdForAlternateRecovery) : base(instanceType, additionalBinaryDataProperties)
         {
             DataSyncOption = dataSyncOption;
             RecoveryVmCreationOption = recoveryVmCreationOption;
             ProviderIdForAlternateRecovery = providerIdForAlternateRecovery;
-            InstanceType = instanceType ?? "HyperVReplicaAzureFailback";
         }
 
         /// <summary> Data sync option. </summary>
         public string DataSyncOption { get; set; }
+
         /// <summary> ALR options to create alternate recovery. </summary>
         public string RecoveryVmCreationOption { get; set; }
+
         /// <summary> Provider Id for alternate location. </summary>
         public string ProviderIdForAlternateRecovery { get; set; }
     }

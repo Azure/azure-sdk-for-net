@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningDefaultScaleSettings : MachineLearningOnlineScaleSettings
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningDefaultScaleSettings"/>. </summary>
-        public MachineLearningDefaultScaleSettings()
+        public MachineLearningDefaultScaleSettings() : base(ScaleType.Default)
         {
-            ScaleType = ScaleType.Default;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningDefaultScaleSettings"/>. </summary>
         /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningDefaultScaleSettings(ScaleType scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(scaleType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDefaultScaleSettings(ScaleType scaleType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(scaleType, additionalBinaryDataProperties)
         {
-            ScaleType = scaleType;
         }
     }
 }

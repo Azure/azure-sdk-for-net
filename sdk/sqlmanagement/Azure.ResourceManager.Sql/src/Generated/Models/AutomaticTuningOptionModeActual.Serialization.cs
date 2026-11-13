@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class AutomaticTuningOptionModeActualExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AutomaticTuningOptionModeActual value) => value switch
         {
             AutomaticTuningOptionModeActual.Off => "Off",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningOptionModeActual value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AutomaticTuningOptionModeActual ToAutomaticTuningOptionModeActual(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Off")) return AutomaticTuningOptionModeActual.Off;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "On")) return AutomaticTuningOptionModeActual.On;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Off"))
+            {
+                return AutomaticTuningOptionModeActual.Off;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "On"))
+            {
+                return AutomaticTuningOptionModeActual.On;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningOptionModeActual value.");
         }
     }

@@ -8,12 +8,14 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> VPN authentication types enabled for the virtual network gateway. </summary>
-    public readonly partial struct VpnAuthenticationType : IEquatable<VpnAuthenticationType>
+    public readonly partial struct VpnAuthenticationType
     {
-        /// <summary> AAD. </summary>
+        // Both spellings shipped in 1.15.0; AAD was already obsolete and Aad was generated.
+        // ApiCompat requires the released Obsolete arguments, including the incorrect message.
+        // The correct replacement is Aad, not the unrelated TagToIPAddresses mentioned there.
+        /// <summary> Compatibility alias for <see cref="Aad"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This value is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
-        public static VpnAuthenticationType AAD { get; } = new VpnAuthenticationType(AadValue);
+        public static VpnAuthenticationType AAD => Aad;
     }
 }

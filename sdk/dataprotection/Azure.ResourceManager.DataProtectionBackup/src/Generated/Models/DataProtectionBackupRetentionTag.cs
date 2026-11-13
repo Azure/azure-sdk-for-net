@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Retention tag. </summary>
     public partial class DataProtectionBackupRetentionTag
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRetentionTag"/>. </summary>
         /// <param name="tagName"> Retention Tag Name to relate it to retention rule. </param>
@@ -59,24 +32,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="eTag"> Retention Tag version. </param>
         /// <param name="id"> Retention Tag version. </param>
         /// <param name="tagName"> Retention Tag Name to relate it to retention rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupRetentionTag(ETag? eTag, string id, string tagName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupRetentionTag(ETag? eTag, string id, string tagName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Id = id;
             TagName = tagName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRetentionTag"/> for deserialization. </summary>
-        internal DataProtectionBackupRetentionTag()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Retention Tag version. </summary>
         public ETag? ETag { get; }
+
         /// <summary> Retention Tag version. </summary>
         public string Id { get; }
+
         /// <summary> Retention Tag Name to relate it to retention rule. </summary>
         public string TagName { get; set; }
     }

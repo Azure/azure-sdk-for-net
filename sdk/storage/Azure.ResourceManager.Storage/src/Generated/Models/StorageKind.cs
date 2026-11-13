@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageKind : IEquatable<StorageKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StorageValue = "Storage";
         private const string StorageV2Value = "StorageV2";
         private const string BlobStorageValue = "BlobStorage";
         private const string FileStorageValue = "FileStorage";
         private const string BlockBlobStorageValue = "BlockBlobStorage";
 
-        /// <summary> Storage. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Storage. </summary>
         public static StorageKind Storage { get; } = new StorageKind(StorageValue);
-        /// <summary> StorageV2. </summary>
+
+        /// <summary> Gets the StorageV2. </summary>
         public static StorageKind StorageV2 { get; } = new StorageKind(StorageV2Value);
-        /// <summary> BlobStorage. </summary>
+
+        /// <summary> Gets the BlobStorage. </summary>
         public static StorageKind BlobStorage { get; } = new StorageKind(BlobStorageValue);
-        /// <summary> FileStorage. </summary>
+
+        /// <summary> Gets the FileStorage. </summary>
         public static StorageKind FileStorage { get; } = new StorageKind(FileStorageValue);
-        /// <summary> BlockBlobStorage. </summary>
+
+        /// <summary> Gets the BlockBlobStorage. </summary>
         public static StorageKind BlockBlobStorage { get; } = new StorageKind(BlockBlobStorageValue);
+
         /// <summary> Determines if two <see cref="StorageKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageKind left, StorageKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageKind left, StorageKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageKind(string value) => new StorageKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageKind?(string value) => value == null ? null : new StorageKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

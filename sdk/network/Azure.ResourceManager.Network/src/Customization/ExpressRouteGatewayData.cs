@@ -5,20 +5,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteGateway data model.
-    /// ExpressRoute gateway resource.
-    /// </summary>
-    public partial class ExpressRouteGatewayData : NetworkTrackedResourceData
+    public partial class ExpressRouteGatewayData
     {
-        /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
-        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        // The released alias reads the canonical generated list; it must not own separate storage.
+        /// <inheritdoc cref="ExpressRouteConnectionList"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<ExpressRouteConnectionData> ExpressRouteConnections => (IReadOnlyList<ExpressRouteConnectionData>)ExpressRouteConnectionList;
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        public IReadOnlyList<ExpressRouteConnectionData> ExpressRouteConnections => new ReadOnlyCollection<ExpressRouteConnectionData>(ExpressRouteConnectionList);
     }
 }

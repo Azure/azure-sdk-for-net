@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkInterfaceMigrationPhase : IEquatable<NetworkInterfaceMigrationPhase>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Prepare. </summary>
+        private const string PrepareValue = "Prepare";
+        /// <summary> Commit. </summary>
+        private const string CommitValue = "Commit";
+        /// <summary> Abort. </summary>
+        private const string AbortValue = "Abort";
+        /// <summary> Committed. </summary>
+        private const string CommittedValue = "Committed";
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceMigrationPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkInterfaceMigrationPhase(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string PrepareValue = "Prepare";
-        private const string CommitValue = "Commit";
-        private const string AbortValue = "Abort";
-        private const string CommittedValue = "Committed";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static NetworkInterfaceMigrationPhase None { get; } = new NetworkInterfaceMigrationPhase(NoneValue);
+
         /// <summary> Prepare. </summary>
         public static NetworkInterfaceMigrationPhase Prepare { get; } = new NetworkInterfaceMigrationPhase(PrepareValue);
+
         /// <summary> Commit. </summary>
         public static NetworkInterfaceMigrationPhase Commit { get; } = new NetworkInterfaceMigrationPhase(CommitValue);
+
         /// <summary> Abort. </summary>
         public static NetworkInterfaceMigrationPhase Abort { get; } = new NetworkInterfaceMigrationPhase(AbortValue);
+
         /// <summary> Committed. </summary>
         public static NetworkInterfaceMigrationPhase Committed { get; } = new NetworkInterfaceMigrationPhase(CommittedValue);
+
         /// <summary> Determines if two <see cref="NetworkInterfaceMigrationPhase"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkInterfaceMigrationPhase left, NetworkInterfaceMigrationPhase right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkInterfaceMigrationPhase"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkInterfaceMigrationPhase left, NetworkInterfaceMigrationPhase right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkInterfaceMigrationPhase"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkInterfaceMigrationPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkInterfaceMigrationPhase(string value) => new NetworkInterfaceMigrationPhase(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkInterfaceMigrationPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkInterfaceMigrationPhase?(string value) => value == null ? null : new NetworkInterfaceMigrationPhase(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkInterfaceMigrationPhase other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkInterfaceMigrationPhase other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

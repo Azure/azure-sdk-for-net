@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PrivateDns
 {
+    /// <summary></summary>
     public partial class VirtualNetworkLinkResource : IJsonModel<VirtualNetworkLinkData>
     {
-        private static VirtualNetworkLinkData s_dataDeserializationInstance;
-        private static VirtualNetworkLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualNetworkLinkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualNetworkLinkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualNetworkLinkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualNetworkLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkLinkData>)Data).Write(writer, options);
 
-        VirtualNetworkLinkData IJsonModel<VirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkLinkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualNetworkLinkData IJsonModel<VirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkLinkData>(Data, options, AzureResourceManagerPrivateDnsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualNetworkLinkData IPersistableModel<VirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkLinkData>(data, options, AzureResourceManagerPrivateDnsContext.Default);
 
-        string IPersistableModel<VirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

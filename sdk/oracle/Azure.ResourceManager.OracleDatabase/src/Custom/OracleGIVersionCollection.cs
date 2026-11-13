@@ -3,6 +3,7 @@
 
 using System.ComponentModel;
 using System.Threading;
+using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
@@ -20,10 +21,6 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <description>GiVersions_ListByLocation</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="OracleGIVersionResource"/></description>
         /// </item>
@@ -32,7 +29,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<OracleGIVersionResource> GetAll(CancellationToken cancellationToken) => GetAll(cancellationToken: cancellationToken);
+        public virtual Pageable<OracleGIVersionResource> GetAll(CancellationToken cancellationToken) => GetAll(null, null, null, cancellationToken);
 
         /// <summary>
         /// List GiVersion resources by Location
@@ -46,10 +43,6 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <description>GiVersions_ListByLocation</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="OracleGIVersionResource"/></description>
         /// </item>
@@ -58,6 +51,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<OracleGIVersionResource> GetAllAsync(CancellationToken cancellationToken) => GetAllAsync(cancellationToken: cancellationToken);
+        public virtual AsyncPageable<OracleGIVersionResource> GetAllAsync(CancellationToken cancellationToken) => GetAllAsync(null, null, null, cancellationToken);
+
+        /// <summary>
+        /// List GiVersion resources by SubscriptionLocationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GiVersion_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shape"> If provided, filters the results for the given shape. </param>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OracleGIVersionResource> GetAllAsync(OracleDatabaseSystemShape? shape, string zone, CancellationToken cancellationToken) =>
+            GetAllAsync(shape, zone, null, cancellationToken);
+
+        /// <summary>
+        /// List GiVersion resources by SubscriptionLocationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GiVersion_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shape"> If provided, filters the results for the given shape. </param>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OracleGIVersionResource> GetAll(OracleDatabaseSystemShape? shape, string zone, CancellationToken cancellationToken = default) =>
+            GetAll(shape, zone, null, cancellationToken);
     }
 }

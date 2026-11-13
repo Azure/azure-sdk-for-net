@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.Kusto
         /// <summary> The principal ID assigned to the database principal. It should be a Guid. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release. Please use DatabasePrincipalId instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Guid? PrincipalId {
+        public Guid? PrincipalId
+        {
             get
             {
                 if (DatabasePrincipalId != null && Guid.TryParse(DatabasePrincipalId, out var principalId))

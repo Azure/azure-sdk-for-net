@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SourceControlOperationWarningCode : IEquatable<SourceControlOperationWarningCode>
     {
         private readonly string _value;
+        /// <summary> SourceControlWarning_DeleteServicePrincipal. </summary>
+        private const string SourceControlWarningDeleteServicePrincipalValue = "SourceControlWarning_DeleteServicePrincipal";
+        /// <summary> SourceControlWarning_DeletePipelineFromAzureDevOps. </summary>
+        private const string SourceControlWarningDeletePipelineFromAzureDevOpsValue = "SourceControlWarning_DeletePipelineFromAzureDevOps";
+        /// <summary> SourceControlWarning_DeleteWorkflowAndSecretFromGitHub. </summary>
+        private const string SourceControlWarningDeleteWorkflowAndSecretFromGitHubValue = "SourceControlWarning_DeleteWorkflowAndSecretFromGitHub";
+        /// <summary> SourceControlWarning_DeleteRoleAssignment. </summary>
+        private const string SourceControlWarningDeleteRoleAssignmentValue = "SourceControlWarning_DeleteRoleAssignment";
+        /// <summary> SourceControl_DeletedWithWarnings. </summary>
+        private const string SourceControlDeletedWithWarningsValue = "SourceControl_DeletedWithWarnings";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlOperationWarningCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlOperationWarningCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SourceControlWarningDeleteServicePrincipalValue = "SourceControlWarning_DeleteServicePrincipal";
-        private const string SourceControlWarningDeletePipelineFromAzureDevOpsValue = "SourceControlWarning_DeletePipelineFromAzureDevOps";
-        private const string SourceControlWarningDeleteWorkflowAndSecretFromGitHubValue = "SourceControlWarning_DeleteWorkflowAndSecretFromGitHub";
-        private const string SourceControlWarningDeleteRoleAssignmentValue = "SourceControlWarning_DeleteRoleAssignment";
-        private const string SourceControlDeletedWithWarningsValue = "SourceControl_DeletedWithWarnings";
+            _value = value;
+        }
 
         /// <summary> SourceControlWarning_DeleteServicePrincipal. </summary>
         public static SourceControlOperationWarningCode SourceControlWarningDeleteServicePrincipal { get; } = new SourceControlOperationWarningCode(SourceControlWarningDeleteServicePrincipalValue);
+
         /// <summary> SourceControlWarning_DeletePipelineFromAzureDevOps. </summary>
         public static SourceControlOperationWarningCode SourceControlWarningDeletePipelineFromAzureDevOps { get; } = new SourceControlOperationWarningCode(SourceControlWarningDeletePipelineFromAzureDevOpsValue);
+
         /// <summary> SourceControlWarning_DeleteWorkflowAndSecretFromGitHub. </summary>
         public static SourceControlOperationWarningCode SourceControlWarningDeleteWorkflowAndSecretFromGitHub { get; } = new SourceControlOperationWarningCode(SourceControlWarningDeleteWorkflowAndSecretFromGitHubValue);
+
         /// <summary> SourceControlWarning_DeleteRoleAssignment. </summary>
         public static SourceControlOperationWarningCode SourceControlWarningDeleteRoleAssignment { get; } = new SourceControlOperationWarningCode(SourceControlWarningDeleteRoleAssignmentValue);
+
         /// <summary> SourceControl_DeletedWithWarnings. </summary>
         public static SourceControlOperationWarningCode SourceControlDeletedWithWarnings { get; } = new SourceControlOperationWarningCode(SourceControlDeletedWithWarningsValue);
+
         /// <summary> Determines if two <see cref="SourceControlOperationWarningCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlOperationWarningCode left, SourceControlOperationWarningCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlOperationWarningCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlOperationWarningCode left, SourceControlOperationWarningCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlOperationWarningCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlOperationWarningCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlOperationWarningCode(string value) => new SourceControlOperationWarningCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlOperationWarningCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlOperationWarningCode?(string value) => value == null ? null : new SourceControlOperationWarningCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlOperationWarningCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlOperationWarningCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

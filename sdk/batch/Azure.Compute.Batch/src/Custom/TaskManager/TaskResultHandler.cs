@@ -22,9 +22,9 @@ namespace Azure.Compute.Batch
         /// <summary>
         /// Handles the result of a single AddTask operation.
         /// </summary>
-        /// <param name="addTaskResult"></param>
+        /// <param name="taskResult"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>AddTaskResultStatus status</returns>
-        public abstract CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken);
+        /// <returns>CreateTaskResultStatus status</returns>
+        public abstract CreateTaskResultStatus HandleTaskResult(CreateTaskResult taskResult, CancellationToken cancellationToken);
     }
 }

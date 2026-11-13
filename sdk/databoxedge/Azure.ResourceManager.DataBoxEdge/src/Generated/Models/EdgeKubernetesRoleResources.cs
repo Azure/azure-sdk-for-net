@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Kubernetes role resources. </summary>
     public partial class EdgeKubernetesRoleResources
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleResources"/>. </summary>
         /// <param name="compute"> Kubernetes role compute resource. </param>
@@ -59,24 +31,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="storage"> Kubernetes role storage resource. </param>
         /// <param name="compute"> Kubernetes role compute resource. </param>
         /// <param name="network"> Kubernetes role network resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeKubernetesRoleResources(EdgeKubernetesRoleStorage storage, EdgeKubernetesRoleCompute compute, EdgeKubernetesRoleNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeKubernetesRoleResources(EdgeKubernetesRoleStorage storage, EdgeKubernetesRoleCompute compute, EdgeKubernetesRoleNetwork network, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Storage = storage;
             Compute = compute;
             Network = network;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleResources"/> for deserialization. </summary>
-        internal EdgeKubernetesRoleResources()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Kubernetes role storage resource. </summary>
         public EdgeKubernetesRoleStorage Storage { get; set; }
+
         /// <summary> Kubernetes role compute resource. </summary>
         public EdgeKubernetesRoleCompute Compute { get; set; }
+
         /// <summary> Kubernetes role network resource. </summary>
         public EdgeKubernetesRoleNetwork Network { get; }
     }

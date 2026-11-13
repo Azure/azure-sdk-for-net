@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class AutoHealActionTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AutoHealActionType value) => value switch
         {
             AutoHealActionType.Recycle => "Recycle",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutoHealActionType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AutoHealActionType ToAutoHealActionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Recycle")) return AutoHealActionType.Recycle;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LogEvent")) return AutoHealActionType.LogEvent;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomAction")) return AutoHealActionType.CustomAction;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Recycle"))
+            {
+                return AutoHealActionType.Recycle;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LogEvent"))
+            {
+                return AutoHealActionType.LogEvent;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomAction"))
+            {
+                return AutoHealActionType.CustomAction;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutoHealActionType value.");
         }
     }

@@ -1,4 +1,0 @@
-﻿Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae cursus quam.
-Duis in nisl in nulla vehicula commodo. Donec aliquam ex vitae lorem condimentum
-mollis. Nullam quis enim nec mi euismod pharetra non a velit. Quisque elementum
-nisl quam, ut pulvinar velit auctor lobortis. Morbi tincidunt, mi id vestibulum.

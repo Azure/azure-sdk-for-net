@@ -3,9 +3,9 @@
 
 using System;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.Data.Tables.Tests;
 using Azure.Data.Tables.Models;
+using Azure.Data.Tables.Tests;
+using NUnit.Framework;
 
 namespace Azure.Data.Tables.Samples
 {

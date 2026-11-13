@@ -1,0 +1,5 @@
+# Test configuration files with secrets
+.env
+
+# Test session recordings
+SessionRecords/

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> This is the first level of operation errors from the request when clients get errors per vm operation. </summary>
     public partial class OperationErrorsResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationErrorsResult"/>. </summary>
         internal OperationErrorsResult()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="operationErrors"> A list of errors associated with the operationid. </param>
         /// <param name="requestErrorCode"> Request level error code. </param>
         /// <param name="requestErrorDetails"> Request level error details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationErrorsResult(string operationId, DateTimeOffset? createdOn, DateTimeOffset? activationOn, DateTimeOffset? completedOn, IReadOnlyList<OperationErrorDetails> operationErrors, string requestErrorCode, string requestErrorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationErrorsResult(string operationId, DateTimeOffset? createdOn, DateTimeOffset? activationOn, DateTimeOffset? completedOn, IReadOnlyList<OperationErrorDetails> operationErrors, string requestErrorCode, string requestErrorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             CreatedOn = createdOn;
@@ -69,21 +41,27 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             OperationErrors = operationErrors;
             RequestErrorCode = requestErrorCode;
             RequestErrorDetails = requestErrorDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operationId identifying a vm operation. </summary>
         public string OperationId { get; }
+
         /// <summary> The creation time of the error result. </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> The activation time of a vm operation. </summary>
         public DateTimeOffset? ActivationOn { get; }
+
         /// <summary> The completion time of the operation if the operation was completed. </summary>
         public DateTimeOffset? CompletedOn { get; }
+
         /// <summary> A list of errors associated with the operationid. </summary>
         public IReadOnlyList<OperationErrorDetails> OperationErrors { get; }
+
         /// <summary> Request level error code. </summary>
         public string RequestErrorCode { get; }
+
         /// <summary> Request level error details. </summary>
         public string RequestErrorDetails { get; }
     }

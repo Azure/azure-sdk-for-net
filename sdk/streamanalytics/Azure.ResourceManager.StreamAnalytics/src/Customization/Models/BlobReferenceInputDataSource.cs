@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes a blob input data source that contains reference data. </summary>
     public partial class BlobReferenceInputDataSource : ReferenceInputDataSource
     {
-         /// <summary> The refresh interval of the blob input data source. </summary>
+        /// <summary> The refresh interval of the blob input data source. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future release. Please use FullSnapshotRefreshInterval instead.", false)]
         public string FullSnapshotRefreshRate

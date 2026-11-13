@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class NotificationLevelExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this NotificationLevel value) => value switch
         {
             NotificationLevel.Critical => "Critical",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NotificationLevel value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static NotificationLevel ToNotificationLevel(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return NotificationLevel.Critical;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return NotificationLevel.Warning;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Information")) return NotificationLevel.Information;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonUrgentSuggestion")) return NotificationLevel.NonUrgentSuggestion;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical"))
+            {
+                return NotificationLevel.Critical;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning"))
+            {
+                return NotificationLevel.Warning;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Information"))
+            {
+                return NotificationLevel.Information;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonUrgentSuggestion"))
+            {
+                return NotificationLevel.NonUrgentSuggestion;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NotificationLevel value.");
         }
     }

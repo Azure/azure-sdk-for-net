@@ -96,7 +96,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // disable a job
                 BatchJobDisableOptions content = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
-                DisableJobOperation jobOperation = await client.DisableJobAsync(jobID, content);
+                DisableJobOperation jobOperation = await client.DisableJobAsync(WaitUntil.Started, jobID, content);
                 await jobOperation.WaitForCompletionAsync().ConfigureAwait(false);
                 Assert.IsTrue(jobOperation.HasCompleted);
                 Assert.IsTrue(jobOperation.HasValue);
@@ -104,7 +104,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsFalse(jobOperation.GetRawResponse().IsError);
 
                 // enable a job
-                EnableJobOperation enableJobOperation = await client.EnableJobAsync(jobID);
+                EnableJobOperation enableJobOperation = await client.EnableJobAsync(WaitUntil.Started, jobID);
                 await enableJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
                 Assert.IsTrue(enableJobOperation.HasCompleted);
                 Assert.IsTrue(enableJobOperation.HasValue);
@@ -126,15 +126,15 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     TerminationReason = "<terminateReason>",
                 };
-                TerminateJobOperation terminateJobOperation = await client.TerminateJobAsync(jobID, parameters, force: true);
+                TerminateJobOperation terminateJobOperation = await client.TerminateJobAsync(WaitUntil.Started, jobID, parameters, force: true);
                 await terminateJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
                 Assert.IsTrue(terminateJobOperation.HasCompleted);
                 Assert.IsTrue(terminateJobOperation.HasValue);
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
-                await client.DeleteJobAsync(jobID, force: true);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobId:jobID, force: true);
             }
         }
 
@@ -182,8 +182,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
-                await client.DeleteJobAsync(jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
             }
         }
 
@@ -217,7 +217,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchJob job = await client.GetJobAsync(jobID);
                 Assert.AreEqual(BatchJobState.Active, job.State);
 
-                await client.TerminateJobAsync(jobID, force: true);
+                await client.TerminateJobAsync(WaitUntil.Started, jobID, force: true);
 
                 job = await client.GetJobAsync(jobID);
                 while (job.State != BatchJobState.Completed)
@@ -230,8 +230,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
-                await client.DeleteJobAsync(jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchJob job = await client.GetJobAsync(jobID);
                 Assert.AreEqual(BatchJobState.Active, job.State);
 
-                DeleteJobOperation operation = await client.DeleteJobAsync(jobID, force: true);
+                DeleteJobOperation operation = await client.DeleteJobAsync(WaitUntil.Started, jobID, force: true);
 
                 Assert.IsNotNull(operation);
 
@@ -298,7 +298,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
     }

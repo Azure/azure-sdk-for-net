@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct HBaseAuthenticationType : IEquatable<HBaseAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Anonymous. </summary>
+        private const string AnonymousValue = "Anonymous";
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
 
         /// <summary> Initializes a new instance of <see cref="HBaseAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HBaseAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnonymousValue = "Anonymous";
-        private const string BasicValue = "Basic";
+            _value = value;
+        }
 
         /// <summary> Anonymous. </summary>
         public static HBaseAuthenticationType Anonymous { get; } = new HBaseAuthenticationType(AnonymousValue);
+
         /// <summary> Basic. </summary>
         public static HBaseAuthenticationType Basic { get; } = new HBaseAuthenticationType(BasicValue);
+
         /// <summary> Determines if two <see cref="HBaseAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HBaseAuthenticationType left, HBaseAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HBaseAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HBaseAuthenticationType left, HBaseAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HBaseAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HBaseAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HBaseAuthenticationType(string value) => new HBaseAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HBaseAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HBaseAuthenticationType?(string value) => value == null ? null : new HBaseAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HBaseAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HBaseAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

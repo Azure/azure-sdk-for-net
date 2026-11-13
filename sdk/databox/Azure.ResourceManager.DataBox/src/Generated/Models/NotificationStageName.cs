@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.DataBox.Models
     public readonly partial struct NotificationStageName : IEquatable<NotificationStageName>
     {
         private readonly string _value;
+        /// <summary> Notification at device prepared stage. </summary>
+        private const string DevicePreparedValue = "DevicePrepared";
+        /// <summary> Notification at device dispatched stage. </summary>
+        private const string DispatchedValue = "Dispatched";
+        /// <summary> Notification at device delivered stage. </summary>
+        private const string DeliveredValue = "Delivered";
+        /// <summary> Notification at device picked up from user stage. </summary>
+        private const string PickedUpValue = "PickedUp";
+        /// <summary> Notification at device received at Azure datacenter stage. </summary>
+        private const string AtAzureDataCenterValue = "AtAzureDC";
+        /// <summary> Notification at data copy started stage. </summary>
+        private const string DataCopyValue = "DataCopy";
+        /// <summary> Notification at job created stage. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> Notification at shipped devices to customer stage. </summary>
+        private const string ShippedToCustomerValue = "ShippedToCustomer";
 
         /// <summary> Initializes a new instance of <see cref="NotificationStageName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationStageName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DevicePreparedValue = "DevicePrepared";
-        private const string DispatchedValue = "Dispatched";
-        private const string DeliveredValue = "Delivered";
-        private const string PickedUpValue = "PickedUp";
-        private const string AtAzureDataCenterValue = "AtAzureDC";
-        private const string DataCopyValue = "DataCopy";
-        private const string CreatedValue = "Created";
-        private const string ShippedToCustomerValue = "ShippedToCustomer";
+            _value = value;
+        }
 
         /// <summary> Notification at device prepared stage. </summary>
         public static NotificationStageName DevicePrepared { get; } = new NotificationStageName(DevicePreparedValue);
+
         /// <summary> Notification at device dispatched stage. </summary>
         public static NotificationStageName Dispatched { get; } = new NotificationStageName(DispatchedValue);
+
         /// <summary> Notification at device delivered stage. </summary>
         public static NotificationStageName Delivered { get; } = new NotificationStageName(DeliveredValue);
+
         /// <summary> Notification at device picked up from user stage. </summary>
         public static NotificationStageName PickedUp { get; } = new NotificationStageName(PickedUpValue);
+
         /// <summary> Notification at device received at Azure datacenter stage. </summary>
         public static NotificationStageName AtAzureDataCenter { get; } = new NotificationStageName(AtAzureDataCenterValue);
+
         /// <summary> Notification at data copy started stage. </summary>
         public static NotificationStageName DataCopy { get; } = new NotificationStageName(DataCopyValue);
+
         /// <summary> Notification at job created stage. </summary>
         public static NotificationStageName Created { get; } = new NotificationStageName(CreatedValue);
+
         /// <summary> Notification at shipped devices to customer stage. </summary>
         public static NotificationStageName ShippedToCustomer { get; } = new NotificationStageName(ShippedToCustomerValue);
+
         /// <summary> Determines if two <see cref="NotificationStageName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationStageName left, NotificationStageName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationStageName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationStageName left, NotificationStageName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationStageName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationStageName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationStageName(string value) => new NotificationStageName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationStageName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationStageName?(string value) => value == null ? null : new NotificationStageName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationStageName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationStageName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

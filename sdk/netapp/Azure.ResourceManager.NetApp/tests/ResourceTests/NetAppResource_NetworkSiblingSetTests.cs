@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
-    public class NetAppResource_NetworkSiblingSetTests: NetAppTestBase
+    public class NetAppResource_NetworkSiblingSetTests : NetAppTestBase
     {
         private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
         private readonly string _pool1Name = "pool1";
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeCollection = _capacityPool.GetNetAppVolumes();
             var volumeName = Recording.GenerateAssetName("volumeName-");
             await CreateVirtualNetwork(location: DefaultLocation);
-            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId);
+            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, networkFeature: NetAppNetworkFeature.Basic);
         }
 
         [TearDown]

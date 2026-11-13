@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Communication.Models
     public readonly partial struct DomainProvisioningState : IEquatable<DomainProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Moving. </summary>
+        private const string MovingValue = "Moving";
 
         /// <summary> Initializes a new instance of <see cref="DomainProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DomainProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string RunningValue = "Running";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string MovingValue = "Moving";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static DomainProvisioningState Unknown { get; } = new DomainProvisioningState(UnknownValue);
+
         /// <summary> Succeeded. </summary>
         public static DomainProvisioningState Succeeded { get; } = new DomainProvisioningState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static DomainProvisioningState Failed { get; } = new DomainProvisioningState(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static DomainProvisioningState Canceled { get; } = new DomainProvisioningState(CanceledValue);
+
         /// <summary> Running. </summary>
         public static DomainProvisioningState Running { get; } = new DomainProvisioningState(RunningValue);
+
         /// <summary> Creating. </summary>
         public static DomainProvisioningState Creating { get; } = new DomainProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static DomainProvisioningState Updating { get; } = new DomainProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static DomainProvisioningState Deleting { get; } = new DomainProvisioningState(DeletingValue);
+
         /// <summary> Moving. </summary>
         public static DomainProvisioningState Moving { get; } = new DomainProvisioningState(MovingValue);
+
         /// <summary> Determines if two <see cref="DomainProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DomainProvisioningState left, DomainProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DomainProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DomainProvisioningState left, DomainProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DomainProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DomainProvisioningState(string value) => new DomainProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DomainProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DomainProvisioningState?(string value) => value == null ? null : new DomainProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DomainProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DomainProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor
 {
+    /// <summary></summary>
     public partial class MonitorPrivateLinkResource : IJsonModel<MonitorPrivateLinkResourceData>
     {
-        private static MonitorPrivateLinkResourceData s_dataDeserializationInstance;
-        private static MonitorPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MonitorPrivateLinkResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MonitorPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MonitorPrivateLinkResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MonitorPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkResourceData>)Data).Write(writer, options);
 
-        MonitorPrivateLinkResourceData IJsonModel<MonitorPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MonitorPrivateLinkResourceData IJsonModel<MonitorPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MonitorPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitorPrivateLinkResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MonitorPrivateLinkResourceData IPersistableModel<MonitorPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorPrivateLinkResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<MonitorPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitorPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MonitorPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

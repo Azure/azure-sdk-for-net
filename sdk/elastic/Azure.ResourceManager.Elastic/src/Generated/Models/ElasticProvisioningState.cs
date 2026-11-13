@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Elastic.Models
     public readonly partial struct ElasticProvisioningState : IEquatable<ElasticProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AcceptedValue = "Accepted";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.Elastic.Models
         private const string DeletedValue = "Deleted";
         private const string NotSpecifiedValue = "NotSpecified";
 
-        /// <summary> Accepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ElasticProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Accepted. </summary>
         public static ElasticProvisioningState Accepted { get; } = new ElasticProvisioningState(AcceptedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static ElasticProvisioningState Creating { get; } = new ElasticProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static ElasticProvisioningState Updating { get; } = new ElasticProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ElasticProvisioningState Deleting { get; } = new ElasticProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ElasticProvisioningState Succeeded { get; } = new ElasticProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ElasticProvisioningState Failed { get; } = new ElasticProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static ElasticProvisioningState Canceled { get; } = new ElasticProvisioningState(CanceledValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static ElasticProvisioningState Deleted { get; } = new ElasticProvisioningState(DeletedValue);
-        /// <summary> NotSpecified. </summary>
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ElasticProvisioningState NotSpecified { get; } = new ElasticProvisioningState(NotSpecifiedValue);
+
         /// <summary> Determines if two <see cref="ElasticProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticProvisioningState left, ElasticProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticProvisioningState left, ElasticProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticProvisioningState(string value) => new ElasticProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticProvisioningState?(string value) => value == null ? null : new ElasticProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

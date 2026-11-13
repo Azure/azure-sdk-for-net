@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Datadog
 {
-    public partial class DatadogSingleSignOnResource : IJsonModel<DatadogSingleSignOnResourceData>
+    /// <summary></summary>
+    public partial class DatadogSingleSignOnResource : IJsonModel<DatadogSingleSignOnData>
     {
-        private static DatadogSingleSignOnResourceData s_dataDeserializationInstance;
-        private static DatadogSingleSignOnResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DatadogSingleSignOnData> s_dataDeserializationInstance;
 
-        void IJsonModel<DatadogSingleSignOnResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatadogSingleSignOnResourceData>)Data).Write(writer, options);
+        private static IJsonModel<DatadogSingleSignOnData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatadogSingleSignOnData();
 
-        DatadogSingleSignOnResourceData IJsonModel<DatadogSingleSignOnResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatadogSingleSignOnResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<DatadogSingleSignOnData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatadogSingleSignOnData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<DatadogSingleSignOnResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatadogSingleSignOnResourceData>(Data, options, AzureResourceManagerDatadogContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatadogSingleSignOnData IJsonModel<DatadogSingleSignOnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        DatadogSingleSignOnResourceData IPersistableModel<DatadogSingleSignOnResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatadogSingleSignOnResourceData>(data, options, AzureResourceManagerDatadogContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatadogSingleSignOnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatadogSingleSignOnData>(Data, options, AzureResourceManagerDatadogContext.Default);
 
-        string IPersistableModel<DatadogSingleSignOnResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatadogSingleSignOnResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatadogSingleSignOnData IPersistableModel<DatadogSingleSignOnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatadogSingleSignOnData>(data, options, AzureResourceManagerDatadogContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatadogSingleSignOnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

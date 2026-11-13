@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiCenter
 {
+    /// <summary></summary>
     public partial class ApiCenterApiVersionResource : IJsonModel<ApiCenterApiVersionData>
     {
-        private static ApiCenterApiVersionData s_dataDeserializationInstance;
-        private static ApiCenterApiVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiCenterApiVersionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiCenterApiVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiCenterApiVersionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiCenterApiVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterApiVersionData>)Data).Write(writer, options);
 
-        ApiCenterApiVersionData IJsonModel<ApiCenterApiVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterApiVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiCenterApiVersionData IJsonModel<ApiCenterApiVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiCenterApiVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiCenterApiVersionData>(Data, options, AzureResourceManagerApiCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiCenterApiVersionData IPersistableModel<ApiCenterApiVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiCenterApiVersionData>(data, options, AzureResourceManagerApiCenterContext.Default);
 
-        string IPersistableModel<ApiCenterApiVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiCenterApiVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiCenterApiVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

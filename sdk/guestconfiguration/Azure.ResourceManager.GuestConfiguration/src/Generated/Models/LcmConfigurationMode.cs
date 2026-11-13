@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     public readonly partial struct LcmConfigurationMode : IEquatable<LcmConfigurationMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LcmConfigurationMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LcmConfigurationMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ApplyOnlyValue = "ApplyOnly";
         private const string ApplyAndMonitorValue = "ApplyAndMonitor";
         private const string ApplyAndAutoCorrectValue = "ApplyAndAutoCorrect";
 
-        /// <summary> ApplyOnly. </summary>
+        /// <summary> Initializes a new instance of <see cref="LcmConfigurationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LcmConfigurationMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ApplyOnly. </summary>
         public static LcmConfigurationMode ApplyOnly { get; } = new LcmConfigurationMode(ApplyOnlyValue);
-        /// <summary> ApplyAndMonitor. </summary>
+
+        /// <summary> Gets the ApplyAndMonitor. </summary>
         public static LcmConfigurationMode ApplyAndMonitor { get; } = new LcmConfigurationMode(ApplyAndMonitorValue);
-        /// <summary> ApplyAndAutoCorrect. </summary>
+
+        /// <summary> Gets the ApplyAndAutoCorrect. </summary>
         public static LcmConfigurationMode ApplyAndAutoCorrect { get; } = new LcmConfigurationMode(ApplyAndAutoCorrectValue);
+
         /// <summary> Determines if two <see cref="LcmConfigurationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LcmConfigurationMode left, LcmConfigurationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LcmConfigurationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LcmConfigurationMode left, LcmConfigurationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LcmConfigurationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LcmConfigurationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LcmConfigurationMode(string value) => new LcmConfigurationMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LcmConfigurationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LcmConfigurationMode?(string value) => value == null ? null : new LcmConfigurationMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LcmConfigurationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LcmConfigurationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

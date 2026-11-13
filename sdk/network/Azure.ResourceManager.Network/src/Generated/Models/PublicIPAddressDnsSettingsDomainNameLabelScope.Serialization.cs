@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal static partial class PublicIPAddressDnsSettingsDomainNameLabelScopeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PublicIPAddressDnsSettingsDomainNameLabelScope value) => value switch
         {
             PublicIPAddressDnsSettingsDomainNameLabelScope.TenantReuse => "TenantReuse",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Network.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicIPAddressDnsSettingsDomainNameLabelScope value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PublicIPAddressDnsSettingsDomainNameLabelScope ToPublicIPAddressDnsSettingsDomainNameLabelScope(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TenantReuse")) return PublicIPAddressDnsSettingsDomainNameLabelScope.TenantReuse;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SubscriptionReuse")) return PublicIPAddressDnsSettingsDomainNameLabelScope.SubscriptionReuse;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ResourceGroupReuse")) return PublicIPAddressDnsSettingsDomainNameLabelScope.ResourceGroupReuse;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoReuse")) return PublicIPAddressDnsSettingsDomainNameLabelScope.NoReuse;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TenantReuse"))
+            {
+                return PublicIPAddressDnsSettingsDomainNameLabelScope.TenantReuse;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SubscriptionReuse"))
+            {
+                return PublicIPAddressDnsSettingsDomainNameLabelScope.SubscriptionReuse;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ResourceGroupReuse"))
+            {
+                return PublicIPAddressDnsSettingsDomainNameLabelScope.ResourceGroupReuse;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoReuse"))
+            {
+                return PublicIPAddressDnsSettingsDomainNameLabelScope.NoReuse;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicIPAddressDnsSettingsDomainNameLabelScope value.");
         }
     }

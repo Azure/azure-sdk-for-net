@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct RecoveryPointSyncType : IEquatable<RecoveryPointSyncType>
     {
         private readonly string _value;
+        /// <summary> MultiVmSyncRecoveryPoint. </summary>
+        private const string MultiVmSyncRecoveryPointValue = "MultiVmSyncRecoveryPoint";
+        /// <summary> PerVmRecoveryPoint. </summary>
+        private const string PerVmRecoveryPointValue = "PerVmRecoveryPoint";
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointSyncType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RecoveryPointSyncType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MultiVmSyncRecoveryPointValue = "MultiVmSyncRecoveryPoint";
-        private const string PerVmRecoveryPointValue = "PerVmRecoveryPoint";
+            _value = value;
+        }
 
         /// <summary> MultiVmSyncRecoveryPoint. </summary>
         public static RecoveryPointSyncType MultiVmSyncRecoveryPoint { get; } = new RecoveryPointSyncType(MultiVmSyncRecoveryPointValue);
+
         /// <summary> PerVmRecoveryPoint. </summary>
         public static RecoveryPointSyncType PerVmRecoveryPoint { get; } = new RecoveryPointSyncType(PerVmRecoveryPointValue);
+
         /// <summary> Determines if two <see cref="RecoveryPointSyncType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryPointSyncType left, RecoveryPointSyncType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecoveryPointSyncType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryPointSyncType left, RecoveryPointSyncType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryPointSyncType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecoveryPointSyncType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecoveryPointSyncType(string value) => new RecoveryPointSyncType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecoveryPointSyncType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryPointSyncType?(string value) => value == null ? null : new RecoveryPointSyncType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryPointSyncType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecoveryPointSyncType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

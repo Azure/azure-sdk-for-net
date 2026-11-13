@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PureStorageBlock
 {
+    /// <summary></summary>
     public partial class PureStorageReservationResource : IJsonModel<PureStorageReservationData>
     {
-        private static PureStorageReservationData s_dataDeserializationInstance;
-        private static PureStorageReservationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PureStorageReservationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PureStorageReservationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PureStorageReservationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStorageReservationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageReservationData>)Data).Write(writer, options);
 
-        PureStorageReservationData IJsonModel<PureStorageReservationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageReservationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageReservationData IJsonModel<PureStorageReservationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PureStorageReservationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PureStorageReservationData>(Data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PureStorageReservationData IPersistableModel<PureStorageReservationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PureStorageReservationData>(data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
-        string IPersistableModel<PureStorageReservationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PureStorageReservationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PureStorageReservationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

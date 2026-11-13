@@ -15,31 +15,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanInMageRcmFailoverContent"/>. </summary>
         /// <param name="recoveryPointType"> The recovery point type. </param>
-        public RecoveryPlanInMageRcmFailoverContent(RecoveryPlanPointType recoveryPointType)
+        public RecoveryPlanInMageRcmFailoverContent(RecoveryPlanPointType recoveryPointType) : base("InMageRcm")
         {
             RecoveryPointType = recoveryPointType;
-            InstanceType = "InMageRcm";
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanInMageRcmFailoverContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointType"> The recovery point type. </param>
         /// <param name="useMultiVmSyncPoint"> A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover. </param>
-        internal RecoveryPlanInMageRcmFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, RecoveryPlanPointType recoveryPointType, string useMultiVmSyncPoint) : base(instanceType, serializedAdditionalRawData)
+        internal RecoveryPlanInMageRcmFailoverContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecoveryPlanPointType recoveryPointType, string useMultiVmSyncPoint) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointType = recoveryPointType;
             UseMultiVmSyncPoint = useMultiVmSyncPoint;
-            InstanceType = instanceType ?? "InMageRcm";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryPlanInMageRcmFailoverContent"/> for deserialization. </summary>
-        internal RecoveryPlanInMageRcmFailoverContent()
-        {
         }
 
         /// <summary> The recovery point type. </summary>
         public RecoveryPlanPointType RecoveryPointType { get; }
+
         /// <summary> A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover. </summary>
         public string UseMultiVmSyncPoint { get; set; }
     }

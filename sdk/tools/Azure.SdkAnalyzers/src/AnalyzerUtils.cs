@@ -1,0 +1,60 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using Microsoft.CodeAnalysis;
+
+namespace Azure.SdkAnalyzers
+{
+    public class AnalyzerUtils
+    {
+        public static bool IsSdkCode(ISymbol symbol)
+        {
+            return symbol != null && IsSdkNamespace(symbol.ContainingNamespace);
+        }
+
+        public static bool IsNamespace(INamespaceSymbol namespaceSymbol, params string[] segments)
+        {
+            for (int i = segments.Length - 1; i >= 0; i--)
+            {
+                if (namespaceSymbol is null || !namespaceSymbol.Name.Equals(segments[i], StringComparison.Ordinal))
+                {
+                    return false;
+                }
+
+                namespaceSymbol = namespaceSymbol.ContainingNamespace;
+            }
+
+            return namespaceSymbol is { IsGlobalNamespace: true };
+        }
+
+        private static bool IsSdkNamespace(INamespaceSymbol namespaceSymbol)
+        {
+            if (namespaceSymbol is null || namespaceSymbol.IsGlobalNamespace)
+            {
+                return false;
+            }
+
+            // Walk up to find the root
+            INamespaceSymbol current = namespaceSymbol;
+            INamespaceSymbol secondLevel = null;
+            INamespaceSymbol topLevel = null;
+
+            while (current != null && !current.IsGlobalNamespace)
+            {
+                secondLevel = topLevel;
+                topLevel = current;
+                current = current.ContainingNamespace;
+            }
+
+            // Check if top level is "Azure"
+            if (topLevel?.Name.Equals("Azure", StringComparison.Ordinal) == false)
+            {
+                return false;
+            }
+
+            // Check if second level is "Core"
+            return secondLevel?.Name.Equals("Core", StringComparison.Ordinal) != true;
+        }
+    }
+}

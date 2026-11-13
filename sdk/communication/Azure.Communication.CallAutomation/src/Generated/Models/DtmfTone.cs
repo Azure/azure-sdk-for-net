@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The Tone. </summary>
+    /// <summary> List of valid stop tones. </summary>
     public readonly partial struct DtmfTone : IEquatable<DtmfTone>
     {
         private readonly string _value;

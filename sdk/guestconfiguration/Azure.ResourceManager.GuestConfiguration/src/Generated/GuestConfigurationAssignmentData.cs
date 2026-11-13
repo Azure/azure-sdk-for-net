@@ -9,30 +9,29 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    /// <summary>
-    /// A class representing the GuestConfigurationAssignment data model.
-    /// Guest configuration assignment is an association between a machine and guest configuration.
-    /// </summary>
+    /// <summary> Guest configuration assignment is an association between a machine and guest configuration. </summary>
     public partial class GuestConfigurationAssignmentData : GuestConfigurationResourceData
     {
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentData"/>. </summary>
-        public GuestConfigurationAssignmentData()
+        /// <param name="name"> The guest configuration assignment name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public GuestConfigurationAssignmentData(string name) : base(name)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentData"/>. </summary>
         /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
-        /// <param name="name"> Name of the guest configuration assignment. </param>
+        /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="location"> Region where the VM is located. </param>
         /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Guest configuration assignment. </param>
-        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, GuestConfigurationAssignmentProperties properties) : base(id, name, location, resourceType, systemData, serializedAdditionalRawData)
+        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, GuestConfigurationAssignmentProperties properties) : base(id, name, location, resourceType, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

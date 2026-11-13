@@ -21,18 +21,48 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceReference"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
-        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        internal VirtualMachineNetworkInterfaceReference(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? primary, ComputeDeleteOption? deleteOption) : base(id, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Describes a network interface reference properties. </param>
+        internal VirtualMachineNetworkInterfaceReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkInterfaceReferenceProperties properties) : base(id, additionalBinaryDataProperties)
         {
-            Primary = primary;
-            DeleteOption = deleteOption;
+            Properties = properties;
         }
 
+        /// <summary> Describes a network interface reference properties. </summary>
+        internal NetworkInterfaceReferenceProperties Properties { get; set; }
+
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
-        public bool? Primary { get; set; }
+        public bool? Primary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfaceReferenceProperties();
+                }
+                Properties.Primary = value;
+            }
+        }
+
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public ComputeDeleteOption? DeleteOption { get; set; }
+        public ComputeDeleteOption? DeleteOption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeleteOption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfaceReferenceProperties();
+                }
+                Properties.DeleteOption = value;
+            }
+        }
     }
 }

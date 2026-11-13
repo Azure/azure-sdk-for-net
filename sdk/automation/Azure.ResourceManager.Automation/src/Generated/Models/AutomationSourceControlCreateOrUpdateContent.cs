@@ -13,81 +13,19 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update source control operation. </summary>
     public partial class AutomationSourceControlCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationSourceControlCreateOrUpdateContent"/>. </summary>
-        public AutomationSourceControlCreateOrUpdateContent()
+        /// <param name="properties"> The properties of the source control. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationSourceControlCreateOrUpdateContent(SourceControlCreateOrUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlCreateOrUpdateContent"/>. </summary>
-        /// <param name="repoUri"> The repo url of the source control. </param>
-        /// <param name="branch"> The repo branch of the source control. Include branch as empty string for VsoTfvc. </param>
-        /// <param name="folderPath"> The folder path of the source control. Path must be relative. </param>
-        /// <param name="isAutoSyncEnabled"> The auto async of the source control. Default is false. </param>
-        /// <param name="isAutoPublishRunbookEnabled"> The auto publish of the source control. Default is true. </param>
-        /// <param name="sourceType"> The source type. Must be one of VsoGit, VsoTfvc, GitHub, case sensitive. </param>
-        /// <param name="securityToken"> The authorization token for the repo of the source control. </param>
-        /// <param name="description"> The user description of the source control. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationSourceControlCreateOrUpdateContent(Uri repoUri, string branch, string folderPath, bool? isAutoSyncEnabled, bool? isAutoPublishRunbookEnabled, SourceControlSourceType? sourceType, SourceControlSecurityTokenProperties securityToken, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            RepoUri = repoUri;
-            Branch = branch;
-            FolderPath = folderPath;
-            IsAutoSyncEnabled = isAutoSyncEnabled;
-            IsAutoPublishRunbookEnabled = isAutoPublishRunbookEnabled;
-            SourceType = sourceType;
-            SecurityToken = securityToken;
-            Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> The repo url of the source control. </summary>
-        public Uri RepoUri { get; set; }
-        /// <summary> The repo branch of the source control. Include branch as empty string for VsoTfvc. </summary>
-        public string Branch { get; set; }
-        /// <summary> The folder path of the source control. Path must be relative. </summary>
-        public string FolderPath { get; set; }
-        /// <summary> The auto async of the source control. Default is false. </summary>
-        public bool? IsAutoSyncEnabled { get; set; }
-        /// <summary> The auto publish of the source control. Default is true. </summary>
-        public bool? IsAutoPublishRunbookEnabled { get; set; }
-        /// <summary> The source type. Must be one of VsoGit, VsoTfvc, GitHub, case sensitive. </summary>
-        public SourceControlSourceType? SourceType { get; set; }
-        /// <summary> The authorization token for the repo of the source control. </summary>
-        public SourceControlSecurityTokenProperties SecurityToken { get; set; }
-        /// <summary> The user description of the source control. </summary>
-        public string Description { get; set; }
+        /// <summary> The properties of the source control. </summary>
+        internal SourceControlCreateOrUpdateProperties Properties { get; }
     }
 }

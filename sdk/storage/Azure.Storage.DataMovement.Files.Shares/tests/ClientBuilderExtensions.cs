@@ -1,18 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseShares;
-
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Test.Shared;
 using BaseShares::Azure.Storage.Files.Shares;
 using BaseShares::Azure.Storage.Files.Shares.Models;
 using SharesClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     BaseShares::Azure.Storage.Files.Shares.ShareServiceClient,
     BaseShares::Azure.Storage.Files.Shares.ShareClientOptions>;
-using System.Threading;
-using Azure.Core;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -79,6 +78,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             shareName ??= clientBuilder.GetNewShareName();
             ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(sasService.GetShareClient(shareName));
+            return await DisposingShare.CreateAsync(share, metadata);
+        }
+
+        public static async Task<DisposingShare> GetTestShareAzureSasCredentialAsync(
+            this SharesClientBuilder clientBuilder,
+            ShareServiceClient service = default,
+            string shareName = default,
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            service ??= clientBuilder.GetServiceClientFromAzureSasCredentialConfig(clientBuilder.Tenants.TestConfigDefault, options);
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            shareName ??= clientBuilder.GetNewShareName();
+            ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
             return await DisposingShare.CreateAsync(share, metadata);
         }
 

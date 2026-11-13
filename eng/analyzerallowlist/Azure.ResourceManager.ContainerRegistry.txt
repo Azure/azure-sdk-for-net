@@ -1,0 +1,7 @@
+# Azure.ResourceManager.ContainerRegistry approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# RegistryUri is obsolete (superseded by RegistryAddress); the type's generated
+# serializer and model factory must still reference it for back-compat, and
+# generated code cannot carry a pragma.
+nowarn:CS0618 T:Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportSource

@@ -14,7 +14,7 @@ namespace Azure.Generator.Management.Providers
     {
         private const string DefaultProviderNamespaceName = "DefaultProviderNamespace";
 
-        public static ValueExpression DefaultProviderNamespace =>  Static(ManagementClientGenerator.Instance.OutputLibrary.ProviderConstants.Type).Property(DefaultProviderNamespaceName);
+        public static ValueExpression DefaultProviderNamespace => Static(ManagementClientGenerator.Instance.OutputLibrary.ProviderConstants.Type).Property(DefaultProviderNamespaceName);
 
         protected override string BuildName() => "ProviderConstants";
 

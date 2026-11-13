@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeLicenseStatus : IEquatable<HybridComputeLicenseStatus>
     {
         private readonly string _value;
+        /// <summary> Unlicensed. </summary>
+        private const string UnlicensedValue = "Unlicensed";
+        /// <summary> Licensed. </summary>
+        private const string LicensedValue = "Licensed";
+        /// <summary> OOBGrace. </summary>
+        private const string OobGraceValue = "OOBGrace";
+        /// <summary> OOTGrace. </summary>
+        private const string OotGraceValue = "OOTGrace";
+        /// <summary> NonGenuineGrace. </summary>
+        private const string NonGenuineGraceValue = "NonGenuineGrace";
+        /// <summary> Notification. </summary>
+        private const string NotificationValue = "Notification";
+        /// <summary> ExtendedGrace. </summary>
+        private const string ExtendedGraceValue = "ExtendedGrace";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeLicenseStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnlicensedValue = "Unlicensed";
-        private const string LicensedValue = "Licensed";
-        private const string OobGraceValue = "OOBGrace";
-        private const string OotGraceValue = "OOTGrace";
-        private const string NonGenuineGraceValue = "NonGenuineGrace";
-        private const string NotificationValue = "Notification";
-        private const string ExtendedGraceValue = "ExtendedGrace";
+            _value = value;
+        }
 
         /// <summary> Unlicensed. </summary>
         public static HybridComputeLicenseStatus Unlicensed { get; } = new HybridComputeLicenseStatus(UnlicensedValue);
+
         /// <summary> Licensed. </summary>
         public static HybridComputeLicenseStatus Licensed { get; } = new HybridComputeLicenseStatus(LicensedValue);
+
         /// <summary> OOBGrace. </summary>
         public static HybridComputeLicenseStatus OobGrace { get; } = new HybridComputeLicenseStatus(OobGraceValue);
+
         /// <summary> OOTGrace. </summary>
         public static HybridComputeLicenseStatus OotGrace { get; } = new HybridComputeLicenseStatus(OotGraceValue);
+
         /// <summary> NonGenuineGrace. </summary>
         public static HybridComputeLicenseStatus NonGenuineGrace { get; } = new HybridComputeLicenseStatus(NonGenuineGraceValue);
+
         /// <summary> Notification. </summary>
         public static HybridComputeLicenseStatus Notification { get; } = new HybridComputeLicenseStatus(NotificationValue);
+
         /// <summary> ExtendedGrace. </summary>
         public static HybridComputeLicenseStatus ExtendedGrace { get; } = new HybridComputeLicenseStatus(ExtendedGraceValue);
+
         /// <summary> Determines if two <see cref="HybridComputeLicenseStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeLicenseStatus left, HybridComputeLicenseStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeLicenseStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeLicenseStatus left, HybridComputeLicenseStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeLicenseStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeLicenseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeLicenseStatus(string value) => new HybridComputeLicenseStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeLicenseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeLicenseStatus?(string value) => value == null ? null : new HybridComputeLicenseStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeLicenseStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeLicenseStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

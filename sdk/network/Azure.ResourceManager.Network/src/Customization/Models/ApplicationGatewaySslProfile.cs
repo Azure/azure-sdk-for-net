@@ -3,24 +3,28 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> SSL profile of an application gateway. </summary>
+    // Native generation loses the released NetworkResourceData inheritance (ApiCompat CP0007).
     public partial class ApplicationGatewaySslProfile : NetworkResourceData
     {
-         /// <summary> Verify client certificate issuer name on the application gateway. </summary>
-         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        // This was already a handwritten flattened facade in 1.15, not a generated leaf.
+        // Restore its null-safe forwarding and lazy parent creation so assignments reach
+        // clientAuthConfiguration.verifyClientCertIssuerDN instead of independent storage.
+        // Hide the convenience facade without deprecating its still-supported wire field.
+        /// <summary> Enables verification of the client certificate issuer distinguished name. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? VerifyClientCertIssuerDN
         {
             get => ClientAuthConfiguration is null ? default : ClientAuthConfiguration.VerifyClientCertIssuerDN;
             set
             {
                 if (ClientAuthConfiguration is null)
+                {
                     ClientAuthConfiguration = new ApplicationGatewayClientAuthConfiguration();
+                }
                 ClientAuthConfiguration.VerifyClientCertIssuerDN = value;
             }
         }

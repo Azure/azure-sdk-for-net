@@ -5,50 +5,124 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Type of the container. The value of this property for
-    /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
-    /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
-    /// </summary>
-    internal enum ProtectableContainerType
+    internal readonly partial struct ProtectableContainerType : IEquatable<ProtectableContainerType>
     {
-        /// <summary> Unknown. </summary>
-        Unknown,
-        /// <summary> Invalid. </summary>
-        Invalid,
-        /// <summary> IaasVMContainer. </summary>
-        IaasVmContainer,
-        /// <summary> IaasVMServiceContainer. </summary>
-        IaasVmServiceContainer,
-        /// <summary> DPMContainer. </summary>
-        DpmContainer,
-        /// <summary> AzureBackupServerContainer. </summary>
-        AzureBackupServerContainer,
-        /// <summary> MABContainer. </summary>
-        MabContainer,
-        /// <summary> Cluster. </summary>
-        Cluster,
-        /// <summary> AzureSqlContainer. </summary>
-        AzureSqlContainer,
-        /// <summary> Windows. </summary>
-        Windows,
-        /// <summary> VCenter. </summary>
-        VCenter,
-        /// <summary> VMAppContainer. </summary>
-        VmAppContainer,
-        /// <summary> SQLAGWorkLoadContainer. </summary>
-        SqlAvailabilityGroupWorkLoadContainer,
-        /// <summary> StorageContainer. </summary>
-        StorageContainer,
-        /// <summary> GenericContainer. </summary>
-        GenericContainer,
-        /// <summary> Microsoft.ClassicCompute/virtualMachines. </summary>
-        MicrosoftClassicComputeVirtualMachines,
-        /// <summary> Microsoft.Compute/virtualMachines. </summary>
-        MicrosoftComputeVirtualMachines,
-        /// <summary> AzureWorkloadContainer. </summary>
-        AzureWorkloadContainer
+        private readonly string _value;
+        private const string InvalidValue = "Invalid";
+        private const string UnknownValue = "Unknown";
+        private const string IaasVMContainerValue = "IaasVMContainer";
+        private const string IaasVMServiceContainerValue = "IaasVMServiceContainer";
+        private const string DPMContainerValue = "DPMContainer";
+        private const string AzureBackupServerContainerValue = "AzureBackupServerContainer";
+        private const string MABContainerValue = "MABContainer";
+        private const string ClusterValue = "Cluster";
+        private const string AzureSqlContainerValue = "AzureSqlContainer";
+        private const string WindowsValue = "Windows";
+        private const string VCenterValue = "VCenter";
+        private const string VMAppContainerValue = "VMAppContainer";
+        private const string SQLAGWorkLoadContainerValue = "SQLAGWorkLoadContainer";
+        private const string StorageContainerValue = "StorageContainer";
+        private const string GenericContainerValue = "GenericContainer";
+        private const string MicrosoftClassicComputeVirtualMachinesValue = "Microsoft.ClassicCompute/virtualMachines";
+        private const string MicrosoftComputeVirtualMachinesValue = "Microsoft.Compute/virtualMachines";
+        private const string AzureWorkloadContainerValue = "AzureWorkloadContainer";
+
+        /// <summary> Initializes a new instance of <see cref="ProtectableContainerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public ProtectableContainerType(string value)
+        {
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
+        public static ProtectableContainerType Invalid { get; } = new ProtectableContainerType(InvalidValue);
+
+        /// <summary> Gets the Unknown. </summary>
+        public static ProtectableContainerType Unknown { get; } = new ProtectableContainerType(UnknownValue);
+
+        /// <summary> Gets the IaasVMContainer. </summary>
+        public static ProtectableContainerType IaasVMContainer { get; } = new ProtectableContainerType(IaasVMContainerValue);
+
+        /// <summary> Gets the IaasVMServiceContainer. </summary>
+        public static ProtectableContainerType IaasVMServiceContainer { get; } = new ProtectableContainerType(IaasVMServiceContainerValue);
+
+        /// <summary> Gets the DPMContainer. </summary>
+        public static ProtectableContainerType DPMContainer { get; } = new ProtectableContainerType(DPMContainerValue);
+
+        /// <summary> Gets the AzureBackupServerContainer. </summary>
+        public static ProtectableContainerType AzureBackupServerContainer { get; } = new ProtectableContainerType(AzureBackupServerContainerValue);
+
+        /// <summary> Gets the MABContainer. </summary>
+        public static ProtectableContainerType MABContainer { get; } = new ProtectableContainerType(MABContainerValue);
+
+        /// <summary> Gets the Cluster. </summary>
+        public static ProtectableContainerType Cluster { get; } = new ProtectableContainerType(ClusterValue);
+
+        /// <summary> Gets the AzureSqlContainer. </summary>
+        public static ProtectableContainerType AzureSqlContainer { get; } = new ProtectableContainerType(AzureSqlContainerValue);
+
+        /// <summary> Gets the Windows. </summary>
+        public static ProtectableContainerType Windows { get; } = new ProtectableContainerType(WindowsValue);
+
+        /// <summary> Gets the VCenter. </summary>
+        public static ProtectableContainerType VCenter { get; } = new ProtectableContainerType(VCenterValue);
+
+        /// <summary> Gets the VMAppContainer. </summary>
+        public static ProtectableContainerType VMAppContainer { get; } = new ProtectableContainerType(VMAppContainerValue);
+
+        /// <summary> Gets the SQLAGWorkLoadContainer. </summary>
+        public static ProtectableContainerType SQLAGWorkLoadContainer { get; } = new ProtectableContainerType(SQLAGWorkLoadContainerValue);
+
+        /// <summary> Gets the StorageContainer. </summary>
+        public static ProtectableContainerType StorageContainer { get; } = new ProtectableContainerType(StorageContainerValue);
+
+        /// <summary> Gets the GenericContainer. </summary>
+        public static ProtectableContainerType GenericContainer { get; } = new ProtectableContainerType(GenericContainerValue);
+
+        /// <summary> Gets the MicrosoftClassicComputeVirtualMachines. </summary>
+        public static ProtectableContainerType MicrosoftClassicComputeVirtualMachines { get; } = new ProtectableContainerType(MicrosoftClassicComputeVirtualMachinesValue);
+
+        /// <summary> Gets the MicrosoftComputeVirtualMachines. </summary>
+        public static ProtectableContainerType MicrosoftComputeVirtualMachines { get; } = new ProtectableContainerType(MicrosoftComputeVirtualMachinesValue);
+
+        /// <summary> Gets the AzureWorkloadContainer. </summary>
+        public static ProtectableContainerType AzureWorkloadContainer { get; } = new ProtectableContainerType(AzureWorkloadContainerValue);
+
+        /// <summary> Determines if two <see cref="ProtectableContainerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ProtectableContainerType left, ProtectableContainerType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ProtectableContainerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ProtectableContainerType left, ProtectableContainerType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ProtectableContainerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProtectableContainerType(string value) => new ProtectableContainerType(value);
+
+        /// <summary> Converts a string to a <see cref="ProtectableContainerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProtectableContainerType?(string value) => value == null ? null : new ProtectableContainerType(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ProtectableContainerType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ProtectableContainerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ConnectionMonitorTestConfigurationProtocol : IEquatable<ConnectionMonitorTestConfigurationProtocol>
     {
         private readonly string _value;
+        /// <summary> Tcp. </summary>
+        private const string TcpValue = "Tcp";
+        /// <summary> Http. </summary>
+        private const string HttpValue = "Http";
+        /// <summary> Icmp. </summary>
+        private const string IcmpValue = "Icmp";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestConfigurationProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionMonitorTestConfigurationProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "Tcp";
-        private const string HttpValue = "Http";
-        private const string IcmpValue = "Icmp";
+            _value = value;
+        }
 
         /// <summary> Tcp. </summary>
         public static ConnectionMonitorTestConfigurationProtocol Tcp { get; } = new ConnectionMonitorTestConfigurationProtocol(TcpValue);
+
         /// <summary> Http. </summary>
         public static ConnectionMonitorTestConfigurationProtocol Http { get; } = new ConnectionMonitorTestConfigurationProtocol(HttpValue);
+
         /// <summary> Icmp. </summary>
         public static ConnectionMonitorTestConfigurationProtocol Icmp { get; } = new ConnectionMonitorTestConfigurationProtocol(IcmpValue);
+
         /// <summary> Determines if two <see cref="ConnectionMonitorTestConfigurationProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionMonitorTestConfigurationProtocol left, ConnectionMonitorTestConfigurationProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionMonitorTestConfigurationProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionMonitorTestConfigurationProtocol left, ConnectionMonitorTestConfigurationProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionMonitorTestConfigurationProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionMonitorTestConfigurationProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionMonitorTestConfigurationProtocol(string value) => new ConnectionMonitorTestConfigurationProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionMonitorTestConfigurationProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionMonitorTestConfigurationProtocol?(string value) => value == null ? null : new ConnectionMonitorTestConfigurationProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionMonitorTestConfigurationProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionMonitorTestConfigurationProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

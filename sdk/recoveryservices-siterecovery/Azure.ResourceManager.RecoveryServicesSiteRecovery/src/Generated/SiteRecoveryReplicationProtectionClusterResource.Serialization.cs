@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
+    /// <summary></summary>
     public partial class SiteRecoveryReplicationProtectionClusterResource : IJsonModel<SiteRecoveryReplicationProtectionClusterData>
     {
-        private static SiteRecoveryReplicationProtectionClusterData s_dataDeserializationInstance;
-        private static SiteRecoveryReplicationProtectionClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SiteRecoveryReplicationProtectionClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SiteRecoveryReplicationProtectionClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SiteRecoveryReplicationProtectionClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteRecoveryReplicationProtectionClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryReplicationProtectionClusterData>)Data).Write(writer, options);
 
-        SiteRecoveryReplicationProtectionClusterData IJsonModel<SiteRecoveryReplicationProtectionClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryReplicationProtectionClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryReplicationProtectionClusterData IJsonModel<SiteRecoveryReplicationProtectionClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SiteRecoveryReplicationProtectionClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryReplicationProtectionClusterData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SiteRecoveryReplicationProtectionClusterData IPersistableModel<SiteRecoveryReplicationProtectionClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryReplicationProtectionClusterData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<SiteRecoveryReplicationProtectionClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryReplicationProtectionClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteRecoveryReplicationProtectionClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

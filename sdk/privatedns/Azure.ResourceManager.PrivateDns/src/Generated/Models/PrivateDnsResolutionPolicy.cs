@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.PrivateDns.Models
     public readonly partial struct PrivateDnsResolutionPolicy : IEquatable<PrivateDnsResolutionPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PrivateDnsResolutionPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PrivateDnsResolutionPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DefaultValue = "Default";
         private const string NxDomainRedirectValue = "NxDomainRedirect";
 
-        /// <summary> Default. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsResolutionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PrivateDnsResolutionPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Default. </summary>
         public static PrivateDnsResolutionPolicy Default { get; } = new PrivateDnsResolutionPolicy(DefaultValue);
-        /// <summary> NxDomainRedirect. </summary>
+
+        /// <summary> Gets the NxDomainRedirect. </summary>
         public static PrivateDnsResolutionPolicy NxDomainRedirect { get; } = new PrivateDnsResolutionPolicy(NxDomainRedirectValue);
+
         /// <summary> Determines if two <see cref="PrivateDnsResolutionPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrivateDnsResolutionPolicy left, PrivateDnsResolutionPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrivateDnsResolutionPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrivateDnsResolutionPolicy left, PrivateDnsResolutionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateDnsResolutionPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PrivateDnsResolutionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrivateDnsResolutionPolicy(string value) => new PrivateDnsResolutionPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrivateDnsResolutionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrivateDnsResolutionPolicy?(string value) => value == null ? null : new PrivateDnsResolutionPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateDnsResolutionPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrivateDnsResolutionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

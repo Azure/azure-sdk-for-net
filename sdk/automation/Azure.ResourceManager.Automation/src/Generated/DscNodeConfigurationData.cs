@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the DscNodeConfiguration data model.
-    /// Definition of the dsc node configuration.
-    /// </summary>
+    /// <summary> Definition of the dsc node configuration. </summary>
     public partial class DscNodeConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationData"/>. </summary>
         public DscNodeConfigurationData()
@@ -57,51 +25,121 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
-        /// <param name="createdOn"> Gets or sets creation time. </param>
-        /// <param name="configuration"> Gets or sets the configuration of the node. </param>
-        /// <param name="source"> Source of node configuration. </param>
-        /// <param name="nodeCount"> Number of nodes with this node configuration assigned. </param>
-        /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, DscConfigurationAssociationProperty configuration, string source, long? nodeCount, bool? isIncrementNodeConfigurationBuildRequired, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Gets or sets the configuration properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscNodeConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            LastModifiedOn = lastModifiedOn;
-            CreatedOn = createdOn;
-            Configuration = configuration;
-            Source = source;
-            NodeCount = nodeCount;
-            IsIncrementNodeConfigurationBuildRequired = isIncrementNodeConfigurationBuildRequired;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the configuration properties. </summary>
+        internal DscNodeConfigurationProperties Properties { get; set; }
+
         /// <summary> Gets or sets the last modified time. </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary> Gets or sets creation time. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> Gets or sets the configuration of the node. </summary>
-        internal DscConfigurationAssociationProperty Configuration { get; set; }
-        /// <summary> Gets or sets the name of the Dsc configuration. </summary>
-        public string ConfigurationName
+        public DateTimeOffset? LastModifiedOn
         {
-            get => Configuration is null ? default : Configuration.ConfigurationName;
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
             set
             {
-                if (Configuration is null)
-                    Configuration = new DscConfigurationAssociationProperty();
-                Configuration.ConfigurationName = value;
+                if (Properties is null)
+                {
+                    Properties = new DscNodeConfigurationProperties();
+                }
+                Properties.LastModifiedOn = value;
+            }
+        }
+
+        /// <summary> Gets or sets creation time. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeConfigurationProperties();
+                }
+                Properties.CreatedOn = value;
             }
         }
 
         /// <summary> Source of node configuration. </summary>
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeConfigurationProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> Number of nodes with this node configuration assigned. </summary>
-        public long? NodeCount { get; set; }
+        public long? NodeCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeConfigurationProperties();
+                }
+                Properties.NodeCount = value;
+            }
+        }
+
         /// <summary> If a new build version of NodeConfiguration is required. </summary>
-        public bool? IsIncrementNodeConfigurationBuildRequired { get; set; }
+        public bool? IsIncrementNodeConfigurationBuildRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsIncrementNodeConfigurationBuildRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeConfigurationProperties();
+                }
+                Properties.IsIncrementNodeConfigurationBuildRequired = value;
+            }
+        }
+
+        /// <summary> Gets or sets the name of the Dsc configuration. </summary>
+        public string ConfigurationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeConfigurationProperties();
+                }
+                Properties.ConfigurationName = value;
+            }
+        }
     }
 }

@@ -129,7 +129,8 @@ namespace Azure.Rest.WebPubSub.Tests
             var connected = JsonSerializer.Deserialize<ConnectedMessage>(frames[0].MessageAsString, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
             Assert.NotNull(connected);
             Assert.AreEqual("connected", connected.Event);
-            Assert.AreEqual(JsonSerializer.Serialize(new {
+            Assert.AreEqual(JsonSerializer.Serialize(new
+            {
                 type = "message",
                 from = "server",
                 dataType = "text",

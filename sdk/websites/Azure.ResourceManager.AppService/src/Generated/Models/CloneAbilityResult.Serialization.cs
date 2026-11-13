@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class CloneAbilityResultExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CloneAbilityResult value) => value switch
         {
             CloneAbilityResult.Cloneable => "Cloneable",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CloneAbilityResult value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static CloneAbilityResult ToCloneAbilityResult(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cloneable")) return CloneAbilityResult.Cloneable;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PartiallyCloneable")) return CloneAbilityResult.PartiallyCloneable;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotCloneable")) return CloneAbilityResult.NotCloneable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cloneable"))
+            {
+                return CloneAbilityResult.Cloneable;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PartiallyCloneable"))
+            {
+                return CloneAbilityResult.PartiallyCloneable;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotCloneable"))
+            {
+                return CloneAbilityResult.NotCloneable;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CloneAbilityResult value.");
         }
     }

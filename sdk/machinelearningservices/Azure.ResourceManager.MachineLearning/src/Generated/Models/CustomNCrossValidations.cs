@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -15,25 +16,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="CustomNCrossValidations"/>. </summary>
         /// <param name="value"> [Required] N-Cross validations value. </param>
-        public CustomNCrossValidations(int value)
+        public CustomNCrossValidations(int value) : base(NCrossValidationsMode.Custom)
         {
             Value = value;
-            Mode = NCrossValidationsMode.Custom;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomNCrossValidations"/>. </summary>
         /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> [Required] N-Cross validations value. </param>
-        internal CustomNCrossValidations(NCrossValidationsMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData, int value) : base(mode, serializedAdditionalRawData)
+        internal CustomNCrossValidations(NCrossValidationsMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties, int value) : base(mode, additionalBinaryDataProperties)
         {
             Value = value;
-            Mode = mode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomNCrossValidations"/> for deserialization. </summary>
-        internal CustomNCrossValidations()
-        {
         }
 
         /// <summary> [Required] N-Cross validations value. </summary>

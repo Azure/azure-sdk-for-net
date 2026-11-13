@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class ImmediateCopySetting : DataProtectionBackupCopySetting
     {
         /// <summary> Initializes a new instance of <see cref="ImmediateCopySetting"/>. </summary>
-        public ImmediateCopySetting()
+        public ImmediateCopySetting() : base("ImmediateCopyOption")
         {
-            ObjectType = "ImmediateCopyOption";
         }
 
         /// <summary> Initializes a new instance of <see cref="ImmediateCopySetting"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImmediateCopySetting(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImmediateCopySetting(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType, additionalBinaryDataProperties)
         {
-            ObjectType = objectType ?? "ImmediateCopyOption";
         }
     }
 }

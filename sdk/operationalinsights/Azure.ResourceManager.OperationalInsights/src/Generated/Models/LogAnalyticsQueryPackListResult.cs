@@ -8,73 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> Describes the list of Log Analytics QueryPack resources. </summary>
+    /// <summary> The response of a LogAnalyticsQueryPack list operation. </summary>
     internal partial class LogAnalyticsQueryPackListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackListResult"/>. </summary>
-        /// <param name="value"> List of Log Analytics QueryPack definitions. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <param name="value"> The LogAnalyticsQueryPack items on this page. </param>
         internal LogAnalyticsQueryPackListResult(IEnumerable<LogAnalyticsQueryPackData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackListResult"/>. </summary>
-        /// <param name="value"> List of Log Analytics QueryPack definitions. </param>
-        /// <param name="nextLink"> The URI to get the next set of Log Analytics QueryPack definitions if too many QueryPacks where returned in the result set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogAnalyticsQueryPackListResult(IReadOnlyList<LogAnalyticsQueryPackData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The LogAnalyticsQueryPack items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LogAnalyticsQueryPackListResult(IList<LogAnalyticsQueryPackData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackListResult"/> for deserialization. </summary>
-        internal LogAnalyticsQueryPackListResult()
-        {
-        }
+        /// <summary> The LogAnalyticsQueryPack items on this page. </summary>
+        [WirePath("value")]
+        public IList<LogAnalyticsQueryPackData> Value { get; }
 
-        /// <summary> List of Log Analytics QueryPack definitions. </summary>
-        public IReadOnlyList<LogAnalyticsQueryPackData> Value { get; }
-        /// <summary> The URI to get the next set of Log Analytics QueryPack definitions if too many QueryPacks where returned in the result set. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

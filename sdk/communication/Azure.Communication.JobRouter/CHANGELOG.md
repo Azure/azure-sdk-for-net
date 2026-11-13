@@ -5,6 +5,8 @@
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Added `JobRouterClientSettings` to support creating a `JobRouterClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `JobRouterAdministrationClientSettings` to support creating a `JobRouterAdministrationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Breaking Changes
 

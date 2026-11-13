@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExpressRouteCircuitSkuFamily : IEquatable<ExpressRouteCircuitSkuFamily>
     {
         private readonly string _value;
+        /// <summary> UnlimitedData. </summary>
+        private const string UnlimitedDataValue = "UnlimitedData";
+        /// <summary> MeteredData. </summary>
+        private const string MeteredDataValue = "MeteredData";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitSkuFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRouteCircuitSkuFamily(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnlimitedDataValue = "UnlimitedData";
-        private const string MeteredDataValue = "MeteredData";
+            _value = value;
+        }
 
         /// <summary> UnlimitedData. </summary>
         public static ExpressRouteCircuitSkuFamily UnlimitedData { get; } = new ExpressRouteCircuitSkuFamily(UnlimitedDataValue);
+
         /// <summary> MeteredData. </summary>
         public static ExpressRouteCircuitSkuFamily MeteredData { get; } = new ExpressRouteCircuitSkuFamily(MeteredDataValue);
+
         /// <summary> Determines if two <see cref="ExpressRouteCircuitSkuFamily"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressRouteCircuitSkuFamily left, ExpressRouteCircuitSkuFamily right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressRouteCircuitSkuFamily"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressRouteCircuitSkuFamily left, ExpressRouteCircuitSkuFamily right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteCircuitSkuFamily"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressRouteCircuitSkuFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressRouteCircuitSkuFamily(string value) => new ExpressRouteCircuitSkuFamily(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressRouteCircuitSkuFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressRouteCircuitSkuFamily?(string value) => value == null ? null : new ExpressRouteCircuitSkuFamily(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressRouteCircuitSkuFamily other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressRouteCircuitSkuFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

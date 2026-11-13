@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupProtectedItemCollection
@@ -23,10 +24,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <description>ProtectedItems_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="BackupProtectedItemResource"/></description>
         /// </item>
@@ -40,9 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BackupProtectedItemResource> CreateOrUpdate(WaitUntil waitUntil, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdate(waitUntil, protectedItemName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
-        }
+            => CreateOrUpdate(waitUntil, protectedItemName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Enables backup of an item or to modifies the backup policy information of an already backed up item. This is an
@@ -57,10 +52,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <description>ProtectedItems_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="BackupProtectedItemResource"/></description>
         /// </item>
@@ -73,9 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation<BackupProtectedItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdateAsync(waitUntil, protectedItemName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
-        }
+        public virtual async Task<ArmOperation<BackupProtectedItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken)
+            => await CreateOrUpdateAsync(waitUntil, protectedItemName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

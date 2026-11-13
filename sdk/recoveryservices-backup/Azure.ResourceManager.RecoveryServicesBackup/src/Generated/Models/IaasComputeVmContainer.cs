@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class IaasComputeVmContainer : IaasVmContainer
     {
         /// <summary> Initializes a new instance of <see cref="IaasComputeVmContainer"/>. </summary>
-        public IaasComputeVmContainer()
+        public IaasComputeVmContainer() : base("Microsoft.Compute/virtualMachines")
         {
-            ContainerType = ProtectableContainerType.MicrosoftComputeVirtualMachines;
         }
 
         /// <summary> Initializes a new instance of <see cref="IaasComputeVmContainer"/>. </summary>
@@ -32,13 +31,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
         /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        internal IaasComputeVmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData, virtualMachineId, virtualMachineVersion, resourceGroup)
+        internal IaasComputeVmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, AzureLocation? sourceLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, sourceLocation, additionalBinaryDataProperties, virtualMachineId, virtualMachineVersion, resourceGroup)
         {
-            ContainerType = containerType;
         }
     }
 }

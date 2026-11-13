@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct StorageCacheUsernameSourceType : IEquatable<StorageCacheUsernameSourceType>
     {
         private readonly string _value;
+        /// <summary> AD. </summary>
+        private const string ADValue = "AD";
+        /// <summary> LDAP. </summary>
+        private const string LdapValue = "LDAP";
+        /// <summary> File. </summary>
+        private const string FileValue = "File";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheUsernameSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageCacheUsernameSourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ADValue = "AD";
-        private const string LdapValue = "LDAP";
-        private const string FileValue = "File";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> AD. </summary>
         public static StorageCacheUsernameSourceType AD { get; } = new StorageCacheUsernameSourceType(ADValue);
+
         /// <summary> LDAP. </summary>
         public static StorageCacheUsernameSourceType Ldap { get; } = new StorageCacheUsernameSourceType(LdapValue);
+
         /// <summary> File. </summary>
         public static StorageCacheUsernameSourceType File { get; } = new StorageCacheUsernameSourceType(FileValue);
+
         /// <summary> None. </summary>
         public static StorageCacheUsernameSourceType None { get; } = new StorageCacheUsernameSourceType(NoneValue);
+
         /// <summary> Determines if two <see cref="StorageCacheUsernameSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageCacheUsernameSourceType left, StorageCacheUsernameSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageCacheUsernameSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageCacheUsernameSourceType left, StorageCacheUsernameSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheUsernameSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageCacheUsernameSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageCacheUsernameSourceType(string value) => new StorageCacheUsernameSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageCacheUsernameSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageCacheUsernameSourceType?(string value) => value == null ? null : new StorageCacheUsernameSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageCacheUsernameSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageCacheUsernameSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

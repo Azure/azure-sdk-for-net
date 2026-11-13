@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Reservations.Models
     public readonly partial struct QuotaRequestState : IEquatable<QuotaRequestState>
     {
         private readonly string _value;
+        /// <summary> Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
 
         /// <summary> Initializes a new instance of <see cref="QuotaRequestState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QuotaRequestState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AcceptedValue = "Accepted";
-        private const string InvalidValue = "Invalid";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string InProgressValue = "InProgress";
+            _value = value;
+        }
 
         /// <summary> Accepted. </summary>
         public static QuotaRequestState Accepted { get; } = new QuotaRequestState(AcceptedValue);
+
         /// <summary> Invalid. </summary>
         public static QuotaRequestState Invalid { get; } = new QuotaRequestState(InvalidValue);
+
         /// <summary> Succeeded. </summary>
         public static QuotaRequestState Succeeded { get; } = new QuotaRequestState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static QuotaRequestState Failed { get; } = new QuotaRequestState(FailedValue);
+
         /// <summary> InProgress. </summary>
         public static QuotaRequestState InProgress { get; } = new QuotaRequestState(InProgressValue);
+
         /// <summary> Determines if two <see cref="QuotaRequestState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QuotaRequestState left, QuotaRequestState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QuotaRequestState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QuotaRequestState left, QuotaRequestState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QuotaRequestState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QuotaRequestState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QuotaRequestState(string value) => new QuotaRequestState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QuotaRequestState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QuotaRequestState?(string value) => value == null ? null : new QuotaRequestState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QuotaRequestState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QuotaRequestState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

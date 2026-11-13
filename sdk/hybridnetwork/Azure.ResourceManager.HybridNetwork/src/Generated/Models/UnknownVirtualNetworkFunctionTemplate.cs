@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Unknown version of VirtualNetworkFunctionTemplate. </summary>
     internal partial class UnknownVirtualNetworkFunctionTemplate : VirtualNetworkFunctionTemplate
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVirtualNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVirtualNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(nfviType, serializedAdditionalRawData)
-        {
-            NfviType = nfviType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownVirtualNetworkFunctionTemplate"/> for deserialization. </summary>
-        internal UnknownVirtualNetworkFunctionTemplate()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownVirtualNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(nfviType != default ? nfviType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

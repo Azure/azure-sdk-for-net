@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class BlobAuditingPolicyStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BlobAuditingPolicyState value) => value switch
         {
             BlobAuditingPolicyState.Enabled => "Enabled",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobAuditingPolicyState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BlobAuditingPolicyState ToBlobAuditingPolicyState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return BlobAuditingPolicyState.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return BlobAuditingPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return BlobAuditingPolicyState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return BlobAuditingPolicyState.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobAuditingPolicyState value.");
         }
     }

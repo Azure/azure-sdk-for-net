@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.GeneratorAgent.csproj" />
+  <Project Path="tests/Azure.GeneratorAgent.Tests.csproj" />
+</Solution>

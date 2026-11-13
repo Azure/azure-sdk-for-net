@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement.Tests
             return new(Task.CompletedTask);
         }
 
-        public bool TryComplete() => true;
+        public Task CleanUpAsync() => Task.CompletedTask;
 
         /// <summary>
         /// Attmpts to read an item from internal queue, then completes
@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement.Tests
             if (_queue.Count > 0)
             {
                 _queue.TryDequeue(out T result);
-                await Process?.Invoke(result, cancellationToken);
+                await Process?.Invoke(result);
                 return true;
             }
             else
@@ -70,11 +70,6 @@ namespace Azure.Storage.DataMovement.Tests
                 steps++;
             }
             return steps;
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return new ValueTask();
         }
     }
 }

@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The DependencyCondition. </summary>
+    /// <summary></summary>
     public readonly partial struct DependencyCondition : IEquatable<DependencyCondition>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Skipped. </summary>
+        private const string SkippedValue = "Skipped";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="DependencyCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DependencyCondition(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string SkippedValue = "Skipped";
-        private const string CompletedValue = "Completed";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static DependencyCondition Succeeded { get; } = new DependencyCondition(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static DependencyCondition Failed { get; } = new DependencyCondition(FailedValue);
+
         /// <summary> Skipped. </summary>
         public static DependencyCondition Skipped { get; } = new DependencyCondition(SkippedValue);
+
         /// <summary> Completed. </summary>
         public static DependencyCondition Completed { get; } = new DependencyCondition(CompletedValue);
+
         /// <summary> Determines if two <see cref="DependencyCondition"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DependencyCondition left, DependencyCondition right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DependencyCondition"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DependencyCondition left, DependencyCondition right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DependencyCondition"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DependencyCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DependencyCondition(string value) => new DependencyCondition(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DependencyCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DependencyCondition?(string value) => value == null ? null : new DependencyCondition(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DependencyCondition other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DependencyCondition other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

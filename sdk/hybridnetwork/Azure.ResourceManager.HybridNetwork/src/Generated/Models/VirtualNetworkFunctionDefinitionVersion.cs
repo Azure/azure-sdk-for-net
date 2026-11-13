@@ -14,9 +14,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class VirtualNetworkFunctionDefinitionVersion : NetworkFunctionDefinitionVersionPropertiesFormat
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkFunctionDefinitionVersion"/>. </summary>
-        public VirtualNetworkFunctionDefinitionVersion()
+        public VirtualNetworkFunctionDefinitionVersion() : base(NetworkFunctionType.VirtualNetworkFunction)
         {
-            NetworkFunctionType = NetworkFunctionType.VirtualNetworkFunction;
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkFunctionDefinitionVersion"/>. </summary>
@@ -25,23 +24,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="description"> The network function definition version description. </param>
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
         /// <param name="networkFunctionType"> The network function type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="networkFunctionTemplate">
-        /// Virtual network function template.
-        /// Please note <see cref="VirtualNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureCoreNetworkFunctionTemplate"/> and <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>.
-        /// </param>
-        internal VirtualNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType, IDictionary<string, BinaryData> serializedAdditionalRawData, VirtualNetworkFunctionTemplate networkFunctionTemplate) : base(provisioningState, versionState, description, deployParameters, networkFunctionType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="networkFunctionTemplate"> Virtual network function template. </param>
+        internal VirtualNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkFunctionTemplate networkFunctionTemplate) : base(provisioningState, versionState, description, deployParameters, networkFunctionType, additionalBinaryDataProperties)
         {
             NetworkFunctionTemplate = networkFunctionTemplate;
-            NetworkFunctionType = networkFunctionType;
         }
 
-        /// <summary>
-        /// Virtual network function template.
-        /// Please note <see cref="VirtualNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureCoreNetworkFunctionTemplate"/> and <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>.
-        /// </summary>
+        /// <summary> Virtual network function template. </summary>
         public VirtualNetworkFunctionTemplate NetworkFunctionTemplate { get; set; }
     }
 }

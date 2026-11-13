@@ -7,30 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Datastore Service Principal secrets. </summary>
     public partial class MachineLearningServicePrincipalDatastoreSecrets : MachineLearningDatastoreSecrets
     {
+        private string _clientSecret;
+        private bool _clientSecretIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicePrincipalDatastoreSecrets"/>. </summary>
-        public MachineLearningServicePrincipalDatastoreSecrets()
+        public MachineLearningServicePrincipalDatastoreSecrets() : base(SecretsType.ServicePrincipal)
         {
-            SecretsType = SecretsType.ServicePrincipal;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicePrincipalDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientSecret"> Service principal secret. </param>
-        internal MachineLearningServicePrincipalDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientSecret) : base(secretsType, serializedAdditionalRawData)
+        internal MachineLearningServicePrincipalDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string clientSecret) : base(secretsType, additionalBinaryDataProperties)
         {
-            ClientSecret = clientSecret;
-            SecretsType = secretsType;
+            _clientSecret = clientSecret;
         }
 
         /// <summary> Service principal secret. </summary>
         [WirePath("clientSecret")]
-        public string ClientSecret { get; set; }
+        public string ClientSecret
+        {
+            get
+            {
+                return _clientSecret;
+            }
+            set
+            {
+                _clientSecret = value;
+                _clientSecretIsDefined = true;
+            }
+        }
     }
 }

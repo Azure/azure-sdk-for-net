@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct AutoProvisionState : IEquatable<AutoProvisionState>
     {
         private readonly string _value;
+        /// <summary> Install missing security agent on VMs automatically. </summary>
+        private const string OnValue = "On";
+        /// <summary> Do not install security agent on the VMs automatically. </summary>
+        private const string OffValue = "Off";
 
         /// <summary> Initializes a new instance of <see cref="AutoProvisionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoProvisionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OnValue = "On";
-        private const string OffValue = "Off";
+            _value = value;
+        }
 
         /// <summary> Install missing security agent on VMs automatically. </summary>
         public static AutoProvisionState On { get; } = new AutoProvisionState(OnValue);
+
         /// <summary> Do not install security agent on the VMs automatically. </summary>
         public static AutoProvisionState Off { get; } = new AutoProvisionState(OffValue);
+
         /// <summary> Determines if two <see cref="AutoProvisionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoProvisionState left, AutoProvisionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoProvisionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoProvisionState left, AutoProvisionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoProvisionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoProvisionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoProvisionState(string value) => new AutoProvisionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoProvisionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoProvisionState?(string value) => value == null ? null : new AutoProvisionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoProvisionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoProvisionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

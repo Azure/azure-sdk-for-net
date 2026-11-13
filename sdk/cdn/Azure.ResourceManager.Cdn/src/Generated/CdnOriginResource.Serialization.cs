@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Cdn
 {
+    /// <summary></summary>
     public partial class CdnOriginResource : IJsonModel<CdnOriginData>
     {
-        private static CdnOriginData s_dataDeserializationInstance;
-        private static CdnOriginData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CdnOriginData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CdnOriginData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CdnOriginData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CdnOriginData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CdnOriginData>)Data).Write(writer, options);
 
-        CdnOriginData IJsonModel<CdnOriginData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnOriginData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnOriginData IJsonModel<CdnOriginData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CdnOriginData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CdnOriginData>(Data, options, AzureResourceManagerCdnContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CdnOriginData IPersistableModel<CdnOriginData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnOriginData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<CdnOriginData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnOriginData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CdnOriginData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

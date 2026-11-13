@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Supported operating system details. </summary>
     public partial class SiteRecoverySupportedOSDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOSDetails"/>. </summary>
         internal SiteRecoverySupportedOSDetails()
@@ -55,19 +27,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="osName"> The name. </param>
         /// <param name="osType"> The type. </param>
         /// <param name="osVersions"> The list of version for operating system. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoverySupportedOSDetails(string osName, string osType, IReadOnlyList<SiteRecoveryOSVersionWrapper> osVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoverySupportedOSDetails(string osName, string osType, IReadOnlyList<SiteRecoveryOSVersionWrapper> osVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSName = osName;
             OSType = osType;
             OSVersions = osVersions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name. </summary>
         public string OSName { get; }
+
         /// <summary> The type. </summary>
         public string OSType { get; }
+
         /// <summary> The list of version for operating system. </summary>
         public IReadOnlyList<SiteRecoveryOSVersionWrapper> OSVersions { get; }
     }

@@ -7,195 +7,20 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontDoorNetworkExperimentProfileData : IUtf8JsonSerializable, IJsonModel<FrontDoorNetworkExperimentProfileData>
+    /// <summary> Defines an Network Experiment Profile and lists of Experiments. </summary>
+    public partial class FrontDoorNetworkExperimentProfileData : TrackedResourceData, IJsonModel<FrontDoorNetworkExperimentProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorNetworkExperimentProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<FrontDoorNetworkExperimentProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorNetworkExperimentProfileData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
-            {
-                writer.WritePropertyName("resourceState"u8);
-                writer.WriteStringValue(ResourceState.Value.ToString());
-            }
-            if (Optional.IsDefined(EnabledState))
-            {
-                writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
-
-        FrontDoorNetworkExperimentProfileData IJsonModel<FrontDoorNetworkExperimentProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorNetworkExperimentProfileData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFrontDoorNetworkExperimentProfileData(document.RootElement, options);
-        }
-
-        internal static FrontDoorNetworkExperimentProfileData DeserializeFrontDoorNetworkExperimentProfileData(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ETag? etag = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
-            NetworkExperimentResourceState? resourceState = default;
-            FrontDoorExperimentState? enabledState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("resourceState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceState = new NetworkExperimentResourceState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("enabledState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enabledState = new FrontDoorExperimentState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FrontDoorNetworkExperimentProfileData(
-                id,
-                name,
-                type,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                etag,
-                resourceState,
-                enabledState,
-                serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<FrontDoorNetworkExperimentProfileData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorNetworkExperimentProfileData>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorNetworkExperimentProfileData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -205,22 +30,36 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-        FrontDoorNetworkExperimentProfileData IPersistableModel<FrontDoorNetworkExperimentProfileData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorNetworkExperimentProfileData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FrontDoorNetworkExperimentProfileData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-            switch (format)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontDoorNetworkExperimentProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="frontDoorNetworkExperimentProfileData"> The <see cref="FrontDoorNetworkExperimentProfileData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FrontDoorNetworkExperimentProfileData frontDoorNetworkExperimentProfileData)
+        {
+            if (frontDoorNetworkExperimentProfileData == null)
             {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFrontDoorNetworkExperimentProfileData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support reading '{options.Format}' format.");
+                return null;
             }
+            return RequestContent.Create(frontDoorNetworkExperimentProfileData, ModelSerializationExtensions.WireOptions);
         }
 
-        string IPersistableModel<FrontDoorNetworkExperimentProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FrontDoorNetworkExperimentProfileData"/> from. </param>
+        internal static FrontDoorNetworkExperimentProfileData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFrontDoorNetworkExperimentProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<FrontDoorNetworkExperimentProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
     }
 }

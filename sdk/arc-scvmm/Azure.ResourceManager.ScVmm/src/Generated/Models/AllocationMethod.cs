@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> Allocation method. </summary>
+    /// <summary> Network address allocation method. </summary>
     public readonly partial struct AllocationMethod : IEquatable<AllocationMethod>
     {
         private readonly string _value;
+        /// <summary> Dynamically allocated address. </summary>
+        private const string DynamicValue = "Dynamic";
+        /// <summary> Statically allocated address. </summary>
+        private const string StaticValue = "Static";
 
         /// <summary> Initializes a new instance of <see cref="AllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AllocationMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DynamicValue = "Dynamic";
-        private const string StaticValue = "Static";
-
-        /// <summary> Dynamic. </summary>
+        /// <summary> Dynamically allocated address. </summary>
         public static AllocationMethod Dynamic { get; } = new AllocationMethod(DynamicValue);
-        /// <summary> Static. </summary>
+
+        /// <summary> Statically allocated address. </summary>
         public static AllocationMethod Static { get; } = new AllocationMethod(StaticValue);
+
         /// <summary> Determines if two <see cref="AllocationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AllocationMethod left, AllocationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AllocationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AllocationMethod left, AllocationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AllocationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AllocationMethod(string value) => new AllocationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AllocationMethod?(string value) => value == null ? null : new AllocationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AllocationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AllocationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

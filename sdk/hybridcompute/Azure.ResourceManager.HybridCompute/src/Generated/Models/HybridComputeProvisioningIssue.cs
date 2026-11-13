@@ -7,87 +7,88 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Details on issues that occurred during provisioning. </summary>
     public partial class HybridComputeProvisioningIssue
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeProvisioningIssue"/>. </summary>
         internal HybridComputeProvisioningIssue()
         {
-            SuggestedResourceIds = new ChangeTrackingList<string>();
-            SuggestedAccessRules = new ChangeTrackingList<HybridComputeAccessRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the provisioning issue. </param>
-        /// <param name="issueType"> Issue type. </param>
-        /// <param name="severity"> Severity of the provisioning issue. </param>
-        /// <param name="description"> Description of the provisioning issue. </param>
-        /// <param name="suggestedResourceIds"> ARM Ids of the resources that can be associated to the same perimeter to remediate the issue. </param>
-        /// <param name="suggestedAccessRules"> Access rules that can be added to the perimeter to remediate the issue. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeProvisioningIssue(string name, HybridComputeProvisioningIssueType? issueType, HybridComputeProvisioningIssueSeverity? severity, string description, IReadOnlyList<string> suggestedResourceIds, IReadOnlyList<HybridComputeAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Provisioning issue properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeProvisioningIssue(string name, ProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            IssueType = issueType;
-            Severity = severity;
-            Description = description;
-            SuggestedResourceIds = suggestedResourceIds;
-            SuggestedAccessRules = suggestedAccessRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the provisioning issue. </summary>
         [WirePath("name")]
         public string Name { get; }
+
+        /// <summary> Provisioning issue properties. </summary>
+        [WirePath("properties")]
+        internal ProvisioningIssueProperties Properties { get; }
+
         /// <summary> Issue type. </summary>
         [WirePath("properties.issueType")]
-        public HybridComputeProvisioningIssueType? IssueType { get; }
+        public HybridComputeProvisioningIssueType? IssueType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IssueType;
+            }
+        }
+
         /// <summary> Severity of the provisioning issue. </summary>
         [WirePath("properties.severity")]
-        public HybridComputeProvisioningIssueSeverity? Severity { get; }
+        public HybridComputeProvisioningIssueSeverity? Severity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Severity;
+            }
+        }
+
         /// <summary> Description of the provisioning issue. </summary>
         [WirePath("properties.description")]
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> ARM Ids of the resources that can be associated to the same perimeter to remediate the issue. </summary>
         [WirePath("properties.suggestedResourceIds")]
-        public IReadOnlyList<string> SuggestedResourceIds { get; }
+        public IReadOnlyList<string> SuggestedResourceIds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SuggestedResourceIds;
+            }
+        }
+
         /// <summary> Access rules that can be added to the perimeter to remediate the issue. </summary>
         [WirePath("properties.suggestedAccessRules")]
-        public IReadOnlyList<HybridComputeAccessRule> SuggestedAccessRules { get; }
+        public IReadOnlyList<HybridComputeAccessRule> SuggestedAccessRules
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SuggestedAccessRules;
+            }
+        }
     }
 }

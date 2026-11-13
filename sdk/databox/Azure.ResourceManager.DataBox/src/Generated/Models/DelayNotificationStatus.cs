@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataBox.Models
     public readonly partial struct DelayNotificationStatus : IEquatable<DelayNotificationStatus>
     {
         private readonly string _value;
+        /// <summary> Delay is still active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Delay has been resolved. </summary>
+        private const string ResolvedValue = "Resolved";
 
         /// <summary> Initializes a new instance of <see cref="DelayNotificationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DelayNotificationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string ResolvedValue = "Resolved";
+            _value = value;
+        }
 
         /// <summary> Delay is still active. </summary>
         public static DelayNotificationStatus Active { get; } = new DelayNotificationStatus(ActiveValue);
+
         /// <summary> Delay has been resolved. </summary>
         public static DelayNotificationStatus Resolved { get; } = new DelayNotificationStatus(ResolvedValue);
+
         /// <summary> Determines if two <see cref="DelayNotificationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DelayNotificationStatus left, DelayNotificationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DelayNotificationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DelayNotificationStatus left, DelayNotificationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DelayNotificationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DelayNotificationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DelayNotificationStatus(string value) => new DelayNotificationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DelayNotificationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DelayNotificationStatus?(string value) => value == null ? null : new DelayNotificationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DelayNotificationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DelayNotificationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public readonly partial struct DataReplicationTaskState : IEquatable<DataReplicationTaskState>
     {
         private readonly string _value;
+        /// <summary> Task has not been started. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Task is in progress. </summary>
+        private const string StartedValue = "Started";
+        /// <summary> Task has completed successfully. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Task failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Task has been cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> Task has been skipped. </summary>
+        private const string SkippedValue = "Skipped";
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationTaskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataReplicationTaskState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string StartedValue = "Started";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
-        private const string SkippedValue = "Skipped";
+            _value = value;
+        }
 
         /// <summary> Task has not been started. </summary>
         public static DataReplicationTaskState Pending { get; } = new DataReplicationTaskState(PendingValue);
+
         /// <summary> Task is in progress. </summary>
         public static DataReplicationTaskState Started { get; } = new DataReplicationTaskState(StartedValue);
+
         /// <summary> Task has completed successfully. </summary>
         public static DataReplicationTaskState Succeeded { get; } = new DataReplicationTaskState(SucceededValue);
+
         /// <summary> Task failed. </summary>
         public static DataReplicationTaskState Failed { get; } = new DataReplicationTaskState(FailedValue);
+
         /// <summary> Task has been cancelled. </summary>
         public static DataReplicationTaskState Cancelled { get; } = new DataReplicationTaskState(CancelledValue);
+
         /// <summary> Task has been skipped. </summary>
         public static DataReplicationTaskState Skipped { get; } = new DataReplicationTaskState(SkippedValue);
+
         /// <summary> Determines if two <see cref="DataReplicationTaskState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataReplicationTaskState left, DataReplicationTaskState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataReplicationTaskState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataReplicationTaskState left, DataReplicationTaskState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationTaskState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataReplicationTaskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataReplicationTaskState(string value) => new DataReplicationTaskState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataReplicationTaskState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataReplicationTaskState?(string value) => value == null ? null : new DataReplicationTaskState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataReplicationTaskState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataReplicationTaskState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

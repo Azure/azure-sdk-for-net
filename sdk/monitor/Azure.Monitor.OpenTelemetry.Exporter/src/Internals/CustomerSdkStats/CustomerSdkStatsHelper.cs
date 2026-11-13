@@ -1,0 +1,344 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Net.Sockets;
+using System.Threading.Tasks;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
+{
+    /// <summary>
+    /// Helper class for tracking customer SDK statistics.
+    /// </summary>
+    internal static class CustomerSdkStatsHelper
+    {
+        private static bool? s_isEnabled;
+
+        private static readonly IReadOnlyDictionary<int, string> StatusCodeDropReasons = new Dictionary<int, string>
+        {
+            [400] = "Bad request",
+            [401] = "Unauthorized",
+            [402] = "Daily quota exceeded",
+            [403] = "Forbidden",
+            [404] = "Not found",
+            [408] = "Request timeout",
+            [413] = "Payload too large",
+            [429] = "Too many requests",
+            [500] = "Internal server error",
+            [502] = "Bad gateway",
+            [503] = "Service unavailable",
+            [504] = "Gateway timeout"
+        };
+
+        /// <summary>
+        /// Checks if customer SDK stats are enabled.
+        /// </summary>
+        /// <returns>True unless explicitly disabled via APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true.</returns>
+        public static bool IsEnabled()
+        {
+            if (s_isEnabled == null)
+            {
+                // On-by-default per the customer-facing SDKStats spec: emit unless the user opts out.
+                var disabledValue = DefaultPlatform.Instance.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_SDKSTATS_DISABLED);
+                s_isEnabled = !string.Equals(disabledValue, "true", StringComparison.OrdinalIgnoreCase);
+            }
+
+            return s_isEnabled.Value;
+        }
+
+        /// <summary>
+        /// Gets the configured export interval for customer SDK stats in milliseconds.
+        /// </summary>
+        /// <returns>Export interval in milliseconds (default: 900000 = 15 minutes)</returns>
+        public static int GetExportIntervalMilliseconds()
+        {
+            var intervalValue = DefaultPlatform.Instance.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL);
+
+            if (int.TryParse(intervalValue, out int intervalSeconds) && intervalSeconds > 0)
+            {
+                var intervalMs = Math.Max(60_000, intervalSeconds * 1_000); // Minimum 1 minute
+                return Math.Min(intervalMs, 24 * 60 * 60 * 1_000); // Maximum 24 hours
+            }
+
+            return 900_000;
+        }
+
+        public static string? GetDropReason(Exception exception)
+        {
+            return exception switch
+            {
+                TimeoutException => "Timeout exception",
+                TaskCanceledException when exception.InnerException is TimeoutException => "Timeout exception",
+                OperationCanceledException => "Timeout exception",
+                HttpRequestException => "Network exception",
+                SocketException => "Network exception",
+                DriveNotFoundException => "Storage exception",
+                FileNotFoundException => "Storage exception",
+                UnauthorizedAccessException => "Storage exception",
+                PathTooLongException => "Storage exception",
+                IOException => "Storage exception",
+                _ => null
+            };
+        }
+
+        /// <summary>
+        /// Categorizes an HTTP status code into a human-readable drop reason.
+        /// Follows the Python categorize_status_code function logic.
+        /// </summary>
+        /// <param name="statusCode">HTTP status code to categorize</param>
+        /// <returns>Human-readable drop reason</returns>
+        public static string CategorizeStatusCode(int statusCode)
+        {
+            if (StatusCodeDropReasons.TryGetValue(statusCode, out var reason))
+            {
+                return reason;
+            }
+
+            if (statusCode >= 400 && statusCode < 500)
+            {
+                return "Client error 4xx";
+            }
+
+            if (statusCode >= 500 && statusCode < 600)
+            {
+                return "Server error 5xx";
+            }
+
+            return $"status_{statusCode}";
+        }
+
+        /// <summary>
+        /// Tracks successful telemetry transmission using pre-computed counts.
+        /// </summary>
+        /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics</param>
+        public static void TrackSuccess(TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter)
+        {
+            if (!IsEnabled() || telemetrySchemaTypeCounter == null)
+                return;
+
+            try
+            {
+                if (telemetrySchemaTypeCounter._requestCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.Request);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._requestCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._dependencyCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.Dependency);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._dependencyCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._exceptionCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.Exception);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._exceptionCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._eventCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.CustomEvent);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._eventCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._metricCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.CustomMetric);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._metricCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._traceCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.Trace);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._traceCount, tags);
+                }
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.CustomerSdkStatsTrackingFailed("success", ex);
+            }
+        }
+
+        /// <summary>
+        /// Tracks dropped telemetry using pre-computed counts.
+        /// According to the specification:
+        /// - For non-retryable status codes: use the actual HTTP status code (401, 403, etc.) as dropCode
+        /// - For other scenarios: use DropCode enum values (CLIENT_EXCEPTION, CLIENT_READONLY, etc.)
+        /// </summary>
+        /// <param name="persistentBlobProviderExists">Indicates if persistent blob storage is configured</param>
+        /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics</param>
+        public static void TrackDropped(TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool persistentBlobProviderExists)
+        {
+            TrackDropped(telemetrySchemaTypeCounter, (int)(persistentBlobProviderExists == false ? DropCode.ClientStorageDisabled : DropCode.ClientPersistenceIssue), null);
+        }
+
+        /// <summary>
+        /// Tracks dropped telemetry using pre-computed counts.
+        /// </summary>
+        /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics</param>
+        /// <param name="dropCode">Drop code - either HTTP status code or DropCode enum value cast to int</param>
+        /// <param name="dropReason">Optional detailed reason for the dropped telemetry</param>
+        public static void TrackDropped(TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, int dropCode, string? dropReason = null)
+        {
+            if (!IsEnabled() || telemetrySchemaTypeCounter == null)
+                return;
+
+            try
+            {
+                string? dropCodeString = null;
+
+                if (dropCode > 0 && dropCode < 10)
+                {
+                    DropCode enumValue = (DropCode)dropCode;
+                    dropCodeString = enumValue.ToDimensionString();
+                }
+
+                dropCodeString ??= dropCode.ToString();
+
+                TrackDroppedBySuccess(
+                    TelemetryType.Request,
+                    telemetrySchemaTypeCounter._requestCount,
+                    telemetrySchemaTypeCounter._requestSuccessCount,
+                    telemetrySchemaTypeCounter._requestFailureCount,
+                    dropCodeString,
+                    dropReason);
+
+                TrackDroppedBySuccess(
+                    TelemetryType.Dependency,
+                    telemetrySchemaTypeCounter._dependencyCount,
+                    telemetrySchemaTypeCounter._dependencySuccessCount,
+                    telemetrySchemaTypeCounter._dependencyFailureCount,
+                    dropCodeString,
+                    dropReason);
+
+                if (telemetrySchemaTypeCounter._exceptionCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.Exception, dropCodeString, dropReason);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._exceptionCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._eventCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.CustomEvent, dropCodeString, dropReason);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._eventCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._metricCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.CustomMetric, dropCodeString, dropReason);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._metricCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._traceCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.Trace, dropCodeString, dropReason);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._traceCount, tags);
+                }
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.CustomerSdkStatsTrackingFailed("dropped", ex);
+            }
+        }
+
+        private static void TrackDroppedBySuccess(
+            TelemetryType telemetryType,
+            int totalCount,
+            int successCount,
+            int failureCount,
+            string dropCode,
+            string? dropReason)
+        {
+            TrackDroppedCount(telemetryType, successCount, dropCode, dropReason, telemetrySuccess: true);
+            TrackDroppedCount(telemetryType, failureCount, dropCode, dropReason, telemetrySuccess: false);
+            TrackDroppedCount(telemetryType, Math.Max(0, totalCount - successCount - failureCount), dropCode, dropReason, telemetrySuccess: null);
+        }
+
+        private static void TrackDroppedCount(
+            TelemetryType telemetryType,
+            int count,
+            string dropCode,
+            string? dropReason,
+            bool? telemetrySuccess)
+        {
+            if (count == 0)
+            {
+                return;
+            }
+
+            var tags = CustomerSdkStatsDimensions.GetDroppedTags(telemetryType, dropCode, dropReason, telemetrySuccess);
+            CustomerSdkStatsMeters.ItemDroppedCount.Add(count, tags);
+        }
+
+        /// <summary>
+        /// Tracks retry telemetry using pre-computed counts.
+        /// </summary>
+        /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics</param>
+        /// <param name="retryCode">retry code - either HTTP status code or DropCode enum value cast to int</param>
+        /// <param name="retryReason">Optional detailed reason for the retry telemetry</param>
+        public static void TrackRetry(TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, int retryCode, string? retryReason = null)
+        {
+            if (!IsEnabled() || telemetrySchemaTypeCounter == null)
+                return;
+
+            try
+            {
+                string? retryCodeString = null;
+
+                if (retryCode > 0 && retryCode < 10)
+                {
+                    DropCode enumValue = (DropCode)retryCode;
+                    retryCodeString = enumValue.ToDimensionString();
+                }
+
+                retryCodeString ??= retryCode.ToString();
+
+                if (telemetrySchemaTypeCounter._requestCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.Request, retryCodeString, retryReason);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._requestCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._dependencyCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.Dependency, retryCodeString, retryReason);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._dependencyCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._exceptionCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.Exception, retryCodeString, retryReason);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._exceptionCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._eventCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.CustomEvent, retryCodeString, retryReason);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._eventCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._metricCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.CustomMetric, retryCodeString, retryReason);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._metricCount, tags);
+                }
+
+                if (telemetrySchemaTypeCounter._traceCount != 0)
+                {
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.Trace, retryCodeString, retryReason);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._traceCount, tags);
+                }
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.CustomerSdkStatsTrackingFailed("retry", ex);
+            }
+        }
+    }
+}

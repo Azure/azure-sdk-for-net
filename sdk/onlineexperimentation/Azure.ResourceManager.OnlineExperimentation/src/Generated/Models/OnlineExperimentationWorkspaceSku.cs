@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
     /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
     public partial class OnlineExperimentationWorkspaceSku
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceSku"/>. </summary>
         /// <param name="name"> The name of the SKU. Ex - F0, P0. It is typically a letter+number code. </param>
@@ -55,21 +26,17 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceSku"/>. </summary>
         /// <param name="name"> The name of the SKU. Ex - F0, P0. It is typically a letter+number code. </param>
         /// <param name="tier"> The name of the SKU tier. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineExperimentationWorkspaceSku(OnlineExperimentationWorkspaceSkuName name, OnlineExperimentationWorkspaceSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OnlineExperimentationWorkspaceSku(OnlineExperimentationWorkspaceSkuName name, OnlineExperimentationWorkspaceSkuTier? tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceSku"/> for deserialization. </summary>
-        internal OnlineExperimentationWorkspaceSku()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the SKU. Ex - F0, P0. It is typically a letter+number code. </summary>
         public OnlineExperimentationWorkspaceSkuName Name { get; set; }
+
         /// <summary> The name of the SKU tier. </summary>
         public OnlineExperimentationWorkspaceSkuTier? Tier { get; }
     }

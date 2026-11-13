@@ -130,7 +130,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             var size = Constants.KB;
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            string path = await CreateRandomFileAsync(test.DirectoryPath, size:0);
+            string path = await CreateRandomFileAsync(test.DirectoryPath, size: 0);
             var data = GetRandomBuffer(size);
             File.WriteAllBytes(path, data);
 

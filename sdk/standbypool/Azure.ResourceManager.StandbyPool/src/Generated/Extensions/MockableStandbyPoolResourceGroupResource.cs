@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StandbyPool;
 
 namespace Azure.ResourceManager.StandbyPool.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableStandbyPoolResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableStandbyPoolResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableStandbyPoolResourceGroupResource for mocking. </summary>
         protected MockableStandbyPoolResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStandbyPoolResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableStandbyPoolResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableStandbyPoolResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of StandbyVirtualMachinePoolResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StandbyVirtualMachinePoolResources and their operations over a StandbyVirtualMachinePoolResource. </returns>
+        /// <summary> Gets a collection of StandbyVirtualMachinePools in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of StandbyVirtualMachinePools and their operations over a StandbyVirtualMachinePoolResource. </returns>
         public virtual StandbyVirtualMachinePoolCollection GetStandbyVirtualMachinePools()
         {
             return GetCachedClient(client => new StandbyVirtualMachinePoolCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// Get a StandbyVirtualMachinePoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyVirtualMachinePools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<StandbyVirtualMachinePoolResource>> GetStandbyVirtualMachinePoolAsync(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
+
             return await GetStandbyVirtualMachinePools().GetAsync(standbyVirtualMachinePoolName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// Get a StandbyVirtualMachinePoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyVirtualMachinePools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +91,13 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         [ForwardsClientCalls]
         public virtual Response<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePool(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
+
             return GetStandbyVirtualMachinePools().Get(standbyVirtualMachinePoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StandbyContainerGroupPoolResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StandbyContainerGroupPoolResources and their operations over a StandbyContainerGroupPoolResource. </returns>
+        /// <summary> Gets a collection of StandbyContainerGroupPools in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of StandbyContainerGroupPools and their operations over a StandbyContainerGroupPoolResource. </returns>
         public virtual StandbyContainerGroupPoolCollection GetStandbyContainerGroupPools()
         {
             return GetCachedClient(client => new StandbyContainerGroupPoolCollection(client, Id));
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// Get a StandbyContainerGroupPoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<StandbyContainerGroupPoolResource>> GetStandbyContainerGroupPoolAsync(string standbyContainerGroupPoolName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(standbyContainerGroupPoolName, nameof(standbyContainerGroupPoolName));
+
             return await GetStandbyContainerGroupPools().GetAsync(standbyContainerGroupPoolName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// Get a StandbyContainerGroupPoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +156,8 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         [ForwardsClientCalls]
         public virtual Response<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPool(string standbyContainerGroupPoolName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(standbyContainerGroupPoolName, nameof(standbyContainerGroupPoolName));
+
             return GetStandbyContainerGroupPools().Get(standbyContainerGroupPoolName, cancellationToken);
         }
     }

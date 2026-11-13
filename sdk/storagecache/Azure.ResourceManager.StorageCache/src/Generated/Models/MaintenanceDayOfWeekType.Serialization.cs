@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     internal static partial class MaintenanceDayOfWeekTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MaintenanceDayOfWeekType value) => value switch
         {
             MaintenanceDayOfWeekType.Monday => "Monday",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.StorageCache.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MaintenanceDayOfWeekType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MaintenanceDayOfWeekType ToMaintenanceDayOfWeekType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return MaintenanceDayOfWeekType.Monday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return MaintenanceDayOfWeekType.Tuesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return MaintenanceDayOfWeekType.Wednesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return MaintenanceDayOfWeekType.Thursday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return MaintenanceDayOfWeekType.Friday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return MaintenanceDayOfWeekType.Saturday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return MaintenanceDayOfWeekType.Sunday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday"))
+            {
+                return MaintenanceDayOfWeekType.Monday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday"))
+            {
+                return MaintenanceDayOfWeekType.Tuesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday"))
+            {
+                return MaintenanceDayOfWeekType.Wednesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday"))
+            {
+                return MaintenanceDayOfWeekType.Thursday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday"))
+            {
+                return MaintenanceDayOfWeekType.Friday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday"))
+            {
+                return MaintenanceDayOfWeekType.Saturday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday"))
+            {
+                return MaintenanceDayOfWeekType.Sunday;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MaintenanceDayOfWeekType value.");
         }
     }

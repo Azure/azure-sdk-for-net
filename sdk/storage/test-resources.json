@@ -28,6 +28,7 @@
         "contributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
         "blobDataOwnerRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
         "fileDataPrivilegedContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/69566ab7-960f-475b-8e7c-b3118f30c6bd')]",
+        "queueDataContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
         "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
         "primaryEncryptionScopeName": "[concat(parameters('baseName'), 'prim', '/encryptionScope')]",
         "secondaryAccountName": "[concat(parameters('baseName'), 'sec')]",
@@ -96,6 +97,15 @@
             "name": "[guid(concat('fileDataPrivilegedContributorRoleId', resourceGroup().id))]",
             "properties": {
                 "roleDefinitionId": "[variables('fileDataPrivilegedContributorRoleId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "[variables('authorizationApiVersion')]",
+            "name": "[guid(concat('queueDataContributorRoleId', resourceGroup().id))]",
+            "properties": {
+                "roleDefinitionId": "[variables('queueDataContributorRoleId')]",
                 "principalId": "[parameters('testApplicationOid')]"
             }
         },

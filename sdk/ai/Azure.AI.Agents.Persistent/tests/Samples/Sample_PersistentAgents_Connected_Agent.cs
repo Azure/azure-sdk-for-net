@@ -50,7 +50,7 @@ public partial class Sample_PersistentAgents_Connected_Agent : SamplesBase<AIAge
            model: modelDeploymentName,
            name: "main-agent",
            instructions: "You are a helpful assistant. When users ask mathematical questions, use the MathHelper tool to get specialized mathematical assistance.",
-           tools: [ connectedAgentTool ]);
+           tools: [connectedAgentTool]);
         #endregion
         // Create thread for communication
         #region Snippet:AgentsConnectedAgentAsync_CreateThreadMessage

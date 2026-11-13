@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> Unknown version of DevOpsOrganizationProfile. </summary>
     internal partial class UnknownDevOpsOrganizationProfile : DevOpsOrganizationProfile
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDevOpsOrganizationProfile"/>. </summary>
         /// <param name="kind"> Discriminator property for DevOpsOrganizationProfile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDevOpsOrganizationProfile(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
-        {
-            Kind = kind ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDevOpsOrganizationProfile"/> for deserialization. </summary>
-        internal UnknownDevOpsOrganizationProfile()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDevOpsOrganizationProfile(string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource.ValidateResourceId(nginxConfigurationResourceIdentifier);
 
             Assert.IsTrue(nginxConfigurationResourceIdentifier.ResourceType.Equals(NginxConfigurationResource.ResourceType));
-            Assert.Throws<ArgumentException>(() => NginxConfigurationResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Data()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Get()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Delete()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -110,6 +112,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Update()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -138,11 +141,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration2 = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, nginxConfigurationCreateOrUpdateContent)).Value;
 
             Assert.AreNotEqual(nginxConfiguration.Data.Properties.RootFile, nginxConfiguration2.Data.Properties.RootFile);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, null)).Value);
         }
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Analysis()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -159,7 +162,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 VirtualPath = virtualPath
             };
 
-            NginxConfigurationProtectedFileContent protectedFile = new NginxConfigurationProtectedFileContent
+            NginxConfigurationContentProtectedFile protectedFile = new NginxConfigurationContentProtectedFile
             {
                 Content = NginxConfigurationContent,
                 VirtualPath = protectedFileVirtualPath

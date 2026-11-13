@@ -10,18 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> Unknown version of ResolutionBase. </summary>
     internal partial class UnknownResolutionBase : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownResolutionBase"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownResolutionBase(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resolutionKind, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownResolutionBase"/> for deserialization. </summary>
-        internal UnknownResolutionBase()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownResolutionBase(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resolutionKind != default ? resolutionKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

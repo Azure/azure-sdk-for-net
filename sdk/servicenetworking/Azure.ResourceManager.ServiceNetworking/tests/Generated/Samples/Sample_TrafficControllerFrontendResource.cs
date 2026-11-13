@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFrontend()
         {
-            // Generated from example definition: 2025-01-01/FrontendGet.json
+            // Generated from example definition: 2025-03-01-preview/FrontendGet.json
             // this example is just showing the usage of "Frontend_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteFrontend()
         {
-            // Generated from example definition: 2025-01-01/FrontendDelete.json
+            // Generated from example definition: 2025-03-01-preview/FrontendDelete.json
             // this example is just showing the usage of "Frontend_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateFrontend()
         {
-            // Generated from example definition: 2025-01-01/FrontendPatch.json
+            // Generated from example definition: 2025-03-01-preview/FrontendPatch.json
             // this example is just showing the usage of "Frontend_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

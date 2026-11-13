@@ -1,18 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
-pr:
+trigger:
   branches:
     include:
     - main
-    - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/mysql/ci.mgmt.yml
-    - sdk/mysql/Azure.ResourceManager.MySql/
-
+    - sdk/mysql/Azure.ResourceManager.MySql
+    - sdk/mysql/Azure.Provisioning.MySql
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -21,7 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.MySql
       safeName: AzureResourceManagerMySql
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.MySql
-      ExpectedWarningsFilepath: None
+    - name: Azure.Provisioning.MySql
+      safeName: AzureProvisioningMySql

@@ -12,7 +12,6 @@ namespace Azure.AI.Language.Text.Authoring.Tests
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
         TextAnalysisAuthoringClientOptions.ServiceVersion.V2023_04_01,
-        TextAnalysisAuthoringClientOptions.ServiceVersion.V2023_04_15_Preview,
         TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview,
         TextAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview
     )]

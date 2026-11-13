@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The IaasVmSnapshotConsistencyType. </summary>
+    /// <summary></summary>
     public readonly partial struct IaasVmSnapshotConsistencyType : IEquatable<IaasVmSnapshotConsistencyType>
     {
         private readonly string _value;
+        private const string OnlyCrashConsistentValue = "OnlyCrashConsistent";
 
         /// <summary> Initializes a new instance of <see cref="IaasVmSnapshotConsistencyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IaasVmSnapshotConsistencyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string OnlyCrashConsistentValue = "OnlyCrashConsistent";
-
-        /// <summary> OnlyCrashConsistent. </summary>
+        /// <summary> Gets the OnlyCrashConsistent. </summary>
         public static IaasVmSnapshotConsistencyType OnlyCrashConsistent { get; } = new IaasVmSnapshotConsistencyType(OnlyCrashConsistentValue);
+
         /// <summary> Determines if two <see cref="IaasVmSnapshotConsistencyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IaasVmSnapshotConsistencyType left, IaasVmSnapshotConsistencyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IaasVmSnapshotConsistencyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IaasVmSnapshotConsistencyType left, IaasVmSnapshotConsistencyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IaasVmSnapshotConsistencyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IaasVmSnapshotConsistencyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IaasVmSnapshotConsistencyType(string value) => new IaasVmSnapshotConsistencyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IaasVmSnapshotConsistencyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IaasVmSnapshotConsistencyType?(string value) => value == null ? null : new IaasVmSnapshotConsistencyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IaasVmSnapshotConsistencyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IaasVmSnapshotConsistencyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

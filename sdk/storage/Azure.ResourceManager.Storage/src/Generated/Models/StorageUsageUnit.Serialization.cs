@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StorageUsageUnitExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageUsageUnit value) => value switch
         {
             StorageUsageUnit.Count => "Count",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageUsageUnit value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StorageUsageUnit ToStorageUsageUnit(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count")) return StorageUsageUnit.Count;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Bytes")) return StorageUsageUnit.Bytes;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Seconds")) return StorageUsageUnit.Seconds;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Percent")) return StorageUsageUnit.Percent;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CountsPerSecond")) return StorageUsageUnit.CountsPerSecond;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BytesPerSecond")) return StorageUsageUnit.BytesPerSecond;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count"))
+            {
+                return StorageUsageUnit.Count;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Bytes"))
+            {
+                return StorageUsageUnit.Bytes;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Seconds"))
+            {
+                return StorageUsageUnit.Seconds;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Percent"))
+            {
+                return StorageUsageUnit.Percent;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CountsPerSecond"))
+            {
+                return StorageUsageUnit.CountsPerSecond;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BytesPerSecond"))
+            {
+                return StorageUsageUnit.BytesPerSecond;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageUsageUnit value.");
         }
     }

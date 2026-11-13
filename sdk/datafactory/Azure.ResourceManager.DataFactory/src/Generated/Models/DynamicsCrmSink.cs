@@ -16,10 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Initializes a new instance of <see cref="DynamicsCrmSink"/>. </summary>
         /// <param name="writeBehavior"> The write behavior for the operation. </param>
-        public DynamicsCrmSink(DynamicsSinkWriteBehavior writeBehavior)
+        public DynamicsCrmSink(DynamicsSinkWriteBehavior writeBehavior) : base("DynamicsCrmSink")
         {
             WriteBehavior = writeBehavior;
-            CopySinkType = "DynamicsCrmSink";
         }
 
         /// <summary> Initializes a new instance of <see cref="DynamicsCrmSink"/>. </summary>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="writeBehavior"> The write behavior for the operation. </param>
         /// <param name="ignoreNullValues"> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="alternateKeyName"> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </param>
@@ -43,22 +42,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             AlternateKeyName = alternateKeyName;
             BypassBusinessLogicExecution = bypassBusinessLogicExecution;
             BypassPowerAutomateFlows = bypassPowerAutomateFlows;
-            CopySinkType = copySinkType ?? "DynamicsCrmSink";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DynamicsCrmSink"/> for deserialization. </summary>
-        internal DynamicsCrmSink()
-        {
         }
 
         /// <summary> The write behavior for the operation. </summary>
         public DynamicsSinkWriteBehavior WriteBehavior { get; set; }
+
         /// <summary> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> IgnoreNullValues { get; set; }
+
         /// <summary> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AlternateKeyName { get; set; }
+
         /// <summary> Controls the bypass of Dataverse custom business logic. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> BypassBusinessLogicExecution { get; set; }
+
         /// <summary> Controls the bypass of Power Automate flows. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> BypassPowerAutomateFlows { get; set; }
     }

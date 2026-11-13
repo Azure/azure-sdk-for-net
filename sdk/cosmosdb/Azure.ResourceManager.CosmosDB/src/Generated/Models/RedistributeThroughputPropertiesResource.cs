@@ -8,50 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Resource to redistribute throughput for Azure Cosmos DB resource. </summary>
     public partial class RedistributeThroughputPropertiesResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedistributeThroughputPropertiesResource"/>. </summary>
         /// <param name="throughputPolicy"> ThroughputPolicy to apply for throughput redistribution. </param>
         /// <param name="targetPhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <param name="sourcePhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetPhysicalPartitionThroughputInfo"/> or <paramref name="sourcePhysicalPartitionThroughputInfo"/> is null. </exception>
-        public RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IEnumerable<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo, IEnumerable<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo)
+        public RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IEnumerable<CosmosDBPhysicalPartitionThroughputInfo> targetPhysicalPartitionThroughputInfo, IEnumerable<CosmosDBPhysicalPartitionThroughputInfo> sourcePhysicalPartitionThroughputInfo)
         {
             Argument.AssertNotNull(targetPhysicalPartitionThroughputInfo, nameof(targetPhysicalPartitionThroughputInfo));
             Argument.AssertNotNull(sourcePhysicalPartitionThroughputInfo, nameof(sourcePhysicalPartitionThroughputInfo));
@@ -65,28 +37,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="throughputPolicy"> ThroughputPolicy to apply for throughput redistribution. </param>
         /// <param name="targetPhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
         /// <param name="sourcePhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IList<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo, IList<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IList<CosmosDBPhysicalPartitionThroughputInfo> targetPhysicalPartitionThroughputInfo, IList<CosmosDBPhysicalPartitionThroughputInfo> sourcePhysicalPartitionThroughputInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ThroughputPolicy = throughputPolicy;
             TargetPhysicalPartitionThroughputInfo = targetPhysicalPartitionThroughputInfo;
             SourcePhysicalPartitionThroughputInfo = sourcePhysicalPartitionThroughputInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RedistributeThroughputPropertiesResource"/> for deserialization. </summary>
-        internal RedistributeThroughputPropertiesResource()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ThroughputPolicy to apply for throughput redistribution. </summary>
         [WirePath("throughputPolicy")]
-        public ThroughputPolicyType ThroughputPolicy { get; set; }
+        public ThroughputPolicyType ThroughputPolicy { get; }
+
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
         [WirePath("targetPhysicalPartitionThroughputInfo")]
-        public IList<PhysicalPartitionThroughputInfoResource> TargetPhysicalPartitionThroughputInfo { get; }
+        public IList<CosmosDBPhysicalPartitionThroughputInfo> TargetPhysicalPartitionThroughputInfo { get; }
+
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
         [WirePath("sourcePhysicalPartitionThroughputInfo")]
-        public IList<PhysicalPartitionThroughputInfoResource> SourcePhysicalPartitionThroughputInfo { get; }
+        public IList<CosmosDBPhysicalPartitionThroughputInfo> SourcePhysicalPartitionThroughputInfo { get; }
     }
 }

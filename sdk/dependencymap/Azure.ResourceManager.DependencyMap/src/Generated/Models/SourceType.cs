@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DependencyMap;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DependencyMap.Models
     internal readonly partial struct SourceType : IEquatable<SourceType>
     {
         private readonly string _value;
+        /// <summary> OffAzure source type. </summary>
+        private const string OffAzureValue = "OffAzure";
 
         /// <summary> Initializes a new instance of <see cref="SourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OffAzureValue = "OffAzure";
+            _value = value;
+        }
 
         /// <summary> OffAzure source type. </summary>
         public static SourceType OffAzure { get; } = new SourceType(OffAzureValue);
+
         /// <summary> Determines if two <see cref="SourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceType left, SourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceType left, SourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceType(string value) => new SourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceType?(string value) => value == null ? null : new SourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Detailed status of current migration. </summary>
     public partial class DataMigrationStatusDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationStatusDetails"/>. </summary>
         internal DataMigrationStatusDetails()
@@ -67,8 +39,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="currentRestoringFilename"> File name that is currently being restored. </param>
         /// <param name="lastRestoredFilename"> Last restored file name. </param>
         /// <param name="pendingLogBackupsCount"> Total pending log backups. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationStatusDetails(string migrationState, DataMigrationSqlBackupSetInfo fullBackupSetInfo, DataMigrationSqlBackupSetInfo lastRestoredBackupSetInfo, IReadOnlyList<DataMigrationSqlBackupSetInfo> activeBackupSets, IReadOnlyList<string> invalidFiles, string blobContainerName, bool? isFullBackupRestored, string restoreBlockingReason, string completeRestoreErrorMessage, IReadOnlyList<string> fileUploadBlockingErrors, string currentRestoringFilename, string lastRestoredFilename, int? pendingLogBackupsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationStatusDetails(string migrationState, DataMigrationSqlBackupSetInfo fullBackupSetInfo, DataMigrationSqlBackupSetInfo lastRestoredBackupSetInfo, IReadOnlyList<DataMigrationSqlBackupSetInfo> activeBackupSets, IReadOnlyList<string> invalidFiles, string blobContainerName, bool? isFullBackupRestored, string restoreBlockingReason, string completeRestoreErrorMessage, IReadOnlyList<string> fileUploadBlockingErrors, string currentRestoringFilename, string lastRestoredFilename, int? pendingLogBackupsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigrationState = migrationState;
             FullBackupSetInfo = fullBackupSetInfo;
@@ -83,33 +55,45 @@ namespace Azure.ResourceManager.DataMigration.Models
             CurrentRestoringFilename = currentRestoringFilename;
             LastRestoredFilename = lastRestoredFilename;
             PendingLogBackupsCount = pendingLogBackupsCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Current State of Migration. </summary>
         public string MigrationState { get; }
+
         /// <summary> Details of full backup set. </summary>
         public DataMigrationSqlBackupSetInfo FullBackupSetInfo { get; }
+
         /// <summary> Last applied backup set information. </summary>
         public DataMigrationSqlBackupSetInfo LastRestoredBackupSetInfo { get; }
+
         /// <summary> Backup sets that are currently active. </summary>
         public IReadOnlyList<DataMigrationSqlBackupSetInfo> ActiveBackupSets { get; }
+
         /// <summary> Files that are not valid backup files. </summary>
         public IReadOnlyList<string> InvalidFiles { get; }
+
         /// <summary> Name of blob container. </summary>
         public string BlobContainerName { get; }
+
         /// <summary> Whether full backup has been applied to the target database or not. </summary>
         public bool? IsFullBackupRestored { get; }
+
         /// <summary> Restore blocking reason, if any. </summary>
         public string RestoreBlockingReason { get; }
+
         /// <summary> Complete restore error message, if any. </summary>
         public string CompleteRestoreErrorMessage { get; }
+
         /// <summary> File upload blocking errors, if any. </summary>
         public IReadOnlyList<string> FileUploadBlockingErrors { get; }
+
         /// <summary> File name that is currently being restored. </summary>
         public string CurrentRestoringFilename { get; }
+
         /// <summary> Last restored file name. </summary>
         public string LastRestoredFilename { get; }
+
         /// <summary> Total pending log backups. </summary>
         public int? PendingLogBackupsCount { get; }
     }

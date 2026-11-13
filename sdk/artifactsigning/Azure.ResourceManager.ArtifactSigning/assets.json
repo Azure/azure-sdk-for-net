@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/artifactsigning/Azure.ResourceManager.ArtifactSigning",
+  "Tag": "net/artifactsigning/Azure.ResourceManager.ArtifactSigning_39077df8b8"
+}

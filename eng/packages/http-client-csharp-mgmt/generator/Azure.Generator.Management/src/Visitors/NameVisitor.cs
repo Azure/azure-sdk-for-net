@@ -6,22 +6,17 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Snippets;
-using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
 internal class NameVisitor : ScmLibraryVisitor
 {
-    private const string ResourceTypeName = "ResourceType";
     private static readonly HashSet<string> _knownTypes = new HashSet<string>()
         {
             "Sku",
@@ -46,8 +41,11 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateLinkResourceListResult"
         };
 
-    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
-    private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
+    protected override TypeProvider? VisitType(TypeProvider type)
+    {
+        ManagementClientGenerator.Instance.OutputLibrary.ApplyRegularCollectionResultName(type);
+        return base.VisitType(type);
+    }
 
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
     {
@@ -72,73 +70,79 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
-        if (TryTransformUrlToUri(model.Name, out var newName))
+        type = base.PreVisitModel(model, type);
+        if (type is null || model.IsExactName || inputLibrary.ClientNameOverriddenModels.Contains(model))
         {
-            UpdateSerialization(type, newName, type.Name);
+            return type;
+        }
+
+        if (TryTransformUrlToUri(type.Name, out var newName))
+        {
             type.Update(name: newName);
         }
 
         if (_knownTypes.Contains(model.Name))
         {
-            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
-            UpdateSerialization(type, newName, type.Name);
+            // Compose with type.Name (not model.Name) so any prior provider-level rename
+            // (e.g. ResourceDataModelProvider's "Data" suffix) is preserved.
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{type.Name}";
             type.Update(name: newName);
         }
 
-        if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
+        if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            newName = $"{enclosingResourceName}Patch";
-            UpdateSerialization(type, newName, type.Name);
-            type.Update(name: newName);
-
-            _resourceUpdateModelTypes.Add(type.Type);
-            foreach (var serializationProvider in type.SerializationProviders)
+            if (isAlsoUsedInCreate)
             {
-                _resourceUpdateModelTypes.Add(serializationProvider.Type);
+                newName = $"{enclosingResourceName}CreateOrUpdateContent";
+                type.Update(name: NormalizeRequestModelName(model, type, newName));
+            }
+            else
+            {
+                newName = $"{enclosingResourceName}Patch";
+                type.Update(name: NormalizeRequestModelName(model, type, newName));
             }
         }
-        return base.PreVisitModel(model, type);
+        return type;
     }
 
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    private void UpdateSerialization(ModelProvider type, string newName, string originalName)
+    private static string NormalizeRequestModelName(InputModelType model, ModelProvider type, string name)
     {
-        foreach (MrwSerializationTypeDefinition serializationProvider in type.SerializationProviders)
+        var plugin = ManagementClientGenerator.Instance;
+        if (plugin.InputLibrary.IsResourceUpdateModelNameExplicit(model))
         {
-            // Update the serialization provider name to match the model name
-            serializationProvider.Update(name: newName);
-            _deserializationRename.Add(serializationProvider, $"Deserialize{newName}");
+            return name;
         }
+
+        return type is ManagementModelProvider managementModel ? managementModel.NormalizeRequestModelName(name) : name;
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
-        DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
+        if (propertyProvider is not null)
+        {
+            ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterSourceProperty(propertyProvider, property);
+        }
+
+        DoPreVisitArmResourceProperty(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
+        DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
-    private void DoPreVisitPropertyForResourceTypeName(InputProperty property, PropertyProvider? propertyProvider)
+    private static void DoPreVisitArmResourceProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
-        if (propertyProvider == null || property is not InputModelProperty)
+        if (property is InputModelProperty modelProperty &&
+            propertyProvider?.EnclosingType is SystemObjectModelProvider modelProvider &&
+            modelProvider.CrossLanguageDefinitionId == KnownManagementTypes.ArmResourceId &&
+            propertyProvider.Type.Equals(_nullableResourceType) &&
+            ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(modelProperty.Type) is { } currentType &&
+            ArmResourcePropertyProjection.TryGetName(modelProperty, currentType, out var name))
         {
-            return;
-        }
-        var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
-            || !modelProvider.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResourceId))
-        {
-            return;
-        }
-        // the Azure.ResourceManager.CommonTypes.Resource defines its `type` property as an optional `armResourceType`
-        // therefore here we need to change it to required because our common types define it as required
-        if (propertyProvider.Type.Equals(_nullableResourceType))
-        {
-            propertyProvider.Update(name: ResourceTypeName, type: typeof(ResourceType));
+            propertyProvider.Update(name: name, type: currentType);
         }
     }
 
-    private readonly CSharpType _nullableResourceType = new CSharpType(typeof(ResourceType), isNullable: true);
+    private static readonly CSharpType _nullableResourceType = new(typeof(ResourceType), isNullable: true);
 
     private void DoPreVisitPropertyForUrlPropertyName(InputProperty property, PropertyProvider? propertyProvider)
     {
@@ -148,64 +152,18 @@ internal class NameVisitor : ScmLibraryVisitor
         }
     }
 
-    protected override MethodProvider? VisitMethod(MethodProvider method)
+    // Dictionary to hold property name renaming mappings
+    private static readonly Dictionary<string, string> _propertyNameRenamingMap = new()
+        {
+            {"Etag", "ETag"}
+        };
+
+    private void DoPreVisitPropertyNameRenaming(InputProperty property, PropertyProvider? propertyProvider)
     {
-        var parameterUpdated = false;
-        foreach (var parameter in method.Signature.Parameters)
+        if (propertyProvider != null && _propertyNameRenamingMap.TryGetValue(propertyProvider.Name, out var newPropertyName))
         {
-            if (_resourceUpdateModelTypes.Contains(parameter.Type))
-            {
-                parameter.Update(name: "patch");
-                parameterUpdated = true;
-            }
+            propertyProvider.Update(name: newPropertyName);
         }
-
-        if (parameterUpdated)
-        {
-            // This is required as a workaround to update documentation for the method signature
-            method.Update(signature: method.Signature);
-        }
-
-        // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
-        {
-            method.Signature.Update(name: newName);
-        }
-
-        return base.VisitMethod(method);
-    }
-
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    protected override MethodBodyStatement? VisitExpressionStatement(ExpressionStatement statement, MethodProvider method)
-    {
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition
-            && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName)
-            && method.Signature.Name == "JsonModelCreateCore"
-            && statement.Expression is KeywordExpression keyword && keyword.Keyword == "return"
-            && keyword.Expression is InvokeMethodExpression invokeMethod)
-        {
-            invokeMethod.Update(methodName: newName);
-        }
-        return base.VisitExpressionStatement(statement, method);
-    }
-
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    protected override SwitchCaseStatement? VisitSwitchCaseStatement(SwitchCaseStatement statement, MethodProvider method)
-    {
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition
-            && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName)
-            && method.Signature.Name == "PersistableModelCreateCore")
-        {
-            if (statement.Statement.AsStatement().FirstOrDefault() is UsingScopeStatement usingScopeStatement
-                && usingScopeStatement.Body.AsStatement().FirstOrDefault() is ExpressionStatement expression
-                && expression.Expression is KeywordExpression keywordExpression
-                && keywordExpression.Keyword == "return"
-                && keywordExpression.Expression is InvokeMethodExpression invokeMethod)
-            {
-                invokeMethod.Update(methodName: newName);
-            }
-        }
-        return base.VisitSwitchCaseStatement(statement, method);
     }
 
     private bool TryTransformUrlToUri(string name, [MaybeNullWhen(false)] out string newName)

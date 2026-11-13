@@ -36,7 +36,7 @@ namespace Azure
         /// Initializes a new instance of <see cref="JsonPatchDocument"/>
         /// </summary>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> instance to use for value serialization.</param>
-        public JsonPatchDocument(ObjectSerializer serializer): this(default(ReadOnlyMemory<byte>), serializer)
+        public JsonPatchDocument(ObjectSerializer serializer) : this(default(ReadOnlyMemory<byte>), serializer)
         {
         }
 
@@ -168,7 +168,7 @@ namespace Azure
                 WriteTo(writer);
             }
 
-            return memoryStream.GetBuffer().AsMemory(0, (int) memoryStream.Length);
+            return memoryStream.GetBuffer().AsMemory(0, (int)memoryStream.Length);
         }
 
         /// <summary>

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SignalR
 {
+    /// <summary></summary>
     public partial class SignalRCustomCertificateResource : IJsonModel<SignalRCustomCertificateData>
     {
-        private static SignalRCustomCertificateData s_dataDeserializationInstance;
-        private static SignalRCustomCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SignalRCustomCertificateData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SignalRCustomCertificateData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SignalRCustomCertificateData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRCustomCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomCertificateData>)Data).Write(writer, options);
 
-        SignalRCustomCertificateData IJsonModel<SignalRCustomCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomCertificateData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SignalRCustomCertificateData IJsonModel<SignalRCustomCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SignalRCustomCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRCustomCertificateData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SignalRCustomCertificateData IPersistableModel<SignalRCustomCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRCustomCertificateData>(data, options, AzureResourceManagerSignalRContext.Default);
 
-        string IPersistableModel<SignalRCustomCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRCustomCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SignalRCustomCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

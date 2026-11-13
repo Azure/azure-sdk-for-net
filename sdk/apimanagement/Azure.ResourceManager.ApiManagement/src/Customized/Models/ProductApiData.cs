@@ -1,42 +1,52 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
 using System;
-using System.ComponentModel;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Summary of revision metadata. </summary>
-    public partial class ProductApiData
+    // Contextual wrapper: same wire shape as ApiData but with a distinct type name for
+    // product API operations. The old SDK returned ProductApiData from product-specific
+    // list/create endpoints. Not spec-fixable: TypeSpec has no concept of "same model,
+    // different name per operation context."
+    // Tracking: https://github.com/Azure/azure-sdk-for-net/issues/60083
+
+    /// <summary> API data returned from product API operations. </summary>
+    public partial class ProductApiData : ApiData, IJsonModel<ProductApiData>, IPersistableModel<ProductApiData>
     {
-        /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri TermsOfServiceUri
+        /// <summary> Initializes a new instance of <see cref="ProductApiData"/>. </summary>
+        public ProductApiData()
         {
-            get
-            {
-                return Uri.TryCreate(TermsOfServiceLink, UriKind.Absolute, out var uri) ? uri : null;
-            }
-            set
-            {
-                TermsOfServiceLink = value.AbsoluteUri;
-            }
         }
 
-        /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri ServiceUri
+        internal ProductApiData(ApiData data)
+            : base(data.Id, data.Name, data.ResourceType, data.SystemData, data.Properties, default)
         {
-            get
-            {
-                return Uri.TryCreate(ServiceLink, UriKind.Absolute, out var uri) ? uri : null;
-            }
-            set
-            {
-                ServiceLink = value.AbsoluteUri;
-            }
         }
+
+        void IJsonModel<ProductApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => ((IJsonModel<ApiData>)this).Write(writer, options);
+
+        ProductApiData IJsonModel<ProductApiData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            ApiData data = ((IJsonModel<ApiData>)new ApiData()).Create(ref reader, options);
+            return data is null ? null : new ProductApiData(data);
+        }
+
+        BinaryData IPersistableModel<ProductApiData>.Write(ModelReaderWriterOptions options)
+            => ((IPersistableModel<ApiData>)this).Write(options);
+
+        ProductApiData IPersistableModel<ProductApiData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            ApiData value = ((IPersistableModel<ApiData>)new ApiData()).Create(data, options);
+            return value is null ? null : new ProductApiData(value);
+        }
+
+        string IPersistableModel<ProductApiData>.GetFormatFromOptions(ModelReaderWriterOptions options)
+            => ((IPersistableModel<ApiData>)new ApiData()).GetFormatFromOptions(options);
     }
 }

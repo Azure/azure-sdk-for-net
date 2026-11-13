@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineKeySetDetailedStatus : IEquatable<BareMetalMachineKeySetDetailedStatus>
     {
         private readonly string _value;
+        /// <summary> All users in the key set are active. </summary>
+        private const string AllActiveValue = "AllActive";
+        /// <summary> Some users in the key set are invalid. </summary>
+        private const string SomeInvalidValue = "SomeInvalid";
+        /// <summary> All users in the key set are invalid. </summary>
+        private const string AllInvalidValue = "AllInvalid";
+        /// <summary> Key set is being validated. </summary>
+        private const string ValidatingValue = "Validating";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineKeySetDetailedStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AllActiveValue = "AllActive";
-        private const string SomeInvalidValue = "SomeInvalid";
-        private const string AllInvalidValue = "AllInvalid";
-        private const string ValidatingValue = "Validating";
-
-        /// <summary> AllActive. </summary>
+        /// <summary> All users in the key set are active. </summary>
         public static BareMetalMachineKeySetDetailedStatus AllActive { get; } = new BareMetalMachineKeySetDetailedStatus(AllActiveValue);
-        /// <summary> SomeInvalid. </summary>
+
+        /// <summary> Some users in the key set are invalid. </summary>
         public static BareMetalMachineKeySetDetailedStatus SomeInvalid { get; } = new BareMetalMachineKeySetDetailedStatus(SomeInvalidValue);
-        /// <summary> AllInvalid. </summary>
+
+        /// <summary> All users in the key set are invalid. </summary>
         public static BareMetalMachineKeySetDetailedStatus AllInvalid { get; } = new BareMetalMachineKeySetDetailedStatus(AllInvalidValue);
-        /// <summary> Validating. </summary>
+
+        /// <summary> Key set is being validated. </summary>
         public static BareMetalMachineKeySetDetailedStatus Validating { get; } = new BareMetalMachineKeySetDetailedStatus(ValidatingValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetDetailedStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineKeySetDetailedStatus left, BareMetalMachineKeySetDetailedStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetDetailedStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineKeySetDetailedStatus left, BareMetalMachineKeySetDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineKeySetDetailedStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineKeySetDetailedStatus(string value) => new BareMetalMachineKeySetDetailedStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineKeySetDetailedStatus?(string value) => value == null ? null : new BareMetalMachineKeySetDetailedStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineKeySetDetailedStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineKeySetDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

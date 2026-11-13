@@ -7,24 +7,116 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class DocumentTranslationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Document.DocumentTranslationInput"/>. </summary>
+        /// <summary> Translation job submission batch request. </summary>
+        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
+        /// <param name="options"> The batch operation options. </param>
+        /// <returns> A new <see cref="Document.TranslationBatch"/> instance for mocking. </returns>
+        public static TranslationBatch TranslationBatch(IEnumerable<DocumentTranslationInput> inputs = default, BatchOptions options = default)
+        {
+            inputs ??= new ChangeTrackingList<DocumentTranslationInput>();
+
+            return new TranslationBatch(inputs.ToList(), options, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Definition for the input batch translation request. </summary>
         /// <param name="source"> Source of the input documents. </param>
         /// <param name="targets"> Location of the destination for the output. </param>
         /// <param name="storageUriKind"> Storage type of the input documents source string. </param>
         /// <returns> A new <see cref="Document.DocumentTranslationInput"/> instance for mocking. </returns>
-        public static DocumentTranslationInput DocumentTranslationInput(TranslationSource source = null, IEnumerable<TranslationTarget> targets = null, StorageInputUriKind? storageUriKind = null)
+        public static DocumentTranslationInput DocumentTranslationInput(TranslationSource source = default, IEnumerable<TranslationTarget> targets = default, StorageInputUriKind? storageUriKind = default)
         {
-            targets ??= new List<TranslationTarget>();
+            targets ??= new ChangeTrackingList<TranslationTarget>();
 
-            return new DocumentTranslationInput(source, targets?.ToList(), storageUriKind, serializedAdditionalRawData: null);
+            return new DocumentTranslationInput(source, targets.ToList(), storageUriKind, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Destination for the finished translated documents. </summary>
+        /// <param name="targetUri"> Location of the folder / container with your documents. </param>
+        /// <param name="categoryId"> Category / custom system for translation request. </param>
+        /// <param name="deploymentName"> Deployment name of the custom translation model for the translation request. </param>
+        /// <param name="languageCode"> Target Language. </param>
+        /// <param name="glossaries"> List of Glossary. </param>
+        /// <param name="storageSource"> Storage Source. </param>
+        /// <returns> A new <see cref="Document.TranslationTarget"/> instance for mocking. </returns>
+        public static TranslationTarget TranslationTarget(Uri targetUri = default, string categoryId = default, string deploymentName = default, string languageCode = default, IEnumerable<TranslationGlossary> glossaries = default, TranslationStorageSource? storageSource = default)
+        {
+            glossaries ??= new ChangeTrackingList<TranslationGlossary>();
+
+            return new TranslationTarget(
+                targetUri,
+                categoryId,
+                deploymentName,
+                languageCode,
+                glossaries.ToList(),
+                storageSource,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Glossary / translation memory for the request. </summary>
+        /// <param name="glossaryUri">
+        /// Location of the glossary. 
+        /// We will use the file extension to extract the
+        /// formatting if the format parameter is not supplied.
+        /// If the translation
+        /// language pair is not present in the glossary, it will not be applied
+        /// </param>
+        /// <param name="format"> Format. </param>
+        /// <param name="formatVersion"> Optional Version.  If not specified, default is used. </param>
+        /// <param name="storageSource"> Storage Source. </param>
+        /// <returns> A new <see cref="Document.TranslationGlossary"/> instance for mocking. </returns>
+        public static TranslationGlossary TranslationGlossary(Uri glossaryUri = default, string format = default, string formatVersion = default, TranslationStorageSource? storageSource = default)
+        {
+            return new TranslationGlossary(glossaryUri, format, formatVersion, storageSource, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Translation batch request options. </summary>
+        /// <param name="translateTextWithinImage"> Translation text within an image option. </param>
+        /// <returns> A new <see cref="Document.BatchOptions"/> instance for mocking. </returns>
+        public static BatchOptions BatchOptions(bool? translateTextWithinImage = default)
+        {
+            return new BatchOptions(translateTextWithinImage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> List of supported file formats. </summary>
+        /// <param name="value"> list of objects. </param>
+        /// <returns> A new <see cref="Document.SupportedFileFormats"/> instance for mocking. </returns>
+        public static SupportedFileFormats SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value = default)
+        {
+            value ??= new ChangeTrackingList<DocumentTranslationFileFormat>();
+
+            return new SupportedFileFormats(value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> File Format. </summary>
+        /// <param name="format"> Name of the format. </param>
+        /// <param name="fileExtensions"> Supported file extension for this format. </param>
+        /// <param name="contentTypes"> Supported Content-Types for this format. </param>
+        /// <param name="defaultFormatVersion"> Default version if none is specified. </param>
+        /// <param name="formatVersions"> Supported Version. </param>
+        /// <param name="type"> Supported Type for this format. </param>
+        /// <returns> A new <see cref="Document.DocumentTranslationFileFormat"/> instance for mocking. </returns>
+        public static DocumentTranslationFileFormat DocumentTranslationFileFormat(string format = default, IEnumerable<string> fileExtensions = default, IEnumerable<string> contentTypes = default, string defaultFormatVersion = default, IEnumerable<string> formatVersions = default, FileFormatType? @type = default)
+        {
+            fileExtensions ??= new ChangeTrackingList<string>();
+            contentTypes ??= new ChangeTrackingList<string>();
+            formatVersions ??= new ChangeTrackingList<string>();
+
+            return new DocumentTranslationFileFormat(
+                format,
+                fileExtensions.ToList(),
+                contentTypes.ToList(),
+                defaultFormatVersion,
+                formatVersions.ToList(),
+                @type,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Document.TranslationTarget"/>. </summary>
@@ -34,69 +126,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="glossaries"> List of Glossary. </param>
         /// <param name="storageSource"> Storage Source. </param>
         /// <returns> A new <see cref="Document.TranslationTarget"/> instance for mocking. </returns>
-        public static TranslationTarget TranslationTarget(Uri targetUri = null, string categoryId = null, string languageCode = null, IEnumerable<TranslationGlossary> glossaries = null, TranslationStorageSource? storageSource = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TranslationTarget TranslationTarget(Uri targetUri, string categoryId, string languageCode, IEnumerable<TranslationGlossary> glossaries, TranslationStorageSource? storageSource)
         {
-            glossaries ??= new List<TranslationGlossary>();
-
-            return new TranslationTarget(
-                targetUri,
-                categoryId,
-                languageCode,
-                glossaries?.ToList(),
-                storageSource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Document.TranslationGlossary"/>. </summary>
-        /// <param name="glossaryUri">
-        /// Location of the glossary.
-        /// We will use the file extension to extract the
-        /// formatting if the format parameter is not supplied.
-        ///
-        /// If the translation
-        /// language pair is not present in the glossary, it will not be applied
-        /// </param>
-        /// <param name="format"> Format. </param>
-        /// <param name="formatVersion"> Optional Version.  If not specified, default is used. </param>
-        /// <param name="storageSource"> Storage Source. </param>
-        /// <returns> A new <see cref="Document.TranslationGlossary"/> instance for mocking. </returns>
-        public static TranslationGlossary TranslationGlossary(Uri glossaryUri = null, string format = null, string formatVersion = null, TranslationStorageSource? storageSource = null)
-        {
-            return new TranslationGlossary(glossaryUri, format, formatVersion, storageSource, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Document.SupportedFileFormats"/>. </summary>
-        /// <param name="value"> list of objects. </param>
-        /// <returns> A new <see cref="Document.SupportedFileFormats"/> instance for mocking. </returns>
-        public static SupportedFileFormats SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value = null)
-        {
-            value ??= new List<DocumentTranslationFileFormat>();
-
-            return new SupportedFileFormats(value?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Document.DocumentTranslationFileFormat"/>. </summary>
-        /// <param name="format"> Name of the format. </param>
-        /// <param name="fileExtensions"> Supported file extension for this format. </param>
-        /// <param name="contentTypes"> Supported Content-Types for this format. </param>
-        /// <param name="defaultFormatVersion"> Default version if none is specified. </param>
-        /// <param name="formatVersions"> Supported Version. </param>
-        /// <param name="type"> Supported Type for this format. </param>
-        /// <returns> A new <see cref="Document.DocumentTranslationFileFormat"/> instance for mocking. </returns>
-        public static DocumentTranslationFileFormat DocumentTranslationFileFormat(string format = null, IEnumerable<string> fileExtensions = null, IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, IEnumerable<string> formatVersions = null, FileFormatType? type = null)
-        {
-            fileExtensions ??= new List<string>();
-            contentTypes ??= new List<string>();
-            formatVersions ??= new List<string>();
-
-            return new DocumentTranslationFileFormat(
-                format,
-                fileExtensions?.ToList(),
-                contentTypes?.ToList(),
-                defaultFormatVersion,
-                formatVersions?.ToList(),
-                type,
-                serializedAdditionalRawData: null);
+            return TranslationTarget(targetUri: targetUri, categoryId: categoryId, deploymentName: default, languageCode: languageCode, glossaries: glossaries, storageSource: storageSource);
         }
     }
 }

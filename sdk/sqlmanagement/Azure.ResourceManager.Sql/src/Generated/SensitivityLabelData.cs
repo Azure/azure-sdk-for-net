@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SensitivityLabel data model.
-    /// A sensitivity label.
-    /// </summary>
+    /// <summary> A sensitivity label. </summary>
     public partial class SensitivityLabelData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SensitivityLabelData"/>. </summary>
         public SensitivityLabelData()
@@ -57,70 +25,174 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="SensitivityLabelData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="managedBy"> Resource that manages the sensitivity label. </param>
-        /// <param name="schemaName"> The schema name. </param>
-        /// <param name="tableName"> The table name. </param>
-        /// <param name="columnName"> The column name. </param>
-        /// <param name="labelName"> The label name. </param>
-        /// <param name="labelId"> The label ID. </param>
-        /// <param name="informationType"> The information type. </param>
-        /// <param name="informationTypeId"> The information type ID. </param>
-        /// <param name="isDisabled"> Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not. </param>
-        /// <param name="rank"></param>
-        /// <param name="clientClassificationSource"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank, ClientClassificationSource? clientClassificationSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SensitivityLabelProperties properties, string managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             ManagedBy = managedBy;
-            SchemaName = schemaName;
-            TableName = tableName;
-            ColumnName = columnName;
-            LabelName = labelName;
-            LabelId = labelId;
-            InformationType = informationType;
-            InformationTypeId = informationTypeId;
-            IsDisabled = isDisabled;
-            Rank = rank;
-            ClientClassificationSource = clientClassificationSource;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal SensitivityLabelProperties Properties { get; set; }
 
         /// <summary> Resource that manages the sensitivity label. </summary>
         [WirePath("managedBy")]
         public string ManagedBy { get; }
+
         /// <summary> The schema name. </summary>
         [WirePath("properties.schemaName")]
-        public string SchemaName { get; }
+        public string SchemaName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SchemaName;
+            }
+        }
+
         /// <summary> The table name. </summary>
         [WirePath("properties.tableName")]
-        public string TableName { get; }
+        public string TableName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TableName;
+            }
+        }
+
         /// <summary> The column name. </summary>
         [WirePath("properties.columnName")]
-        public string ColumnName { get; }
+        public string ColumnName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ColumnName;
+            }
+        }
+
         /// <summary> The label name. </summary>
         [WirePath("properties.labelName")]
-        public string LabelName { get; set; }
+        public string LabelName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LabelName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                Properties.LabelName = value;
+            }
+        }
+
         /// <summary> The label ID. </summary>
         [WirePath("properties.labelId")]
-        public string LabelId { get; set; }
+        public string LabelId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LabelId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                Properties.LabelId = value;
+            }
+        }
+
         /// <summary> The information type. </summary>
         [WirePath("properties.informationType")]
-        public string InformationType { get; set; }
+        public string InformationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InformationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                Properties.InformationType = value;
+            }
+        }
+
         /// <summary> The information type ID. </summary>
         [WirePath("properties.informationTypeId")]
-        public string InformationTypeId { get; set; }
+        public string InformationTypeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InformationTypeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                Properties.InformationTypeId = value;
+            }
+        }
+
         /// <summary> Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not. </summary>
         [WirePath("properties.isDisabled")]
-        public bool? IsDisabled { get; }
-        /// <summary> Gets or sets the rank. </summary>
+        public bool? IsDisabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDisabled;
+            }
+        }
+
+        /// <summary> Gets or sets the Rank. </summary>
         [WirePath("properties.rank")]
-        public SensitivityLabelRank? Rank { get; set; }
-        /// <summary> Gets or sets the client classification source. </summary>
+        public SensitivityLabelRank? Rank
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Rank;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                Properties.Rank = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ClientClassificationSource. </summary>
         [WirePath("properties.clientClassificationSource")]
-        public ClientClassificationSource? ClientClassificationSource { get; set; }
+        public ClientClassificationSource? ClientClassificationSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientClassificationSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                Properties.ClientClassificationSource = value;
+            }
+        }
     }
 }

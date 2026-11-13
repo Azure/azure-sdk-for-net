@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -12,57 +12,40 @@ using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
+    // Backward compatibility: the old SDK had a 3-param constructor taking (location, containers, osType).
+    // The new generator only produces a 2-param constructor (location, containers).
+    // Also provides OSType (non-nullable) as a wrapper over ContainerGroupOSType (nullable),
+    // and ContainerGroupProvisioningState (typed) as a wrapper over ProvisioningState (string).
     public partial class ContainerGroupData
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="containers"> The containers within the container group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers) : base(location)
-        {
-            Argument.AssertNotNull(containers, nameof(containers));
-
-            Containers = containers.ToList();
-            ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
-            Volumes = new ChangeTrackingList<ContainerVolume>();
-            SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
-            InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
-            Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
-            Zones = new ChangeTrackingList<string>();
-            SecretReferences = new ChangeTrackingList<ContainerGroupSecretReference>();
-        }
-
         /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, ContainerInstanceOperatingSystemType osType) : base(location)
+        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, ContainerInstanceOperatingSystemType osType) : this(location, containers)
         {
-            Argument.AssertNotNull(containers, nameof(containers));
-
-            Containers = containers.ToList();
-            ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
             OSType = osType;
-            Volumes = new ChangeTrackingList<ContainerVolume>();
-            SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
-            InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
-            Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
-            Zones = new ChangeTrackingList<string>();
-            SecretReferences = new ChangeTrackingList<ContainerGroupSecretReference>();
         }
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ContainerInstanceOperatingSystemType OSType
         {
-            get => ContainerGroupOSType.ToString();
+            get => ContainerGroupOSType.HasValue ? ContainerGroupOSType.Value.ToString() : default;
             set => ContainerGroupOSType = value.ToString();
         }
 
         /// <summary> The provisioning state of the container group. This only appears in the response. </summary>
-        public string ProvisioningState { get => ContainerGroupProvisioningState.ToString(); }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ContainerGroupProvisioningState? ContainerGroupProvisioningState
+        {
+            get
+            {
+                var ps = ProvisioningState;
+                return ps != null ? new ContainerGroupProvisioningState(ps) : null;
+            }
+        }
     }
 }

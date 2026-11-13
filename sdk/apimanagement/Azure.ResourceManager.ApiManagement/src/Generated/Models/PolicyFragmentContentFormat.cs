@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The PolicyFragmentContentFormat. </summary>
+    /// <summary></summary>
     public readonly partial struct PolicyFragmentContentFormat : IEquatable<PolicyFragmentContentFormat>
     {
         private readonly string _value;
+        /// <summary> The contents are inline and Content type is an XML document. </summary>
+        private const string XmlValue = "xml";
+        /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
+        private const string RawxmlValue = "rawxml";
 
         /// <summary> Initializes a new instance of <see cref="PolicyFragmentContentFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyFragmentContentFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string XmlValue = "xml";
-        private const string RawxmlValue = "rawxml";
+            _value = value;
+        }
 
         /// <summary> The contents are inline and Content type is an XML document. </summary>
         public static PolicyFragmentContentFormat Xml { get; } = new PolicyFragmentContentFormat(XmlValue);
+
         /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
         public static PolicyFragmentContentFormat Rawxml { get; } = new PolicyFragmentContentFormat(RawxmlValue);
+
         /// <summary> Determines if two <see cref="PolicyFragmentContentFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyFragmentContentFormat left, PolicyFragmentContentFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicyFragmentContentFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyFragmentContentFormat left, PolicyFragmentContentFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyFragmentContentFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicyFragmentContentFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicyFragmentContentFormat(string value) => new PolicyFragmentContentFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolicyFragmentContentFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolicyFragmentContentFormat?(string value) => value == null ? null : new PolicyFragmentContentFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicyFragmentContentFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicyFragmentContentFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

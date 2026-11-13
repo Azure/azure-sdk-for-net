@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class LocalNetworkGatewayResource : IJsonModel<LocalNetworkGatewayData>
     {
-        private static LocalNetworkGatewayData s_dataDeserializationInstance;
-        private static LocalNetworkGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LocalNetworkGatewayData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LocalNetworkGatewayData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LocalNetworkGatewayData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LocalNetworkGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LocalNetworkGatewayData>)Data).Write(writer, options);
 
-        LocalNetworkGatewayData IJsonModel<LocalNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalNetworkGatewayData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LocalNetworkGatewayData IJsonModel<LocalNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LocalNetworkGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LocalNetworkGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LocalNetworkGatewayData IPersistableModel<LocalNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalNetworkGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<LocalNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalNetworkGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LocalNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -99,7 +99,7 @@ namespace Azure.Communication.CallAutomation
                     result = new AddParticipantEventResult(true, (AddParticipantSucceeded)returnedEvent, null, ((AddParticipantSucceeded)returnedEvent).Participant);
                     break;
                 case AddParticipantFailed:
-                    result = new AddParticipantEventResult(false, null, (AddParticipantFailed)returnedEvent,((AddParticipantFailed)returnedEvent).Participant);
+                    result = new AddParticipantEventResult(false, null, (AddParticipantFailed)returnedEvent, ((AddParticipantFailed)returnedEvent).Participant);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

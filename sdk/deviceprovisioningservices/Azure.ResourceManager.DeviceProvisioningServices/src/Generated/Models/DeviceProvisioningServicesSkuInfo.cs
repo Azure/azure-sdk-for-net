@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> List of possible provisioning service SKUs. </summary>
     public partial class DeviceProvisioningServicesSkuInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSkuInfo"/>. </summary>
         public DeviceProvisioningServicesSkuInfo()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="name"> Sku name. </param>
         /// <param name="tier"> Pricing tier name of the provisioning service. </param>
         /// <param name="capacity"> The number of units to provision. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceProvisioningServicesSkuInfo(DeviceProvisioningServicesSku? name, string tier, long? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServicesSkuInfo(DeviceProvisioningServicesSku? name, string tier, long? capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
             Capacity = capacity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Sku name. </summary>
         public DeviceProvisioningServicesSku? Name { get; set; }
+
         /// <summary> Pricing tier name of the provisioning service. </summary>
         public string Tier { get; }
+
         /// <summary> The number of units to provision. </summary>
         public long? Capacity { get; set; }
     }

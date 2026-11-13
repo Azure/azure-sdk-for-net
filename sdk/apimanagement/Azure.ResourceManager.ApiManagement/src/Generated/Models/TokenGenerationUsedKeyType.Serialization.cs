@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class TokenGenerationUsedKeyTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this TokenGenerationUsedKeyType value) => value switch
         {
             TokenGenerationUsedKeyType.Primary => "primary",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenGenerationUsedKeyType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static TokenGenerationUsedKeyType ToTokenGenerationUsedKeyType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "primary")) return TokenGenerationUsedKeyType.Primary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondary")) return TokenGenerationUsedKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "primary"))
+            {
+                return TokenGenerationUsedKeyType.Primary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondary"))
+            {
+                return TokenGenerationUsedKeyType.Secondary;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenGenerationUsedKeyType value.");
         }
     }

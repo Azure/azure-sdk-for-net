@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DBNodeProvisioningState : IEquatable<DBNodeProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Indicates that resource in Provisioning state. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Indicates that resource in Available state. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Indicates that resource in Updating state. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Indicates that resource in Stopping state. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Indicates that resource in Stopped state. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Indicates that resource in Starting state. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Indicates that resource in Terminating state. </summary>
+        private const string TerminatingValue = "Terminating";
+        /// <summary> Indicates that resource in Terminated state. </summary>
+        private const string TerminatedValue = "Terminated";
+        /// <summary> Indicates that resource in Failed state. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="DBNodeProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DBNodeProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProvisioningValue = "Provisioning";
-        private const string AvailableValue = "Available";
-        private const string UpdatingValue = "Updating";
-        private const string StoppingValue = "Stopping";
-        private const string StoppedValue = "Stopped";
-        private const string StartingValue = "Starting";
-        private const string TerminatingValue = "Terminating";
-        private const string TerminatedValue = "Terminated";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Indicates that resource in Provisioning state. </summary>
         public static DBNodeProvisioningState Provisioning { get; } = new DBNodeProvisioningState(ProvisioningValue);
+
         /// <summary> Indicates that resource in Available state. </summary>
         public static DBNodeProvisioningState Available { get; } = new DBNodeProvisioningState(AvailableValue);
+
         /// <summary> Indicates that resource in Updating state. </summary>
         public static DBNodeProvisioningState Updating { get; } = new DBNodeProvisioningState(UpdatingValue);
+
         /// <summary> Indicates that resource in Stopping state. </summary>
         public static DBNodeProvisioningState Stopping { get; } = new DBNodeProvisioningState(StoppingValue);
+
         /// <summary> Indicates that resource in Stopped state. </summary>
         public static DBNodeProvisioningState Stopped { get; } = new DBNodeProvisioningState(StoppedValue);
+
         /// <summary> Indicates that resource in Starting state. </summary>
         public static DBNodeProvisioningState Starting { get; } = new DBNodeProvisioningState(StartingValue);
+
         /// <summary> Indicates that resource in Terminating state. </summary>
         public static DBNodeProvisioningState Terminating { get; } = new DBNodeProvisioningState(TerminatingValue);
+
         /// <summary> Indicates that resource in Terminated state. </summary>
         public static DBNodeProvisioningState Terminated { get; } = new DBNodeProvisioningState(TerminatedValue);
+
         /// <summary> Indicates that resource in Failed state. </summary>
         public static DBNodeProvisioningState Failed { get; } = new DBNodeProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="DBNodeProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DBNodeProvisioningState left, DBNodeProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DBNodeProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DBNodeProvisioningState left, DBNodeProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DBNodeProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DBNodeProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DBNodeProvisioningState(string value) => new DBNodeProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DBNodeProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DBNodeProvisioningState?(string value) => value == null ? null : new DBNodeProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DBNodeProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DBNodeProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

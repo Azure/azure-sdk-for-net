@@ -216,6 +216,64 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void DoesNotFormatEmptyResponseContentForTextContentTypes(
+            [Values(true, false)] bool responseIsError)
+        {
+            // An error response can carry a text Content-Type header but an empty body (e.g. a
+            // gateway/proxy 401/403/5xx). The Content section must be skipped so that reading an
+            // empty body cannot throw while formatting the exception message.
+            var formattedResponse = responseIsError ?
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Content-Type: text/json" + s_nl +
+                "x-ms-requestId: 123" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
+            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+            response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
+            response.SetContent(string.Empty);
+            response.Sanitizer = Sanitizer;
+
+            RequestFailedException exception = null;
+            Assert.DoesNotThrow(() => exception = new RequestFailedException(response));
+            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.IsFalse(exception.Message.Contains("Content:"));
+            Assert.AreEqual(210, exception.Status);
+        }
+
+        [Test]
+        public void DoesNotThrowWhenContentFormattingFails()
+        {
+            // If reading the response content throws (for example, an older BinaryData.ToString()
+            // on .NET Framework throwing ArgumentNullException for empty content), the original
+            // failed response must still surface as a RequestFailedException carrying status,
+            // reason phrase, and headers rather than the secondary formatting exception.
+            var response = new ThrowingContentResponse(403, "Forbidden");
+            response.SetIsError(true);
+            response.AddHeader(new HttpHeader("Content-Type", "text/plain"));
+            response.AddHeader(new HttpHeader("x-ms-requestId", "abc"));
+            response.SetContent("this content read will throw");
+            response.Sanitizer = Sanitizer;
+
+            RequestFailedException exception = null;
+            Assert.DoesNotThrow(() => exception = new RequestFailedException(response));
+            Assert.AreEqual(403, exception.Status);
+            StringAssert.Contains("Status: 403 (Forbidden)", exception.Message);
+            StringAssert.Contains("Headers:", exception.Message);
+            StringAssert.Contains("Content-Type: text/plain", exception.Message);
+            StringAssert.Contains("x-ms-requestId: abc", exception.Message);
+            StringAssert.Contains("response content could not be read", exception.Message);
+        }
+
+        [Test]
         public void DoesntFormatsResponseContentForNonTextContentTypes(
             [Values(true, false)] bool responseIsError)
         {
@@ -766,6 +824,16 @@ namespace Azure.Core.Tests
                 data = response.Content.ToObjectFromJson<IDictionary<string, string>>();
                 return true;
             }
+        }
+
+        private class ThrowingContentResponse : MockResponse
+        {
+            public ThrowingContentResponse(int status, string reasonPhrase)
+                : base(status, reasonPhrase)
+            {
+            }
+
+            public override BinaryData Content => throw new ArgumentNullException("bytes");
         }
     }
 }

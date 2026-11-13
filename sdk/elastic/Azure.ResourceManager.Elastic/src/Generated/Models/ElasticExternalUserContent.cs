@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> The properties of the request required for creating user on elastic side. </summary>
     public partial class ElasticExternalUserContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticExternalUserContent"/>. </summary>
         public ElasticExternalUserContent()
@@ -57,25 +29,29 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="password"> Password of the user to be created or updated. </param>
         /// <param name="emailId"> Email id of the user to be created or updated. </param>
         /// <param name="roles"> Roles to be assigned for  created or updated user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticExternalUserContent(string userName, string fullName, string password, string emailId, IList<string> roles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticExternalUserContent(string userName, string fullName, string password, string emailId, IList<string> roles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserName = userName;
             FullName = fullName;
             Password = password;
             EmailId = emailId;
             Roles = roles;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Username of the user to be created or updated. </summary>
         public string UserName { get; set; }
+
         /// <summary> Full name of the user to be created or updated. </summary>
         public string FullName { get; set; }
+
         /// <summary> Password of the user to be created or updated. </summary>
         public string Password { get; set; }
+
         /// <summary> Email id of the user to be created or updated. </summary>
         public string EmailId { get; set; }
+
         /// <summary> Roles to be assigned for  created or updated user. </summary>
         public IList<string> Roles { get; }
     }

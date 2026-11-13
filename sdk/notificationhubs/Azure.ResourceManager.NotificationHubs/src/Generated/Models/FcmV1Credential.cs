@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub FcmV1Credential. </summary>
     public partial class FcmV1Credential
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FcmV1Credential"/>. </summary>
         /// <param name="clientEmail"> Gets or sets client email. </param>
@@ -56,34 +28,70 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Argument.AssertNotNull(privateKey, nameof(privateKey));
             Argument.AssertNotNull(projectId, nameof(projectId));
 
-            ClientEmail = clientEmail;
-            PrivateKey = privateKey;
-            ProjectId = projectId;
+            Properties = new FcmV1CredentialProperties(clientEmail, privateKey, projectId);
         }
 
         /// <summary> Initializes a new instance of <see cref="FcmV1Credential"/>. </summary>
-        /// <param name="clientEmail"> Gets or sets client email. </param>
-        /// <param name="privateKey"> Gets or sets private key. </param>
-        /// <param name="projectId"> Gets or sets project id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FcmV1Credential(string clientEmail, string privateKey, string projectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Description of a NotificationHub FcmV1Credential. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FcmV1Credential(FcmV1CredentialProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClientEmail = clientEmail;
-            PrivateKey = privateKey;
-            ProjectId = projectId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FcmV1Credential"/> for deserialization. </summary>
-        internal FcmV1Credential()
-        {
-        }
+        /// <summary> Description of a NotificationHub FcmV1Credential. </summary>
+        internal FcmV1CredentialProperties Properties { get; set; }
 
         /// <summary> Gets or sets client email. </summary>
-        public string ClientEmail { get; set; }
+        public string ClientEmail
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientEmail;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FcmV1CredentialProperties();
+                }
+                Properties.ClientEmail = value;
+            }
+        }
+
         /// <summary> Gets or sets private key. </summary>
-        public string PrivateKey { get; set; }
+        public string PrivateKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FcmV1CredentialProperties();
+                }
+                Properties.PrivateKey = value;
+            }
+        }
+
         /// <summary> Gets or sets project id. </summary>
-        public string ProjectId { get; set; }
+        public string ProjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FcmV1CredentialProperties();
+                }
+                Properties.ProjectId = value;
+            }
+        }
     }
 }

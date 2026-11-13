@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HealthDataAIServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
@@ -14,37 +15,8 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
     /// <summary> Patch request body for DeidService. </summary>
     public partial class DeidServicePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeidServicePatch"/>. </summary>
         public DeidServicePatch()
@@ -56,27 +28,34 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Updatable managed service identity. </param>
         /// <param name="properties"> RP-specific properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DeidPropertiesUpdate properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DeidPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> RP-specific properties. </summary>
         internal DeidPropertiesUpdate Properties { get; set; }
+
         /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
         public HealthDataAIServicesPublicNetworkAccess? DeidPropertiesUpdatePublicNetworkAccess
         {
-            get => Properties is null ? default : Properties.PublicNetworkAccess;
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
             set
             {
                 if (Properties is null)
+                {
                     Properties = new DeidPropertiesUpdate();
+                }
                 Properties.PublicNetworkAccess = value;
             }
         }

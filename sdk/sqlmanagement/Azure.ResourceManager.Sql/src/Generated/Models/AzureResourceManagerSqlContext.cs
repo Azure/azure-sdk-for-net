@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdministratorListResult))]
     [ModelReaderWriterBuildable(typeof(AutomaticTuningOptions))]
@@ -59,6 +60,8 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(DataMaskingPolicyResource))]
     [ModelReaderWriterBuildable(typeof(DataMaskingRule))]
     [ModelReaderWriterBuildable(typeof(DataMaskingRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(DataSyncParticipantIdentity))]
+    [ModelReaderWriterBuildable(typeof(DataSyncParticipantUserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(DataWarehouseUserActivitiesListResult))]
     [ModelReaderWriterBuildable(typeof(DataWarehouseUserActivityData))]
     [ModelReaderWriterBuildable(typeof(DataWarehouseUserActivityResource))]
@@ -87,6 +90,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(EndpointCertificateData))]
     [ModelReaderWriterBuildable(typeof(EndpointCertificateListResult))]
     [ModelReaderWriterBuildable(typeof(EndpointCertificateResource))]
+    [ModelReaderWriterBuildable(typeof(EndpointTrustedRootCertificateInfo))]
     [ModelReaderWriterBuildable(typeof(ExtendedDatabaseBlobAuditingPolicyData))]
     [ModelReaderWriterBuildable(typeof(ExtendedDatabaseBlobAuditingPolicyListResult))]
     [ModelReaderWriterBuildable(typeof(ExtendedDatabaseBlobAuditingPolicyResource))]
@@ -242,10 +246,10 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(ManagedInstancePrivateLinkProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedInstancePrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(ManagedInstancePrivateLinkServiceConnectionStateProperty))]
-    [ModelReaderWriterBuildable(typeof(ManagedInstanceQuery))]
+    [ModelReaderWriterBuildable(typeof(ManagedInstanceQueryData))]
+    [ModelReaderWriterBuildable(typeof(ManagedInstanceQueryResource))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceQueryStatistics))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceResource))]
-    [ModelReaderWriterBuildable(typeof(ManagedInstanceResourceGetTopQueriesOptions))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceServerConfigurationOptionData))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceServerConfigurationOptionResource))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceServerTrustCertificateResource))]
@@ -394,7 +398,6 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(SqlNetworkSecurityPerimeterConfigProfile))]
     [ModelReaderWriterBuildable(typeof(SqlNetworkSecurityPerimeterConfigRule))]
     [ModelReaderWriterBuildable(typeof(SqlNetworkSecurityPerimeterConfigurationData))]
-    [ModelReaderWriterBuildable(typeof(SqlNetworkSecurityPerimeterConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(SqlNetworkSecurityPerimeterConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(SqlNetworkSecurityPerimeterProvisioningIssue))]
     [ModelReaderWriterBuildable(typeof(SqlNetworkSecurityPerimeterProvisioningIssueProperties))]
@@ -496,7 +499,6 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentRuleMetadata))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanData))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanError))]
-    [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanListResult))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanRecordListResult))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResultData))]
     [ModelReaderWriterBuildable(typeof(StartStopManagedInstanceScheduleListResult))]
@@ -533,6 +535,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(SyncMemberResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TdeCertificate))]
+    [ModelReaderWriterBuildable(typeof(TdeCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(TimeZoneListResult))]
     [ModelReaderWriterBuildable(typeof(TopQueries))]
     [ModelReaderWriterBuildable(typeof(TopQueriesListResult))]

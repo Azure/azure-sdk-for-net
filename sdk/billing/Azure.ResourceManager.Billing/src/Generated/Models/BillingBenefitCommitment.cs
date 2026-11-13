@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingBenefitCommitment"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="grain"> Commitment grain. </param>
-        internal BillingBenefitCommitment(string currencyCode, double? amount, IDictionary<string, BinaryData> serializedAdditionalRawData, BillingBenefitCommitmentGrain? grain) : base(currencyCode, amount, serializedAdditionalRawData)
+        internal BillingBenefitCommitment(string currencyCode, double? amount, IDictionary<string, BinaryData> additionalBinaryDataProperties, BillingBenefitCommitmentGrain? grain) : base(currencyCode, amount, additionalBinaryDataProperties)
         {
             Grain = grain;
         }

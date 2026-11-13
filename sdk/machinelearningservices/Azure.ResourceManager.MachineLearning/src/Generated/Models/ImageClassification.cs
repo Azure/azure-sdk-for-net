@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -16,30 +17,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageClassification : AutoMLVertical
     {
+        private ImageModelSettingsClassification _modelSettings;
+        private bool _modelSettingsIsDefined;
+        private ImageSweepSettings _sweepSettings;
+        private bool _sweepSettingsIsDefined;
+        private MachineLearningTableJobInput _validationData;
+        private bool _validationDataIsDefined;
+        private double? _validationDataSize;
+        private bool _validationDataSizeIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ImageClassification"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> or <paramref name="limitSettings"/> is null. </exception>
-        public ImageClassification(MachineLearningTableJobInput trainingData, ImageLimitSettings limitSettings) : base(trainingData)
+        public ImageClassification(MachineLearningTableJobInput trainingData, ImageLimitSettings limitSettings) : base(TaskType.ImageClassification, trainingData)
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
             Argument.AssertNotNull(limitSettings, nameof(limitSettings));
 
             SearchSpace = new ChangeTrackingList<ImageModelDistributionSettingsClassification>();
             LimitSettings = limitSettings;
-            TaskType = TaskType.ImageClassification;
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageClassification"/>. </summary>
-        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        /// <param name="logVerbosity"> Log verbosity for the job. </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="logVerbosity"> Enum for setting log verbosity. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="primaryMetric"> Primary metric to optimize for this task. </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="modelSettings"> Settings used for training the model. </param>
         /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
@@ -50,47 +58,92 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </param>
-        internal ImageClassification(TaskType taskType, MachineLearningLogVerbosity? logVerbosity, MachineLearningTableJobInput trainingData, string targetColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationPrimaryMetric? primaryMetric, ImageModelSettingsClassification modelSettings, IList<ImageModelDistributionSettingsClassification> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize) : base(taskType, logVerbosity, trainingData, targetColumnName, serializedAdditionalRawData)
+        /// <param name="primaryMetric"> Primary metrics for classification tasks. </param>
+        internal ImageClassification(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageModelSettingsClassification modelSettings, IList<ImageModelDistributionSettingsClassification> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize, ClassificationPrimaryMetric? primaryMetric) : base(logVerbosity, targetColumnName, taskType, trainingData, additionalBinaryDataProperties)
         {
-            PrimaryMetric = primaryMetric;
-            ModelSettings = modelSettings;
+            _modelSettings = modelSettings;
             SearchSpace = searchSpace;
             LimitSettings = limitSettings;
-            SweepSettings = sweepSettings;
-            ValidationData = validationData;
-            ValidationDataSize = validationDataSize;
-            TaskType = taskType;
+            _sweepSettings = sweepSettings;
+            _validationData = validationData;
+            _validationDataSize = validationDataSize;
+            PrimaryMetric = primaryMetric;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageClassification"/> for deserialization. </summary>
-        internal ImageClassification()
-        {
-        }
-
-        /// <summary> Primary metric to optimize for this task. </summary>
-        [WirePath("primaryMetric")]
-        public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Settings used for training the model. </summary>
         [WirePath("modelSettings")]
-        public ImageModelSettingsClassification ModelSettings { get; set; }
+        public ImageModelSettingsClassification ModelSettings
+        {
+            get
+            {
+                return _modelSettings;
+            }
+            set
+            {
+                _modelSettings = value;
+                _modelSettingsIsDefined = true;
+            }
+        }
+
         /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
         [WirePath("searchSpace")]
         public IList<ImageModelDistributionSettingsClassification> SearchSpace { get; set; }
+
         /// <summary> [Required] Limit settings for the AutoML job. </summary>
         [WirePath("limitSettings")]
         public ImageLimitSettings LimitSettings { get; set; }
+
         /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
         [WirePath("sweepSettings")]
-        public ImageSweepSettings SweepSettings { get; set; }
+        public ImageSweepSettings SweepSettings
+        {
+            get
+            {
+                return _sweepSettings;
+            }
+            set
+            {
+                _sweepSettings = value;
+                _sweepSettingsIsDefined = true;
+            }
+        }
+
         /// <summary> Validation data inputs. </summary>
         [WirePath("validationData")]
-        public MachineLearningTableJobInput ValidationData { get; set; }
+        public MachineLearningTableJobInput ValidationData
+        {
+            get
+            {
+                return _validationData;
+            }
+            set
+            {
+                _validationData = value;
+                _validationDataIsDefined = true;
+            }
+        }
+
         /// <summary>
         /// The fraction of training dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </summary>
         [WirePath("validationDataSize")]
-        public double? ValidationDataSize { get; set; }
+        public double? ValidationDataSize
+        {
+            get
+            {
+                return _validationDataSize;
+            }
+            set
+            {
+                _validationDataSize = value;
+                _validationDataSizeIsDefined = true;
+            }
+        }
+
+        /// <summary> Primary metrics for classification tasks. </summary>
+        [WirePath("primaryMetric")]
+        public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
     }
 }

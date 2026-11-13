@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure
 {
-        public class HealthInsightsTestEnvironment : TestEnvironment
+    public class HealthInsightsTestEnvironment : TestEnvironment
     {
         /// <summary>The name of the environment variable from which the Health Insights resource's endpoint will be extracted for the live tests.</summary>
         internal const string EndpointEnvironmentVariableName = "AZURE_HEALTH_INSIGHTS_ENDPOINT";

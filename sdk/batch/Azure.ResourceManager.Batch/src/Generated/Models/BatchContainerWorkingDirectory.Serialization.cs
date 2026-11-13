@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchContainerWorkingDirectoryExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchContainerWorkingDirectory value) => value switch
         {
             BatchContainerWorkingDirectory.TaskWorkingDirectory => "TaskWorkingDirectory",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchContainerWorkingDirectory value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchContainerWorkingDirectory ToBatchContainerWorkingDirectory(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskWorkingDirectory")) return BatchContainerWorkingDirectory.TaskWorkingDirectory;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContainerImageDefault")) return BatchContainerWorkingDirectory.ContainerImageDefault;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TaskWorkingDirectory"))
+            {
+                return BatchContainerWorkingDirectory.TaskWorkingDirectory;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContainerImageDefault"))
+            {
+                return BatchContainerWorkingDirectory.ContainerImageDefault;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchContainerWorkingDirectory value.");
         }
     }

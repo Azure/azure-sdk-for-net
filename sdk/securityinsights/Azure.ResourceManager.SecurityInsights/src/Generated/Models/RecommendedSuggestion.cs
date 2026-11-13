@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> What suggestions should be taken to complete the recommendation. </summary>
     public partial class RecommendedSuggestion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecommendedSuggestion"/>. </summary>
         /// <param name="suggestionTypeId"> Id of the suggestion type. </param>
@@ -71,34 +43,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="description"> Description of the suggestion. </param>
         /// <param name="action"> Action of the suggestion. </param>
         /// <param name="additionalProperties"> Collection of additional properties for the suggestion. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendedSuggestion(string suggestionTypeId, string title, string description, string action, IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedSuggestion(string suggestionTypeId, string title, string description, string action, IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SuggestionTypeId = suggestionTypeId;
             Title = title;
             Description = description;
             Action = action;
             AdditionalProperties = additionalProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecommendedSuggestion"/> for deserialization. </summary>
-        internal RecommendedSuggestion()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of the suggestion type. </summary>
         [WirePath("suggestionTypeId")]
         public string SuggestionTypeId { get; set; }
+
         /// <summary> Title of the suggestion. </summary>
         [WirePath("title")]
         public string Title { get; set; }
+
         /// <summary> Description of the suggestion. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> Action of the suggestion. </summary>
         [WirePath("action")]
         public string Action { get; set; }
+
         /// <summary> Collection of additional properties for the suggestion. </summary>
         [WirePath("additionalProperties")]
         public IDictionary<string, string> AdditionalProperties { get; set; }

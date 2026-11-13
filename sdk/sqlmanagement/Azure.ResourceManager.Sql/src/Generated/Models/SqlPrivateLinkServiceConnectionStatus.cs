@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlPrivateLinkServiceConnectionStatus : IEquatable<SqlPrivateLinkServiceConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Rejected. </summary>
+        private const string RejectedValue = "Rejected";
+        /// <summary> Disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="SqlPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlPrivateLinkServiceConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ApprovedValue = "Approved";
-        private const string PendingValue = "Pending";
-        private const string RejectedValue = "Rejected";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> Approved. </summary>
         public static SqlPrivateLinkServiceConnectionStatus Approved { get; } = new SqlPrivateLinkServiceConnectionStatus(ApprovedValue);
+
         /// <summary> Pending. </summary>
         public static SqlPrivateLinkServiceConnectionStatus Pending { get; } = new SqlPrivateLinkServiceConnectionStatus(PendingValue);
+
         /// <summary> Rejected. </summary>
         public static SqlPrivateLinkServiceConnectionStatus Rejected { get; } = new SqlPrivateLinkServiceConnectionStatus(RejectedValue);
+
         /// <summary> Disconnected. </summary>
         public static SqlPrivateLinkServiceConnectionStatus Disconnected { get; } = new SqlPrivateLinkServiceConnectionStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="SqlPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlPrivateLinkServiceConnectionStatus left, SqlPrivateLinkServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlPrivateLinkServiceConnectionStatus left, SqlPrivateLinkServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlPrivateLinkServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlPrivateLinkServiceConnectionStatus(string value) => new SqlPrivateLinkServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new SqlPrivateLinkServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlPrivateLinkServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlPrivateLinkServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

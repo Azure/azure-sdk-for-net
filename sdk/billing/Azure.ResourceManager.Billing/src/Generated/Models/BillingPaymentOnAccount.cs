@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> A Payment on Account. </summary>
     public partial class BillingPaymentOnAccount
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingPaymentOnAccount"/>. </summary>
         internal BillingPaymentOnAccount()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="invoiceName"> The name of the invoice for the payments on account. </param>
         /// <param name="on"> The date of the payments on account. </param>
         /// <param name="paymentMethodType"> Payment on Account type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPaymentOnAccount(CreatedSubscriptionReseller amount, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier invoiceId, string invoiceName, DateTimeOffset? @on, PaymentMethodFamily? paymentMethodType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingPaymentOnAccount(CreatedSubscriptionReseller amount, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier invoiceId, string invoiceName, DateTimeOffset? @on, PaymentMethodFamily? paymentMethodType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Amount = amount;
             BillingProfileId = billingProfileId;
@@ -69,27 +41,33 @@ namespace Azure.ResourceManager.Billing.Models
             InvoiceName = invoiceName;
             On = @on;
             PaymentMethodType = paymentMethodType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Payment on Account amount. </summary>
         [WirePath("amount")]
         public CreatedSubscriptionReseller Amount { get; }
+
         /// <summary> The ID of the billing profile for the payments on account. </summary>
         [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
+
         /// <summary> The name of the billing profile for the payments on account. </summary>
         [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
+
         /// <summary> The ID of the invoice for which the payments on account was generated. </summary>
         [WirePath("invoiceId")]
         public ResourceIdentifier InvoiceId { get; }
+
         /// <summary> The name of the invoice for the payments on account. </summary>
         [WirePath("invoiceName")]
         public string InvoiceName { get; }
+
         /// <summary> The date of the payments on account. </summary>
         [WirePath("date")]
         public DateTimeOffset? On { get; }
+
         /// <summary> Payment on Account type. </summary>
         [WirePath("paymentMethodType")]
         public PaymentMethodFamily? PaymentMethodType { get; }

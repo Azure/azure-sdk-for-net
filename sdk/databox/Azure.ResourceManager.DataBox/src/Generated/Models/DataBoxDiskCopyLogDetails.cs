@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataBoxDiskCopyLogDetails : CopyLogDetails
     {
         /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyLogDetails"/>. </summary>
-        internal DataBoxDiskCopyLogDetails()
+        internal DataBoxDiskCopyLogDetails() : base(DataBoxOrderType.DataBoxDisk)
         {
-            CopyLogDetailsType = DataBoxOrderType.DataBoxDisk;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskSerialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        internal DataBoxDiskCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string diskSerialNumber, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType, serializedAdditionalRawData)
+        internal DataBoxDiskCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string diskSerialNumber, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType, additionalBinaryDataProperties)
         {
             DiskSerialNumber = diskSerialNumber;
             ErrorLogLink = errorLogLink;
             VerboseLogLink = verboseLogLink;
-            CopyLogDetailsType = copyLogDetailsType;
         }
 
         /// <summary> Disk Serial Number. </summary>
         public string DiskSerialNumber { get; }
+
         /// <summary> Link for copy error logs. </summary>
         public string ErrorLogLink { get; }
+
         /// <summary> Link for copy verbose logs. </summary>
         public string VerboseLogLink { get; }
     }

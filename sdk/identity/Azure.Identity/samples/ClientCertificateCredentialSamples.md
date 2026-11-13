@@ -1,37 +1,40 @@
 # Using the ClientCertificateCredential
 
-Applications which execute in a protected environment can authenticate using a client assertion signed by a private key whose public key or root certificate is registered with Microsoft Entra ID. The Azure.Identity library provides the `ClientCertificateCredential` for applications choosing to authenticate this way. Below are some examples of how applications can utilize the `ClientCertificateCredential` to authenticate clients.
+Applications which execute in a protected environment can authenticate using a client assertion signed by a private key whose public key or root certificate is registered with Microsoft Entra ID. The Azure.Identity library provides the [`ClientCertificateCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.clientcertificatecredential) for applications choosing to authenticate this way. Below are some examples of how applications can utilize `ClientCertificateCredential` to authenticate clients.
 
+`ClientCertificateCredential` can also be used via [`EnvironmentCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.environmentcredential), or [`DefaultAzureCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential) - see [README#credential-classes](https://github.com/azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#credential-classes).
 
 ## Loading certificates from disk
 
-Applications commonly need to load a client certificate from disk. One approach is for the application to construct the `ClientCertificateCredential` by specifying the applications tenant id, client id, and the path to the certificate.
+Applications commonly need to load a client certificate from disk. One approach is for the application to construct the `ClientCertificateCredential` by specifying the application's tenant ID, client ID, and filesystem path to the certificate.
 
-```C# Snippet:Identity_CertificateCredenetial_CreateWithPath
+```C# Snippet:Identity_CertificateCredential_CreateWithPath_File
 var credential = new ClientCertificateCredential(tenantId, clientId, "./certs/cert.pfx");
 ```
-Alternatively, the application can construct the `X509Certificate2` themselves, such as in the following example, where the certificate key is password protected.
 
-```C# Snippet:Identity_CertificateCredenetial_CreateWithX509Cert
+Alternatively, the application can construct the [`X509Certificate2`](https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509certificate2) themselves, such as in the following example, where the certificate key is password protected.
+
+```C# Snippet:Identity_CertificateCredential_CreateWithX509Cert
 var certificate = new X509Certificate2("./certs/cert-password-protected.pfx", "password");
 
 var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
 ```
 
-## Loading certificates from an X509Store
+## Loading certificates from the certificate store
 
-Applications running on platforms which provide a secure certificate store might prefer to store and retrieve certificates from there. While the `ClientCertificateCredential` doesn't directly provide a mechanism for this, the application can retrieve the appropriate certificate from the store and use it to construct the `ClientCertificateCredential`.
+`ClientCertificateCredential` supports loading a certificate directly from the platform certificate store by specifying a path in the form `cert:/StoreLocation/StoreName/Thumbprint`. This is a simpler alternative to manually opening an `X509Store`.
 
-Consider the scenario where a pinned certificate used for development authentication is stored in the Personal certificate store. Since the certificate is pinned it can be identified by its thumbprint, which the application might read from configuration or the environment.
+> [!Important]
+> Password-protected certificates cannot be loaded from the certificate store using this method.
 
-```C# Snippet:Identity_CertificateCredenetial_CreateFromStore
-using var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
-
-store.Open(OpenFlags.ReadOnly);
-
-var certificate = store.Certificates.Cast<X509Certificate2>().FirstOrDefault(cert => cert.Thumbprint == thumbprint);
-
-var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
+```C# Snippet:Identity_CertificateCredential_CreateWithStorePath
+// Load a certificate from the platform certificate store (Windows Certificate Store or macOS Keychain)
+// by specifying the path in the format: cert:/StoreLocation/StoreName/Thumbprint
+// Windows-style backslash separators `\` are also accepted
+var credential = new ClientCertificateCredential(
+    tenantId,
+    clientId,
+    "cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870");
 ```
 
 ## Rolling Certificates
@@ -44,7 +47,7 @@ However, if an application wants to roll this certificate without creating new s
 
 If the application get's notified of certificate rotations and it can directly respond, it might choose to wrap the `ClientCertificateCredential` in a custom credential which provides a means for rotating the certificate.
 
-```C# Snippet:Identity_CertificateCredenetial_RotatableCredential
+```C# Snippet:Identity_CertificateCredential_RotatableCredential
 public class RotatableCertificateCredential : TokenCredential
 {
     private readonly string _tenantId;
@@ -80,7 +83,7 @@ The above example shows a custom credential type `RotatableCertificateCredential
 ### Implicit rotation
 Some applications might want to respond to certificate rotations which are external to the application, for instance a separate process rotates the certificate by updating it on disk. Here the application create a custom credential which checks for certificate updates when tokens are requested.
 
-```C# Snippet:Identity_CertificateCredenetial_RotatingCredential
+```C# Snippet:Identity_CertificateCredential_RotatingCredential
 public class RotatingCertificateCredential : TokenCredential
 {
     private readonly string _tenantId;

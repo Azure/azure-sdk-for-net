@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics.Tracing;
-using Azure.Core.Diagnostics;
-using CommandLine;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Identity;
 using Azure.Storage.Stress;
+using CommandLine;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress;
 /// <summary>

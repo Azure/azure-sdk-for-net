@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.10.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,47 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.10.0-beta.1 (2026-10-30)
+
+### Features Added
+
+- Upgraded the API version to `2026-07-01`.
+- Added vault and recovery point immutability configuration support.
+- Added PostgreSQL Flexible Server backup solution settings.
+
+## 1.9.0 (2026-09-10)
+
+### Features Added
+
+- Upgraded the api-version to 2026-06-01.
+
+## 1.8.0 (2026-05-11)
+
+### Features Added
+
+- Upgraded the api-version to 2026-03-01.
+
+## 1.7.1 (2026-03-20)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.51.1.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
+
+## 1.7.0 (2025-09-25)
+
+### Features Added
+
+- Stable version release for API version 2025-07-01.
+    - Added property `RenameTo` in the model `ItemPathBasedRestoreCriteria` to support rename during restore.
+    - Added model `AdlsBlobBackupDatasourceParameters` to support ADLS Gen2 backup datasource.
+- Make `Azure.ResourceManager.DataProtectionBackup` AOT-compatible.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.45.0 to 1.49.0
+- Upgraded Azure.ResourceManager from 1.13.0 to 1.13.2
 
 ## 1.6.0 (2025-02-12)
 

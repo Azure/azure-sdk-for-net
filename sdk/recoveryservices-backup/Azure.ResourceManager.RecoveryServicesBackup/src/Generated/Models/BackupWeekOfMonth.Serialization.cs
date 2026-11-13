@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     internal static partial class BackupWeekOfMonthExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BackupWeekOfMonth value) => value switch
         {
             BackupWeekOfMonth.First => "First",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupWeekOfMonth value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BackupWeekOfMonth ToBackupWeekOfMonth(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "First")) return BackupWeekOfMonth.First;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Second")) return BackupWeekOfMonth.Second;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Third")) return BackupWeekOfMonth.Third;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Fourth")) return BackupWeekOfMonth.Fourth;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Last")) return BackupWeekOfMonth.Last;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return BackupWeekOfMonth.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "First"))
+            {
+                return BackupWeekOfMonth.First;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Second"))
+            {
+                return BackupWeekOfMonth.Second;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Third"))
+            {
+                return BackupWeekOfMonth.Third;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Fourth"))
+            {
+                return BackupWeekOfMonth.Fourth;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Last"))
+            {
+                return BackupWeekOfMonth.Last;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return BackupWeekOfMonth.Invalid;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupWeekOfMonth value.");
         }
     }

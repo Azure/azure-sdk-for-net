@@ -17,6 +17,8 @@ namespace Payload.ContentNegotiation._SameBody
     {
         protected SameBody() => throw null;
 
+        internal SameBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAvatarAsPng(RequestContext context) => throw null;

@@ -7,60 +7,90 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The MigrationItemOperation. </summary>
+    /// <summary> The allowed operations on the migration item based on the current migration state of the item. </summary>
     public readonly partial struct MigrationItemOperation : IEquatable<MigrationItemOperation>
     {
         private readonly string _value;
+        /// <summary> DisableMigration. </summary>
+        private const string DisableMigrationValue = "DisableMigration";
+        /// <summary> TestMigrate. </summary>
+        private const string TestMigrateValue = "TestMigrate";
+        /// <summary> TestMigrateCleanup. </summary>
+        private const string TestMigrateCleanupValue = "TestMigrateCleanup";
+        /// <summary> Migrate. </summary>
+        private const string MigrateValue = "Migrate";
+        /// <summary> StartResync. </summary>
+        private const string StartResyncValue = "StartResync";
+        /// <summary> PauseReplication. </summary>
+        private const string PauseReplicationValue = "PauseReplication";
+        /// <summary> ResumeReplication. </summary>
+        private const string ResumeReplicationValue = "ResumeReplication";
 
         /// <summary> Initializes a new instance of <see cref="MigrationItemOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MigrationItemOperation(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisableMigrationValue = "DisableMigration";
-        private const string TestMigrateValue = "TestMigrate";
-        private const string TestMigrateCleanupValue = "TestMigrateCleanup";
-        private const string MigrateValue = "Migrate";
-        private const string StartResyncValue = "StartResync";
-        private const string PauseReplicationValue = "PauseReplication";
-        private const string ResumeReplicationValue = "ResumeReplication";
+            _value = value;
+        }
 
         /// <summary> DisableMigration. </summary>
         public static MigrationItemOperation DisableMigration { get; } = new MigrationItemOperation(DisableMigrationValue);
+
         /// <summary> TestMigrate. </summary>
         public static MigrationItemOperation TestMigrate { get; } = new MigrationItemOperation(TestMigrateValue);
+
         /// <summary> TestMigrateCleanup. </summary>
         public static MigrationItemOperation TestMigrateCleanup { get; } = new MigrationItemOperation(TestMigrateCleanupValue);
+
         /// <summary> Migrate. </summary>
         public static MigrationItemOperation Migrate { get; } = new MigrationItemOperation(MigrateValue);
+
         /// <summary> StartResync. </summary>
         public static MigrationItemOperation StartResync { get; } = new MigrationItemOperation(StartResyncValue);
+
         /// <summary> PauseReplication. </summary>
         public static MigrationItemOperation PauseReplication { get; } = new MigrationItemOperation(PauseReplicationValue);
+
         /// <summary> ResumeReplication. </summary>
         public static MigrationItemOperation ResumeReplication { get; } = new MigrationItemOperation(ResumeReplicationValue);
+
         /// <summary> Determines if two <see cref="MigrationItemOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MigrationItemOperation left, MigrationItemOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MigrationItemOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MigrationItemOperation left, MigrationItemOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationItemOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MigrationItemOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MigrationItemOperation(string value) => new MigrationItemOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MigrationItemOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MigrationItemOperation?(string value) => value == null ? null : new MigrationItemOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MigrationItemOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MigrationItemOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

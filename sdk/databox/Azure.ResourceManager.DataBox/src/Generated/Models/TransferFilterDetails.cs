@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Details of the filtering the transfer of data. </summary>
     public partial class TransferFilterDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TransferFilterDetails"/>. </summary>
         /// <param name="dataAccountType"> Type of the account of data. </param>
@@ -58,27 +30,25 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="blobFilterDetails"> Filter details to transfer blobs. </param>
         /// <param name="azureFileFilterDetails"> Filter details to transfer Azure files. </param>
         /// <param name="filterFileDetails"> Details of the filter files to be used for data transfer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TransferFilterDetails(DataAccountType dataAccountType, BlobFilterDetails blobFilterDetails, AzureFileFilterDetails azureFileFilterDetails, IList<FilterFileDetails> filterFileDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TransferFilterDetails(DataAccountType dataAccountType, BlobFilterDetails blobFilterDetails, AzureFileFilterDetails azureFileFilterDetails, IList<FilterFileDetails> filterFileDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataAccountType = dataAccountType;
             BlobFilterDetails = blobFilterDetails;
             AzureFileFilterDetails = azureFileFilterDetails;
             FilterFileDetails = filterFileDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TransferFilterDetails"/> for deserialization. </summary>
-        internal TransferFilterDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of the account of data. </summary>
         public DataAccountType DataAccountType { get; set; }
+
         /// <summary> Filter details to transfer blobs. </summary>
         public BlobFilterDetails BlobFilterDetails { get; set; }
+
         /// <summary> Filter details to transfer Azure files. </summary>
         public AzureFileFilterDetails AzureFileFilterDetails { get; set; }
+
         /// <summary> Details of the filter files to be used for data transfer. </summary>
         public IList<FilterFileDetails> FilterFileDetails { get; }
     }

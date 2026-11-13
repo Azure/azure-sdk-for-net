@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachinePowerState : IEquatable<VirtualMachinePowerState>
     {
         private readonly string _value;
+        /// <summary> The virtual machine is powered off. </summary>
+        private const string OffValue = "Off";
+        /// <summary> The virtual machine is powered on. </summary>
+        private const string OnValue = "On";
+        /// <summary> The virtual machine power state is unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachinePowerState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string OnValue = "On";
-        private const string OffValue = "Off";
-        private const string UnknownValue = "Unknown";
-
-        /// <summary> On. </summary>
-        public static VirtualMachinePowerState On { get; } = new VirtualMachinePowerState(OnValue);
-        /// <summary> Off. </summary>
+        /// <summary> The virtual machine is powered off. </summary>
         public static VirtualMachinePowerState Off { get; } = new VirtualMachinePowerState(OffValue);
-        /// <summary> Unknown. </summary>
+
+        /// <summary> The virtual machine is powered on. </summary>
+        public static VirtualMachinePowerState On { get; } = new VirtualMachinePowerState(OnValue);
+
+        /// <summary> The virtual machine power state is unknown. </summary>
         public static VirtualMachinePowerState Unknown { get; } = new VirtualMachinePowerState(UnknownValue);
+
         /// <summary> Determines if two <see cref="VirtualMachinePowerState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachinePowerState left, VirtualMachinePowerState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachinePowerState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachinePowerState left, VirtualMachinePowerState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachinePowerState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachinePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachinePowerState(string value) => new VirtualMachinePowerState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachinePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachinePowerState?(string value) => value == null ? null : new VirtualMachinePowerState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachinePowerState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachinePowerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

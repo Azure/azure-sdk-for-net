@@ -7,72 +7,110 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The DataMigrationMongoDBMigrationState. </summary>
+    /// <summary></summary>
     public readonly partial struct DataMigrationMongoDBMigrationState : IEquatable<DataMigrationMongoDBMigrationState>
     {
         private readonly string _value;
+        /// <summary> NotStarted. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> ValidatingInput. </summary>
+        private const string ValidatingInputValue = "ValidatingInput";
+        /// <summary> Initializing. </summary>
+        private const string InitializingValue = "Initializing";
+        /// <summary> Restarting. </summary>
+        private const string RestartingValue = "Restarting";
+        /// <summary> Copying. </summary>
+        private const string CopyingValue = "Copying";
+        /// <summary> InitialReplay. </summary>
+        private const string InitialReplayValue = "InitialReplay";
+        /// <summary> Replaying. </summary>
+        private const string ReplayingValue = "Replaying";
+        /// <summary> Finalizing. </summary>
+        private const string FinalizingValue = "Finalizing";
+        /// <summary> Complete. </summary>
+        private const string CompleteValue = "Complete";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationMongoDBMigrationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string ValidatingInputValue = "ValidatingInput";
-        private const string InitializingValue = "Initializing";
-        private const string RestartingValue = "Restarting";
-        private const string CopyingValue = "Copying";
-        private const string InitialReplayValue = "InitialReplay";
-        private const string ReplayingValue = "Replaying";
-        private const string FinalizingValue = "Finalizing";
-        private const string CompleteValue = "Complete";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> NotStarted. </summary>
         public static DataMigrationMongoDBMigrationState NotStarted { get; } = new DataMigrationMongoDBMigrationState(NotStartedValue);
+
         /// <summary> ValidatingInput. </summary>
         public static DataMigrationMongoDBMigrationState ValidatingInput { get; } = new DataMigrationMongoDBMigrationState(ValidatingInputValue);
+
         /// <summary> Initializing. </summary>
         public static DataMigrationMongoDBMigrationState Initializing { get; } = new DataMigrationMongoDBMigrationState(InitializingValue);
+
         /// <summary> Restarting. </summary>
         public static DataMigrationMongoDBMigrationState Restarting { get; } = new DataMigrationMongoDBMigrationState(RestartingValue);
+
         /// <summary> Copying. </summary>
         public static DataMigrationMongoDBMigrationState Copying { get; } = new DataMigrationMongoDBMigrationState(CopyingValue);
+
         /// <summary> InitialReplay. </summary>
         public static DataMigrationMongoDBMigrationState InitialReplay { get; } = new DataMigrationMongoDBMigrationState(InitialReplayValue);
+
         /// <summary> Replaying. </summary>
         public static DataMigrationMongoDBMigrationState Replaying { get; } = new DataMigrationMongoDBMigrationState(ReplayingValue);
+
         /// <summary> Finalizing. </summary>
         public static DataMigrationMongoDBMigrationState Finalizing { get; } = new DataMigrationMongoDBMigrationState(FinalizingValue);
+
         /// <summary> Complete. </summary>
         public static DataMigrationMongoDBMigrationState Complete { get; } = new DataMigrationMongoDBMigrationState(CompleteValue);
+
         /// <summary> Canceled. </summary>
         public static DataMigrationMongoDBMigrationState Canceled { get; } = new DataMigrationMongoDBMigrationState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static DataMigrationMongoDBMigrationState Failed { get; } = new DataMigrationMongoDBMigrationState(FailedValue);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBMigrationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationMongoDBMigrationState left, DataMigrationMongoDBMigrationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBMigrationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationMongoDBMigrationState left, DataMigrationMongoDBMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationMongoDBMigrationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationMongoDBMigrationState(string value) => new DataMigrationMongoDBMigrationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationMongoDBMigrationState?(string value) => value == null ? null : new DataMigrationMongoDBMigrationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationMongoDBMigrationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationMongoDBMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

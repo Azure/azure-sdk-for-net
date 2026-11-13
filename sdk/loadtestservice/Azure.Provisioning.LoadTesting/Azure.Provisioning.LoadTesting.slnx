@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.LoadTesting.csproj" />
+  <Project Path="tests/Azure.Provisioning.LoadTesting.Tests.csproj" />
+</Solution>

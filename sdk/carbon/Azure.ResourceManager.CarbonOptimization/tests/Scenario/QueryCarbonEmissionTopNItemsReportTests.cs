@@ -162,13 +162,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Value);
 
-            var firstItem = (CarbonEmissionTopItemsSummary) result.Value.First();
+            var firstItem = (CarbonEmissionTopItemsSummary)result.Value.First();
             Assert.IsNotNull(firstItem.LatestMonthEmissions);
             Assert.IsTrue(firstItem.DataType == CarbonEmissionDataType.TopItemsSummaryData);
             Assert.IsNotNull(firstItem.ItemName);
             Assert.IsTrue(firstItem.CategoryType == categoryType);
 
-            var lastItem = (CarbonEmissionTopItemsSummary) result.Value.Last();
+            var lastItem = (CarbonEmissionTopItemsSummary)result.Value.Last();
             Assert.IsNotNull(lastItem.LatestMonthEmissions);
             Assert.IsTrue(lastItem.DataType == CarbonEmissionDataType.TopItemsSummaryData);
             Assert.IsNotNull(lastItem.ItemName);

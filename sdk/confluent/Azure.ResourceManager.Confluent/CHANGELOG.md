@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.2 (2026-09-04)
+
+### Features Added
+
+- Upgraded API version to v2026_06_02_preview.
+
+### Other Changes
+
+- Upgraded Azure.Core to 1.61.0.
+- Upgraded Azure.ResourceManager to 1.14.0.
+
+## 1.3.0-beta.1 (2026-03-18)
+
+### Features Added
+
+- Migrated from AutoRest/Swagger to TypeSpec-based code generation.
+- Upgraded API version from `2024-02-13` to `2025-08-18-preview`.
+- Added new resource types: `SCEnvironmentRecordResource`, `SCClusterRecordResource`, `ConfluentConnectorResource`, and `TopicRecordResource`.
+- Environment and cluster records are now modeled as ARM resources with full CRUD support.
+
+### Breaking Changes
+
+- Deprecated flat organization-level methods (`GetEnvironments`, `GetClusters`, `GetSchemaRegistryClusters`, `CreateApiKey`, `GetCluster`, `GetSchemaRegistryCluster`) in favor of the new resource hierarchy pattern (organization → environment → cluster).
 
 ## 1.2.1 (2025-03-11)
 
@@ -25,8 +49,8 @@
 
 ### Other Changes
 
-- Upgraded Azure.Core from 1.36.0 to 1.38.0
-- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.2
+- Upgraded Azure.Core from 1.36.0 to 1.38.0.
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.2.
 
 ## 1.1.0 (2023-11-27)
 

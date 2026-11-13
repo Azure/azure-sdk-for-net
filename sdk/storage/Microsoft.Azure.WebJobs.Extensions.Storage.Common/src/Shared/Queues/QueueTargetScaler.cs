@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             _functionId = functionId;
             _queueName = queueClient.Name;
-            _queueMetricsProvider = new QueueMetricsProvider(queueClient, loggerFactory);
+            _queueMetricsProvider = new QueueMetricsProvider(_functionId, queueClient, loggerFactory);
             _targetScalerDescriptor = new TargetScalerDescriptor(functionId);
             _options = options;
             _logger = loggerFactory.CreateLogger<QueueTargetScaler>();

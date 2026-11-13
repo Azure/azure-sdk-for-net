@@ -6,25 +6,17 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the DdosCustomPolicy data model.
-    /// A DDoS custom policy in a resource group.
-    /// </summary>
-    public partial class DdosCustomPolicyData : NetworkTrackedResourceData
+    public partial class DdosCustomPolicyData
     {
-        /// <summary> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </summary>
-        [Obsolete("This property is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<WritableSubResource> PublicIPAddresses { get => new ChangeTrackingList<WritableSubResource>(); }
+        // Retain the obsolete 1.15 compatibility API; current TypeSpec has no protocolCustomSettings field.
+        // Keep the persistent per-instance list shipped in 1.16.1/1.17 without adding wire serialization.
         /// <summary> The protocol-specific DDoS policy customization parameters. </summary>
-        [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<ProtocolCustomSettings> ProtocolCustomSettings { get => new ChangeTrackingList<ProtocolCustomSettings>(); }
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        public IList<ProtocolCustomSettings> ProtocolCustomSettings { get; } = new List<ProtocolCustomSettings>();
     }
 }

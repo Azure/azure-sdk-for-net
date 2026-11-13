@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct DataProtectionBackupRecoveryPointCompletionState : IEquatable<DataProtectionBackupRecoveryPointCompletionState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointCompletionState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataProtectionBackupRecoveryPointCompletionState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CompletedValue = "Completed";
         private const string PartialValue = "Partial";
 
-        /// <summary> Completed. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointCompletionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataProtectionBackupRecoveryPointCompletionState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Completed. </summary>
         public static DataProtectionBackupRecoveryPointCompletionState Completed { get; } = new DataProtectionBackupRecoveryPointCompletionState(CompletedValue);
-        /// <summary> Partial. </summary>
+
+        /// <summary> Gets the Partial. </summary>
         public static DataProtectionBackupRecoveryPointCompletionState Partial { get; } = new DataProtectionBackupRecoveryPointCompletionState(PartialValue);
+
         /// <summary> Determines if two <see cref="DataProtectionBackupRecoveryPointCompletionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataProtectionBackupRecoveryPointCompletionState left, DataProtectionBackupRecoveryPointCompletionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataProtectionBackupRecoveryPointCompletionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataProtectionBackupRecoveryPointCompletionState left, DataProtectionBackupRecoveryPointCompletionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataProtectionBackupRecoveryPointCompletionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataProtectionBackupRecoveryPointCompletionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataProtectionBackupRecoveryPointCompletionState(string value) => new DataProtectionBackupRecoveryPointCompletionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataProtectionBackupRecoveryPointCompletionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataProtectionBackupRecoveryPointCompletionState?(string value) => value == null ? null : new DataProtectionBackupRecoveryPointCompletionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataProtectionBackupRecoveryPointCompletionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataProtectionBackupRecoveryPointCompletionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

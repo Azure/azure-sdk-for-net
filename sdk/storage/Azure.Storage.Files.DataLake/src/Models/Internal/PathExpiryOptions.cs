@@ -3,5 +3,5 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal readonly partial struct PathExpiryOptions {}
+    internal readonly partial struct PathExpiryOptions { }
 }

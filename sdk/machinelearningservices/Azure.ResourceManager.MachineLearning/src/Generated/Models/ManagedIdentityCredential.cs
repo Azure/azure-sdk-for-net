@@ -7,50 +7,94 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Credential for user managed identity. </summary>
     public partial class ManagedIdentityCredential : DataReferenceCredential
     {
+        private string _managedIdentityType;
+        private bool _managedIdentityTypeIsDefined;
+        private string _userManagedIdentityClientId;
+        private bool _userManagedIdentityClientIdIsDefined;
+        private string _userManagedIdentityPrincipalId;
+        private bool _userManagedIdentityPrincipalIdIsDefined;
+        private string _userManagedIdentityResourceId;
+        private bool _userManagedIdentityResourceIdIsDefined;
+        private string _userManagedIdentityTenantId;
+        private bool _userManagedIdentityTenantIdIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityCredential"/>. </summary>
-        internal ManagedIdentityCredential()
+        internal ManagedIdentityCredential() : base(DataReferenceCredentialType.ManagedIdentity)
         {
-            CredentialType = DataReferenceCredentialType.ManagedIdentity;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityCredential"/>. </summary>
         /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedIdentityType"> ManagedIdentityCredential identity type. </param>
-        /// <param name="userManagedIdentityResourceId"> Full arm scope for the Id. For ManagedIdentityType = SystemManaged, this field is null. </param>
         /// <param name="userManagedIdentityClientId"> ClientId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </param>
         /// <param name="userManagedIdentityPrincipalId"> PrincipalId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </param>
+        /// <param name="userManagedIdentityResourceId"> Full arm scope for the Id. For ManagedIdentityType = SystemManaged, this field is null. </param>
         /// <param name="userManagedIdentityTenantId"> TenantId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </param>
-        internal ManagedIdentityCredential(DataReferenceCredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData, string managedIdentityType, string userManagedIdentityResourceId, string userManagedIdentityClientId, string userManagedIdentityPrincipalId, string userManagedIdentityTenantId) : base(credentialType, serializedAdditionalRawData)
+        internal ManagedIdentityCredential(DataReferenceCredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedIdentityType, string userManagedIdentityClientId, string userManagedIdentityPrincipalId, string userManagedIdentityResourceId, string userManagedIdentityTenantId) : base(credentialType, additionalBinaryDataProperties)
         {
-            ManagedIdentityType = managedIdentityType;
-            UserManagedIdentityResourceId = userManagedIdentityResourceId;
-            UserManagedIdentityClientId = userManagedIdentityClientId;
-            UserManagedIdentityPrincipalId = userManagedIdentityPrincipalId;
-            UserManagedIdentityTenantId = userManagedIdentityTenantId;
-            CredentialType = credentialType;
+            _managedIdentityType = managedIdentityType;
+            _userManagedIdentityClientId = userManagedIdentityClientId;
+            _userManagedIdentityPrincipalId = userManagedIdentityPrincipalId;
+            _userManagedIdentityResourceId = userManagedIdentityResourceId;
+            _userManagedIdentityTenantId = userManagedIdentityTenantId;
         }
 
         /// <summary> ManagedIdentityCredential identity type. </summary>
         [WirePath("managedIdentityType")]
-        public string ManagedIdentityType { get; }
-        /// <summary> Full arm scope for the Id. For ManagedIdentityType = SystemManaged, this field is null. </summary>
-        [WirePath("userManagedIdentityResourceId")]
-        public string UserManagedIdentityResourceId { get; }
+        public string ManagedIdentityType
+        {
+            get
+            {
+                return _managedIdentityType;
+            }
+        }
+
         /// <summary> ClientId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </summary>
         [WirePath("userManagedIdentityClientId")]
-        public string UserManagedIdentityClientId { get; }
+        public string UserManagedIdentityClientId
+        {
+            get
+            {
+                return _userManagedIdentityClientId;
+            }
+        }
+
         /// <summary> PrincipalId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </summary>
         [WirePath("userManagedIdentityPrincipalId")]
-        public string UserManagedIdentityPrincipalId { get; }
+        public string UserManagedIdentityPrincipalId
+        {
+            get
+            {
+                return _userManagedIdentityPrincipalId;
+            }
+        }
+
+        /// <summary> Full arm scope for the Id. For ManagedIdentityType = SystemManaged, this field is null. </summary>
+        [WirePath("userManagedIdentityResourceId")]
+        public string UserManagedIdentityResourceId
+        {
+            get
+            {
+                return _userManagedIdentityResourceId;
+            }
+        }
+
         /// <summary> TenantId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </summary>
         [WirePath("userManagedIdentityTenantId")]
-        public string UserManagedIdentityTenantId { get; }
+        public string UserManagedIdentityTenantId
+        {
+            get
+            {
+                return _userManagedIdentityTenantId;
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CaptionResult))]
     [ModelReaderWriterBuildable(typeof(CropRegion))]
@@ -27,11 +27,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     [ModelReaderWriterBuildable(typeof(ImageBoundingBox))]
     [ModelReaderWriterBuildable(typeof(ImageMetadata))]
     [ModelReaderWriterBuildable(typeof(ImagePoint))]
-    [ModelReaderWriterBuildable(typeof(ImageUrl))]
     [ModelReaderWriterBuildable(typeof(ObjectsResult))]
     [ModelReaderWriterBuildable(typeof(PeopleResult))]
     [ModelReaderWriterBuildable(typeof(ReadResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SmartCropsResult))]
     [ModelReaderWriterBuildable(typeof(TagsResult))]
     public partial class AzureAIVisionImageAnalysisContext : ModelReaderWriterContext

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct LearningRateScheduler : IEquatable<LearningRateScheduler>
     {
         private readonly string _value;
+        /// <summary> No learning rate scheduler selected. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Cosine Annealing With Warmup. </summary>
+        private const string WarmupCosineValue = "WarmupCosine";
+        /// <summary> Step learning rate scheduler. </summary>
+        private const string StepValue = "Step";
 
         /// <summary> Initializes a new instance of <see cref="LearningRateScheduler"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LearningRateScheduler(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string WarmupCosineValue = "WarmupCosine";
-        private const string StepValue = "Step";
+            _value = value;
+        }
 
         /// <summary> No learning rate scheduler selected. </summary>
         public static LearningRateScheduler None { get; } = new LearningRateScheduler(NoneValue);
+
         /// <summary> Cosine Annealing With Warmup. </summary>
         public static LearningRateScheduler WarmupCosine { get; } = new LearningRateScheduler(WarmupCosineValue);
+
         /// <summary> Step learning rate scheduler. </summary>
         public static LearningRateScheduler Step { get; } = new LearningRateScheduler(StepValue);
+
         /// <summary> Determines if two <see cref="LearningRateScheduler"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LearningRateScheduler left, LearningRateScheduler right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LearningRateScheduler"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LearningRateScheduler left, LearningRateScheduler right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LearningRateScheduler"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LearningRateScheduler"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LearningRateScheduler(string value) => new LearningRateScheduler(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LearningRateScheduler"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LearningRateScheduler?(string value) => value == null ? null : new LearningRateScheduler(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LearningRateScheduler other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LearningRateScheduler other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

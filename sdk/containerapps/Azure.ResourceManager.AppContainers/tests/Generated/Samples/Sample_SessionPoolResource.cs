@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSessionPool()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/SessionPools_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/SessionPools_Get.json
             // this example is just showing the usage of "ContainerAppsSessionPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSessionPool()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/SessionPools_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/SessionPools_Delete.json
             // this example is just showing the usage of "ContainerAppsSessionPools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSessionPool()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/SessionPools_Patch.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/SessionPools_Patch.json
             // this example is just showing the usage of "ContainerAppsSessionPools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

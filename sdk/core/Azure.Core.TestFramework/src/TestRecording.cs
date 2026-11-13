@@ -84,7 +84,8 @@ namespace Azure.Core.TestFramework
                         ExcludedHeaders = string.Join(",", excludedHeaders),
                         IgnoredHeaders = _recordedTestBase.IgnoredHeaders.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredHeaders) : null,
                         IgnoredQueryParameters = _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters) : null,
-                        CompareBodies = _recordedTestBase.CompareBodies
+                        CompareBodies = _recordedTestBase.CompareBodies,
+                        IgnoreQueryOrdering = true
                     });
 
                     foreach (HeaderTransform transform in _recordedTestBase.HeaderTransforms)
@@ -217,7 +218,7 @@ namespace Azure.Core.TestFramework
         {
             get
             {
-               return _recordedTestBase.UseDefaultGuidFormatForClientRequestId;
+                return _recordedTestBase.UseDefaultGuidFormatForClientRequestId;
             }
         }
 

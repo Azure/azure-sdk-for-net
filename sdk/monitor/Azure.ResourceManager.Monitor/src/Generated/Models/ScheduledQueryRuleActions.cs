@@ -7,65 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Actions to invoke when the alert fires. </summary>
     public partial class ScheduledQueryRuleActions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleActions"/>. </summary>
         public ScheduledQueryRuleActions()
         {
             ActionGroups = new ChangeTrackingList<string>();
             CustomProperties = new ChangeTrackingDictionary<string, string>();
+            ActionProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleActions"/>. </summary>
         /// <param name="actionGroups"> Action Group resource Ids to invoke when the alert fires. </param>
         /// <param name="customProperties"> The properties of an alert payload. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleActions(IList<string> actionGroups, IDictionary<string, string> customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="actionProperties"> The properties of an action properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledQueryRuleActions(IList<string> actionGroups, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionGroups = actionGroups;
             CustomProperties = customProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ActionProperties = actionProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Action Group resource Ids to invoke when the alert fires. </summary>
         public IList<string> ActionGroups { get; }
+
         /// <summary> The properties of an alert payload. </summary>
         public IDictionary<string, string> CustomProperties { get; }
+
+        /// <summary> The properties of an action properties. </summary>
+        public IDictionary<string, string> ActionProperties { get; }
     }
 }

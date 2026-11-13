@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningStorageAccountType : IEquatable<MachineLearningStorageAccountType>
     {
         private readonly string _value;
+        private const string StandardLRSValue = "Standard_LRS";
+        private const string PremiumLRSValue = "Premium_LRS";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningStorageAccountType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string StandardLrsValue = "Standard_LRS";
-        private const string PremiumLrsValue = "Premium_LRS";
+        /// <summary> Gets the StandardLRS. </summary>
+        public static MachineLearningStorageAccountType StandardLRS { get; } = new MachineLearningStorageAccountType(StandardLRSValue);
 
-        /// <summary> Standard_LRS. </summary>
-        public static MachineLearningStorageAccountType StandardLrs { get; } = new MachineLearningStorageAccountType(StandardLrsValue);
-        /// <summary> Premium_LRS. </summary>
-        public static MachineLearningStorageAccountType PremiumLrs { get; } = new MachineLearningStorageAccountType(PremiumLrsValue);
+        /// <summary> Gets the PremiumLRS. </summary>
+        public static MachineLearningStorageAccountType PremiumLRS { get; } = new MachineLearningStorageAccountType(PremiumLRSValue);
+
         /// <summary> Determines if two <see cref="MachineLearningStorageAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningStorageAccountType left, MachineLearningStorageAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningStorageAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningStorageAccountType left, MachineLearningStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningStorageAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningStorageAccountType(string value) => new MachineLearningStorageAccountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningStorageAccountType?(string value) => value == null ? null : new MachineLearningStorageAccountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningStorageAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

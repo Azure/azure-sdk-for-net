@@ -8,54 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The response from a Hibernate request. </summary>
     public partial class HibernateResourceOperationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HibernateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="resourceType"> The type of resources used in the Hibernate request eg virtual machines. </param>
         /// <param name="location"> The location of the Hibernate request eg westus. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="resourceType"/> is null. </exception>
         internal HibernateResourceOperationResult(string description, string resourceType, AzureLocation location)
         {
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
-
             Description = description;
             ResourceType = resourceType;
             Location = location;
@@ -67,27 +35,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceType"> The type of resources used in the Hibernate request eg virtual machines. </param>
         /// <param name="location"> The location of the Hibernate request eg westus. </param>
         /// <param name="results"> The results from the Hibernate request if no errors exist. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HibernateResourceOperationResult(string description, string resourceType, AzureLocation location, IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HibernateResourceOperationResult(string description, string resourceType, AzureLocation location, IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ResourceType = resourceType;
             Location = location;
             Results = results;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HibernateResourceOperationResult"/> for deserialization. </summary>
-        internal HibernateResourceOperationResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The description of the operation response. </summary>
         public string Description { get; }
+
         /// <summary> The type of resources used in the Hibernate request eg virtual machines. </summary>
         public string ResourceType { get; }
+
         /// <summary> The location of the Hibernate request eg westus. </summary>
         public AzureLocation Location { get; }
+
         /// <summary> The results from the Hibernate request if no errors exist. </summary>
         public IReadOnlyList<ResourceOperationResult> Results { get; }
     }

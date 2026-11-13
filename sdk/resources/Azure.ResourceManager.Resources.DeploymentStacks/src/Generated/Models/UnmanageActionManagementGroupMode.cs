@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Resources.DeploymentStacks;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
-    /// <summary> The UnmanageActionManagementGroupMode. </summary>
+    /// <summary> Specifies an action for a newly unmanaged resource. </summary>
     public readonly partial struct UnmanageActionManagementGroupMode : IEquatable<UnmanageActionManagementGroupMode>
     {
         private readonly string _value;
+        /// <summary> Delete the management groups from Azure. </summary>
+        private const string DeleteValue = "delete";
+        /// <summary> Keep the management groups in Azure. </summary>
+        private const string DetachValue = "detach";
 
         /// <summary> Initializes a new instance of <see cref="UnmanageActionManagementGroupMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UnmanageActionManagementGroupMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DeleteValue = "delete";
-        private const string DetachValue = "detach";
-
-        /// <summary> delete. </summary>
+        /// <summary> Delete the management groups from Azure. </summary>
         public static UnmanageActionManagementGroupMode Delete { get; } = new UnmanageActionManagementGroupMode(DeleteValue);
-        /// <summary> detach. </summary>
+
+        /// <summary> Keep the management groups in Azure. </summary>
         public static UnmanageActionManagementGroupMode Detach { get; } = new UnmanageActionManagementGroupMode(DetachValue);
+
         /// <summary> Determines if two <see cref="UnmanageActionManagementGroupMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UnmanageActionManagementGroupMode left, UnmanageActionManagementGroupMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UnmanageActionManagementGroupMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UnmanageActionManagementGroupMode left, UnmanageActionManagementGroupMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UnmanageActionManagementGroupMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UnmanageActionManagementGroupMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UnmanageActionManagementGroupMode(string value) => new UnmanageActionManagementGroupMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UnmanageActionManagementGroupMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UnmanageActionManagementGroupMode?(string value) => value == null ? null : new UnmanageActionManagementGroupMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UnmanageActionManagementGroupMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UnmanageActionManagementGroupMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

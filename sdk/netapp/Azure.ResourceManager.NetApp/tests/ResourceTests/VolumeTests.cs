@@ -3,29 +3,41 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.NetApp.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using NUnit.Framework;
-using Azure.Core;
+using Azure.ResourceManager.Resources;
 using FluentAssertions;
-using Polly.Contrib.WaitAndRetry;
+using NUnit.Framework;
 using Polly;
-using System.Net;
+using Polly.Contrib.WaitAndRetry;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
     public class VolumeTests : NetAppTestBase
     {
         private string _pool1Name = "pool1";
-        private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts();}
+        private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
+
         public VolumeTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
+        }
+
+        private string GenerateRecordedAssetName(string variableName, string prefix)
+        {
+            // Request IDs share the random generator; persist names independently of dependency-specific requests.
+            string name = Recording.GetVariable(variableName, Recording.GenerateAssetName(prefix));
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new InvalidOperationException($"Recording is missing the '{variableName}' asset name.");
+            }
+            return name;
         }
 
         [SetUp]
@@ -40,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
             _volumeCollection = _capacityPool.GetNetAppVolumes();
-
+            await CreateVirtualNetwork();
             Console.WriteLine("VolumeTEST Setup create vnet");
         }
 
@@ -105,9 +117,8 @@ namespace Azure.ResourceManager.NetApp.Tests
 
         private async Task CleanupRemoteResources(NetAppVolumeResource volume)
         {
-            await CreateVirtualNetwork();
             Console.WriteLine($"Cleaning up remote resources: {volume.Data.DataProtection.Replication.RemoteVolumeResourceId}");
-            NetAppVolumeResource remoteVolume = Client.GetNetAppVolumeResource(volume.Data.DataProtection.Replication.RemoteVolumeResourceId);
+            NetAppVolumeResource remoteVolume = Client.GetNetAppVolumeResource(new ResourceIdentifier(volume.Data.DataProtection.Replication.RemoteVolumeResourceId));
 
             // delete the data protection object
             ArmOperation deleteReplicationOperation = (await remoteVolume.DeleteReplicationAsync(WaitUntil.Completed));
@@ -127,11 +138,10 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task UpdateVolume()
         {
             //create volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
             VerifyVolumeProperties(volumeResource1, true);
-            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value, options => options.IncludingAllDeclaredProperties());
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             VerifyVolumeProperties(volumeResource2, true);
@@ -159,11 +169,10 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CreateDeleteVolume()
         {
             //create volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             VerifyVolumeProperties(volumeResource1, true);
-            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value, options => options.IncludingAllDeclaredProperties());
 
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
@@ -189,8 +198,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CreateVolumePoolNotFound()
         {
             //Delete pool
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
             await LiveDelay(40000);
             //create volume
@@ -202,27 +210,26 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CreateVolumeWithProperties()
         {
             //create volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, exportPolicyRule: _defaultExportPolicyRule, protocolTypes: _defaultProtocolTypes, volumeName: volumeName);
             VerifyVolumeProperties(volumeResource1, true);
-            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value, options => options.IncludingAllDeclaredProperties());
 
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             VerifyVolumeProperties(volumeResource2, true);
             Assert.NotNull(volumeResource2.Data.ProtocolTypes);
-            volumeResource2.Should().BeEquivalentTo(volumeResource1);
+            volumeResource2.Should().BeEquivalentTo(volumeResource1, options => options.IncludingAllDeclaredProperties());
             volumeResource2.Data.ProtocolTypes.Should().Equal(_defaultProtocolTypes);
-            Assert.NotNull(volumeResource2.Data.ExportPolicy);
-            volumeResource2.Data.ExportPolicy.Rules.Should().NotBeEmpty();
-            Assert.AreEqual(_defaultExportPolicyRule.RuleIndex, volumeResource2.Data.ExportPolicy.Rules[0].RuleIndex);
-            Assert.AreEqual(_defaultExportPolicyRule.IsUnixReadOnly, volumeResource2.Data.ExportPolicy.Rules[0].IsUnixReadOnly);
-            Assert.AreEqual(_defaultExportPolicyRule.AllowCifsProtocol, volumeResource2.Data.ExportPolicy.Rules[0].AllowCifsProtocol);
-            Assert.AreEqual(_defaultExportPolicyRule.AllowNfsV3Protocol, volumeResource2.Data.ExportPolicy.Rules[0].AllowNfsV3Protocol);
-            Assert.AreEqual(_defaultExportPolicyRule.AllowNfsV41Protocol, volumeResource2.Data.ExportPolicy.Rules[0].AllowNfsV41Protocol);
-            Assert.AreEqual(_defaultExportPolicyRule.AllowedClients, volumeResource2.Data.ExportPolicy.Rules[0].AllowedClients);
-            volumeResource2.Data.ProtocolTypes.Should().BeEquivalentTo(_defaultProtocolTypes);
+            Assert.NotNull(volumeResource2.Data.ExportRules);
+            volumeResource2.Data.ExportRules.Should().NotBeEmpty();
+            Assert.AreEqual(_defaultExportPolicyRule.RuleIndex, volumeResource2.Data.ExportRules[0].RuleIndex);
+            Assert.AreEqual(_defaultExportPolicyRule.IsUnixReadOnly, volumeResource2.Data.ExportRules[0].IsUnixReadOnly);
+            Assert.AreEqual(_defaultExportPolicyRule.AllowCifsProtocol, volumeResource2.Data.ExportRules[0].AllowCifsProtocol);
+            Assert.AreEqual(_defaultExportPolicyRule.AllowNfsV3Protocol, volumeResource2.Data.ExportRules[0].AllowNfsV3Protocol);
+            Assert.AreEqual(_defaultExportPolicyRule.AllowNfsV41Protocol, volumeResource2.Data.ExportRules[0].AllowNfsV41Protocol);
+            Assert.AreEqual(_defaultExportPolicyRule.AllowedClients, volumeResource2.Data.ExportRules[0].AllowedClients);
+            volumeResource2.Data.ProtocolTypes.Should().BeEquivalentTo(_defaultProtocolTypes, options => options.IncludingAllDeclaredProperties());
 
             //delete Volume
             await volumeResource2.DeleteAsync(WaitUntil.Completed);
@@ -238,11 +245,10 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
             Console.WriteLine("TEST DeletePooWithVolumePresent");
             //create volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             VerifyVolumeProperties(volumeResource1, true);
-            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value, options => options.IncludingAllDeclaredProperties());
 
             //Delete pool
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _capacityPool.DeleteAsync(WaitUntil.Completed); });
@@ -254,21 +260,19 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
             Console.WriteLine("TEST GetVolumeByName");
             //create volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             VerifyVolumeProperties(volumeResource2, true);
-            volumeResource2.Should().BeEquivalentTo(volumeResource1);
+            volumeResource2.Should().BeEquivalentTo(volumeResource1, options => options.IncludingAllDeclaredProperties());
         }
 
         [RecordedTest]
         public async Task GetVolumeByNameNotFound()
         {
-            string volumeName = Recording.GenerateAssetName("volumeName-");
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             //Try and get a volume rom the pool, none have been created yet
-            await CreateVirtualNetwork();
             Assert.IsFalse(await _capacityPoolCollection.ExistsAsync(volumeName));
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _capacityPoolCollection.GetAsync(volumeName); });
             Assert.AreEqual(404, exception.Status);
@@ -277,9 +281,8 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task GetVolumeByNamePoolNotFound()
         {
-            string volumeName = Recording.GenerateAssetName("volumeName-");
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             //create volume
-            await CreateVirtualNetwork();
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
             //delete Volume
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
@@ -297,9 +300,8 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task ListVolumes()
         {
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            string volumeName2 = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
+            string volumeName2 = GenerateRecordedAssetName("VolumeName2", "volumeName-");
             //create volume1
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             //create volume2
@@ -317,8 +319,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 if (volume.Id.Name == volumeResource2.Id.Name)
                     volumeResource3 = volume;
             }
-            volumeResource3.Should().BeEquivalentTo(volumeResource3);
-            volumeResource4.Should().BeEquivalentTo(volumeResource4);
+            volumeResource3.Should().BeEquivalentTo(volumeResource3, options => options.IncludingAllDeclaredProperties());
+            volumeResource4.Should().BeEquivalentTo(volumeResource4, options => options.IncludingAllDeclaredProperties());
         }
 
         [Ignore("Ignore for now due to CI pipeline timeout.")]
@@ -327,7 +329,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
             //Set pool size to fit the number of volumes
             CapacityPoolPatch parameters = new(DefaultLocation);
-            await CreateVirtualNetwork();
             long setPoolSize = 11 * _tebibyte;
             parameters.Size = setPoolSize;
             await _capacityPool.UpdateAsync(WaitUntil.Completed, parameters);
@@ -354,18 +355,17 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task ChangePoolForVolume()
         {
             //create volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            string poolName2 = Recording.GenerateAssetName("pool-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
+            string poolName2 = GenerateRecordedAssetName("PoolName2", "pool-");
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             VerifyVolumeProperties(volumeResource2, true);
-            volumeResource2.Should().BeEquivalentTo(volumeResource1);
+            volumeResource2.Should().BeEquivalentTo(volumeResource1, options => options.IncludingAllDeclaredProperties());
             //create second pool
             CapacityPoolResource pool2 = await CreateCapacityPool(DefaultLocation, NetAppFileServiceLevel.Premium, _poolSize, poolName: poolName2);
             CapacityPoolResource pool3 = await _capacityPoolCollection.GetAsync(poolName2);
-            pool3.Should().BeEquivalentTo(pool2);
+            pool3.Should().BeEquivalentTo(pool2, options => options.IncludingAllDeclaredProperties());
 
             //Change pools
             NetAppVolumePoolChangeContent parameters = new(pool2.Id);
@@ -384,9 +384,12 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task CheckAvailability()
         {
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            string otherName = Recording.GenerateAssetName("someOtherAccount");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
+            // Use a fixed literal instead of Recording.GenerateAssetName so the request body
+            // is stable across runs and matches the recording. This name is never used to
+            // create a NetApp account; it is only sent to the passive checkNameAvailability
+            // probe to assert that an unused account name returns IsAvailable = true.
+            string otherName = "someOtherAccountXXX";
             string fullVolumeName = $"{_netAppAccount.Id.Name}/{_capacityPool.Id.Name.Split().Last()}/{volumeName}";
             //check account availability
             NetAppNameAvailabilityContent parameters = new(_netAppAccount.Id.Name, NetAppNameAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, _resourceGroup.Id.Name);
@@ -414,14 +417,13 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CreateDPVolume()
         {
             //create the source volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            string volumeName2 = Recording.GenerateAssetName("volumeName-");
-            string remoteRGName = Recording.GenerateAssetName(_resourceGroup.Id.Name + "-remote");
-            string remotevnetName = Recording.GenerateAssetName("vnet-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
+            string volumeName2 = GenerateRecordedAssetName("VolumeName2", "volumeName-");
+            string remoteRGName = GenerateRecordedAssetName("RemoteResourceGroupName", _resourceGroup.Id.Name + "-remote");
+            string remotevnetName = GenerateRecordedAssetName("RemoteVirtualNetworkName", "vnet-");
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName);
             VerifyVolumeProperties(volumeResource1, true);
-            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value, options => options.IncludingAllDeclaredProperties());
             await LiveDelay(10000);
             //create destination volume + resources
             //create remote resource Group
@@ -456,7 +458,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumeResource remoteVolumeResource = await remoteVolumeCollection.GetAsync(remoteVolume.Id.Name);
             VerifyVolumeProperties(remoteVolumeResource, false);
             Assert.AreEqual(RemoteLocation, remoteVolumeResource.Data.Location);
-            remoteVolumeResource.Should().BeEquivalentTo(remoteVolume);
+            remoteVolumeResource.Should().BeEquivalentTo(remoteVolume, options => options.IncludingAllDeclaredProperties());
             Assert.IsNotNull(remoteVolumeResource.Data.DataProtection);
             Assert.IsNull(remoteVolumeResource.Data.DataProtection.Backup);
             Assert.IsNull(remoteVolumeResource.Data.DataProtection.Snapshot);
@@ -472,7 +474,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             ArmOperation authorizeOperation = (await volumeResource1.AuthorizeReplicationAsync(WaitUntil.Completed, authorize));
             Assert.IsTrue(authorizeOperation.HasCompleted);
             await LiveDelay(240000);
-            //Wait for Mirrored status this indicates a healty replication relationship, tests ReplicationStatusAsync() operation
+            //Wait for Mirrored status this indicates a healty replication relationship, tests GetReplicationStatusAsync() operation
             await WaitForReplicationStatus(volumeResource1, NetAppMirrorState.Mirrored);
 
             ///List replications
@@ -485,14 +487,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             ArmOperation breakReplicationOperation = (await remoteVolume.BreakReplicationAsync(WaitUntil.Completed, new()));
             Assert.IsTrue(breakReplicationOperation.HasCompleted);
             await LiveDelay(5000);
-            //Wait for Broken status this indicates a Broken replication relationship, tests ReplicationStatusAsync() operation
+            //Wait for Broken status this indicates a Broken replication relationship, tests GetReplicationStatusAsync() operation
             await WaitForReplicationStatus(remoteVolume, NetAppMirrorState.Broken);
 
             //Resync Replication
             ArmOperation resyncReplicationOperation = (await remoteVolume.ResyncReplicationAsync(WaitUntil.Completed));
             Assert.IsTrue(resyncReplicationOperation.HasCompleted);
             await LiveDelay(5000);
-            //Wait for Broken status this indicates a Broken replication relationship, tests ReplicationStatusAsync() operation
+            //Wait for Broken status this indicates a Broken replication relationship, tests GetReplicationStatusAsync() operation
             await WaitForReplicationStatus(remoteVolume, NetAppMirrorState.Mirrored);
 
             await LiveDelay(5000);
@@ -504,7 +506,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             breakReplicationOperation = (await remoteVolume.BreakReplicationAsync(WaitUntil.Completed, forceBreak));
             Assert.IsTrue(breakReplicationOperation.HasCompleted);
             await LiveDelay(5000);
-            //Wait for Broken status this indicates a Broken replication relationship, calls ReplicationStatusAsync() operation
+            //Wait for Broken status this indicates a Broken replication relationship, calls GetReplicationStatusAsync() operation
             await WaitForReplicationStatus(remoteVolume, NetAppMirrorState.Broken);
 
             // delete the data protection object
@@ -574,7 +576,6 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //create volume
             string volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
             //Update the remote volume with dataProtection for Migration (external replication)
             NetAppReplicationObject replication = new()
             {
@@ -583,7 +584,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection() { Replication = replication };
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName, volumeType: "Migration", dataProtection: dataProtectionProperties);
             VerifyVolumeProperties(volumeResource1, true);
-            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value, options => options.IncludingAllDeclaredProperties());
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             VerifyVolumeProperties(volumeResource2, true);
@@ -614,11 +615,10 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task BreakFileLocksVolumeNoFiles()
         {
             //create volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
             VerifyVolumeProperties(volumeResource1, true);
-            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value, options => options.IncludingAllDeclaredProperties());
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             VerifyVolumeProperties(volumeResource2, true);
@@ -637,11 +637,10 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task GetGetGroupIdListForLdapUserNonLDAPVolumeShouldReturnError()
         {
             //create volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork();
+            string volumeName = GenerateRecordedAssetName("VolumeName", "volumeName-");
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
             VerifyVolumeProperties(volumeResource1, true);
-            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value, options => options.IncludingAllDeclaredProperties());
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             VerifyVolumeProperties(volumeResource2, true);
@@ -651,6 +650,23 @@ namespace Azure.ResourceManager.NetApp.Tests
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource1.GetGetGroupIdListForLdapUserAsync(WaitUntil.Completed, parameters); });
             Assert.AreEqual(400, exception.Status);
         }
+
+        // TODO in preview, enable when GA
+        //[Ignore("Ignore for now due to CI pipeline issue.")]
+        //[RecordedTest]
+        //public async Task ListQuotaReport()
+        //{
+        //    //create volume
+        //    string volumeName = Recording.GenerateAssetName("volumeName-");
+        //    NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
+        //    //Check filePathAvailability, should be unavailable after volume creation
+        //    NetAppVolumeResource netAppVolume = Client.GetNetAppVolumeResource(volumeResource1.Id);
+        //    // invoke the operation
+        //    ArmOperation<NetAppVolumeQuotaReportListResult> lro = await netAppVolume.GetQuotaReportAsync(WaitUntil.Completed);
+        //    NetAppVolumeQuotaReportListResult result = lro.Value;
+        //    result.Should().NotBeNull();
+        //    result.Value.Should().BeEmpty();
+        //}
 
         private async Task WaitForReplicationStatus(NetAppVolumeResource volumeResource, NetAppMirrorState mirrorState)
         {
@@ -701,7 +717,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 try
                 {
-                    replicationStatus =     await volumeResource.GetReplicationStatusAsync();
+                    replicationStatus = await volumeResource.GetReplicationStatusAsync();
                     attempts++;
                 }
                 catch (RequestFailedException ex)

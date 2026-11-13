@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The managed server capability. </summary>
     public partial class ManagedInstanceEditionCapability
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceEditionCapability"/>. </summary>
         internal ManagedInstanceEditionCapability()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceEditionCapability(string name, bool? isGeneralPurposeV2, IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceEditionCapability(string name, bool? isGeneralPurposeV2, IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsGeneralPurposeV2 = isGeneralPurposeV2;
@@ -68,24 +40,29 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedStorageCapabilities = supportedStorageCapabilities;
             Status = status;
             Reason = reason;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The managed server version name. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> Whether or not this is a GPv2 variant of General Purpose edition. </summary>
         [WirePath("isGeneralPurposeV2")]
         public bool? IsGeneralPurposeV2 { get; }
+
         /// <summary> The supported families. </summary>
         [WirePath("supportedFamilies")]
         public IReadOnlyList<ManagedInstanceFamilyCapability> SupportedFamilies { get; }
+
         /// <summary> The list of supported storage capabilities for this edition. </summary>
         [WirePath("supportedStorageCapabilities")]
         public IReadOnlyList<StorageCapability> SupportedStorageCapabilities { get; }
+
         /// <summary> The status of the capability. </summary>
         [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
+
         /// <summary> The reason for the capability not being available. </summary>
         [WirePath("reason")]
         public string Reason { get; }

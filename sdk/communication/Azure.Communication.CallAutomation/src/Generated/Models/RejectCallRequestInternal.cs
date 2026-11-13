@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="RejectCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="callRejectReason"> The rejection reason. </param>
+        /// <param name="callRejectReason"> Reason of rejecting a call. </param>
         internal RejectCallRequestInternal(string incomingCallContext, CallRejectReason? callRejectReason)
         {
             IncomingCallContext = incomingCallContext;
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
-        /// <summary> The rejection reason. </summary>
+        /// <summary> Reason of rejecting a call. </summary>
         public CallRejectReason? CallRejectReason { get; set; }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Consumption
 {
+    /// <summary></summary>
     public partial class ConsumptionBudgetResource : IJsonModel<ConsumptionBudgetData>
     {
-        private static ConsumptionBudgetData s_dataDeserializationInstance;
-        private static ConsumptionBudgetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ConsumptionBudgetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ConsumptionBudgetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ConsumptionBudgetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConsumptionBudgetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConsumptionBudgetData>)Data).Write(writer, options);
 
-        ConsumptionBudgetData IJsonModel<ConsumptionBudgetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConsumptionBudgetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConsumptionBudgetData IJsonModel<ConsumptionBudgetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ConsumptionBudgetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConsumptionBudgetData>(Data, options, AzureResourceManagerConsumptionContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ConsumptionBudgetData IPersistableModel<ConsumptionBudgetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConsumptionBudgetData>(data, options, AzureResourceManagerConsumptionContext.Default);
 
-        string IPersistableModel<ConsumptionBudgetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConsumptionBudgetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConsumptionBudgetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

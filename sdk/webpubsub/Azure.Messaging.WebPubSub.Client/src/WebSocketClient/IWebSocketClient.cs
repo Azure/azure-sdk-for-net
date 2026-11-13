@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Messaging.WebPubSub.Clients
 {

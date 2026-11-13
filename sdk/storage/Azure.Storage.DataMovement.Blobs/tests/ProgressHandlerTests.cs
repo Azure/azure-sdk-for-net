@@ -139,7 +139,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             transferOptions.CreationMode = createMode;
 
             TransferOperation transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
-            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTime));
+            using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTime));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             ProgressHandlerAsserts.AssertFileProgress(progressHandler.Updates, fileCount, skippedCount, failedCount);
@@ -346,7 +346,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await Task.Delay(delayInMs);
 
             // Pause transfer
-            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transferManager.PauseTransferAsync(transfer.Id, tokenSource.Token);
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
@@ -358,8 +358,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 transfer.Id,
                 transferOptions);
 
-            tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await resumeTransfer.WaitForCompletionAsync(tokenSource.Token);
+            using CancellationTokenSource tokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await resumeTransfer.WaitForCompletionAsync(tokenSource2.Token);
 
             // Assert
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);

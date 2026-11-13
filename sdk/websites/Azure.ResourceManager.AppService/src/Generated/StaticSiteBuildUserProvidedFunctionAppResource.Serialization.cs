@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class StaticSiteBuildUserProvidedFunctionAppResource : IJsonModel<StaticSiteUserProvidedFunctionAppData>
     {
-        private static StaticSiteUserProvidedFunctionAppData s_dataDeserializationInstance;
-        private static StaticSiteUserProvidedFunctionAppData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StaticSiteUserProvidedFunctionAppData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StaticSiteUserProvidedFunctionAppData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StaticSiteUserProvidedFunctionAppData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StaticSiteUserProvidedFunctionAppData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteUserProvidedFunctionAppData>)Data).Write(writer, options);
 
-        StaticSiteUserProvidedFunctionAppData IJsonModel<StaticSiteUserProvidedFunctionAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteUserProvidedFunctionAppData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StaticSiteUserProvidedFunctionAppData IJsonModel<StaticSiteUserProvidedFunctionAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StaticSiteUserProvidedFunctionAppData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteUserProvidedFunctionAppData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StaticSiteUserProvidedFunctionAppData IPersistableModel<StaticSiteUserProvidedFunctionAppData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteUserProvidedFunctionAppData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<StaticSiteUserProvidedFunctionAppData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteUserProvidedFunctionAppData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StaticSiteUserProvidedFunctionAppData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

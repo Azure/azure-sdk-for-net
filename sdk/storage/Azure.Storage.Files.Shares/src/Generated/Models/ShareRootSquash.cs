@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The ShareRootSquash. </summary>
+    /// <summary> The root squash setting for the share. </summary>
     public enum ShareRootSquash
     {
         /// <summary> NoRootSquash. </summary>

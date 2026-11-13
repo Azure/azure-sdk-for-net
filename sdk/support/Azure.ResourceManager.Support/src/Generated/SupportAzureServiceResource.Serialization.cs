@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Support
 {
+    /// <summary></summary>
     public partial class SupportAzureServiceResource : IJsonModel<SupportAzureServiceData>
     {
-        private static SupportAzureServiceData s_dataDeserializationInstance;
-        private static SupportAzureServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SupportAzureServiceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SupportAzureServiceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SupportAzureServiceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SupportAzureServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SupportAzureServiceData>)Data).Write(writer, options);
 
-        SupportAzureServiceData IJsonModel<SupportAzureServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportAzureServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SupportAzureServiceData IJsonModel<SupportAzureServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SupportAzureServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SupportAzureServiceData>(Data, options, AzureResourceManagerSupportContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SupportAzureServiceData IPersistableModel<SupportAzureServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportAzureServiceData>(data, options, AzureResourceManagerSupportContext.Default);
 
-        string IPersistableModel<SupportAzureServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportAzureServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SupportAzureServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

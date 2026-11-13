@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StorageCache
 {
+    /// <summary></summary>
     public partial class AmlFileSystemResource : IJsonModel<AmlFileSystemData>
     {
-        private static AmlFileSystemData s_dataDeserializationInstance;
-        private static AmlFileSystemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AmlFileSystemData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AmlFileSystemData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AmlFileSystemData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AmlFileSystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AmlFileSystemData>)Data).Write(writer, options);
 
-        AmlFileSystemData IJsonModel<AmlFileSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AmlFileSystemData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AmlFileSystemData IJsonModel<AmlFileSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AmlFileSystemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AmlFileSystemData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AmlFileSystemData IPersistableModel<AmlFileSystemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AmlFileSystemData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        string IPersistableModel<AmlFileSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AmlFileSystemData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AmlFileSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

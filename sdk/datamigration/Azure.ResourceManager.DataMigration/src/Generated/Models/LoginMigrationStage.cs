@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct LoginMigrationStage : IEquatable<LoginMigrationStage>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Initialize. </summary>
+        private const string InitializeValue = "Initialize";
+        /// <summary> LoginMigration. </summary>
+        private const string LoginMigrationValue = "LoginMigration";
+        /// <summary> EstablishUserMapping. </summary>
+        private const string EstablishUserMappingValue = "EstablishUserMapping";
+        /// <summary> AssignRoleMembership. </summary>
+        private const string AssignRoleMembershipValue = "AssignRoleMembership";
+        /// <summary> AssignRoleOwnership. </summary>
+        private const string AssignRoleOwnershipValue = "AssignRoleOwnership";
+        /// <summary> EstablishServerPermissions. </summary>
+        private const string EstablishServerPermissionsValue = "EstablishServerPermissions";
+        /// <summary> EstablishObjectPermissions. </summary>
+        private const string EstablishObjectPermissionsValue = "EstablishObjectPermissions";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="LoginMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoginMigrationStage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string InitializeValue = "Initialize";
-        private const string LoginMigrationValue = "LoginMigration";
-        private const string EstablishUserMappingValue = "EstablishUserMapping";
-        private const string AssignRoleMembershipValue = "AssignRoleMembership";
-        private const string AssignRoleOwnershipValue = "AssignRoleOwnership";
-        private const string EstablishServerPermissionsValue = "EstablishServerPermissions";
-        private const string EstablishObjectPermissionsValue = "EstablishObjectPermissions";
-        private const string CompletedValue = "Completed";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static LoginMigrationStage None { get; } = new LoginMigrationStage(NoneValue);
+
         /// <summary> Initialize. </summary>
         public static LoginMigrationStage Initialize { get; } = new LoginMigrationStage(InitializeValue);
+
         /// <summary> LoginMigration. </summary>
         public static LoginMigrationStage LoginMigration { get; } = new LoginMigrationStage(LoginMigrationValue);
+
         /// <summary> EstablishUserMapping. </summary>
         public static LoginMigrationStage EstablishUserMapping { get; } = new LoginMigrationStage(EstablishUserMappingValue);
+
         /// <summary> AssignRoleMembership. </summary>
         public static LoginMigrationStage AssignRoleMembership { get; } = new LoginMigrationStage(AssignRoleMembershipValue);
+
         /// <summary> AssignRoleOwnership. </summary>
         public static LoginMigrationStage AssignRoleOwnership { get; } = new LoginMigrationStage(AssignRoleOwnershipValue);
+
         /// <summary> EstablishServerPermissions. </summary>
         public static LoginMigrationStage EstablishServerPermissions { get; } = new LoginMigrationStage(EstablishServerPermissionsValue);
+
         /// <summary> EstablishObjectPermissions. </summary>
         public static LoginMigrationStage EstablishObjectPermissions { get; } = new LoginMigrationStage(EstablishObjectPermissionsValue);
+
         /// <summary> Completed. </summary>
         public static LoginMigrationStage Completed { get; } = new LoginMigrationStage(CompletedValue);
+
         /// <summary> Determines if two <see cref="LoginMigrationStage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoginMigrationStage left, LoginMigrationStage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LoginMigrationStage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoginMigrationStage left, LoginMigrationStage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LoginMigrationStage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LoginMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LoginMigrationStage(string value) => new LoginMigrationStage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LoginMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LoginMigrationStage?(string value) => value == null ? null : new LoginMigrationStage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LoginMigrationStage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LoginMigrationStage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppContainers.Models;
@@ -8,7 +9,6 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using Castle.Core.Resource;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.AppContainers.Tests
 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             return envResource.Value;
         }
 
-        protected async Task<ContainerAppResource> CreateContainerApp(ResourceGroupResource resourceGroup, ContainerAppManagedEnvironmentResource env,string containerAppName)
+        protected async Task<ContainerAppResource> CreateContainerApp(ResourceGroupResource resourceGroup, ContainerAppManagedEnvironmentResource env, string containerAppName)
         {
             ContainerAppData appData = new ContainerAppData(AzureLocation.WestUS)
             {

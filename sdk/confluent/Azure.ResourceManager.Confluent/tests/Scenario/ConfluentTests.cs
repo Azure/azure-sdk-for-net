@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             ConfluentOrganizationData inputData = new ConfluentOrganizationData(DefaultLocation, offerDetail, userDetail);
             var confluentNewOrg = await confluentOrgCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, inputData);
             var result = await confluentNewOrg.Value.DeleteAsync(WaitUntil.Completed);
-            Assert.AreEqual(result.GetRawResponse().Status,200);
+            Assert.AreEqual(result.GetRawResponse().Status, 200);
         }
     }
 }

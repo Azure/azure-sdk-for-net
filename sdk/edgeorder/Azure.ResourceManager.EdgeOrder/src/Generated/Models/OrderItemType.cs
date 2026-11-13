@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,38 +15,62 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct OrderItemType : IEquatable<OrderItemType>
     {
         private readonly string _value;
+        /// <summary> Purchase OrderItem. </summary>
+        private const string PurchaseValue = "Purchase";
+        /// <summary> Rental OrderItem. </summary>
+        private const string RentalValue = "Rental";
+        /// <summary> Orders placed outside of azure. </summary>
+        private const string ExternalValue = "External";
 
         /// <summary> Initializes a new instance of <see cref="OrderItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OrderItemType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PurchaseValue = "Purchase";
-        private const string RentalValue = "Rental";
+            _value = value;
+        }
 
         /// <summary> Purchase OrderItem. </summary>
         public static OrderItemType Purchase { get; } = new OrderItemType(PurchaseValue);
+
         /// <summary> Rental OrderItem. </summary>
         public static OrderItemType Rental { get; } = new OrderItemType(RentalValue);
+
+        /// <summary> Orders placed outside of azure. </summary>
+        public static OrderItemType External { get; } = new OrderItemType(ExternalValue);
+
         /// <summary> Determines if two <see cref="OrderItemType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OrderItemType left, OrderItemType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OrderItemType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OrderItemType left, OrderItemType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OrderItemType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OrderItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OrderItemType(string value) => new OrderItemType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OrderItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OrderItemType?(string value) => value == null ? null : new OrderItemType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OrderItemType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OrderItemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

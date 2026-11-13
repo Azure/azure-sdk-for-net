@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct DataStatus : IEquatable<DataStatus>
     {
         private readonly string _value;
+        /// <summary> present. </summary>
+        private const string PresentValue = "present";
+        /// <summary> notPresent. </summary>
+        private const string NotPresentValue = "notPresent";
 
         /// <summary> Initializes a new instance of <see cref="DataStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PresentValue = "present";
-        private const string NotPresentValue = "notPresent";
+            _value = value;
+        }
 
         /// <summary> present. </summary>
         public static DataStatus Present { get; } = new DataStatus(PresentValue);
+
         /// <summary> notPresent. </summary>
         public static DataStatus NotPresent { get; } = new DataStatus(NotPresentValue);
+
         /// <summary> Determines if two <see cref="DataStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataStatus left, DataStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataStatus left, DataStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataStatus(string value) => new DataStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataStatus?(string value) => value == null ? null : new DataStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

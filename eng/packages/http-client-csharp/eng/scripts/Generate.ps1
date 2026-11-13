@@ -69,17 +69,21 @@ foreach ($specFile in Get-Sorted-Specs) {
     Write-Host "Generating $subPath" -ForegroundColor Cyan
 
     if ($folders.Contains("versioning")) {
-        Generate-Versioning (Split-Path $specFile) $generationDir -generateStub $stubbed
         $spectorLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
         $spectorLaunchProjects.Add($($folders -join "-") + "-v2", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v2")
+        if (-not $LaunchOnly) {
+            Generate-Versioning (Split-Path $specFile) $generationDir -generateStub $stubbed
+        }
         continue
     }
 
     # srv-driven contains two separate specs, for two separate clients. We need to generate both.
     if ($folders.Contains("srv-driven")) {
-        Generate-Srv-Driven (Split-Path $specFile) $generationDir -generateStub $stubbed
         $spectorLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
         $spectorLaunchProjects.Add($($folders -join "-") + "-v2", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v2")
+        if (-not $LaunchOnly) {
+            Generate-Srv-Driven (Split-Path $specFile) $generationDir -generateStub $stubbed
+        }
         continue
     }
 
@@ -136,6 +140,15 @@ if ($null -eq $filter) {
     $launchSettingsPath = Join-Path $solutionDir "Azure.Generator" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
     $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $launchSettingsPath
+}
+
+if (-not $LaunchOnly) {
+    Write-Host "Regenerating emitter docs" -ForegroundColor Cyan
+    Invoke "npm run regen-docs:only"
+
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
 }
 
 # Stop total timer

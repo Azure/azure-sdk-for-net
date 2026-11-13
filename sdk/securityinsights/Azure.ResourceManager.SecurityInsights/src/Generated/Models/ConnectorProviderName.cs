@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct ConnectorProviderName : IEquatable<ConnectorProviderName>
     {
         private readonly string _value;
+        /// <summary> Microsoft.OperationalInsights/solutions. </summary>
+        private const string MicrosoftOperationalInsightsSolutionsValue = "Microsoft.OperationalInsights/solutions";
+        /// <summary> Microsoft.OperationalInsights/workspaces. </summary>
+        private const string MicrosoftOperationalInsightsWorkspacesValue = "Microsoft.OperationalInsights/workspaces";
+        /// <summary> Microsoft.OperationalInsights/workspaces/datasources. </summary>
+        private const string MicrosoftOperationalInsightsWorkspacesDatasourcesValue = "Microsoft.OperationalInsights/workspaces/datasources";
+        /// <summary> microsoft.aadiam/diagnosticSettings. </summary>
+        private const string MicrosoftAadiamDiagnosticSettingsValue = "microsoft.aadiam/diagnosticSettings";
+        /// <summary> Microsoft.OperationalInsights/workspaces/sharedKeys. </summary>
+        private const string MicrosoftOperationalInsightsWorkspacesSharedKeysValue = "Microsoft.OperationalInsights/workspaces/sharedKeys";
+        /// <summary> Microsoft.Authorization/policyAssignments. </summary>
+        private const string MicrosoftAuthorizationPolicyAssignmentsValue = "Microsoft.Authorization/policyAssignments";
 
         /// <summary> Initializes a new instance of <see cref="ConnectorProviderName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectorProviderName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftOperationalInsightsSolutionsValue = "Microsoft.OperationalInsights/solutions";
-        private const string MicrosoftOperationalInsightsWorkspacesValue = "Microsoft.OperationalInsights/workspaces";
-        private const string MicrosoftOperationalInsightsWorkspacesDatasourcesValue = "Microsoft.OperationalInsights/workspaces/datasources";
-        private const string MicrosoftAadiamDiagnosticSettingsValue = "microsoft.aadiam/diagnosticSettings";
-        private const string MicrosoftOperationalInsightsWorkspacesSharedKeysValue = "Microsoft.OperationalInsights/workspaces/sharedKeys";
-        private const string MicrosoftAuthorizationPolicyAssignmentsValue = "Microsoft.Authorization/policyAssignments";
+            _value = value;
+        }
 
         /// <summary> Microsoft.OperationalInsights/solutions. </summary>
         public static ConnectorProviderName MicrosoftOperationalInsightsSolutions { get; } = new ConnectorProviderName(MicrosoftOperationalInsightsSolutionsValue);
+
         /// <summary> Microsoft.OperationalInsights/workspaces. </summary>
         public static ConnectorProviderName MicrosoftOperationalInsightsWorkspaces { get; } = new ConnectorProviderName(MicrosoftOperationalInsightsWorkspacesValue);
+
         /// <summary> Microsoft.OperationalInsights/workspaces/datasources. </summary>
         public static ConnectorProviderName MicrosoftOperationalInsightsWorkspacesDatasources { get; } = new ConnectorProviderName(MicrosoftOperationalInsightsWorkspacesDatasourcesValue);
+
         /// <summary> microsoft.aadiam/diagnosticSettings. </summary>
         public static ConnectorProviderName MicrosoftAadiamDiagnosticSettings { get; } = new ConnectorProviderName(MicrosoftAadiamDiagnosticSettingsValue);
+
         /// <summary> Microsoft.OperationalInsights/workspaces/sharedKeys. </summary>
         public static ConnectorProviderName MicrosoftOperationalInsightsWorkspacesSharedKeys { get; } = new ConnectorProviderName(MicrosoftOperationalInsightsWorkspacesSharedKeysValue);
+
         /// <summary> Microsoft.Authorization/policyAssignments. </summary>
         public static ConnectorProviderName MicrosoftAuthorizationPolicyAssignments { get; } = new ConnectorProviderName(MicrosoftAuthorizationPolicyAssignmentsValue);
+
         /// <summary> Determines if two <see cref="ConnectorProviderName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectorProviderName left, ConnectorProviderName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectorProviderName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectorProviderName left, ConnectorProviderName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectorProviderName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectorProviderName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectorProviderName(string value) => new ConnectorProviderName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectorProviderName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectorProviderName?(string value) => value == null ? null : new ConnectorProviderName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectorProviderName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectorProviderName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Kusto
 {
+    /// <summary></summary>
     public partial class KustoPrivateLinkResource : IJsonModel<KustoPrivateLinkResourceData>
     {
-        private static KustoPrivateLinkResourceData s_dataDeserializationInstance;
-        private static KustoPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<KustoPrivateLinkResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<KustoPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new KustoPrivateLinkResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoPrivateLinkResourceData>)Data).Write(writer, options);
 
-        KustoPrivateLinkResourceData IJsonModel<KustoPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoPrivateLinkResourceData IJsonModel<KustoPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<KustoPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoPrivateLinkResourceData>(Data, options, AzureResourceManagerKustoContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         KustoPrivateLinkResourceData IPersistableModel<KustoPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoPrivateLinkResourceData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

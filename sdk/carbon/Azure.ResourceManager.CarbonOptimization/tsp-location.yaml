@@ -1,3 +1,4 @@
 directory: specification/carbon/Carbon.Management
-commit: ba248e15f963e991cf88f68c019efe36f2870593
+commit: 2bf4f6034e40e4cc0a58af771b6de75d41f0ff0a
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

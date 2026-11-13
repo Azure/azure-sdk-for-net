@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AutoForecastHorizon : ForecastHorizon
     {
         /// <summary> Initializes a new instance of <see cref="AutoForecastHorizon"/>. </summary>
-        public AutoForecastHorizon()
+        public AutoForecastHorizon() : base(ForecastHorizonMode.Auto)
         {
-            Mode = ForecastHorizonMode.Auto;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoForecastHorizon"/>. </summary>
         /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoForecastHorizon(ForecastHorizonMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutoForecastHorizon(ForecastHorizonMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(mode, additionalBinaryDataProperties)
         {
-            Mode = mode;
         }
     }
 }

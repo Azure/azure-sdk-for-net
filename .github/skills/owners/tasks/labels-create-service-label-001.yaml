@@ -1,0 +1,30 @@
+id: labels-create-service-label-001
+name: Create Service Label
+description: |
+  Test that the skill creates a new service label by first checking if it exists,
+  then calling the create tool with the label name and a documentation URL.
+tags:
+  - basic
+  - happy-path
+inputs:
+  prompt: "Create a service label called Messaging for the azure-sdk-for-python repo. The docs URL is https://learn.microsoft.com/azure/messaging"
+expected:
+  output_contains:
+    - "Messaging"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_check_service_label
+    - type: tool_called
+      tool_name: azsdk_create_service_label
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000
+graders:
+  - type: text
+    name: correct_entities
+    config:
+      contains:
+        - "Messaging"
+      not_contains:
+        - "cannot help"
+        - "not supported"

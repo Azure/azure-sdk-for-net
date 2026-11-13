@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class EffectiveNetworkSecurityGroupListResultOperationSource : IOperationSource<EffectiveNetworkSecurityGroupListResult>
+    /// <summary></summary>
+    internal partial class EffectiveNetworkSecurityGroupListResultOperationSource : IOperationSource<EffectiveNetworkSecurityGroupListResult>
     {
-        EffectiveNetworkSecurityGroupListResult IOperationSource<EffectiveNetworkSecurityGroupListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal EffectiveNetworkSecurityGroupListResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return EffectiveNetworkSecurityGroupListResult.DeserializeEffectiveNetworkSecurityGroupListResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        EffectiveNetworkSecurityGroupListResult IOperationSource<EffectiveNetworkSecurityGroupListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return EffectiveNetworkSecurityGroupListResult.DeserializeEffectiveNetworkSecurityGroupListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EffectiveNetworkSecurityGroupListResult> IOperationSource<EffectiveNetworkSecurityGroupListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return EffectiveNetworkSecurityGroupListResult.DeserializeEffectiveNetworkSecurityGroupListResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return EffectiveNetworkSecurityGroupListResult.DeserializeEffectiveNetworkSecurityGroupListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

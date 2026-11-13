@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -15,26 +16,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="NumericalDataDriftMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The numerical data drift metric to calculate. </param>
-        public NumericalDataDriftMetricThreshold(NumericalDataDriftMetric metric)
+        public NumericalDataDriftMetricThreshold(NumericalDataDriftMetric metric) : base(MonitoringFeatureDataType.Numerical)
         {
             Metric = metric;
-            DataType = MonitoringFeatureDataType.Numerical;
         }
 
         /// <summary> Initializes a new instance of <see cref="NumericalDataDriftMetricThreshold"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metric"> [Required] The numerical data drift metric to calculate. </param>
-        internal NumericalDataDriftMetricThreshold(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData, NumericalDataDriftMetric metric) : base(dataType, threshold, serializedAdditionalRawData)
+        internal NumericalDataDriftMetricThreshold(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> additionalBinaryDataProperties, NumericalDataDriftMetric metric) : base(dataType, threshold, additionalBinaryDataProperties)
         {
             Metric = metric;
-            DataType = dataType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NumericalDataDriftMetricThreshold"/> for deserialization. </summary>
-        internal NumericalDataDriftMetricThreshold()
-        {
         }
 
         /// <summary> [Required] The numerical data drift metric to calculate. </summary>

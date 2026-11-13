@@ -10,18 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> Unknown version of ConversationEntityExtraInformation. </summary>
     internal partial class UnknownConversationEntityExtraInformation : ConversationEntityExtraInformation
     {
         /// <summary> Initializes a new instance of <see cref="UnknownConversationEntityExtraInformation"/>. </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConversationEntityExtraInformation(ExtraInformationKind extraInformationKind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(extraInformationKind, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownConversationEntityExtraInformation"/> for deserialization. </summary>
-        internal UnknownConversationEntityExtraInformation()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownConversationEntityExtraInformation(ExtraInformationKind extraInformationKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(extraInformationKind != default ? extraInformationKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -63,19 +63,17 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                GatewayDefaultSite = null,
+                GatewayDefaultSiteId = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id }, Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
                     }
                 },
-                Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Basic, Tier = VirtualNetworkGatewaySkuTier.Basic }
+                Sku = new VirtualNetworkGatewaySku() {Tier = VirtualNetworkGatewaySkuTier.Basic }
             };
 
             var virtualNetworkGatewayCollection = GetVirtualNetworkGatewayCollection(resourceGroupName);

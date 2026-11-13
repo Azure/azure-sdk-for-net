@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeDataPolicy : IEquatable<DataBoxEdgeDataPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDataPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeDataPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CloudValue = "Cloud";
         private const string LocalValue = "Local";
 
-        /// <summary> Cloud. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDataPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeDataPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Cloud. </summary>
         public static DataBoxEdgeDataPolicy Cloud { get; } = new DataBoxEdgeDataPolicy(CloudValue);
-        /// <summary> Local. </summary>
+
+        /// <summary> Gets the Local. </summary>
         public static DataBoxEdgeDataPolicy Local { get; } = new DataBoxEdgeDataPolicy(LocalValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDataPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeDataPolicy left, DataBoxEdgeDataPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDataPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeDataPolicy left, DataBoxEdgeDataPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeDataPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeDataPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeDataPolicy(string value) => new DataBoxEdgeDataPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeDataPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeDataPolicy?(string value) => value == null ? null : new DataBoxEdgeDataPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeDataPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeDataPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

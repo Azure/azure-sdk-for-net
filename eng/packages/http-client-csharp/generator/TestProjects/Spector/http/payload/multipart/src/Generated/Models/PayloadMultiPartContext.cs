@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace Payload.MultiPart
 {
+    [ModelReaderWriterBuildable(typeof(Address))]
     public partial class PayloadMultiPartContext : ModelReaderWriterContext
     {
     }

@@ -11,19 +11,6 @@ trigger:
     exclude:
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/confidentialledger/
-    exclude:
-    - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

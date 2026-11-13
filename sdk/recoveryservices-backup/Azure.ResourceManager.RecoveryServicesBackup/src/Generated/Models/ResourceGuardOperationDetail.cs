@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The ResourceGuardOperationDetail. </summary>
     public partial class ResourceGuardOperationDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetail"/>. </summary>
         public ResourceGuardOperationDetail()
@@ -54,17 +25,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetail"/>. </summary>
         /// <param name="vaultCriticalOperation"></param>
         /// <param name="defaultResourceId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceGuardOperationDetail(string vaultCriticalOperation, ResourceIdentifier defaultResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGuardOperationDetail(string vaultCriticalOperation, ResourceIdentifier defaultResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VaultCriticalOperation = vaultCriticalOperation;
             DefaultResourceId = defaultResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the vault critical operation. </summary>
+        /// <summary> Gets or sets the VaultCriticalOperation. </summary>
         public string VaultCriticalOperation { get; set; }
-        /// <summary> Gets or sets the default resource id. </summary>
+
+        /// <summary> Gets or sets the DefaultResourceId. </summary>
         public ResourceIdentifier DefaultResourceId { get; set; }
     }
 }

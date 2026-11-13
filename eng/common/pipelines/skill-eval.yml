@@ -1,0 +1,51 @@
+# Skill-compliance eval CI: runs the per-skill Vally evals under .github/skills (one job per skill).
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - .github/skills/**
+      # Retrigger when the mock MCP's tool catalog changes (it can move results).
+      - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
+      - eng/common/pipelines/skill-eval.yml
+      - eng/common/pipelines/templates/jobs/**
+      - eng/common/pipelines/templates/steps/eval-invoke.yml
+      - eng/common/pipelines/templates/steps/login-to-copilot.yml
+      - eng/common/pipelines/templates/steps/login-to-github.yml
+      - eng/common/scripts/login-to-github.ps1
+      - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+      - eng/common/pipelines/templates/steps/eval-publish-results.yml
+      - eng/common/pipelines/templates/stages/archetype-eval.yml
+      - eng/common/scripts/eval/**
+
+pr: none
+
+parameters:
+  - name: publishDashboardResults
+    displayName: 'Publish trusted main results to Blob (includes pipeline-wide Azure Storage egress)'
+    type: boolean
+    default: true
+
+variables:
+  # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
+  - template: /eng/pipelines/templates/variables/image.yml
+
+extends:
+  template: /eng/common/pipelines/templates/stages/archetype-eval.yml
+  parameters:
+    createDashboardBundle: true
+    # EvalStorageAccountName is configured by the pipeline owner, not in synced YAML.
+    publishDashboardResults: ${{ parameters.publishDashboardResults }}
+    # Shared mock/live builder; select the mock tier.
+    mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+    TestType: mock
+    vallyRoot: .github/skills
+    # Single-level glob excludes azure-typespec-author/evaluate/ (its own benchmark pipeline).
+    evalGlobs:
+      - '*/evals/*.eval.yaml'
+      - 'azsdk-common-typespec-naming/evals/eval.yaml'
+      - 'code-review/evals/eval.yaml'
+    # Per-shard job timeout (report-only tier).
+    shardTimeoutInMinutes: 20

@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> Gets or sets a value indicating whether to enable dynamic memory or not. </summary>
+    /// <summary> Dynamic memory enabled. </summary>
     public readonly partial struct DynamicMemoryEnabled : IEquatable<DynamicMemoryEnabled>
     {
         private readonly string _value;
+        /// <summary> Enable dynamic memory. </summary>
+        private const string TrueValue = "true";
+        /// <summary> Disable dynamic memory. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="DynamicMemoryEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicMemoryEnabled(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string FalseValue = "false";
-        private const string TrueValue = "true";
-
-        /// <summary> false. </summary>
-        public static DynamicMemoryEnabled False { get; } = new DynamicMemoryEnabled(FalseValue);
-        /// <summary> true. </summary>
+        /// <summary> Enable dynamic memory. </summary>
         public static DynamicMemoryEnabled True { get; } = new DynamicMemoryEnabled(TrueValue);
+
+        /// <summary> Disable dynamic memory. </summary>
+        public static DynamicMemoryEnabled False { get; } = new DynamicMemoryEnabled(FalseValue);
+
         /// <summary> Determines if two <see cref="DynamicMemoryEnabled"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynamicMemoryEnabled left, DynamicMemoryEnabled right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynamicMemoryEnabled"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynamicMemoryEnabled left, DynamicMemoryEnabled right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicMemoryEnabled"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynamicMemoryEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynamicMemoryEnabled(string value) => new DynamicMemoryEnabled(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DynamicMemoryEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DynamicMemoryEnabled?(string value) => value == null ? null : new DynamicMemoryEnabled(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynamicMemoryEnabled other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynamicMemoryEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The method that should be used to authenticate the user. </summary>
+    /// <summary> Method used to authenticate the custom OpenID Connect provider client credential. </summary>
     public readonly partial struct ContainerAppOpenIdConnectClientCredentialMethod : IEquatable<ContainerAppOpenIdConnectClientCredentialMethod>
     {
         private readonly string _value;
+        /// <summary> Client secret post authentication. </summary>
+        private const string ClientSecretPostValue = "ClientSecretPost";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppOpenIdConnectClientCredentialMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ClientSecretPostValue = "ClientSecretPost";
-
-        /// <summary> ClientSecretPost. </summary>
+        /// <summary> Client secret post authentication. </summary>
         public static ContainerAppOpenIdConnectClientCredentialMethod ClientSecretPost { get; } = new ContainerAppOpenIdConnectClientCredentialMethod(ClientSecretPostValue);
+
         /// <summary> Determines if two <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppOpenIdConnectClientCredentialMethod left, ContainerAppOpenIdConnectClientCredentialMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppOpenIdConnectClientCredentialMethod left, ContainerAppOpenIdConnectClientCredentialMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppOpenIdConnectClientCredentialMethod(string value) => new ContainerAppOpenIdConnectClientCredentialMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppOpenIdConnectClientCredentialMethod?(string value) => value == null ? null : new ContainerAppOpenIdConnectClientCredentialMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppOpenIdConnectClientCredentialMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppOpenIdConnectClientCredentialMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

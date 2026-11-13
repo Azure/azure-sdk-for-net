@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define an exchange peering. </summary>
     public partial class ExchangePeeringProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExchangePeeringProperties"/>. </summary>
         public ExchangePeeringProperties()
@@ -55,29 +26,19 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Initializes a new instance of <see cref="ExchangePeeringProperties"/>. </summary>
         /// <param name="connections"> The set of connections that constitute an exchange peering. </param>
-        /// <param name="peerAsn"> The reference of the peer ASN. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExchangePeeringProperties(IList<PeeringExchangeConnection> connections, WritableSubResource peerAsn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="peerAsnId"> The reference of the peer ASN. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExchangePeeringProperties(IList<PeeringExchangeConnection> connections, ResourceIdentifier peerAsnId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Connections = connections;
-            PeerAsn = peerAsn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            PeerAsnId = peerAsnId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The set of connections that constitute an exchange peering. </summary>
         public IList<PeeringExchangeConnection> Connections { get; }
+
         /// <summary> The reference of the peer ASN. </summary>
-        internal WritableSubResource PeerAsn { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PeerAsnId
-        {
-            get => PeerAsn is null ? default : PeerAsn.Id;
-            set
-            {
-                if (PeerAsn is null)
-                    PeerAsn = new WritableSubResource();
-                PeerAsn.Id = value;
-            }
-        }
+        public ResourceIdentifier PeerAsnId { get; set; }
     }
 }

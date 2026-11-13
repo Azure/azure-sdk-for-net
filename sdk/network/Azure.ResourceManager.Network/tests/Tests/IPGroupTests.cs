@@ -4,13 +4,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeTearDown]
         public async Task GlobalTearDown()
         {
-            await _resourceGroup.DeleteAsync(WaitUntil.Completed);
+            await _resourceGroup.DeleteAsync(WaitUntil.Completed, null, System.Threading.CancellationToken.None);
         }
 
         [SetUp]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests
             if (await _resourceGroup.GetIPGroups().ExistsAsync(_iPGroupName))
             {
                 var ipGroup = await _resourceGroup.GetIPGroups().GetAsync(_iPGroupName);
-                await ipGroup.Value.DeleteAsync(WaitUntil.Completed);
+                await ipGroup.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Tests
             var container = _resourceGroup.GetIPGroups();
             var data = new IPGroupData();
             data.Location = AzureLocation.WestUS2;
-            var ipGroup = await container.CreateOrUpdateAsync(WaitUntil.Completed, ipGroupName, data);
+            var ipGroup = await container.CreateOrUpdateAsync(WaitUntil.Completed, ipGroupName, data, System.Threading.CancellationToken.None);
             return ipGroup;
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        public async Task GetAll ()
+        public async Task GetAll()
         {
             await CreateIpGroup(_iPGroupName);
             var iPGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            var ipGroup  = await CreateIpGroup(_iPGroupName);
-            await ipGroup.Value.DeleteAsync(WaitUntil.Completed);
+            var ipGroup = await CreateIpGroup(_iPGroupName);
+            await ipGroup.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             var ipGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(ipGroupList);
         }

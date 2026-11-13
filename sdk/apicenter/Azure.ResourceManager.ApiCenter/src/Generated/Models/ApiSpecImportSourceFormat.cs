@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
@@ -14,41 +15,63 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public readonly partial struct ApiSpecImportSourceFormat : IEquatable<ApiSpecImportSourceFormat>
     {
         private readonly string _value;
+        /// <summary> The inlined content of a specification document. </summary>
+        private const string InlineValue = "inline";
+        /// <summary>
+        /// The link to a specification document hosted on a publicly accessible internet
+        /// address.
+        /// </summary>
+        private const string LinkValue = "link";
 
         /// <summary> Initializes a new instance of <see cref="ApiSpecImportSourceFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiSpecImportSourceFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InlineValue = "inline";
-        private const string LinkValue = "link";
+            _value = value;
+        }
 
         /// <summary> The inlined content of a specification document. </summary>
         public static ApiSpecImportSourceFormat Inline { get; } = new ApiSpecImportSourceFormat(InlineValue);
+
         /// <summary>
         /// The link to a specification document hosted on a publicly accessible internet
         /// address.
         /// </summary>
         public static ApiSpecImportSourceFormat Link { get; } = new ApiSpecImportSourceFormat(LinkValue);
+
         /// <summary> Determines if two <see cref="ApiSpecImportSourceFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiSpecImportSourceFormat left, ApiSpecImportSourceFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiSpecImportSourceFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiSpecImportSourceFormat left, ApiSpecImportSourceFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiSpecImportSourceFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiSpecImportSourceFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiSpecImportSourceFormat(string value) => new ApiSpecImportSourceFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiSpecImportSourceFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiSpecImportSourceFormat?(string value) => value == null ? null : new ApiSpecImportSourceFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiSpecImportSourceFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiSpecImportSourceFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

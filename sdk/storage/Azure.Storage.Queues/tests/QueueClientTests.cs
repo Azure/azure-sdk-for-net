@@ -4,20 +4,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Azure.Storage.Test;
-using Azure.Storage.Queues.Models;
-using Azure.Storage.Queues.Tests;
-using NUnit.Framework;
-using Azure.Core;
-using Azure.Storage.Sas;
 using System.Text;
-using Moq;
-using Azure.Storage.Queues.Specialized;
-using Moq.Protected;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using System.Threading;
+using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues.Specialized;
+using Azure.Storage.Queues.Tests;
+using Azure.Storage.Sas;
+using Azure.Storage.Test;
+using Moq;
+using Moq.Protected;
+using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -1891,7 +1891,7 @@ namespace Azure.Storage.Queues.Test
             string stringToSign = null;
 
             // Act
-            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
+            Uri sasUri = queueClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)

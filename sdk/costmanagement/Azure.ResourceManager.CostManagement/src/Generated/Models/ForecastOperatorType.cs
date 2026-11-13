@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ForecastOperatorType : IEquatable<ForecastOperatorType>
     {
         private readonly string _value;
+        private const string InValue = "In";
 
         /// <summary> Initializes a new instance of <see cref="ForecastOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ForecastOperatorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InValue = "In";
-
-        /// <summary> In. </summary>
+        /// <summary> Gets the In. </summary>
         public static ForecastOperatorType In { get; } = new ForecastOperatorType(InValue);
+
         /// <summary> Determines if two <see cref="ForecastOperatorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ForecastOperatorType left, ForecastOperatorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ForecastOperatorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ForecastOperatorType left, ForecastOperatorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ForecastOperatorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ForecastOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ForecastOperatorType(string value) => new ForecastOperatorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ForecastOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ForecastOperatorType?(string value) => value == null ? null : new ForecastOperatorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ForecastOperatorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ForecastOperatorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

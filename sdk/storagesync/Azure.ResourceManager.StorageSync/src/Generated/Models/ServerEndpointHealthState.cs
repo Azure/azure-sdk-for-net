@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct ServerEndpointHealthState : IEquatable<ServerEndpointHealthState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServerEndpointHealthState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServerEndpointHealthState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnavailableValue = "Unavailable";
         private const string HealthyValue = "Healthy";
         private const string ErrorValue = "Error";
 
-        /// <summary> Unavailable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointHealthState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServerEndpointHealthState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unavailable. </summary>
         public static ServerEndpointHealthState Unavailable { get; } = new ServerEndpointHealthState(UnavailableValue);
-        /// <summary> Healthy. </summary>
+
+        /// <summary> Gets the Healthy. </summary>
         public static ServerEndpointHealthState Healthy { get; } = new ServerEndpointHealthState(HealthyValue);
-        /// <summary> Error. </summary>
+
+        /// <summary> Gets the Error. </summary>
         public static ServerEndpointHealthState Error { get; } = new ServerEndpointHealthState(ErrorValue);
+
         /// <summary> Determines if two <see cref="ServerEndpointHealthState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServerEndpointHealthState left, ServerEndpointHealthState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServerEndpointHealthState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServerEndpointHealthState left, ServerEndpointHealthState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerEndpointHealthState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServerEndpointHealthState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServerEndpointHealthState(string value) => new ServerEndpointHealthState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServerEndpointHealthState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServerEndpointHealthState?(string value) => value == null ? null : new ServerEndpointHealthState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServerEndpointHealthState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServerEndpointHealthState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

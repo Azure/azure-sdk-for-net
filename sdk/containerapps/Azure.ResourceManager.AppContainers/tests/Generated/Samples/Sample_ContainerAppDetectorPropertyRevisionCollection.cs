@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Revisions_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Revisions_Get.json
             // this example is just showing the usage of "ContainerAppsDiagnostics_GetRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListContainerAppSRevisions()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Revisions_List.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Revisions_List.json
             // this example is just showing the usage of "ContainerAppsDiagnostics_ListRevisions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Revisions_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Revisions_Get.json
             // this example is just showing the usage of "ContainerAppsDiagnostics_GetRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Revisions_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Revisions_Get.json
             // this example is just showing the usage of "ContainerAppsDiagnostics_GetRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

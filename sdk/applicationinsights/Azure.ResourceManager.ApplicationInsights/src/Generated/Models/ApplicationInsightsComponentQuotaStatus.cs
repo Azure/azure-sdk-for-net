@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> An Application Insights component daily data volume cap status. </summary>
     public partial class ApplicationInsightsComponentQuotaStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentQuotaStatus"/>. </summary>
         internal ApplicationInsightsComponentQuotaStatus()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="appId"> The Application ID for the Application Insights component. </param>
         /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
         /// <param name="expireOn"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentQuotaStatus(string appId, bool? shouldBeThrottled, DateTimeOffset? expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentQuotaStatus(string appId, bool? shouldBeThrottled, DateTimeOffset? expireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppId = appId;
             ShouldBeThrottled = shouldBeThrottled;
             ExpireOn = expireOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Application ID for the Application Insights component. </summary>
         [WirePath("AppId")]
         public string AppId { get; }
+
         /// <summary> The daily data volume cap is met, and data ingestion will be stopped. </summary>
         [WirePath("ShouldBeThrottled")]
         public bool? ShouldBeThrottled { get; }
+
         /// <summary> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </summary>
         [WirePath("ExpirationTime")]
         public DateTimeOffset? ExpireOn { get; }

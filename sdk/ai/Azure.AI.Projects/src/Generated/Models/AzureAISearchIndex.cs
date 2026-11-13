@@ -8,19 +8,11 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Azure AI Search Index Definition. </summary>
-    public partial class AzureAISearchIndex : SearchIndex
+    public partial class AzureAISearchIndex : AIProjectIndex
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
-        /// <param name="connectionName"> Name of connection to Azure AI Search. </param>
-        /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="indexName"/> is null. </exception>
-        public AzureAISearchIndex(string connectionName, string indexName) : base(IndexType.AzureSearch)
+        public AzureAISearchIndex() : base(IndexType.AzureSearch)
         {
-            Argument.AssertNotNull(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(indexName, nameof(indexName));
-
-            ConnectionName = connectionName;
-            IndexName = indexName;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
@@ -34,11 +26,24 @@ namespace Azure.AI.Projects
         /// <param name="connectionName"> Name of connection to Azure AI Search. </param>
         /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
         /// <param name="fieldMapping"> Field mapping configuration. </param>
-        internal AzureAISearchIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionName, string indexName, FieldMapping fieldMapping) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
+        internal AzureAISearchIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionName, string indexName, AIProjectIndexFieldMapping fieldMapping) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
         {
             ConnectionName = connectionName;
             IndexName = indexName;
             FieldMapping = fieldMapping;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
+        /// <param name="connectionName"> Name of connection to Azure AI Search. </param>
+        /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="indexName"/> is null. </exception>
+        public AzureAISearchIndex(string connectionName, string indexName) : this()
+        {
+            Argument.AssertNotNull(connectionName, nameof(connectionName));
+            Argument.AssertNotNull(indexName, nameof(indexName));
+
+            ConnectionName = connectionName;
+            IndexName = indexName;
         }
 
         /// <summary> Name of connection to Azure AI Search. </summary>
@@ -48,6 +53,6 @@ namespace Azure.AI.Projects
         public string IndexName { get; set; }
 
         /// <summary> Field mapping configuration. </summary>
-        public FieldMapping FieldMapping { get; set; }
+        public AIProjectIndexFieldMapping FieldMapping { get; set; }
     }
 }

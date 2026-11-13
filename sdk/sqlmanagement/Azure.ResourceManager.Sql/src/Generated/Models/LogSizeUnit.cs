@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct LogSizeUnit : IEquatable<LogSizeUnit>
     {
         private readonly string _value;
+        /// <summary> Megabytes. </summary>
+        private const string MegabytesValue = "Megabytes";
+        /// <summary> Gigabytes. </summary>
+        private const string GigabytesValue = "Gigabytes";
+        /// <summary> Terabytes. </summary>
+        private const string TerabytesValue = "Terabytes";
+        /// <summary> Petabytes. </summary>
+        private const string PetabytesValue = "Petabytes";
+        /// <summary> Percent. </summary>
+        private const string PercentValue = "Percent";
 
         /// <summary> Initializes a new instance of <see cref="LogSizeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LogSizeUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MegabytesValue = "Megabytes";
-        private const string GigabytesValue = "Gigabytes";
-        private const string TerabytesValue = "Terabytes";
-        private const string PetabytesValue = "Petabytes";
-        private const string PercentValue = "Percent";
+            _value = value;
+        }
 
         /// <summary> Megabytes. </summary>
         public static LogSizeUnit Megabytes { get; } = new LogSizeUnit(MegabytesValue);
+
         /// <summary> Gigabytes. </summary>
         public static LogSizeUnit Gigabytes { get; } = new LogSizeUnit(GigabytesValue);
+
         /// <summary> Terabytes. </summary>
         public static LogSizeUnit Terabytes { get; } = new LogSizeUnit(TerabytesValue);
+
         /// <summary> Petabytes. </summary>
         public static LogSizeUnit Petabytes { get; } = new LogSizeUnit(PetabytesValue);
+
         /// <summary> Percent. </summary>
         public static LogSizeUnit Percent { get; } = new LogSizeUnit(PercentValue);
+
         /// <summary> Determines if two <see cref="LogSizeUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogSizeUnit left, LogSizeUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LogSizeUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogSizeUnit left, LogSizeUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LogSizeUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LogSizeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LogSizeUnit(string value) => new LogSizeUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LogSizeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LogSizeUnit?(string value) => value == null ? null : new LogSizeUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogSizeUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LogSizeUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct NewRelicObservabilityMarketplaceSubscriptionStatus : IEquatable<NewRelicObservabilityMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
+        /// <summary> monitoring is enabled. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> monitoring is disabled. </summary>
+        private const string SuspendedValue = "Suspended";
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NewRelicObservabilityMarketplaceSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string SuspendedValue = "Suspended";
+            _value = value;
+        }
 
         /// <summary> monitoring is enabled. </summary>
         public static NewRelicObservabilityMarketplaceSubscriptionStatus Active { get; } = new NewRelicObservabilityMarketplaceSubscriptionStatus(ActiveValue);
+
         /// <summary> monitoring is disabled. </summary>
         public static NewRelicObservabilityMarketplaceSubscriptionStatus Suspended { get; } = new NewRelicObservabilityMarketplaceSubscriptionStatus(SuspendedValue);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NewRelicObservabilityMarketplaceSubscriptionStatus left, NewRelicObservabilityMarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NewRelicObservabilityMarketplaceSubscriptionStatus left, NewRelicObservabilityMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NewRelicObservabilityMarketplaceSubscriptionStatus(string value) => new NewRelicObservabilityMarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NewRelicObservabilityMarketplaceSubscriptionStatus?(string value) => value == null ? null : new NewRelicObservabilityMarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NewRelicObservabilityMarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NewRelicObservabilityMarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

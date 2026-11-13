@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
+    /// <summary></summary>
     public partial class NotificationHubNamespaceAuthorizationRuleResource : IJsonModel<NotificationHubAuthorizationRuleData>
     {
-        private static NotificationHubAuthorizationRuleData s_dataDeserializationInstance;
-        private static NotificationHubAuthorizationRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NotificationHubAuthorizationRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NotificationHubAuthorizationRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NotificationHubAuthorizationRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NotificationHubAuthorizationRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubAuthorizationRuleData>)Data).Write(writer, options);
 
-        NotificationHubAuthorizationRuleData IJsonModel<NotificationHubAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubAuthorizationRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NotificationHubAuthorizationRuleData IJsonModel<NotificationHubAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NotificationHubAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationHubAuthorizationRuleData>(Data, options, AzureResourceManagerNotificationHubsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NotificationHubAuthorizationRuleData IPersistableModel<NotificationHubAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubAuthorizationRuleData>(data, options, AzureResourceManagerNotificationHubsContext.Default);
 
-        string IPersistableModel<NotificationHubAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubAuthorizationRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NotificationHubAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

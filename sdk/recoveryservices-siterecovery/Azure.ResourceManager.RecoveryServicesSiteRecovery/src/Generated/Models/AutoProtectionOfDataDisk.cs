@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct AutoProtectionOfDataDisk : IEquatable<AutoProtectionOfDataDisk>
     {
         private readonly string _value;
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="AutoProtectionOfDataDisk"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoProtectionOfDataDisk(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Disabled. </summary>
         public static AutoProtectionOfDataDisk Disabled { get; } = new AutoProtectionOfDataDisk(DisabledValue);
+
         /// <summary> Enabled. </summary>
         public static AutoProtectionOfDataDisk Enabled { get; } = new AutoProtectionOfDataDisk(EnabledValue);
+
         /// <summary> Determines if two <see cref="AutoProtectionOfDataDisk"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoProtectionOfDataDisk left, AutoProtectionOfDataDisk right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoProtectionOfDataDisk"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoProtectionOfDataDisk left, AutoProtectionOfDataDisk right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoProtectionOfDataDisk"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoProtectionOfDataDisk"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoProtectionOfDataDisk(string value) => new AutoProtectionOfDataDisk(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoProtectionOfDataDisk"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoProtectionOfDataDisk?(string value) => value == null ? null : new AutoProtectionOfDataDisk(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoProtectionOfDataDisk other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoProtectionOfDataDisk other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

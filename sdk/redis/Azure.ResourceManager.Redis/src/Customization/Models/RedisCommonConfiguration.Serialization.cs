@@ -8,14 +8,17 @@ using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis.Models
 {
+    // Legacy wire quirks preserved for back-compat:
+    // - rdb-backup-enabled / aof-backup-enabled may arrive as either bool or string.
+    // - rdb-backup-max-snapshot-count: int written/read as a JSON string.
     [CodeGenSerialization(nameof(IsRdbBackupEnabled), DeserializationValueHook = nameof(ReadIsRdbBackupEnabled))]
     [CodeGenSerialization(nameof(IsAofBackupEnabled), DeserializationValueHook = nameof(ReadIsAofBackupEnabled))]
     [CodeGenSerialization(nameof(RdbBackupMaxSnapshotCount), SerializationValueHook = nameof(WriteRdbBackupMaxSnapshotCount), DeserializationValueHook = nameof(ReadRdbBackupMaxSnapshotCount))]
-    public partial class RedisCommonConfiguration : IUtf8JsonSerializable, IJsonModel<RedisCommonConfiguration>
+    public partial class RedisCommonConfiguration
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void WriteRdbBackupMaxSnapshotCount(Utf8JsonWriter writer, ModelReaderWriterOptions options)

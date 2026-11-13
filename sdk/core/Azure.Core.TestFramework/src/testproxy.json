@@ -683,6 +683,9 @@
         },
         "ignoredQueryParameters": {
           "type": "string"
+        },
+        "ignoreQueryOrdering": {
+          "type": "boolean"
         }
       }
     },

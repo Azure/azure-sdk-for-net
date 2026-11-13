@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlDistributedAvailabilityGroupResource : IJsonModel<SqlDistributedAvailabilityGroupData>
     {
-        private static SqlDistributedAvailabilityGroupData s_dataDeserializationInstance;
-        private static SqlDistributedAvailabilityGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlDistributedAvailabilityGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlDistributedAvailabilityGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlDistributedAvailabilityGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlDistributedAvailabilityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlDistributedAvailabilityGroupData>)Data).Write(writer, options);
 
-        SqlDistributedAvailabilityGroupData IJsonModel<SqlDistributedAvailabilityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDistributedAvailabilityGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlDistributedAvailabilityGroupData IJsonModel<SqlDistributedAvailabilityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlDistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlDistributedAvailabilityGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlDistributedAvailabilityGroupData IPersistableModel<SqlDistributedAvailabilityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDistributedAvailabilityGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlDistributedAvailabilityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDistributedAvailabilityGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlDistributedAvailabilityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

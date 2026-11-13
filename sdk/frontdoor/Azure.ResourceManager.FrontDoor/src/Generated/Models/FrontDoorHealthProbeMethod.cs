@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorHealthProbeMethod : IEquatable<FrontDoorHealthProbeMethod>
     {
         private readonly string _value;
+        /// <summary> GET. </summary>
+        private const string GetValue = "GET";
+        /// <summary> HEAD. </summary>
+        private const string HeadValue = "HEAD";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorHealthProbeMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorHealthProbeMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GetValue = "GET";
-        private const string HeadValue = "HEAD";
+            _value = value;
+        }
 
         /// <summary> GET. </summary>
         public static FrontDoorHealthProbeMethod Get { get; } = new FrontDoorHealthProbeMethod(GetValue);
+
         /// <summary> HEAD. </summary>
         public static FrontDoorHealthProbeMethod Head { get; } = new FrontDoorHealthProbeMethod(HeadValue);
+
         /// <summary> Determines if two <see cref="FrontDoorHealthProbeMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorHealthProbeMethod left, FrontDoorHealthProbeMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorHealthProbeMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorHealthProbeMethod left, FrontDoorHealthProbeMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorHealthProbeMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorHealthProbeMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorHealthProbeMethod(string value) => new FrontDoorHealthProbeMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorHealthProbeMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorHealthProbeMethod?(string value) => value == null ? null : new FrontDoorHealthProbeMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorHealthProbeMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorHealthProbeMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

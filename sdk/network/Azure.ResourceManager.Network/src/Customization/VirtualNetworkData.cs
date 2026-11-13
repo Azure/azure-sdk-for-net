@@ -4,23 +4,22 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualNetwork data model.
-    /// Virtual Network resource.
-    /// </summary>
-    public partial class VirtualNetworkData : NetworkTrackedResourceData
+    public partial class VirtualNetworkData
     {
+        // Native regeneration omits this released getter (CP0002); AddressSpace also contains IPAM allocations.
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.addressSpace.addressPrefixes")]
         public IList<string> AddressPrefixes
         {
             get
             {
-                if (AddressSpace is null)
-                    AddressSpace = new VirtualNetworkAddressSpace();
+                AddressSpace ??= new VirtualNetworkAddressSpace();
                 return AddressSpace.AddressPrefixes;
             }
         }

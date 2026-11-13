@@ -7,60 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
+    /// <summary> The response of a PrivateEndpointConnection list operation. </summary>
     internal partial class AttestationPrivateEndpointConnectionListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AttestationPrivateEndpointConnectionListResult"/>. </summary>
-        internal AttestationPrivateEndpointConnectionListResult()
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        internal AttestationPrivateEndpointConnectionListResult(IEnumerable<AttestationPrivateEndpointConnectionData> value)
         {
-            Value = new ChangeTrackingList<AttestationPrivateEndpointConnectionData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AttestationPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationPrivateEndpointConnectionListResult(IReadOnlyList<AttestationPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationPrivateEndpointConnectionListResult(IList<AttestationPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<AttestationPrivateEndpointConnectionData> Value { get; }
+        /// <summary> The PrivateEndpointConnection items on this page. </summary>
+        public IList<AttestationPrivateEndpointConnectionData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

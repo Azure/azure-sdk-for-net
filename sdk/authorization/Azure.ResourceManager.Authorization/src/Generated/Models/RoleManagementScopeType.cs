@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Type of the scope. </summary>
+    /// <summary></summary>
     public readonly partial struct RoleManagementScopeType : IEquatable<RoleManagementScopeType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RoleManagementScopeType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RoleManagementScopeType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SubscriptionValue = "subscription";
         private const string ManagementGroupValue = "managementgroup";
         private const string ResourceGroupValue = "resourcegroup";
 
-        /// <summary> subscription. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RoleManagementScopeType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Subscription. </summary>
         public static RoleManagementScopeType Subscription { get; } = new RoleManagementScopeType(SubscriptionValue);
-        /// <summary> managementgroup. </summary>
+
+        /// <summary> Gets the ManagementGroup. </summary>
         public static RoleManagementScopeType ManagementGroup { get; } = new RoleManagementScopeType(ManagementGroupValue);
-        /// <summary> resourcegroup. </summary>
+
+        /// <summary> Gets the ResourceGroup. </summary>
         public static RoleManagementScopeType ResourceGroup { get; } = new RoleManagementScopeType(ResourceGroupValue);
+
         /// <summary> Determines if two <see cref="RoleManagementScopeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleManagementScopeType left, RoleManagementScopeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleManagementScopeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleManagementScopeType left, RoleManagementScopeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementScopeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleManagementScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleManagementScopeType(string value) => new RoleManagementScopeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleManagementScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleManagementScopeType?(string value) => value == null ? null : new RoleManagementScopeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleManagementScopeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleManagementScopeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

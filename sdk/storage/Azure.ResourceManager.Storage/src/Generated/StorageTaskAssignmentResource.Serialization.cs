@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class StorageTaskAssignmentResource : IJsonModel<StorageTaskAssignmentData>
     {
-        private static StorageTaskAssignmentData s_dataDeserializationInstance;
-        private static StorageTaskAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageTaskAssignmentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageTaskAssignmentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageTaskAssignmentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageTaskAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskAssignmentData>)Data).Write(writer, options);
 
-        StorageTaskAssignmentData IJsonModel<StorageTaskAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageTaskAssignmentData IJsonModel<StorageTaskAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageTaskAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageTaskAssignmentData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageTaskAssignmentData IPersistableModel<StorageTaskAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageTaskAssignmentData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<StorageTaskAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageTaskAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageTaskAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

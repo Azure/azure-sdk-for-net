@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             return workspace;
         }
         #endregion
-        private SecurityInsightsSentinelOnboardingStateCollection GetSentinelOnboardingStateCollectionAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
+        private SecurityInsightsSentinelOnboardingStateCollection GetSentinelOnboardingStateCollectionAsync(ResourceIdentifier operationalInsights)
         {
-            return operationalInsights.GetSecurityInsightsSentinelOnboardingStates();
+            return Client.GetSecurityInsightsSentinelOnboardingStates(operationalInsights);
         }
 
         private async Task<SecurityInsightsSentinelOnboardingStateResource> CreateSentinelOnboardingStateResourceAsync(string onboardName)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var groupName = resourceGroup.Data.Name;
             var workspaceName = groupName + "-ws";
             var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
-            var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
+            var operationalInsights = ResourceID;
             var collection = GetSentinelOnboardingStateCollectionAsync(operationalInsights);
             var input = ResourceDataHelpers.GetSentinelOnboardingStateData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, onboardName, input);

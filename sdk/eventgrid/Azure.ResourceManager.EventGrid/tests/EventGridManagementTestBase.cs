@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
@@ -8,7 +9,6 @@ using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 namespace Azure.ResourceManager.EventGrid.Tests
 {
     public class EventGridManagementTestBase : ManagementRecordedTestBase<EventGridManagementTestEnvironment>
@@ -16,17 +16,21 @@ namespace Azure.ResourceManager.EventGrid.Tests
         protected ArmClient Client { get; private set; }
         public Azure.ResourceManager.Resources.SubscriptionResource DefaultSubscription { get; private set; }
         public AzureLocation DefaultLocation => AzureLocation.EastUS;
-        public const string  ResourceGroupNamePrefix = "EventGridRG";
+        public const string ResourceGroupNamePrefix = "EventGridRG";
 
         protected EventGridManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-           // Sanitize the endpointUrl with code parameter
-           BodyKeySanitizers.Add(new BodyKeySanitizer("..endpointUrl") { Value = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
-           });
-           // Sanitize Endpoint property with sig and sv parameters
-           BodyKeySanitizers.Add(new BodyKeySanitizer("..Endpoint") { Value = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
-           });
+            // Sanitize the endpointUrl with code parameter
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..endpointUrl")
+            {
+                Value = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
+            });
+            // Sanitize Endpoint property with sig and sv parameters
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..Endpoint")
+            {
+                Value = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
+            });
 
             // Sanitize for the AAD Application ID used in the tests
             BodyKeySanitizers.Add(new BodyKeySanitizer("..azureActiveDirectoryApplicationIdOrUri") { Value = "api://SANITIZED_APPLICATION_ID" });
@@ -48,17 +52,23 @@ namespace Azure.ResourceManager.EventGrid.Tests
         protected EventGridManagementTestBase(bool isAsync)
             : base(isAsync)
         {
-           // Sanitize the endpointUrl with code parameter
-           BodyKeySanitizers.Add(new BodyKeySanitizer("..endpointUrl") { Value = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
-           });
+            // Sanitize the endpointUrl with code parameter
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..endpointUrl")
+            {
+                Value = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
+            });
 
-           // Sanitize Endpoint property with sig and sv parameters
-           BodyKeySanitizers.Add(new BodyKeySanitizer("..Endpoint") { Value = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
-           });
+            // Sanitize Endpoint property with sig and sv parameters
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..Endpoint")
+            {
+                Value = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY"
+            });
 
-           // Sanitize certificateUrl property
-           BodyKeySanitizers.Add(new BodyKeySanitizer("..certificateUrl") { Value = "https://sdk-eg-pre-generated-kv.vault.azure.net/certificates/sdk-eventgrid-test-certificate/SANITIZED_CERTIFICATE_URL"
-           });
+            // Sanitize certificateUrl property
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..certificateUrl")
+            {
+                Value = "https://sdk-eg-pre-generated-kv.vault.azure.net/certificates/sdk-eventgrid-test-certificate/SANITIZED_CERTIFICATE_URL"
+            });
 
             // Sanitize for the AAD Application ID used in the tests
             BodyKeySanitizers.Add(new BodyKeySanitizer("..azureActiveDirectoryApplicationIdOrUri") { Value = "api://SANITIZED_APPLICATION_ID" });

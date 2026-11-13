@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     public readonly partial struct ResourceHealthEventLevelValue : IEquatable<ResourceHealthEventLevelValue>
     {
         private readonly string _value;
+        /// <summary> Critical. </summary>
+        private const string CriticalValue = "Critical";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Informational. </summary>
+        private const string InformationalValue = "Informational";
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthEventLevelValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceHealthEventLevelValue(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CriticalValue = "Critical";
-        private const string ErrorValue = "Error";
-        private const string WarningValue = "Warning";
-        private const string InformationalValue = "Informational";
+            _value = value;
+        }
 
         /// <summary> Critical. </summary>
         public static ResourceHealthEventLevelValue Critical { get; } = new ResourceHealthEventLevelValue(CriticalValue);
+
         /// <summary> Error. </summary>
         public static ResourceHealthEventLevelValue Error { get; } = new ResourceHealthEventLevelValue(ErrorValue);
+
         /// <summary> Warning. </summary>
         public static ResourceHealthEventLevelValue Warning { get; } = new ResourceHealthEventLevelValue(WarningValue);
+
         /// <summary> Informational. </summary>
         public static ResourceHealthEventLevelValue Informational { get; } = new ResourceHealthEventLevelValue(InformationalValue);
+
         /// <summary> Determines if two <see cref="ResourceHealthEventLevelValue"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceHealthEventLevelValue left, ResourceHealthEventLevelValue right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceHealthEventLevelValue"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceHealthEventLevelValue left, ResourceHealthEventLevelValue right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthEventLevelValue"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceHealthEventLevelValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceHealthEventLevelValue(string value) => new ResourceHealthEventLevelValue(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceHealthEventLevelValue"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceHealthEventLevelValue?(string value) => value == null ? null : new ResourceHealthEventLevelValue(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceHealthEventLevelValue other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceHealthEventLevelValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

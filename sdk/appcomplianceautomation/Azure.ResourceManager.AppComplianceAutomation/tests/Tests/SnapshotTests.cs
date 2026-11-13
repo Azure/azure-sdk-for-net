@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.AppComplianceAutomation;
-using NUnit.Framework;
-using Azure.ResourceManager.AppComplianceAutomation.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.AppComplianceAutomation;
+using Azure.ResourceManager.AppComplianceAutomation.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             string latestSnapshotName = "";
             AppComplianceReportResource report = Client.GetAppComplianceReportResource(AppComplianceReportResource.CreateResourceIdentifier("sdk-test-report"));
             AppComplianceReportSnapshotCollection snapshots = report.GetAppComplianceReportSnapshots();
-            await foreach (AppComplianceReportSnapshotResource resource in snapshots.GetAllAsync(null))
+            await foreach (AppComplianceReportSnapshotResource resource in snapshots.GetAllAsync())
             {
                 count++;
                 if (latestSnapshotName == "")

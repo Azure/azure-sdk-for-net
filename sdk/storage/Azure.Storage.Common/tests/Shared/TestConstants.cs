@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -46,6 +47,16 @@ namespace Azure.Storage.Test
             public string KeyTenantId { get; } = "KeyTid";
             public string KeyService { get; } = "KeyService";
             public string KeyVersion { get; } = "KeyVersion";
+            public string KeyDelegatedTenantId { get; } = "DelegatedTid";
+            public string DelegatedObjectId { get; } = "DelegatedOid";
+            public Dictionary<string, string> RequestHeaders { get; } = new Dictionary<string, string>()
+            {
+                { "foo", "bar" }
+            };
+            public Dictionary<string, string> RequestQueryParameters { get; } = new Dictionary<string, string>()
+            {
+                { "hello", "world" }
+            };
             public string KeyValue { get; } = Convert.ToBase64String(Encoding.UTF8.GetBytes("value"));
             public SasProtocol Protocol { get; } = SasProtocol.Https;
 
@@ -65,6 +76,7 @@ namespace Azure.Storage.Test
             public SasIPRange IPRange { get; protected internal set; }
             public DateTimeOffset KeyStart { get; protected internal set; }
             public DateTimeOffset KeyExpiry { get; protected internal set; }
+
             public StorageSharedKeyCredential SharedKeyCredential { get; protected internal set; }
         }
 

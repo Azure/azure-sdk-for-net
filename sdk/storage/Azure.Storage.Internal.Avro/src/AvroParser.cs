@@ -30,6 +30,10 @@ namespace Azure.Storage.Internal.Avro
             bool async,
             CancellationToken cancellationToken)
         {
+            if (length < 0 || length > int.MaxValue)
+            {
+                throw Errors.InvalidAvroFieldSize(length, int.MaxValue);
+            }
             byte[] data = new byte[length];
             int start = 0;
             while (length > 0)
@@ -150,10 +154,14 @@ namespace Azure.Storage.Internal.Avro
             bool async,
             CancellationToken cancellationToken)
         {
-            // Note that byte array length is actually defined as a long in the Avro spec.
-            // This is fine for now, but may need to be changed in the future.
-            int size = await ReadIntAsync(stream, async, cancellationToken).ConfigureAwait(false);
-            return await ReadFixedBytesAsync(stream, size, async, cancellationToken).ConfigureAwait(false);
+            // The Avro spec defines byte array length as a long.
+            // Read as long and validate before casting to int.
+            long size = await ReadLongAsync(stream, async, cancellationToken).ConfigureAwait(false);
+            if (size < 0 || size > int.MaxValue)
+            {
+                throw Errors.InvalidAvroFieldSize(size, int.MaxValue);
+            }
+            return await ReadFixedBytesAsync(stream, (int)size, async, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -179,9 +187,9 @@ namespace Azure.Storage.Internal.Avro
             CancellationToken cancellationToken)
         {
             string key = await ReadStringAsync(stream, async, cancellationToken).ConfigureAwait(false);
-            #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             T value = await parseItemAsync(stream, async, cancellationToken).ConfigureAwait(false);
-            #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             return new KeyValuePair<string, T>(key, value);
         }
 
@@ -224,11 +232,12 @@ namespace Azure.Storage.Internal.Avro
                 }
                 while (length-- > 0)
                 {
-                    #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     T item = await parseItemAsync(stream, async, cancellationToken).ConfigureAwait(false);
-                    #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     items.Add(item);
-                };
+                }
+                ;
             }
             return items;
         }
@@ -374,9 +383,9 @@ namespace Azure.Storage.Internal.Avro
             CancellationToken cancellationToken) =>
             Primitive switch
             {
-                #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 AvroPrimitive.Null => await AvroParser.ReadNullAsync().ConfigureAwait(false),
-                #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 AvroPrimitive.Boolean => await AvroParser.ReadBoolAsync(stream, async, cancellationToken).ConfigureAwait(false),
                 AvroPrimitive.Int => await AvroParser.ReadIntAsync(stream, async, cancellationToken).ConfigureAwait(false),
                 AvroPrimitive.Long => await AvroParser.ReadLongAsync(stream, async, cancellationToken).ConfigureAwait(false),

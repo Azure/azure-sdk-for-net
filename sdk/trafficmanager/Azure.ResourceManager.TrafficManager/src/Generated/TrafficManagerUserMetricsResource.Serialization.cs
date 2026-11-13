@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.TrafficManager
 {
+    /// <summary></summary>
     public partial class TrafficManagerUserMetricsResource : IJsonModel<TrafficManagerUserMetricData>
     {
-        private static TrafficManagerUserMetricData s_dataDeserializationInstance;
-        private static TrafficManagerUserMetricData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TrafficManagerUserMetricData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TrafficManagerUserMetricData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TrafficManagerUserMetricData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerUserMetricData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerUserMetricData>)Data).Write(writer, options);
 
-        TrafficManagerUserMetricData IJsonModel<TrafficManagerUserMetricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerUserMetricData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerUserMetricData IJsonModel<TrafficManagerUserMetricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TrafficManagerUserMetricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficManagerUserMetricData>(Data, options, AzureResourceManagerTrafficManagerContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TrafficManagerUserMetricData IPersistableModel<TrafficManagerUserMetricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerUserMetricData>(data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        string IPersistableModel<TrafficManagerUserMetricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerUserMetricData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrafficManagerUserMetricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

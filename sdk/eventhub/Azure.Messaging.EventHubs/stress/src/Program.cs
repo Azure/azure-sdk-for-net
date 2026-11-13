@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using CommandLine;
+using System.Diagnostics.Tracing;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
+using CommandLine;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -59,7 +59,7 @@ public class Program
         // test scenario runs are run in parallel.
 
         var testScenarioTasks = new List<Task>();
-        var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenarioName)) : new TestScenarioName[]{StringToTestScenario(opts.Test)};
+        var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenarioName)) : new TestScenarioName[] { StringToTestScenario(opts.Test) };
 
         var testParameters = new TestParameters();
         testParameters.EventHubsConnectionString = eventHubsConnectionString;

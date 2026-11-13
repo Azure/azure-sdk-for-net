@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkIPAllocationMethod : IEquatable<NetworkIPAllocationMethod>
     {
         private readonly string _value;
+        /// <summary> Static. </summary>
+        private const string StaticValue = "Static";
+        /// <summary> Dynamic. </summary>
+        private const string DynamicValue = "Dynamic";
 
         /// <summary> Initializes a new instance of <see cref="NetworkIPAllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkIPAllocationMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StaticValue = "Static";
-        private const string DynamicValue = "Dynamic";
+            _value = value;
+        }
 
         /// <summary> Static. </summary>
         public static NetworkIPAllocationMethod Static { get; } = new NetworkIPAllocationMethod(StaticValue);
+
         /// <summary> Dynamic. </summary>
         public static NetworkIPAllocationMethod Dynamic { get; } = new NetworkIPAllocationMethod(DynamicValue);
+
         /// <summary> Determines if two <see cref="NetworkIPAllocationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkIPAllocationMethod left, NetworkIPAllocationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkIPAllocationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkIPAllocationMethod left, NetworkIPAllocationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkIPAllocationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkIPAllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkIPAllocationMethod(string value) => new NetworkIPAllocationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkIPAllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkIPAllocationMethod?(string value) => value == null ? null : new NetworkIPAllocationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkIPAllocationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkIPAllocationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

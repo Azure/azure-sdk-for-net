@@ -7,33 +7,34 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary>
-    /// A base CosmosDB data source/sink
-    /// Please note <see cref="BaseCosmosDataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
-    /// </summary>
+    /// <summary> A base CosmosDB data source/sink. </summary>
     public partial class BaseCosmosDataTransferDataSourceSink : DataTransferDataSourceSink
     {
         /// <summary> Initializes a new instance of <see cref="BaseCosmosDataTransferDataSourceSink"/>. </summary>
-        public BaseCosmosDataTransferDataSourceSink()
+        public BaseCosmosDataTransferDataSourceSink() : base("BaseCosmosDataTransferDataSourceSink")
         {
-            Component = new DataTransferComponent("BaseCosmosDataTransferDataSourceSink");
         }
 
         /// <summary> Initializes a new instance of <see cref="BaseCosmosDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="remoteAccountName"></param>
-        internal BaseCosmosDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string remoteAccountName) : base(component, serializedAdditionalRawData)
+        internal BaseCosmosDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> additionalBinaryDataProperties, string remoteAccountName) : base(component, additionalBinaryDataProperties)
         {
             RemoteAccountName = remoteAccountName;
-            Component = component;
         }
 
-        /// <summary> Gets or sets the remote account name. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseCosmosDataTransferDataSourceSink"/>. </summary>
+        /// <param name="component"></param>
+        private protected BaseCosmosDataTransferDataSourceSink(DataTransferComponent component) : base(component)
+        {
+        }
+
+        /// <summary> Gets or sets the RemoteAccountName. </summary>
         [WirePath("remoteAccountName")]
         public string RemoteAccountName { get; set; }
     }

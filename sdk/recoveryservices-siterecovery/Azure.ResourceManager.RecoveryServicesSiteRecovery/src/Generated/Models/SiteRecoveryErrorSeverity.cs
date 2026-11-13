@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryErrorSeverity : IEquatable<SiteRecoveryErrorSeverity>
     {
         private readonly string _value;
+        /// <summary> NONE. </summary>
+        private const string NoneValue = "NONE";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Info. </summary>
+        private const string InfoValue = "Info";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryErrorSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryErrorSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "NONE";
-        private const string WarningValue = "Warning";
-        private const string ErrorValue = "Error";
-        private const string InfoValue = "Info";
+            _value = value;
+        }
 
         /// <summary> NONE. </summary>
         public static SiteRecoveryErrorSeverity None { get; } = new SiteRecoveryErrorSeverity(NoneValue);
+
         /// <summary> Warning. </summary>
         public static SiteRecoveryErrorSeverity Warning { get; } = new SiteRecoveryErrorSeverity(WarningValue);
+
         /// <summary> Error. </summary>
         public static SiteRecoveryErrorSeverity Error { get; } = new SiteRecoveryErrorSeverity(ErrorValue);
+
         /// <summary> Info. </summary>
         public static SiteRecoveryErrorSeverity Info { get; } = new SiteRecoveryErrorSeverity(InfoValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryErrorSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryErrorSeverity left, SiteRecoveryErrorSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryErrorSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryErrorSeverity left, SiteRecoveryErrorSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryErrorSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryErrorSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryErrorSeverity(string value) => new SiteRecoveryErrorSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryErrorSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryErrorSeverity?(string value) => value == null ? null : new SiteRecoveryErrorSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryErrorSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryErrorSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

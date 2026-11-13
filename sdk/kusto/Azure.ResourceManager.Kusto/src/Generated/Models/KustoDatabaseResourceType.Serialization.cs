@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     internal static partial class KustoDatabaseResourceTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this KustoDatabaseResourceType value) => value switch
         {
             KustoDatabaseResourceType.MicrosoftKustoClustersDatabases => "Microsoft.Kusto/clusters/databases",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Kusto.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KustoDatabaseResourceType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static KustoDatabaseResourceType ToKustoDatabaseResourceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Kusto/clusters/databases")) return KustoDatabaseResourceType.MicrosoftKustoClustersDatabases;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Kusto/clusters/attachedDatabaseConfigurations")) return KustoDatabaseResourceType.MicrosoftKustoClustersAttachedDatabaseConfigurations;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Kusto/clusters/databases"))
+            {
+                return KustoDatabaseResourceType.MicrosoftKustoClustersDatabases;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Kusto/clusters/attachedDatabaseConfigurations"))
+            {
+                return KustoDatabaseResourceType.MicrosoftKustoClustersAttachedDatabaseConfigurations;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KustoDatabaseResourceType value.");
         }
     }

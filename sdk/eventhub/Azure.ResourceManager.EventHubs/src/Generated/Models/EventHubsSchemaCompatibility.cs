@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> The EventHubsSchemaCompatibility. </summary>
+    /// <summary></summary>
     public readonly partial struct EventHubsSchemaCompatibility : IEquatable<EventHubsSchemaCompatibility>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EventHubsSchemaCompatibility"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsSchemaCompatibility(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string BackwardValue = "Backward";
         private const string ForwardValue = "Forward";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsSchemaCompatibility"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsSchemaCompatibility(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static EventHubsSchemaCompatibility None { get; } = new EventHubsSchemaCompatibility(NoneValue);
-        /// <summary> Backward. </summary>
+
+        /// <summary> Gets the Backward. </summary>
         public static EventHubsSchemaCompatibility Backward { get; } = new EventHubsSchemaCompatibility(BackwardValue);
-        /// <summary> Forward. </summary>
+
+        /// <summary> Gets the Forward. </summary>
         public static EventHubsSchemaCompatibility Forward { get; } = new EventHubsSchemaCompatibility(ForwardValue);
+
         /// <summary> Determines if two <see cref="EventHubsSchemaCompatibility"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsSchemaCompatibility left, EventHubsSchemaCompatibility right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubsSchemaCompatibility"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsSchemaCompatibility left, EventHubsSchemaCompatibility right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsSchemaCompatibility"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubsSchemaCompatibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubsSchemaCompatibility(string value) => new EventHubsSchemaCompatibility(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubsSchemaCompatibility"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubsSchemaCompatibility?(string value) => value == null ? null : new EventHubsSchemaCompatibility(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsSchemaCompatibility other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubsSchemaCompatibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

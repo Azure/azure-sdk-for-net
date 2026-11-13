@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Storage.Models;
-using NUnit.Framework;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -34,11 +34,13 @@ namespace Azure.ResourceManager.Storage.Tests
         protected StorageManagementTestBase(bool isAsync) : base(isAsync)
         {
             IgnoreNetworkDependencyVersions();
+            JsonPathSanitizers.Add("$..secretAccessKey");
         }
 
         public StorageManagementTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             IgnoreNetworkDependencyVersions();
+            JsonPathSanitizers.Add("$..secretAccessKey");
         }
 
         public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)

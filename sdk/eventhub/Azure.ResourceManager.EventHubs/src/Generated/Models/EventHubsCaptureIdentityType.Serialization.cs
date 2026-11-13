@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     internal static partial class EventHubsCaptureIdentityTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EventHubsCaptureIdentityType value) => value switch
         {
             EventHubsCaptureIdentityType.SystemAssigned => "SystemAssigned",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsCaptureIdentityType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static EventHubsCaptureIdentityType ToEventHubsCaptureIdentityType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned")) return EventHubsCaptureIdentityType.SystemAssigned;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned")) return EventHubsCaptureIdentityType.UserAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned"))
+            {
+                return EventHubsCaptureIdentityType.SystemAssigned;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned"))
+            {
+                return EventHubsCaptureIdentityType.UserAssigned;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsCaptureIdentityType value.");
         }
     }

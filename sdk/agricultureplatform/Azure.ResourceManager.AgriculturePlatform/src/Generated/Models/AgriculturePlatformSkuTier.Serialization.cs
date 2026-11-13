@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
     internal static partial class AgriculturePlatformSkuTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AgriculturePlatformSkuTier value) => value switch
         {
             AgriculturePlatformSkuTier.Free => "Free",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgriculturePlatformSkuTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AgriculturePlatformSkuTier ToAgriculturePlatformSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return AgriculturePlatformSkuTier.Free;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return AgriculturePlatformSkuTier.Basic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return AgriculturePlatformSkuTier.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return AgriculturePlatformSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free"))
+            {
+                return AgriculturePlatformSkuTier.Free;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic"))
+            {
+                return AgriculturePlatformSkuTier.Basic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return AgriculturePlatformSkuTier.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
+            {
+                return AgriculturePlatformSkuTier.Premium;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgriculturePlatformSkuTier value.");
         }
     }

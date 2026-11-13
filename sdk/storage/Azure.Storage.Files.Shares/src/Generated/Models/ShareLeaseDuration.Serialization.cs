@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class ShareLeaseDurationExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ShareLeaseDuration value) => value switch
         {
             ShareLeaseDuration.Infinite => "infinite",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareLeaseDuration value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ShareLeaseDuration ToShareLeaseDuration(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "infinite")) return ShareLeaseDuration.Infinite;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fixed")) return ShareLeaseDuration.Fixed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "infinite"))
+            {
+                return ShareLeaseDuration.Infinite;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fixed"))
+            {
+                return ShareLeaseDuration.Fixed;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareLeaseDuration value.");
         }
     }

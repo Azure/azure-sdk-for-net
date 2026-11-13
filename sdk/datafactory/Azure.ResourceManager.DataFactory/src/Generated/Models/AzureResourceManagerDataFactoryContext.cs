@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AmazonMwsLinkedService))]
     [ModelReaderWriterBuildable(typeof(AmazonMwsObjectDataset))]
@@ -238,7 +239,6 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(DataFactoryPatch))]
     [ModelReaderWriterBuildable(typeof(DataFactoryPipelineData))]
     [ModelReaderWriterBuildable(typeof(DataFactoryPipelineListResult))]
-    [ModelReaderWriterBuildable(typeof(DataFactoryPipelinePolicy))]
     [ModelReaderWriterBuildable(typeof(DataFactoryPipelineReference))]
     [ModelReaderWriterBuildable(typeof(DataFactoryPipelineResource))]
     [ModelReaderWriterBuildable(typeof(DataFactoryPipelineRunEntityInfo))]
@@ -255,7 +255,6 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(DataFactoryPrivateEndpointResource))]
     [ModelReaderWriterBuildable(typeof(DataFactoryPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(DataFactoryPrivateLinkResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(DataFactoryPurviewConfiguration))]
     [ModelReaderWriterBuildable(typeof(DataFactoryRecurrenceSchedule))]
     [ModelReaderWriterBuildable(typeof(DataFactoryRecurrenceScheduleOccurrence))]
     [ModelReaderWriterBuildable(typeof(DataFactoryResource))]
@@ -337,6 +336,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(EloquaLinkedService))]
     [ModelReaderWriterBuildable(typeof(EloquaObjectDataset))]
     [ModelReaderWriterBuildable(typeof(EloquaSource))]
+    [ModelReaderWriterBuildable(typeof(EnableInteractiveQueryContent))]
     [ModelReaderWriterBuildable(typeof(EntityParameterSpecification))]
     [ModelReaderWriterBuildable(typeof(EntityReference))]
     [ModelReaderWriterBuildable(typeof(EnvironmentVariableSetup))]
@@ -450,6 +450,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(IntegrationRuntimeSsisProperties))]
     [ModelReaderWriterBuildable(typeof(IntegrationRuntimeStatus))]
     [ModelReaderWriterBuildable(typeof(IntegrationRuntimeVnetProperties))]
+    [ModelReaderWriterBuildable(typeof(InteractiveQueryProperties))]
     [ModelReaderWriterBuildable(typeof(JiraLinkedService))]
     [ModelReaderWriterBuildable(typeof(JiraObjectDataset))]
     [ModelReaderWriterBuildable(typeof(JiraSource))]
@@ -599,6 +600,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(RelationalSource))]
     [ModelReaderWriterBuildable(typeof(RelationalTableDataset))]
     [ModelReaderWriterBuildable(typeof(RerunTumblingWindowTrigger))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResponsysLinkedService))]
     [ModelReaderWriterBuildable(typeof(ResponsysObjectDataset))]
     [ModelReaderWriterBuildable(typeof(ResponsysSource))]
@@ -640,6 +642,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(SapEccResourceDataset))]
     [ModelReaderWriterBuildable(typeof(SapEccSource))]
     [ModelReaderWriterBuildable(typeof(SapHanaLinkedService))]
+    [ModelReaderWriterBuildable(typeof(SapHanaLinkedServiceProperties))]
     [ModelReaderWriterBuildable(typeof(SapHanaPartitionSettings))]
     [ModelReaderWriterBuildable(typeof(SapHanaSource))]
     [ModelReaderWriterBuildable(typeof(SapHanaTableDataset))]
@@ -788,6 +791,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(UnknownWebLinkedServiceTypeProperties))]
     [ModelReaderWriterBuildable(typeof(UntilActivity))]
     [ModelReaderWriterBuildable(typeof(UpdateIntegrationRuntimeNodeContent))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ValidationActivity))]
     [ModelReaderWriterBuildable(typeof(VerticaLinkedService))]
     [ModelReaderWriterBuildable(typeof(VerticaSource))]

@@ -79,7 +79,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
                 + "the function, ALWAYS specify the output queue uri parameter as "
                 + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
                 + "\"Foo says\" and then the response from the tool.",
-            tools: [ azureFnTool ]
+            tools: [azureFnTool]
             );
         #endregion
         #region Snippet:AgentsAzureFunctionsHandlePollingWithRequiredAction

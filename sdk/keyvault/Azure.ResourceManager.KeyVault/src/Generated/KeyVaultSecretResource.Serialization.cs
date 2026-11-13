@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.KeyVault
 {
+    /// <summary></summary>
     public partial class KeyVaultSecretResource : IJsonModel<KeyVaultSecretData>
     {
-        private static KeyVaultSecretData s_dataDeserializationInstance;
-        private static KeyVaultSecretData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<KeyVaultSecretData> s_dataDeserializationInstance;
 
+        private static IJsonModel<KeyVaultSecretData> DataDeserializationInstance => s_dataDeserializationInstance ??= new KeyVaultSecretData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeyVaultSecretData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretData>)Data).Write(writer, options);
 
-        KeyVaultSecretData IJsonModel<KeyVaultSecretData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeyVaultSecretData IJsonModel<KeyVaultSecretData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KeyVaultSecretData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         KeyVaultSecretData IPersistableModel<KeyVaultSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultSecretData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        string IPersistableModel<KeyVaultSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultSecretData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KeyVaultSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

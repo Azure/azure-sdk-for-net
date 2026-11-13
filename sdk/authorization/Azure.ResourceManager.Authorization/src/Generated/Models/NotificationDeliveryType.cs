@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Authorization.Models
     public readonly partial struct NotificationDeliveryType : IEquatable<NotificationDeliveryType>
     {
         private readonly string _value;
+        /// <summary> Email. </summary>
+        private const string EmailValue = "Email";
 
         /// <summary> Initializes a new instance of <see cref="NotificationDeliveryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationDeliveryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EmailValue = "Email";
+            _value = value;
+        }
 
         /// <summary> Email. </summary>
         public static NotificationDeliveryType Email { get; } = new NotificationDeliveryType(EmailValue);
+
         /// <summary> Determines if two <see cref="NotificationDeliveryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationDeliveryType left, NotificationDeliveryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationDeliveryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationDeliveryType left, NotificationDeliveryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationDeliveryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationDeliveryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationDeliveryType(string value) => new NotificationDeliveryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationDeliveryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationDeliveryType?(string value) => value == null ? null : new NotificationDeliveryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationDeliveryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationDeliveryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

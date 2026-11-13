@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,36 +18,58 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="variableName"> The name of the environment variable. </param>
         /// <param name="variableValue"> The value of the environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> or <paramref name="variableValue"/> is null. </exception>
-        public EnvironmentVariableSetup(string variableName, string variableValue)
+        public EnvironmentVariableSetup(string variableName, string variableValue) : base("EnvironmentVariableSetup")
         {
             Argument.AssertNotNull(variableName, nameof(variableName));
             Argument.AssertNotNull(variableValue, nameof(variableValue));
 
-            VariableName = variableName;
-            VariableValue = variableValue;
-            CustomSetupBaseType = "EnvironmentVariableSetup";
+            TypeProperties = new EnvironmentVariableSetupTypeProperties(variableName, variableValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentVariableSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="variableName"> The name of the environment variable. </param>
-        /// <param name="variableValue"> The value of the environment variable. </param>
-        internal EnvironmentVariableSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string variableName, string variableValue) : base(customSetupBaseType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="typeProperties"> Add environment variable type properties. </param>
+        internal EnvironmentVariableSetup(string customSetupBaseType, IDictionary<string, BinaryData> additionalBinaryDataProperties, EnvironmentVariableSetupTypeProperties typeProperties) : base(customSetupBaseType, additionalBinaryDataProperties)
         {
-            VariableName = variableName;
-            VariableValue = variableValue;
-            CustomSetupBaseType = customSetupBaseType ?? "EnvironmentVariableSetup";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentVariableSetup"/> for deserialization. </summary>
-        internal EnvironmentVariableSetup()
-        {
-        }
+        /// <summary> Add environment variable type properties. </summary>
+        internal EnvironmentVariableSetupTypeProperties TypeProperties { get; set; }
 
         /// <summary> The name of the environment variable. </summary>
-        public string VariableName { get; set; }
+        public string VariableName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.VariableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new EnvironmentVariableSetupTypeProperties();
+                }
+                TypeProperties.VariableName = value;
+            }
+        }
+
         /// <summary> The value of the environment variable. </summary>
-        public string VariableValue { get; set; }
+        public string VariableValue
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.VariableValue;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new EnvironmentVariableSetupTypeProperties();
+                }
+                TypeProperties.VariableValue = value;
+            }
+        }
     }
 }

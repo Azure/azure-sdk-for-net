@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoClusterZoneStatus : IEquatable<KustoClusterZoneStatus>
     {
         private readonly string _value;
+        /// <summary> NonZonal. </summary>
+        private const string NonZonalValue = "NonZonal";
+        /// <summary> ZonalInconsistency. </summary>
+        private const string ZonalInconsistencyValue = "ZonalInconsistency";
+        /// <summary> Zonal. </summary>
+        private const string ZonalValue = "Zonal";
 
         /// <summary> Initializes a new instance of <see cref="KustoClusterZoneStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoClusterZoneStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NonZonalValue = "NonZonal";
-        private const string ZonalInconsistencyValue = "ZonalInconsistency";
-        private const string ZonalValue = "Zonal";
+            _value = value;
+        }
 
         /// <summary> NonZonal. </summary>
         public static KustoClusterZoneStatus NonZonal { get; } = new KustoClusterZoneStatus(NonZonalValue);
+
         /// <summary> ZonalInconsistency. </summary>
         public static KustoClusterZoneStatus ZonalInconsistency { get; } = new KustoClusterZoneStatus(ZonalInconsistencyValue);
+
         /// <summary> Zonal. </summary>
         public static KustoClusterZoneStatus Zonal { get; } = new KustoClusterZoneStatus(ZonalValue);
+
         /// <summary> Determines if two <see cref="KustoClusterZoneStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoClusterZoneStatus left, KustoClusterZoneStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoClusterZoneStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoClusterZoneStatus left, KustoClusterZoneStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterZoneStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoClusterZoneStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoClusterZoneStatus(string value) => new KustoClusterZoneStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoClusterZoneStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoClusterZoneStatus?(string value) => value == null ? null : new KustoClusterZoneStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoClusterZoneStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoClusterZoneStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

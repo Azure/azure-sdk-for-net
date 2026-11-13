@@ -3,21 +3,18 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Serialization;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped SuggestDocumentsResult
-    [CodeGenModel("SuggestDocumentsResult")]
-    internal partial class SuggestDocumentsResult { }
-
     /// <summary>
     /// Response containing suggestion query results from an index.
     /// </summary>
@@ -25,6 +22,7 @@ namespace Azure.Search.Documents.Models
     /// The .NET type that maps to the index schema. Instances of this type can
     /// be retrieved as documents from the index.
     /// </typeparam>
+    [SuppressMessage("Usage", "AZC0035:Output model type 'SuggestResults' should have a corresponding method in a model factory class.", Justification = "Model factory method exists in SearchModelFactory but analyzer isn’t recognizing it")]
     public partial class SuggestResults<T>
     {
         /// <summary>
@@ -43,7 +41,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         internal SuggestResults() { }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize the SuggestResults.
         /// </summary>
@@ -63,7 +61,7 @@ namespace Azure.Search.Documents.Models
             ObjectSerializer serializer,
             bool async,
             CancellationToken cancellationToken)
-        #pragma warning restore CS1572
+#pragma warning restore CS1572
         {
             // Parse the JSON
             using JsonDocument doc = async ?

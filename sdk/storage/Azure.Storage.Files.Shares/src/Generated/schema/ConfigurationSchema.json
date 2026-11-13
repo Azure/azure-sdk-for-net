@@ -1,0 +1,81 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "ShareClient": {
+          "type": "object",
+          "description": "Configuration for ShareClient.",
+          "properties": {
+            "Url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Url."
+            },
+            "ConnectionString": {
+              "type": "string"
+            },
+            "ShareName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/shareClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "shareClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Version": {
+              "type": "string"
+            },
+            "TransferValidation": {
+              "type": "object"
+            },
+            "AllowTrailingDot": {
+              "type": "boolean"
+            },
+            "AllowSourceTrailingDot": {
+              "type": "boolean"
+            },
+            "ShareTokenIntent": {
+              "$ref": "#/definitions/shareTokenIntent"
+            },
+            "Audience": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "shareTokenIntent": {
+      "anyOf": [
+        {
+          "enum": [
+            "backup"
+          ]
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  }
+}

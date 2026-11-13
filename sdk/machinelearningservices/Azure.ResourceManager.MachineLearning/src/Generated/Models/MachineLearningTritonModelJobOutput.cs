@@ -7,36 +7,56 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningTritonModelJobOutput. </summary>
     public partial class MachineLearningTritonModelJobOutput : MachineLearningJobOutput
     {
+        private string _assetName;
+        private bool _assetNameIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningTritonModelJobOutput"/>. </summary>
-        public MachineLearningTritonModelJobOutput()
+        public MachineLearningTritonModelJobOutput() : base(JobOutputType.TritonModel)
         {
-            JobOutputType = JobOutputType.TritonModel;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTritonModelJobOutput"/>. </summary>
-        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="description"> Description for the output. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="assetName"> Output Asset Name. </param>
+        /// <param name="mode"> Output data delivery mode enums. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        /// <param name="mode"> Output Asset Delivery Mode. </param>
-        internal MachineLearningTritonModelJobOutput(JobOutputType jobOutputType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, MachineLearningOutputDeliveryMode? mode) : base(jobOutputType, description, serializedAdditionalRawData)
+        internal MachineLearningTritonModelJobOutput(string description, JobOutputType jobOutputType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string assetName, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType, additionalBinaryDataProperties)
         {
-            Uri = uri;
+            _assetName = assetName;
             Mode = mode;
-            JobOutputType = jobOutputType;
+            Uri = uri;
         }
+
+        /// <summary> Output Asset Name. </summary>
+        [WirePath("assetName")]
+        public string AssetName
+        {
+            get
+            {
+                return _assetName;
+            }
+            set
+            {
+                _assetName = value;
+                _assetNameIsDefined = true;
+            }
+        }
+
+        /// <summary> Output data delivery mode enums. </summary>
+        [WirePath("mode")]
+        public MachineLearningOutputDeliveryMode? Mode { get; set; }
 
         /// <summary> Output Asset URI. </summary>
         [WirePath("uri")]
         public Uri Uri { get; set; }
-        /// <summary> Output Asset Delivery Mode. </summary>
-        [WirePath("mode")]
-        public MachineLearningOutputDeliveryMode? Mode { get; set; }
     }
 }

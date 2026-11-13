@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -15,47 +16,64 @@ namespace Azure.ResourceManager.AppService.Models
     /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
     /// INHERITED - Routes inherited from the real Virtual Network routes
     /// STATIC - Static route set on the app only
-    ///
     /// These values will be used for syncing an app's routes with those from a Virtual Network.
     /// </summary>
     public readonly partial struct AppServiceVirtualNetworkRouteType : IEquatable<AppServiceVirtualNetworkRouteType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkRouteType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppServiceVirtualNetworkRouteType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DefaultValue = "DEFAULT";
         private const string InheritedValue = "INHERITED";
         private const string StaticValue = "STATIC";
 
-        /// <summary> DEFAULT. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkRouteType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppServiceVirtualNetworkRouteType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Default. </summary>
         public static AppServiceVirtualNetworkRouteType Default { get; } = new AppServiceVirtualNetworkRouteType(DefaultValue);
-        /// <summary> INHERITED. </summary>
+
+        /// <summary> Gets the Inherited. </summary>
         public static AppServiceVirtualNetworkRouteType Inherited { get; } = new AppServiceVirtualNetworkRouteType(InheritedValue);
-        /// <summary> STATIC. </summary>
+
+        /// <summary> Gets the Static. </summary>
         public static AppServiceVirtualNetworkRouteType Static { get; } = new AppServiceVirtualNetworkRouteType(StaticValue);
+
         /// <summary> Determines if two <see cref="AppServiceVirtualNetworkRouteType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceVirtualNetworkRouteType left, AppServiceVirtualNetworkRouteType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceVirtualNetworkRouteType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceVirtualNetworkRouteType left, AppServiceVirtualNetworkRouteType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceVirtualNetworkRouteType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceVirtualNetworkRouteType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceVirtualNetworkRouteType(string value) => new AppServiceVirtualNetworkRouteType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceVirtualNetworkRouteType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceVirtualNetworkRouteType?(string value) => value == null ? null : new AppServiceVirtualNetworkRouteType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceVirtualNetworkRouteType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceVirtualNetworkRouteType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

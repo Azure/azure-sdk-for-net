@@ -8,73 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> The List hybrid machine license profile operation response. </summary>
+    /// <summary> Paged collection of LicenseProfile items. </summary>
     internal partial class LicenseProfilesListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfilesListResult"/>. </summary>
-        /// <param name="value"> The list of license profiles. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <param name="value"> The LicenseProfile items on this page. </param>
         internal LicenseProfilesListResult(IEnumerable<HybridComputeLicenseProfileData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfilesListResult"/>. </summary>
-        /// <param name="value"> The list of license profiles. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of license profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LicenseProfilesListResult(IReadOnlyList<HybridComputeLicenseProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The LicenseProfile items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LicenseProfilesListResult(IList<HybridComputeLicenseProfileData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LicenseProfilesListResult"/> for deserialization. </summary>
-        internal LicenseProfilesListResult()
-        {
-        }
+        /// <summary> The LicenseProfile items on this page. </summary>
+        [WirePath("value")]
+        public IList<HybridComputeLicenseProfileData> Value { get; }
 
-        /// <summary> The list of license profiles. </summary>
-        public IReadOnlyList<HybridComputeLicenseProfileData> Value { get; }
-        /// <summary> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of license profile. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

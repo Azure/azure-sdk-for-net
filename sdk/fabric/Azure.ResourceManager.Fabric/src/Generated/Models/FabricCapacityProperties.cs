@@ -7,83 +7,71 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Fabric;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> The Microsoft Fabric capacity properties. </summary>
     public partial class FabricCapacityProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FabricCapacityProperties"/>. </summary>
-        /// <param name="administration"> The capacity administration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="administration"/> is null. </exception>
-        public FabricCapacityProperties(FabricCapacityAdministration administration)
+        /// <param name="overage"> The capacity overage properties of the Fabric capacity resource. </param>
+        /// <param name="administrationMembers"> An array of administrator user identities. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="overage"/> or <paramref name="administrationMembers"/> is null. </exception>
+        public FabricCapacityProperties(CapacityOverageProperties overage, IList<string> administrationMembers)
         {
-            Argument.AssertNotNull(administration, nameof(administration));
+            Argument.AssertNotNull(overage, nameof(overage));
+            Argument.AssertNotNull(administrationMembers, nameof(administrationMembers));
 
-            Administration = administration;
+            Overage = overage;
+            Administration = new FabricCapacityAdministration(administrationMembers);
         }
 
         /// <summary> Initializes a new instance of <see cref="FabricCapacityProperties"/>. </summary>
         /// <param name="provisioningState"> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
+        /// <param name="overage"> The capacity overage properties of the Fabric capacity resource. </param>
         /// <param name="administration"> The capacity administration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCapacityProperties(FabricProvisioningState? provisioningState, FabricResourceState? state, FabricCapacityAdministration administration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FabricCapacityProperties(FabricProvisioningState? provisioningState, FabricResourceState? state, CapacityOverageProperties overage, FabricCapacityAdministration administration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             State = state;
+            Overage = overage;
             Administration = administration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FabricCapacityProperties"/> for deserialization. </summary>
-        internal FabricCapacityProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </summary>
         public FabricProvisioningState? ProvisioningState { get; }
+
         /// <summary> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </summary>
         public FabricResourceState? State { get; }
+
+        /// <summary> The capacity overage properties of the Fabric capacity resource. </summary>
+        public CapacityOverageProperties Overage { get; set; }
+
         /// <summary> The capacity administration. </summary>
         internal FabricCapacityAdministration Administration { get; set; }
+
         /// <summary> An array of administrator user identities. </summary>
         public IList<string> AdministrationMembers
         {
-            get => Administration is null ? default : Administration.Members;
-            set => Administration = new FabricCapacityAdministration(value);
+            get
+            {
+                if (Administration is null)
+                {
+                    Administration = new FabricCapacityAdministration();
+                }
+                return Administration.Members;
+            }
+            set
+            {
+                Administration = new FabricCapacityAdministration(value);
+            }
         }
     }
 }

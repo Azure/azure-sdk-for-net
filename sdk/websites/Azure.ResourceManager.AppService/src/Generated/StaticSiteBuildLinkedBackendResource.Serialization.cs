@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class StaticSiteBuildLinkedBackendResource : IJsonModel<StaticSiteLinkedBackendData>
     {
-        private static StaticSiteLinkedBackendData s_dataDeserializationInstance;
-        private static StaticSiteLinkedBackendData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StaticSiteLinkedBackendData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StaticSiteLinkedBackendData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StaticSiteLinkedBackendData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StaticSiteLinkedBackendData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteLinkedBackendData>)Data).Write(writer, options);
 
-        StaticSiteLinkedBackendData IJsonModel<StaticSiteLinkedBackendData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteLinkedBackendData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StaticSiteLinkedBackendData IJsonModel<StaticSiteLinkedBackendData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StaticSiteLinkedBackendData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteLinkedBackendData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StaticSiteLinkedBackendData IPersistableModel<StaticSiteLinkedBackendData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteLinkedBackendData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<StaticSiteLinkedBackendData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteLinkedBackendData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StaticSiteLinkedBackendData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

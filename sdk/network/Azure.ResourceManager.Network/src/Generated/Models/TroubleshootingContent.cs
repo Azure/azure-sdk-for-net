@@ -8,86 +8,68 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the resource to troubleshoot. </summary>
     public partial class TroubleshootingContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/>. </summary>
         /// <param name="targetResourceId"> The target resource to troubleshoot. </param>
         /// <param name="storageId"> The ID for the storage account to save the troubleshoot result. </param>
-        /// <param name="storageUri"> The path to the blob to save the troubleshoot result in. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="storageId"/> or <paramref name="storageUri"/> is null. </exception>
-        public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storageUri)
+        /// <param name="storagePath"> The path to the blob to save the troubleshoot result in. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="storageId"/> or <paramref name="storagePath"/> is null. </exception>
+        public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, string storagePath)
         {
             Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
             Argument.AssertNotNull(storageId, nameof(storageId));
-            Argument.AssertNotNull(storageUri, nameof(storageUri));
+            Argument.AssertNotNull(storagePath, nameof(storagePath));
 
             TargetResourceId = targetResourceId;
-            StorageId = storageId;
-            StorageUri = storageUri;
+            Properties = new TroubleshootingProperties(storageId, storagePath);
         }
 
         /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/>. </summary>
         /// <param name="targetResourceId"> The target resource to troubleshoot. </param>
-        /// <param name="storageId"> The ID for the storage account to save the troubleshoot result. </param>
-        /// <param name="storageUri"> The path to the blob to save the troubleshoot result in. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storageUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the troubleshooting resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TroubleshootingContent(ResourceIdentifier targetResourceId, TroubleshootingProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
-            StorageId = storageId;
-            StorageUri = storageUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/> for deserialization. </summary>
-        internal TroubleshootingContent()
-        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The target resource to troubleshoot. </summary>
         [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
+
+        /// <summary> Properties of the troubleshooting resource. </summary>
+        [WirePath("properties")]
+        internal TroubleshootingProperties Properties { get; }
+
         /// <summary> The ID for the storage account to save the troubleshoot result. </summary>
         [WirePath("properties.storageId")]
-        public ResourceIdentifier StorageId { get; }
+        public ResourceIdentifier StorageId
+        {
+            get
+            {
+                return Properties.StorageId;
+            }
+        }
+
         /// <summary> The path to the blob to save the troubleshoot result in. </summary>
         [WirePath("properties.storagePath")]
-        public Uri StorageUri { get; }
+        public string StoragePath
+        {
+            get
+            {
+                return Properties.StoragePath;
+            }
+        }
     }
 }

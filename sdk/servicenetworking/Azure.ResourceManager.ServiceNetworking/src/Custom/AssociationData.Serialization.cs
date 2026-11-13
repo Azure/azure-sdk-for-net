@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                JsonSerializer.Serialize(writer, Subnet);
+                writer.WriteObjectValue(Subnet, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             {
                                 continue;
                             }
-                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            subnet = ModelReaderWriter.Read<WritableSubResource>(BinaryData.FromString(property0.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

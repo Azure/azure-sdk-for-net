@@ -14,6 +14,26 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusReceiverOptions
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiverOptions"/> class.
+        /// </summary>
+        public ServiceBusReceiverOptions()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiverOptions"/> class carrying the session
+        /// locking mode down to the transport layer.
+        /// </summary>
+        ///
+        /// <param name="isSessionExclusive">Whether the session is locked exclusively by the receiver.</param>
+        /// <param name="sessionLockToken">The session lock token to present when taking over a non-exclusive session.</param>
+        internal ServiceBusReceiverOptions(bool isSessionExclusive, Guid? sessionLockToken)
+        {
+            IsSessionExclusive = isSessionExclusive;
+            SessionLockToken = sessionLockToken;
+        }
+
+        /// <summary>
         /// Gets or sets the number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
         /// whether the receiver is actively receiving, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
@@ -50,6 +70,22 @@ namespace Azure.Messaging.ServiceBus
         /// Gets or sets the subqueue to connect the receiver to. By default, the receiver will not connect to a subqueue.
         /// </summary>
         public SubQueue SubQueue { get; set; } = SubQueue.None;
+
+        /// <summary>
+        /// Internal carrier for the session exclusivity flag, threaded from
+        /// <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> down to the transport layer.
+        /// Defaults to <c>true</c> (exclusive lock) to preserve existing behavior. Assigned only through the internal
+        /// constructor, so the shared default-options singleton that <see cref="ServiceBusReceiver"/> resolves cannot be
+        /// mutated after construction.
+        /// </summary>
+        internal bool IsSessionExclusive { get; } = true;
+
+        /// <summary>
+        /// Internal carrier for the session lock token to present when cooperatively taking over a
+        /// non-exclusive session, threaded from <see cref="ServiceBusSessionReceiverOptions.SessionLockToken"/>
+        /// down to the transport layer.
+        /// </summary>
+        internal Guid? SessionLockToken { get; }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.

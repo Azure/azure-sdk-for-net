@@ -1,0 +1,15 @@
+parameters:
+  service-dir:
+    default: sdk/compute
+options:
+  "@azure-tools/typespec-python":
+    package-dir: azure-mgmt-compute
+  "@azure-tools/typespec-csharp":
+    namespace: Azure.ResourceManager.Compute
+  "@azure-tools/typespec-java":
+    package-dir: azure-resourcemanager-compute
+  "@azure-tools/typespec-ts":
+    packageDetails:
+      name: "@azure/arm-compute"
+  "@azure-tools/typespec-go":
+    module: "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/compute/armcompute"

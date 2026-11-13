@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> PeerDb Details. </summary>
     public partial class AutonomousDatabaseActionContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseActionContent"/>. </summary>
         public AutonomousDatabaseActionContent()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="peerDBId"> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
         /// <param name="peerDBOcid"> Ocid of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
         /// <param name="peerDBLocation"> The location of the Disaster Recovery peer database. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseActionContent(string peerDBId, string peerDBOcid, string peerDBLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutonomousDatabaseActionContent(string peerDBId, string peerDBOcid, string peerDBLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeerDBId = peerDBId;
             PeerDBOcid = peerDBOcid;
             PeerDBLocation = peerDBLocation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
         public string PeerDBId { get; set; }
+
         /// <summary> Ocid of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
         public string PeerDBOcid { get; set; }
+
         /// <summary> The location of the Disaster Recovery peer database. </summary>
         public string PeerDBLocation { get; set; }
     }

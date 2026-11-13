@@ -1,0 +1,43 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.AppService.Models
+{
+    public partial class WebAppKeyInfo
+    {
+        /// <summary> The name of the key. </summary>
+        [Obsolete("Please use WebAppKeyInfo.Properties.Name instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Name
+        {
+            get
+            {
+                return this.Properties.Name;
+            }
+            set
+            {
+                this.Properties.Name = value;
+            }
+        }
+
+        /// <summary> The value of the key. </summary>
+        [Obsolete("Please use WebAppKeyInfo.Properties.Value instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Value
+        {
+            get
+            {
+                return this.Properties.Value;
+            }
+            set
+            {
+                this.Properties.Value = value;
+            }
+        }
+    }
+}

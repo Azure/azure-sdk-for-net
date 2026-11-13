@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     {
         protected abstract void CompareModels(TElement model, TElement model2, string format);
 
+        protected virtual bool HasReflectionBuilderSupport => true;
+
         protected abstract string CollectionTypeName { get; }
 
         protected virtual string GetJsonCollectionType() => GetCollectionType();
@@ -36,35 +38,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ReadListNoContextShouldFail()
-        {
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(JsonPayload), typeof(TCollection)));
-            Assert.IsNotNull(ex);
-            Assert.AreEqual($"{CollectionTypeName} does not implement IPersistableModel", ex!.Message);
-        }
-
-        [Test]
-        public void WriteListNoContextShouldFail()
-        {
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(Instance!));
-            Assert.IsNotNull(ex);
-            Assert.AreEqual($"{CollectionTypeName} does not implement IPersistableModel", ex!.Message);
-        }
-
-        [Test]
         public void WriteNonJFormat()
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(Instance!, ModelReaderWriterOptions.Xml));
             Assert.IsNotNull(ex);
-            Assert.AreEqual($"{CollectionTypeName} does not implement IPersistableModel", ex!.Message);
+            Assert.AreEqual($"Format 'X' is not supported.  Only 'J' or 'W' format can be written as collections", ex!.Message);
         }
 
         protected override void RoundTripTest(string format, RoundTripStrategy<TCollection> strategy)
         {
-            var options = new ModelReaderWriterOptions(format);
+            if (!strategy.UsesContext && !HasReflectionBuilderSupport)
+            {
+                Assert.Ignore($"Collection type {CollectionTypeName} does not have reflection builder support.  Skipping test.");
+            }
 
-            if (MrwCollectionTests<TCollection, TElement>.AssertFailures(Instance, format, strategy, options))
-                return;
+            var options = new ModelReaderWriterOptions(format);
 
             Assert.AreEqual(typeof(TCollection), Instance!.GetType());
 
@@ -116,18 +104,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             //assert none left in round trip
             Assert.IsFalse(actualEnumerator.MoveNext(), "More items found in round trip collection");
-        }
-
-        private static bool AssertFailures(TCollection instance, string format, RoundTripStrategy<TCollection> strategy, ModelReaderWriterOptions options)
-        {
-            if (strategy is ModelReaderWriterNonGenericStrategy<TCollection>)
-            {
-                var ex = Assert.Throws<InvalidOperationException>(() => strategy.Write(instance, options));
-                Assert.IsNotNull(ex);
-                Assert.IsTrue(ex!.Message.EndsWith(" does not implement IPersistableModel"));
-                return true;
-            }
-            return false;
         }
 
         protected static IEnumerable GetEnumerable(object collection)

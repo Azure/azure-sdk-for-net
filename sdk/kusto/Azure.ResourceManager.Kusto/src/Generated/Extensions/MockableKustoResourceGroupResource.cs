@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Kusto;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Kusto.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableKustoResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableKustoResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableKustoResourceGroupResource for mocking. </summary>
         protected MockableKustoResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableKustoResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableKustoResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableKustoResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of KustoClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of KustoClusterResources and their operations over a KustoClusterResource. </returns>
+        /// <summary> Gets a collection of KustoClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of KustoClusters and their operations over a KustoClusterResource. </returns>
         public virtual KustoClusterCollection GetKustoClusters()
         {
             return GetCachedClient(client => new KustoClusterCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// Gets a Kusto cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Kusto.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoClusterResource>> GetKustoClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return await GetKustoClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// Gets a Kusto cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Kusto.Mocking
         [ForwardsClientCalls]
         public virtual Response<KustoClusterResource> GetKustoCluster(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return GetKustoClusters().Get(clusterName, cancellationToken);
         }
     }

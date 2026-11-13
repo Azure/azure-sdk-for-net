@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary></summary>
     public partial class EventGridNamespaceClientGroupResource : IJsonModel<EventGridNamespaceClientGroupData>
     {
-        private static EventGridNamespaceClientGroupData s_dataDeserializationInstance;
-        private static EventGridNamespaceClientGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EventGridNamespaceClientGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EventGridNamespaceClientGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EventGridNamespaceClientGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventGridNamespaceClientGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceClientGroupData>)Data).Write(writer, options);
 
-        EventGridNamespaceClientGroupData IJsonModel<EventGridNamespaceClientGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceClientGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventGridNamespaceClientGroupData IJsonModel<EventGridNamespaceClientGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EventGridNamespaceClientGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridNamespaceClientGroupData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EventGridNamespaceClientGroupData IPersistableModel<EventGridNamespaceClientGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespaceClientGroupData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<EventGridNamespaceClientGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespaceClientGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventGridNamespaceClientGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

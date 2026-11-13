@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> VMwareCbt disk input for update. </summary>
     public partial class VMwareCbtUpdateDiskContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
@@ -59,25 +31,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="targetDiskName"> The target disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareCbtUpdateDiskContent(string diskId, string targetDiskName, string isOSDisk, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="iops"> The number of IOPS allowed for Premium V2 and Ultra disks. </param>
+        /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
+        /// <param name="diskSizeInGB"> The target disk size in GB. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareCbtUpdateDiskContent(string diskId, string targetDiskName, string isOSDisk, long? iops, long? throughputInMbps, long? diskSizeInGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             TargetDiskName = targetDiskName;
             IsOSDisk = isOSDisk;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateDiskContent"/> for deserialization. </summary>
-        internal VMwareCbtUpdateDiskContent()
-        {
+            Iops = iops;
+            ThroughputInMbps = throughputInMbps;
+            DiskSizeInGB = diskSizeInGB;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The disk Id. </summary>
         public string DiskId { get; }
+
         /// <summary> The target disk name. </summary>
         public string TargetDiskName { get; set; }
+
         /// <summary> A value indicating whether the disk is the OS disk. </summary>
         public string IsOSDisk { get; set; }
+
+        /// <summary> The number of IOPS allowed for Premium V2 and Ultra disks. </summary>
+        public long? Iops { get; set; }
+
+        /// <summary> The total throughput in Mbps for Premium V2 and Ultra disks. </summary>
+        public long? ThroughputInMbps { get; set; }
+
+        /// <summary> The target disk size in GB. </summary>
+        public long? DiskSizeInGB { get; set; }
     }
 }

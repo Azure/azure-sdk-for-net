@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Unknown version of CopyLogDetails. </summary>
     internal partial class UnknownCopyLogDetails : CopyLogDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(copyLogDetailsType, serializedAdditionalRawData)
-        {
-            CopyLogDetailsType = copyLogDetailsType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownCopyLogDetails"/> for deserialization. </summary>
-        internal UnknownCopyLogDetails()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(copyLogDetailsType, additionalBinaryDataProperties)
         {
         }
     }

@@ -90,10 +90,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateRouterJob
 
             Response<RouterJob> updatedJob = routerClient.UpdateJob(new RouterJob(jobId)
-                {
-                    // one or more job properties can be updated
-                    ChannelReference = "45678",
-                });
+            {
+                // one or more job properties can be updated
+                ChannelReference = "45678",
+            });
 
             Console.WriteLine($"Job has been successfully updated. Current value of channelReference: {updatedJob.Value.ChannelReference}"); // "45678"
 

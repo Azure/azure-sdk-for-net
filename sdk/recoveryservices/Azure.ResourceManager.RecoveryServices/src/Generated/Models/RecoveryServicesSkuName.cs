@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct RecoveryServicesSkuName : IEquatable<RecoveryServicesSkuName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSkuName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RecoveryServicesSkuName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardValue = "Standard";
         private const string RS0Value = "RS0";
 
-        /// <summary> Standard. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryServicesSkuName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Standard. </summary>
         public static RecoveryServicesSkuName Standard { get; } = new RecoveryServicesSkuName(StandardValue);
-        /// <summary> RS0. </summary>
+
+        /// <summary> Gets the RS0. </summary>
         public static RecoveryServicesSkuName RS0 { get; } = new RecoveryServicesSkuName(RS0Value);
+
         /// <summary> Determines if two <see cref="RecoveryServicesSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryServicesSkuName left, RecoveryServicesSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecoveryServicesSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryServicesSkuName left, RecoveryServicesSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecoveryServicesSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecoveryServicesSkuName(string value) => new RecoveryServicesSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecoveryServicesSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryServicesSkuName?(string value) => value == null ? null : new RecoveryServicesSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryServicesSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecoveryServicesSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

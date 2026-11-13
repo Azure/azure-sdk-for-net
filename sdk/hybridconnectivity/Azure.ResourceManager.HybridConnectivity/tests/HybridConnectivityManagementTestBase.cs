@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
-using System.Threading.Tasks;
-using System;
 using Azure.Identity;
 using Azure.ResourceManager.HybridConnectivity.Models;
 using Azure.ResourceManager.Models;
-using System.Collections.Generic;
-using System.Xml;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TestFramework;
 using Castle.Components.DictionaryAdapter.Xml;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridConnectivity.Tests
 {

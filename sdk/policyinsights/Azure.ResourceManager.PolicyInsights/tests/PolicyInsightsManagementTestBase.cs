@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.PolicyInsights.Tests
 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             return lro.Value;
         }
 
-        protected async Task<SubscriptionPolicyDefinitionResource> CreatePolicyDefinition(string policyDefinitionName,string scope)
+        protected async Task<SubscriptionPolicyDefinitionResource> CreatePolicyDefinition(string policyDefinitionName, string scope)
         {
             PolicyDefinitionData data = new PolicyDefinitionData()
             {

@@ -4,12 +4,10 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Adhoc backup rules. </summary>
-    [CodeGenSuppress("AdhocBackupRules", typeof(string), typeof(AdhocBackupTriggerSetting))]
     public partial class AdhocBackupRules
     {
         /// <summary> Initializes a new instance of AdhocBackupRules. </summary>

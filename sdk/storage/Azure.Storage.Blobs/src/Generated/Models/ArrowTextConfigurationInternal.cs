@@ -5,34 +5,28 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Groups the settings used for formatting the response if the response should be Arrow formatted. </summary>
     internal partial class ArrowTextConfigurationInternal
     {
         /// <summary> Initializes a new instance of <see cref="ArrowTextConfigurationInternal"/>. </summary>
-        /// <param name="schema"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schema"/> is null. </exception>
+        /// <param name="schema"> The Apache Arrow schema. </param>
         public ArrowTextConfigurationInternal(IEnumerable<ArrowFieldInternal> schema)
         {
-            Argument.AssertNotNull(schema, nameof(schema));
-
             Schema = schema.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArrowTextConfigurationInternal"/>. </summary>
-        /// <param name="schema"></param>
+        /// <param name="schema"> The Apache Arrow schema. </param>
         internal ArrowTextConfigurationInternal(IList<ArrowFieldInternal> schema)
         {
             Schema = schema;
         }
 
-        /// <summary> Gets the schema. </summary>
+        /// <summary> The Apache Arrow schema. </summary>
         public IList<ArrowFieldInternal> Schema { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,11 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="OdbcTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public OdbcTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public OdbcTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("OdbcTable", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
-            DatasetType = "OdbcTable";
         }
 
         /// <summary> Initializes a new instance of <see cref="OdbcTableDataset"/>. </summary>
@@ -33,20 +33,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName"> The ODBC table name. Type: string (or Expression with resultType string). </param>
-        internal OdbcTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> ODBC table dataset properties. </param>
+        internal OdbcTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, OdbcTableDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            TableName = tableName;
-            DatasetType = datasetType ?? "OdbcTable";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OdbcTableDataset"/> for deserialization. </summary>
-        internal OdbcTableDataset()
-        {
-        }
+        /// <summary> ODBC table dataset properties. </summary>
+        internal OdbcTableDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The ODBC table name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> TableName { get; set; }
+        public DataFactoryElement<string> TableName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new OdbcTableDatasetTypeProperties();
+                }
+                TypeProperties.TableName = value;
+            }
+        }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The type used for update operations of the Zoo. </summary>
     public partial class ZooPatch
@@ -35,26 +35,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal ZooUpdateProperties Properties { get; set; }
-
-        /// <summary> something. </summary>
-        public string ZooUpdateSomething
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Something;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ZooUpdateProperties();
-                }
-                Properties.Something = value;
-            }
-        }
+        [WirePath("properties")]
+        public ZooUpdateProperties Properties { get; set; }
     }
 }

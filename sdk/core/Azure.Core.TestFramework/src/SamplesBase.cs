@@ -9,7 +9,7 @@ namespace Azure.Core.TestFramework
 {
     [NonParallelizable]
     [LiveOnly]
-    public abstract class SamplesBase<TEnvironment>: LiveTestBase<TEnvironment> where TEnvironment : TestEnvironment, new()
+    public abstract class SamplesBase<TEnvironment> : LiveTestBase<TEnvironment> where TEnvironment : TestEnvironment, new()
     {
         private static AsyncLocal<TokenCredential> CurrentCredential = new AsyncLocal<TokenCredential>();
 
@@ -23,7 +23,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// This class is intended to shade the Identity.DefaultAzureCredential to prevent it from caching the credential chain.
         /// </summary>
-        protected class DefaultAzureCredential: TokenCredential
+        protected class DefaultAzureCredential : TokenCredential
         {
             public DefaultAzureCredential(bool includeInteractiveCredentials = false)
             {

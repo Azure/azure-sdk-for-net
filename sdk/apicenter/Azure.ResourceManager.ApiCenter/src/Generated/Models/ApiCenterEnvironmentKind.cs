@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public readonly partial struct ApiCenterEnvironmentKind : IEquatable<ApiCenterEnvironmentKind>
     {
         private readonly string _value;
+        /// <summary> Development environment. </summary>
+        private const string DevelopmentValue = "development";
+        /// <summary> Testing environment. </summary>
+        private const string TestingValue = "testing";
+        /// <summary> Staging environment. </summary>
+        private const string StagingValue = "staging";
+        /// <summary> Production environment. </summary>
+        private const string ProductionValue = "production";
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterEnvironmentKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiCenterEnvironmentKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DevelopmentValue = "development";
-        private const string TestingValue = "testing";
-        private const string StagingValue = "staging";
-        private const string ProductionValue = "production";
+            _value = value;
+        }
 
         /// <summary> Development environment. </summary>
         public static ApiCenterEnvironmentKind Development { get; } = new ApiCenterEnvironmentKind(DevelopmentValue);
+
         /// <summary> Testing environment. </summary>
         public static ApiCenterEnvironmentKind Testing { get; } = new ApiCenterEnvironmentKind(TestingValue);
+
         /// <summary> Staging environment. </summary>
         public static ApiCenterEnvironmentKind Staging { get; } = new ApiCenterEnvironmentKind(StagingValue);
+
         /// <summary> Production environment. </summary>
         public static ApiCenterEnvironmentKind Production { get; } = new ApiCenterEnvironmentKind(ProductionValue);
+
         /// <summary> Determines if two <see cref="ApiCenterEnvironmentKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiCenterEnvironmentKind left, ApiCenterEnvironmentKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiCenterEnvironmentKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiCenterEnvironmentKind left, ApiCenterEnvironmentKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiCenterEnvironmentKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiCenterEnvironmentKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiCenterEnvironmentKind(string value) => new ApiCenterEnvironmentKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiCenterEnvironmentKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiCenterEnvironmentKind?(string value) => value == null ? null : new ApiCenterEnvironmentKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiCenterEnvironmentKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiCenterEnvironmentKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

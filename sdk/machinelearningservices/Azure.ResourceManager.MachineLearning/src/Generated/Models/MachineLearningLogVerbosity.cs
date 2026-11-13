@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningLogVerbosity : IEquatable<MachineLearningLogVerbosity>
     {
         private readonly string _value;
+        /// <summary> No logs emitted. </summary>
+        private const string NotSetValue = "NotSet";
+        /// <summary> Debug and above log statements logged. </summary>
+        private const string DebugValue = "Debug";
+        /// <summary> Info and above log statements logged. </summary>
+        private const string InfoValue = "Info";
+        /// <summary> Warning and above log statements logged. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Error and above log statements logged. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Only critical statements logged. </summary>
+        private const string CriticalValue = "Critical";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningLogVerbosity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningLogVerbosity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSetValue = "NotSet";
-        private const string DebugValue = "Debug";
-        private const string InfoValue = "Info";
-        private const string WarningValue = "Warning";
-        private const string ErrorValue = "Error";
-        private const string CriticalValue = "Critical";
+            _value = value;
+        }
 
         /// <summary> No logs emitted. </summary>
         public static MachineLearningLogVerbosity NotSet { get; } = new MachineLearningLogVerbosity(NotSetValue);
+
         /// <summary> Debug and above log statements logged. </summary>
         public static MachineLearningLogVerbosity Debug { get; } = new MachineLearningLogVerbosity(DebugValue);
+
         /// <summary> Info and above log statements logged. </summary>
         public static MachineLearningLogVerbosity Info { get; } = new MachineLearningLogVerbosity(InfoValue);
+
         /// <summary> Warning and above log statements logged. </summary>
         public static MachineLearningLogVerbosity Warning { get; } = new MachineLearningLogVerbosity(WarningValue);
+
         /// <summary> Error and above log statements logged. </summary>
         public static MachineLearningLogVerbosity Error { get; } = new MachineLearningLogVerbosity(ErrorValue);
+
         /// <summary> Only critical statements logged. </summary>
         public static MachineLearningLogVerbosity Critical { get; } = new MachineLearningLogVerbosity(CriticalValue);
+
         /// <summary> Determines if two <see cref="MachineLearningLogVerbosity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningLogVerbosity left, MachineLearningLogVerbosity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningLogVerbosity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningLogVerbosity left, MachineLearningLogVerbosity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningLogVerbosity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningLogVerbosity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningLogVerbosity(string value) => new MachineLearningLogVerbosity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningLogVerbosity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningLogVerbosity?(string value) => value == null ? null : new MachineLearningLogVerbosity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningLogVerbosity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningLogVerbosity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

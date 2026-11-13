@@ -13,13 +13,13 @@ namespace Azure.Developer.Playwright
     /// <summary> Client options for TestRunUpdateClient. </summary>
     internal partial class TestRunUpdateClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_07_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_09_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2025-07-01-preview". </summary>
-            V2025_07_01_Preview = 1,
+            /// <summary> Service version "2025-09-01". </summary>
+            V2025_09_01 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Developer.Playwright
         {
             Version = version switch
             {
-                ServiceVersion.V2025_07_01_Preview => "2025-07-01-preview",
+                ServiceVersion.V2025_09_01 => "2025-09-01",
                 _ => throw new NotSupportedException()
             };
         }

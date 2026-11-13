@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the StaticSiteCustomDomainOverview data model.
-    /// Static Site Custom Domain Overview ARM resource.
-    /// </summary>
+    /// <summary> Static Site Custom Domain Overview ARM resource. </summary>
     public partial class StaticSiteCustomDomainOverviewData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewData"/>. </summary>
         public StaticSiteCustomDomainOverviewData()
@@ -57,45 +25,76 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="domainName"> The domain name for the static site custom domain. </param>
-        /// <param name="createdOn"> The date and time on which the custom domain was created for the static site. </param>
-        /// <param name="status"> The status of the custom domain. </param>
-        /// <param name="validationToken"> The TXT record validation token. </param>
-        /// <param name="errorMessage"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> StaticSiteCustomDomainOverviewARMResource resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteCustomDomainOverviewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteCustomDomainOverviewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticSiteCustomDomainOverviewARMResourceProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            DomainName = domainName;
-            CreatedOn = createdOn;
-            Status = status;
-            ValidationToken = validationToken;
-            ErrorMessage = errorMessage;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The domain name for the static site custom domain. </summary>
-        [WirePath("properties.domainName")]
-        public string DomainName { get; }
-        /// <summary> The date and time on which the custom domain was created for the static site. </summary>
-        [WirePath("properties.createdOn")]
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The status of the custom domain. </summary>
-        [WirePath("properties.status")]
-        public CustomDomainStatus? Status { get; }
-        /// <summary> The TXT record validation token. </summary>
-        [WirePath("properties.validationToken")]
-        public string ValidationToken { get; }
-        /// <summary> Gets the error message. </summary>
-        [WirePath("properties.errorMessage")]
-        public string ErrorMessage { get; }
+        /// <summary> StaticSiteCustomDomainOverviewARMResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal StaticSiteCustomDomainOverviewARMResourceProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> The domain name for the static site custom domain. </summary>
+        [WirePath("properties.domainName")]
+        public string DomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DomainName;
+            }
+        }
+
+        /// <summary> The date and time on which the custom domain was created for the static site. </summary>
+        [WirePath("properties.createdOn")]
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> The status of the custom domain. </summary>
+        [WirePath("properties.status")]
+        public CustomDomainStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> The TXT record validation token. </summary>
+        [WirePath("properties.validationToken")]
+        public string ValidationToken
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidationToken;
+            }
+        }
+
+        /// <summary> Gets the ErrorMessage. </summary>
+        [WirePath("properties.errorMessage")]
+        public string ErrorMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorMessage;
+            }
+        }
     }
 }

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
     internal partial class BarQuotaResourceOperationSource : IOperationSource<BarQuotaResource>

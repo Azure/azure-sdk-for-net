@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Get()
         {
             string externalSecuritySolutionsName = "";
-            var externalSecuritySolutions = await _externalSecuritySolutionCollection.GetAsync( externalSecuritySolutionsName);
+            var externalSecuritySolutions = await _externalSecuritySolutionCollection.GetAsync(externalSecuritySolutionsName);
             Assert.IsNotNull(externalSecuritySolutions);
         }
 

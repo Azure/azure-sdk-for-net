@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableEdgeOrderArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeOrderArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableEdgeOrderArmClient for mocking. </summary>
         protected MockableEdgeOrderArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeOrderArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableEdgeOrderArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableEdgeOrderArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableEdgeOrderArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeOrderAddressResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeOrderAddressResource.CreateResourceIdentifier" /> to create an <see cref="EdgeOrderAddressResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeOrderAddressResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeOrderAddressResource"/> object. </returns>
         public virtual EdgeOrderAddressResource GetEdgeOrderAddressResource(ResourceIdentifier id)
@@ -46,28 +35,22 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             return new EdgeOrderAddressResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeOrderResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeOrderResource.CreateResourceIdentifier" /> to create an <see cref="EdgeOrderResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeOrderResource"/> object. </returns>
-        public virtual EdgeOrderResource GetEdgeOrderResource(ResourceIdentifier id)
-        {
-            EdgeOrderResource.ValidateResourceId(id);
-            return new EdgeOrderResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeOrderItemResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeOrderItemResource.CreateResourceIdentifier" /> to create an <see cref="EdgeOrderItemResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeOrderItemResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeOrderItemResource"/> object. </returns>
         public virtual EdgeOrderItemResource GetEdgeOrderItemResource(ResourceIdentifier id)
         {
             EdgeOrderItemResource.ValidateResourceId(id);
             return new EdgeOrderItemResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeOrderResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeOrderResource"/> object. </returns>
+        public virtual EdgeOrderResource GetEdgeOrderResource(ResourceIdentifier id)
+        {
+            EdgeOrderResource.ValidateResourceId(id);
+            return new EdgeOrderResource(Client, id);
         }
     }
 }

@@ -1,0 +1,370 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+
+namespace Azure.Generator.Management.Providers
+{
+    /// <summary>
+    /// Provider for collection result classes that wrap array responses into a single-page Pageable.
+    /// This uses a simpler TypeProvider-based implementation without inheriting from CollectionResultDefinition.
+    /// </summary>
+    internal class ArrayResponseCollectionResultDefinition : TypeProvider
+    {
+        private readonly ClientProvider _restClient;
+        private readonly InputServiceMethod _serviceMethod;
+        private readonly CSharpType _itemType;
+        private readonly bool _isAsync;
+        private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
+        private readonly TypeProvider _backCompatProvider;
+        private readonly string _methodName;
+        private readonly string _name;
+
+        private readonly FieldProvider _clientField;
+        private readonly IReadOnlyList<FieldProvider> _parameterFields;
+        private readonly FieldProvider _contextField;
+        private readonly FieldProvider _diagnosticScopeField;
+
+        private static readonly ParameterProvider ContinuationTokenParameter =
+            new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
+        private static readonly ParameterProvider PageSizeHintParameter =
+            new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
+        private static readonly ParameterProvider CancellationTokenParameter =
+            new("cancellationToken", $"The cancellation token to use.", typeof(CancellationToken));
+        private static readonly ParameterProvider EnumerationCancellationTokenParameter =
+            new("cancellationToken", $"The cancellation token to use.", typeof(CancellationToken),
+                attributes: [new AttributeStatement(typeof(EnumeratorCancellationAttribute))]);
+
+        public ArrayResponseCollectionResultDefinition(
+            ClientProvider restClient,
+            InputServiceMethod serviceMethod,
+            CSharpType itemType,
+            bool isAsync,
+            IReadOnlyList<ParameterProvider> constructorParameters,
+            TypeProvider backCompatProvider,
+            string methodName,
+            string enclosingTypeName)
+        {
+            _restClient = restClient;
+            _serviceMethod = serviceMethod;
+            _itemType = itemType;
+            _isAsync = isAsync;
+            _constructorParameters = constructorParameters;
+            _backCompatProvider = backCompatProvider;
+            _methodName = methodName;
+            _name = ManagementClientGenerator.Instance.OutputLibrary.GetArrayCollectionResultName(
+                $"{enclosingTypeName}{methodName}", ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace,
+                backCompatProvider, serviceMethod, isAsync);
+
+            _clientField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                _restClient.Type,
+                "_client",
+                this);
+            _parameterFields = _constructorParameters.Select(p => new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                p.Type,
+                ToFieldName(p.Name),
+                this)).ToArray();
+            _contextField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                typeof(RequestContext),
+                "_context",
+                this);
+            _diagnosticScopeField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                typeof(string),
+                "_diagnosticScope",
+                this);
+        }
+
+        protected override string BuildRelativeFilePath() =>
+            Path.Combine("src", "Generated", "CollectionResults", $"{Name}.cs");
+
+        protected override string BuildName() => $"{_name}CollectionResultOfT";
+
+        protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
+            TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial;
+
+        protected override IReadOnlyList<CSharpType> BuildHelperDependencyTypes() => [_restClient.Type];
+
+        protected override CSharpType[] BuildImplements()
+        {
+            var baseType = _isAsync
+                ? new CSharpType(typeof(AsyncPageable<>), _itemType)
+                : new CSharpType(typeof(Pageable<>), _itemType);
+            return [baseType];
+        }
+
+        private static string ToFieldName(string paramName) => $"_{paramName.ToVariableName()}";
+
+        protected override FieldProvider[] BuildFields()
+        {
+            return [_clientField, .. _parameterFields, _contextField, _diagnosticScopeField];
+        }
+
+        protected override ConstructorProvider[] BuildConstructors()
+        {
+            var parameters = new List<ParameterProvider>
+            {
+                new ParameterProvider("client", $"The {_restClient.Name} client used to send requests.", _restClient.Type)
+            };
+            parameters.AddRange(_constructorParameters);
+            parameters.Add(new ParameterProvider("context", $"The request options, which can override default behaviors of the client pipeline on a per-call basis.", typeof(RequestContext)));
+            parameters.Add(new ParameterProvider("diagnosticScope", $"The diagnostic scope name.", typeof(string)));
+
+            var contextParam = parameters[^2];
+            var scopeParam = parameters[^1];
+
+            var signature = new ConstructorSignature(
+                Type,
+                $"Initializes a new instance of {Name}, which is used to iterate over the pages of a collection.",
+                MethodSignatureModifiers.Public,
+                parameters);
+
+            var bodyStatements = new List<MethodBodyStatement>
+            {
+                _clientField.Assign(parameters[0]).Terminate()
+            };
+
+            for (int i = 0; i < _constructorParameters.Count; i++)
+            {
+                bodyStatements.Add(_parameterFields[i].Assign(_constructorParameters[i]).Terminate());
+            }
+
+            bodyStatements.Add(_contextField.Assign(contextParam).Terminate());
+            bodyStatements.Add(_diagnosticScopeField.Assign(scopeParam).Terminate());
+
+            return [new ConstructorProvider(signature, bodyStatements.ToArray(), this)];
+        }
+
+        protected override MethodProvider[] BuildMethods()
+        {
+            return _isAsync
+                ? [BuildAsPagesMethod(), BuildAsPagesAsyncMethod(), BuildGetNextResponseMethod(), BuildParseArrayFromResponseMethod()]
+                : [BuildAsPagesMethod(), BuildGetNextResponseMethod(), BuildParseArrayFromResponseMethod()];
+        }
+
+        private MethodProvider BuildAsPagesMethod()
+        {
+            var signature = new MethodSignature(
+                "AsPages",
+                $"Gets the pages of {Name} as an enumerable collection.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
+                _isAsync
+                    ? new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemType))
+                    : new CSharpType(typeof(IEnumerable<>), new CSharpType(typeof(Page<>), _itemType)),
+                $"The pages of {Name} as an enumerable collection.",
+                [ContinuationTokenParameter, PageSizeHintParameter]);
+
+            return new MethodProvider(signature, _isAsync
+                ? [Return(This.Invoke("AsPagesAsync", [ContinuationTokenParameter, PageSizeHintParameter,
+                    _contextField.NullConditional().Property(nameof(RequestContext.CancellationToken)).NullCoalesce(Default)]))]
+                : BuildAsPagesMethodBody(), this);
+        }
+
+        private MethodProvider BuildAsPagesAsyncMethod()
+        {
+            var signature = new MethodSignature(
+                "AsPagesAsync",
+                null,
+                MethodSignatureModifiers.Private | MethodSignatureModifiers.Async,
+                new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemType)),
+                null,
+                [ContinuationTokenParameter, PageSizeHintParameter, EnumerationCancellationTokenParameter]);
+            return new MethodProvider(signature, BuildAsPagesMethodBody(), this);
+        }
+
+        private MethodBodyStatement[] BuildAsPagesMethodBody()
+        {
+            var statements = new List<MethodBodyStatement>
+            {
+                Declare("response", new CSharpType(typeof(Response), isNullable: true),
+                    This.Invoke(_isAsync ? "GetNextResponseAsync" : "GetNextResponse",
+                        _isAsync ? [PageSizeHintParameter, Null, EnumerationCancellationTokenParameter] : [PageSizeHintParameter, Null], _isAsync),
+                    out var responseVariable),
+                new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() },
+                Declare("result", new CSharpType(typeof(IReadOnlyList<>), _itemType),
+                    Static(Type).Invoke("ParseArrayFromResponse", [responseVariable]),
+                    out var resultVariable),
+                YieldReturn(Static(new CSharpType(typeof(Page<>), _itemType)).Invoke("FromValues", [resultVariable, Null, responseVariable]))
+            };
+
+            return [.. statements];
+        }
+
+        private MethodProvider BuildGetNextResponseMethod()
+        {
+            var nextLinkParameter = new ParameterProvider("nextLink", $"The next link to use for the next page of results.", new CSharpType(typeof(Uri), isNullable: true));
+
+            var returnType = _isAsync
+                ? new CSharpType(typeof(ValueTask<>), new CSharpType(typeof(Response), isNullable: true))
+                : new CSharpType(typeof(Response), isNullable: true);
+
+            var modifiers = _isAsync
+                ? MethodSignatureModifiers.Private | MethodSignatureModifiers.Async
+                : MethodSignatureModifiers.Private;
+
+            var signature = new MethodSignature(
+                _isAsync ? "GetNextResponseAsync" : "GetNextResponse",
+                $"Get next page.",
+                modifiers,
+                returnType,
+                null,
+                _isAsync ? [PageSizeHintParameter, nextLinkParameter, CancellationTokenParameter] : [PageSizeHintParameter, nextLinkParameter]);
+
+            return new MethodProvider(signature, BuildGetNextResponseMethodBody(), this);
+        }
+
+        private MethodBodyStatement[] BuildGetNextResponseMethodBody()
+        {
+            // Since we're generating collection result, we just need to call the Create*Request method on the client
+            // The method name is derived from the original convenience method name from the REST client, not the potentially customized _methodName
+            // (e.g., operation "listDependencies" -> convenience method "GetDependencies" -> request method "CreateGetDependenciesRequest")
+            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync, _backCompatProvider);
+            var originalMethodName = convenienceMethod.Signature.Name;
+            var baseName = originalMethodName.EndsWith("Async") ? originalMethodName.Substring(0, originalMethodName.Length - 5) : originalMethodName;
+            var createRequestMethodName = $"Create{baseName}Request";
+
+            var requestArgs = new List<ValueExpression>();
+
+            // Add arguments from fields
+            foreach (var field in _parameterFields)
+            {
+                requestArgs.Add(field);
+            }
+
+            // Add context parameter
+            requestArgs.Add(_contextField);
+
+            var bodyStatements = new List<MethodBodyStatement>
+            {
+                Declare("message", typeof(HttpMessage),
+                    _clientField.Invoke(createRequestMethodName, requestArgs),
+                    out var messageVariable),
+                UsingDeclare("scope", typeof(DiagnosticScope),
+                    _clientField.Property("ClientDiagnostics").Invoke("CreateScope", [_diagnosticScopeField]),
+                    out var scopeVariable),
+                scopeVariable.Invoke("Start").Terminate()
+            };
+
+            ValueExpression context = _contextField;
+            var message = messageVariable.ToApi<HttpMessageApi>();
+            var options = context.ToApi<HttpRequestOptionsApi>();
+            var declareErrorOptions = new DeclarationExpression(typeof(ErrorOptions), "errorOptions", out var errorOptions);
+            MethodBodyStatement[] tryStatements = _isAsync
+                ?
+                [
+                    declareErrorOptions.Assign(options.ErrorOptions().NullCoalesce(FrameworkEnumValue(ErrorOptions.Default))).Terminate(),
+                    _clientField.Property("Pipeline").Invoke(nameof(HttpPipeline.SendAsync), [messageVariable, CancellationTokenParameter], true).Terminate(),
+                    new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", errorOptions, options.NoThrow()).NotEqual(options.NoThrow())))
+                    {
+                        Throw(ManagementClientGenerator.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
+                    },
+                    Return(message.Response())
+                ]
+                : [Return(_clientField.Property("Pipeline").Invoke("ProcessMessage", [messageVariable, _contextField]))];
+
+            var catchBlock = Catch(
+                Declare<Exception>("e", out var exceptionVariable),
+                [
+                    scopeVariable.Invoke("Failed", exceptionVariable).Terminate(),
+                    Throw()
+                ]);
+
+            bodyStatements.Add(new TryCatchFinallyStatement(new TryExpression(tryStatements), catchBlock));
+
+            return [.. bodyStatements];
+        }
+
+        private MethodProvider BuildParseArrayFromResponseMethod()
+        {
+            var responseParam = new ParameterProvider("response", $"The response to parse.", typeof(Response));
+
+            var signature = new MethodSignature(
+                "ParseArrayFromResponse",
+                $"Parse the array from the response.",
+                MethodSignatureModifiers.Private | MethodSignatureModifiers.Static,
+                new CSharpType(typeof(IReadOnlyList<>), _itemType),
+                $"The parsed array.",
+                [responseParam]);
+
+            // Generate body using ForEachStatement from Statements
+            var bodyStatements = new List<MethodBodyStatement>
+            {
+                // using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+                UsingDeclare("document", typeof(JsonDocument),
+                    Static(typeof(JsonDocument)).Invoke("Parse",
+                        new ValueExpression[]
+                        {
+                            responseParam.Property("Content"),
+                            Static<ModelSerializationExtensionsDefinition>().Property("JsonDocumentOptions")
+                        }),
+                    out var documentVariable),
+
+                // var array = document.RootElement;
+                Declare("array", typeof(JsonElement),
+                    documentVariable.Property("RootElement"),
+                    out var arrayVariable),
+
+                // var result = new List<T>();
+                Declare("result", new CSharpType(typeof(List<>), _itemType),
+                    New.Instance(new CSharpType(typeof(List<>), _itemType)),
+                    out var resultVariable),
+
+                // foreach (var element in array.EnumerateArray())
+                new ForEachStatement(
+                    typeof(JsonElement),
+                    "element",
+                    arrayVariable.Invoke("EnumerateArray"),
+                    isAsync: false,
+                    out var elementVariable)
+                {
+                    // result.Add(ModelReaderWriter.Read<T>(new BinaryData(element.GetRawText()), ModelSerializationExtensions.WireOptions, {Context}.Default));
+                    // Use Literal code for the context reference since it's a generated type
+                    resultVariable.Invoke("Add",
+                        new ValueExpression[]
+                        {
+                            Static(new CSharpType(typeof(ModelReaderWriter))).Invoke("Read",
+                                new ValueExpression[]
+                                {
+                                    New.Instance(typeof(BinaryData),
+                                        Static(typeof(Encoding)).Property("UTF8").Invoke("GetBytes",
+                                            elementVariable.Invoke("GetRawText"))),
+                                    Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"),
+                                    Static(ManagementClientGenerator.Instance.OutputLibrary.ModelReaderWriterContextType).Property("Default")
+                                },
+                                new[] { _itemType })
+                        }).Terminate()
+                },
+
+                // return result;
+                Return(resultVariable)
+            };
+
+            return new MethodProvider(signature, bodyStatements.ToArray(), this);
+        }
+    }
+}

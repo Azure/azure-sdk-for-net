@@ -11,41 +11,48 @@ using System.Globalization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The connector Availability Status. </summary>
+    /// <summary></summary>
     public readonly partial struct ConnectorAvailabilityStatus : IEquatable<ConnectorAvailabilityStatus>
     {
         private readonly int _value;
+        private const int _1Value = 1;
 
         /// <summary> Initializes a new instance of <see cref="ConnectorAvailabilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public ConnectorAvailabilityStatus(int value)
         {
             _value = value;
         }
 
-        private const int _1Value = 1;
-
-        /// <summary> 1. </summary>
+        /// <summary> Gets the _1. </summary>
         public static ConnectorAvailabilityStatus _1 { get; } = new ConnectorAvailabilityStatus(_1Value);
 
-        internal int ToSerialInt32() => _value;
-
         /// <summary> Determines if two <see cref="ConnectorAvailabilityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectorAvailabilityStatus left, ConnectorAvailabilityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectorAvailabilityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectorAvailabilityStatus left, ConnectorAvailabilityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="int"/> to a <see cref="ConnectorAvailabilityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectorAvailabilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectorAvailabilityStatus(int value) => new ConnectorAvailabilityStatus(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectorAvailabilityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectorAvailabilityStatus other) => Equals(_value, other._value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value.ToString(CultureInfo.InvariantCulture);
     }
 }

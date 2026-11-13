@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,16 +15,15 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevel : MigrateSqlServerSqlDBTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>. </summary>
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevel()
+        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevel() : base("DatabaseLevelOutput")
         {
             ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
-            ResultType = "DatabaseLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> Name of the item. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="resultPrefix"> Wildcard string prefix to use for querying all sub-tem results of the item. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <param name="objectSummary"> Summary of object results in the migration. </param>
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationState? state, DatabaseMigrationStage? stage, string statusMessage, string message, long? numberOfObjects, long? numberOfObjectsCompleted, long? errorCount, string errorPrefix, string resultPrefix, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings, string objectSummary) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationState? state, DatabaseMigrationStage? stage, string statusMessage, string message, long? numberOfObjects, long? numberOfObjectsCompleted, long? errorCount, string errorPrefix, string resultPrefix, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings, string objectSummary) : base(id, resultType, additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;
@@ -54,35 +54,47 @@ namespace Azure.ResourceManager.DataMigration.Models
             ResultPrefix = resultPrefix;
             ExceptionsAndWarnings = exceptionsAndWarnings;
             ObjectSummary = objectSummary;
-            ResultType = resultType ?? "DatabaseLevelOutput";
         }
 
         /// <summary> Name of the item. </summary>
         public string DatabaseName { get; }
+
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Current state of migration. </summary>
         public DataMigrationState? State { get; }
+
         /// <summary> Migration stage that this database is in. </summary>
         public DatabaseMigrationStage? Stage { get; }
+
         /// <summary> Status message. </summary>
         public string StatusMessage { get; }
+
         /// <summary> Migration progress message. </summary>
         public string Message { get; }
+
         /// <summary> Number of objects. </summary>
         public long? NumberOfObjects { get; }
+
         /// <summary> Number of successfully completed objects. </summary>
         public long? NumberOfObjectsCompleted { get; }
+
         /// <summary> Number of database/object errors. </summary>
         public long? ErrorCount { get; }
+
         /// <summary> Wildcard string prefix to use for querying all errors of the item. </summary>
         public string ErrorPrefix { get; }
+
         /// <summary> Wildcard string prefix to use for querying all sub-tem results of the item. </summary>
         public string ResultPrefix { get; }
+
         /// <summary> Migration exceptions and warnings. </summary>
         public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
+
         /// <summary> Summary of object results in the migration. </summary>
         public string ObjectSummary { get; }
     }

@@ -20,23 +20,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArmTemplateDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="templateMappingRuleProfile"> The template mapping rule profile. </param>
-        internal AzureOperatorNexusArmTemplateDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmTemplateMappingRuleProfile templateMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
+        internal AzureOperatorNexusArmTemplateDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmTemplateMappingRuleProfile templateMappingRuleProfile) : base(applicationEnablement, additionalBinaryDataProperties)
         {
             TemplateMappingRuleProfile = templateMappingRuleProfile;
         }
 
         /// <summary> The template mapping rule profile. </summary>
         internal ArmTemplateMappingRuleProfile TemplateMappingRuleProfile { get; set; }
+
         /// <summary> List of template parameters. </summary>
         public string TemplateParameters
         {
-            get => TemplateMappingRuleProfile is null ? default : TemplateMappingRuleProfile.TemplateParameters;
+            get
+            {
+                return TemplateMappingRuleProfile is null ? default : TemplateMappingRuleProfile.TemplateParameters;
+            }
             set
             {
                 if (TemplateMappingRuleProfile is null)
+                {
                     TemplateMappingRuleProfile = new ArmTemplateMappingRuleProfile();
+                }
                 TemplateMappingRuleProfile.TemplateParameters = value;
             }
         }

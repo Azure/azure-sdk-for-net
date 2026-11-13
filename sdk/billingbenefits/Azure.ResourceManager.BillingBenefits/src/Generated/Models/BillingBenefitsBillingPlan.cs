@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     public readonly partial struct BillingBenefitsBillingPlan : IEquatable<BillingBenefitsBillingPlan>
     {
         private readonly string _value;
+        private const string P1MValue = "P1M";
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsBillingPlan"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingBenefitsBillingPlan(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string P1MValue = "P1M";
-
-        /// <summary> P1M. </summary>
+        /// <summary> Gets the P1M. </summary>
         public static BillingBenefitsBillingPlan P1M { get; } = new BillingBenefitsBillingPlan(P1MValue);
+
         /// <summary> Determines if two <see cref="BillingBenefitsBillingPlan"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingBenefitsBillingPlan left, BillingBenefitsBillingPlan right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingBenefitsBillingPlan"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingBenefitsBillingPlan left, BillingBenefitsBillingPlan right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitsBillingPlan"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingBenefitsBillingPlan"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingBenefitsBillingPlan(string value) => new BillingBenefitsBillingPlan(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingBenefitsBillingPlan"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingBenefitsBillingPlan?(string value) => value == null ? null : new BillingBenefitsBillingPlan(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingBenefitsBillingPlan other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingBenefitsBillingPlan other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

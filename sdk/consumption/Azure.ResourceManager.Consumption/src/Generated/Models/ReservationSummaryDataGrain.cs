@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The ReservationSummaryDataGrain. </summary>
+    /// <summary></summary>
     public readonly partial struct ReservationSummaryDataGrain : IEquatable<ReservationSummaryDataGrain>
     {
         private readonly string _value;
+        /// <summary> Daily grain of data. </summary>
+        private const string DailyGrainValue = "daily";
+        /// <summary> Monthly grain of data. </summary>
+        private const string MonthlyGrainValue = "monthly";
 
         /// <summary> Initializes a new instance of <see cref="ReservationSummaryDataGrain"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReservationSummaryDataGrain(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DailyGrainValue = "daily";
-        private const string MonthlyGrainValue = "monthly";
+            _value = value;
+        }
 
         /// <summary> Daily grain of data. </summary>
         public static ReservationSummaryDataGrain DailyGrain { get; } = new ReservationSummaryDataGrain(DailyGrainValue);
+
         /// <summary> Monthly grain of data. </summary>
         public static ReservationSummaryDataGrain MonthlyGrain { get; } = new ReservationSummaryDataGrain(MonthlyGrainValue);
+
         /// <summary> Determines if two <see cref="ReservationSummaryDataGrain"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReservationSummaryDataGrain left, ReservationSummaryDataGrain right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReservationSummaryDataGrain"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReservationSummaryDataGrain left, ReservationSummaryDataGrain right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationSummaryDataGrain"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReservationSummaryDataGrain"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReservationSummaryDataGrain(string value) => new ReservationSummaryDataGrain(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReservationSummaryDataGrain"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReservationSummaryDataGrain?(string value) => value == null ? null : new ReservationSummaryDataGrain(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReservationSummaryDataGrain other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReservationSummaryDataGrain other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

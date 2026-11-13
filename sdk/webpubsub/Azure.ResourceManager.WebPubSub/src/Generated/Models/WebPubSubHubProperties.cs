@@ -7,66 +7,62 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Properties of a hub. </summary>
     public partial class WebPubSubHubProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubHubProperties"/>. </summary>
         public WebPubSubHubProperties()
         {
             EventHandlers = new ChangeTrackingList<WebPubSubEventHandler>();
+            EventListeners = new ChangeTrackingList<WebPubSubEventListener>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubHubProperties"/>. </summary>
         /// <param name="eventHandlers"> Event handler of a hub. </param>
+        /// <param name="eventListeners">
+        /// Event listener settings for forwarding your client events to listeners.
+        /// Event listener is transparent to Web PubSub clients, and it doesn't return any result to clients nor interrupt the lifetime of clients.
+        /// One event can be sent to multiple listeners, as long as it matches the filters in those listeners. The order of the array elements doesn't matter.
+        /// Maximum count of event listeners among all hubs is 10.
+        /// </param>
         /// <param name="anonymousConnectPolicy"> The settings for configuring if anonymous connections are allowed for this hub: "allow" or "deny". Default to "deny". </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubHubProperties(IList<WebPubSubEventHandler> eventHandlers, string anonymousConnectPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="webSocketKeepAliveIntervalInSeconds"> The settings for configuring the WebSocket ping-pong interval in seconds for all clients in the hub. Valid range: 1 to 120. Default to 20 seconds. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubHubProperties(IList<WebPubSubEventHandler> eventHandlers, IList<WebPubSubEventListener> eventListeners, string anonymousConnectPolicy, int? webSocketKeepAliveIntervalInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventHandlers = eventHandlers;
+            EventListeners = eventListeners;
             AnonymousConnectPolicy = anonymousConnectPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            WebSocketKeepAliveIntervalInSeconds = webSocketKeepAliveIntervalInSeconds;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Event handler of a hub. </summary>
         [WirePath("eventHandlers")]
         public IList<WebPubSubEventHandler> EventHandlers { get; }
+
+        /// <summary>
+        /// Event listener settings for forwarding your client events to listeners.
+        /// Event listener is transparent to Web PubSub clients, and it doesn't return any result to clients nor interrupt the lifetime of clients.
+        /// One event can be sent to multiple listeners, as long as it matches the filters in those listeners. The order of the array elements doesn't matter.
+        /// Maximum count of event listeners among all hubs is 10.
+        /// </summary>
+        [WirePath("eventListeners")]
+        public IList<WebPubSubEventListener> EventListeners { get; }
+
         /// <summary> The settings for configuring if anonymous connections are allowed for this hub: "allow" or "deny". Default to "deny". </summary>
         [WirePath("anonymousConnectPolicy")]
         public string AnonymousConnectPolicy { get; set; }
+
+        /// <summary> The settings for configuring the WebSocket ping-pong interval in seconds for all clients in the hub. Valid range: 1 to 120. Default to 20 seconds. </summary>
+        [WirePath("webSocketKeepAliveIntervalInSeconds")]
+        public int? WebSocketKeepAliveIntervalInSeconds { get; set; }
     }
 }

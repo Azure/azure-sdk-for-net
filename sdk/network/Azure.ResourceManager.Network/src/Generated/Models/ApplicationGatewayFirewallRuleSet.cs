@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,8 +18,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
         public ApplicationGatewayFirewallRuleSet()
         {
-            RuleGroups = new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>();
-            Tiers = new ChangeTrackingList<ApplicationGatewayTierType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
@@ -27,35 +26,107 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="provisioningState"> The provisioning state of the web application firewall rule set. </param>
-        /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
-        /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
-        /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
-        /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
-        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups, IList<ApplicationGatewayTierType> tiers) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway firewall rule set. </param>
+        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayFirewallRuleSetPropertiesFormat properties) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
-            RuleSetType = ruleSetType;
-            RuleSetVersion = ruleSetVersion;
-            RuleGroups = ruleGroups;
-            Tiers = tiers;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the application gateway firewall rule set. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayFirewallRuleSetPropertiesFormat Properties { get; set; }
 
         /// <summary> The provisioning state of the web application firewall rule set. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The type of the web application firewall rule set. </summary>
         [WirePath("properties.ruleSetType")]
-        public string RuleSetType { get; set; }
+        public string RuleSetType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleSetType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                Properties.RuleSetType = value;
+            }
+        }
+
         /// <summary> The version of the web application firewall rule set type. </summary>
         [WirePath("properties.ruleSetVersion")]
-        public string RuleSetVersion { get; set; }
+        public string RuleSetVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleSetVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                Properties.RuleSetVersion = value;
+            }
+        }
+
+        /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> The rule groups of the web application firewall rule set. </summary>
         [WirePath("properties.ruleGroups")]
-        public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups { get; }
+        public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                return Properties.RuleGroups;
+            }
+        }
+
         /// <summary> Tier of an application gateway that support the rule set. </summary>
         [WirePath("properties.tiers")]
-        public IList<ApplicationGatewayTierType> Tiers { get; }
+        public IList<ApplicationGatewayTierType> Tiers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                return Properties.Tiers;
+            }
+        }
     }
 }

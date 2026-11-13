@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
-using Azure.Messaging.EventHubs.Processor;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Processor;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -66,7 +66,7 @@ public static class EventTracking
     public static void AugmentEvent(EventData eventData,
                                     SHA256 sha256Hash,
                                     int indexNumber,
-                                    string partition=null)
+                                    string partition = null)
     {
         eventData.Properties.Add(IndexNumberPropertyName, indexNumber);
         eventData.Properties.Add(PublishTimePropertyName, DateTimeOffset.UtcNow);
@@ -143,9 +143,9 @@ public static class EventTracking
         var roleList = new List<Role>(roles);
 
         var numPublishers = roleList.Count(role => (role == Role.Publisher || role == Role.BufferedPublisher || role == Role.PartitionPublisher));
-        var thisPublisherIndex = (roleList.GetRange(0,roleIndex)).Count(role => (role == Role.Publisher || role == Role.BufferedPublisher || role == Role.PartitionPublisher));
+        var thisPublisherIndex = (roleList.GetRange(0, roleIndex)).Count(role => (role == Role.Publisher || role == Role.BufferedPublisher || role == Role.PartitionPublisher));
 
-        var baseNum = partitionCount/numPublishers;
+        var baseNum = partitionCount / numPublishers;
         var remainder = partitionCount % numPublishers;
 
         var startPartition = 0;
@@ -153,12 +153,12 @@ public static class EventTracking
 
         if (thisPublisherIndex >= remainder)
         {
-            startPartition = (baseNum*thisPublisherIndex) + remainder;
+            startPartition = (baseNum * thisPublisherIndex) + remainder;
             endPartition = startPartition + baseNum;
         }
         else
         {
-            startPartition = (baseNum*thisPublisherIndex) + thisPublisherIndex;
+            startPartition = (baseNum * thisPublisherIndex) + thisPublisherIndex;
             endPartition = startPartition + baseNum + 1;
         }
 
@@ -217,13 +217,13 @@ public static class EventTracking
 
         // Partition Checks
         var hasPartition = eventData.Properties.TryGetValue(PartitionPropertyName, out var partitionProperty);
-        var publisherSetPartitionProperty = partitionProperty?.ToString();;
+        var publisherSetPartitionProperty = partitionProperty?.ToString();
 
         if (partitionReceivedFrom != publisherSetPartitionProperty || !hasPartition)
         {
             metrics.Client.GetMetric(Metrics.EventReceivedFromWrongPartition).TrackValue(1);
 
-            var eventProperties = new Dictionary<string,string>();
+            var eventProperties = new Dictionary<string, string>();
             eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
             eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
             eventProperties.Add(Metrics.PartitionId, partitionReceivedFrom.ToString());
@@ -236,7 +236,7 @@ public static class EventTracking
 
         if (!hasIndex)
         {
-            var eventProperties = new Dictionary<string,string>();
+            var eventProperties = new Dictionary<string, string>();
             eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
             eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
             metrics.Client.TrackEvent(Metrics.UnknownEventsProcessed, eventProperties);
@@ -250,14 +250,14 @@ public static class EventTracking
         {
             metrics.Client.GetMetric(Metrics.MissingOrOutOfOrderEvent).TrackValue(1);
 
-            var eventProperties = new Dictionary<string,string>();
+            var eventProperties = new Dictionary<string, string>();
             eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
             eventProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
             eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
             metrics.Client.TrackEvent(Metrics.MissingOrOutOfOrderEvent, eventProperties);
         }
 
-        lastReadPartitionSequence.AddOrUpdate(partitionReceivedFrom, _ => indexNumber, (k,v) => Math.Max(v, indexNumber));
+        lastReadPartitionSequence.AddOrUpdate(partitionReceivedFrom, _ => indexNumber, (k, v) => Math.Max(v, indexNumber));
 
         // Hashed event body checks
         eventData.Properties.TryGetValue(EventBodyHashPropertyName, out var expected);
@@ -266,7 +266,7 @@ public static class EventTracking
 
         if (expectedEventBodyHash != receivedEventBodyHash)
         {
-            var eventProperties = new Dictionary<string,string>();
+            var eventProperties = new Dictionary<string, string>();
             eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
             eventProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
             eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());

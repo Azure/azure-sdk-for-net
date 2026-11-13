@@ -15,30 +15,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class SecurityAutomationActionEventHub : SecurityAutomationAction
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionEventHub"/>. </summary>
-        public SecurityAutomationActionEventHub()
+        public SecurityAutomationActionEventHub() : base(ActionType.EventHub)
         {
-            ActionType = ActionType.EventHub;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionEventHub"/>. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventHubResourceId"> The target Event Hub Azure Resource ID. </param>
         /// <param name="sasPolicyName"> The target Event Hub SAS policy name. </param>
         /// <param name="connectionString"> The target Event Hub connection string (it will not be included in any response). </param>
-        internal SecurityAutomationActionEventHub(ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier eventHubResourceId, string sasPolicyName, string connectionString) : base(actionType, serializedAdditionalRawData)
+        /// <param name="isTrustedServiceEnabled"> Indicates whether the trusted service is enabled or not. </param>
+        internal SecurityAutomationActionEventHub(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier eventHubResourceId, string sasPolicyName, string connectionString, bool? isTrustedServiceEnabled) : base(actionType, additionalBinaryDataProperties)
         {
             EventHubResourceId = eventHubResourceId;
             SasPolicyName = sasPolicyName;
             ConnectionString = connectionString;
-            ActionType = actionType;
+            IsTrustedServiceEnabled = isTrustedServiceEnabled;
         }
 
         /// <summary> The target Event Hub Azure Resource ID. </summary>
         public ResourceIdentifier EventHubResourceId { get; set; }
+
         /// <summary> The target Event Hub SAS policy name. </summary>
         public string SasPolicyName { get; }
+
         /// <summary> The target Event Hub connection string (it will not be included in any response). </summary>
         public string ConnectionString { get; set; }
+
+        /// <summary> Indicates whether the trusted service is enabled or not. </summary>
+        public bool? IsTrustedServiceEnabled { get; set; }
     }
 }

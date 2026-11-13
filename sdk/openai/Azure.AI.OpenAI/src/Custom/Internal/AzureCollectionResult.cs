@@ -16,33 +16,33 @@ namespace Azure.AI.OpenAI.Utility;
 internal class AzureCollectionResult<TItem, TContinuation> : CollectionResult<TItem> where TContinuation : ContinuationToken
 {
     private readonly ClientPipeline _pipeline;
-    private readonly RequestOptions _options;
     private readonly Func<TContinuation?, PipelineMessage> _createRequest;
     private readonly Func<ClientResult, TContinuation?> _getContinuationToken;
     private readonly Func<ClientResult, IEnumerable<TItem>> _getValues;
+    private readonly CancellationToken _cancellation;
 
     /// <summary>
     /// Creates a new instance.
     /// </summary>
     /// <param name="pipeline">The client pipeline to use to send requests.</param>
-    /// <param name="options">The request options to use.</param>
     /// <param name="createRequest">The function used to create the request to get a page of results. The continuation token
     /// may be set to null to get the first page. After that it will be set to a value used to get the next page of results.</param>
     /// <param name="getContinuationToken">The function used to create a continuation token from a page of results.</param>
     /// <param name="getValues">The function used to extract results from a page.</param>
+    /// <param name="cancellationToken"></param>
     /// <exception cref="ArgumentNullException">If any of the required arguments are null.</exception>
     public AzureCollectionResult(
         ClientPipeline pipeline,
-        RequestOptions options,
         Func<TContinuation?, PipelineMessage> createRequest,
         Func<ClientResult, TContinuation?> getContinuationToken,
-        Func<ClientResult, IEnumerable<TItem>> getValues)
+        Func<ClientResult, IEnumerable<TItem>> getValues,
+        CancellationToken cancellationToken)
     {
         _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-        _options = options ?? new();
         _createRequest = createRequest ?? throw new ArgumentNullException(nameof(_createRequest));
         _getContinuationToken = getContinuationToken ?? throw new ArgumentNullException(nameof(_getContinuationToken));
         _getValues = getValues ?? throw new ArgumentNullException(nameof(_getContinuationToken));
+        _cancellation = cancellationToken;
     }
 
     /// <inheritdoc />
@@ -75,6 +75,6 @@ internal class AzureCollectionResult<TItem, TContinuation> : CollectionResult<TI
     protected virtual ClientResult SendRequest(TContinuation? continuationToken)
     {
         using PipelineMessage message = _createRequest(continuationToken);
-        return ClientResult.FromResponse(_pipeline.ProcessMessage(message, _options));
+        return ClientResult.FromResponse(_pipeline.ProcessMessage(message, _cancellation.ToRequestOptions()));
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class GovernanceAssignmentResource : IJsonModel<GovernanceAssignmentData>
     {
-        private static GovernanceAssignmentData s_dataDeserializationInstance;
-        private static GovernanceAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GovernanceAssignmentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GovernanceAssignmentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GovernanceAssignmentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GovernanceAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceAssignmentData>)Data).Write(writer, options);
 
-        GovernanceAssignmentData IJsonModel<GovernanceAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GovernanceAssignmentData IJsonModel<GovernanceAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GovernanceAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GovernanceAssignmentData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GovernanceAssignmentData IPersistableModel<GovernanceAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GovernanceAssignmentData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<GovernanceAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GovernanceAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GovernanceAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

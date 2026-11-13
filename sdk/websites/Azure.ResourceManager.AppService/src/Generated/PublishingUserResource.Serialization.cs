@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class PublishingUserResource : IJsonModel<PublishingUserData>
     {
-        private static PublishingUserData s_dataDeserializationInstance;
-        private static PublishingUserData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PublishingUserData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PublishingUserData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PublishingUserData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PublishingUserData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublishingUserData>)Data).Write(writer, options);
 
-        PublishingUserData IJsonModel<PublishingUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublishingUserData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PublishingUserData IJsonModel<PublishingUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PublishingUserData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublishingUserData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PublishingUserData IPersistableModel<PublishingUserData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublishingUserData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<PublishingUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublishingUserData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PublishingUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

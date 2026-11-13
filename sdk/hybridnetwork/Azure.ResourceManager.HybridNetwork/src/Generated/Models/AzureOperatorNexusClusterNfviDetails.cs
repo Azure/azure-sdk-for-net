@@ -8,40 +8,43 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The AzureOperatorNexusCluster NFVI detail. </summary>
-    public partial class AzureOperatorNexusClusterNfviDetails : NFVIs
+    public partial class AzureOperatorNexusClusterNfviDetails : NfviDetails
     {
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusClusterNfviDetails"/>. </summary>
-        public AzureOperatorNexusClusterNfviDetails()
+        public AzureOperatorNexusClusterNfviDetails() : base(NfviType.AzureOperatorNexus)
         {
-            NfviType = NfviType.AzureOperatorNexus;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusClusterNfviDetails"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customLocationReference"> The reference to the custom location. </param>
-        internal AzureOperatorNexusClusterNfviDetails(string name, NfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource customLocationReference) : base(name, nfviType, serializedAdditionalRawData)
+        internal AzureOperatorNexusClusterNfviDetails(string name, NfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReferencedResourceById customLocationReference) : base(name, nfviType, additionalBinaryDataProperties)
         {
             CustomLocationReference = customLocationReference;
-            NfviType = nfviType;
         }
 
         /// <summary> The reference to the custom location. </summary>
-        internal WritableSubResource CustomLocationReference { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        internal ReferencedResourceById CustomLocationReference { get; set; }
+
+        /// <summary> Resource ID. </summary>
         public ResourceIdentifier CustomLocationReferenceId
         {
-            get => CustomLocationReference is null ? default : CustomLocationReference.Id;
+            get
+            {
+                return CustomLocationReference is null ? default : CustomLocationReference.Id;
+            }
             set
             {
                 if (CustomLocationReference is null)
-                    CustomLocationReference = new WritableSubResource();
+                {
+                    CustomLocationReference = new ReferencedResourceById();
+                }
                 CustomLocationReference.Id = value;
             }
         }

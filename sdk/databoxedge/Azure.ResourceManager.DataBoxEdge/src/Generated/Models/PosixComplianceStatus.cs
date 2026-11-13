@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct PosixComplianceStatus : IEquatable<PosixComplianceStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PosixComplianceStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PosixComplianceStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="PosixComplianceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PosixComplianceStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static PosixComplianceStatus Invalid { get; } = new PosixComplianceStatus(InvalidValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static PosixComplianceStatus Enabled { get; } = new PosixComplianceStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static PosixComplianceStatus Disabled { get; } = new PosixComplianceStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="PosixComplianceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PosixComplianceStatus left, PosixComplianceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PosixComplianceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PosixComplianceStatus left, PosixComplianceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PosixComplianceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PosixComplianceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PosixComplianceStatus(string value) => new PosixComplianceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PosixComplianceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PosixComplianceStatus?(string value) => value == null ? null : new PosixComplianceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PosixComplianceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PosixComplianceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

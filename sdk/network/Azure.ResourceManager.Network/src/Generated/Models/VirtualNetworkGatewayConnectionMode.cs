@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VirtualNetworkGatewayConnectionMode : IEquatable<VirtualNetworkGatewayConnectionMode>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> ResponderOnly. </summary>
+        private const string ResponderOnlyValue = "ResponderOnly";
+        /// <summary> InitiatorOnly. </summary>
+        private const string InitiatorOnlyValue = "InitiatorOnly";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkGatewayConnectionMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string ResponderOnlyValue = "ResponderOnly";
-        private const string InitiatorOnlyValue = "InitiatorOnly";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static VirtualNetworkGatewayConnectionMode Default { get; } = new VirtualNetworkGatewayConnectionMode(DefaultValue);
+
         /// <summary> ResponderOnly. </summary>
         public static VirtualNetworkGatewayConnectionMode ResponderOnly { get; } = new VirtualNetworkGatewayConnectionMode(ResponderOnlyValue);
+
         /// <summary> InitiatorOnly. </summary>
         public static VirtualNetworkGatewayConnectionMode InitiatorOnly { get; } = new VirtualNetworkGatewayConnectionMode(InitiatorOnlyValue);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualNetworkGatewayConnectionMode left, VirtualNetworkGatewayConnectionMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualNetworkGatewayConnectionMode left, VirtualNetworkGatewayConnectionMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkGatewayConnectionMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualNetworkGatewayConnectionMode(string value) => new VirtualNetworkGatewayConnectionMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualNetworkGatewayConnectionMode?(string value) => value == null ? null : new VirtualNetworkGatewayConnectionMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualNetworkGatewayConnectionMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualNetworkGatewayConnectionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

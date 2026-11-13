@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerService
 {
+    /// <summary></summary>
     public partial class MeshRevisionProfileResource : IJsonModel<MeshRevisionProfileData>
     {
-        private static MeshRevisionProfileData s_dataDeserializationInstance;
-        private static MeshRevisionProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MeshRevisionProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MeshRevisionProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MeshRevisionProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MeshRevisionProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MeshRevisionProfileData>)Data).Write(writer, options);
 
-        MeshRevisionProfileData IJsonModel<MeshRevisionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MeshRevisionProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MeshRevisionProfileData IJsonModel<MeshRevisionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MeshRevisionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MeshRevisionProfileData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MeshRevisionProfileData IPersistableModel<MeshRevisionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MeshRevisionProfileData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<MeshRevisionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MeshRevisionProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MeshRevisionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

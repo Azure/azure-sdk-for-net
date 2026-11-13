@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct IormObjective : IEquatable<IormObjective>
     {
         private readonly string _value;
+        /// <summary> Low latency objective. </summary>
+        private const string LowLatencyValue = "LowLatency";
+        /// <summary> High throughput objective. </summary>
+        private const string HighThroughputValue = "HighThroughput";
+        /// <summary> Balanced objective. </summary>
+        private const string BalancedValue = "Balanced";
+        /// <summary> Auto objective. </summary>
+        private const string AutoValue = "Auto";
+        /// <summary> Basic objective. </summary>
+        private const string BasicValue = "Basic";
 
         /// <summary> Initializes a new instance of <see cref="IormObjective"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IormObjective(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowLatencyValue = "LowLatency";
-        private const string HighThroughputValue = "HighThroughput";
-        private const string BalancedValue = "Balanced";
-        private const string AutoValue = "Auto";
-        private const string BasicValue = "Basic";
+            _value = value;
+        }
 
         /// <summary> Low latency objective. </summary>
         public static IormObjective LowLatency { get; } = new IormObjective(LowLatencyValue);
+
         /// <summary> High throughput objective. </summary>
         public static IormObjective HighThroughput { get; } = new IormObjective(HighThroughputValue);
+
         /// <summary> Balanced objective. </summary>
         public static IormObjective Balanced { get; } = new IormObjective(BalancedValue);
+
         /// <summary> Auto objective. </summary>
         public static IormObjective Auto { get; } = new IormObjective(AutoValue);
+
         /// <summary> Basic objective. </summary>
         public static IormObjective Basic { get; } = new IormObjective(BasicValue);
+
         /// <summary> Determines if two <see cref="IormObjective"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IormObjective left, IormObjective right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IormObjective"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IormObjective left, IormObjective right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IormObjective"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IormObjective"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IormObjective(string value) => new IormObjective(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IormObjective"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IormObjective?(string value) => value == null ? null : new IormObjective(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IormObjective other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IormObjective other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

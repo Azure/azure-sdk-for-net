@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingSubscriptionAutoRenewState : IEquatable<BillingSubscriptionAutoRenewState>
     {
         private readonly string _value;
+        /// <summary> Off. </summary>
+        private const string OffValue = "Off";
+        /// <summary> On. </summary>
+        private const string OnValue = "On";
 
         /// <summary> Initializes a new instance of <see cref="BillingSubscriptionAutoRenewState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingSubscriptionAutoRenewState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OffValue = "Off";
-        private const string OnValue = "On";
+            _value = value;
+        }
 
         /// <summary> Off. </summary>
         public static BillingSubscriptionAutoRenewState Off { get; } = new BillingSubscriptionAutoRenewState(OffValue);
+
         /// <summary> On. </summary>
         public static BillingSubscriptionAutoRenewState On { get; } = new BillingSubscriptionAutoRenewState(OnValue);
+
         /// <summary> Determines if two <see cref="BillingSubscriptionAutoRenewState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingSubscriptionAutoRenewState left, BillingSubscriptionAutoRenewState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingSubscriptionAutoRenewState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingSubscriptionAutoRenewState left, BillingSubscriptionAutoRenewState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingSubscriptionAutoRenewState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingSubscriptionAutoRenewState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingSubscriptionAutoRenewState(string value) => new BillingSubscriptionAutoRenewState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingSubscriptionAutoRenewState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingSubscriptionAutoRenewState?(string value) => value == null ? null : new BillingSubscriptionAutoRenewState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingSubscriptionAutoRenewState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingSubscriptionAutoRenewState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

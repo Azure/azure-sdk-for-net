@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class PredictiveAutoscalePolicyScaleModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PredictiveAutoscalePolicyScaleMode value) => value switch
         {
             PredictiveAutoscalePolicyScaleMode.Disabled => "Disabled",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PredictiveAutoscalePolicyScaleMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PredictiveAutoscalePolicyScaleMode ToPredictiveAutoscalePolicyScaleMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return PredictiveAutoscalePolicyScaleMode.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ForecastOnly")) return PredictiveAutoscalePolicyScaleMode.ForecastOnly;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return PredictiveAutoscalePolicyScaleMode.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return PredictiveAutoscalePolicyScaleMode.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ForecastOnly"))
+            {
+                return PredictiveAutoscalePolicyScaleMode.ForecastOnly;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return PredictiveAutoscalePolicyScaleMode.Enabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PredictiveAutoscalePolicyScaleMode value.");
         }
     }

@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Batch;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Batch.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableBatchResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableBatchResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableBatchResourceGroupResource for mocking. </summary>
         protected MockableBatchResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableBatchResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableBatchResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableBatchResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of BatchAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of BatchAccountResources and their operations over a BatchAccountResource. </returns>
+        /// <summary> Gets a collection of BatchAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of BatchAccounts and their operations over a BatchAccountResource. </returns>
         public virtual BatchAccountCollection GetBatchAccounts()
         {
             return GetCachedClient(client => new BatchAccountCollection(client, Id));
@@ -44,30 +42,28 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// Gets information about the specified Batch account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BatchAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BatchAccountResource>> GetBatchAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return await GetBatchAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,30 +71,28 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// Gets information about the specified Batch account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BatchAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="accountName"> The name of the Batch account. </param>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BatchAccountResource> GetBatchAccount(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return GetBatchAccounts().Get(accountName, cancellationToken);
         }
     }

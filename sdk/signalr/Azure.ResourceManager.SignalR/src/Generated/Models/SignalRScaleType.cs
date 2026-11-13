@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.SignalR.Models
     public readonly partial struct SignalRScaleType : IEquatable<SignalRScaleType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SignalRScaleType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SignalRScaleType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string ManualValue = "Manual";
         private const string AutomaticValue = "Automatic";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SignalRScaleType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static SignalRScaleType None { get; } = new SignalRScaleType(NoneValue);
-        /// <summary> Manual. </summary>
+
+        /// <summary> Gets the Manual. </summary>
         public static SignalRScaleType Manual { get; } = new SignalRScaleType(ManualValue);
-        /// <summary> Automatic. </summary>
+
+        /// <summary> Gets the Automatic. </summary>
         public static SignalRScaleType Automatic { get; } = new SignalRScaleType(AutomaticValue);
+
         /// <summary> Determines if two <see cref="SignalRScaleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SignalRScaleType left, SignalRScaleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SignalRScaleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SignalRScaleType left, SignalRScaleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRScaleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SignalRScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SignalRScaleType(string value) => new SignalRScaleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SignalRScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SignalRScaleType?(string value) => value == null ? null : new SignalRScaleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignalRScaleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SignalRScaleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

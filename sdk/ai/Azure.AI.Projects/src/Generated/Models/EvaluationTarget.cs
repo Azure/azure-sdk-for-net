@@ -5,11 +5,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
-    /// Abstract base model for defining evaluation targets.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModelResponseGenerationTarget"/>.
+    /// Base class for targets with discriminator support.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAIAgentTarget"/> and <see cref="AzureAIModelTarget"/>.
     /// </summary>
     public abstract partial class EvaluationTarget
     {
@@ -17,22 +17,22 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EvaluationTarget"/>. </summary>
-        /// <param name="type"> Discriminator that defines the type of the evaluation target. </param>
-        private protected EvaluationTarget(EvaluationTargetType @type)
+        /// <param name="type"> The type of target. </param>
+        private protected EvaluationTarget(string @type)
         {
             Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="EvaluationTarget"/>. </summary>
-        /// <param name="type"> Discriminator that defines the type of the evaluation target. </param>
+        /// <param name="type"> The type of target. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationTarget(EvaluationTargetType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Discriminator that defines the type of the evaluation target. </summary>
-        internal EvaluationTargetType Type { get; set; }
+        /// <summary> The type of target. </summary>
+        internal string Type { get; set; }
     }
 }

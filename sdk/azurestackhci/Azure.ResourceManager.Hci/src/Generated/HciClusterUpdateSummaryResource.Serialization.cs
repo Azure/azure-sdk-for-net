@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci
 {
+    /// <summary></summary>
     public partial class HciClusterUpdateSummaryResource : IJsonModel<HciClusterUpdateSummaryData>
     {
-        private static HciClusterUpdateSummaryData s_dataDeserializationInstance;
-        private static HciClusterUpdateSummaryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciClusterUpdateSummaryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciClusterUpdateSummaryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciClusterUpdateSummaryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciClusterUpdateSummaryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterUpdateSummaryData>)Data).Write(writer, options);
 
-        HciClusterUpdateSummaryData IJsonModel<HciClusterUpdateSummaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterUpdateSummaryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciClusterUpdateSummaryData IJsonModel<HciClusterUpdateSummaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciClusterUpdateSummaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciClusterUpdateSummaryData>(Data, options, AzureResourceManagerHciContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciClusterUpdateSummaryData IPersistableModel<HciClusterUpdateSummaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciClusterUpdateSummaryData>(data, options, AzureResourceManagerHciContext.Default);
 
-        string IPersistableModel<HciClusterUpdateSummaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciClusterUpdateSummaryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciClusterUpdateSummaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

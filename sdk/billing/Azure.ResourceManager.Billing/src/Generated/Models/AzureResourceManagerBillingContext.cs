@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AcceptTransferContent))]
     [ModelReaderWriterBuildable(typeof(AgreementListResult))]
@@ -95,6 +96,8 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(BillingInvoiceSectionResourceGetTransactionsOptions))]
     [ModelReaderWriterBuildable(typeof(BillingInvoiceSectionRoleAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(BillingInvoiceSectionRoleDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(BillingOperationDisplay))]
+    [ModelReaderWriterBuildable(typeof(BillingOperationInfo))]
     [ModelReaderWriterBuildable(typeof(BillingPaymentMethodData))]
     [ModelReaderWriterBuildable(typeof(BillingPaymentMethodLinkData))]
     [ModelReaderWriterBuildable(typeof(BillingPaymentMethodLinkResource))]
@@ -274,7 +277,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransactionListResult))]
     [ModelReaderWriterBuildable(typeof(TransferDetailsListResult))]
-    [ModelReaderWriterBuildable(typeof(ValidateTransferListResponse))]
     public partial class AzureResourceManagerBillingContext : ModelReaderWriterContext
     {
     }

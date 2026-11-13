@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct ConnectorSettingType : IEquatable<ConnectorSettingType>
     {
         private readonly string _value;
+        /// <summary> CopyableLabel. </summary>
+        private const string CopyableLabelValue = "CopyableLabel";
+        /// <summary> InstructionStepsGroup. </summary>
+        private const string InstructionStepsGroupValue = "InstructionStepsGroup";
+        /// <summary> InfoMessage. </summary>
+        private const string InfoMessageValue = "InfoMessage";
 
         /// <summary> Initializes a new instance of <see cref="ConnectorSettingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectorSettingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CopyableLabelValue = "CopyableLabel";
-        private const string InstructionStepsGroupValue = "InstructionStepsGroup";
-        private const string InfoMessageValue = "InfoMessage";
+            _value = value;
+        }
 
         /// <summary> CopyableLabel. </summary>
         public static ConnectorSettingType CopyableLabel { get; } = new ConnectorSettingType(CopyableLabelValue);
+
         /// <summary> InstructionStepsGroup. </summary>
         public static ConnectorSettingType InstructionStepsGroup { get; } = new ConnectorSettingType(InstructionStepsGroupValue);
+
         /// <summary> InfoMessage. </summary>
         public static ConnectorSettingType InfoMessage { get; } = new ConnectorSettingType(InfoMessageValue);
+
         /// <summary> Determines if two <see cref="ConnectorSettingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectorSettingType left, ConnectorSettingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectorSettingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectorSettingType left, ConnectorSettingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectorSettingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectorSettingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectorSettingType(string value) => new ConnectorSettingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectorSettingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectorSettingType?(string value) => value == null ? null : new ConnectorSettingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectorSettingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectorSettingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

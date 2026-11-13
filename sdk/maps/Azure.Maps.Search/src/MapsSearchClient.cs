@@ -261,7 +261,7 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="options"> additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Boundary>> GetPolygonAsync(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchBoundary>> GetPolygonAsync(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygon");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.Maps.Search
                     };
                 }
                 var boundaryInternal = await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Boundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
+                return Response.FromValue(new SearchBoundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -299,7 +299,7 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="options"> additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Boundary> GetPolygon(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchBoundary> GetPolygon(GetPolygonOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygon");
             scope.Start();
@@ -319,7 +319,7 @@ namespace Azure.Maps.Search
                     coordinates = [(double)options.Coordinates.Longitude, (double)options.Coordinates.Latitude];
                 }
                 var boundaryInternal = RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
-                return Response.FromValue(new Boundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
+                return Response.FromValue(new SearchBoundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
             }
             catch (Exception e)
             {

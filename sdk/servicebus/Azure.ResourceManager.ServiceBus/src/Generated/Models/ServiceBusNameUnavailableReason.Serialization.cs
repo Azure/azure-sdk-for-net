@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal static partial class ServiceBusNameUnavailableReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ServiceBusNameUnavailableReason value) => value switch
         {
             ServiceBusNameUnavailableReason.None => "None",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusNameUnavailableReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ServiceBusNameUnavailableReason ToServiceBusNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ServiceBusNameUnavailableReason.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidName")) return ServiceBusNameUnavailableReason.InvalidName;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SubscriptionIsDisabled")) return ServiceBusNameUnavailableReason.SubscriptionIsDisabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInUse")) return ServiceBusNameUnavailableReason.NameInUse;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInLockdown")) return ServiceBusNameUnavailableReason.NameInLockdown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TooManyNamespaceInCurrentSubscription")) return ServiceBusNameUnavailableReason.TooManyNamespaceInCurrentSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return ServiceBusNameUnavailableReason.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidName"))
+            {
+                return ServiceBusNameUnavailableReason.InvalidName;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SubscriptionIsDisabled"))
+            {
+                return ServiceBusNameUnavailableReason.SubscriptionIsDisabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInUse"))
+            {
+                return ServiceBusNameUnavailableReason.NameInUse;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInLockdown"))
+            {
+                return ServiceBusNameUnavailableReason.NameInLockdown;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TooManyNamespaceInCurrentSubscription"))
+            {
+                return ServiceBusNameUnavailableReason.TooManyNamespaceInCurrentSubscription;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusNameUnavailableReason value.");
         }
     }

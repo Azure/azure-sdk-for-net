@@ -5,17 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
+namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     public partial class AnimalOperations
     {
         protected AnimalOperations() => throw null;
+
+        internal AnimalOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

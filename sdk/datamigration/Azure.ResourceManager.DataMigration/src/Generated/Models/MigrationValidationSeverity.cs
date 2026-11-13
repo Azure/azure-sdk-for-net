@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct MigrationValidationSeverity : IEquatable<MigrationValidationSeverity>
     {
         private readonly string _value;
+        /// <summary> Message. </summary>
+        private const string MessageValue = "Message";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="MigrationValidationSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MigrationValidationSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MessageValue = "Message";
-        private const string WarningValue = "Warning";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> Message. </summary>
         public static MigrationValidationSeverity Message { get; } = new MigrationValidationSeverity(MessageValue);
+
         /// <summary> Warning. </summary>
         public static MigrationValidationSeverity Warning { get; } = new MigrationValidationSeverity(WarningValue);
+
         /// <summary> Error. </summary>
         public static MigrationValidationSeverity Error { get; } = new MigrationValidationSeverity(ErrorValue);
+
         /// <summary> Determines if two <see cref="MigrationValidationSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MigrationValidationSeverity left, MigrationValidationSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MigrationValidationSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MigrationValidationSeverity left, MigrationValidationSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationValidationSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MigrationValidationSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MigrationValidationSeverity(string value) => new MigrationValidationSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MigrationValidationSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MigrationValidationSeverity?(string value) => value == null ? null : new MigrationValidationSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MigrationValidationSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MigrationValidationSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

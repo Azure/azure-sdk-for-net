@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct PostFailoverRedundancy : IEquatable<PostFailoverRedundancy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostFailoverRedundancy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostFailoverRedundancy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardLrsValue = "Standard_LRS";
         private const string StandardZrsValue = "Standard_ZRS";
 
-        /// <summary> Standard_LRS. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostFailoverRedundancy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostFailoverRedundancy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the StandardLrs. </summary>
         public static PostFailoverRedundancy StandardLrs { get; } = new PostFailoverRedundancy(StandardLrsValue);
-        /// <summary> Standard_ZRS. </summary>
+
+        /// <summary> Gets the StandardZrs. </summary>
         public static PostFailoverRedundancy StandardZrs { get; } = new PostFailoverRedundancy(StandardZrsValue);
+
         /// <summary> Determines if two <see cref="PostFailoverRedundancy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostFailoverRedundancy left, PostFailoverRedundancy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostFailoverRedundancy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostFailoverRedundancy left, PostFailoverRedundancy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostFailoverRedundancy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostFailoverRedundancy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostFailoverRedundancy(string value) => new PostFailoverRedundancy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostFailoverRedundancy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostFailoverRedundancy?(string value) => value == null ? null : new PostFailoverRedundancy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostFailoverRedundancy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostFailoverRedundancy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

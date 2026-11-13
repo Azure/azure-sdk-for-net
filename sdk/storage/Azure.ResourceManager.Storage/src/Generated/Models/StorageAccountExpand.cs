@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The StorageAccountExpand. </summary>
+    /// <summary></summary>
     public enum StorageAccountExpand
     {
-        /// <summary> geoReplicationStats. </summary>
+        /// <summary> GeoReplicationStats. </summary>
         GeoReplicationStats,
-        /// <summary> blobRestoreStatus. </summary>
+        /// <summary> BlobRestoreStatus. </summary>
         BlobRestoreStatus
     }
 }

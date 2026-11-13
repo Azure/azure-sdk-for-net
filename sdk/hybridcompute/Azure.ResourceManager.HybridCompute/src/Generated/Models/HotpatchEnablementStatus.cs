@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HotpatchEnablementStatus : IEquatable<HotpatchEnablementStatus>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> PendingEvaluation. </summary>
+        private const string PendingEvaluationValue = "PendingEvaluation";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> ActionRequired. </summary>
+        private const string ActionRequiredValue = "ActionRequired";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="HotpatchEnablementStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HotpatchEnablementStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string PendingEvaluationValue = "PendingEvaluation";
-        private const string DisabledValue = "Disabled";
-        private const string ActionRequiredValue = "ActionRequired";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static HotpatchEnablementStatus Unknown { get; } = new HotpatchEnablementStatus(UnknownValue);
+
         /// <summary> PendingEvaluation. </summary>
         public static HotpatchEnablementStatus PendingEvaluation { get; } = new HotpatchEnablementStatus(PendingEvaluationValue);
+
         /// <summary> Disabled. </summary>
         public static HotpatchEnablementStatus Disabled { get; } = new HotpatchEnablementStatus(DisabledValue);
+
         /// <summary> ActionRequired. </summary>
         public static HotpatchEnablementStatus ActionRequired { get; } = new HotpatchEnablementStatus(ActionRequiredValue);
+
         /// <summary> Enabled. </summary>
         public static HotpatchEnablementStatus Enabled { get; } = new HotpatchEnablementStatus(EnabledValue);
+
         /// <summary> Determines if two <see cref="HotpatchEnablementStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HotpatchEnablementStatus left, HotpatchEnablementStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HotpatchEnablementStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HotpatchEnablementStatus left, HotpatchEnablementStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HotpatchEnablementStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HotpatchEnablementStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HotpatchEnablementStatus(string value) => new HotpatchEnablementStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HotpatchEnablementStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HotpatchEnablementStatus?(string value) => value == null ? null : new HotpatchEnablementStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HotpatchEnablementStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HotpatchEnablementStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,9 +1,15 @@
 # Project Overview
 
+> **Note**: For general AI agent guidelines and repository overview, see [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/AGENTS.md) at the repository root.
+
 This repo contains Azure SDKs for various Azure services and tools that generate them.
 
 ## Prerequisites
 - To use MCP tool calls, PowerShell must be installed. Provide [PowerShell installation instructions](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) if not installed, and recommend restarting the IDE to use the MCP server.
+- When using Copilot from Visual Studio or VS Code (not applicable when using Coding Agent on Github.com):
+  - **Always run** the [`azsdk_verify_setup`](../eng/common/instructions/azsdk-tools/verify-setup.instructions.md) tool first to validate the user's development environment for SDK MCP tools.
+  - **Do not proceed** with any other tool execution until this step is complete.
+  - **Skip this check only** for queries that do not require tool execution.
 
 ## Folder Structure
 
@@ -15,28 +21,32 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 
 - Always run `npm install` in the `/eng/packages/http-client-csharp` directory before running the generator.
 - Always run `/eng/packages/http-client-csharp/eng/scripts/Generate.ps1` to regenerate the test projects to validate the result of generator code changes.
+- For emitter changes, always run `npm run lint` and `npm run prettier` in the `/eng/packages/http-client-csharp` directory to ensure the changes won't break CI.
 
 ### Azure Management Generator
 
 - Always run `npm install` in the `/eng/packages/http-client-csharp-mgmt` directory before running the generator.
 - Always run `/eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1` to regenerate the test projects to validate the result of generator code changes.
+- For emitter changes, always run `npm run lint` and `npm run prettier` in the `/eng/packages/http-client-csharp-mgmt` directory to ensure the changes won't break CI.
 
-## SDK release
+## Local SDK Generation and Package Lifecycle (TypeSpec)
 
-There are two tools to help with SDK releases:
-- Check SDK release readiness
-- Release SDK
+### DEFAULT BEHAVIORS
+- **Repository:** Use the current workspace as the local SDK repository unless the user specifies a different path.
+- **Configuration:** Identify `tsp-location.yaml` from files open in the editor. If unclear, ask the user.
 
-### Check SDK Release Readiness
-Run `CheckPackageReleaseReadiness` to verify if the package is ready for release. This tool checks:
-- API review status
-- Change log status
-- Package name approval(If package is new and releasing a preview version)
-- Release date is set in release tracker
+### REQUIRED CONFIRMATIONS
+Ask the user for clarification if repository path or configuration file is ambiguous.
 
-### Release SDK
-Run `ReleasePackage` to release the package. This tool requires package name and language as inputs. It will:
-- Check if the package is ready for release
-- Identify the release pipeline
-- Trigger the release pipeline.
-User needs to approve the release stage in the pipeline after it is triggered.
+## Pre-Commit Validation
+
+Before committing changes to SDK packages under `sdk/`, always run the pre-commit validation checks described in the `pre-commit-checks` skill. These checks run `dotnet format`, regenerate public API listings, update snippets, and regenerate code as needed. They may produce additional file changes that must be included in the commit.
+
+## Code Review
+
+Before inspecting or commenting on any pull request, diff, patch, commit, or local changes for code
+review, load and follow
+[`code-review`](skills/code-review/SKILL.md) as the first review
+step. When Agent Skill invocation is available, invoke `code-review` before
+reviewing. Its Azure SDK-specific rules augment rather than replace the normal open-ended review
+for bugs, security, correctness, reliability, and maintainability.

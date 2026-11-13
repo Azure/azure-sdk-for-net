@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     internal class RequestValidator
     {
-        private readonly Dictionary<string, string> _hostKeyMappings = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, WebPubSubServiceEndpoint> _hostEndpointMappings = new(StringComparer.OrdinalIgnoreCase);
 
         public RequestValidator(IOptions<WebPubSubOptions> options)
         {
@@ -28,21 +28,23 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             var endpoint = options.Value.ServiceEndpoint;
             if (endpoint != null)
             {
-                _hostKeyMappings.Add(endpoint.Endpoint.Host, endpoint.AccessKey);
+                _hostEndpointMappings.Add(endpoint.Endpoint.Host, endpoint);
             }
         }
 
         public bool IsValidSignature(WebPubSubConnectionContext context)
         {
             // no options skip validation.
-            if (_hostKeyMappings.Count == 0)
+            if (_hostEndpointMappings.Count == 0)
             {
                 return true;
             }
             foreach (var origin in ToHeaderList(context.Origin))
             {
-                if (_hostKeyMappings.TryGetValue(origin, out var accessKey))
+                if (_hostEndpointMappings.TryGetValue(origin, out var endpoint))
                 {
+                    // Read the key live so AzureKeyCredential rotation is honored.
+                    var accessKey = endpoint.AccessKey;
                     // server side disable signature checks.
                     if (string.IsNullOrEmpty(accessKey))
                     {
@@ -68,7 +70,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         public bool IsValidOrigin(IEnumerable<string> requestOrigins)
         {
-            if (_hostKeyMappings.Count == 0)
+            if (_hostEndpointMappings.Count == 0)
             {
                 return true;
             }
@@ -76,7 +78,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             {
                 foreach (var item in requestOrigins)
                 {
-                    if (_hostKeyMappings.ContainsKey(item))
+                    if (_hostEndpointMappings.ContainsKey(item))
                     {
                         return true;
                     }

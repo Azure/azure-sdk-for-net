@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    /// <summary>
+    /// Enable protection provider specific input.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="A2ACrossClusterMigrationEnableProtectionContent"/>, <see cref="A2AEnableProtectionContent"/>, <see cref="HyperVReplicaAzureEnableProtectionContent"/>, <see cref="InMageAzureV2EnableProtectionContent"/>, <see cref="InMageEnableProtectionContent"/>, and <see cref="InMageRcmEnableProtectionContent"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownEnableProtectionProviderSpecificContent))]
-    public partial class EnableProtectionProviderSpecificContent : IUtf8JsonSerializable, IJsonModel<EnableProtectionProviderSpecificContent>
+    public abstract partial class EnableProtectionProviderSpecificContent : IJsonModel<EnableProtectionProviderSpecificContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnableProtectionProviderSpecificContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnableProtectionProviderSpecificContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEnableProtectionProviderSpecificContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EnableProtectionProviderSpecificContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnableProtectionProviderSpecificContent IPersistableModel<EnableProtectionProviderSpecificContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EnableProtectionProviderSpecificContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnableProtectionProviderSpecificContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +72,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,70 +96,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        EnableProtectionProviderSpecificContent IJsonModel<EnableProtectionProviderSpecificContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnableProtectionProviderSpecificContent IJsonModel<EnableProtectionProviderSpecificContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnableProtectionProviderSpecificContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEnableProtectionProviderSpecificContent(document.RootElement, options);
         }
 
-        internal static EnableProtectionProviderSpecificContent DeserializeEnableProtectionProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EnableProtectionProviderSpecificContent DeserializeEnableProtectionProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AEnableProtectionContent.DeserializeA2AEnableProtectionContent(element, options);
-                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationEnableProtectionContent.DeserializeA2ACrossClusterMigrationEnableProtectionContent(element, options);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureEnableProtectionContent.DeserializeHyperVReplicaAzureEnableProtectionContent(element, options);
-                    case "InMage": return InMageEnableProtectionContent.DeserializeInMageEnableProtectionContent(element, options);
-                    case "InMageAzureV2": return InMageAzureV2EnableProtectionContent.DeserializeInMageAzureV2EnableProtectionContent(element, options);
-                    case "InMageRcm": return InMageRcmEnableProtectionContent.DeserializeInMageRcmEnableProtectionContent(element, options);
+                    case "A2ACrossClusterMigration":
+                        return A2ACrossClusterMigrationEnableProtectionContent.DeserializeA2ACrossClusterMigrationEnableProtectionContent(element, options);
+                    case "A2A":
+                        return A2AEnableProtectionContent.DeserializeA2AEnableProtectionContent(element, options);
+                    case "HyperVReplicaAzure":
+                        return HyperVReplicaAzureEnableProtectionContent.DeserializeHyperVReplicaAzureEnableProtectionContent(element, options);
+                    case "InMageAzureV2":
+                        return InMageAzureV2EnableProtectionContent.DeserializeInMageAzureV2EnableProtectionContent(element, options);
+                    case "InMage":
+                        return InMageEnableProtectionContent.DeserializeInMageEnableProtectionContent(element, options);
+                    case "InMageRcm":
+                        return InMageRcmEnableProtectionContent.DeserializeInMageRcmEnableProtectionContent(element, options);
                 }
             }
             return UnknownEnableProtectionProviderSpecificContent.DeserializeUnknownEnableProtectionProviderSpecificContent(element, options);
         }
-
-        BinaryData IPersistableModel<EnableProtectionProviderSpecificContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EnableProtectionProviderSpecificContent IPersistableModel<EnableProtectionProviderSpecificContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEnableProtectionProviderSpecificContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EnableProtectionProviderSpecificContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

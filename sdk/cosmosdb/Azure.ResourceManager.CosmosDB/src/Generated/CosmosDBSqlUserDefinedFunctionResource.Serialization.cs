@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class CosmosDBSqlUserDefinedFunctionResource : IJsonModel<CosmosDBSqlUserDefinedFunctionData>
     {
-        private static CosmosDBSqlUserDefinedFunctionData s_dataDeserializationInstance;
-        private static CosmosDBSqlUserDefinedFunctionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CosmosDBSqlUserDefinedFunctionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CosmosDBSqlUserDefinedFunctionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CosmosDBSqlUserDefinedFunctionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBSqlUserDefinedFunctionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlUserDefinedFunctionData>)Data).Write(writer, options);
 
-        CosmosDBSqlUserDefinedFunctionData IJsonModel<CosmosDBSqlUserDefinedFunctionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlUserDefinedFunctionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBSqlUserDefinedFunctionData IJsonModel<CosmosDBSqlUserDefinedFunctionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBSqlUserDefinedFunctionData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CosmosDBSqlUserDefinedFunctionData IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlUserDefinedFunctionData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlUserDefinedFunctionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

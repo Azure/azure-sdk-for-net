@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Authorization.Models
     public readonly partial struct RoleManagementScheduleMemberType : IEquatable<RoleManagementScheduleMemberType>
     {
         private readonly string _value;
+        /// <summary> Inherited. </summary>
+        private const string InheritedValue = "Inherited";
+        /// <summary> Direct. </summary>
+        private const string DirectValue = "Direct";
+        /// <summary> Group. </summary>
+        private const string GroupValue = "Group";
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementScheduleMemberType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoleManagementScheduleMemberType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InheritedValue = "Inherited";
-        private const string DirectValue = "Direct";
-        private const string GroupValue = "Group";
+            _value = value;
+        }
 
         /// <summary> Inherited. </summary>
         public static RoleManagementScheduleMemberType Inherited { get; } = new RoleManagementScheduleMemberType(InheritedValue);
+
         /// <summary> Direct. </summary>
         public static RoleManagementScheduleMemberType Direct { get; } = new RoleManagementScheduleMemberType(DirectValue);
+
         /// <summary> Group. </summary>
         public static RoleManagementScheduleMemberType Group { get; } = new RoleManagementScheduleMemberType(GroupValue);
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleMemberType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleManagementScheduleMemberType left, RoleManagementScheduleMemberType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleMemberType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleManagementScheduleMemberType left, RoleManagementScheduleMemberType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementScheduleMemberType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleManagementScheduleMemberType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleManagementScheduleMemberType(string value) => new RoleManagementScheduleMemberType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleManagementScheduleMemberType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleManagementScheduleMemberType?(string value) => value == null ? null : new RoleManagementScheduleMemberType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleManagementScheduleMemberType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleManagementScheduleMemberType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

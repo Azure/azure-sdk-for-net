@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Support.Models
     public readonly partial struct PreferredContactMethod : IEquatable<PreferredContactMethod>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PreferredContactMethod"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PreferredContactMethod(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EmailValue = "email";
         private const string PhoneValue = "phone";
 
-        /// <summary> email. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreferredContactMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PreferredContactMethod(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Email. </summary>
         public static PreferredContactMethod Email { get; } = new PreferredContactMethod(EmailValue);
-        /// <summary> phone. </summary>
+
+        /// <summary> Gets the Phone. </summary>
         public static PreferredContactMethod Phone { get; } = new PreferredContactMethod(PhoneValue);
+
         /// <summary> Determines if two <see cref="PreferredContactMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PreferredContactMethod left, PreferredContactMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PreferredContactMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PreferredContactMethod left, PreferredContactMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PreferredContactMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PreferredContactMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PreferredContactMethod(string value) => new PreferredContactMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PreferredContactMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PreferredContactMethod?(string value) => value == null ? null : new PreferredContactMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PreferredContactMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PreferredContactMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

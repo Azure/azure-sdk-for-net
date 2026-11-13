@@ -73,8 +73,16 @@ jobs:
           artifactName: "Crash Dump - $(System.JobName) - $(System.JobAttempt)"
           condition: eq(variables['uploadDump'], 'true')
           sbomEnabled: false
+        # See eng/common/pipelines/templates/steps/upload-llm-artifacts.yml for corresponding file copy step
+        - output: pipelineArtifact
+          targetPath: '$(Build.ArtifactStagingDirectory)/llm-artifacts'
+          artifactName: "LLM Artifacts - $(System.JobName) - $(System.JobAttempt)"
+          condition: eq(variables['uploadLlmArtifacts'], 'true')
+          sbomEnabled: false
 
     steps:
+      - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+      
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
@@ -157,11 +165,15 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
-      - script: >-
+      - pwsh: |
+          dotnet tool restore
+
+      - pwsh: >
+          ./eng/scripts/runwithdevopslogging.ps1
           dotnet test eng/service.proj
-          --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
+          --filter '"(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"'
           --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+          --logger '"trx;LogFileName=$(TestTargetFramework).trx"' --logger:'"console;verbosity=normal"'
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=$(ServiceDirectory)
@@ -185,6 +197,9 @@ jobs:
           testResultsFormat: "VSTest"
           mergeTestResults: true
       - template: /eng/pipelines/templates/steps/upload-dumps.yml
+      - template: /eng/common/pipelines/templates/steps/upload-llm-artifacts.yml
+        parameters:
+          TestResultsGlob: '$(TestTargetFramework)*.trx'
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports

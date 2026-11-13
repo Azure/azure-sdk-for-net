@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AmlComputeProperties : IUtf8JsonSerializable, IJsonModel<AmlComputeProperties>
+    /// <summary> AML Compute properties. </summary>
+    public partial class AmlComputeProperties : IJsonModel<AmlComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlComputeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AmlComputeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAmlComputeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AmlComputeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AmlComputeProperties IPersistableModel<AmlComputeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AmlComputeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AmlComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
@@ -51,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("vmPriority"u8);
                 writer.WriteStringValue(VmPriority.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualMachineImage))
+            if (Optional.IsDefined(VirtualMachineImage, _virtualMachineImageIsDefined))
             {
                 if (VirtualMachineImage != null)
                 {
@@ -60,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("virtualMachineImage");
+                    writer.WriteNull("virtualMachineImage"u8);
                 }
             }
             if (Optional.IsDefined(IsolatedNetwork))
@@ -73,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings, options);
             }
-            if (Optional.IsDefined(UserAccountCredentials))
+            if (Optional.IsDefined(UserAccountCredentials, _userAccountCredentialsIsDefined))
             {
                 if (UserAccountCredentials != null)
                 {
@@ -82,10 +120,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("userAccountCredentials");
+                    writer.WriteNull("userAccountCredentials"u8);
                 }
             }
-            if (Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet, _subnetIsDefined))
             {
                 if (Subnet != null)
                 {
@@ -94,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("subnet");
+                    writer.WriteNull("subnet"u8);
                 }
             }
             if (Optional.IsDefined(RemoteLoginPortPublicAccess))
@@ -118,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WritePropertyName("errors"u8);
                     writer.WriteStartArray();
-                    foreach (var item in Errors)
+                    foreach (MachineLearningError item in Errors)
                     {
                         writer.WriteObjectValue(item, options);
                     }
@@ -126,10 +164,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("errors");
+                    writer.WriteNull("errors"u8);
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCount))
+            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCount, _currentNodeCountIsDefined))
             {
                 if (CurrentNodeCount != null)
                 {
@@ -138,10 +176,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("currentNodeCount");
+                    writer.WriteNull("currentNodeCount"u8);
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetNodeCount))
+            if (options.Format != "W" && Optional.IsDefined(TargetNodeCount, _targetNodeCountIsDefined))
             {
                 if (TargetNodeCount != null)
                 {
@@ -150,10 +188,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("targetNodeCount");
+                    writer.WriteNull("targetNodeCount"u8);
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeStateCounts))
+            if (options.Format != "W" && Optional.IsDefined(NodeStateCounts, _nodeStateCountsIsDefined))
             {
                 if (NodeStateCounts != null)
                 {
@@ -162,10 +200,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("nodeStateCounts");
+                    writer.WriteNull("nodeStateCounts"u8);
                 }
             }
-            if (Optional.IsDefined(EnableNodePublicIP))
+            if (Optional.IsDefined(EnableNodePublicIP, _enableNodePublicIPIsDefined))
             {
                 if (EnableNodePublicIP != null)
                 {
@@ -174,18 +212,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("enableNodePublicIp");
+                    writer.WriteNull("enableNodePublicIp"u8);
                 }
             }
-            if (Optional.IsDefined(PropertyBag))
+            if (Optional.IsDefined(PropertyBag, _propertyBagIsDefined))
             {
                 if (PropertyBag != null)
                 {
                     writer.WritePropertyName("propertyBag"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(PropertyBag);
+                    writer.WriteRawValue(PropertyBag);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(PropertyBag, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(PropertyBag))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -193,18 +231,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 else
                 {
-                    writer.WriteNull("propertyBag");
+                    writer.WriteNull("propertyBag"u8);
                 }
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -213,22 +251,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        AmlComputeProperties IJsonModel<AmlComputeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AmlComputeProperties IJsonModel<AmlComputeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AmlComputeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAmlComputeProperties(document.RootElement, options);
         }
 
-        internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -236,193 +279,207 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningOSType? osType = default;
             string vmSize = default;
             MachineLearningVmPriority? vmPriority = default;
+            bool virtualMachineImageIsDefined = false;
             VirtualMachineImage virtualMachineImage = default;
             bool? isolatedNetwork = default;
             AmlComputeScaleSettings scaleSettings = default;
+            bool userAccountCredentialsIsDefined = false;
             MachineLearningUserAccountCredentials userAccountCredentials = default;
+            bool subnetIsDefined = false;
             ResourceId subnet = default;
             MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess = default;
             MachineLearningAllocationState? allocationState = default;
-            DateTimeOffset? allocationStateTransitionTime = default;
-            IReadOnlyList<MachineLearningError> errors = default;
+            DateTimeOffset? allocationStateTransitionOn = default;
+            IReadOnlyList<MachineLearningError> errors = new ChangeTrackingList<MachineLearningError>();
+            bool currentNodeCountIsDefined = false;
             int? currentNodeCount = default;
+            bool targetNodeCountIsDefined = false;
             int? targetNodeCount = default;
+            bool nodeStateCountsIsDefined = false;
             MachineLearningNodeStateCounts nodeStateCounts = default;
+            bool enableNodePublicIPIsDefined = false;
             bool? enableNodePublicIP = default;
+            bool propertyBagIsDefined = false;
             BinaryData propertyBag = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osType = new MachineLearningOSType(property.Value.GetString());
+                    osType = new MachineLearningOSType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vmSize"u8))
+                if (prop.NameEquals("vmSize"u8))
                 {
-                    vmSize = property.Value.GetString();
+                    vmSize = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmPriority"u8))
+                if (prop.NameEquals("vmPriority"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmPriority = new MachineLearningVmPriority(property.Value.GetString());
+                    vmPriority = new MachineLearningVmPriority(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("virtualMachineImage"u8))
+                if (prop.NameEquals("virtualMachineImage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    virtualMachineImageIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         virtualMachineImage = null;
                         continue;
                     }
-                    virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(property.Value, options);
+                    virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("isolatedNetwork"u8))
+                if (prop.NameEquals("isolatedNetwork"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isolatedNetwork = property.Value.GetBoolean();
+                    isolatedNetwork = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("scaleSettings"u8))
+                if (prop.NameEquals("scaleSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value, options);
+                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userAccountCredentials"u8))
+                if (prop.NameEquals("userAccountCredentials"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    userAccountCredentialsIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userAccountCredentials = null;
                         continue;
                     }
-                    userAccountCredentials = MachineLearningUserAccountCredentials.DeserializeMachineLearningUserAccountCredentials(property.Value, options);
+                    userAccountCredentials = MachineLearningUserAccountCredentials.DeserializeMachineLearningUserAccountCredentials(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("subnet"u8))
+                if (prop.NameEquals("subnet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    subnetIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         subnet = null;
                         continue;
                     }
-                    subnet = ResourceId.DeserializeResourceId(property.Value, options);
+                    subnet = ResourceId.DeserializeResourceId(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("remoteLoginPortPublicAccess"u8))
+                if (prop.NameEquals("remoteLoginPortPublicAccess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    remoteLoginPortPublicAccess = new MachineLearningRemoteLoginPortPublicAccess(property.Value.GetString());
+                    remoteLoginPortPublicAccess = new MachineLearningRemoteLoginPortPublicAccess(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allocationState"u8))
+                if (prop.NameEquals("allocationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allocationState = new MachineLearningAllocationState(property.Value.GetString());
+                    allocationState = new MachineLearningAllocationState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allocationStateTransitionTime"u8))
+                if (prop.NameEquals("allocationStateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allocationStateTransitionTime = property.Value.GetDateTimeOffset("O");
+                    allocationStateTransitionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errors"u8))
+                if (prop.NameEquals("errors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         errors = null;
                         continue;
                     }
                     List<MachineLearningError> array = new List<MachineLearningError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("currentNodeCount"u8))
+                if (prop.NameEquals("currentNodeCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    currentNodeCountIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         currentNodeCount = null;
                         continue;
                     }
-                    currentNodeCount = property.Value.GetInt32();
+                    currentNodeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetNodeCount"u8))
+                if (prop.NameEquals("targetNodeCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    targetNodeCountIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetNodeCount = null;
                         continue;
                     }
-                    targetNodeCount = property.Value.GetInt32();
+                    targetNodeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeStateCounts"u8))
+                if (prop.NameEquals("nodeStateCounts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    nodeStateCountsIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nodeStateCounts = null;
                         continue;
                     }
-                    nodeStateCounts = MachineLearningNodeStateCounts.DeserializeMachineLearningNodeStateCounts(property.Value, options);
+                    nodeStateCounts = MachineLearningNodeStateCounts.DeserializeMachineLearningNodeStateCounts(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("enableNodePublicIp"u8))
+                if (prop.NameEquals("enableNodePublicIp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    enableNodePublicIPIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableNodePublicIP = null;
                         continue;
                     }
-                    enableNodePublicIP = property.Value.GetBoolean();
+                    enableNodePublicIP = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("propertyBag"u8))
+                if (prop.NameEquals("propertyBag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    propertyBagIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         propertyBag = null;
                         continue;
                     }
-                    propertyBag = BinaryData.FromString(property.Value.GetRawText());
+                    propertyBag = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AmlComputeProperties(
                 osType,
                 vmSize,
@@ -434,342 +491,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 subnet,
                 remoteLoginPortPublicAccess,
                 allocationState,
-                allocationStateTransitionTime,
-                errors ?? new ChangeTrackingList<MachineLearningError>(),
+                allocationStateTransitionOn,
+                errors,
                 currentNodeCount,
                 targetNodeCount,
                 nodeStateCounts,
                 enableNodePublicIP,
                 propertyBag,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties)
+            {
+                _virtualMachineImageIsDefined = virtualMachineImageIsDefined,
+                _userAccountCredentialsIsDefined = userAccountCredentialsIsDefined,
+                _subnetIsDefined = subnetIsDefined,
+                _currentNodeCountIsDefined = currentNodeCountIsDefined,
+                _targetNodeCountIsDefined = targetNodeCountIsDefined,
+                _nodeStateCountsIsDefined = nodeStateCountsIsDefined,
+                _enableNodePublicIPIsDefined = enableNodePublicIPIsDefined,
+                _propertyBagIsDefined = propertyBagIsDefined
+            };
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  osType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OSType))
-                {
-                    builder.Append("  osType: ");
-                    builder.AppendLine($"'{OSType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vmSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VmSize))
-                {
-                    builder.Append("  vmSize: ");
-                    if (VmSize.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VmSize}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VmSize}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmPriority), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vmPriority: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VmPriority))
-                {
-                    builder.Append("  vmPriority: ");
-                    builder.AppendLine($"'{VmPriority.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("VirtualMachineImageId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  virtualMachineImage: ");
-                builder.AppendLine("{");
-                builder.Append("    id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualMachineImage))
-                {
-                    builder.Append("  virtualMachineImage: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VirtualMachineImage, options, 2, false, "  virtualMachineImage: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsolatedNetwork), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isolatedNetwork: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsolatedNetwork))
-                {
-                    builder.Append("  isolatedNetwork: ");
-                    var boolValue = IsolatedNetwork.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scaleSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleSettings))
-                {
-                    builder.Append("  scaleSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ScaleSettings, options, 2, false, "  scaleSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAccountCredentials), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userAccountCredentials: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserAccountCredentials))
-                {
-                    builder.Append("  userAccountCredentials: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, UserAccountCredentials, options, 2, false, "  userAccountCredentials: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SubnetId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subnet: ");
-                builder.AppendLine("{");
-                builder.Append("    id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Subnet))
-                {
-                    builder.Append("  subnet: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Subnet, options, 2, false, "  subnet: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteLoginPortPublicAccess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  remoteLoginPortPublicAccess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RemoteLoginPortPublicAccess))
-                {
-                    builder.Append("  remoteLoginPortPublicAccess: ");
-                    builder.AppendLine($"'{RemoteLoginPortPublicAccess.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllocationState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  allocationState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AllocationState))
-                {
-                    builder.Append("  allocationState: ");
-                    builder.AppendLine($"'{AllocationState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllocationStateTransitionOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  allocationStateTransitionTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AllocationStateTransitionOn))
-                {
-                    builder.Append("  allocationStateTransitionTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(AllocationStateTransitionOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Errors), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  errors: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Errors))
-                {
-                    if (Errors.Any())
-                    {
-                        builder.Append("  errors: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Errors)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  errors: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  currentNodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrentNodeCount))
-                {
-                    builder.Append("  currentNodeCount: ");
-                    builder.AppendLine($"{CurrentNodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  targetNodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TargetNodeCount))
-                {
-                    builder.Append("  targetNodeCount: ");
-                    builder.AppendLine($"{TargetNodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeStateCounts), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodeStateCounts: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeStateCounts))
-                {
-                    builder.Append("  nodeStateCounts: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, NodeStateCounts, options, 2, false, "  nodeStateCounts: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableNodePublicIP), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableNodePublicIp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableNodePublicIP))
-                {
-                    builder.Append("  enableNodePublicIp: ");
-                    var boolValue = EnableNodePublicIP.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PropertyBag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  propertyBag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PropertyBag))
-                {
-                    builder.Append("  propertyBag: ");
-                    builder.AppendLine($"'{PropertyBag.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AmlComputeProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AmlComputeProperties IPersistableModel<AmlComputeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAmlComputeProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AmlComputeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

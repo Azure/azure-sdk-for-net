@@ -2,17 +2,24 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Azure.Generator.Tests
 {
@@ -25,16 +32,16 @@ namespace Azure.Generator.Tests
         }
 
         [TestCase(typeof(Guid), ExpectedResult = "writer.WriteStringValue(value);\n")]
-        [TestCase(typeof(IPAddress), ExpectedResult ="writer.WriteStringValue(value.ToString());\n")]
+        [TestCase(typeof(IPAddress), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(ETag), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(AzureLocation), ExpectedResult = "writer.WriteStringValue(value);\n")]
         [TestCase(typeof(ResourceIdentifier), ExpectedResult = "writer.WriteStringValue(value);\n")]
         [TestCase(typeof(ResponseError), ExpectedResult = "((global::System.ClientModel.Primitives.IJsonModel<global::Azure.ResponseError>)value).Write(writer, options);\n")]
         public string ValidateSerializationStatement(Type type)
         {
-            var value = new ParameterProvider("value", $"", type).AsExpression().As(type);
-            var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsExpression().As<Utf8JsonWriter>();
-            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsExpression().As<ModelReaderWriterOptions>();
+            var value = new ParameterProvider("value", $"", type).AsVariable().As(type);
+            var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsVariable().As<Utf8JsonWriter>();
+            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsVariable().As<ModelReaderWriterOptions>();
 
             var statement = AzureClientGenerator.Instance.TypeFactory.SerializeJsonValue(type, value, writer, options, SerializationFormat.Default);
             Assert.IsNotNull(statement);
@@ -50,11 +57,12 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ResponseError), ExpectedResult = "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResponseError>(new global::System.BinaryData(global::System.Text.Encoding.UTF8.GetBytes(element.GetRawText())), options, global::Samples.SamplesContext.Default)")]
         public string ValidateDeserializationExpression(Type type)
         {
-            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsExpression().As<JsonElement>();
-
+            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsVariable().As<JsonElement>();
+            var data = new ParameterProvider("data", $"", typeof(BinaryData)).AsVariable().As<BinaryData>();
             var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
                 type,
                 element,
+                data,
                 new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
                 SerializationFormat.Default);
             Assert.IsNotNull(expression);
@@ -151,12 +159,246 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ResourceIdentifier))]
         [TestCase(typeof(AzureLocation))]
         [TestCase(typeof(ResponseError))]
+        [TestCase(typeof(ClientDiagnostics))]
+        [TestCase(typeof(RequestConditions))]
+        [TestCase(typeof(DataFactoryElement<>))]
+        [TestCase(typeof(DataFactorySecret))]
+        [TestCase(typeof(DataFactoryLinkedServiceReference))]
+        [TestCase(typeof(DataFactorySecretString))]
         public void CreatesFrameworkType(Type expectedType)
         {
             var factory = new TestTypeFactory();
 
             var actual = factory.InvokeCreateFrameworkType(expectedType.FullName!);
             Assert.AreEqual(expectedType, actual);
+        }
+
+        [Test]
+        public void DataFactoryElementWithString()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputPrimitiveType (string)
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
+            var dfeExpression = InputFactory.Model("DfeExpression");
+            var stringType = InputPrimitiveType.String;
+            var unionType = InputFactory.Union("DfeString", [stringType, dfeExpression], externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            Assert.AreEqual(typeof(string), actual.Arguments[0].FrameworkType);
+        }
+
+        [Test]
+        public void DataFactoryElementWithInt()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputPrimitiveType (int)
+            var intType = InputPrimitiveType.Int32;
+            var dfeExpression = InputFactory.Model("DfeExpression");
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
+            var unionType = InputFactory.Union("DfeInt", [intType, dfeExpression], externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            Assert.AreEqual(typeof(int), actual.Arguments[0].FrameworkType);
+        }
+
+        [Test]
+        public void DataFactoryElementWithBool()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputPrimitiveType (bool)
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
+            var dfeExpression = InputFactory.Model("DfeExpression");
+            var boolType = InputPrimitiveType.Boolean;
+            var unionType = InputFactory.Union("DfeBool", [boolType, dfeExpression], externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            Assert.AreEqual(typeof(bool), actual.Arguments[0].FrameworkType);
+        }
+
+        [Test]
+        public void DataFactoryElementWithArray()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputArrayType (string[])
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
+            var dfeExpression = InputFactory.Model("DfeExpression");
+            var arrayType = InputFactory.Array(InputPrimitiveType.String);
+            var unionType = InputFactory.Union("DfeStringArray", [arrayType, dfeExpression], externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            // The inner type should be IList<string>
+            Assert.IsTrue(actual.Arguments[0].IsGenericType);
+        }
+
+        [Test]
+        public void DataFactoryElementNotAppliedForNonDataFactoryExternalType()
+        {
+            // Create a union type with a different external type (not DataFactoryElement)
+            var externalType = new InputExternalTypeMetadata("System.IO.File", null, null);
+            var stringType = InputPrimitiveType.String;
+            var unionType = InputFactory.Union("OtherUnion", [stringType], externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            // Should fall back to default behavior, not create a DataFactoryElement
+            Assert.IsTrue(actual!.Equals(typeof(File)));
+        }
+
+        [Test]
+        public void DataFactoryElementWithModel()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputModelType
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
+            var dfeExpression = InputFactory.Model("DfeExpression");
+            var modelType = InputFactory.Model("TestModel");
+            var unionType = InputFactory.Union("DfeModel", [modelType, dfeExpression], externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            // The inner type should be the model type
+            Assert.AreEqual("TestModel", actual.Arguments[0].Name);
+        }
+
+        [Test]
+        public void DataFactoryElementSerializationUsesWriteObjectValue()
+        {
+            // Verify that DataFactoryElement<string> uses WriteObjectValue for serialization
+            // which internally leverages IJsonModel
+            var type = typeof(DataFactoryElement<string>);
+            var value = new ParameterProvider("value", $"", type).AsVariable().As(type);
+            var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsVariable().As<Utf8JsonWriter>();
+            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsVariable().As<ModelReaderWriterOptions>();
+
+            var statement = AzureClientGenerator.Instance.TypeFactory.SerializeJsonValue(type, value, writer, options, SerializationFormat.Default);
+            Assert.IsNotNull(statement);
+
+            var displayString = statement.ToDisplayString();
+            // Should use WriteObjectValue pattern which internally uses IJsonModel
+            Assert.IsTrue(
+                displayString.Contains("WriteObjectValue") && displayString.Contains("DataFactoryElement"),
+                $"Expected serialization to use WriteObjectValue pattern for DataFactoryElement, but got: {displayString}");
+        }
+
+        [TestCase(typeof(DataFactoryElement<string>), "string", "options")]
+        [TestCase(typeof(DataFactoryElement<string>), "string", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<int>), "int", "options")]
+        [TestCase(typeof(DataFactoryElement<int>), "int", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<bool>), "bool", "options")]
+        [TestCase(typeof(DataFactoryElement<bool>), "bool", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<IList<string>>), "global::System.Collections.Generic.IList<string>", "options")]
+        [TestCase(typeof(DataFactoryElement<IList<string>>), "global::System.Collections.Generic.IList<string>", "customOptions")]
+        public void DataFactoryElementDeserializationUsesDeserializeMethod(Type type, string typeArgument, string optionsName)
+        {
+            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsVariable().As<JsonElement>();
+            var data = new ParameterProvider("data", $"", typeof(BinaryData)).AsVariable().As<BinaryData>();
+            var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
+                type,
+                element,
+                data,
+                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), optionsName)),
+                SerializationFormat.Default);
+            Assert.IsNotNull(expression);
+
+            var displayString = expression.ToDisplayString();
+            Assert.AreEqual(
+                $"global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<{typeArgument}>>(data, {optionsName}, global::Samples.SamplesContext.Default)",
+                displayString);
+        }
+
+        [Test]
+        public void ExternalIdentityOnModelResolvesToFrameworkType()
+        {
+            // Simulate @@alternateType(SomeModel, { identity: "Azure.Core.ResourceIdentifier" }, "csharp")
+            // The InputModelType has External.Identity set to a fully-qualified type name.
+            // Without explicit handling, the property would be silently dropped from generated code.
+            var externalType = new InputExternalTypeMetadata("Azure.Core.ResourceIdentifier", null, null);
+            var model = InputFactory.Model("AliasedModel", externalTypeMetadata: externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(model);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsFrameworkType);
+            Assert.AreEqual(typeof(ResourceIdentifier), actual.FrameworkType);
+        }
+
+        [Test]
+        public void ExternalIdentityOnModelResolvesToDataFactoryType()
+        {
+            // Repro from the issue: @@alternateType(SecretBase, { identity: "Azure.Core.Expressions.DataFactory.DataFactorySecret" }, "csharp")
+            // before the fix, this property would be silently dropped from the generated client.
+            var externalType = new InputExternalTypeMetadata(
+                "Azure.Core.Expressions.DataFactory.DataFactorySecret",
+                null,
+                null);
+            var model = InputFactory.Model("SecretBase", externalTypeMetadata: externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(model);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsFrameworkType);
+            Assert.AreEqual(typeof(DataFactorySecret), actual.FrameworkType);
+        }
+
+        [TestCase("Azure.Core.Expressions.DataFactory.DataFactorySecret", typeof(DataFactorySecret))]
+        [TestCase("Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference", typeof(DataFactoryLinkedServiceReference))]
+        [TestCase("Azure.Core.Expressions.DataFactory.DataFactorySecretString", typeof(DataFactorySecretString))]
+        public void DataFactoryFrameworkTypesAreResolvable(string identity, Type expectedType)
+        {
+            var factory = new TestTypeFactory();
+
+            var actual = factory.InvokeCreateFrameworkType(identity);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+
+        [TestCase(typeof(ETag), false, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
+        [TestCase(typeof(ETag), true, ExpectedResult = "writer.WriteValue(value.Value.ToString());\n")]
+        [TestCase(typeof(ResourceIdentifier), false, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
+        [TestCase(typeof(ResourceIdentifier), true, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
+        public string ValidateXmlSerializationStatement(Type type, bool isNullable)
+        {
+            CSharpType valueType = new CSharpType(type).WithNullable(isNullable);
+            var value = new VariableExpression(valueType, "value");
+            var writer = new ParameterProvider("writer", $"", typeof(XmlWriter)).AsVariable().As<XmlWriter>();
+            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsVariable().As<ModelReaderWriterOptions>();
+
+            var statement = AzureClientGenerator.Instance.TypeFactory.SerializeXmlValue(valueType, value, writer, options, SerializationFormat.Default);
+            Assert.IsNotNull(statement);
+
+            return statement.ToDisplayString();
+        }
+
+        [TestCase(typeof(ETag), false, ExpectedResult = "new global::Azure.ETag(element.Value)")]
+        [TestCase(typeof(ETag), true, ExpectedResult = "new global::Azure.ETag(element.Value)")]
+        [TestCase(typeof(ResourceIdentifier), false, ExpectedResult = "new global::Azure.Core.ResourceIdentifier(element.Value)")]
+        [TestCase(typeof(ResourceIdentifier), true, ExpectedResult = "new global::Azure.Core.ResourceIdentifier(element.Value)")]
+        public string ValidateXmlDeserializationExpression(Type type, bool isNullable)
+        {
+            CSharpType valueType = new CSharpType(type).WithNullable(isNullable);
+            var element = new ParameterProvider("element", $"", typeof(XElement)).AsVariable().As<XElement>();
+            var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeXmlValue(
+                valueType,
+                element,
+                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
+                SerializationFormat.Default);
+            Assert.IsNotNull(expression);
+
+            return expression.ToDisplayString();
         }
     }
 }

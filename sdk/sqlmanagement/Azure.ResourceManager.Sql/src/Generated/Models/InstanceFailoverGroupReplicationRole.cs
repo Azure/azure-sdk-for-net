@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct InstanceFailoverGroupReplicationRole : IEquatable<InstanceFailoverGroupReplicationRole>
     {
         private readonly string _value;
+        /// <summary> Primary. </summary>
+        private const string PrimaryValue = "Primary";
+        /// <summary> Secondary. </summary>
+        private const string SecondaryValue = "Secondary";
 
         /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupReplicationRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InstanceFailoverGroupReplicationRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrimaryValue = "Primary";
-        private const string SecondaryValue = "Secondary";
+            _value = value;
+        }
 
         /// <summary> Primary. </summary>
         public static InstanceFailoverGroupReplicationRole Primary { get; } = new InstanceFailoverGroupReplicationRole(PrimaryValue);
+
         /// <summary> Secondary. </summary>
         public static InstanceFailoverGroupReplicationRole Secondary { get; } = new InstanceFailoverGroupReplicationRole(SecondaryValue);
+
         /// <summary> Determines if two <see cref="InstanceFailoverGroupReplicationRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InstanceFailoverGroupReplicationRole left, InstanceFailoverGroupReplicationRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InstanceFailoverGroupReplicationRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InstanceFailoverGroupReplicationRole left, InstanceFailoverGroupReplicationRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InstanceFailoverGroupReplicationRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InstanceFailoverGroupReplicationRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InstanceFailoverGroupReplicationRole(string value) => new InstanceFailoverGroupReplicationRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InstanceFailoverGroupReplicationRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InstanceFailoverGroupReplicationRole?(string value) => value == null ? null : new InstanceFailoverGroupReplicationRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InstanceFailoverGroupReplicationRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InstanceFailoverGroupReplicationRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

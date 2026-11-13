@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
                             Key = "mContainerKey1",
                             Value = "mContainerValue1",
                         }},
-                    },
+                },
                     new StorageTaskPreviewBlobProperties[]
                     {
                         new StorageTaskPreviewBlobProperties

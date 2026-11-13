@@ -107,7 +107,7 @@ namespace Azure
 
             return format switch
             {
-                HeaderFormat => !IsValidQuotedFormat(_value) ?  $"{QuoteString}{_value}{QuoteString}" : _value,
+                HeaderFormat => !IsValidQuotedFormat(_value) ? $"{QuoteString}{_value}{QuoteString}" : _value,
                 DefaultFormat => _value,
                 _ => throw new ArgumentException("Invalid format string.")
             };
@@ -134,7 +134,8 @@ namespace Azure
             }
         }
 
-        private static bool IsValidQuotedFormat(string value) {
+        private static bool IsValidQuotedFormat(string value)
+        {
             return (value.StartsWith(QuoteString, StringComparison.Ordinal) || value.StartsWith(WeakETagPrefix, StringComparison.Ordinal)) &&
                 value.EndsWith(QuoteString, StringComparison.Ordinal) || value == All._value;
         }

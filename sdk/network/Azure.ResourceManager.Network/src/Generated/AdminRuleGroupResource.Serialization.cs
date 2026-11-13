@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class AdminRuleGroupResource : IJsonModel<AdminRuleGroupData>
     {
-        private static AdminRuleGroupData s_dataDeserializationInstance;
-        private static AdminRuleGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AdminRuleGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AdminRuleGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AdminRuleGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AdminRuleGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AdminRuleGroupData>)Data).Write(writer, options);
 
-        AdminRuleGroupData IJsonModel<AdminRuleGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdminRuleGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AdminRuleGroupData IJsonModel<AdminRuleGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AdminRuleGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdminRuleGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AdminRuleGroupData IPersistableModel<AdminRuleGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdminRuleGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<AdminRuleGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdminRuleGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AdminRuleGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

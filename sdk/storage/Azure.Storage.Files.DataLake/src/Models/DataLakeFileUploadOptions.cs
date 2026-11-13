@@ -43,6 +43,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Umask { get; set; }
 
         /// <summary>
+        /// Options for scheduling the deletion of a path.
+        /// </summary>
+        public DataLakePathScheduleDeletionOptions ScheduleDeletionOptions { get; set; }
+
+        /// <summary>
         /// Optional <see cref="DataLakeRequestConditions"/> to apply to the request.
         /// </summary>
         public DataLakeRequestConditions Conditions { get; set; }

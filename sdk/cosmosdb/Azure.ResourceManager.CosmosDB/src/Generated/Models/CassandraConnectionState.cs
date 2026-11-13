@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CassandraConnectionState : IEquatable<CassandraConnectionState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CassandraConnectionState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CassandraConnectionState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string OKValue = "OK";
         private const string OperatorToDataCenterNetworkErrorValue = "OperatorToDataCenterNetworkError";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string InternalOperatorToDataCenterCertificateErrorValue = "InternalOperatorToDataCenterCertificateError";
         private const string InternalErrorValue = "InternalError";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraConnectionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CassandraConnectionState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static CassandraConnectionState Unknown { get; } = new CassandraConnectionState(UnknownValue);
-        /// <summary> OK. </summary>
+
+        /// <summary> Gets the OK. </summary>
         public static CassandraConnectionState OK { get; } = new CassandraConnectionState(OKValue);
-        /// <summary> OperatorToDataCenterNetworkError. </summary>
+
+        /// <summary> Gets the OperatorToDataCenterNetworkError. </summary>
         public static CassandraConnectionState OperatorToDataCenterNetworkError { get; } = new CassandraConnectionState(OperatorToDataCenterNetworkErrorValue);
-        /// <summary> DatacenterToDatacenterNetworkError. </summary>
+
+        /// <summary> Gets the DatacenterToDatacenterNetworkError. </summary>
         public static CassandraConnectionState DatacenterToDatacenterNetworkError { get; } = new CassandraConnectionState(DatacenterToDatacenterNetworkErrorValue);
-        /// <summary> InternalOperatorToDataCenterCertificateError. </summary>
+
+        /// <summary> Gets the InternalOperatorToDataCenterCertificateError. </summary>
         public static CassandraConnectionState InternalOperatorToDataCenterCertificateError { get; } = new CassandraConnectionState(InternalOperatorToDataCenterCertificateErrorValue);
-        /// <summary> InternalError. </summary>
+
+        /// <summary> Gets the InternalError. </summary>
         public static CassandraConnectionState InternalError { get; } = new CassandraConnectionState(InternalErrorValue);
+
         /// <summary> Determines if two <see cref="CassandraConnectionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CassandraConnectionState left, CassandraConnectionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CassandraConnectionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CassandraConnectionState left, CassandraConnectionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraConnectionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CassandraConnectionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CassandraConnectionState(string value) => new CassandraConnectionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CassandraConnectionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CassandraConnectionState?(string value) => value == null ? null : new CassandraConnectionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CassandraConnectionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CassandraConnectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

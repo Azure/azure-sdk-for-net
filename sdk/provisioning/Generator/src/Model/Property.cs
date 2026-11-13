@@ -23,7 +23,7 @@ public class Property(TypeModel parent, ModelBase propertyType, PropertyInfo? ar
             parent?.Spec?.DocComments.GetSummary(armParameter) :
             parent?.Spec?.DocComments.GetSummary(armMember!);
 
-    
+
     public string FieldName { get => $"_{Name.ToCamelCase()}"; }
     public IList<string>? Path { get; set; }
 

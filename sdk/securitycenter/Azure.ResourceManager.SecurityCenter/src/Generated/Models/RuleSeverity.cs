@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct RuleSeverity : IEquatable<RuleSeverity>
     {
         private readonly string _value;
+        /// <summary> High severity vulnerability requiring immediate attention. </summary>
+        private const string HighValue = "High";
+        /// <summary> Medium severity vulnerability that should be addressed. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> Low severity vulnerability with minimal risk. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Informational finding that does not indicate a vulnerability. </summary>
+        private const string InformationalValue = "Informational";
+        /// <summary> The rule is obsolete and no longer applicable. </summary>
+        private const string ObsoleteValue = "Obsolete";
 
         /// <summary> Initializes a new instance of <see cref="RuleSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RuleSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string HighValue = "High";
-        private const string MediumValue = "Medium";
-        private const string LowValue = "Low";
-        private const string InformationalValue = "Informational";
-        private const string ObsoleteValue = "Obsolete";
-
-        /// <summary> High. </summary>
+        /// <summary> High severity vulnerability requiring immediate attention. </summary>
         public static RuleSeverity High { get; } = new RuleSeverity(HighValue);
-        /// <summary> Medium. </summary>
+
+        /// <summary> Medium severity vulnerability that should be addressed. </summary>
         public static RuleSeverity Medium { get; } = new RuleSeverity(MediumValue);
-        /// <summary> Low. </summary>
+
+        /// <summary> Low severity vulnerability with minimal risk. </summary>
         public static RuleSeverity Low { get; } = new RuleSeverity(LowValue);
-        /// <summary> Informational. </summary>
+
+        /// <summary> Informational finding that does not indicate a vulnerability. </summary>
         public static RuleSeverity Informational { get; } = new RuleSeverity(InformationalValue);
-        /// <summary> Obsolete. </summary>
+
+        /// <summary> The rule is obsolete and no longer applicable. </summary>
         public static RuleSeverity Obsolete { get; } = new RuleSeverity(ObsoleteValue);
+
         /// <summary> Determines if two <see cref="RuleSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RuleSeverity left, RuleSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RuleSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RuleSeverity left, RuleSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RuleSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RuleSeverity(string value) => new RuleSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RuleSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RuleSeverity?(string value) => value == null ? null : new RuleSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RuleSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RuleSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

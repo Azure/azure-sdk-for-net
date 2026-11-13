@@ -19,12 +19,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class EventGridSenderClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "SharedAccessKey";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
         private readonly string _apiVersion;
 
@@ -104,7 +100,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<PublishResult> Send(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
-            Response result = Send(topicName, @event, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Send(topicName, @event, cancellationToken.ToRequestContext());
             return Response.FromValue((PublishResult)result, result);
         }
 
@@ -115,7 +111,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<PublishResult>> SendAsync(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
-            Response result = await SendAsync(topicName, @event, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await SendAsync(topicName, @event, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PublishResult)result, result);
         }
 
@@ -185,7 +181,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual Response<PublishResult> SendEvents(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
             using RequestContent content = BinaryContentHelper.FromEnumerable(events);
-            Response result = SendEvents(topicName, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = SendEvents(topicName, content, cancellationToken.ToRequestContext());
             return Response.FromValue((PublishResult)result, result);
         }
 
@@ -197,7 +193,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual async Task<Response<PublishResult>> SendEventsAsync(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
             using RequestContent content = BinaryContentHelper.FromEnumerable(events);
-            Response result = await SendEventsAsync(topicName, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await SendEventsAsync(topicName, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PublishResult)result, result);
         }
     }

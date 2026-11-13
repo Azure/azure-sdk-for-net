@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct ScmType : IEquatable<ScmType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ScmType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScmType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string DropboxValue = "Dropbox";
         private const string TfsValue = "Tfs";
@@ -37,51 +30,88 @@ namespace Azure.ResourceManager.AppService.Models
         private const string VSOValue = "VSO";
         private const string VstsrmValue = "VSTSRM";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScmType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ScmType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static ScmType None { get; } = new ScmType(NoneValue);
-        /// <summary> Dropbox. </summary>
+
+        /// <summary> Gets the Dropbox. </summary>
         public static ScmType Dropbox { get; } = new ScmType(DropboxValue);
-        /// <summary> Tfs. </summary>
+
+        /// <summary> Gets the Tfs. </summary>
         public static ScmType Tfs { get; } = new ScmType(TfsValue);
-        /// <summary> LocalGit. </summary>
+
+        /// <summary> Gets the LocalGit. </summary>
         public static ScmType LocalGit { get; } = new ScmType(LocalGitValue);
-        /// <summary> GitHub. </summary>
+
+        /// <summary> Gets the GitHub. </summary>
         public static ScmType GitHub { get; } = new ScmType(GitHubValue);
-        /// <summary> CodePlexGit. </summary>
+
+        /// <summary> Gets the CodePlexGit. </summary>
         public static ScmType CodePlexGit { get; } = new ScmType(CodePlexGitValue);
-        /// <summary> CodePlexHg. </summary>
+
+        /// <summary> Gets the CodePlexHg. </summary>
         public static ScmType CodePlexHg { get; } = new ScmType(CodePlexHgValue);
-        /// <summary> BitbucketGit. </summary>
+
+        /// <summary> Gets the BitbucketGit. </summary>
         public static ScmType BitbucketGit { get; } = new ScmType(BitbucketGitValue);
-        /// <summary> BitbucketHg. </summary>
+
+        /// <summary> Gets the BitbucketHg. </summary>
         public static ScmType BitbucketHg { get; } = new ScmType(BitbucketHgValue);
-        /// <summary> ExternalGit. </summary>
+
+        /// <summary> Gets the ExternalGit. </summary>
         public static ScmType ExternalGit { get; } = new ScmType(ExternalGitValue);
-        /// <summary> ExternalHg. </summary>
+
+        /// <summary> Gets the ExternalHg. </summary>
         public static ScmType ExternalHg { get; } = new ScmType(ExternalHgValue);
-        /// <summary> OneDrive. </summary>
+
+        /// <summary> Gets the OneDrive. </summary>
         public static ScmType OneDrive { get; } = new ScmType(OneDriveValue);
-        /// <summary> VSO. </summary>
+
+        /// <summary> Gets the VSO. </summary>
         public static ScmType VSO { get; } = new ScmType(VSOValue);
-        /// <summary> VSTSRM. </summary>
+
+        /// <summary> Gets the Vstsrm. </summary>
         public static ScmType Vstsrm { get; } = new ScmType(VstsrmValue);
+
         /// <summary> Determines if two <see cref="ScmType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScmType left, ScmType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScmType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScmType left, ScmType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScmType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScmType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScmType(string value) => new ScmType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScmType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScmType?(string value) => value == null ? null : new ScmType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScmType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScmType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

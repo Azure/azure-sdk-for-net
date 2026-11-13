@@ -1,19 +1,20 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Files.DataLake.Models;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Collections.Generic;
-using Azure.Storage.Sas;
-using System.ComponentModel;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
+using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -434,14 +435,37 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
 
+            // Build the DFS pipeline from the supplied authentication policy as-is.
+            // For token-credential scenarios, only the inner blob container client gets a
+            // separate pipeline wrapped with SessionAuthenticationPolicy, so DFS endpoint
+            // requests can never route through session auth.
+            HttpPipeline dfsPipeline = options.Build(authentication);
+
+            HttpPipeline blobPipeline = dfsPipeline;
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(options);
+            if (tokenCredential != null)
+            {
+                HttpPipelinePolicy blobAuthentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
+                    _blobUri,
+                    CreateBlobClientOptions(options, clientDiagnostics),
+                    authentication,
+                    dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
+                    tokenCredential,
+                    options.SessionOptions);
+                blobPipeline = options.Build(blobAuthentication);
+            }
+
             _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: options.Build(authentication),
+                pipeline: dfsPipeline,
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: clientDiagnostics,
                 clientOptions: options,
-                customerProvidedKey: options.CustomerProvidedKey);
+                customerProvidedKey: options.CustomerProvidedKey)
+            {
+                BlobPipeline = blobPipeline,
+            };
 
             _containerClient = BlobContainerClientInternals.Create(
                 _blobUri,
@@ -492,18 +516,30 @@ namespace Azure.Storage.Files.DataLake
             FileSystemRestClient dfsFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: dfsUri.AbsoluteUri,
-                resource: "filesystem",
+                endpoint: dfsUri,
+                resource: FileSystemResourceType.Filesystem,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             FileSystemRestClient blobFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
-                pipeline: _clientConfiguration.Pipeline,
-            url: blobUri.AbsoluteUri,
-                resource: "filesystem",
+                pipeline: _clientConfiguration.BlobPipeline,
+                endpoint: blobUri,
+                resource: FileSystemResourceType.Filesystem,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             return (dfsFileSystemRestClient, blobFileSystemRestClient);
+        }
+
+        private static BlobClientOptions CreateBlobClientOptions(
+            DataLakeClientOptions clientOptions,
+            ClientDiagnostics clientDiagnostics)
+        {
+            BlobClientOptions options = new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
+            {
+                Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled },
+            };
+            clientOptions.TransferValidation.CopyTo(options.TransferValidation);
+            return options;
         }
 
         /// <summary>
@@ -516,15 +552,13 @@ namespace Azure.Storage.Files.DataLake
                 Uri uri,
                 DataLakeClientConfiguration clientConfiguration)
             {
-                var options = new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                {
-                    Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
-                };
-                clientConfiguration.TransferValidation.CopyTo(options.TransferValidation);
+                BlobClientOptions options = CreateBlobClientOptions(
+                    clientConfiguration.ClientOptions,
+                    clientConfiguration.ClientDiagnostics);
                 return BlobContainerClient.CreateClient(
                     uri,
                     options,
-                    clientConfiguration.Pipeline);
+                    clientConfiguration.BlobPipeline);
             }
         }
         #endregion ctors
@@ -1189,6 +1223,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response Delete(
             DataLakeRequestConditions conditions = default,
@@ -1247,6 +1291,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
             DataLakeRequestConditions conditions = default,
@@ -1308,6 +1362,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
             DataLakeRequestConditions conditions = default,
@@ -1366,6 +1430,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             DataLakeRequestConditions conditions = default,
@@ -1732,7 +1806,84 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Paths
         /// <summary>
-        /// The <see cref="GetPaths"/>
+        /// The <see cref="GetPathsAsync(DataLakeGetPathsOptions, CancellationToken)"/>
+        /// operation returns an async sequence of paths in this file system.
+        /// Enumerating the paths may make multiple requests to the service
+        /// while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathItem}"/>
+        /// describing the paths in the file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Pageable<PathItem> GetPaths(
+            DataLakeGetPathsOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetPathsAsyncCollection(
+                this,
+                options?.Path,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                options?.StartFrom,
+                $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
+                .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPathsAsync(string, bool, bool, CancellationToken)"/>
+        /// operation returns an async sequence of paths in this file system.  Enumerating
+        /// the paths may make multiple requests to the service while fetching all the
+        /// values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// paths in the file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual AsyncPageable<PathItem> GetPathsAsync(
+            DataLakeGetPathsOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetPathsAsyncCollection(this,
+                options?.Path,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                options?.StartFrom,
+                $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
+            .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPaths(string, bool, bool, CancellationToken)"/>
         /// operation returns an async sequence of paths in this file system.
         /// Enumerating the paths may make multiple requests to the service
         /// while fetching all the values.
@@ -1769,16 +1920,20 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Pageable<PathItem> GetPaths(
-            string path = default,
-            bool recursive = default,
-            bool userPrincipalName = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string path,
+            bool recursive,
+            bool userPrincipalName,
+            CancellationToken cancellationToken) =>
             new GetPathsAsyncCollection(
                 this,
                 path,
                 recursive,
                 userPrincipalName,
+                beginFrom: default,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
                 .ToSyncCollection(cancellationToken);
 
@@ -1820,15 +1975,19 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual AsyncPageable<PathItem> GetPathsAsync(
-            string path = default,
-            bool recursive = default,
-            bool userPrincipalName = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string path,
+            bool recursive,
+            bool userPrincipalName,
+            CancellationToken cancellationToken) =>
             new GetPathsAsyncCollection(this,
                 path,
                 recursive,
                 userPrincipalName,
+                beginFrom: default,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
 
@@ -1839,7 +1998,7 @@ namespace Azure.Storage.Files.DataLake
         /// <paramref name="continuation"/> to start enumeration from the beginning
         /// and the <see cref="PathSegment.Continuation"/> if it's not
         /// empty to make subsequent calls to
-        /// <see cref="GetPathsAsync"/>
+        /// <see cref="GetPathsAsync(DataLakeGetPathsOptions, CancellationToken)"/>
         /// to continue enumerating the paths segment by segment. Paths are
         /// ordered lexicographically by name.
         ///
@@ -1871,6 +2030,9 @@ namespace Azure.Storage.Files.DataLake
         /// An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000,
         /// the response will include up to 5,000 items.
         /// </param>
+        /// <param name="beginFrom">
+        /// Optional. A relative path within the specified directory where the listing will start from.
+        /// </param>
         /// <param name="operationName">
         /// The name of the operation.
         /// </param>
@@ -1897,6 +2059,7 @@ namespace Azure.Storage.Files.DataLake
             bool userPrincipalName,
             string continuation,
             int? maxResults,
+            string beginFrom,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
@@ -1916,27 +2079,29 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response;
+                    Response<PathList> response;
 
                     if (async)
                     {
-                        response = await FileSystemRestClient.ListPathsAsync(
+                        response = await FileSystemRestClient.GetPathsAsync(
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
                             maxResults: maxResults,
                             upn: userPrincipalName,
+                            beginFrom: beginFrom,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = FileSystemRestClient.ListPaths(
+                        response = FileSystemRestClient.GetPaths(
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
                             maxResults: maxResults,
                             upn: userPrincipalName,
+                            beginFrom: beginFrom,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3377,7 +3542,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3409,7 +3574,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -3440,7 +3605,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="DataLakeSasBuilder"/> on successfully deleting.
@@ -3470,7 +3635,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -3590,14 +3755,14 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> response;
+                    Response<ListBlobsHierarchySegmentResult> response;
 
                     /* Note that the query parameter showonly=deleted is hardcoded in the generated code.
                      * Once we migrate to the blob endpoint, we will need to specify showonly=deleted here.
                      */
                     if (async)
                     {
-                        response = await BlobFileSystemRestClient.ListBlobHierarchySegmentAsync(
+                        response = await BlobFileSystemRestClient.GetBlobHierarchySegmentAsync(
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3610,7 +3775,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     else
                     {
-                        response = BlobFileSystemRestClient.ListBlobHierarchySegment(
+                        response = BlobFileSystemRestClient.GetBlobHierarchySegment(
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3726,7 +3891,7 @@ namespace Azure.Storage.Files.DataLake
                     scope.Start();
                     DataLakePathClient pathClient = GetPathClient(deletedPath);
                     string undeleteSource = $"?{Constants.DataLake.DeletionId}={deletionId}";
-                    ResponseWithHeaders<PathUndeleteHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -3745,19 +3910,20 @@ namespace Azure.Storage.Files.DataLake
                     }
 
                     DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathClient.Uri);
-                    if (response.Headers.ResourceType == Constants.DataLake.DirectoryResourceType)
+                    if (response.Headers.TryGetValue(DataLakeExtensions.ResourceTypeHeader, out string resourceType)
+                        && resourceType == Constants.DataLake.DirectoryResourceType)
                     {
                         DataLakeDirectoryClient directoryClient = GetDirectoryClient(uriBuilder.DirectoryOrFilePath);
                         return Response.FromValue(
                             (DataLakePathClient)directoryClient,
-                            response.GetRawResponse());
+                            response);
                     }
                     else
                     {
                         DataLakeFileClient fileClient = GetFileClient(uriBuilder.DirectoryOrFilePath);
                         return Response.FromValue(
                             (DataLakePathClient)fileClient,
-                            response.GetRawResponse());
+                            response);
                     }
                 }
                 catch (Exception ex)

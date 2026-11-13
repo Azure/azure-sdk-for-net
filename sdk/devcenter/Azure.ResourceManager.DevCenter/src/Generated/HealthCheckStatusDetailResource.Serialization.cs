@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevCenter
 {
+    /// <summary></summary>
     public partial class HealthCheckStatusDetailResource : IJsonModel<HealthCheckStatusDetailData>
     {
-        private static HealthCheckStatusDetailData s_dataDeserializationInstance;
-        private static HealthCheckStatusDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HealthCheckStatusDetailData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HealthCheckStatusDetailData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HealthCheckStatusDetailData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthCheckStatusDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthCheckStatusDetailData>)Data).Write(writer, options);
 
-        HealthCheckStatusDetailData IJsonModel<HealthCheckStatusDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthCheckStatusDetailData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthCheckStatusDetailData IJsonModel<HealthCheckStatusDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HealthCheckStatusDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthCheckStatusDetailData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HealthCheckStatusDetailData IPersistableModel<HealthCheckStatusDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthCheckStatusDetailData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<HealthCheckStatusDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthCheckStatusDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthCheckStatusDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

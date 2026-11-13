@@ -16,23 +16,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForVaultContent"/>. </summary>
         /// <param name="sourceTierType"> Source tier for the request. </param>
         /// <param name="targetTierType"> target tier for the request. </param>
-        public FetchTieringCostSavingsInfoForVaultContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType) : base(sourceTierType, targetTierType)
+        public FetchTieringCostSavingsInfoForVaultContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType) : base(sourceTierType, targetTierType, "FetchTieringCostSavingsInfoForVaultRequest")
         {
-            ObjectType = "FetchTieringCostSavingsInfoForVaultRequest";
         }
 
         /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForVaultContent"/>. </summary>
         /// <param name="sourceTierType"> Source tier for the request. </param>
         /// <param name="targetTierType"> target tier for the request. </param>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FetchTieringCostSavingsInfoForVaultContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sourceTierType, targetTierType, objectType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "FetchTieringCostSavingsInfoForVaultRequest";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForVaultContent"/> for deserialization. </summary>
-        internal FetchTieringCostSavingsInfoForVaultContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FetchTieringCostSavingsInfoForVaultContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sourceTierType, targetTierType, objectType, additionalBinaryDataProperties)
         {
         }
     }

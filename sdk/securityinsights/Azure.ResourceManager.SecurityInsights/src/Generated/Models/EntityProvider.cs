@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct EntityProvider : IEquatable<EntityProvider>
     {
         private readonly string _value;
+        /// <summary> ActiveDirectory. </summary>
+        private const string ActiveDirectoryValue = "ActiveDirectory";
+        /// <summary> AzureActiveDirectory. </summary>
+        private const string AzureActiveDirectoryValue = "AzureActiveDirectory";
 
         /// <summary> Initializes a new instance of <see cref="EntityProvider"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityProvider(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveDirectoryValue = "ActiveDirectory";
-        private const string AzureActiveDirectoryValue = "AzureActiveDirectory";
+            _value = value;
+        }
 
         /// <summary> ActiveDirectory. </summary>
         public static EntityProvider ActiveDirectory { get; } = new EntityProvider(ActiveDirectoryValue);
+
         /// <summary> AzureActiveDirectory. </summary>
         public static EntityProvider AzureActiveDirectory { get; } = new EntityProvider(AzureActiveDirectoryValue);
+
         /// <summary> Determines if two <see cref="EntityProvider"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityProvider left, EntityProvider right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntityProvider"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityProvider left, EntityProvider right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityProvider"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntityProvider"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntityProvider(string value) => new EntityProvider(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntityProvider"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntityProvider?(string value) => value == null ? null : new EntityProvider(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntityProvider other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntityProvider other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

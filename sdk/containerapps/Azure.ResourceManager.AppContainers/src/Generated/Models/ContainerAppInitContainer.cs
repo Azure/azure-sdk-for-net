@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="env"> Container environment variables. </param>
         /// <param name="resources"> Container resource requirements. </param>
         /// <param name="volumeMounts"> Container volume mounts. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppInitContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(image, name, command, args, env, resources, volumeMounts, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppInitContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(image, name, command, args, env, resources, volumeMounts, additionalBinaryDataProperties)
         {
         }
     }

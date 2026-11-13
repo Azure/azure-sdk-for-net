@@ -243,12 +243,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < otherTokens.Length; ++index)
             {
-                Assert.That(otherTokens[index], Is.Not.Null, $"The token at index `{ index }` should have been produced.");
-                Assert.That(firstCallToken, Is.Not.SameAs(otherTokens[index]), $"The token at index `{ index } ` should not have matched the first call instance.");
+                Assert.That(otherTokens[index], Is.Not.Null, $"The token at index `{index}` should have been produced.");
+                Assert.That(firstCallToken, Is.Not.SameAs(otherTokens[index]), $"The token at index `{index} ` should not have matched the first call instance.");
 
                 if (index > 0)
                 {
-                    Assert.That(otherTokens[0], Is.SameAs(otherTokens[index]), $"The other tokens should all be the same instance.  The token at index `{ index } ` did not match index `0`.");
+                    Assert.That(otherTokens[0], Is.SameAs(otherTokens[index]), $"The other tokens should all be the same instance.  The token at index `{index} ` did not match index `0`.");
                 }
             }
 

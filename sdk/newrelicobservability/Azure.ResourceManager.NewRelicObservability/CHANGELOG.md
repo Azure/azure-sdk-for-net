@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2026-09-01)
+
+### Features Added
+
+- Upgraded the service API version to `2026-06-01`.
+
+## 1.2.0-beta.2 (2026-06-16)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.2.0-beta.1 (2025-11-05)
+
+### Features Added
+
+- Upgraded the api-version to "2025-05-01-preview".
+
+### Other Changes
+
+- Fixed model naming compliance issues by renaming models that violated Azure SDK guidelines:
+  - Renamed `SaaSData` to `NewRelicObservabilitySaaSInfo`
+  - Renamed `SaaSResourceDetailsResponse` to `NewRelicObservabilitySaaSResourceDetailsResult`
+  - Renamed `LatestLinkedSaaSResponse` to `NewRelicObservabilityLatestLinkedSaaSResult`
 
 ## 1.1.1 (2025-03-11)
 

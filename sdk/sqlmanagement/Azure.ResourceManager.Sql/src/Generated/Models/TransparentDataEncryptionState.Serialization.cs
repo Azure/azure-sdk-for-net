@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class TransparentDataEncryptionStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this TransparentDataEncryptionState value) => value switch
         {
             TransparentDataEncryptionState.Enabled => "Enabled",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TransparentDataEncryptionState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static TransparentDataEncryptionState ToTransparentDataEncryptionState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return TransparentDataEncryptionState.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return TransparentDataEncryptionState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return TransparentDataEncryptionState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return TransparentDataEncryptionState.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TransparentDataEncryptionState value.");
         }
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class BlobContainerResource : IJsonModel<BlobContainerData>
     {
-        private static BlobContainerData s_dataDeserializationInstance;
-        private static BlobContainerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BlobContainerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BlobContainerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BlobContainerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BlobContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BlobContainerData>)Data).Write(writer, options);
 
-        BlobContainerData IJsonModel<BlobContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BlobContainerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BlobContainerData IJsonModel<BlobContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BlobContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BlobContainerData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BlobContainerData IPersistableModel<BlobContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BlobContainerData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<BlobContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BlobContainerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BlobContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

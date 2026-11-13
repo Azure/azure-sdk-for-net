@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
-using _Specs_.Azure.Core.Basic;
+using Specs.Azure.Core.Basic;
 using Azure;
 using Azure.Core;
 using NUnit.Framework;
@@ -33,7 +33,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
         [SpectorTest]
         public Task Azure_Core_Basic_createOrReplace() => Test(async (host) =>
         {
-            User response = await new BasicClient(host, null).CreateOrReplaceAsync(1, new User("Madge"));
+            User response = await new BasicClient(host, null).CreateOrReplaceAsync(1, new User { Name = "Madge" });
             Assert.AreEqual("Madge", response.Name);
         });
 

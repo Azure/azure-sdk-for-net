@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The SensitivityLabelRank. </summary>
+    /// <summary></summary>
     public enum SensitivityLabelRank
     {
         /// <summary> None. </summary>

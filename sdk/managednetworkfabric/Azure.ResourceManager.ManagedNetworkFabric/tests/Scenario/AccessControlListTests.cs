@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -31,10 +31,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricAccessControlListData data = new NetworkFabricAccessControlListData(new AzureLocation("eastUs"))
+            NetworkFabricAccessControlListData data = new NetworkFabricAccessControlListData(new AzureLocation("eastUs"), NetworkFabricConfigurationType.File)
             {
                 Annotation = "annotation",
-                ConfigurationType = NetworkFabricConfigurationType.File,
                 AclsUri = new Uri("https://ACL-Storage-URL"),
                 DefaultAction = CommunityActionType.Permit,
                 MatchConfigurations =
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     {
                         MatchConfigurationName = "example-match",
                         SequenceNumber = 123,
-                        IPAddressType = NetworkFabricIPAddressType.IPv4,
+                        IpAddressType = NetworkFabricIPAddressType.IPv4,
                         MatchConditions =
                         {
                             new AccessControlListMatchCondition()
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                 {
                                 "0xff00-0xffff"
                                 },
-                            IPLengths =
+                            IpLengths =
                                 {
                                 "4094-9214"
                                 },
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                 {
                                 "32"
                                 },
-                            PortCondition = new AccessControlListPortCondition(Layer4Protocol.Tcp)
+                            PortCondition = new AccessControlListPortCondition(Layer4Protocol.TCP)
                             {
                                 Flags =
                                     {
@@ -258,15 +257,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                     "example-vlanGroup"
                                     },
                             },
-                            IPCondition = new IPMatchCondition()
+                            IpCondition = new IPMatchCondition()
                             {
-                                SourceDestinationType = SourceDestinationType.SourceIP,
+                                Type = SourceDestinationType.SourceIP,
                                 PrefixType = IPMatchConditionPrefixType.Prefix,
-                                IPPrefixValues =
+                                IpPrefixValues =
                                     {
                                     "10.20.20.20/12"
                                     },
-                                IPGroupNames =
+                                IpGroupNames =
                                     {
                                     "example-ipGroup"
                                     },
@@ -277,7 +276,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         {
                             new AccessControlListAction()
                                 {
-                                    AclActionType = AclActionType.Count,
+                                    Type = AclActionType.Count,
                                     CounterName = "example-counter",
                                 }
                         },
@@ -287,13 +286,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     {
                         new CommonDynamicMatchConfiguration()
                         {
-                            IPGroups =
+                            IpGroups =
                             {
                                 new MatchConfigurationIPGroupProperties()
                                 {
                                     Name = "example-ipGroup",
-                                    IPAddressType = NetworkFabricIPAddressType.IPv4,
-                                    IPPrefixes =
+                                    IpAddressType = NetworkFabricIPAddressType.IPv4,
+                                    IpPrefixes =
                                         {
                                         "10.20.3.1/20"
                                         },

@@ -4,8 +4,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Core;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerChaosContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

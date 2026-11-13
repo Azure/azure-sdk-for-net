@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Extra Parameters specific to each Service Provider. </summary>
     public partial class BotServiceProviderParameter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BotServiceProviderParameter"/>. </summary>
-        internal BotServiceProviderParameter()
+        public BotServiceProviderParameter()
         {
         }
 
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="helpUri"> Help Url for the  Service Provider. </param>
         /// <param name="default"> Default Name for the Service Provider. </param>
         /// <param name="metadata"> Meta data for the Service Provider. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotServiceProviderParameter(string name, string serviceProviderParameterType, string displayName, string description, Uri helpUri, string @default, ServiceProviderParameterMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BotServiceProviderParameter(string name, string serviceProviderParameterType, string displayName, string description, Uri helpUri, string @default, ServiceProviderParameterMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ServiceProviderParameterType = serviceProviderParameterType;
@@ -68,27 +39,37 @@ namespace Azure.ResourceManager.BotService.Models
             HelpUri = helpUri;
             Default = @default;
             Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Service Provider. </summary>
         public string Name { get; }
+
         /// <summary> Type of the Service Provider. </summary>
         public string ServiceProviderParameterType { get; }
+
         /// <summary> Display Name of the Service Provider. </summary>
         public string DisplayName { get; }
+
         /// <summary> Description of the Service Provider. </summary>
         public string Description { get; }
+
         /// <summary> Help Url for the  Service Provider. </summary>
         public Uri HelpUri { get; }
+
         /// <summary> Default Name for the Service Provider. </summary>
         public string Default { get; }
+
         /// <summary> Meta data for the Service Provider. </summary>
         internal ServiceProviderParameterMetadata Metadata { get; }
+
         /// <summary> Whether required the constraints of the bot meta data. </summary>
         public bool? IsRequired
         {
-            get => Metadata?.IsRequired;
+            get
+            {
+                return Metadata is null ? default : Metadata.IsRequired;
+            }
         }
     }
 }

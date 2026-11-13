@@ -7,42 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Provisioning state. </summary>
+    /// <summary>
+    /// C# compatibility enum surfaced by the previous AutoRest SDK for association provisioning state.
+    /// Kept in client.tsp and applied with `@@alternateType` so the OpenAPI output remains unchanged.
+    /// </summary>
     public readonly partial struct AssociationEntityProvisioningState : IEquatable<AssociationEntityProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Created. </summary>
+        private const string CreatedValue = "created";
 
         /// <summary> Initializes a new instance of <see cref="AssociationEntityProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AssociationEntityProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CreatedValue = "created";
-
-        /// <summary> created. </summary>
+        /// <summary> Created. </summary>
         public static AssociationEntityProvisioningState Created { get; } = new AssociationEntityProvisioningState(CreatedValue);
+
         /// <summary> Determines if two <see cref="AssociationEntityProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AssociationEntityProvisioningState left, AssociationEntityProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AssociationEntityProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AssociationEntityProvisioningState left, AssociationEntityProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AssociationEntityProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AssociationEntityProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AssociationEntityProvisioningState(string value) => new AssociationEntityProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AssociationEntityProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AssociationEntityProvisioningState?(string value) => value == null ? null : new AssociationEntityProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AssociationEntityProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AssociationEntityProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

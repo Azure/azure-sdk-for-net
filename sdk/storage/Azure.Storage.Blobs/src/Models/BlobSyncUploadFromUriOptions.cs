@@ -81,5 +81,11 @@ namespace Azure.Storage.Blobs.Models
         /// Used to indicate the intent of the request.
         /// </summary>
         public FileShareTokenIntent? SourceShareTokenIntent { get; set; }
+
+        /// <summary>
+        /// Optional. Specifies the source customer provided key to use to encrypt the source blob.
+        /// Applicable only for service version 2026-02-06 or later.
+        /// </summary>
+        public CustomerProvidedKey? SourceCustomerProvidedKey { get; set; }
     }
 }

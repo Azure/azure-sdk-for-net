@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Subscription information. </summary>
     public partial class MarketplaceSubscription
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSubscription"/>. </summary>
         internal MarketplaceSubscription()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>
         /// <param name="state"> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSubscription(string id, string subscriptionId, string displayName, MarketplaceSubscriptionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceSubscription(string id, string subscriptionId, string displayName, MarketplaceSubscriptionState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SubscriptionId = subscriptionId;
             DisplayName = displayName;
             State = state;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </summary>
         public string Id { get; }
+
         /// <summary> The subscription ID. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> The subscription display name. </summary>
         public string DisplayName { get; }
+
         /// <summary> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </summary>
         public MarketplaceSubscriptionState? State { get; }
     }

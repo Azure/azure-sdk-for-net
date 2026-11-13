@@ -1,15 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using Azure.Core;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
+
+#pragma warning  disable SA1402 // File may only contain a single class, struct, or interface
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("KeywordTokenizerV2")]
-    [CodeGenSerialization(nameof(BufferSize), "bufferSize")]
-    public partial class KeywordTokenizer : IUtf8JsonSerializable
+    [Typespec.CodeGenType("KeywordTokenizerV2")]
+    internal partial class InternalKeywordTokenizerV2 { }
+
+    [Typespec.CodeGenType("KeywordTokenizer")]
+    [Typespec.CodeGenSerialization(nameof(BufferSize), "bufferSize")]
+    public partial class KeywordTokenizer
     {
+        /// <summary> Initializes a new instance of <see cref="KeywordTokenizer"/> for deserialization. </summary>
+        internal KeywordTokenizer()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of KeywordTokenizer.
         /// </summary>
@@ -22,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ODataType = "#Microsoft.Azure.Search.KeywordTokenizerV2";
+            OdataType = "#Microsoft.Azure.Search.KeywordTokenizerV2";
         }
 
         /// <summary>
@@ -39,38 +54,35 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         public int? MaxTokenLength { get; set; }
 
-        // Use global scope to fully qualify name to work around bug in generator currently.
-        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(ODataType);
-
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-
-            if (BufferSize != null)
+            string format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("bufferSize");
+                throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(BufferSize))
+            {
+                writer.WritePropertyName("bufferSize"u8);
                 writer.WriteNumberValue(BufferSize.Value);
             }
-
-            if (MaxTokenLength != null)
+            if (Optional.IsDefined(MaxTokenLength))
             {
-                writer.WritePropertyName("maxTokenLength");
+                writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-
-            writer.WriteEndObject();
         }
 
-        internal static KeywordTokenizer DeserializeKeywordTokenizer(JsonElement element)
+        internal static KeywordTokenizer DeserializeKeywordTokenizer(JsonElement element, ModelReaderWriterOptions options)
         {
             int? bufferSize = default;
             int? maxTokenLength = default;
             string odataType = default;
             string name = default;
+            IDictionary<string, BinaryData> additionalProperties = new Dictionary<string, BinaryData>();
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
@@ -105,13 +117,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalProperties.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
 
-            return new KeywordTokenizer(name)
+            return new KeywordTokenizer(odataType, name, additionalProperties, bufferSize)
             {
-                ODataType = odataType,
-                BufferSize = bufferSize,
-                MaxTokenLength = maxTokenLength,
+                MaxTokenLength = maxTokenLength
             };
         }
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Purview
 {
+    /// <summary></summary>
     public partial class PurviewPrivateEndpointConnectionResource : IJsonModel<PurviewPrivateEndpointConnectionData>
     {
-        private static PurviewPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static PurviewPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PurviewPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PurviewPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PurviewPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PurviewPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        PurviewPrivateEndpointConnectionData IJsonModel<PurviewPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PurviewPrivateEndpointConnectionData IJsonModel<PurviewPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PurviewPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewPrivateEndpointConnectionData>(Data, options, AzureResourceManagerPurviewContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PurviewPrivateEndpointConnectionData IPersistableModel<PurviewPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(data, options, AzureResourceManagerPurviewContext.Default);
 
-        string IPersistableModel<PurviewPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PurviewPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -182,7 +182,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             var message = new ServiceBusMessage();
             Assert.IsTrue(message.Body.ToMemory().IsEmpty);
 
-            message = new ServiceBusMessage((BinaryData) null);
+            message = new ServiceBusMessage((BinaryData)null);
             Assert.IsTrue(message.Body.ToMemory().IsEmpty);
         }
 

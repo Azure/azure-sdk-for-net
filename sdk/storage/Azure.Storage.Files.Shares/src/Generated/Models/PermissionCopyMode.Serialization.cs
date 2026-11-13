@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class PermissionCopyModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PermissionCopyMode value) => value switch
         {
             PermissionCopyMode.Source => "source",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PermissionCopyMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PermissionCopyMode ToPermissionCopyMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "source")) return PermissionCopyMode.Source;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "override")) return PermissionCopyMode.Override;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "source"))
+            {
+                return PermissionCopyMode.Source;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "override"))
+            {
+                return PermissionCopyMode.Override;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PermissionCopyMode value.");
         }
     }

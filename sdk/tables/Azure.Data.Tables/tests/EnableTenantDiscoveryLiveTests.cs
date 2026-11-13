@@ -35,5 +35,5 @@ namespace Azure.Data.Tables.Tests
             (await client.QueryAsync<TableEntity>().ToEnumerableAsync()).ToList();
             (await service.QueryAsync().ToEnumerableAsync()).ToList();
         }
-   }
+    }
 }

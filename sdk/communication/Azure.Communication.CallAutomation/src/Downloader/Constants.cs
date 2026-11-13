@@ -35,5 +35,21 @@ namespace Azure.Communication.CallAutomation
             public const string ContentRange = "Content-Range";
             public const string XMsHost = XMsPrefix + "host";
         }
+
+        /// <summary>
+        /// Recording URL validation values.
+        /// </summary>
+        internal static class RecordingUrlValidation
+        {
+            /// <summary>
+            /// Allowed recording endpoint host suffixes.
+            /// </summary>
+            internal static readonly string[] AllowedHostSuffixes = new[]
+            {
+                ".asm.skype.com",
+                ".asyncgw.teams.microsoft.com",
+                ".ams.gov.teams.microsoft.us",
+            };
+        }
     }
 }

@@ -8,8 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
 using Azure.Messaging.EventHubs.Tests;
+using Azure.Storage.Blobs;
 
 namespace Azure.Messaging.EventHubs.Stress;
 

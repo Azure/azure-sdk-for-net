@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The SqlSecurityAlertPolicyName. </summary>
+    /// <summary></summary>
     public readonly partial struct SqlSecurityAlertPolicyName : IEquatable<SqlSecurityAlertPolicyName>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
 
         /// <summary> Initializes a new instance of <see cref="SqlSecurityAlertPolicyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlSecurityAlertPolicyName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static SqlSecurityAlertPolicyName Default { get; } = new SqlSecurityAlertPolicyName(DefaultValue);
+
         /// <summary> Determines if two <see cref="SqlSecurityAlertPolicyName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlSecurityAlertPolicyName left, SqlSecurityAlertPolicyName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlSecurityAlertPolicyName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlSecurityAlertPolicyName left, SqlSecurityAlertPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlSecurityAlertPolicyName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlSecurityAlertPolicyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlSecurityAlertPolicyName(string value) => new SqlSecurityAlertPolicyName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlSecurityAlertPolicyName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlSecurityAlertPolicyName?(string value) => value == null ? null : new SqlSecurityAlertPolicyName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlSecurityAlertPolicyName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlSecurityAlertPolicyName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

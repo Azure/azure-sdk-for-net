@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ConsistencyModeType : IEquatable<ConsistencyModeType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConsistencyModeType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConsistencyModeType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CrashConsistentValue = "CrashConsistent";
         private const string FileSystemConsistentValue = "FileSystemConsistent";
         private const string ApplicationConsistentValue = "ApplicationConsistent";
 
-        /// <summary> CrashConsistent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsistencyModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConsistencyModeType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the CrashConsistent. </summary>
         public static ConsistencyModeType CrashConsistent { get; } = new ConsistencyModeType(CrashConsistentValue);
-        /// <summary> FileSystemConsistent. </summary>
+
+        /// <summary> Gets the FileSystemConsistent. </summary>
         public static ConsistencyModeType FileSystemConsistent { get; } = new ConsistencyModeType(FileSystemConsistentValue);
-        /// <summary> ApplicationConsistent. </summary>
+
+        /// <summary> Gets the ApplicationConsistent. </summary>
         public static ConsistencyModeType ApplicationConsistent { get; } = new ConsistencyModeType(ApplicationConsistentValue);
+
         /// <summary> Determines if two <see cref="ConsistencyModeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConsistencyModeType left, ConsistencyModeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConsistencyModeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConsistencyModeType left, ConsistencyModeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsistencyModeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConsistencyModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConsistencyModeType(string value) => new ConsistencyModeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConsistencyModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConsistencyModeType?(string value) => value == null ? null : new ConsistencyModeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConsistencyModeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConsistencyModeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

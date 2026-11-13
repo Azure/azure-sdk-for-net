@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the event properties. </summary>
     public partial class DeviceRegistryEventBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryEventBase"/>. </summary>
         /// <param name="name"> The name of the event. </param>
@@ -63,27 +35,25 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="eventNotifier"> The address of the notifier of the event in the asset (e.g. URL) so that a client can access the event on the asset. </param>
         /// <param name="eventConfiguration"> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
         /// <param name="topic"> Object that describes the topic information for the specific event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryEventBase(string name, string eventNotifier, string eventConfiguration, DeviceRegistryTopic topic, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceRegistryEventBase(string name, string eventNotifier, string eventConfiguration, DeviceRegistryTopic topic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             EventNotifier = eventNotifier;
             EventConfiguration = eventConfiguration;
             Topic = topic;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryEventBase"/> for deserialization. </summary>
-        internal DeviceRegistryEventBase()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the event. </summary>
         public string Name { get; set; }
+
         /// <summary> The address of the notifier of the event in the asset (e.g. URL) so that a client can access the event on the asset. </summary>
         public string EventNotifier { get; set; }
+
         /// <summary> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </summary>
         public string EventConfiguration { get; set; }
+
         /// <summary> Object that describes the topic information for the specific event. </summary>
         public DeviceRegistryTopic Topic { get; set; }
     }

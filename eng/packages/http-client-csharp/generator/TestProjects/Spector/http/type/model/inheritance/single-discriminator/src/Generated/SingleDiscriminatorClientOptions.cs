@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     public partial class SingleDiscriminatorClientOptions : ClientOptions
     {
+        public SingleDiscriminatorClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal SingleDiscriminatorClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

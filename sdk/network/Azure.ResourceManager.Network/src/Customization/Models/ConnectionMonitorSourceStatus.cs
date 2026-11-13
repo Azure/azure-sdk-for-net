@@ -8,46 +8,38 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Status of connection monitor source. </summary>
+    /// <summary> Connection monitor source status. </summary>
+    // The legacy query schema is unreachable in the current C# input; deleting this partial removes the released type.
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This legacy query status is not supported by the current connection monitor API.")]
     public readonly partial struct ConnectionMonitorSourceStatus : IEquatable<ConnectionMonitorSourceStatus>
     {
         private readonly string _value;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSourceStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectionMonitorSourceStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+        /// <param name="value"> The value. </param>
+        public ConnectionMonitorSourceStatus(string value) => _value = value;
 
-        private const string UnknownValue = "Unknown";
-        private const string ActiveValue = "Active";
-        private const string InactiveValue = "Inactive";
-
-        /// <summary> Unknown. </summary>
-        public static ConnectionMonitorSourceStatus Unknown { get; } = new ConnectionMonitorSourceStatus(UnknownValue);
         /// <summary> Active. </summary>
-        public static ConnectionMonitorSourceStatus Active { get; } = new ConnectionMonitorSourceStatus(ActiveValue);
+        public static ConnectionMonitorSourceStatus Active { get; } = new ConnectionMonitorSourceStatus("Active");
         /// <summary> Inactive. </summary>
-        public static ConnectionMonitorSourceStatus Inactive { get; } = new ConnectionMonitorSourceStatus(InactiveValue);
-        /// <summary> Determines if two <see cref="ConnectionMonitorSourceStatus"/> values are the same. </summary>
-        public static bool operator ==(ConnectionMonitorSourceStatus left, ConnectionMonitorSourceStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ConnectionMonitorSourceStatus"/> values are not the same. </summary>
-        public static bool operator !=(ConnectionMonitorSourceStatus left, ConnectionMonitorSourceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionMonitorSourceStatus"/>. </summary>
-        public static implicit operator ConnectionMonitorSourceStatus(string value) => new ConnectionMonitorSourceStatus(value);
+        public static ConnectionMonitorSourceStatus Inactive { get; } = new ConnectionMonitorSourceStatus("Inactive");
+        /// <summary> Unknown. </summary>
+        public static ConnectionMonitorSourceStatus Unknown { get; } = new ConnectionMonitorSourceStatus("Unknown");
 
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConnectionMonitorSourceStatus other && Equals(other);
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool Equals(ConnectionMonitorSourceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <inheritdoc/>
+        public override bool Equals(object obj) => obj is ConnectionMonitorSourceStatus other && Equals(other);
+        /// <inheritdoc/>
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> Compares two <see cref="ConnectionMonitorSourceStatus"/> values for equality. </summary>
+        public static bool operator ==(ConnectionMonitorSourceStatus left, ConnectionMonitorSourceStatus right) => left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ConnectionMonitorSourceStatus"/>. </summary>
+        public static implicit operator ConnectionMonitorSourceStatus(string value) => new ConnectionMonitorSourceStatus(value);
+        /// <summary> Compares two <see cref="ConnectionMonitorSourceStatus"/> values for inequality. </summary>
+        public static bool operator !=(ConnectionMonitorSourceStatus left, ConnectionMonitorSourceStatus right) => !left.Equals(right);
+        /// <inheritdoc/>
+        public override string ToString() => _value ?? string.Empty;
     }
 }

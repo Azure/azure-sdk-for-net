@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct EventDefinitionKind : IEquatable<EventDefinitionKind>
     {
         private readonly string _value;
+        /// <summary> Inline. </summary>
+        private const string InlineValue = "Inline";
 
         /// <summary> Initializes a new instance of <see cref="EventDefinitionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventDefinitionKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InlineValue = "Inline";
+            _value = value;
+        }
 
         /// <summary> Inline. </summary>
         public static EventDefinitionKind Inline { get; } = new EventDefinitionKind(InlineValue);
+
         /// <summary> Determines if two <see cref="EventDefinitionKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventDefinitionKind left, EventDefinitionKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventDefinitionKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventDefinitionKind left, EventDefinitionKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventDefinitionKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventDefinitionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventDefinitionKind(string value) => new EventDefinitionKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventDefinitionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventDefinitionKind?(string value) => value == null ? null : new EventDefinitionKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventDefinitionKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventDefinitionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

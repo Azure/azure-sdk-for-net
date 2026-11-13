@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WorkflowRunActionRepetitionResource : IJsonModel<WorkflowRunActionRepetitionDefinitionData>
     {
-        private static WorkflowRunActionRepetitionDefinitionData s_dataDeserializationInstance;
-        private static WorkflowRunActionRepetitionDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkflowRunActionRepetitionDefinitionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkflowRunActionRepetitionDefinitionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkflowRunActionRepetitionDefinitionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkflowRunActionRepetitionDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionRepetitionDefinitionData>)Data).Write(writer, options);
 
-        WorkflowRunActionRepetitionDefinitionData IJsonModel<WorkflowRunActionRepetitionDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionRepetitionDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkflowRunActionRepetitionDefinitionData IJsonModel<WorkflowRunActionRepetitionDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowRunActionRepetitionDefinitionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkflowRunActionRepetitionDefinitionData IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunActionRepetitionDefinitionData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunActionRepetitionDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

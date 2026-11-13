@@ -1,0 +1,1153 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.EmitterRpc;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+
+namespace Azure.Generator.Management.Visitors
+{
+    /// <summary>
+    /// Repairs model factory constructor calls after visitors change the current model shape.
+    /// Used from <see cref="ManagementClientGenerator.GetWriter(TypeProvider)"/> because some compatibility overloads are
+    /// synthesized from LastContractView after normal visitors have finished.
+    /// </summary>
+    internal static class ModelFactoryBackwardCompatHelper
+    {
+        internal static void FixModelFactoryConstructorCalls(IReadOnlyList<MethodProvider> methods)
+        {
+            foreach (var method in methods)
+            {
+                if (IsBackwardCompatMethod(method) || method.BodyStatements is null)
+                {
+                    continue;
+                }
+
+                var updatedBodyStatements = new List<MethodBodyStatement>();
+                var bodyUpdated = false;
+                foreach (var statement in method.BodyStatements)
+                {
+                    // Primary factory methods are created before later visitors may reset/reorder model constructors.
+                    // Rebuild direct constructor calls from the method signature so the public factory parameters
+                    // keep flowing into the final constructor slots.
+                    if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
+                        && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var updatedArguments))
+                    {
+                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
+                        bodyUpdated = true;
+                    }
+                    else
+                    {
+                        updatedBodyStatements.Add(statement);
+                    }
+                }
+
+                if (bodyUpdated)
+                {
+                    // Only the body changed. Passing the signature back would make MethodProvider rebuild the XML docs
+                    // from the (empty) signature description and drop the summary this method was created with.
+                    method.Update(bodyStatements: updatedBodyStatements);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates hidden compatibility overload bodies so old parameters still flow into the current flattened model shape.
+        /// Input is the complete model factory method list; output is in-place method body updates for repairable overloads.
+        /// Used just before writing a <see cref="ModelFactoryProvider"/> to cover both visitor-created and LastContractView-created overloads.
+        /// </summary>
+        internal static void FixModelFactoryBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
+        {
+            // First identify the current primary overload for each model factory method name. Hidden compatibility overloads
+            // are skipped here because they represent older signatures, not the current argument order/body shape.
+            var primaryMethods = new Dictionary<string, MethodProvider>();
+            foreach (var method in methods)
+            {
+                if (!IsBackwardCompatMethod(method))
+                {
+                    var key = method.Signature.Name;
+                    if (!primaryMethods.TryGetValue(key, out var existing) || method.Signature.Parameters.Count > existing.Signature.Parameters.Count)
+                    {
+                        primaryMethods[key] = method;
+                    }
+                }
+            }
+
+            // Then scan hidden compatibility overload bodies and repair the two shapes we know how to preserve:
+            // 1. A call into the primary overload with stale positional arguments.
+            // 2. A direct model construction with default arguments where the old overload still has matching inputs.
+            foreach (var method in methods)
+            {
+                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
+                {
+                    continue;
+                }
+
+                var updatedBodyStatements = new List<MethodBodyStatement>();
+                var bodyUpdated = false;
+                foreach (var statement in method.BodyStatements)
+                {
+                    if (TryUpdatePrimaryMethodInvocation(statement, primaryMethods, out var updatedInvocation))
+                    {
+                        updatedBodyStatements.Add(updatedInvocation);
+                        bodyUpdated = true;
+                    }
+                    else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
+                        && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var rebuiltArguments))
+                    {
+                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, rebuiltArguments)));
+                        bodyUpdated = true;
+                    }
+                    else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression fallbackNewInstanceExpression } }
+                        && TryUpdateNewInstanceArguments(method, fallbackNewInstanceExpression, out var updatedArguments, out var matchedParameters))
+                    {
+                        updatedBodyStatements.RemoveAll(s => IsNullCoalescingAssignmentToMatchedParameter(s, matchedParameters, fallbackNewInstanceExpression.Parameters));
+                        updatedBodyStatements.Add(Return(New.Instance(fallbackNewInstanceExpression.Type!, updatedArguments)));
+                        bodyUpdated = true;
+                    }
+                    else
+                    {
+                        updatedBodyStatements.Add(statement);
+                    }
+                }
+
+                if (bodyUpdated)
+                {
+                    // Deliberately does not re-supply the signature: it is this method's own signature, so passing it
+                    // changes nothing except forcing MethodProvider.Update to rebuild XmlDocs, discarding the
+                    // documentation regenerated when the overload was created.
+                    method.Update(bodyStatements: updatedBodyStatements);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Warns and omits unsafe GA compatibility overloads after final body repair, without blocking generation.
+        /// Signatures alone cannot distinguish new losses from historically discarded arguments.
+        /// </summary>
+        internal static void RemoveUnsafeHistoricalFactoryOverloads(ModelFactoryProvider factory)
+        {
+            var contract = ManagementClientGenerator.Instance.SourceInputModel?.LastContract;
+            if (contract is null || !factory.Methods.Any(IsBackwardCompatMethod))
+            {
+                return;
+            }
+            var configuration = ManagementClientGenerator.Instance.Configuration;
+            var selectedVersion = HistoricalFactoryUsage.SelectedVersion(configuration.OutputDirectory, configuration.PackageName);
+            var historicalUsage = HistoricalFactoryUsage.Read(contract, factory.Type, selectedVersion, configuration.PackageName);
+            var unsafeOverloads = new HashSet<MethodProvider>();
+            foreach (var method in factory.Methods.Where(IsBackwardCompatMethod))
+            {
+                if (ModelFactoryVisitor.IsRemovalAcceptedInBaseline(factory, method.Signature)
+                    || factory.CustomCodeView?.Methods.Any(custom =>
+                        ModelFactoryVisitor.HasSameCSharpSignature(custom.Signature, method.Signature)) == true
+                    || !historicalUsage.TryGetValue(HistoricalFactoryUsage.Key(method.Signature), out var preserved))
+                {
+                    continue;
+                }
+
+                // Only an exact, generator-owned reconstruction establishes which inputs are
+                // definitely unmapped. Aliases, extra statements, and unsupported/custom return
+                // expressions are unknown, rather than being mistaken for absent references.
+                if (method.BodyStatements?
+                    .Where(statement => !ReferenceEquals(statement, MethodBodyStatement.Empty)
+                        && !ReferenceEquals(statement, MethodBodyStatement.EmptyLine)).ToArray() is not
+                    [ExpressionStatement { Expression: KeywordExpression { Keyword: "return", Expression: NewInstanceExpression returned } }]
+                    || returned.Type is null || !TryGetModelProvider(returned.Type, out var model))
+                {
+                    continue;
+                }
+                var mapping = BuildFactoryConstructorMapping(method, model);
+                if (New.Instance(returned.Type, mapping.Arguments).ToDisplayString() != returned.ToDisplayString())
+                {
+                    continue;
+                }
+                foreach (var parameter in method.Signature.Parameters)
+                {
+                    if (preserved.Contains(parameter.Name) && !mapping.MatchedParameters.Contains(parameter))
+                    {
+                        unsafeOverloads.Add(method);
+                        var parameters = string.Join(", ", method.Signature.Parameters.Select(p => $"{p.Type} {p.Name}"));
+                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning",
+                            $"Compatibility factory '{factory.Type.FullyQualifiedName}.{method.Signature.Name}({parameters})' was not restored: " +
+                            $"parameter '{parameter.Name}' reached the returned model in the previous GA implementation, " +
+                            "but the generator cannot infer a lossless mapping to the current model. " +
+                            "Provide an explicit compatibility customization or accept the missing overload in the ApiCompat baseline.",
+                            severity: EmitterDiagnosticSeverity.Warning);
+                        break;
+                    }
+                }
+            }
+            if (unsafeOverloads.Count > 0)
+            {
+                factory.Update(methods: factory.Methods.Where(method => !unsafeOverloads.Contains(method)));
+            }
+        }
+
+        private static bool TryRebuildNewInstanceFromMethodSignature(
+            MethodProvider method,
+            NewInstanceExpression newInstanceExpression,
+            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments)
+        {
+            updatedArguments = null;
+            if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
+            {
+                return false;
+            }
+
+            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
+            if (constructorParameters.Count == newInstanceExpression.Parameters.Count
+                && HasNamedArgumentMismatchingFullConstructor(newInstanceExpression.Parameters, constructorParameters))
+            {
+                // Named arguments targeting a different constructor shape usually mean custom code is involved.
+                // Leave those calls untouched rather than guessing and potentially corrupting custom factories.
+                return false;
+            }
+
+            var arguments = new List<ValueExpression>(constructorParameters.Count);
+            var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
+            for (var constructorParameterIndex = 0; constructorParameterIndex < constructorParameters.Count; constructorParameterIndex++)
+            {
+                var constructorParameter = constructorParameters[constructorParameterIndex];
+                // Parameters referenced by this constructor slot belong to that slot and remain available while it is
+                // rebuilt. Only references from sibling slots make a same-named nested parameter ambiguous. This keeps
+                // the repair idempotent when it runs once during visitation and again after constructors are finalized.
+                var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(
+                    method,
+                    constructorParameters,
+                    newInstanceExpression.Parameters,
+                    excludedArgumentIndex: FindOriginalArgumentIndex(method, constructorParameter, newInstanceExpression.Parameters));
+                ValueExpression rebuiltArgument;
+                if (TryBuildDiscriminatorArgument(method, modelProvider, constructorParameter, out var discriminatorArgument))
+                {
+                    rebuiltArgument = discriminatorArgument;
+                }
+                else if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
+                {
+                    rebuiltArgument = argument.Argument;
+                }
+                else if (constructorParameter.Property?.Body is AutoPropertyBody { InitializationExpression: { } initializationExpression })
+                {
+                    // Required literals are omitted from the factory signature. Preserve the initializer
+                    // used by the upstream factory instead of overwriting it with a default value.
+                    rebuiltArgument = initializationExpression;
+                }
+                else
+                {
+                    arguments.Add(GetDefaultArgument(constructorParameter));
+                    var index = arguments.Count - 1;
+                    if (!changed && !IsDefaultExpression(newInstanceExpression.Parameters[index]))
+                    {
+                        changed = true;
+                    }
+                    continue;
+                }
+
+                arguments.Add(rebuiltArgument);
+                if (!changed && !ReferenceEquals(rebuiltArgument, newInstanceExpression.Parameters[arguments.Count - 1]))
+                {
+                    changed = true;
+                }
+            }
+            updatedArguments = changed ? arguments : null;
+            return changed;
+        }
+
+        private static bool TryBuildDiscriminatorArgument(
+            MethodProvider method,
+            ModelProvider model,
+            ParameterProvider constructorParameter,
+            [NotNullWhen(true)] out ValueExpression? argument)
+        {
+            argument = null;
+            if (constructorParameter.Property is not { IsDiscriminator: true } property)
+            {
+                return false;
+            }
+
+            if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, property, out var parameter))
+            {
+                argument = BuildParameterArgument(parameter, constructorParameter.Type);
+                return true;
+            }
+
+            // Factories expose an enum discriminator's underlying type, not the internal enum itself.
+            if (constructorParameter.Type.IsEnum
+                && TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type.UnderlyingEnumType, property, out parameter))
+            {
+                var convertedArgument = constructorParameter.Type.ToEnum(parameter);
+                // Preserve omitted/null inputs, including a null nullable enum rather than an empty enum value.
+                argument = parameter.Type.IsValueType && !parameter.Type.IsNullable
+                    ? convertedArgument
+                    : new TernaryConditionalExpression(parameter.Is(Null), Default.CastTo(constructorParameter.Type), convertedArgument);
+                return true;
+            }
+
+            // Match the upstream factory's initializer/known-discriminator behavior when no input is exposed.
+            if (property.Body is AutoPropertyBody { InitializationExpression: not null } autoProperty)
+            {
+                argument = autoProperty.InitializationExpression;
+                return true;
+            }
+
+            // Different hierarchy levels can have different discriminators. Use the value belonging to
+            // this property's declaring base model, rather than always using the most-derived value.
+            for (var current = model; current.BaseModelProvider is { } baseModel; current = baseModel)
+            {
+                if (baseModel.Properties.Any(p => ReferenceEquals(p, property)))
+                {
+                    argument = current.DiscriminatorValueExpression;
+                    return argument is not null;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true when a method is a hidden backward-compatibility overload.
+        /// Input is a method provider; output is whether it has <see cref="System.ComponentModel.EditorBrowsableAttribute"/>.
+        /// Used by this helper and tests to separate old compatibility overloads from current primary overloads.
+        /// </summary>
+        internal static bool IsBackwardCompatMethod(MethodProvider method)
+        {
+            return method.Signature.Attributes.Any(a =>
+                a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+        }
+
+        internal static bool TryCreateBackwardCompatMethod(MethodProvider method, TypeProvider enclosingType, [NotNullWhen(true)] out MethodProvider? updatedMethod)
+        {
+            updatedMethod = null;
+            if (method.Signature.ReturnType is null || !TryGetModelProvider(method.Signature.ReturnType, out var modelProvider))
+            {
+                return false;
+            }
+
+            var mapping = BuildFactoryConstructorMapping(method, modelProvider);
+            var signature = CreateBackwardCompatSignature(method.Signature, modelProvider, mapping.ParameterDescriptions);
+            updatedMethod = new MethodProvider(
+                signature,
+                Return(New.Instance(method.Signature.ReturnType, mapping.Arguments)),
+                enclosingType);
+            return true;
+        }
+
+        private static FactoryConstructorMapping BuildFactoryConstructorMapping(MethodProvider method, ModelProvider model)
+        {
+            var constructorParameters = model.FullConstructor.Signature.Parameters;
+            var directParameterNames = constructorParameters
+                .Where(parameter => TryGetMethodParameter(method, parameter.Name, parameter.Type, parameter.Property, out _))
+                .Select(parameter => parameter.Name)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            var arguments = new List<ValueExpression>(constructorParameters.Count);
+            var matchedParameters = new HashSet<ParameterProvider>();
+            var parameterDescriptions = new Dictionary<string, FormattableString>(StringComparer.Ordinal);
+            foreach (var constructorParameter in constructorParameters)
+            {
+                if (TryBuildCompatibilityArgument(method, constructorParameter, directParameterNames, out var argument))
+                {
+                    arguments.Add(argument.Argument);
+                    matchedParameters.UnionWith(argument.MatchedParameters);
+                    foreach (var documentation in argument.ParameterDocumentation)
+                    {
+                        parameterDescriptions.TryAdd(documentation.Parameter.Name, documentation.Description);
+                    }
+                }
+                else if (constructorParameter.Property?.Body is AutoPropertyBody { InitializationExpression: { } initializationExpression })
+                {
+                    arguments.Add(initializationExpression);
+                }
+                else
+                {
+                    arguments.Add(GetDefaultArgument(constructorParameter));
+                }
+            }
+            return new FactoryConstructorMapping(arguments, matchedParameters, parameterDescriptions);
+        }
+
+        private record FactoryConstructorMapping(
+            IReadOnlyList<ValueExpression> Arguments,
+            IReadOnlySet<ParameterProvider> MatchedParameters,
+            IReadOnlyDictionary<string, FormattableString> ParameterDescriptions);
+
+        /// <summary>
+        /// Creates the hidden compatibility signature, regenerating its documentation from the current model.
+        /// Every description comes from the current model; the previous contract supplies only the parameter list.
+        /// A parameter that no longer maps to the model has no current description, and the previous one is not
+        /// salvaged: it was parsed back out of generated C#, so it has already lost its cref text and accumulated
+        /// the writer's indentation.
+        /// </summary>
+        private static MethodSignature CreateBackwardCompatSignature(
+            MethodSignature signature,
+            ModelProvider modelProvider,
+            IReadOnlyDictionary<string, FormattableString> parameterDescriptions)
+        {
+            var attributes = signature.Attributes.Any(attribute =>
+                attribute.Type is { IsFrameworkType: true } && attribute.Type.FrameworkType == typeof(EditorBrowsableAttribute))
+                    ? signature.Attributes
+                    : [.. signature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))];
+
+            // Restored methods own their mutable parameters. Updating descriptions or defaults
+            // must not change the published contract used by later compatibility processing.
+            var parameters = signature.Parameters.Select(parameter => new ParameterProvider(
+                parameter.Name,
+                parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription) ? currentDescription : $"",
+                parameter.Type,
+                defaultValue: parameter.DefaultValue,
+                isRef: parameter.IsRef,
+                isOut: parameter.IsOut,
+                isIn: parameter.IsIn,
+                isParams: parameter.IsParams,
+                attributes: parameter.Attributes,
+                property: parameter.Property,
+                field: parameter.Field,
+                initializationValue: parameter.InitializationValue,
+                location: parameter.Location,
+                wireInfo: parameter.WireInfo,
+                validation: parameter.Validation,
+                inputParameter: parameter.InputParameter)
+            {
+                SpreadSource = parameter.SpreadSource
+            }).ToArray();
+
+            return new MethodSignature(
+                signature.Name,
+                modelProvider.Description,
+                signature.Modifiers,
+                signature.ReturnType,
+                $"A new {signature.ReturnType:C} instance for mocking.",
+                parameters,
+                attributes,
+                signature.GenericArguments,
+                signature.GenericParameterConstraints,
+                signature.ExplicitInterface,
+                signature.NonDocumentComment);
+        }
+
+        /// <summary>
+        /// Rebuilds a hidden overload's primary-method invocation in the current primary method parameter order.
+        /// Inputs are one body statement and the primary method lookup; output is a replacement return statement when the call changed.
+        /// Used by <see cref="FixModelFactoryBackwardCompatOverloads"/> for overloads whose body delegates to another model factory method.
+        /// </summary>
+        private static bool TryUpdatePrimaryMethodInvocation(
+            MethodBodyStatement statement,
+            IReadOnlyDictionary<string, MethodProvider> primaryMethods,
+            [NotNullWhen(true)] out MethodBodyStatement? updatedStatement)
+        {
+            updatedStatement = null;
+            if (statement is not ExpressionStatement expressionStatement
+                || (expressionStatement.Expression as KeywordExpression)?.Expression is not InvokeMethodExpression invokeExpression
+                || (invokeExpression.MethodName ?? invokeExpression.MethodSignature?.Name) is not string calledMethodName
+                || !primaryMethods.TryGetValue(calledMethodName, out var primaryMethod))
+            {
+                return false;
+            }
+
+            // The invoke signature describes the old overload's argument names, while primaryParams describes the current
+            // overload shape. If either side is unavailable, the safest behavior is to leave the old body unchanged.
+            var primaryParams = primaryMethod.Signature.Parameters;
+            var invokeArgs = invokeExpression.Arguments;
+            var invokeSignatureParams = invokeExpression.MethodSignature?.Parameters;
+
+            if (invokeSignatureParams is null || invokeSignatureParams.Count != invokeArgs.Count)
+            {
+                return false;
+            }
+
+            // Compatibility overloads may call the current primary overload using an older parameter order.
+            // Rebuild the call by parameter name so old overload arguments continue to flow to their matching
+            // current parameters, and any parameters not present in the old overload keep a named default value.
+            var argsByName = new Dictionary<string, ValueExpression>(StringComparer.OrdinalIgnoreCase);
+            for (int i = 0; i < invokeSignatureParams.Count; i++)
+            {
+                argsByName[invokeSignatureParams[i].Name] = invokeArgs[i];
+            }
+
+            var newArgs = new List<ValueExpression>(primaryParams.Count);
+            var changed = false;
+            for (int i = 0; i < primaryParams.Count; i++)
+            {
+                // Preserve old arguments by matching parameter names instead of trusting old positional order.
+                if (argsByName.TryGetValue(primaryParams[i].Name, out var arg))
+                {
+                    newArgs.Add(arg);
+                    if (!changed && (i >= invokeArgs.Count || !ReferenceEquals(arg, invokeArgs[i])))
+                    {
+                        changed = true;
+                    }
+                }
+                else
+                {
+                    // Parameters added after the old overload was generated must remain defaulted, but we emit them as
+                    // named positional references so the generated call remains stable if later parameters move again.
+                    newArgs.Add(Snippet.PositionalReference(primaryParams[i], GetDefaultArgument(primaryParams[i])));
+                    changed = true;
+                }
+            }
+
+            if (!changed)
+            {
+                return false;
+            }
+
+            updatedStatement = Return(new InvokeMethodExpression(null, primaryMethod.Signature, newArgs));
+            return true;
+        }
+
+        /// <summary>
+        /// Replaces default arguments in a hidden overload's direct model construction with arguments rebuilt from old parameters.
+        /// Inputs are the old method and its returned <see cref="NewInstanceExpression"/>; outputs are updated constructor arguments
+        /// and the old parameters consumed by the repair. Used for compatibility overloads that construct the model directly.
+        /// </summary>
+        private static bool TryUpdateNewInstanceArguments(
+            MethodProvider method,
+            NewInstanceExpression newInstanceExpression,
+            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments,
+            [NotNullWhen(true)] out IReadOnlyList<ParameterProvider>? matchedParameters)
+        {
+            updatedArguments = null;
+            matchedParameters = null;
+            if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
+            {
+                return false;
+            }
+
+            // The repair maps arguments by the generated full constructor. If the expression contains named arguments that
+            // target a customization constructor instead, the full-constructor parameter order is not authoritative.
+            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
+            if (constructorParameters.Count != newInstanceExpression.Parameters.Count)
+            {
+                return false;
+            }
+
+            if (HasNamedArgumentMismatchingFullConstructor(newInstanceExpression.Parameters, constructorParameters))
+            {
+                return false;
+            }
+
+            List<ValueExpression>? arguments = null;
+            List<ParameterProvider>? matched = null;
+            var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(method, constructorParameters, newInstanceExpression.Parameters);
+            for (int i = 0; i < newInstanceExpression.Parameters.Count; i++)
+            {
+                // Only default slots are candidates for repair. Non-default arguments were intentionally present in the
+                // old generated body and should not be overwritten.
+                var currentArgument = newInstanceExpression.Parameters[i];
+                if (!IsDefaultExpression(currentArgument))
+                {
+                    continue;
+                }
+
+                if (TryBuildCompatibilityArgument(method, constructorParameters[i], unavailableDirectParameterNames, out var replacement))
+                {
+                    arguments ??= [.. newInstanceExpression.Parameters];
+                    matched ??= [];
+                    arguments[i] = replacement.Argument;
+                    matched.AddRange(replacement.MatchedParameters);
+                }
+            }
+
+            updatedArguments = arguments;
+            matchedParameters = matched;
+            return arguments is not null;
+        }
+
+        /// <summary>
+        /// Detects named constructor arguments that prove a <see cref="NewInstanceExpression"/> is not bound to the generated full constructor.
+        /// Inputs are rendered arguments and full-constructor parameters; output is true when a named argument targets a different slot.
+        /// Used before direct-constructor repair to avoid corrupting calls to custom constructors.
+        /// </summary>
+        private static bool HasNamedArgumentMismatchingFullConstructor(IReadOnlyList<ValueExpression> arguments, IReadOnlyList<ParameterProvider> constructorParameters)
+        {
+            for (int i = 0; i < arguments.Count; i++)
+            {
+                if (arguments[i] is PositionalParameterReferenceExpression { ParameterName: var argumentName }
+                    && !string.Equals(argumentName, constructorParameters[i].Name, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true for a null-coalescing assignment statement that initializes a parameter consumed by a repaired argument.
+        /// Inputs are a method body statement and repaired parameters; output is whether the statement should be removed.
+        /// Used after rebuilding nested model arguments because the new conditional construction handles null/default behavior.
+        /// </summary>
+        private static bool IsNullCoalescingAssignmentToMatchedParameter(
+            MethodBodyStatement statement,
+            IReadOnlyList<ParameterProvider> parameters,
+            IReadOnlyList<ValueExpression> originalArguments)
+        {
+            if (statement is not ExpressionStatement { Expression: AssignmentExpression { UseNullCoalesce: true } assignment })
+            {
+                return false;
+            }
+
+            return parameters.Any(parameter =>
+                ReferencesParameter(assignment.Variable, parameter)
+                && !IsParameterUsedByOriginalArgument(parameter, originalArguments));
+        }
+
+        /// <summary>
+        /// Returns true when a matched old parameter is still used by an original non-default constructor argument.
+        /// Used to preserve existing null-coalescing assignments needed by unrepaired direct arguments.
+        /// </summary>
+        private static bool IsParameterUsedByOriginalArgument(ParameterProvider parameter, IEnumerable<ValueExpression> originalArguments)
+        {
+            return originalArguments.Any(argument =>
+                !IsDefaultExpression(argument)
+                && ReferencesParameter(argument, parameter));
+        }
+
+        private static int? FindOriginalArgumentIndex(
+            MethodProvider method,
+            ParameterProvider constructorParameter,
+            IReadOnlyList<ValueExpression> originalArguments)
+        {
+            for (var index = 0; index < originalArguments.Count; index++)
+            {
+                var argument = originalArguments[index];
+                if (argument is PositionalParameterReferenceExpression { ParameterName: var parameterName }
+                    && string.Equals(parameterName, constructorParameter.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return index;
+                }
+
+                if (argument is VariableExpression variable
+                    && string.Equals(variable.Declaration.RequestedName, constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
+                    && AreCompatibleParameterTypes(variable.Type, constructorParameter.Type))
+                {
+                    return index;
+                }
+            }
+
+            var typeMatches = originalArguments
+                .Select((argument, index) => (Argument: argument, Index: index))
+                .Where(item => ConstructsType(item.Argument, constructorParameter.Type))
+                .ToArray();
+            if (typeMatches.Length == 1)
+            {
+                return typeMatches[0].Index;
+            }
+
+            if (typeMatches.Length > 1 && TryGetModelProvider(constructorParameter.Type, out var nestedModel))
+            {
+                var contextualParameters = new HashSet<ParameterProvider>();
+                foreach (var nestedParameter in nestedModel.FullConstructor.Signature.Parameters)
+                {
+                    if (constructorParameter.Property is not null && nestedParameter.Property is not null)
+                    {
+                        var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, constructorParameter.Property).ToVariableName();
+                        foreach (var parameter in method.Signature.Parameters.Where(parameter =>
+                            string.Equals(parameter.Name, combinedName, StringComparison.OrdinalIgnoreCase)
+                            && AreCompatibleParameterTypes(parameter.Type, nestedParameter.Type)))
+                        {
+                            contextualParameters.Add(parameter);
+                        }
+                    }
+
+                    foreach (var parameter in method.Signature.Parameters.Where(parameter =>
+                        parameter.Name.Contains(constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
+                        && parameter.Name.EndsWith(nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                        && AreCompatibleParameterTypes(parameter.Type, nestedParameter.Type)))
+                    {
+                        contextualParameters.Add(parameter);
+                    }
+                }
+
+                var contextualMatches = typeMatches
+                    .Where(item => contextualParameters.Any(parameter => ReferencesParameter(item.Argument, parameter)))
+                    .ToArray();
+                if (contextualMatches.Length == 1)
+                {
+                    return contextualMatches[0].Index;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool ConstructsType(ValueExpression expression, CSharpType expectedType)
+            => expression switch
+            {
+                NewInstanceExpression { Type: not null } instance => instance.Type.AreNamesEqual(expectedType),
+                TernaryConditionalExpression ternary => ConstructsType(ternary.Consequent, expectedType)
+                    || ConstructsType(ternary.Alternative, expectedType),
+                KeywordExpression { Expression: not null } keyword => ConstructsType(keyword.Expression!, expectedType),
+                PositionalParameterReferenceExpression positional => ConstructsType(positional.ParameterValue, expectedType),
+                _ => false
+            };
+
+        private static HashSet<string> GetUnavailableDirectParameterNames(
+            MethodProvider method,
+            IReadOnlyList<ParameterProvider> constructorParameters,
+            IReadOnlyList<ValueExpression> originalArguments,
+            int? excludedArgumentIndex = null)
+        {
+            var argumentsToInspect = excludedArgumentIndex is int index && index < originalArguments.Count
+                ? originalArguments.Where((_, argumentIndex) => argumentIndex != index)
+                : originalArguments;
+            var result = GetParameterNamesUsedByOriginalArguments(method.Signature.Parameters, argumentsToInspect);
+            foreach (var constructorParameter in constructorParameters)
+            {
+                if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out _))
+                {
+                    result.Add(constructorParameter.Name);
+                }
+            }
+
+            return result;
+        }
+
+        private static HashSet<string> GetParameterNamesUsedByOriginalArguments(IReadOnlyList<ParameterProvider> parameters, IEnumerable<ValueExpression> originalArguments)
+            => parameters
+                .Where(parameter => IsParameterUsedByOriginalArgument(parameter, originalArguments))
+                .Select(parameter => parameter.Name)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        private static bool ReferencesParameter(ValueExpression expression, ParameterProvider parameter)
+        {
+            if (ReferenceEquals(expression, parameter))
+            {
+                return true;
+            }
+
+            return expression switch
+            {
+                VariableExpression variable => string.Equals(variable.Declaration.RequestedName, parameter.Name, StringComparison.Ordinal),
+                PositionalParameterReferenceExpression positional => ReferencesParameter(positional.ParameterValue, parameter),
+                MemberExpression { Inner: not null } member => ReferencesParameter(member.Inner, parameter),
+                CastExpression cast => ReferencesParameter(cast.Inner, parameter),
+                NullConditionalExpression conditional => ReferencesParameter(conditional.Inner, parameter),
+                TernaryConditionalExpression ternary => ReferencesParameter(ternary.Consequent, parameter)
+                    || ReferencesParameter(ternary.Alternative, parameter),
+                InvokeMethodExpression invoke => (invoke.InstanceReference is not null && ReferencesParameter(invoke.InstanceReference, parameter))
+                    || invoke.Arguments.Any(argument => ReferencesParameter(argument, parameter)),
+                NewInstanceExpression newInstance => newInstance.Parameters.Any(argument => ReferencesParameter(argument, parameter)),
+                BinaryOperatorExpression binary => ReferencesParameter(binary.Left, parameter) || ReferencesParameter(binary.Right, parameter),
+                KeywordExpression keyword => keyword.Expression is not null && ReferencesParameter(keyword.Expression, parameter),
+                AssignmentExpression assignment => ReferencesParameter(assignment.Variable, parameter)
+                    || (assignment.Value is not null && ReferencesParameter(assignment.Value, parameter)),
+                _ => false
+            };
+        }
+
+        private static bool ReferencesParameter(MethodBodyStatement statement, ParameterProvider parameter)
+            => statement switch
+            {
+                ExpressionStatement { Expression: var expression } => ReferencesParameter(expression, parameter),
+                _ => false
+            };
+
+        private static ValueExpression GetDefaultArgument(ParameterProvider parameter)
+            // Emit typed defaults when a parameter has no explicit default. Bare `default` can become ambiguous
+            // when a generated model exposes multiple constructors with the same arity.
+            => parameter.DefaultValue ?? Default.CastTo(parameter.Type);
+
+        private static bool TryBuildCompatibilityArgument(
+            MethodProvider method,
+            ParameterProvider constructorParameter,
+            IReadOnlySet<string> unavailableDirectParameterNames,
+            [NotNullWhen(true)] out CompatibilityArgument? argument)
+        {
+            // Direct matching is only safe for the constructor slot currently being repaired. Recursive nested
+            // resolution uses combined/contextual names to avoid stealing outer parameters with the same name.
+            if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out var directParameter))
+            {
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(directParameter, constructorParameter.Type),
+                    [directParameter],
+                    [new ParameterDocumentation(directParameter, constructorParameter.Description)]);
+                return true;
+            }
+
+            return TryBuildModelCompatibilityArgument(method, constructorParameter, [], unavailableDirectParameterNames, useNullGuard: true, out argument);
+        }
+
+        /// <summary>
+        /// Reconstructs a model argument from parameters still present on the old overload.
+        /// </summary>
+        /// <param name="method">The hidden backward-compatible overload being repaired.</param>
+        /// <param name="constructorParameter">The model-typed constructor parameter to build an argument for.</param>
+        /// <param name="visitedTypes">The current recursion stack used to avoid cycles in nested model graphs.</param>
+        /// <param name="unavailableDirectParameterNames">Old parameter names that should not be reused by direct nested-name fallback.</param>
+        /// <param name="useNullGuard">Whether omission of all parameters mapped to this model should preserve a null model value.</param>
+        /// <param name="argument">The reconstructed model argument and old parameters used by it.</param>
+        private static bool TryBuildModelCompatibilityArgument(
+            MethodProvider method,
+            ParameterProvider constructorParameter,
+            List<CSharpType> visitedTypes,
+            IReadOnlySet<string> unavailableDirectParameterNames,
+            bool useNullGuard,
+            [NotNullWhen(true)] out CompatibilityArgument? argument)
+        {
+            // For flattened models, old overload parameters often correspond to leaves of a nested model. Track visited
+            // model types by name to avoid infinite recursion in self-referential model graphs.
+            if (visitedTypes.Any(type => type.AreNamesEqual(constructorParameter.Type)))
+            {
+                argument = null;
+                return false;
+            }
+
+            visitedTypes.Add(constructorParameter.Type);
+
+            if (!TryGetModelProvider(constructorParameter.Type, out var nestedModel))
+            {
+                argument = null;
+                visitedTypes.Remove(constructorParameter.Type);
+                return false;
+            }
+
+            // Reconstruct the nested model by independently resolving each constructor parameter from the old overload.
+            // Missing nested parameters intentionally stay defaulted to preserve old overload shape.
+            var nestedConstructorParameters = nestedModel.FullConstructor.Signature.Parameters;
+            var nestedArguments = new List<ValueExpression>(nestedConstructorParameters.Count);
+            var matchedParameters = new List<ParameterProvider>();
+            var parameterDocumentation = new List<ParameterDocumentation>();
+            foreach (var nestedParameter in nestedConstructorParameters)
+            {
+                if (TryGetNestedCompatibilityArgument(method, constructorParameter.Property, constructorParameter.Name, nestedParameter, visitedTypes, unavailableDirectParameterNames, out var nestedArgument))
+                {
+                    nestedArguments.Add(nestedArgument.Argument);
+                    matchedParameters.AddRange(nestedArgument.MatchedParameters);
+                    parameterDocumentation.AddRange(nestedArgument.ParameterDocumentation);
+                }
+                else
+                {
+                    nestedArguments.Add(GetDefaultArgument(nestedParameter));
+                }
+            }
+
+            if (matchedParameters.Count == 0)
+            {
+                argument = null;
+                visitedTypes.Remove(constructorParameter.Type);
+                return false;
+            }
+
+            // Preserve omission independently for optional reconstructed models. Creating a parent does not imply
+            // that an optional child was supplied, while required children retain their existing construction behavior.
+            var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
+            var condition = useNullGuard ? BuildAllNullCondition(matchedParameters) : null;
+            var expression = condition is null
+                ? newInstance
+                : new TernaryConditionalExpression(condition, Default, newInstance);
+            argument = new CompatibilityArgument(expression, matchedParameters, parameterDocumentation);
+            visitedTypes.Remove(constructorParameter.Type);
+            return true;
+        }
+
+        /// <summary>
+        /// Resolves one nested constructor parameter against the old overload signature.
+        /// Inputs are the old method, optional parent property, nested parameter, and recursion stack; output is the rebuilt nested argument.
+        /// Used by <see cref="TryBuildCompatibilityArgument"/> while reconstructing flattened nested model instances.
+        /// </summary>
+        private static bool TryGetNestedCompatibilityArgument(
+            MethodProvider method,
+            PropertyProvider? parentProperty,
+            string? parentName,
+            ParameterProvider nestedParameter,
+            List<CSharpType> visitedTypes,
+            IReadOnlySet<string> unavailableDirectParameterNames,
+            [NotNullWhen(true)] out CompatibilityArgument? argument)
+        {
+            // Prefer the flattened combined name (for example, parent + child) when available so it wins over unrelated
+            // top-level parameters with the same child name.
+            if (parentProperty is not null && nestedParameter.Property is not null)
+            {
+                var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, parentProperty).ToVariableName();
+                if (TryGetMethodParameter(method, combinedName, nestedParameter.Type, nestedParameter.Property, out var combinedParameter))
+                {
+                    argument = new CompatibilityArgument(
+                        BuildParameterArgument(combinedParameter, nestedParameter.Type),
+                        [combinedParameter],
+                        [new ParameterDocumentation(combinedParameter, nestedParameter.Description)]);
+                    return true;
+                }
+            }
+
+            // Fall back to contextual old names before the nested parameter's own name. Some old overloads preserved
+            // collision-avoiding names that are not identical to the current combined name, such as
+            // namePropertiesProgressName for a nested progress.name leaf.
+            if (parentName is not null
+                && nestedParameter.Property is not null
+                && TryGetContextualMethodParameter(method, parentName, nestedParameter, out var contextualParameter))
+            {
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(contextualParameter, nestedParameter.Type),
+                    [contextualParameter],
+                    [new ParameterDocumentation(contextualParameter, nestedParameter.Description)]);
+                return true;
+            }
+
+            // Fall back to the nested parameter's own name when it is not already consumed by an original non-default
+            // constructor argument or exposed as a current top-level constructor parameter. Reusing such a parameter is
+            // ambiguous because it likely belongs to that original slot.
+            if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, nestedParameter.Property, out var directParameter)
+                && !unavailableDirectParameterNames.Contains(directParameter.Name))
+            {
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(directParameter, nestedParameter.Type),
+                    [directParameter],
+                    [new ParameterDocumentation(directParameter, nestedParameter.Description)]);
+                return true;
+            }
+
+            // A generated C# name can change while the wire name remains stable (e.g. a factory's
+            // historical `uri` argument and a current `ClusterUri` leaf serialized as `uri`).
+            // Only use the wire name when exactly one compatible constructor destination exists
+            // across the returned model, not merely within this particular nested model.
+            var wireName = nestedParameter.Property?.WireInfo?.SerializedName;
+            if (wireName is not null && !string.Equals(wireName, nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                && TryGetMethodParameter(method, wireName, nestedParameter.Type, nestedParameter.Property, out var wireParameter)
+                && !unavailableDirectParameterNames.Contains(wireParameter.Name)
+                && method.Signature.ReturnType is { } returnType
+                && TryGetModelProvider(returnType, out var returnModel)
+                && CountMatchingDestinations(returnModel, wireName, wireParameter.Type, []) == 1)
+            {
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(wireParameter, nestedParameter.Type),
+                    [wireParameter],
+                    [new ParameterDocumentation(wireParameter, nestedParameter.Description)]);
+                return true;
+            }
+
+            return TryBuildModelCompatibilityArgument(
+                method,
+                nestedParameter,
+                visitedTypes,
+                unavailableDirectParameterNames,
+                useNullGuard: nestedParameter.Property?.WireInfo?.IsRequired == false,
+                out argument);
+        }
+
+        /// <summary>
+        /// Finds an old overload parameter by name and compatible type.
+        /// Inputs are the old method, expected parameter name, and expected type; output is the matching parameter.
+        /// Used whenever direct or nested compatibility repair needs to reuse an existing old overload argument.
+        /// </summary>
+        private static bool TryGetMethodParameter(
+            MethodProvider method,
+            string name,
+            CSharpType expectedType,
+            PropertyProvider? expectedProperty,
+            [NotNullWhen(true)] out ParameterProvider? parameter)
+        {
+            var matches = method.Signature.Parameters.Where(p =>
+                string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)
+                && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
+            if (matches.Length > 1 && expectedProperty is not null)
+            {
+                // Some generated factory methods can temporarily contain duplicate semantic parameter names before
+                // the writer disambiguates them. Prefer the parameter from the same source property when available.
+                matches = matches.Where(p => ReferenceEquals(p.Property, expectedProperty)).ToArray();
+            }
+            else if (matches.Length == 0 && expectedProperty is not null && ManagementClientGenerator.Instance.DateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(expectedProperty))
+            {
+                matches = method.Signature.Parameters.Where(p =>
+                    ManagementClientGenerator.Instance.DateTimePropertyMatcher.HasSameSourceProperty(expectedProperty, p.Property)
+                    && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
+            }
+
+            parameter = matches.Length == 1 ? matches[0] : null;
+            return parameter is not null;
+        }
+
+        private static int CountMatchingDestinations(ModelProvider model, string name, CSharpType parameterType, HashSet<string> visitedTypes)
+        {
+            if (!visitedTypes.Add(model.Type.FullyQualifiedName))
+            {
+                return 0;
+            }
+
+            var count = 0;
+            foreach (var parameter in model.FullConstructor.Signature.Parameters)
+            {
+                // Include ordinary C# name matches: a wire-name fallback must not reuse an old
+                // argument already claimed by a different constructor slot.
+                if ((string.Equals(parameter.Name, name, StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(parameter.Property?.WireInfo?.SerializedName, name, StringComparison.OrdinalIgnoreCase))
+                    && AreCompatibleParameterTypes(parameterType, parameter.Type))
+                {
+                    count++;
+                }
+                if (!parameter.Type.IsFrameworkType && TryGetModelProvider(parameter.Type, out var nestedModel))
+                {
+                    count += CountMatchingDestinations(nestedModel, name, parameterType, visitedTypes);
+                }
+                if (count > 1)
+                {
+                    break;
+                }
+            }
+            visitedTypes.Remove(model.Type.FullyQualifiedName);
+            return count;
+        }
+
+        private static bool TryGetContextualMethodParameter(MethodProvider method, string parentName, ParameterProvider nestedParameter, [NotNullWhen(true)] out ParameterProvider? parameter)
+        {
+            var matches = method.Signature.Parameters.Where(p =>
+                !string.Equals(p.Name, nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                && p.Name.Contains(parentName, StringComparison.OrdinalIgnoreCase)
+                && p.Name.EndsWith(nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                && AreCompatibleParameterTypes(p.Type, nestedParameter.Type)).ToArray();
+            parameter = matches.Length == 1 ? matches[0] : null;
+            return parameter is not null;
+        }
+
+        /// <summary>
+        /// Determines whether an old parameter can be used for a current constructor parameter.
+        /// Inputs are old and expected types; output is whether direct assignment or helper conversion can make them compatible.
+        /// Used by <see cref="TryGetMethodParameter"/> to allow nullable/value and list-interface shape differences.
+        /// </summary>
+        private static bool AreCompatibleParameterTypes(CSharpType parameterType, CSharpType expectedType)
+            => parameterType.AreNamesEqual(expectedType)
+            || parameterType.InputType.AreNamesEqual(expectedType.InputType)
+            || AreCompatibleListTypes(parameterType, expectedType)
+            || AreCompatibleDictionaryTypes(parameterType, expectedType);
+
+        /// <summary>
+        /// Determines whether two list-like types have compatible element types.
+        /// Inputs are old and expected list types; output is whether their element type names match.
+        /// Used when old overloads expose <c>IEnumerable&lt;T&gt;</c> but current constructors need another list interface.
+        /// </summary>
+        private static bool AreCompatibleListTypes(CSharpType parameterType, CSharpType expectedType)
+            => parameterType.IsList
+            && expectedType.IsList
+            && parameterType.Arguments.Count == expectedType.Arguments.Count
+            && parameterType.Arguments.Zip(expectedType.Arguments).All(pair => pair.First.AreNamesEqual(pair.Second));
+
+        private static bool AreCompatibleDictionaryTypes(CSharpType parameterType, CSharpType expectedType)
+            => parameterType.IsDictionary
+            && expectedType.IsDictionary
+            && parameterType.Arguments.Count == expectedType.Arguments.Count
+            && parameterType.Arguments.Zip(expectedType.Arguments).All(pair => pair.First.AreNamesEqual(pair.Second));
+
+        /// <summary>
+        /// Converts an old overload parameter into an expression suitable for a current constructor parameter.
+        /// Inputs are the matched old parameter and expected type; output is the expression to pass to generated code.
+        /// Used after name/type matching to handle list materialization and nullable value-type unwrapping.
+        /// </summary>
+        private static ValueExpression BuildParameterArgument(ParameterProvider parameter, CSharpType expectedType)
+        {
+            if (AreCompatibleListTypes(parameter.Type, expectedType))
+            {
+                return parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList();
+            }
+
+            if (AreCompatibleDictionaryTypes(parameter.Type, expectedType))
+            {
+                var dictionaryType = ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(expectedType.Arguments);
+                var nullCoalescedDictionary = parameter.NullCoalesce(New.Instance(dictionaryType));
+                return parameter.Type.AreNamesEqual(expectedType)
+                    ? nullCoalescedDictionary
+                    : New.Instance(dictionaryType, nullCoalescedDictionary);
+            }
+
+            if (parameter.Type.IsValueType && parameter.Type.IsNullable && expectedType.IsValueType && !expectedType.IsNullable)
+            {
+                return parameter.Invoke(nameof(Nullable<int>.GetValueOrDefault));
+            }
+
+            return parameter;
+        }
+
+        /// <summary>
+        /// Builds the guard that preserves old "all flattened inputs are null" behavior.
+        /// Input is the set of old parameters consumed by a reconstructed nested model; output is the combined null check.
+        /// Used for top-level nested model reconstruction to emit <c>allNull ? default : new Nested(...)</c>.
+        /// </summary>
+        private static ScopedApi<bool>? BuildAllNullCondition(IEnumerable<ParameterProvider> parameters)
+        {
+            var parameterList = parameters.ToArray();
+            // A non-nullable value-type factory parameter is always present, so the nested model must always be
+            // constructed. Building a guard from only its nullable siblings would discard that value whenever
+            // all of those siblings are null.
+            if (parameterList.Any(parameter => parameter.Type.IsValueType && !parameter.Type.IsNullable))
+            {
+                return null;
+            }
+
+            ScopedApi<bool>? result = null;
+            foreach (var parameter in parameterList)
+            {
+                result = result is null
+                    ? parameter.Is(Null)
+                    : result.And(parameter.Is(Null));
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Returns true when an expression renders as a C# default literal/expression.
+        /// Input is a generated value expression; output is whether it is eligible for replacement.
+        /// Used by <see cref="TryUpdateNewInstanceArguments"/> so only previously defaulted constructor slots are repaired.
+        /// </summary>
+        private static bool IsDefaultExpression(ValueExpression expression)
+        {
+            return expression is KeywordExpression { Keyword: "default" };
+        }
+
+        /// <summary>
+        /// Resolves a generated model provider from a C# type.
+        /// Input is a constructor parameter type; output is the corresponding model provider when the type is a generated model.
+        /// Used by direct-constructor repair to recursively reconstruct nested flattened model arguments.
+        /// </summary>
+        private static bool TryGetModelProvider(CSharpType type, [NotNullWhen(true)] out ModelProvider? modelProvider)
+        {
+            if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(type, out var typeProvider) && typeProvider is ModelProvider model)
+            {
+                modelProvider = model;
+                return true;
+            }
+            foreach (var mappedProvider in ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.Values)
+            {
+                if (mappedProvider is ModelProvider mappedModel && mappedModel.Type.AreNamesEqual(type))
+                {
+                    modelProvider = mappedModel;
+                    return true;
+                }
+            }
+            foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            {
+                if (ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel) is { } inputModelProvider
+                    && inputModelProvider.Type.AreNamesEqual(type))
+                {
+                    modelProvider = inputModelProvider;
+                    return true;
+                }
+            }
+            foreach (var outputModel in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
+            {
+                if (outputModel.Type.AreNamesEqual(type))
+                {
+                    modelProvider = outputModel;
+                    return true;
+                }
+            }
+            modelProvider = null;
+            return false;
+        }
+
+        private record ParameterDocumentation(ParameterProvider Parameter, FormattableString Description);
+
+        private record CompatibilityArgument(
+            ValueExpression Argument,
+            IReadOnlyList<ParameterProvider> MatchedParameters,
+            IReadOnlyList<ParameterDocumentation> ParameterDocumentation);
+    }
+}

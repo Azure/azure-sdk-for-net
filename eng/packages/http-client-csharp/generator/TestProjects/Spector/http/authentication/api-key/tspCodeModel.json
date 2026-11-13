@@ -8,15 +8,23 @@
       "$id": "1",
       "kind": "model",
       "name": "InvalidAuth",
+      "apiVersions": [],
       "namespace": "Authentication.ApiKey",
       "crossLanguageDefinitionId": "Authentication.ApiKey.InvalidAuth",
       "usage": "Json,Exception",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InvalidAuth"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "2",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "type": {
             "$id": "3",
@@ -36,7 +44,8 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -46,6 +55,7 @@
       "$id": "4",
       "kind": "client",
       "name": "ApiKeyClient",
+      "isExactName": false,
       "namespace": "Authentication.ApiKey",
       "doc": "Illustrates clients generated with ApiKey authentication.",
       "methods": [
@@ -53,13 +63,14 @@
           "$id": "5",
           "kind": "basic",
           "name": "valid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated",
           "operation": {
             "$id": "6",
             "name": "valid",
-            "resourceName": "ApiKey",
+            "isExactName": false,
             "doc": "Check whether client is authenticated",
             "accessibility": "public",
             "parameters": [],
@@ -69,7 +80,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -79,7 +91,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.ApiKey.valid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.ApiKey"
           },
           "parameters": [],
           "response": {},
@@ -92,13 +105,14 @@
           "$id": "7",
           "kind": "basic",
           "name": "invalid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated.",
           "operation": {
             "$id": "8",
             "name": "invalid",
-            "resourceName": "ApiKey",
+            "isExactName": false,
             "doc": "Check whether client is authenticated.",
             "accessibility": "public",
             "parameters": [],
@@ -108,7 +122,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -118,7 +133,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.ApiKey.invalid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.ApiKey"
           },
           "parameters": [],
           "response": {},
@@ -157,12 +173,15 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Authentication.ApiKey.endpoint"
+          "crossLanguageDefinitionId": "Authentication.ApiKey.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.ApiKey",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {

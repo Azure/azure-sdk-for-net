@@ -211,19 +211,19 @@ text = "Ok, change the destination back to Berlin.",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationalAITask(new ConversationalAIAnalysisInput(new AIConversation[]
+            AnalyzeConversationInput analyzeConversationInput = new ConversationalAITask(new ConversationalAIAnalysisInput(new TextConversation[]
             {
-new AIConversation("order", InputModality.Text, "en", new ConversationalAIItem[]
+new TextConversation("order", "en", new TextConversationItem[]
 {
-new ConversationalAIItem("1", "user", "Hi!"),
-new ConversationalAIItem("2", "bot", "Hello, how can I help you?"),
-new ConversationalAIItem("3", "user", "I would like to book a flight from Paris to Berlin on Oct 10th."),
-new ConversationalAIItem("4", "bot", "Do you have any airline preference?"),
-new ConversationalAIItem("5", "user", "No."),
-new ConversationalAIItem("6", "user", "I like New York and Boston."),
-new ConversationalAIItem("7", "user", "Actualy, change the destination to New York."),
-new ConversationalAIItem("8", "user", "Wait, I do not like the food in New York."),
-new ConversationalAIItem("9", "user", "Ok, change the destination back to Berlin.")
+new TextConversationItem("1", "user", "Hi!"),
+new TextConversationItem("2", "bot", "Hello, how can I help you?"),
+new TextConversationItem("3", "user", "I would like to book a flight from Paris to Berlin on Oct 10th."),
+new TextConversationItem("4", "bot", "Do you have any airline preference?"),
+new TextConversationItem("5", "user", "No."),
+new TextConversationItem("6", "user", "I like New York and Boston."),
+new TextConversationItem("7", "user", "Actualy, change the destination to New York."),
+new TextConversationItem("8", "user", "Wait, I do not like the food in New York."),
+new TextConversationItem("9", "user", "Ok, change the destination back to Berlin.")
 })
             }), new AIConversationLanguageUnderstandingActionContent("project1", "deployment1")
             {
@@ -240,19 +240,19 @@ new ConversationalAIItem("9", "user", "Ok, change the destination back to Berlin
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationalAITask(new ConversationalAIAnalysisInput(new AIConversation[]
+            AnalyzeConversationInput analyzeConversationInput = new ConversationalAITask(new ConversationalAIAnalysisInput(new TextConversation[]
             {
-new AIConversation("order", InputModality.Text, "en", new ConversationalAIItem[]
+new TextConversation("order", "en", new TextConversationItem[]
 {
-new ConversationalAIItem("1", "user", "Hi!"),
-new ConversationalAIItem("2", "bot", "Hello, how can I help you?"),
-new ConversationalAIItem("3", "user", "I would like to book a flight from Paris to Berlin on Oct 10th."),
-new ConversationalAIItem("4", "bot", "Do you have any airline preference?"),
-new ConversationalAIItem("5", "user", "No."),
-new ConversationalAIItem("6", "user", "I like New York and Boston."),
-new ConversationalAIItem("7", "user", "Actualy, change the destination to New York."),
-new ConversationalAIItem("8", "user", "Wait, I do not like the food in New York."),
-new ConversationalAIItem("9", "user", "Ok, change the destination back to Berlin.")
+new TextConversationItem("1", "user", "Hi!"),
+new TextConversationItem("2", "bot", "Hello, how can I help you?"),
+new TextConversationItem("3", "user", "I would like to book a flight from Paris to Berlin on Oct 10th."),
+new TextConversationItem("4", "bot", "Do you have any airline preference?"),
+new TextConversationItem("5", "user", "No."),
+new TextConversationItem("6", "user", "I like New York and Boston."),
+new TextConversationItem("7", "user", "Actualy, change the destination to New York."),
+new TextConversationItem("8", "user", "Wait, I do not like the food in New York."),
+new TextConversationItem("9", "user", "Ok, change the destination back to Berlin.")
 })
             }), new AIConversationLanguageUnderstandingActionContent("project1", "deployment1")
             {

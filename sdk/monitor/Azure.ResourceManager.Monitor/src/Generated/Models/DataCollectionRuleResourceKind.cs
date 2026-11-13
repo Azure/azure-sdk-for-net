@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct DataCollectionRuleResourceKind : IEquatable<DataCollectionRuleResourceKind>
     {
         private readonly string _value;
+        /// <summary> Linux. </summary>
+        private const string LinuxValue = "Linux";
+        /// <summary> Windows. </summary>
+        private const string WindowsValue = "Windows";
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleResourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataCollectionRuleResourceKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LinuxValue = "Linux";
-        private const string WindowsValue = "Windows";
+            _value = value;
+        }
 
         /// <summary> Linux. </summary>
         public static DataCollectionRuleResourceKind Linux { get; } = new DataCollectionRuleResourceKind(LinuxValue);
+
         /// <summary> Windows. </summary>
         public static DataCollectionRuleResourceKind Windows { get; } = new DataCollectionRuleResourceKind(WindowsValue);
+
         /// <summary> Determines if two <see cref="DataCollectionRuleResourceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataCollectionRuleResourceKind left, DataCollectionRuleResourceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataCollectionRuleResourceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataCollectionRuleResourceKind left, DataCollectionRuleResourceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataCollectionRuleResourceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataCollectionRuleResourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataCollectionRuleResourceKind(string value) => new DataCollectionRuleResourceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataCollectionRuleResourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataCollectionRuleResourceKind?(string value) => value == null ? null : new DataCollectionRuleResourceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataCollectionRuleResourceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataCollectionRuleResourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

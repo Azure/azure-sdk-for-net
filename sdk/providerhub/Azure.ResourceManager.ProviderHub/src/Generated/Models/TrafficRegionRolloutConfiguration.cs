@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Initializes a new instance of <see cref="TrafficRegionRolloutConfiguration"/>. </summary>
         /// <param name="regions"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="waitDuration"></param>
-        internal TrafficRegionRolloutConfiguration(IList<AzureLocation> regions, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? waitDuration) : base(regions, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="waitDuration"> The wait duration. </param>
+        internal TrafficRegionRolloutConfiguration(IList<AzureLocation> regions, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan? waitDuration) : base(regions, additionalBinaryDataProperties)
         {
             WaitDuration = waitDuration;
         }
 
-        /// <summary> Gets or sets the wait duration. </summary>
+        /// <summary> The wait duration. </summary>
         public TimeSpan? WaitDuration { get; set; }
     }
 }

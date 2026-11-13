@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Authentication method to access the storage account for deployment. </summary>
     public partial class FunctionAppStorageAuthentication
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppStorageAuthentication"/>. </summary>
         public FunctionAppStorageAuthentication()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="authenticationType"> Property to select authentication type to access the selected storage account. Available options: SystemAssignedIdentity, UserAssignedIdentity, StorageAccountConnectionString. </param>
         /// <param name="userAssignedIdentityResourceId"> Use this property for UserAssignedIdentity. Set the resource ID of the identity. Do not set a value for this property when using other authentication type. </param>
         /// <param name="storageAccountConnectionStringName"> Use this property for StorageAccountConnectionString. Set the name of the app setting that has the storage account connection string. Do not set a value for this property when using other authentication type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppStorageAuthentication(FunctionAppStorageAccountAuthenticationType? authenticationType, string userAssignedIdentityResourceId, string storageAccountConnectionStringName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppStorageAuthentication(FunctionAppStorageAccountAuthenticationType? authenticationType, string userAssignedIdentityResourceId, string storageAccountConnectionStringName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthenticationType = authenticationType;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
             StorageAccountConnectionStringName = storageAccountConnectionStringName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Property to select authentication type to access the selected storage account. Available options: SystemAssignedIdentity, UserAssignedIdentity, StorageAccountConnectionString. </summary>
         [WirePath("type")]
         public FunctionAppStorageAccountAuthenticationType? AuthenticationType { get; set; }
+
         /// <summary> Use this property for UserAssignedIdentity. Set the resource ID of the identity. Do not set a value for this property when using other authentication type. </summary>
         [WirePath("userAssignedIdentityResourceId")]
         public string UserAssignedIdentityResourceId { get; set; }
+
         /// <summary> Use this property for StorageAccountConnectionString. Set the name of the app setting that has the storage account connection string. Do not set a value for this property when using other authentication type. </summary>
         [WirePath("storageAccountConnectionStringName")]
         public string StorageAccountConnectionStringName { get; set; }

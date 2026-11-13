@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
     public partial class NewRelicObservabilityMetricRules
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityMetricRules"/>. </summary>
         public NewRelicObservabilityMetricRules()
@@ -54,23 +26,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityMetricRules"/>. </summary>
         /// <param name="sendMetrics"> Flag specifying if metrics should be sent for the Monitor resource. </param>
         /// <param name="filteringTags"> List of filtering tags to be used for capturing metrics. </param>
-        /// <param name="userEmail"> User Email. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicObservabilityMetricRules(NewRelicObservabilitySendMetricsStatus? sendMetrics, IList<NewRelicObservabilityFilteringTag> filteringTags, string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="userEmail"> Reusable representation of an email address. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicObservabilityMetricRules(NewRelicObservabilitySendMetricsStatus? sendMetrics, IList<NewRelicObservabilityFilteringTag> filteringTags, string userEmail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SendMetrics = sendMetrics;
             FilteringTags = filteringTags;
             UserEmail = userEmail;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Flag specifying if metrics should be sent for the Monitor resource. </summary>
         [WirePath("sendMetrics")]
         public NewRelicObservabilitySendMetricsStatus? SendMetrics { get; set; }
+
         /// <summary> List of filtering tags to be used for capturing metrics. </summary>
         [WirePath("filteringTags")]
         public IList<NewRelicObservabilityFilteringTag> FilteringTags { get; }
-        /// <summary> User Email. </summary>
+
+        /// <summary> Reusable representation of an email address. </summary>
         [WirePath("userEmail")]
         public string UserEmail { get; set; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExpressRoutePortsEncapsulation : IEquatable<ExpressRoutePortsEncapsulation>
     {
         private readonly string _value;
+        /// <summary> Dot1Q. </summary>
+        private const string Dot1QValue = "Dot1Q";
+        /// <summary> QinQ. </summary>
+        private const string QinQValue = "QinQ";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsEncapsulation"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRoutePortsEncapsulation(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Dot1QValue = "Dot1Q";
-        private const string QinQValue = "QinQ";
+            _value = value;
+        }
 
         /// <summary> Dot1Q. </summary>
         public static ExpressRoutePortsEncapsulation Dot1Q { get; } = new ExpressRoutePortsEncapsulation(Dot1QValue);
+
         /// <summary> QinQ. </summary>
         public static ExpressRoutePortsEncapsulation QinQ { get; } = new ExpressRoutePortsEncapsulation(QinQValue);
+
         /// <summary> Determines if two <see cref="ExpressRoutePortsEncapsulation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressRoutePortsEncapsulation left, ExpressRoutePortsEncapsulation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressRoutePortsEncapsulation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressRoutePortsEncapsulation left, ExpressRoutePortsEncapsulation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRoutePortsEncapsulation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressRoutePortsEncapsulation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressRoutePortsEncapsulation(string value) => new ExpressRoutePortsEncapsulation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressRoutePortsEncapsulation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressRoutePortsEncapsulation?(string value) => value == null ? null : new ExpressRoutePortsEncapsulation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressRoutePortsEncapsulation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressRoutePortsEncapsulation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class NetworkProfileResource : IJsonModel<NetworkProfileData>
     {
-        private static NetworkProfileData s_dataDeserializationInstance;
-        private static NetworkProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkProfileData>)Data).Write(writer, options);
 
-        NetworkProfileData IJsonModel<NetworkProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkProfileData IJsonModel<NetworkProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkProfileData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkProfileData IPersistableModel<NetworkProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkProfileData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

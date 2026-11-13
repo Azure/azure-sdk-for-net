@@ -1,0 +1,8 @@
+# Azure.Storage.Blobs.Batch approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# SpecializedBlobExtensions is a GA'd static extensions class whose name intentionally matches the
+# same-named type in Azure.Storage.Blobs (both live in the Azure.Storage.Blobs.Specialized namespace
+# and extend the blob client surface). Renaming it would be a breaking change, so AZC0034 is
+# suppressed for this type.
+nowarn:AZC0034 T:Azure.Storage.Blobs.Specialized.SpecializedBlobExtensions

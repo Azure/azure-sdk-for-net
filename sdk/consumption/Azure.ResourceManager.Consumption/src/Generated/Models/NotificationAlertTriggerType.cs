@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Consumption.Models
     public readonly partial struct NotificationAlertTriggerType : IEquatable<NotificationAlertTriggerType>
     {
         private readonly string _value;
+        /// <summary> Alert will be triggered if the evaluated cost is the same as threshold value. Note: It’s not recommended to use this OperatorType as there’s low chance of cost being exactly the same as threshold value, leading to missing of your alert. This OperatorType will be deprecated in future. </summary>
+        private const string EqualToValue = "EqualTo";
+        /// <summary> Alert will be triggered if the evaluated cost is greater than the threshold value. Note: This is the recommended OperatorType while configuring Budget Alert. </summary>
+        private const string GreaterThanValue = "GreaterThan";
+        /// <summary> Alert will be triggered if the evaluated cost is greater than or equal to the threshold value. </summary>
+        private const string GreaterThanOrEqualToValue = "GreaterThanOrEqualTo";
 
         /// <summary> Initializes a new instance of <see cref="NotificationAlertTriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationAlertTriggerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualToValue = "EqualTo";
-        private const string GreaterThanValue = "GreaterThan";
-        private const string GreaterThanOrEqualToValue = "GreaterThanOrEqualTo";
+            _value = value;
+        }
 
         /// <summary> Alert will be triggered if the evaluated cost is the same as threshold value. Note: It’s not recommended to use this OperatorType as there’s low chance of cost being exactly the same as threshold value, leading to missing of your alert. This OperatorType will be deprecated in future. </summary>
         public static NotificationAlertTriggerType EqualTo { get; } = new NotificationAlertTriggerType(EqualToValue);
+
         /// <summary> Alert will be triggered if the evaluated cost is greater than the threshold value. Note: This is the recommended OperatorType while configuring Budget Alert. </summary>
         public static NotificationAlertTriggerType GreaterThan { get; } = new NotificationAlertTriggerType(GreaterThanValue);
+
         /// <summary> Alert will be triggered if the evaluated cost is greater than or equal to the threshold value. </summary>
         public static NotificationAlertTriggerType GreaterThanOrEqualTo { get; } = new NotificationAlertTriggerType(GreaterThanOrEqualToValue);
+
         /// <summary> Determines if two <see cref="NotificationAlertTriggerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationAlertTriggerType left, NotificationAlertTriggerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationAlertTriggerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationAlertTriggerType left, NotificationAlertTriggerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationAlertTriggerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationAlertTriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationAlertTriggerType(string value) => new NotificationAlertTriggerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationAlertTriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationAlertTriggerType?(string value) => value == null ? null : new NotificationAlertTriggerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationAlertTriggerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationAlertTriggerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

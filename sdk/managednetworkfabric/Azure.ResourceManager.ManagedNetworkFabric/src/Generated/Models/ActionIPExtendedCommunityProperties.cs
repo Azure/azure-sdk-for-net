@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionIPExtendedCommunityProperties"/>. </summary>
-        /// <param name="add"> List of IP Extended Community IDs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="add"> List of IP extended community resource IDs to add. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="delete"> List of IP Extended Community IDs. </param>
         /// <param name="set"> List of IP Extended Community IDs. </param>
-        internal ActionIPExtendedCommunityProperties(IPExtendedCommunityIdList @add, IDictionary<string, BinaryData> serializedAdditionalRawData, IPExtendedCommunityIdList delete, IPExtendedCommunityIdList @set) : base(@add, serializedAdditionalRawData)
+        internal ActionIPExtendedCommunityProperties(IPExtendedCommunityIdList @add, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPExtendedCommunityIdList delete, IPExtendedCommunityIdList @set) : base(@add, additionalBinaryDataProperties)
         {
             Delete = delete;
             Set = @set;
@@ -32,26 +32,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> List of IP Extended Community IDs. </summary>
         internal IPExtendedCommunityIdList Delete { get; set; }
+
+        /// <summary> List of IP Extended Community IDs. </summary>
+        internal IPExtendedCommunityIdList Set { get; set; }
+
         /// <summary> List of IP Extended Community resource IDs. </summary>
         public IList<ResourceIdentifier> DeleteIPExtendedCommunityIds
         {
             get
             {
                 if (Delete is null)
+                {
                     Delete = new IPExtendedCommunityIdList();
+                }
                 return Delete.IPExtendedCommunityIds;
             }
         }
 
-        /// <summary> List of IP Extended Community IDs. </summary>
-        internal IPExtendedCommunityIdList Set { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>
         public IList<ResourceIdentifier> SetIPExtendedCommunityIds
         {
             get
             {
                 if (Set is null)
+                {
                     Set = new IPExtendedCommunityIdList();
+                }
                 return Set.IPExtendedCommunityIds;
             }
         }

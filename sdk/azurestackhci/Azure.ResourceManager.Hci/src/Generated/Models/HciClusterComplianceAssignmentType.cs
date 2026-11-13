@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct HciClusterComplianceAssignmentType : IEquatable<HciClusterComplianceAssignmentType>
     {
         private readonly string _value;
+        /// <summary> Report on the state of the machine, but don't make changes. </summary>
+        private const string AuditValue = "Audit";
+        /// <summary> Applied to the machine. If it drifts, the local service inside the machine makes a correction at the next evaluation. </summary>
+        private const string ApplyAndAutoCorrectValue = "ApplyAndAutoCorrect";
 
         /// <summary> Initializes a new instance of <see cref="HciClusterComplianceAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciClusterComplianceAssignmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AuditValue = "Audit";
-        private const string ApplyAndAutoCorrectValue = "ApplyAndAutoCorrect";
+            _value = value;
+        }
 
         /// <summary> Report on the state of the machine, but don't make changes. </summary>
         public static HciClusterComplianceAssignmentType Audit { get; } = new HciClusterComplianceAssignmentType(AuditValue);
+
         /// <summary> Applied to the machine. If it drifts, the local service inside the machine makes a correction at the next evaluation. </summary>
         public static HciClusterComplianceAssignmentType ApplyAndAutoCorrect { get; } = new HciClusterComplianceAssignmentType(ApplyAndAutoCorrectValue);
+
         /// <summary> Determines if two <see cref="HciClusterComplianceAssignmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciClusterComplianceAssignmentType left, HciClusterComplianceAssignmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciClusterComplianceAssignmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciClusterComplianceAssignmentType left, HciClusterComplianceAssignmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciClusterComplianceAssignmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciClusterComplianceAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciClusterComplianceAssignmentType(string value) => new HciClusterComplianceAssignmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciClusterComplianceAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciClusterComplianceAssignmentType?(string value) => value == null ? null : new HciClusterComplianceAssignmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciClusterComplianceAssignmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciClusterComplianceAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

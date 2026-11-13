@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,92 +15,147 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingTaxIdentifierType : IEquatable<BillingTaxIdentifierType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> BrazilCcmId. </summary>
+        private const string BrazilCcmIdValue = "BrazilCcmId";
+        /// <summary> BrazilCnpjId. </summary>
+        private const string BrazilCnpjIdValue = "BrazilCnpjId";
+        /// <summary> BrazilCpfId. </summary>
+        private const string BrazilCpfIdValue = "BrazilCpfId";
+        /// <summary> CanadianFederalExempt. </summary>
+        private const string CanadianFederalExemptValue = "CanadianFederalExempt";
+        /// <summary> CanadianProvinceExempt. </summary>
+        private const string CanadianProvinceExemptValue = "CanadianProvinceExempt";
+        /// <summary> ExternalTaxation. </summary>
+        private const string ExternalTaxationValue = "ExternalTaxation";
+        /// <summary> IndiaFederalTanId. </summary>
+        private const string IndiaFederalTanIdValue = "IndiaFederalTanId";
+        /// <summary> IndiaFederalServiceTaxId. </summary>
+        private const string IndiaFederalServiceTaxIdValue = "IndiaFederalServiceTaxId";
+        /// <summary> IndiaPanId. </summary>
+        private const string IndiaPanIdValue = "IndiaPanId";
+        /// <summary> IndiaStateCstId. </summary>
+        private const string IndiaStateCstIdValue = "IndiaStateCstId";
+        /// <summary> IndiaStateGstINId. </summary>
+        private const string IndiaStateGstINIdValue = "IndiaStateGstINId";
+        /// <summary> IndiaStateVatId. </summary>
+        private const string IndiaStateVatIdValue = "IndiaStateVatId";
+        /// <summary> IntlExempt. </summary>
+        private const string IntlExemptValue = "IntlExempt";
+        /// <summary> USExempt. </summary>
+        private const string USExemptValue = "USExempt";
+        /// <summary> VatId. </summary>
+        private const string VatIdValue = "VatId";
+        /// <summary> LoveCode. </summary>
+        private const string LoveCodeValue = "LoveCode";
+        /// <summary> MobileBarCode. </summary>
+        private const string MobileBarCodeValue = "MobileBarCode";
+        /// <summary> NationalIdentificationNumber. </summary>
+        private const string NationalIdentificationNumberValue = "NationalIdentificationNumber";
+        /// <summary> PublicSectorId. </summary>
+        private const string PublicSectorIdValue = "PublicSectorId";
 
         /// <summary> Initializes a new instance of <see cref="BillingTaxIdentifierType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingTaxIdentifierType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string BrazilCcmIdValue = "BrazilCcmId";
-        private const string BrazilCnpjIdValue = "BrazilCnpjId";
-        private const string BrazilCpfIdValue = "BrazilCpfId";
-        private const string CanadianFederalExemptValue = "CanadianFederalExempt";
-        private const string CanadianProvinceExemptValue = "CanadianProvinceExempt";
-        private const string ExternalTaxationValue = "ExternalTaxation";
-        private const string IndiaFederalTanIdValue = "IndiaFederalTanId";
-        private const string IndiaFederalServiceTaxIdValue = "IndiaFederalServiceTaxId";
-        private const string IndiaPanIdValue = "IndiaPanId";
-        private const string IndiaStateCstIdValue = "IndiaStateCstId";
-        private const string IndiaStateGstINIdValue = "IndiaStateGstINId";
-        private const string IndiaStateVatIdValue = "IndiaStateVatId";
-        private const string IntlExemptValue = "IntlExempt";
-        private const string USExemptValue = "USExempt";
-        private const string VatIdValue = "VatId";
-        private const string LoveCodeValue = "LoveCode";
-        private const string MobileBarCodeValue = "MobileBarCode";
-        private const string NationalIdentificationNumberValue = "NationalIdentificationNumber";
-        private const string PublicSectorIdValue = "PublicSectorId";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingTaxIdentifierType Other { get; } = new BillingTaxIdentifierType(OtherValue);
+
         /// <summary> BrazilCcmId. </summary>
         public static BillingTaxIdentifierType BrazilCcmId { get; } = new BillingTaxIdentifierType(BrazilCcmIdValue);
+
         /// <summary> BrazilCnpjId. </summary>
         public static BillingTaxIdentifierType BrazilCnpjId { get; } = new BillingTaxIdentifierType(BrazilCnpjIdValue);
+
         /// <summary> BrazilCpfId. </summary>
         public static BillingTaxIdentifierType BrazilCpfId { get; } = new BillingTaxIdentifierType(BrazilCpfIdValue);
+
         /// <summary> CanadianFederalExempt. </summary>
         public static BillingTaxIdentifierType CanadianFederalExempt { get; } = new BillingTaxIdentifierType(CanadianFederalExemptValue);
+
         /// <summary> CanadianProvinceExempt. </summary>
         public static BillingTaxIdentifierType CanadianProvinceExempt { get; } = new BillingTaxIdentifierType(CanadianProvinceExemptValue);
+
         /// <summary> ExternalTaxation. </summary>
         public static BillingTaxIdentifierType ExternalTaxation { get; } = new BillingTaxIdentifierType(ExternalTaxationValue);
+
         /// <summary> IndiaFederalTanId. </summary>
         public static BillingTaxIdentifierType IndiaFederalTanId { get; } = new BillingTaxIdentifierType(IndiaFederalTanIdValue);
+
         /// <summary> IndiaFederalServiceTaxId. </summary>
         public static BillingTaxIdentifierType IndiaFederalServiceTaxId { get; } = new BillingTaxIdentifierType(IndiaFederalServiceTaxIdValue);
+
         /// <summary> IndiaPanId. </summary>
         public static BillingTaxIdentifierType IndiaPanId { get; } = new BillingTaxIdentifierType(IndiaPanIdValue);
+
         /// <summary> IndiaStateCstId. </summary>
         public static BillingTaxIdentifierType IndiaStateCstId { get; } = new BillingTaxIdentifierType(IndiaStateCstIdValue);
+
         /// <summary> IndiaStateGstINId. </summary>
         public static BillingTaxIdentifierType IndiaStateGstINId { get; } = new BillingTaxIdentifierType(IndiaStateGstINIdValue);
+
         /// <summary> IndiaStateVatId. </summary>
         public static BillingTaxIdentifierType IndiaStateVatId { get; } = new BillingTaxIdentifierType(IndiaStateVatIdValue);
+
         /// <summary> IntlExempt. </summary>
         public static BillingTaxIdentifierType IntlExempt { get; } = new BillingTaxIdentifierType(IntlExemptValue);
+
         /// <summary> USExempt. </summary>
         public static BillingTaxIdentifierType USExempt { get; } = new BillingTaxIdentifierType(USExemptValue);
+
         /// <summary> VatId. </summary>
         public static BillingTaxIdentifierType VatId { get; } = new BillingTaxIdentifierType(VatIdValue);
+
         /// <summary> LoveCode. </summary>
         public static BillingTaxIdentifierType LoveCode { get; } = new BillingTaxIdentifierType(LoveCodeValue);
+
         /// <summary> MobileBarCode. </summary>
         public static BillingTaxIdentifierType MobileBarCode { get; } = new BillingTaxIdentifierType(MobileBarCodeValue);
+
         /// <summary> NationalIdentificationNumber. </summary>
         public static BillingTaxIdentifierType NationalIdentificationNumber { get; } = new BillingTaxIdentifierType(NationalIdentificationNumberValue);
+
         /// <summary> PublicSectorId. </summary>
         public static BillingTaxIdentifierType PublicSectorId { get; } = new BillingTaxIdentifierType(PublicSectorIdValue);
+
         /// <summary> Determines if two <see cref="BillingTaxIdentifierType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingTaxIdentifierType left, BillingTaxIdentifierType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingTaxIdentifierType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingTaxIdentifierType left, BillingTaxIdentifierType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingTaxIdentifierType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingTaxIdentifierType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingTaxIdentifierType(string value) => new BillingTaxIdentifierType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingTaxIdentifierType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingTaxIdentifierType?(string value) => value == null ? null : new BillingTaxIdentifierType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingTaxIdentifierType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingTaxIdentifierType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -105,10 +105,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue<object>(Scope);
             }
+            if (Optional.IsDefined(Role))
+            {
+                writer.WritePropertyName("role"u8);
+                writer.WriteObjectValue<object>(Role);
+            }
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteObjectValue<object>(Host);
+            }
+            if (Optional.IsDefined(Schema))
+            {
+                writer.WritePropertyName("schema"u8);
+                writer.WriteObjectValue<object>(Schema);
             }
             if (Optional.IsDefined(PrivateKey))
             {
@@ -124,6 +134,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
+            }
+            if (Optional.IsDefined(UseUtcTimestamps))
+            {
+                writer.WritePropertyName("useUtcTimestamps"u8);
+                writer.WriteObjectValue<object>(UseUtcTimestamps);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -156,10 +171,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SecretBase clientSecret = default;
             object tenantId = default;
             object scope = default;
+            object role = default;
             object host = default;
+            object schema = default;
             SecretBase privateKey = default;
             SecretBase privateKeyPassphrase = default;
             string encryptedCredential = default;
+            object useUtcTimestamps = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -310,6 +328,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             scope = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("role"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            role = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("host"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -317,6 +344,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 continue;
                             }
                             host = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("schema"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            schema = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("privateKey"u8))
@@ -340,6 +376,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
                             encryptedCredential = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("useUtcTimestamps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useUtcTimestamps = property0.Value.GetObject();
                             continue;
                         }
                     }
@@ -366,10 +411,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 clientSecret,
                 tenantId,
                 scope,
+                role,
                 host,
+                schema,
                 privateKey,
                 privateKeyPassphrase,
-                encryptedCredential);
+                encryptedCredential,
+                useUtcTimestamps);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

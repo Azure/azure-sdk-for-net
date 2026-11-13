@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct ConversationActionState : IEquatable<ConversationActionState>
     {
         private readonly string _value;
+        /// <summary> Not started state. </summary>
+        private const string NotStartedValue = "notStarted";
+        /// <summary> Running state. </summary>
+        private const string RunningValue = "running";
+        /// <summary> Succeeded state. </summary>
+        private const string SucceededValue = "succeeded";
+        /// <summary> Partially completed state. </summary>
+        private const string PartiallyCompletedValue = "partiallyCompleted";
+        /// <summary> Failed state. </summary>
+        private const string FailedValue = "failed";
+        /// <summary> Cancelled state. </summary>
+        private const string CancelledValue = "cancelled";
+        /// <summary> Cancelling state. </summary>
+        private const string CancellingValue = "cancelling";
 
         /// <summary> Initializes a new instance of <see cref="ConversationActionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversationActionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "notStarted";
-        private const string RunningValue = "running";
-        private const string SucceededValue = "succeeded";
-        private const string PartiallyCompletedValue = "partiallyCompleted";
-        private const string FailedValue = "failed";
-        private const string CancelledValue = "cancelled";
-        private const string CancellingValue = "cancelling";
+            _value = value;
+        }
 
         /// <summary> Not started state. </summary>
         public static ConversationActionState NotStarted { get; } = new ConversationActionState(NotStartedValue);
+
         /// <summary> Running state. </summary>
         public static ConversationActionState Running { get; } = new ConversationActionState(RunningValue);
+
         /// <summary> Succeeded state. </summary>
         public static ConversationActionState Succeeded { get; } = new ConversationActionState(SucceededValue);
+
         /// <summary> Partially completed state. </summary>
         public static ConversationActionState PartiallyCompleted { get; } = new ConversationActionState(PartiallyCompletedValue);
+
         /// <summary> Failed state. </summary>
         public static ConversationActionState Failed { get; } = new ConversationActionState(FailedValue);
+
         /// <summary> Cancelled state. </summary>
         public static ConversationActionState Cancelled { get; } = new ConversationActionState(CancelledValue);
+
         /// <summary> Cancelling state. </summary>
         public static ConversationActionState Cancelling { get; } = new ConversationActionState(CancellingValue);
+
         /// <summary> Determines if two <see cref="ConversationActionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConversationActionState left, ConversationActionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConversationActionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConversationActionState left, ConversationActionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConversationActionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConversationActionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConversationActionState(string value) => new ConversationActionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConversationActionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConversationActionState?(string value) => value == null ? null : new ConversationActionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConversationActionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConversationActionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

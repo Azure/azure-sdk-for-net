@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     internal static partial class IotHubIPFilterActionTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IotHubIPFilterActionType value) => value switch
         {
             IotHubIPFilterActionType.Accept => "Accept",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.IotHub.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubIPFilterActionType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static IotHubIPFilterActionType ToIotHubIPFilterActionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accept")) return IotHubIPFilterActionType.Accept;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reject")) return IotHubIPFilterActionType.Reject;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accept"))
+            {
+                return IotHubIPFilterActionType.Accept;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reject"))
+            {
+                return IotHubIPFilterActionType.Reject;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubIPFilterActionType value.");
         }
     }

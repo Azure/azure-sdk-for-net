@@ -10,17 +10,6 @@ trigger:
     include:
     - sdk/entra/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/entra/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

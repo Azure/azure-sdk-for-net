@@ -31,7 +31,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 model: modelDeploymentName,
                 name: "My Friendly Test Agent",
                 instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
-                tools: [ new CodeInterpreterToolDefinition() ]
+                tools: [new CodeInterpreterToolDefinition()]
             );
             #endregion
             # region Snippet:AgentsStreamingAsync_CreateThread

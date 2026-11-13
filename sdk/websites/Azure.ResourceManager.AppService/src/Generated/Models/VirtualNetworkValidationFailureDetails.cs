@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,80 +16,99 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A class that describes the reason for a validation failure. </summary>
     public partial class VirtualNetworkValidationFailureDetails : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkValidationFailureDetails"/>. </summary>
         public VirtualNetworkValidationFailureDetails()
         {
-            FailedTests = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
-            Warnings = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkValidationFailureDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="message"> Text describing the validation outcome. </param>
-        /// <param name="isFailed"> A flag describing whether or not validation failed. </param>
-        /// <param name="failedTests"> A list of tests that failed in the validation. </param>
-        /// <param name="warnings"> A list of warnings generated during validation. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> VnetValidationFailureDetails resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, bool? isFailed, IList<VirtualNetworkValidationTestFailure> failedTests, IList<VirtualNetworkValidationTestFailure> warnings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VnetValidationFailureDetailsProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Message = message;
-            IsFailed = isFailed;
-            FailedTests = failedTests;
-            Warnings = warnings;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Text describing the validation outcome. </summary>
-        [WirePath("properties.message")]
-        public string Message { get; set; }
-        /// <summary> A flag describing whether or not validation failed. </summary>
-        [WirePath("properties.failed")]
-        public bool? IsFailed { get; set; }
-        /// <summary> A list of tests that failed in the validation. </summary>
-        [WirePath("properties.failedTests")]
-        public IList<VirtualNetworkValidationTestFailure> FailedTests { get; }
-        /// <summary> A list of warnings generated during validation. </summary>
-        [WirePath("properties.warnings")]
-        public IList<VirtualNetworkValidationTestFailure> Warnings { get; }
+        /// <summary> VnetValidationFailureDetails resource specific properties. </summary>
+        [WirePath("properties")]
+        internal VnetValidationFailureDetailsProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Text describing the validation outcome. </summary>
+        [WirePath("properties.message")]
+        public string Message
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Message;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VnetValidationFailureDetailsProperties();
+                }
+                Properties.Message = value;
+            }
+        }
+
+        /// <summary> A flag describing whether or not validation failed. </summary>
+        [WirePath("properties.failed")]
+        public bool? IsFailed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFailed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VnetValidationFailureDetailsProperties();
+                }
+                Properties.IsFailed = value;
+            }
+        }
+
+        /// <summary> A list of tests that failed in the validation. </summary>
+        [WirePath("properties.failedTests")]
+        public IList<VirtualNetworkValidationTestFailure> FailedTests
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VnetValidationFailureDetailsProperties();
+                }
+                return Properties.FailedTests;
+            }
+        }
+
+        /// <summary> A list of warnings generated during validation. </summary>
+        [WirePath("properties.warnings")]
+        public IList<VirtualNetworkValidationTestFailure> Warnings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VnetValidationFailureDetailsProperties();
+                }
+                return Properties.Warnings;
+            }
+        }
     }
 }

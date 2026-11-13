@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsCommitment"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="grain"> Commitment grain. </param>
-        internal BillingBenefitsCommitment(string currencyCode, double? amount, IDictionary<string, BinaryData> serializedAdditionalRawData, BillingBenefitsCommitmentGrain? grain) : base(currencyCode, amount, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="grain"> The grain of the commitment. </param>
+        internal BillingBenefitsCommitment(string currencyCode, double? amount, IDictionary<string, BinaryData> additionalBinaryDataProperties, BillingBenefitsCommitmentGrain? grain) : base(currencyCode, amount, additionalBinaryDataProperties)
         {
             Grain = grain;
         }
 
-        /// <summary> Commitment grain. </summary>
+        /// <summary> The grain of the commitment. </summary>
         public BillingBenefitsCommitmentGrain? Grain { get; set; }
     }
 }

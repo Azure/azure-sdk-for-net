@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     public readonly partial struct InformaticaPlatformType : IEquatable<InformaticaPlatformType>
     {
         private readonly string _value;
+        /// <summary> Azure platform type. </summary>
+        private const string AzureValue = "AZURE";
 
         /// <summary> Initializes a new instance of <see cref="InformaticaPlatformType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InformaticaPlatformType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureValue = "AZURE";
+            _value = value;
+        }
 
         /// <summary> Azure platform type. </summary>
         public static InformaticaPlatformType Azure { get; } = new InformaticaPlatformType(AzureValue);
+
         /// <summary> Determines if two <see cref="InformaticaPlatformType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InformaticaPlatformType left, InformaticaPlatformType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InformaticaPlatformType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InformaticaPlatformType left, InformaticaPlatformType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InformaticaPlatformType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InformaticaPlatformType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InformaticaPlatformType(string value) => new InformaticaPlatformType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InformaticaPlatformType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InformaticaPlatformType?(string value) => value == null ? null : new InformaticaPlatformType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InformaticaPlatformType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InformaticaPlatformType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,15 +11,15 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using KeyVaultProperties = Azure.ResourceManager.KeyVault.Models.KeyVaultProperties;
 using ManagedServiceIdentityType = Azure.ResourceManager.Models.ManagedServiceIdentityType;
 using StorageAccountType = Azure.ResourceManager.Compute.Models.StorageAccountType;
-using KeyVaultProperties = Azure.ResourceManager.KeyVault.Models.KeyVaultProperties;
-using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Tests
 {

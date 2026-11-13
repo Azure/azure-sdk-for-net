@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ClusterContinueUpdateVersionMachineGroupTargetingMode : IEquatable<ClusterContinueUpdateVersionMachineGroupTargetingMode>
     {
         private readonly string _value;
+        /// <summary> Racks will be targeted for update in alphabetical order based on the rack name. </summary>
+        private const string AlphaByRackValue = "AlphaByRack";
 
         /// <summary> Initializes a new instance of <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterContinueUpdateVersionMachineGroupTargetingMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AlphaByRackValue = "AlphaByRack";
-
-        /// <summary> AlphaByRack. </summary>
+        /// <summary> Racks will be targeted for update in alphabetical order based on the rack name. </summary>
         public static ClusterContinueUpdateVersionMachineGroupTargetingMode AlphaByRack { get; } = new ClusterContinueUpdateVersionMachineGroupTargetingMode(AlphaByRackValue);
+
         /// <summary> Determines if two <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterContinueUpdateVersionMachineGroupTargetingMode left, ClusterContinueUpdateVersionMachineGroupTargetingMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterContinueUpdateVersionMachineGroupTargetingMode left, ClusterContinueUpdateVersionMachineGroupTargetingMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterContinueUpdateVersionMachineGroupTargetingMode(string value) => new ClusterContinueUpdateVersionMachineGroupTargetingMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterContinueUpdateVersionMachineGroupTargetingMode?(string value) => value == null ? null : new ClusterContinueUpdateVersionMachineGroupTargetingMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterContinueUpdateVersionMachineGroupTargetingMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterContinueUpdateVersionMachineGroupTargetingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

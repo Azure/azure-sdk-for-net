@@ -156,7 +156,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await service.SetPropertiesAsync(properties: properties.Value);
 
             // Assert
-           await service.GetPropertiesAsync();
+            await service.GetPropertiesAsync();
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25266")]
@@ -217,6 +217,111 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Cleanup
                 properties.Protocol.Smb.Multichannel.Enabled = false;
+                await service.SetPropertiesAsync(properties);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        [NonParallelizable]
+        [Category("NonVirtualized")]
+        public async Task GetSetServicePropertiesAsync_EncryptionInTransit_SMB()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+
+            // Act
+            Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
+            ShareServiceProperties properties = propertiesResponse.Value;
+
+            if (properties.Protocol.Smb.EncryptionInTransit?.Required == true)
+            {
+                // Act
+                properties.Protocol.Smb.Multichannel = null;
+                properties.Protocol.Smb.EncryptionInTransit.Required = false;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
+
+                // Assert
+                Assert.IsFalse(properties.Protocol.Smb.EncryptionInTransit.Required);
+
+                // Cleanup
+                properties.Protocol.Smb.EncryptionInTransit.Required = false;
+                properties.Protocol.Smb.Multichannel = null;
+
+                await service.SetPropertiesAsync(properties);
+            }
+            else
+            {
+                // Act
+                properties.Protocol.Smb.EncryptionInTransit = new ShareSmbSettingsEncryptionInTransit
+                {
+                    Required = true
+                };
+                properties.Protocol.Smb.Multichannel = null;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
+
+                // Assert
+                Assert.IsTrue(properties.Protocol.Smb.EncryptionInTransit.Required);
+
+                // Cleanup
+                properties.Protocol.Smb.Multichannel = null;
+                properties.Protocol.Smb.EncryptionInTransit.Required = false;
+                await service.SetPropertiesAsync(properties);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        [NonParallelizable]
+        [Category("NonVirtualized")]
+        public async Task GetSetServicePropertiesAsync_EncryptionInTransit_NFS()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+
+            // Act
+            Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
+            ShareServiceProperties properties = propertiesResponse.Value;
+
+            if (properties.Protocol.Nfs?.EncryptionInTransit?.Required == true)
+            {
+                // Act
+                properties.Protocol.Nfs.EncryptionInTransit.Required = false;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
+
+                // Assert
+                Assert.IsFalse(properties.Protocol.Smb.EncryptionInTransit.Required);
+
+                // Cleanup
+                properties.Protocol.Smb.EncryptionInTransit.Required = true;
+                await service.SetPropertiesAsync(properties);
+            }
+            else
+            {
+                // Act
+                if (properties.Protocol.Nfs == null)
+                {
+                    properties.Protocol.Nfs = new ShareNfsSettings();
+                }
+                properties.Protocol.Nfs.EncryptionInTransit = new ShareNfsSettingsEncryptionInTransit
+                {
+                    Required = true
+                };
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
+
+                // Assert
+                Assert.IsTrue(properties.Protocol.Nfs.EncryptionInTransit.Required);
+
+                // Cleanup
+                properties.Protocol.Nfs.EncryptionInTransit.Required = false;
                 await service.SetPropertiesAsync(properties);
             }
         }
@@ -512,6 +617,26 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
+        public async Task ListSharesSegmentAsync_CreatedOn()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // Act
+            IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+
+            // Assert
+            ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
+            Assert.IsNotNull(shareItem);
+            Assert.IsNotNull(shareItem.Properties.ETag);
+            Assert.IsNotNull(shareItem.Properties.CreatedOn);
+        }
+
+        [RecordedTest]
         public async Task CreateShareAsync()
         {
             var name = GetNewShareName();
@@ -581,6 +706,61 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.UndeleteShareAsync(GetNewShareName(), fakeVersion),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetUserDelegationKey()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            DateTimeOffset startTime = Recording.UtcNow.AddMinutes(-5);
+            DateTimeOffset expiryTime = Recording.UtcNow.AddHours(1);
+
+            // Act
+            ShareGetUserDelegationKeyOptions options = new ShareGetUserDelegationKeyOptions(expiresOn: expiryTime)
+            {
+                StartsOn = startTime,
+            };
+            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(options);
+
+            // Assert
+            Assert.IsNotNull(response.Value);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetUserDelegationKey_Error()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+
+            // Act
+            ShareGetUserDelegationKeyOptions options = new ShareGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.GetUserDelegationKeyAsync(options: options),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetUserDelegationKey_ArgumentException()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+
+            // Act
+            ShareGetUserDelegationKeyOptions options = new ShareGetUserDelegationKeyOptions(
+                    // ensure the time used is not UTC, as DateTimeOffset.Now could actually be UTC based on OS settings
+                    // Use a custom time zone so we aren't dependent on OS having specific standard time zone.
+                    expiresOn: TimeZoneInfo.ConvertTime(
+                        Recording.Now.AddHours(1),
+                        TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ")));
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                service.GetUserDelegationKeyAsync(
+                    options: options),
+                e => Assert.AreEqual("expiresOn must be UTC", e.Message));
+            ;
         }
 
         #region GenerateSasTests

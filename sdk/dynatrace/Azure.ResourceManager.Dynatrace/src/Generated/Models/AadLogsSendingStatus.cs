@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public readonly partial struct AadLogsSendingStatus : IEquatable<AadLogsSendingStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AadLogsSendingStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AadLogsSendingStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadLogsSendingStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AadLogsSendingStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static AadLogsSendingStatus Enabled { get; } = new AadLogsSendingStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static AadLogsSendingStatus Disabled { get; } = new AadLogsSendingStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="AadLogsSendingStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AadLogsSendingStatus left, AadLogsSendingStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AadLogsSendingStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AadLogsSendingStatus left, AadLogsSendingStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AadLogsSendingStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AadLogsSendingStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AadLogsSendingStatus(string value) => new AadLogsSendingStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AadLogsSendingStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AadLogsSendingStatus?(string value) => value == null ? null : new AadLogsSendingStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AadLogsSendingStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AadLogsSendingStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </summary>
     public partial class VpnConnectionPacketCaptureStartContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VpnConnectionPacketCaptureStartContent"/>. </summary>
         public VpnConnectionPacketCaptureStartContent()
@@ -54,17 +26,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VpnConnectionPacketCaptureStartContent"/>. </summary>
         /// <param name="filterData"> Start Packet capture parameters on vpn connection. </param>
         /// <param name="linkConnectionNames"> List of site link connection names. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VpnConnectionPacketCaptureStartContent(string filterData, IList<string> linkConnectionNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VpnConnectionPacketCaptureStartContent(string filterData, IList<string> linkConnectionNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilterData = filterData;
             LinkConnectionNames = linkConnectionNames;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start Packet capture parameters on vpn connection. </summary>
         [WirePath("filterData")]
         public string FilterData { get; set; }
+
         /// <summary> List of site link connection names. </summary>
         [WirePath("linkConnectionNames")]
         public IList<string> LinkConnectionNames { get; }

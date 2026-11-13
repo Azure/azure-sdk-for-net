@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct PermissionBindingProvisioningState : IEquatable<PermissionBindingProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Deleted. </summary>
+        private const string DeletedValue = "Deleted";
 
         /// <summary> Initializes a new instance of <see cref="PermissionBindingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PermissionBindingProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string DeletedValue = "Deleted";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static PermissionBindingProvisioningState Creating { get; } = new PermissionBindingProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static PermissionBindingProvisioningState Updating { get; } = new PermissionBindingProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static PermissionBindingProvisioningState Deleting { get; } = new PermissionBindingProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static PermissionBindingProvisioningState Succeeded { get; } = new PermissionBindingProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static PermissionBindingProvisioningState Canceled { get; } = new PermissionBindingProvisioningState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static PermissionBindingProvisioningState Failed { get; } = new PermissionBindingProvisioningState(FailedValue);
+
         /// <summary> Deleted. </summary>
         public static PermissionBindingProvisioningState Deleted { get; } = new PermissionBindingProvisioningState(DeletedValue);
+
         /// <summary> Determines if two <see cref="PermissionBindingProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PermissionBindingProvisioningState left, PermissionBindingProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PermissionBindingProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PermissionBindingProvisioningState left, PermissionBindingProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PermissionBindingProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PermissionBindingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PermissionBindingProvisioningState(string value) => new PermissionBindingProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PermissionBindingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PermissionBindingProvisioningState?(string value) => value == null ? null : new PermissionBindingProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PermissionBindingProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PermissionBindingProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

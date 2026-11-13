@@ -7,45 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The EntityQueryKind. </summary>
-    public readonly partial struct EntityQueryKind : IEquatable<EntityQueryKind>
+    /// <summary> The kind of the entity query. </summary>
+    internal readonly partial struct EntityQueryKind : IEquatable<EntityQueryKind>
     {
         private readonly string _value;
+        /// <summary> Expansion. </summary>
+        private const string ExpansionValue = "Expansion";
+        /// <summary> Insight. </summary>
+        private const string InsightValue = "Insight";
+        /// <summary> Activity. </summary>
+        private const string ActivityValue = "Activity";
 
         /// <summary> Initializes a new instance of <see cref="EntityQueryKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityQueryKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExpansionValue = "Expansion";
-        private const string ActivityValue = "Activity";
+            _value = value;
+        }
 
         /// <summary> Expansion. </summary>
         public static EntityQueryKind Expansion { get; } = new EntityQueryKind(ExpansionValue);
+
+        /// <summary> Insight. </summary>
+        public static EntityQueryKind Insight { get; } = new EntityQueryKind(InsightValue);
+
         /// <summary> Activity. </summary>
         public static EntityQueryKind Activity { get; } = new EntityQueryKind(ActivityValue);
+
         /// <summary> Determines if two <see cref="EntityQueryKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityQueryKind left, EntityQueryKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntityQueryKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityQueryKind left, EntityQueryKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityQueryKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntityQueryKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntityQueryKind(string value) => new EntityQueryKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntityQueryKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntityQueryKind?(string value) => value == null ? null : new EntityQueryKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntityQueryKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntityQueryKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

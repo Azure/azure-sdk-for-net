@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeStorageContainerStatus : IEquatable<DataBoxEdgeStorageContainerStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeStorageContainerStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string OKValue = "OK";
         private const string OfflineValue = "Offline";
         private const string UnknownValue = "Unknown";
         private const string UpdatingValue = "Updating";
         private const string NeedsAttentionValue = "NeedsAttention";
 
-        /// <summary> OK. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeStorageContainerStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the OK. </summary>
         public static DataBoxEdgeStorageContainerStatus OK { get; } = new DataBoxEdgeStorageContainerStatus(OKValue);
-        /// <summary> Offline. </summary>
+
+        /// <summary> Gets the Offline. </summary>
         public static DataBoxEdgeStorageContainerStatus Offline { get; } = new DataBoxEdgeStorageContainerStatus(OfflineValue);
-        /// <summary> Unknown. </summary>
+
+        /// <summary> Gets the Unknown. </summary>
         public static DataBoxEdgeStorageContainerStatus Unknown { get; } = new DataBoxEdgeStorageContainerStatus(UnknownValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static DataBoxEdgeStorageContainerStatus Updating { get; } = new DataBoxEdgeStorageContainerStatus(UpdatingValue);
-        /// <summary> NeedsAttention. </summary>
+
+        /// <summary> Gets the NeedsAttention. </summary>
         public static DataBoxEdgeStorageContainerStatus NeedsAttention { get; } = new DataBoxEdgeStorageContainerStatus(NeedsAttentionValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageContainerStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeStorageContainerStatus left, DataBoxEdgeStorageContainerStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageContainerStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeStorageContainerStatus left, DataBoxEdgeStorageContainerStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeStorageContainerStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeStorageContainerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeStorageContainerStatus(string value) => new DataBoxEdgeStorageContainerStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeStorageContainerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeStorageContainerStatus?(string value) => value == null ? null : new DataBoxEdgeStorageContainerStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeStorageContainerStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeStorageContainerStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

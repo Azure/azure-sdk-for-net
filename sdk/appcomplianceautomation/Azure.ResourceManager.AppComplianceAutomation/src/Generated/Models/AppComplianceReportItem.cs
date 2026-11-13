@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Object that includes all the content for single compliance result. </summary>
     public partial class AppComplianceReportItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportItem"/>. </summary>
         internal AppComplianceReportItem()
@@ -64,8 +35,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="resourceOrigin"> Resource origin. </param>
         /// <param name="resourceStatus"> Resource status. </param>
         /// <param name="resourceStatusChangedOn"> The status change date for the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceReportItem(string categoryName, string controlFamilyName, string controlId, string controlName, AppComplianceControlStatus? controlStatus, string responsibilityTitle, string responsibilityDescription, ResourceIdentifier resourceId, ResourceType? resourceType, ReportResourceOrigin? resourceOrigin, ReportResourceStatus? resourceStatus, DateTimeOffset? resourceStatusChangedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppComplianceReportItem(string categoryName, string controlFamilyName, string controlId, string controlName, AppComplianceControlStatus? controlStatus, string responsibilityTitle, string responsibilityDescription, ResourceIdentifier resourceId, ResourceType? resourceType, ReportResourceOrigin? resourceOrigin, ReportResourceStatus? resourceStatus, DateTimeOffset? resourceStatusChangedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CategoryName = categoryName;
             ControlFamilyName = controlFamilyName;
@@ -79,31 +50,42 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             ResourceOrigin = resourceOrigin;
             ResourceStatus = resourceStatus;
             ResourceStatusChangedOn = resourceStatusChangedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The category name. </summary>
         public string CategoryName { get; }
+
         /// <summary> The control family name. </summary>
         public string ControlFamilyName { get; }
+
         /// <summary> The control Id - e.g. "1". </summary>
         public string ControlId { get; }
+
         /// <summary> The control name. </summary>
         public string ControlName { get; }
+
         /// <summary> Control status. </summary>
         public AppComplianceControlStatus? ControlStatus { get; }
+
         /// <summary> The title of the customer responsibility. </summary>
         public string ResponsibilityTitle { get; }
+
         /// <summary> The description of the customer responsibility. </summary>
         public string ResponsibilityDescription { get; }
+
         /// <summary> The Id of the resource. </summary>
         public ResourceIdentifier ResourceId { get; }
+
         /// <summary> The type of the resource.  e.g. "Microsoft.SignalRService/SignalR". </summary>
         public ResourceType? ResourceType { get; }
+
         /// <summary> Resource origin. </summary>
         public ReportResourceOrigin? ResourceOrigin { get; }
+
         /// <summary> Resource status. </summary>
         public ReportResourceStatus? ResourceStatus { get; }
+
         /// <summary> The status change date for the resource. </summary>
         public DateTimeOffset? ResourceStatusChangedOn { get; }
     }

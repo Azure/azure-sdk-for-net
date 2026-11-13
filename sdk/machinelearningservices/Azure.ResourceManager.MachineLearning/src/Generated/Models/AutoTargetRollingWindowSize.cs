@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AutoTargetRollingWindowSize : TargetRollingWindowSize
     {
         /// <summary> Initializes a new instance of <see cref="AutoTargetRollingWindowSize"/>. </summary>
-        public AutoTargetRollingWindowSize()
+        public AutoTargetRollingWindowSize() : base(TargetRollingWindowSizeMode.Auto)
         {
-            Mode = TargetRollingWindowSizeMode.Auto;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoTargetRollingWindowSize"/>. </summary>
         /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoTargetRollingWindowSize(TargetRollingWindowSizeMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutoTargetRollingWindowSize(TargetRollingWindowSizeMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(mode, additionalBinaryDataProperties)
         {
-            Mode = mode;
         }
     }
 }

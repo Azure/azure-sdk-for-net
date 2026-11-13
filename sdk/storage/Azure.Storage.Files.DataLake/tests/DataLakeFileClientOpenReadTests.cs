@@ -89,7 +89,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 BufferSize = bufferSize,
                 Position = position,
-                Conditions = conditions
+                Conditions = conditions,
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
             });
 
         protected override async Task<Stream> OpenReadAsyncOverload(DataLakeFileClient client, int? bufferSize = null, long position = 0, bool allowModifications = false)
@@ -97,7 +98,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         protected override async Task StageDataAsync(DataLakeFileClient client, Stream data)
         {
-            using Stream writeStream = await client.OpenWriteAsync( overwrite: true);
+            using Stream writeStream = await client.OpenWriteAsync(overwrite: true);
             await data.CopyToAsync(writeStream);
         }
 

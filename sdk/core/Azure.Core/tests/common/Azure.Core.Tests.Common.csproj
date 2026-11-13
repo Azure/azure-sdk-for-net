@@ -7,7 +7,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\..\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
-    <ProjectReference Include="..\..\..\System.ClientModel\src\System.ClientModel.csproj" />
+    <PackageReference Include="System.ClientModel" />
     <ProjectReference Include="..\..\src\Azure.Core.csproj" />
   </ItemGroup>
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetVmDeleteOption : IEquatable<ComputeFleetVmDeleteOption>
     {
         private readonly string _value;
+        /// <summary> Delete Option. </summary>
+        private const string DeleteValue = "Delete";
+        /// <summary> Detach Option. </summary>
+        private const string DetachValue = "Detach";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmDeleteOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetVmDeleteOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeleteValue = "Delete";
-        private const string DetachValue = "Detach";
+            _value = value;
+        }
 
         /// <summary> Delete Option. </summary>
         public static ComputeFleetVmDeleteOption Delete { get; } = new ComputeFleetVmDeleteOption(DeleteValue);
+
         /// <summary> Detach Option. </summary>
         public static ComputeFleetVmDeleteOption Detach { get; } = new ComputeFleetVmDeleteOption(DetachValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetVmDeleteOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetVmDeleteOption left, ComputeFleetVmDeleteOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetVmDeleteOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetVmDeleteOption left, ComputeFleetVmDeleteOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetVmDeleteOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetVmDeleteOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetVmDeleteOption(string value) => new ComputeFleetVmDeleteOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetVmDeleteOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetVmDeleteOption?(string value) => value == null ? null : new ComputeFleetVmDeleteOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetVmDeleteOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetVmDeleteOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

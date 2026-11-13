@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct HostPoolType : IEquatable<HostPoolType>
     {
         private readonly string _value;
+        /// <summary> Users will be assigned a SessionHost either by administrators (PersonalDesktopAssignmentType = Direct) or upon connecting to the pool (PersonalDesktopAssignmentType = Automatic). They will always be redirected to their assigned SessionHost. </summary>
+        private const string PersonalValue = "Personal";
+        /// <summary> Users get a new (random) SessionHost every time it connects to the HostPool. </summary>
+        private const string PooledValue = "Pooled";
+        /// <summary> Users assign their own machines, load balancing logic remains the same as Personal. PersonalDesktopAssignmentType must be Direct. </summary>
+        private const string BringYourOwnDesktopValue = "BYODesktop";
 
         /// <summary> Initializes a new instance of <see cref="HostPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HostPoolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PersonalValue = "Personal";
-        private const string PooledValue = "Pooled";
-        private const string BringYourOwnDesktopValue = "BYODesktop";
+            _value = value;
+        }
 
         /// <summary> Users will be assigned a SessionHost either by administrators (PersonalDesktopAssignmentType = Direct) or upon connecting to the pool (PersonalDesktopAssignmentType = Automatic). They will always be redirected to their assigned SessionHost. </summary>
         public static HostPoolType Personal { get; } = new HostPoolType(PersonalValue);
+
         /// <summary> Users get a new (random) SessionHost every time it connects to the HostPool. </summary>
         public static HostPoolType Pooled { get; } = new HostPoolType(PooledValue);
+
         /// <summary> Users assign their own machines, load balancing logic remains the same as Personal. PersonalDesktopAssignmentType must be Direct. </summary>
         public static HostPoolType BringYourOwnDesktop { get; } = new HostPoolType(BringYourOwnDesktopValue);
+
         /// <summary> Determines if two <see cref="HostPoolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HostPoolType left, HostPoolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HostPoolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HostPoolType left, HostPoolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HostPoolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HostPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HostPoolType(string value) => new HostPoolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HostPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HostPoolType?(string value) => value == null ? null : new HostPoolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HostPoolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HostPoolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the IP flow to be verified. </summary>
     public partial class VerificationIPFlowContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VerificationIPFlowContent"/>. </summary>
         /// <param name="targetResourceId"> The ID of the target resource to perform next-hop on. </param>
@@ -81,8 +53,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="localIPAddress"> The local IP address. Acceptable values are valid IPv4 addresses. </param>
         /// <param name="remoteIPAddress"> The remote IP address. Acceptable values are valid IPv4 addresses. </param>
         /// <param name="targetNicResourceId"> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified. Otherwise optional). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VerificationIPFlowContent(ResourceIdentifier targetResourceId, NetworkTrafficDirection direction, IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress, ResourceIdentifier targetNicResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VerificationIPFlowContent(ResourceIdentifier targetResourceId, NetworkTrafficDirection direction, IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress, ResourceIdentifier targetNicResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             Direction = direction;
@@ -92,35 +64,37 @@ namespace Azure.ResourceManager.Network.Models
             LocalIPAddress = localIPAddress;
             RemoteIPAddress = remoteIPAddress;
             TargetNicResourceId = targetNicResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VerificationIPFlowContent"/> for deserialization. </summary>
-        internal VerificationIPFlowContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the target resource to perform next-hop on. </summary>
         [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
+
         /// <summary> The direction of the packet represented as a 5-tuple. </summary>
         [WirePath("direction")]
         public NetworkTrafficDirection Direction { get; }
+
         /// <summary> Protocol to be verified on. </summary>
         [WirePath("protocol")]
         public IPFlowProtocol Protocol { get; }
+
         /// <summary> The local port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </summary>
         [WirePath("localPort")]
         public string LocalPort { get; }
+
         /// <summary> The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </summary>
         [WirePath("remotePort")]
         public string RemotePort { get; }
+
         /// <summary> The local IP address. Acceptable values are valid IPv4 addresses. </summary>
         [WirePath("localIPAddress")]
         public string LocalIPAddress { get; }
+
         /// <summary> The remote IP address. Acceptable values are valid IPv4 addresses. </summary>
         [WirePath("remoteIPAddress")]
         public string RemoteIPAddress { get; }
+
         /// <summary> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified. Otherwise optional). </summary>
         [WirePath("targetNicResourceId")]
         public ResourceIdentifier TargetNicResourceId { get; set; }

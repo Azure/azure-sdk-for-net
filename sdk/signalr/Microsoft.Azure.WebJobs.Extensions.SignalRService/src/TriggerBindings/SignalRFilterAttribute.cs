@@ -9,10 +9,19 @@ using Microsoft.Azure.WebJobs.Host;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
+    /// <summary>
+    /// A base attribute for filters that run before a SignalR trigger function is invoked.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 #pragma warning disable CS0618 // Type or member is obsolete
     public abstract class SignalRFilterAttribute : FunctionInvocationFilterAttribute
     {
+        /// <summary>
+        /// Executed before the target function is invoked; extracts the <see cref="InvocationContext"/> from the
+        /// executing arguments and dispatches to <see cref="FilterAsync"/>.
+        /// </summary>
+        /// <param name="executingContext">The context for the function that is about to be executed.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         public override Task OnExecutingAsync(FunctionExecutingContext executingContext,
             CancellationToken cancellationToken)
         {

@@ -42,8 +42,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             AssertTrackedResource(set1, set2);
             Assert.AreEqual(set1.PlatformFaultDomainCount, set2.PlatformFaultDomainCount);
             Assert.AreEqual(set1.PlatformUpdateDomainCount, set2.PlatformUpdateDomainCount);
-            Assert.AreEqual(set1.ProximityPlacementGroup, set2.ProximityPlacementGroup);
-            Assert.AreEqual(set1.ProximityPlacementGroup?.Id, set2.ProximityPlacementGroup?.Id);
+            Assert.AreEqual(set1.ProximityPlacementGroupId, set2.ProximityPlacementGroupId);
         }
 
         public static AvailabilitySetData GetBasicAvailabilitySetData(AzureLocation location)
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         {
             AssertTrackedResource(gallery1, gallery2);
             Assert.AreEqual(gallery1.Description, gallery2.Description);
-            Assert.AreEqual(gallery1.Identifier?.UniqueName, gallery2.Identifier?.UniqueName);
+            Assert.AreEqual(gallery1.IdentifierUniqueName, gallery2.IdentifierUniqueName);
         }
 
         public static GalleryData GetBasicGalleryData(AzureLocation location, string description = null)
@@ -329,10 +328,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                                     new("internal")
                                     {
                                         Primary = true,
-                                        Subnet = new WritableSubResource()
-                                        {
-                                            Id = subnetId
-                                        }
+                                        SubnetId = subnetId
                                     }
                                 }
                             }

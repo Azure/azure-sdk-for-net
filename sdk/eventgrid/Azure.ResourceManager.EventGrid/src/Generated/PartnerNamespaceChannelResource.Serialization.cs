@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary></summary>
     public partial class PartnerNamespaceChannelResource : IJsonModel<PartnerNamespaceChannelData>
     {
-        private static PartnerNamespaceChannelData s_dataDeserializationInstance;
-        private static PartnerNamespaceChannelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PartnerNamespaceChannelData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PartnerNamespaceChannelData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PartnerNamespaceChannelData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PartnerNamespaceChannelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PartnerNamespaceChannelData>)Data).Write(writer, options);
 
-        PartnerNamespaceChannelData IJsonModel<PartnerNamespaceChannelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerNamespaceChannelData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PartnerNamespaceChannelData IJsonModel<PartnerNamespaceChannelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PartnerNamespaceChannelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PartnerNamespaceChannelData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PartnerNamespaceChannelData IPersistableModel<PartnerNamespaceChannelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerNamespaceChannelData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<PartnerNamespaceChannelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerNamespaceChannelData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PartnerNamespaceChannelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

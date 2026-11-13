@@ -7,81 +7,130 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The AgentUpgradeBlockedReason. </summary>
+    /// <summary></summary>
     public readonly partial struct AgentUpgradeBlockedReason : IEquatable<AgentUpgradeBlockedReason>
     {
         private readonly string _value;
+        /// <summary> AlreadyOnLatestVersion. </summary>
+        private const string AlreadyOnLatestVersionValue = "AlreadyOnLatestVersion";
+        /// <summary> RebootRequired. </summary>
+        private const string RebootRequiredValue = "RebootRequired";
+        /// <summary> AgentNoHeartbeat. </summary>
+        private const string AgentNoHeartbeatValue = "AgentNoHeartbeat";
+        /// <summary> RcmProxyNoHeartbeat. </summary>
+        private const string RcmProxyNoHeartbeatValue = "RcmProxyNoHeartbeat";
+        /// <summary> ProcessServerNoHeartbeat. </summary>
+        private const string ProcessServerNoHeartbeatValue = "ProcessServerNoHeartbeat";
+        /// <summary> IncompatibleApplianceVersion. </summary>
+        private const string IncompatibleApplianceVersionValue = "IncompatibleApplianceVersion";
+        /// <summary> NotProtected. </summary>
+        private const string NotProtectedValue = "NotProtected";
+        /// <summary> UnsupportedProtectionScenario. </summary>
+        private const string UnsupportedProtectionScenarioValue = "UnsupportedProtectionScenario";
+        /// <summary> DistroIsNotReported. </summary>
+        private const string DistroIsNotReportedValue = "DistroIsNotReported";
+        /// <summary> DistroNotSupportedForUpgrade. </summary>
+        private const string DistroNotSupportedForUpgradeValue = "DistroNotSupportedForUpgrade";
+        /// <summary> MissingUpgradePath. </summary>
+        private const string MissingUpgradePathValue = "MissingUpgradePath";
+        /// <summary> InvalidAgentVersion. </summary>
+        private const string InvalidAgentVersionValue = "InvalidAgentVersion";
+        /// <summary> InvalidDriverVersion. </summary>
+        private const string InvalidDriverVersionValue = "InvalidDriverVersion";
+        /// <summary> ReInstallRequired. </summary>
+        private const string ReInstallRequiredValue = "ReInstallRequired";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="AgentUpgradeBlockedReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgentUpgradeBlockedReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlreadyOnLatestVersionValue = "AlreadyOnLatestVersion";
-        private const string RebootRequiredValue = "RebootRequired";
-        private const string AgentNoHeartbeatValue = "AgentNoHeartbeat";
-        private const string RcmProxyNoHeartbeatValue = "RcmProxyNoHeartbeat";
-        private const string ProcessServerNoHeartbeatValue = "ProcessServerNoHeartbeat";
-        private const string IncompatibleApplianceVersionValue = "IncompatibleApplianceVersion";
-        private const string NotProtectedValue = "NotProtected";
-        private const string UnsupportedProtectionScenarioValue = "UnsupportedProtectionScenario";
-        private const string DistroIsNotReportedValue = "DistroIsNotReported";
-        private const string DistroNotSupportedForUpgradeValue = "DistroNotSupportedForUpgrade";
-        private const string MissingUpgradePathValue = "MissingUpgradePath";
-        private const string InvalidAgentVersionValue = "InvalidAgentVersion";
-        private const string InvalidDriverVersionValue = "InvalidDriverVersion";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> AlreadyOnLatestVersion. </summary>
         public static AgentUpgradeBlockedReason AlreadyOnLatestVersion { get; } = new AgentUpgradeBlockedReason(AlreadyOnLatestVersionValue);
+
         /// <summary> RebootRequired. </summary>
         public static AgentUpgradeBlockedReason RebootRequired { get; } = new AgentUpgradeBlockedReason(RebootRequiredValue);
+
         /// <summary> AgentNoHeartbeat. </summary>
         public static AgentUpgradeBlockedReason AgentNoHeartbeat { get; } = new AgentUpgradeBlockedReason(AgentNoHeartbeatValue);
+
         /// <summary> RcmProxyNoHeartbeat. </summary>
         public static AgentUpgradeBlockedReason RcmProxyNoHeartbeat { get; } = new AgentUpgradeBlockedReason(RcmProxyNoHeartbeatValue);
+
         /// <summary> ProcessServerNoHeartbeat. </summary>
         public static AgentUpgradeBlockedReason ProcessServerNoHeartbeat { get; } = new AgentUpgradeBlockedReason(ProcessServerNoHeartbeatValue);
+
         /// <summary> IncompatibleApplianceVersion. </summary>
         public static AgentUpgradeBlockedReason IncompatibleApplianceVersion { get; } = new AgentUpgradeBlockedReason(IncompatibleApplianceVersionValue);
+
         /// <summary> NotProtected. </summary>
         public static AgentUpgradeBlockedReason NotProtected { get; } = new AgentUpgradeBlockedReason(NotProtectedValue);
+
         /// <summary> UnsupportedProtectionScenario. </summary>
         public static AgentUpgradeBlockedReason UnsupportedProtectionScenario { get; } = new AgentUpgradeBlockedReason(UnsupportedProtectionScenarioValue);
+
         /// <summary> DistroIsNotReported. </summary>
         public static AgentUpgradeBlockedReason DistroIsNotReported { get; } = new AgentUpgradeBlockedReason(DistroIsNotReportedValue);
+
         /// <summary> DistroNotSupportedForUpgrade. </summary>
         public static AgentUpgradeBlockedReason DistroNotSupportedForUpgrade { get; } = new AgentUpgradeBlockedReason(DistroNotSupportedForUpgradeValue);
+
         /// <summary> MissingUpgradePath. </summary>
         public static AgentUpgradeBlockedReason MissingUpgradePath { get; } = new AgentUpgradeBlockedReason(MissingUpgradePathValue);
+
         /// <summary> InvalidAgentVersion. </summary>
         public static AgentUpgradeBlockedReason InvalidAgentVersion { get; } = new AgentUpgradeBlockedReason(InvalidAgentVersionValue);
+
         /// <summary> InvalidDriverVersion. </summary>
         public static AgentUpgradeBlockedReason InvalidDriverVersion { get; } = new AgentUpgradeBlockedReason(InvalidDriverVersionValue);
+
+        /// <summary> ReInstallRequired. </summary>
+        public static AgentUpgradeBlockedReason ReInstallRequired { get; } = new AgentUpgradeBlockedReason(ReInstallRequiredValue);
+
         /// <summary> Unknown. </summary>
         public static AgentUpgradeBlockedReason Unknown { get; } = new AgentUpgradeBlockedReason(UnknownValue);
+
         /// <summary> Determines if two <see cref="AgentUpgradeBlockedReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgentUpgradeBlockedReason left, AgentUpgradeBlockedReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AgentUpgradeBlockedReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgentUpgradeBlockedReason left, AgentUpgradeBlockedReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentUpgradeBlockedReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AgentUpgradeBlockedReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AgentUpgradeBlockedReason(string value) => new AgentUpgradeBlockedReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AgentUpgradeBlockedReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AgentUpgradeBlockedReason?(string value) => value == null ? null : new AgentUpgradeBlockedReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AgentUpgradeBlockedReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AgentUpgradeBlockedReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

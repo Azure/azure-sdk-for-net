@@ -13,43 +13,14 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> Set of broker authentication policies. Only one method is supported for each entry. </summary>
     public partial class BrokerAuthenticatorMethods
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorMethods"/>. </summary>
         /// <param name="method"> Custom authentication configuration. </param>
-        public BrokerAuthenticatorMethods(BrokerAuthenticationMethod method)
+        public BrokerAuthenticatorMethods(BrokerAuthenticationMethod @method)
         {
-            Method = method;
+            Method = @method;
         }
 
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorMethods"/>. </summary>
@@ -57,33 +28,24 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="customSettings"> Custom authentication configuration. </param>
         /// <param name="serviceAccountTokenSettings"> ServiceAccountToken authentication configuration. </param>
         /// <param name="x509Settings"> X.509 authentication configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerAuthenticatorMethods(BrokerAuthenticationMethod method, BrokerAuthenticatorMethodCustom customSettings, BrokerAuthenticatorMethodSat serviceAccountTokenSettings, BrokerAuthenticatorMethodX509 x509Settings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BrokerAuthenticatorMethods(BrokerAuthenticationMethod @method, BrokerAuthenticatorMethodCustom customSettings, BrokerAuthenticatorMethodSat serviceAccountTokenSettings, BrokerAuthenticatorMethodX509 x509Settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Method = method;
+            Method = @method;
             CustomSettings = customSettings;
             ServiceAccountTokenSettings = serviceAccountTokenSettings;
             X509Settings = x509Settings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorMethods"/> for deserialization. </summary>
-        internal BrokerAuthenticatorMethods()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Custom authentication configuration. </summary>
         public BrokerAuthenticationMethod Method { get; set; }
+
         /// <summary> Custom authentication configuration. </summary>
         public BrokerAuthenticatorMethodCustom CustomSettings { get; set; }
+
         /// <summary> ServiceAccountToken authentication configuration. </summary>
         internal BrokerAuthenticatorMethodSat ServiceAccountTokenSettings { get; set; }
-        /// <summary> List of allowed audience. </summary>
-        public IList<string> ServiceAccountTokenAudiences
-        {
-            get => ServiceAccountTokenSettings is null ? default : ServiceAccountTokenSettings.Audiences;
-            set => ServiceAccountTokenSettings = new BrokerAuthenticatorMethodSat(value);
-        }
 
         /// <summary> X.509 authentication configuration. </summary>
         public BrokerAuthenticatorMethodX509 X509Settings { get; set; }

@@ -18,22 +18,22 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         public void discoTemplateScenario()
         {
             #region Snippet:Sample3_DiscoTemplates_Create_Client
-            #if SNIPPET
+#if SNIPPET
             string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                             new DefaultAzureCredential());
-            #else
+#else
             string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                 TestEnvironment.Credential);
-            #endif
+#endif
             #endregion
             #region Snippet:Sample3_DiscoTemplates_Get_Templates
-            #if SNIPPET
+#if SNIPPET
             string partialName = "<partial_name>";
-            #else
+#else
             string partialName = TestEnvironment.PartialName;
-            #endif
+#endif
             var response = client.GetDiscoveryTemplates(partialName);
             foreach (DiscoveryTemplate template in response)
             {
@@ -41,11 +41,11 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             }
             #endregion
             #region Snippet:Sample3_DiscoTemplates_Get_Template_Seeds
-            #if SNIPPET
+#if SNIPPET
             string templateId = Console.ReadLine();
-            #else
+#else
             string templateId = TestEnvironment.TemplateId;
-            #endif
+#endif
             var discoTemplateResponse = client.GetDiscoveryTemplate(templateId);
             DiscoveryTemplate discoTemplate = discoTemplateResponse.Value;
             Console.WriteLine($"Chosen template id: {discoTemplate.Id}");

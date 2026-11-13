@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -14,24 +15,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Managed compute identity definition. </summary>
     public partial class ManagedComputeIdentity : MonitorComputeIdentityBase
     {
+        private ManagedServiceIdentity _identity;
+        private bool _identityIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ManagedComputeIdentity"/>. </summary>
-        public ManagedComputeIdentity()
+        public ManagedComputeIdentity() : base(MonitorComputeIdentityType.ManagedIdentity)
         {
-            ComputeIdentityType = MonitorComputeIdentityType.ManagedIdentity;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedComputeIdentity"/>. </summary>
         /// <param name="computeIdentityType"> [Required] Specifies the type of identity to use within the monitoring jobs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> The identity which will be leveraged by the monitoring jobs. </param>
-        internal ManagedComputeIdentity(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity) : base(computeIdentityType, serializedAdditionalRawData)
+        internal ManagedComputeIdentity(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedServiceIdentity identity) : base(computeIdentityType, additionalBinaryDataProperties)
         {
-            Identity = identity;
-            ComputeIdentityType = computeIdentityType;
+            _identity = identity;
         }
 
         /// <summary> The identity which will be leveraged by the monitoring jobs. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
     }
 }

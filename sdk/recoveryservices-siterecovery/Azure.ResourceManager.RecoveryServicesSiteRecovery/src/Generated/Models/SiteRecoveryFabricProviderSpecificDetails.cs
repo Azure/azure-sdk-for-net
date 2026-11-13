@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,41 +16,43 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class SiteRecoveryFabricProviderSpecificDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProviderSpecificDetails"/>. </summary>
-        internal SiteRecoveryFabricProviderSpecificDetails()
+        internal SiteRecoveryFabricProviderSpecificDetails() : base("Azure")
         {
             ContainerIds = new ChangeTrackingList<ResourceIdentifier>();
             Zones = new ChangeTrackingList<A2AZoneDetails>();
             ExtendedLocations = new ChangeTrackingList<A2AExtendedLocationDetails>();
             LocationDetails = new ChangeTrackingList<A2AFabricSpecificLocationDetails>();
-            InstanceType = "Azure";
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The Location for the Azure fabric. </param>
         /// <param name="containerIds"> The container Ids for the Azure fabric. </param>
         /// <param name="zones"> The zones. </param>
         /// <param name="extendedLocations"> The ExtendedLocations. </param>
         /// <param name="locationDetails"> The location details. </param>
-        internal SiteRecoveryFabricProviderSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? location, IReadOnlyList<ResourceIdentifier> containerIds, IReadOnlyList<A2AZoneDetails> zones, IReadOnlyList<A2AExtendedLocationDetails> extendedLocations, IReadOnlyList<A2AFabricSpecificLocationDetails> locationDetails) : base(instanceType, serializedAdditionalRawData)
+        internal SiteRecoveryFabricProviderSpecificDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, IReadOnlyList<ResourceIdentifier> containerIds, IReadOnlyList<A2AZoneDetails> zones, IReadOnlyList<A2AExtendedLocationDetails> extendedLocations, IReadOnlyList<A2AFabricSpecificLocationDetails> locationDetails) : base(instanceType, additionalBinaryDataProperties)
         {
             Location = location;
             ContainerIds = containerIds;
             Zones = zones;
             ExtendedLocations = extendedLocations;
             LocationDetails = locationDetails;
-            InstanceType = instanceType ?? "Azure";
         }
 
         /// <summary> The Location for the Azure fabric. </summary>
         public AzureLocation? Location { get; }
+
         /// <summary> The container Ids for the Azure fabric. </summary>
         public IReadOnlyList<ResourceIdentifier> ContainerIds { get; }
+
         /// <summary> The zones. </summary>
         public IReadOnlyList<A2AZoneDetails> Zones { get; }
+
         /// <summary> The ExtendedLocations. </summary>
         public IReadOnlyList<A2AExtendedLocationDetails> ExtendedLocations { get; }
+
         /// <summary> The location details. </summary>
         public IReadOnlyList<A2AFabricSpecificLocationDetails> LocationDetails { get; }
     }

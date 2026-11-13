@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,22 +15,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class BooleanConditionProperties : SecurityInsightsAutomationRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="BooleanConditionProperties"/>. </summary>
-        public BooleanConditionProperties()
+        public BooleanConditionProperties() : base(ConditionType.Boolean)
         {
-            ConditionType = ConditionType.Boolean;
         }
 
         /// <summary> Initializes a new instance of <see cref="BooleanConditionProperties"/>. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="conditionProperties"></param>
-        internal BooleanConditionProperties(ConditionType conditionType, IDictionary<string, BinaryData> serializedAdditionalRawData, AutomationRuleBooleanCondition conditionProperties) : base(conditionType, serializedAdditionalRawData)
+        internal BooleanConditionProperties(ConditionType conditionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutomationRuleBooleanCondition conditionProperties) : base(conditionType, additionalBinaryDataProperties)
         {
             ConditionProperties = conditionProperties;
-            ConditionType = conditionType;
         }
 
-        /// <summary> Gets or sets the condition properties. </summary>
+        /// <summary> Gets or sets the ConditionProperties. </summary>
         [WirePath("conditionProperties")]
         public AutomationRuleBooleanCondition ConditionProperties { get; set; }
     }

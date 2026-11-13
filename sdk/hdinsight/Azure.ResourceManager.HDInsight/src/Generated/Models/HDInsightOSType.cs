@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct HDInsightOSType : IEquatable<HDInsightOSType>
     {
         private readonly string _value;
+        /// <summary> Windows. </summary>
+        private const string WindowsValue = "Windows";
+        /// <summary> Linux. </summary>
+        private const string LinuxValue = "Linux";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightOSType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WindowsValue = "Windows";
-        private const string LinuxValue = "Linux";
+            _value = value;
+        }
 
         /// <summary> Windows. </summary>
         public static HDInsightOSType Windows { get; } = new HDInsightOSType(WindowsValue);
+
         /// <summary> Linux. </summary>
         public static HDInsightOSType Linux { get; } = new HDInsightOSType(LinuxValue);
+
         /// <summary> Determines if two <see cref="HDInsightOSType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightOSType left, HDInsightOSType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightOSType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightOSType left, HDInsightOSType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightOSType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightOSType(string value) => new HDInsightOSType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightOSType?(string value) => value == null ? null : new HDInsightOSType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightOSType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

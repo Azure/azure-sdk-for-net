@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct InternetGatewayType : IEquatable<InternetGatewayType>
     {
         private readonly string _value;
+        /// <summary> GatewayType Infrastructure. </summary>
+        private const string InfrastructureValue = "Infrastructure";
+        /// <summary> GatewayType Workload. </summary>
+        private const string WorkloadValue = "Workload";
 
         /// <summary> Initializes a new instance of <see cref="InternetGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InternetGatewayType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InfrastructureValue = "Infrastructure";
-        private const string WorkloadValue = "Workload";
-
-        /// <summary> Infrastructure. </summary>
+        /// <summary> GatewayType Infrastructure. </summary>
         public static InternetGatewayType Infrastructure { get; } = new InternetGatewayType(InfrastructureValue);
-        /// <summary> Workload. </summary>
+
+        /// <summary> GatewayType Workload. </summary>
         public static InternetGatewayType Workload { get; } = new InternetGatewayType(WorkloadValue);
+
         /// <summary> Determines if two <see cref="InternetGatewayType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InternetGatewayType left, InternetGatewayType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InternetGatewayType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InternetGatewayType left, InternetGatewayType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InternetGatewayType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InternetGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InternetGatewayType(string value) => new InternetGatewayType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InternetGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InternetGatewayType?(string value) => value == null ? null : new InternetGatewayType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InternetGatewayType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InternetGatewayType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

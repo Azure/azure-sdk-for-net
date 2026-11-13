@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,15 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct ComputeType : IEquatable<ComputeType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ComputeType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string AksValue = "AKS";
+        private const string AKSValue = "AKS";
         private const string KubernetesValue = "Kubernetes";
         private const string AmlComputeValue = "AmlCompute";
         private const string ComputeInstanceValue = "ComputeInstance";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DataLakeAnalyticsValue = "DataLakeAnalytics";
         private const string SynapseSparkValue = "SynapseSpark";
 
-        /// <summary> AKS. </summary>
-        public static ComputeType Aks { get; } = new ComputeType(AksValue);
-        /// <summary> Kubernetes. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ComputeType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AKS. </summary>
+        public static ComputeType AKS { get; } = new ComputeType(AKSValue);
+
+        /// <summary> Gets the Kubernetes. </summary>
         public static ComputeType Kubernetes { get; } = new ComputeType(KubernetesValue);
-        /// <summary> AmlCompute. </summary>
+
+        /// <summary> Gets the AmlCompute. </summary>
         public static ComputeType AmlCompute { get; } = new ComputeType(AmlComputeValue);
-        /// <summary> ComputeInstance. </summary>
+
+        /// <summary> Gets the ComputeInstance. </summary>
         public static ComputeType ComputeInstance { get; } = new ComputeType(ComputeInstanceValue);
-        /// <summary> DataFactory. </summary>
+
+        /// <summary> Gets the DataFactory. </summary>
         public static ComputeType DataFactory { get; } = new ComputeType(DataFactoryValue);
-        /// <summary> VirtualMachine. </summary>
+
+        /// <summary> Gets the VirtualMachine. </summary>
         public static ComputeType VirtualMachine { get; } = new ComputeType(VirtualMachineValue);
-        /// <summary> HDInsight. </summary>
+
+        /// <summary> Gets the HDInsight. </summary>
         public static ComputeType HDInsight { get; } = new ComputeType(HDInsightValue);
-        /// <summary> Databricks. </summary>
+
+        /// <summary> Gets the Databricks. </summary>
         public static ComputeType Databricks { get; } = new ComputeType(DatabricksValue);
-        /// <summary> DataLakeAnalytics. </summary>
+
+        /// <summary> Gets the DataLakeAnalytics. </summary>
         public static ComputeType DataLakeAnalytics { get; } = new ComputeType(DataLakeAnalyticsValue);
-        /// <summary> SynapseSpark. </summary>
+
+        /// <summary> Gets the SynapseSpark. </summary>
         public static ComputeType SynapseSpark { get; } = new ComputeType(SynapseSparkValue);
+
         /// <summary> Determines if two <see cref="ComputeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeType left, ComputeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeType left, ComputeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeType(string value) => new ComputeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeType?(string value) => value == null ? null : new ComputeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

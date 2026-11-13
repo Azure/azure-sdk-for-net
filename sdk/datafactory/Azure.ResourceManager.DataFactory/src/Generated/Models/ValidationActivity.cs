@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,8 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(dataset, nameof(dataset));
 
-            Dataset = dataset;
-            ActivityType = "Validation";
+            TypeProperties = new ValidationActivityTypeProperties(dataset);
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidationActivity"/>. </summary>
@@ -35,36 +35,99 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="timeout"> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="sleep"> A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="minimumSize"> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="childItems"> Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="dataset"> Validation activity dataset reference. </param>
-        internal ValidationActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> timeout, DataFactoryElement<int> sleep, DataFactoryElement<int> minimumSize, DataFactoryElement<bool> childItems, DatasetReference dataset) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Validation activity properties. </param>
+        internal ValidationActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ValidationActivityTypeProperties typeProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
-            Timeout = timeout;
-            Sleep = sleep;
-            MinimumSize = minimumSize;
-            ChildItems = childItems;
-            Dataset = dataset;
-            ActivityType = activityType ?? "Validation";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/> for deserialization. </summary>
-        internal ValidationActivity()
-        {
-        }
+        /// <summary> Validation activity properties. </summary>
+        internal ValidationActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public DataFactoryElement<string> Timeout { get; set; }
+        public DataFactoryElement<string> Timeout
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Timeout;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ValidationActivityTypeProperties();
+                }
+                TypeProperties.Timeout = value;
+            }
+        }
+
         /// <summary> A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer). </summary>
-        public DataFactoryElement<int> Sleep { get; set; }
+        public DataFactoryElement<int> Sleep
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Sleep;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ValidationActivityTypeProperties();
+                }
+                TypeProperties.Sleep = value;
+            }
+        }
+
         /// <summary> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </summary>
-        public DataFactoryElement<int> MinimumSize { get; set; }
+        public DataFactoryElement<int> MinimumSize
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MinimumSize;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ValidationActivityTypeProperties();
+                }
+                TypeProperties.MinimumSize = value;
+            }
+        }
+
         /// <summary> Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> ChildItems { get; set; }
+        public DataFactoryElement<bool> ChildItems
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ChildItems;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ValidationActivityTypeProperties();
+                }
+                TypeProperties.ChildItems = value;
+            }
+        }
+
         /// <summary> Validation activity dataset reference. </summary>
-        public DatasetReference Dataset { get; set; }
+        public DatasetReference Dataset
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Dataset;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ValidationActivityTypeProperties();
+                }
+                TypeProperties.Dataset = value;
+            }
+        }
     }
 }

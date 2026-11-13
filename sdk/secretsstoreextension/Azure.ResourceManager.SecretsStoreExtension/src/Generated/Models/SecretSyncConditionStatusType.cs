@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecretsStoreExtension;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     public readonly partial struct SecretSyncConditionStatusType : IEquatable<SecretSyncConditionStatusType>
     {
         private readonly string _value;
+        /// <summary> The status is true. </summary>
+        private const string TrueValue = "True";
+        /// <summary> The status is false. </summary>
+        private const string FalseValue = "False";
+        /// <summary> The status is unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="SecretSyncConditionStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecretSyncConditionStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> The status is true. </summary>
         public static SecretSyncConditionStatusType True { get; } = new SecretSyncConditionStatusType(TrueValue);
+
         /// <summary> The status is false. </summary>
         public static SecretSyncConditionStatusType False { get; } = new SecretSyncConditionStatusType(FalseValue);
+
         /// <summary> The status is unknown. </summary>
         public static SecretSyncConditionStatusType Unknown { get; } = new SecretSyncConditionStatusType(UnknownValue);
+
         /// <summary> Determines if two <see cref="SecretSyncConditionStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecretSyncConditionStatusType left, SecretSyncConditionStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecretSyncConditionStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecretSyncConditionStatusType left, SecretSyncConditionStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecretSyncConditionStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecretSyncConditionStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecretSyncConditionStatusType(string value) => new SecretSyncConditionStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecretSyncConditionStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecretSyncConditionStatusType?(string value) => value == null ? null : new SecretSyncConditionStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecretSyncConditionStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecretSyncConditionStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

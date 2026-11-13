@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public partial class NativePerformanceDetail : PerformanceDetail
     {
         /// <summary> Initializes a new instance of <see cref="NativePerformanceDetail"/>. </summary>
-        internal NativePerformanceDetail()
+        internal NativePerformanceDetail() : base(SapDiscoveryDataSource.Native)
         {
-            DataSource = SapDiscoveryDataSource.Native;
         }
 
         /// <summary> Initializes a new instance of <see cref="NativePerformanceDetail"/>. </summary>
         /// <param name="dataSource"> The data source of the performance data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NativePerformanceDetail(SapDiscoveryDataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataSource, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NativePerformanceDetail(SapDiscoveryDataSource dataSource, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(dataSource, additionalBinaryDataProperties)
         {
-            DataSource = dataSource;
         }
     }
 }

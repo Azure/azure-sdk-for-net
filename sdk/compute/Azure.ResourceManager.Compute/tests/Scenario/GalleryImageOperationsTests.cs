@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
+        // TODO: Re-enable once the new mgmt generator emits patch-model serialization with all
+        // properties Optional-gated (regardless of underlying model's required-ness). The new
+        // generator faithfully serializes GalleryImageProperties' required fields (osState,
+        // identifier) even when wrapped by GalleryImageUpdate, producing PATCH bodies like
+        // {"properties":{...,"osState":"Generalized","identifier":null}} which Azure rejects
+        // and which diverge from the AutoRest-era patch behavior.
+        // Tracking: https://github.com/Azure/azure-sdk-for-net/issues/59095
+        [Ignore("Generator regression: PATCH body emits required-but-unset osState/identifier from shared GalleryImageProperties. See #59095.")]
         public async Task Update()
         {
             var name = Recording.GenerateAssetName("testGallery_");

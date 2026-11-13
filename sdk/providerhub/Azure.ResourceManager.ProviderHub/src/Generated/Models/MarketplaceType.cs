@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The MarketplaceType. </summary>
+    /// <summary> The marketplace type. </summary>
     public enum MarketplaceType
     {
         /// <summary> NotSpecified. </summary>
@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Bypass. </summary>
         Bypass,
         /// <summary> Store. </summary>
-        Store
+        Store,
+        /// <summary> ProviderHub. </summary>
+        ProviderHub
     }
 }

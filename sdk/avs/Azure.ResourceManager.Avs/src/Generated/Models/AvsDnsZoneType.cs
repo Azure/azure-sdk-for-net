@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct AvsDnsZoneType : IEquatable<AvsDnsZoneType>
     {
         private readonly string _value;
+        /// <summary> Primary DNS zone. </summary>
+        private const string PublicValue = "Public";
+        /// <summary> Private DNS zone. </summary>
+        private const string PrivateValue = "Private";
 
         /// <summary> Initializes a new instance of <see cref="AvsDnsZoneType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvsDnsZoneType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PublicValue = "Public";
-        private const string PrivateValue = "Private";
+            _value = value;
+        }
 
         /// <summary> Primary DNS zone. </summary>
         public static AvsDnsZoneType Public { get; } = new AvsDnsZoneType(PublicValue);
+
         /// <summary> Private DNS zone. </summary>
         public static AvsDnsZoneType Private { get; } = new AvsDnsZoneType(PrivateValue);
+
         /// <summary> Determines if two <see cref="AvsDnsZoneType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvsDnsZoneType left, AvsDnsZoneType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvsDnsZoneType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvsDnsZoneType left, AvsDnsZoneType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsDnsZoneType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvsDnsZoneType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvsDnsZoneType(string value) => new AvsDnsZoneType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvsDnsZoneType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvsDnsZoneType?(string value) => value == null ? null : new AvsDnsZoneType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvsDnsZoneType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvsDnsZoneType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

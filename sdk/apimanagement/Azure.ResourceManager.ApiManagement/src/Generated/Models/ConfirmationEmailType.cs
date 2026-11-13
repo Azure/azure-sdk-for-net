@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ConfirmationEmailType : IEquatable<ConfirmationEmailType>
     {
         private readonly string _value;
+        /// <summary> Send an e-mail to the user confirming they have successfully signed up. </summary>
+        private const string SignUpValue = "signup";
+        /// <summary> Send an e-mail inviting the user to sign-up and complete registration. </summary>
+        private const string InviteValue = "invite";
 
         /// <summary> Initializes a new instance of <see cref="ConfirmationEmailType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConfirmationEmailType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SignUpValue = "signup";
-        private const string InviteValue = "invite";
+            _value = value;
+        }
 
         /// <summary> Send an e-mail to the user confirming they have successfully signed up. </summary>
         public static ConfirmationEmailType SignUp { get; } = new ConfirmationEmailType(SignUpValue);
+
         /// <summary> Send an e-mail inviting the user to sign-up and complete registration. </summary>
         public static ConfirmationEmailType Invite { get; } = new ConfirmationEmailType(InviteValue);
+
         /// <summary> Determines if two <see cref="ConfirmationEmailType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfirmationEmailType left, ConfirmationEmailType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConfirmationEmailType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfirmationEmailType left, ConfirmationEmailType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfirmationEmailType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConfirmationEmailType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConfirmationEmailType(string value) => new ConfirmationEmailType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConfirmationEmailType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConfirmationEmailType?(string value) => value == null ? null : new ConfirmationEmailType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfirmationEmailType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConfirmationEmailType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

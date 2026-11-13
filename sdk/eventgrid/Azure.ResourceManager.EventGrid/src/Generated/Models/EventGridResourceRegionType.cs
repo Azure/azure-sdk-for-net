@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct EventGridResourceRegionType : IEquatable<EventGridResourceRegionType>
     {
         private readonly string _value;
+        /// <summary> RegionalResource. </summary>
+        private const string RegionalResourceValue = "RegionalResource";
+        /// <summary> GlobalResource. </summary>
+        private const string GlobalResourceValue = "GlobalResource";
 
         /// <summary> Initializes a new instance of <see cref="EventGridResourceRegionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventGridResourceRegionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RegionalResourceValue = "RegionalResource";
-        private const string GlobalResourceValue = "GlobalResource";
+            _value = value;
+        }
 
         /// <summary> RegionalResource. </summary>
         public static EventGridResourceRegionType RegionalResource { get; } = new EventGridResourceRegionType(RegionalResourceValue);
+
         /// <summary> GlobalResource. </summary>
         public static EventGridResourceRegionType GlobalResource { get; } = new EventGridResourceRegionType(GlobalResourceValue);
+
         /// <summary> Determines if two <see cref="EventGridResourceRegionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventGridResourceRegionType left, EventGridResourceRegionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventGridResourceRegionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventGridResourceRegionType left, EventGridResourceRegionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridResourceRegionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventGridResourceRegionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventGridResourceRegionType(string value) => new EventGridResourceRegionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventGridResourceRegionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventGridResourceRegionType?(string value) => value == null ? null : new EventGridResourceRegionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventGridResourceRegionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventGridResourceRegionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

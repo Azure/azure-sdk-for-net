@@ -3,7 +3,6 @@
 
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
-using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -241,6 +240,56 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
             Assert.AreEqual(404, operation.GetRawResponse().Status);
+        }
+
+        [RecordedTest]
+        public async Task VerifyCreateCertificateWithPlatformManaged()
+        {
+            // Use the default API version to exercise PlatformManaged independently of the fixture version.
+            CertificateClientOptions options = new CertificateClientOptions()
+            {
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
+                    LoggedHeaderNames = { "x-ms-request-id" },
+                }
+            };
+            CertificateClient defaultClient = InstrumentClient(new CertificateClient(
+                VaultUri,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(options)));
+
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = new CertificatePolicy
+            {
+                PlatformManaged = new PlatformManaged("PublicTLSServerAuth"),
+            };
+
+            // Service expects snake_case metadata.sans.dns_names. The published design doc
+            // shows metadata.subjectAlternateNames.dnsNames, but the deployed service rejects
+            // that shape; defer to the working contract.
+            certificatePolicy.PlatformManaged.Metadata["sans"] = BinaryData.FromObjectAsJson(
+                new Dictionary<string, string[]> { ["dns_names"] = new[] { "sanitized.example.invalid" } });
+
+            // Verifies the SDK can send a PlatformManaged create request and the service
+            // accepts the policy round-trip. We intentionally do not WaitForCompletionAsync:
+            // OneCert backend issuance is asynchronous service behavior, not SDK behavior,
+            // and the issuer registration is not always available in test environments.
+            CertificateOperation operation = await defaultClient.StartCreateCertificateAsync(certName, certificatePolicy);
+            operation = InstrumentOperation(operation);
+
+            RegisterForCleanup(certName);
+
+            Assert.NotNull(operation);
+            Assert.NotNull(operation.Id);
+
+            CertificatePolicy returnedPolicy = await defaultClient.GetCertificatePolicyAsync(certName);
+
+            Assert.NotNull(returnedPolicy);
+            Assert.NotNull(returnedPolicy.PlatformManaged);
+            Assert.AreEqual("PublicTLSServerAuth", returnedPolicy.PlatformManaged.CertificateUsage);
+            Assert.IsTrue(returnedPolicy.PlatformManaged.Metadata.ContainsKey("sans"));
         }
 
         [RecordedTest]

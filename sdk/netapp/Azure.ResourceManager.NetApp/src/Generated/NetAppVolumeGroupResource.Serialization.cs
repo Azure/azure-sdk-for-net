@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class NetAppVolumeGroupResource : IJsonModel<NetAppVolumeGroupData>
     {
-        private static NetAppVolumeGroupData s_dataDeserializationInstance;
-        private static NetAppVolumeGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppVolumeGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetAppVolumeGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppVolumeGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppVolumeGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeGroupData>)Data).Write(writer, options);
 
-        NetAppVolumeGroupData IJsonModel<NetAppVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppVolumeGroupData IJsonModel<NetAppVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetAppVolumeGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppVolumeGroupData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetAppVolumeGroupData IPersistableModel<NetAppVolumeGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeGroupData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

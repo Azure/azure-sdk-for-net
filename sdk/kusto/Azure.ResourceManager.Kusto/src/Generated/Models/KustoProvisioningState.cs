@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoProvisioningState : IEquatable<KustoProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Moving. </summary>
+        private const string MovingValue = "Moving";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="KustoProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RunningValue = "Running";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string MovingValue = "Moving";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Running. </summary>
         public static KustoProvisioningState Running { get; } = new KustoProvisioningState(RunningValue);
+
         /// <summary> Creating. </summary>
         public static KustoProvisioningState Creating { get; } = new KustoProvisioningState(CreatingValue);
+
         /// <summary> Deleting. </summary>
         public static KustoProvisioningState Deleting { get; } = new KustoProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static KustoProvisioningState Succeeded { get; } = new KustoProvisioningState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static KustoProvisioningState Failed { get; } = new KustoProvisioningState(FailedValue);
+
         /// <summary> Moving. </summary>
         public static KustoProvisioningState Moving { get; } = new KustoProvisioningState(MovingValue);
+
         /// <summary> Canceled. </summary>
         public static KustoProvisioningState Canceled { get; } = new KustoProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="KustoProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoProvisioningState left, KustoProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoProvisioningState left, KustoProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoProvisioningState(string value) => new KustoProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoProvisioningState?(string value) => value == null ? null : new KustoProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct HDInsightClusterProvisioningState : IEquatable<HDInsightClusterProvisioningState>
     {
         private readonly string _value;
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightClusterProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> InProgress. </summary>
         public static HDInsightClusterProvisioningState InProgress { get; } = new HDInsightClusterProvisioningState(InProgressValue);
+
         /// <summary> Failed. </summary>
         public static HDInsightClusterProvisioningState Failed { get; } = new HDInsightClusterProvisioningState(FailedValue);
+
         /// <summary> Succeeded. </summary>
         public static HDInsightClusterProvisioningState Succeeded { get; } = new HDInsightClusterProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static HDInsightClusterProvisioningState Canceled { get; } = new HDInsightClusterProvisioningState(CanceledValue);
+
         /// <summary> Deleting. </summary>
         public static HDInsightClusterProvisioningState Deleting { get; } = new HDInsightClusterProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="HDInsightClusterProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightClusterProvisioningState left, HDInsightClusterProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightClusterProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightClusterProvisioningState left, HDInsightClusterProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightClusterProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightClusterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightClusterProvisioningState(string value) => new HDInsightClusterProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightClusterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightClusterProvisioningState?(string value) => value == null ? null : new HDInsightClusterProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightClusterProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightClusterProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

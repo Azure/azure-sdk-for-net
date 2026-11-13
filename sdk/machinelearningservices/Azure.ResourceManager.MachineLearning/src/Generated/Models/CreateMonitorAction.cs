@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="CreateMonitorAction"/>. </summary>
         /// <param name="monitorDefinition"> [Required] Defines the monitor. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorDefinition"/> is null. </exception>
-        public CreateMonitorAction(MonitorDefinition monitorDefinition)
+        public CreateMonitorAction(MonitorDefinition monitorDefinition) : base(ScheduleActionType.CreateMonitor)
         {
             Argument.AssertNotNull(monitorDefinition, nameof(monitorDefinition));
 
             MonitorDefinition = monitorDefinition;
-            ActionType = ScheduleActionType.CreateMonitor;
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateMonitorAction"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="monitorDefinition"> [Required] Defines the monitor. </param>
-        internal CreateMonitorAction(ScheduleActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, MonitorDefinition monitorDefinition) : base(actionType, serializedAdditionalRawData)
+        internal CreateMonitorAction(ScheduleActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, MonitorDefinition monitorDefinition) : base(actionType, additionalBinaryDataProperties)
         {
             MonitorDefinition = monitorDefinition;
-            ActionType = actionType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CreateMonitorAction"/> for deserialization. </summary>
-        internal CreateMonitorAction()
-        {
         }
 
         /// <summary> [Required] Defines the monitor. </summary>

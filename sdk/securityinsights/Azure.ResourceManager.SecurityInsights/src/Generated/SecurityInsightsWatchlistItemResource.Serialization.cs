@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityInsightsWatchlistItemResource : IJsonModel<SecurityInsightsWatchlistItemData>
     {
-        private static SecurityInsightsWatchlistItemData s_dataDeserializationInstance;
-        private static SecurityInsightsWatchlistItemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsWatchlistItemData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityInsightsWatchlistItemData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsightsWatchlistItemData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsWatchlistItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsWatchlistItemData>)Data).Write(writer, options);
 
-        SecurityInsightsWatchlistItemData IJsonModel<SecurityInsightsWatchlistItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsWatchlistItemData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsWatchlistItemData IJsonModel<SecurityInsightsWatchlistItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityInsightsWatchlistItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsWatchlistItemData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityInsightsWatchlistItemData IPersistableModel<SecurityInsightsWatchlistItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsWatchlistItemData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsWatchlistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsWatchlistItemData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsWatchlistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

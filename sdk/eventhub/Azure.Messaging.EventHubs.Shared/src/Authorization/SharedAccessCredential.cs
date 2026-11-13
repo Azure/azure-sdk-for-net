@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Authorization
 
             // If the key-based signature is approaching expiration, extend it.
 
-            if  (signature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
+            if (signature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
             {
                 var updatedSignature = signature.CloneWithNewExpiration(SignatureExtensionDuration);
                 signature = SafeUpdateSharedAccessSignature(signature, updatedSignature);

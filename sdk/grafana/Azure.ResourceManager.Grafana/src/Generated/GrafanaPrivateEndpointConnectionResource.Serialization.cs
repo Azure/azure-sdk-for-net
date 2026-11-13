@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Grafana
 {
+    /// <summary></summary>
     public partial class GrafanaPrivateEndpointConnectionResource : IJsonModel<GrafanaPrivateEndpointConnectionData>
     {
-        private static GrafanaPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static GrafanaPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GrafanaPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GrafanaPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GrafanaPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GrafanaPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        GrafanaPrivateEndpointConnectionData IJsonModel<GrafanaPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GrafanaPrivateEndpointConnectionData IJsonModel<GrafanaPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GrafanaPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GrafanaPrivateEndpointConnectionData>(Data, options, AzureResourceManagerGrafanaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GrafanaPrivateEndpointConnectionData IPersistableModel<GrafanaPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GrafanaPrivateEndpointConnectionData>(data, options, AzureResourceManagerGrafanaContext.Default);
 
-        string IPersistableModel<GrafanaPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GrafanaPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GrafanaPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

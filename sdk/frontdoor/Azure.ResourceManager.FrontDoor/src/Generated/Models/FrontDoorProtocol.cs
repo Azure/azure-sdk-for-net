@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorProtocol : IEquatable<FrontDoorProtocol>
     {
         private readonly string _value;
+        /// <summary> Http. </summary>
+        private const string HttpValue = "Http";
+        /// <summary> Https. </summary>
+        private const string HttpsValue = "Https";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HttpValue = "Http";
-        private const string HttpsValue = "Https";
+            _value = value;
+        }
 
         /// <summary> Http. </summary>
         public static FrontDoorProtocol Http { get; } = new FrontDoorProtocol(HttpValue);
+
         /// <summary> Https. </summary>
         public static FrontDoorProtocol Https { get; } = new FrontDoorProtocol(HttpsValue);
+
         /// <summary> Determines if two <see cref="FrontDoorProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorProtocol left, FrontDoorProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorProtocol left, FrontDoorProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorProtocol(string value) => new FrontDoorProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorProtocol?(string value) => value == null ? null : new FrontDoorProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

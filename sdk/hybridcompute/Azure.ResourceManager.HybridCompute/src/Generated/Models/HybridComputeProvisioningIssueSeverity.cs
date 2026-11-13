@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeProvisioningIssueSeverity : IEquatable<HybridComputeProvisioningIssueSeverity>
     {
         private readonly string _value;
+        /// <summary> Warnings can cause connectivity issues after provisioning succeeds. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Errors will cause association provisioning to fail. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeProvisioningIssueSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeProvisioningIssueSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WarningValue = "Warning";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> Warnings can cause connectivity issues after provisioning succeeds. </summary>
         public static HybridComputeProvisioningIssueSeverity Warning { get; } = new HybridComputeProvisioningIssueSeverity(WarningValue);
+
         /// <summary> Errors will cause association provisioning to fail. </summary>
         public static HybridComputeProvisioningIssueSeverity Error { get; } = new HybridComputeProvisioningIssueSeverity(ErrorValue);
+
         /// <summary> Determines if two <see cref="HybridComputeProvisioningIssueSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeProvisioningIssueSeverity left, HybridComputeProvisioningIssueSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeProvisioningIssueSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeProvisioningIssueSeverity left, HybridComputeProvisioningIssueSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeProvisioningIssueSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeProvisioningIssueSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeProvisioningIssueSeverity(string value) => new HybridComputeProvisioningIssueSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeProvisioningIssueSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeProvisioningIssueSeverity?(string value) => value == null ? null : new HybridComputeProvisioningIssueSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeProvisioningIssueSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeProvisioningIssueSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

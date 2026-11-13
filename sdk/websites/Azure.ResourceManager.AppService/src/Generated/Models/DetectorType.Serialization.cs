@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class DetectorTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DetectorType value) => value switch
         {
             DetectorType.Detector => "Detector",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DetectorType ToDetectorType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Detector")) return DetectorType.Detector;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Analysis")) return DetectorType.Analysis;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CategoryOverview")) return DetectorType.CategoryOverview;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Detector"))
+            {
+                return DetectorType.Detector;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Analysis"))
+            {
+                return DetectorType.Analysis;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CategoryOverview"))
+            {
+                return DetectorType.CategoryOverview;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorType value.");
         }
     }

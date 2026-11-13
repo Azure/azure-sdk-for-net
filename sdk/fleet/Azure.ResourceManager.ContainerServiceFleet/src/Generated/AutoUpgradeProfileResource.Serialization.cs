@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
+    /// <summary></summary>
     public partial class AutoUpgradeProfileResource : IJsonModel<AutoUpgradeProfileData>
     {
-        private static AutoUpgradeProfileData s_dataDeserializationInstance;
-        private static AutoUpgradeProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutoUpgradeProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutoUpgradeProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutoUpgradeProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoUpgradeProfileData>)Data).Write(writer, options);
 
-        AutoUpgradeProfileData IJsonModel<AutoUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoUpgradeProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoUpgradeProfileData IJsonModel<AutoUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutoUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoUpgradeProfileData>(Data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutoUpgradeProfileData IPersistableModel<AutoUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoUpgradeProfileData>(data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
-        string IPersistableModel<AutoUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoUpgradeProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

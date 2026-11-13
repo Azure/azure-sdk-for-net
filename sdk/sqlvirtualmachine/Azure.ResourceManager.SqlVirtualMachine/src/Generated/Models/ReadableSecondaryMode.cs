@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct ReadableSecondaryMode : IEquatable<ReadableSecondaryMode>
     {
         private readonly string _value;
+        private const string NoValue = "No";
+        private const string AllValue = "All";
+        private const string ReadOnlyValue = "Read_Only";
 
         /// <summary> Initializes a new instance of <see cref="ReadableSecondaryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReadableSecondaryMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoValue = "NO";
-        private const string AllValue = "ALL";
-        private const string ReadOnlyValue = "READ_ONLY";
-
-        /// <summary> NO. </summary>
+        /// <summary> Gets the No. </summary>
         public static ReadableSecondaryMode No { get; } = new ReadableSecondaryMode(NoValue);
-        /// <summary> ALL. </summary>
+
+        /// <summary> Gets the All. </summary>
         public static ReadableSecondaryMode All { get; } = new ReadableSecondaryMode(AllValue);
-        /// <summary> READ_ONLY. </summary>
+
+        /// <summary> Gets the ReadOnly. </summary>
         public static ReadableSecondaryMode ReadOnly { get; } = new ReadableSecondaryMode(ReadOnlyValue);
+
         /// <summary> Determines if two <see cref="ReadableSecondaryMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReadableSecondaryMode left, ReadableSecondaryMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReadableSecondaryMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReadableSecondaryMode left, ReadableSecondaryMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReadableSecondaryMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReadableSecondaryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReadableSecondaryMode(string value) => new ReadableSecondaryMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReadableSecondaryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReadableSecondaryMode?(string value) => value == null ? null : new ReadableSecondaryMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReadableSecondaryMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReadableSecondaryMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

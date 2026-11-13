@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsNetworkRuleSetDefaultAction : IEquatable<EventHubsNetworkRuleSetDefaultAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetDefaultAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsNetworkRuleSetDefaultAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllowValue = "Allow";
         private const string DenyValue = "Deny";
 
-        /// <summary> Allow. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsNetworkRuleSetDefaultAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Allow. </summary>
         public static EventHubsNetworkRuleSetDefaultAction Allow { get; } = new EventHubsNetworkRuleSetDefaultAction(AllowValue);
-        /// <summary> Deny. </summary>
+
+        /// <summary> Gets the Deny. </summary>
         public static EventHubsNetworkRuleSetDefaultAction Deny { get; } = new EventHubsNetworkRuleSetDefaultAction(DenyValue);
+
         /// <summary> Determines if two <see cref="EventHubsNetworkRuleSetDefaultAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsNetworkRuleSetDefaultAction left, EventHubsNetworkRuleSetDefaultAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubsNetworkRuleSetDefaultAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsNetworkRuleSetDefaultAction left, EventHubsNetworkRuleSetDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsNetworkRuleSetDefaultAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubsNetworkRuleSetDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubsNetworkRuleSetDefaultAction(string value) => new EventHubsNetworkRuleSetDefaultAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubsNetworkRuleSetDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubsNetworkRuleSetDefaultAction?(string value) => value == null ? null : new EventHubsNetworkRuleSetDefaultAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsNetworkRuleSetDefaultAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubsNetworkRuleSetDefaultAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

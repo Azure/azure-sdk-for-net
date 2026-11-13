@@ -4,9 +4,9 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Azure.AI.Translation.Document.Tests;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Translation.Document.Samples
 {

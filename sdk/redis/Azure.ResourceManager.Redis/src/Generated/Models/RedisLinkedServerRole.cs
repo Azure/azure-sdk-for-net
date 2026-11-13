@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Role of the linked server. </summary>
     public enum RedisLinkedServerRole
     {
-        /// <summary> Primary. </summary>
+        /// <summary> The linked server is in the writable primary role. </summary>
         Primary,
-        /// <summary> Secondary. </summary>
+        /// <summary> The linked server is in the read-only replica role. </summary>
         Secondary
     }
 }

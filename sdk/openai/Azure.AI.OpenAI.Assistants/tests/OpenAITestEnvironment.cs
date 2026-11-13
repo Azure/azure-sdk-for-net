@@ -5,6 +5,7 @@ using System;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.OpenAI.Assistants.Tests;
+
 public class OpenAITestEnvironment : TestEnvironment
 {
     public string NonAzureOpenAIApiKey => GetOptionalVariable("OPENAI_API_KEY");

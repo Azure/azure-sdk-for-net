@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomEntityAlias : IUtf8JsonSerializable, IJsonModel<CustomEntityAlias>
+    /// <summary> A complex object that can be used to specify alternative spellings or synonyms to the root entity name. </summary>
+    public partial class CustomEntityAlias : IJsonModel<CustomEntityAlias>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomEntityAlias>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/> for deserialization. </summary>
+        internal CustomEntityAlias()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CustomEntityAlias PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomEntityAlias>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomEntityAlias(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomEntityAlias)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomEntityAlias>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomEntityAlias)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomEntityAlias>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomEntityAlias IPersistableModel<CustomEntityAlias>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomEntityAlias>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomEntityAlias>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,15 +74,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityAlias>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomEntityAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomEntityAlias)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(CaseSensitive))
+            if (Optional.IsDefined(CaseSensitive, _caseSensitiveIsDefined))
             {
                 if (CaseSensitive != null)
                 {
@@ -45,10 +90,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 else
                 {
-                    writer.WriteNull("caseSensitive");
+                    writer.WriteNull("caseSensitive"u8);
                 }
             }
-            if (Optional.IsDefined(AccentSensitive))
+            if (Optional.IsDefined(AccentSensitive, _accentSensitiveIsDefined))
             {
                 if (AccentSensitive != null)
                 {
@@ -57,10 +102,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 else
                 {
-                    writer.WriteNull("accentSensitive");
+                    writer.WriteNull("accentSensitive"u8);
                 }
             }
-            if (Optional.IsDefined(FuzzyEditDistance))
+            if (Optional.IsDefined(FuzzyEditDistance, _fuzzyEditDistanceIsDefined))
             {
                 if (FuzzyEditDistance != null)
                 {
@@ -69,18 +114,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 else
                 {
-                    writer.WriteNull("fuzzyEditDistance");
+                    writer.WriteNull("fuzzyEditDistance"u8);
                 }
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,123 +134,90 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        CustomEntityAlias IJsonModel<CustomEntityAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomEntityAlias IJsonModel<CustomEntityAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CustomEntityAlias JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityAlias>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomEntityAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomEntityAlias)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCustomEntityAlias(document.RootElement, options);
         }
 
-        internal static CustomEntityAlias DeserializeCustomEntityAlias(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CustomEntityAlias DeserializeCustomEntityAlias(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string text = default;
+            bool caseSensitiveIsDefined = false;
             bool? caseSensitive = default;
+            bool accentSensitiveIsDefined = false;
             bool? accentSensitive = default;
+            bool fuzzyEditDistanceIsDefined = false;
             int? fuzzyEditDistance = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("text"u8))
+                if (prop.NameEquals("text"u8))
                 {
-                    text = property.Value.GetString();
+                    text = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("caseSensitive"u8))
+                if (prop.NameEquals("caseSensitive"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    caseSensitiveIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         caseSensitive = null;
                         continue;
                     }
-                    caseSensitive = property.Value.GetBoolean();
+                    caseSensitive = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("accentSensitive"u8))
+                if (prop.NameEquals("accentSensitive"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    accentSensitiveIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         accentSensitive = null;
                         continue;
                     }
-                    accentSensitive = property.Value.GetBoolean();
+                    accentSensitive = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("fuzzyEditDistance"u8))
+                if (prop.NameEquals("fuzzyEditDistance"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    fuzzyEditDistanceIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         fuzzyEditDistance = null;
                         continue;
                     }
-                    fuzzyEditDistance = property.Value.GetInt32();
+                    fuzzyEditDistance = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CustomEntityAlias(text, caseSensitive, accentSensitive, fuzzyEditDistance, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<CustomEntityAlias>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityAlias>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
+            return new CustomEntityAlias(text, caseSensitive, accentSensitive, fuzzyEditDistance, additionalBinaryDataProperties)
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CustomEntityAlias)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CustomEntityAlias IPersistableModel<CustomEntityAlias>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityAlias>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCustomEntityAlias(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomEntityAlias)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CustomEntityAlias>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CustomEntityAlias FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCustomEntityAlias(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+                _caseSensitiveIsDefined = caseSensitiveIsDefined,
+                _accentSensitiveIsDefined = accentSensitiveIsDefined,
+                _fuzzyEditDistanceIsDefined = fuzzyEditDistanceIsDefined
+            };
         }
     }
 }

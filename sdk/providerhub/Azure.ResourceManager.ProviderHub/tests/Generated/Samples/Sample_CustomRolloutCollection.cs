@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CustomRolloutsCreateOrUpdate()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/CustomRollouts_CreateOrUpdate.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/CustomRollouts_CreateOrUpdate.json
             // this example is just showing the usage of "CustomRollouts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,10 +40,16 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // invoke the operation
             string rolloutName = "brazilUsShoeBoxTesting";
-            CustomRolloutData data = new CustomRolloutData(new CustomRolloutProperties(new CustomRolloutSpecification(new TrafficRegions
+            CustomRolloutData data = new CustomRolloutData(new CustomRolloutProperties(new CustomRolloutSpecification
             {
-                Regions = { new AzureLocation("brazilus") },
-            })));
+                AutoProvisionConfig = new CustomRolloutAutoProvisionConfig
+                {
+                    IsStorageEnabled = true,
+                    IsResourceGraphEnabled = true,
+                },
+                CanaryRegions = { new AzureLocation("brazilus") },
+                RefreshSubscriptionRegistration = true,
+            }));
             ArmOperation<CustomRolloutResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, rolloutName, data);
             CustomRolloutResource result = lro.Value;
 
@@ -58,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CustomRolloutsGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/CustomRollouts_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/CustomRollouts_Get.json
             // this example is just showing the usage of "CustomRollouts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CustomRolloutsListByProviderRegistration()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/CustomRollouts_ListByProviderRegistration.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/CustomRollouts_ListByProviderRegistration.json
             // this example is just showing the usage of "CustomRollouts_ListByProviderRegistration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_CustomRolloutsGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/CustomRollouts_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/CustomRollouts_Get.json
             // this example is just showing the usage of "CustomRollouts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CustomRolloutsGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/CustomRollouts_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2024-09-01/examples/CustomRollouts_Get.json
             // this example is just showing the usage of "CustomRollouts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

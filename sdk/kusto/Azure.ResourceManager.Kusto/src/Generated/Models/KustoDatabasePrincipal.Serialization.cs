@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoDatabasePrincipal : IUtf8JsonSerializable, IJsonModel<KustoDatabasePrincipal>
+    /// <summary> A class representing database principal entity. </summary>
+    public partial class KustoDatabasePrincipal : IJsonModel<KustoDatabasePrincipal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoDatabasePrincipal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipal"/> for deserialization. </summary>
+        internal KustoDatabasePrincipal()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KustoDatabasePrincipal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKustoDatabasePrincipal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KustoDatabasePrincipal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoDatabasePrincipal IPersistableModel<KustoDatabasePrincipal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoDatabasePrincipal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoDatabasePrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("name"u8);
@@ -60,15 +105,15 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("tenantName"u8);
                 writer.WriteStringValue(TenantName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,118 +122,90 @@ namespace Azure.ResourceManager.Kusto.Models
             }
         }
 
-        KustoDatabasePrincipal IJsonModel<KustoDatabasePrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoDatabasePrincipal IJsonModel<KustoDatabasePrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KustoDatabasePrincipal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKustoDatabasePrincipal(document.RootElement, options);
         }
 
-        internal static KustoDatabasePrincipal DeserializeKustoDatabasePrincipal(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KustoDatabasePrincipal DeserializeKustoDatabasePrincipal(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             KustoDatabasePrincipalRole role = default;
             string name = default;
-            KustoDatabasePrincipalType type = default;
+            KustoDatabasePrincipalType principalType = default;
             string fqn = default;
             string email = default;
             string appId = default;
             string tenantName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("role"u8))
+                if (prop.NameEquals("role"u8))
                 {
-                    role = new KustoDatabasePrincipalRole(property.Value.GetString());
+                    role = new KustoDatabasePrincipalRole(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new KustoDatabasePrincipalType(property.Value.GetString());
+                    principalType = new KustoDatabasePrincipalType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fqn"u8))
+                if (prop.NameEquals("fqn"u8))
                 {
-                    fqn = property.Value.GetString();
+                    fqn = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("email"u8))
+                if (prop.NameEquals("email"u8))
                 {
-                    email = property.Value.GetString();
+                    email = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appId"u8))
+                if (prop.NameEquals("appId"u8))
                 {
-                    appId = property.Value.GetString();
+                    appId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantName"u8))
+                if (prop.NameEquals("tenantName"u8))
                 {
-                    tenantName = property.Value.GetString();
+                    tenantName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KustoDatabasePrincipal(
                 role,
                 name,
-                type,
+                principalType,
                 fqn,
                 email,
                 appId,
                 tenantName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<KustoDatabasePrincipal>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KustoDatabasePrincipal IPersistableModel<KustoDatabasePrincipal>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKustoDatabasePrincipal(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KustoDatabasePrincipal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

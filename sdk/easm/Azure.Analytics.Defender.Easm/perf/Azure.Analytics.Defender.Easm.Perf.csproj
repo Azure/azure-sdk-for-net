@@ -9,8 +9,5 @@
     <ProjectReference Include="..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
 
 </Project>

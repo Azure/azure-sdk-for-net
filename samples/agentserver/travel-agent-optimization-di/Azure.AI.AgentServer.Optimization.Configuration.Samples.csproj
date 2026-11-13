@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <RootNamespace>Azure.AI.AgentServer.Optimization.Configuration.Samples</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.AgentServer.Optimization" Version="1.0.0-beta.3" />
+    <PackageReference Include="Azure.AI.AgentServer.Core" Version="1.0.0-beta.21" />
+    <PackageReference Include="Azure.AI.AgentServer.Responses" Version="1.0.0-beta.1" />
+    <PackageReference Include="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
+    <!-- Microsoft Agent Framework: build the response agent with AIAgent + tools. -->
+    <PackageReference Include="Microsoft.Agents.AI" Version="1.10.0" />
+    <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.10.0" />
+    <PackageReference Include="Microsoft.Extensions.AI" Version="10.6.0" />
+    <!-- Required by Azure.AI.AgentServer.Core telemetry; not yet in aspnet:10.0 shared framework. -->
+    <PackageReference Include="Microsoft.OpenTelemetry" Version="1.0.0-beta.1" />
+  </ItemGroup>
+
+</Project>

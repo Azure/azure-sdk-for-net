@@ -14,8 +14,14 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
+    /// <summary>
+    /// Provides configuration options for the Event Hubs binding and trigger.
+    /// </summary>
     public class EventHubOptions : IOptionsFormatter
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventHubOptions"/> class.
+        /// </summary>
         public EventHubOptions()
         {
             MaxEventBatchSize = 100;

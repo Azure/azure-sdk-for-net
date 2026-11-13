@@ -26,4 +26,8 @@ namespace Azure.Maps.Geolocation
             V1 = 1,
         }
     }
+    public static partial class MapsGeolocationModelFactory
+    {
+        public static Azure.Maps.Geolocation.CountryRegionResult CountryRegionResult(string isoCode = null, System.Net.IPAddress ipAddress = null) { throw null; }
+    }
 }

@@ -11,6 +11,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <AotAnalyzersOptOut>true</AotAnalyzersOptOut>
   </PropertyGroup>
 
   <ItemGroup>

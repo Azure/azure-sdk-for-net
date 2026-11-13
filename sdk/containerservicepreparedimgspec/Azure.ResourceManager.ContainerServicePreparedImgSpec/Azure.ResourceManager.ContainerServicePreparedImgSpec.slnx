@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ContainerServicePreparedImgSpec.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ContainerServicePreparedImgSpec.Tests.csproj" />
+</Solution>

@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Server.Path.Single
 {
     public partial class SingleClientOptions : ClientOptions
     {
+        public SingleClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal SingleClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

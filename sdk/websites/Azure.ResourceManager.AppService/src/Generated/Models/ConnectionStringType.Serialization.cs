@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ConnectionStringTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ConnectionStringType value) => value switch
         {
             ConnectionStringType.MySql => "MySql",
@@ -27,19 +28,53 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionStringType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ConnectionStringType ToConnectionStringType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MySql")) return ConnectionStringType.MySql;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLServer")) return ConnectionStringType.SqlServer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLAzure")) return ConnectionStringType.SqlAzure;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return ConnectionStringType.Custom;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotificationHub")) return ConnectionStringType.NotificationHub;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceBus")) return ConnectionStringType.ServiceBus;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EventHub")) return ConnectionStringType.EventHub;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ApiHub")) return ConnectionStringType.ApiHub;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DocDb")) return ConnectionStringType.DocDB;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedisCache")) return ConnectionStringType.RedisCache;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PostgreSQL")) return ConnectionStringType.PostgreSql;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MySql"))
+            {
+                return ConnectionStringType.MySql;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLServer"))
+            {
+                return ConnectionStringType.SqlServer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLAzure"))
+            {
+                return ConnectionStringType.SqlAzure;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom"))
+            {
+                return ConnectionStringType.Custom;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotificationHub"))
+            {
+                return ConnectionStringType.NotificationHub;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceBus"))
+            {
+                return ConnectionStringType.ServiceBus;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EventHub"))
+            {
+                return ConnectionStringType.EventHub;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ApiHub"))
+            {
+                return ConnectionStringType.ApiHub;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DocDb"))
+            {
+                return ConnectionStringType.DocDB;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedisCache"))
+            {
+                return ConnectionStringType.RedisCache;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PostgreSQL"))
+            {
+                return ConnectionStringType.PostgreSql;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionStringType value.");
         }
     }

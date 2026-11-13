@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using NUnit.Framework;
-using Azure.Storage.Test;
 using System.IO;
 using Azure.Storage.DataMovement.JobPlan;
+using Azure.Storage.Test;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {

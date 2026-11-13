@@ -7,57 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The UpsertManagedServerOperationStepStatus. </summary>
+    /// <summary></summary>
     public readonly partial struct UpsertManagedServerOperationStepStatus : IEquatable<UpsertManagedServerOperationStepStatus>
     {
         private readonly string _value;
+        /// <summary> NotStarted. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> SlowedDown. </summary>
+        private const string SlowedDownValue = "SlowedDown";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStepStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpsertManagedServerOperationStepStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string InProgressValue = "InProgress";
-        private const string SlowedDownValue = "SlowedDown";
-        private const string CompletedValue = "Completed";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> NotStarted. </summary>
         public static UpsertManagedServerOperationStepStatus NotStarted { get; } = new UpsertManagedServerOperationStepStatus(NotStartedValue);
+
         /// <summary> InProgress. </summary>
         public static UpsertManagedServerOperationStepStatus InProgress { get; } = new UpsertManagedServerOperationStepStatus(InProgressValue);
+
         /// <summary> SlowedDown. </summary>
         public static UpsertManagedServerOperationStepStatus SlowedDown { get; } = new UpsertManagedServerOperationStepStatus(SlowedDownValue);
+
         /// <summary> Completed. </summary>
         public static UpsertManagedServerOperationStepStatus Completed { get; } = new UpsertManagedServerOperationStepStatus(CompletedValue);
+
         /// <summary> Failed. </summary>
         public static UpsertManagedServerOperationStepStatus Failed { get; } = new UpsertManagedServerOperationStepStatus(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static UpsertManagedServerOperationStepStatus Canceled { get; } = new UpsertManagedServerOperationStepStatus(CanceledValue);
+
         /// <summary> Determines if two <see cref="UpsertManagedServerOperationStepStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UpsertManagedServerOperationStepStatus left, UpsertManagedServerOperationStepStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UpsertManagedServerOperationStepStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UpsertManagedServerOperationStepStatus left, UpsertManagedServerOperationStepStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UpsertManagedServerOperationStepStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UpsertManagedServerOperationStepStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UpsertManagedServerOperationStepStatus(string value) => new UpsertManagedServerOperationStepStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UpsertManagedServerOperationStepStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UpsertManagedServerOperationStepStatus?(string value) => value == null ? null : new UpsertManagedServerOperationStepStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UpsertManagedServerOperationStepStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UpsertManagedServerOperationStepStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

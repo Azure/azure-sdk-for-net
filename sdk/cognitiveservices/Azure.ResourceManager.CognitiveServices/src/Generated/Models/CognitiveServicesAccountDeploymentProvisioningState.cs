@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct CognitiveServicesAccountDeploymentProvisioningState : IEquatable<CognitiveServicesAccountDeploymentProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CognitiveServicesAccountDeploymentProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AcceptedValue = "Accepted";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string DisabledValue = "Disabled";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Accepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CognitiveServicesAccountDeploymentProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Accepted. </summary>
         public static CognitiveServicesAccountDeploymentProvisioningState Accepted { get; } = new CognitiveServicesAccountDeploymentProvisioningState(AcceptedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static CognitiveServicesAccountDeploymentProvisioningState Creating { get; } = new CognitiveServicesAccountDeploymentProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static CognitiveServicesAccountDeploymentProvisioningState Deleting { get; } = new CognitiveServicesAccountDeploymentProvisioningState(DeletingValue);
-        /// <summary> Moving. </summary>
+
+        /// <summary> Gets the Moving. </summary>
         public static CognitiveServicesAccountDeploymentProvisioningState Moving { get; } = new CognitiveServicesAccountDeploymentProvisioningState(MovingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static CognitiveServicesAccountDeploymentProvisioningState Failed { get; } = new CognitiveServicesAccountDeploymentProvisioningState(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static CognitiveServicesAccountDeploymentProvisioningState Succeeded { get; } = new CognitiveServicesAccountDeploymentProvisioningState(SucceededValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static CognitiveServicesAccountDeploymentProvisioningState Disabled { get; } = new CognitiveServicesAccountDeploymentProvisioningState(DisabledValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static CognitiveServicesAccountDeploymentProvisioningState Canceled { get; } = new CognitiveServicesAccountDeploymentProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="CognitiveServicesAccountDeploymentProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CognitiveServicesAccountDeploymentProvisioningState left, CognitiveServicesAccountDeploymentProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CognitiveServicesAccountDeploymentProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CognitiveServicesAccountDeploymentProvisioningState left, CognitiveServicesAccountDeploymentProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesAccountDeploymentProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CognitiveServicesAccountDeploymentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CognitiveServicesAccountDeploymentProvisioningState(string value) => new CognitiveServicesAccountDeploymentProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CognitiveServicesAccountDeploymentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CognitiveServicesAccountDeploymentProvisioningState?(string value) => value == null ? null : new CognitiveServicesAccountDeploymentProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CognitiveServicesAccountDeploymentProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CognitiveServicesAccountDeploymentProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

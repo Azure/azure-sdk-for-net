@@ -1,0 +1,14 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/recoveryservices-backup/**/*.cs'
+    words:
+      - dedup
+      - issqlcompression
+      - kpis
+      - mware
+      - sqlag
+      - sqldb
+      - Trycep
+      - xcool
+      - xsmb

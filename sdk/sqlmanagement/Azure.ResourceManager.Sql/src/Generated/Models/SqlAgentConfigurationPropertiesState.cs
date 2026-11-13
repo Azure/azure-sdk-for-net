@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlAgentConfigurationPropertiesState : IEquatable<SqlAgentConfigurationPropertiesState>
     {
         private readonly string _value;
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="SqlAgentConfigurationPropertiesState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlAgentConfigurationPropertiesState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enabled. </summary>
         public static SqlAgentConfigurationPropertiesState Enabled { get; } = new SqlAgentConfigurationPropertiesState(EnabledValue);
+
         /// <summary> Disabled. </summary>
         public static SqlAgentConfigurationPropertiesState Disabled { get; } = new SqlAgentConfigurationPropertiesState(DisabledValue);
+
         /// <summary> Determines if two <see cref="SqlAgentConfigurationPropertiesState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlAgentConfigurationPropertiesState left, SqlAgentConfigurationPropertiesState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlAgentConfigurationPropertiesState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlAgentConfigurationPropertiesState left, SqlAgentConfigurationPropertiesState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlAgentConfigurationPropertiesState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlAgentConfigurationPropertiesState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlAgentConfigurationPropertiesState(string value) => new SqlAgentConfigurationPropertiesState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlAgentConfigurationPropertiesState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlAgentConfigurationPropertiesState?(string value) => value == null ? null : new SqlAgentConfigurationPropertiesState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlAgentConfigurationPropertiesState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlAgentConfigurationPropertiesState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

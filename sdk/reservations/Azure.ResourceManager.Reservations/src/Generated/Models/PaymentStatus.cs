@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Reservations.Models
     public readonly partial struct PaymentStatus : IEquatable<PaymentStatus>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Scheduled. </summary>
+        private const string ScheduledValue = "Scheduled";
+        /// <summary> Cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
 
         /// <summary> Initializes a new instance of <see cref="PaymentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PaymentStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string ScheduledValue = "Scheduled";
-        private const string CancelledValue = "Cancelled";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static PaymentStatus Succeeded { get; } = new PaymentStatus(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static PaymentStatus Failed { get; } = new PaymentStatus(FailedValue);
+
         /// <summary> Scheduled. </summary>
         public static PaymentStatus Scheduled { get; } = new PaymentStatus(ScheduledValue);
+
         /// <summary> Cancelled. </summary>
         public static PaymentStatus Cancelled { get; } = new PaymentStatus(CancelledValue);
+
         /// <summary> Determines if two <see cref="PaymentStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PaymentStatus left, PaymentStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PaymentStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PaymentStatus left, PaymentStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PaymentStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PaymentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PaymentStatus(string value) => new PaymentStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PaymentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PaymentStatus?(string value) => value == null ? null : new PaymentStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PaymentStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PaymentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

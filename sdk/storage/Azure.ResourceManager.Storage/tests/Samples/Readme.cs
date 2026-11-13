@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public void ClientAuth()
         {
-#region Snippet:Managing_StorageAccounts_AuthClient
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-#endregion
+            #region Snippet:Managing_StorageAccounts_AuthClient
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+            #endregion
         }
     }
 }

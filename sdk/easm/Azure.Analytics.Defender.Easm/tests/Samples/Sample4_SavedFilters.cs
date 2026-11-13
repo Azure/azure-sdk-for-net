@@ -19,15 +19,15 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         public void SavedFiltersScenario()
         {
             #region Snippet:Sample4_SavedFilters_Create_Client
-            #if SNIPPET
+#if SNIPPET
             string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                             new DefaultAzureCredential());
-            #else
+#else
             string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                 TestEnvironment.Credential);
-            #endif
+#endif
             #endregion
             #region Snippet:Sample4_SavedFilters_Create_Saved_Filter
             string savedFilterName = "Sample saved filter";
@@ -37,11 +37,11 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             #region Snippet:Sample4_SavedFilters_Monitor_Assets
             var savedFilterResponse = client.GetSavedFilter(savedFilterName);
             string monitorFilter = savedFilterResponse.Value.Filter;
-            #if SNIPPET
+#if SNIPPET
             var savedFilterPageResponse = client.GetSavedFilters(monitorFilter);
-            #else
+#else
             var savedFilterPageResponse = client.GetSavedFilters();
-            #endif
+#endif
             foreach (SavedFilter savedFilter in savedFilterPageResponse)
             {
                 monitor(savedFilter);

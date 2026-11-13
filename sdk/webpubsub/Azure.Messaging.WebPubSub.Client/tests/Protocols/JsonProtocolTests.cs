@@ -30,7 +30,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
                 return new object[] { Encoding.UTF8.GetBytes(converter), assert };
             }
 
-            yield return GetData(new { type="ack", ackId = 123, success=true }, message =>
+            yield return GetData(new { type = "ack", ackId = 123, success = true }, message =>
             {
                 Assert.True(message is AckMessage);
                 var ackMessage = message as AckMessage;
@@ -38,7 +38,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
                 Assert.True(ackMessage.Success);
                 Assert.Null(ackMessage.Error);
             });
-            yield return GetData(new { type = "ack", ackId = 123, success = false, error = new { name = "Forbidden", message = "message"} }, message =>
+            yield return GetData(new { type = "ack", ackId = 123, success = false, error = new { name = "Forbidden", message = "message" } }, message =>
             {
                 Assert.True(message is AckMessage);
                 var ackMessage = message as AckMessage;
@@ -87,7 +87,8 @@ namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
             yield return GetData(new { type = "message", from = "server", dataType = "json", data = new JsonData { Value = "xyz" } }, message =>
             {
                 Assert.True(message is ServerDataMessage);
-                var dataMessage = message as ServerDataMessage;;
+                var dataMessage = message as ServerDataMessage;
+                ;
                 Assert.Null(dataMessage.SequenceId);
                 Assert.AreEqual(WebPubSubDataType.Json, dataMessage.DataType);
                 var obj = dataMessage.Data.ToObjectFromJson<JsonData>();
@@ -123,13 +124,41 @@ namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
                 var disconnectedMessage = message as DisconnectedMessage;
                 Assert.AreEqual("msg", disconnectedMessage.Reason);
             });
+            yield return GetData(new { type = "invokeResponse", invocationId = "inv-1", success = true, dataType = "text", data = "pong" }, message =>
+            {
+                Assert.True(message is InvokeResponseMessage);
+                var invokeResponse = message as InvokeResponseMessage;
+                Assert.AreEqual("inv-1", invokeResponse.InvocationId);
+                Assert.True(invokeResponse.Success);
+                Assert.AreEqual(WebPubSubDataType.Text, invokeResponse.DataType);
+                Assert.AreEqual("pong", invokeResponse.Data.ToString());
+                Assert.Null(invokeResponse.Error);
+            });
+            yield return GetData(new { type = "invokeResponse", invocationId = "inv-2", success = false, error = new { name = "BadRequest", message = "oops" } }, message =>
+            {
+                Assert.True(message is InvokeResponseMessage);
+                var invokeResponse = message as InvokeResponseMessage;
+                Assert.AreEqual("inv-2", invokeResponse.InvocationId);
+                Assert.False(invokeResponse.Success);
+                Assert.AreEqual("BadRequest", invokeResponse.Error.Name);
+                Assert.AreEqual("oops", invokeResponse.Error.Message);
+            });
+            yield return GetData(new { type = "invokeResponse", invocationId = "inv-3", success = true, dataType = "json", data = new { key = "value" } }, message =>
+            {
+                Assert.True(message is InvokeResponseMessage);
+                var invokeResponse = message as InvokeResponseMessage;
+                Assert.AreEqual("inv-3", invokeResponse.InvocationId);
+                Assert.True(invokeResponse.Success);
+                Assert.AreEqual(WebPubSubDataType.Json, invokeResponse.DataType);
+                Assert.IsNotNull(invokeResponse.Data);
+            });
         }
 
         public static IEnumerable<object[]> GetSerializingTestData()
         {
             static object[] GetData(WebPubSubMessage message, object json)
             {
-                return new object[] { message, JsonSerializer.Serialize(json)};
+                return new object[] { message, JsonSerializer.Serialize(json) };
             }
 
             yield return GetData(new JoinGroupMessage("group", null), new { type = "joinGroup", group = "group" });
@@ -137,15 +166,19 @@ namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
             yield return GetData(new LeaveGroupMessage("group", null), new { type = "leaveGroup", group = "group" });
             yield return GetData(new LeaveGroupMessage("group", 738476327894), new { type = "leaveGroup", group = "group", ackId = 738476327894u });
             yield return GetData(new SendToGroupMessage("group", BinaryData.FromString("xzy"), WebPubSubDataType.Text, null, false), new { type = "sendToGroup", group = "group", noEcho = false, dataType = "Text", data = "xzy" });
-            yield return GetData(new SendToGroupMessage("group", BinaryData.FromObjectAsJson(new JsonData { Value = "xyz"}), WebPubSubDataType.Json, 738476327894, true), new { type = "sendToGroup", group = "group", ackId = 738476327894u, noEcho = true, dataType = "Json", data = new { Value = "xyz" } });
+            yield return GetData(new SendToGroupMessage("group", BinaryData.FromObjectAsJson(new JsonData { Value = "xyz" }), WebPubSubDataType.Json, 738476327894, true), new { type = "sendToGroup", group = "group", ackId = 738476327894u, noEcho = true, dataType = "Json", data = new { Value = "xyz" } });
             yield return GetData(new SendToGroupMessage("group", BinaryData.FromBytes(Convert.FromBase64String("eHl6")), WebPubSubDataType.Binary, 738476327894, true), new { type = "sendToGroup", group = "group", ackId = 738476327894u, noEcho = true, dataType = "Binary", data = "eHl6" });
             yield return GetData(new SendToGroupMessage("group", BinaryData.FromBytes(Convert.FromBase64String("eHl6")), WebPubSubDataType.Protobuf, 738476327894, true), new { type = "sendToGroup", group = "group", ackId = 738476327894u, noEcho = true, dataType = "Protobuf", data = "eHl6" });
             yield return GetData(new SendEventMessage("event", BinaryData.FromString("xzy"), WebPubSubDataType.Text, null), new { type = "event", @event = "event", dataType = "Text", data = "xzy" });
-            yield return GetData(new SendEventMessage("event", BinaryData.FromObjectAsJson(new JsonData { Value = "xyz" }), WebPubSubDataType.Json, 738476327894), new { type = "event", @event = "event", ackId = 738476327894u,dataType = "Json", data = new { Value = "xyz" } });
+            yield return GetData(new SendEventMessage("event", BinaryData.FromObjectAsJson(new JsonData { Value = "xyz" }), WebPubSubDataType.Json, 738476327894), new { type = "event", @event = "event", ackId = 738476327894u, dataType = "Json", data = new { Value = "xyz" } });
             yield return GetData(new SendEventMessage("event", BinaryData.FromBytes(Convert.FromBase64String("eHl6")), WebPubSubDataType.Binary, 738476327894), new { type = "event", @event = "event", ackId = 738476327894u, dataType = "Binary", data = "eHl6" });
             yield return GetData(new SendEventMessage("event", BinaryData.FromBytes(Convert.FromBase64String("eHl6")), WebPubSubDataType.Protobuf, 738476327894), new { type = "event", @event = "event", ackId = 738476327894u, dataType = "Protobuf", data = "eHl6" });
             yield return GetData(new SequenceAckMessage(123), new { type = "sequenceAck", sequenceId = 123 });
             yield return GetData(new SequenceAckMessage(738476327894), new { type = "sequenceAck", sequenceId = 738476327894u });
+            yield return GetData(new InvokeMessage("inv-1", "echo", BinaryData.FromString("ping"), WebPubSubDataType.Text), new { type = "invoke", invocationId = "inv-1", target = "event", @event = "echo", dataType = "Text", data = "ping" });
+            yield return GetData(new InvokeMessage("inv-2", "process", BinaryData.FromObjectAsJson(new JsonData { Value = "xyz" }), WebPubSubDataType.Json), new { type = "invoke", invocationId = "inv-2", target = "event", @event = "process", dataType = "Json", data = new { Value = "xyz" } });
+            yield return GetData(new InvokeMessage("inv-3", "upload", BinaryData.FromBytes(Convert.FromBase64String("eHl6")), WebPubSubDataType.Binary), new { type = "invoke", invocationId = "inv-3", target = "event", @event = "upload", dataType = "Binary", data = "eHl6" });
+            yield return GetData(new CancelInvocationMessage("inv-cancel"), new { type = "cancelInvocation", invocationId = "inv-cancel" });
         }
 
         [TestCaseSource(nameof(GetParsingTestData))]

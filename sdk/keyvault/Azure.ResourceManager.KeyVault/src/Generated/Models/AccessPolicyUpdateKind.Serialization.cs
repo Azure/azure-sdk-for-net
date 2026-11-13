@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     internal static partial class AccessPolicyUpdateKindExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AccessPolicyUpdateKind value) => value switch
         {
             AccessPolicyUpdateKind.Add => "add",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.KeyVault.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessPolicyUpdateKind value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AccessPolicyUpdateKind ToAccessPolicyUpdateKind(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "add")) return AccessPolicyUpdateKind.Add;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "replace")) return AccessPolicyUpdateKind.Replace;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove")) return AccessPolicyUpdateKind.Remove;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "add"))
+            {
+                return AccessPolicyUpdateKind.Add;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "replace"))
+            {
+                return AccessPolicyUpdateKind.Replace;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove"))
+            {
+                return AccessPolicyUpdateKind.Remove;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessPolicyUpdateKind value.");
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningUseStl : IEquatable<MachineLearningUseStl>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningUseStl"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningUseStl(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> No stl decomposition. </summary>
         private const string NoneValue = "None";
         private const string SeasonValue = "Season";
         private const string SeasonTrendValue = "SeasonTrend";
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUseStl"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningUseStl(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
         /// <summary> No stl decomposition. </summary>
         public static MachineLearningUseStl None { get; } = new MachineLearningUseStl(NoneValue);
-        /// <summary> Season. </summary>
+
+        /// <summary> Gets the Season. </summary>
         public static MachineLearningUseStl Season { get; } = new MachineLearningUseStl(SeasonValue);
-        /// <summary> SeasonTrend. </summary>
+
+        /// <summary> Gets the SeasonTrend. </summary>
         public static MachineLearningUseStl SeasonTrend { get; } = new MachineLearningUseStl(SeasonTrendValue);
+
         /// <summary> Determines if two <see cref="MachineLearningUseStl"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningUseStl left, MachineLearningUseStl right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningUseStl"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningUseStl left, MachineLearningUseStl right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningUseStl"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningUseStl"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningUseStl(string value) => new MachineLearningUseStl(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningUseStl"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningUseStl?(string value) => value == null ? null : new MachineLearningUseStl(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningUseStl other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningUseStl other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

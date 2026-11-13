@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedClusterUpgradeCadence : IEquatable<ManagedClusterUpgradeCadence>
     {
         private readonly string _value;
+        /// <summary> Cluster upgrade starts immediately after a new version is rolled out. Recommended for Test/Dev clusters. </summary>
+        private const string Wave0Value = "Wave0";
+        /// <summary> Cluster upgrade starts 7 days after a new version is rolled out. Recommended for Pre-prod clusters. </summary>
+        private const string Wave1Value = "Wave1";
+        /// <summary> Cluster upgrade starts 14 days after a new version is rolled out. Recommended for Production clusters. </summary>
+        private const string Wave2Value = "Wave2";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeCadence"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterUpgradeCadence(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Wave0Value = "Wave0";
-        private const string Wave1Value = "Wave1";
-        private const string Wave2Value = "Wave2";
+            _value = value;
+        }
 
         /// <summary> Cluster upgrade starts immediately after a new version is rolled out. Recommended for Test/Dev clusters. </summary>
         public static ManagedClusterUpgradeCadence Wave0 { get; } = new ManagedClusterUpgradeCadence(Wave0Value);
+
         /// <summary> Cluster upgrade starts 7 days after a new version is rolled out. Recommended for Pre-prod clusters. </summary>
         public static ManagedClusterUpgradeCadence Wave1 { get; } = new ManagedClusterUpgradeCadence(Wave1Value);
+
         /// <summary> Cluster upgrade starts 14 days after a new version is rolled out. Recommended for Production clusters. </summary>
         public static ManagedClusterUpgradeCadence Wave2 { get; } = new ManagedClusterUpgradeCadence(Wave2Value);
+
         /// <summary> Determines if two <see cref="ManagedClusterUpgradeCadence"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterUpgradeCadence left, ManagedClusterUpgradeCadence right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterUpgradeCadence"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterUpgradeCadence left, ManagedClusterUpgradeCadence right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterUpgradeCadence"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterUpgradeCadence"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterUpgradeCadence(string value) => new ManagedClusterUpgradeCadence(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterUpgradeCadence"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterUpgradeCadence?(string value) => value == null ? null : new ManagedClusterUpgradeCadence(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterUpgradeCadence other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterUpgradeCadence other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

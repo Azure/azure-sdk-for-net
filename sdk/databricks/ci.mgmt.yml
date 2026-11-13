@@ -1,0 +1,21 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/databricks/Azure.ResourceManager.Databricks
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: databricks
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.Databricks
+      safeName: AzureResourceManagerDatabricks
+    - name: Azure.Provisioning.Databricks
+      safeName: AzureProvisioningDatabricks

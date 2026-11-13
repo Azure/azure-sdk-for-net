@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsKeySource : IEquatable<EventHubsKeySource>
     {
         private readonly string _value;
+        private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
 
         /// <summary> Initializes a new instance of <see cref="EventHubsKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventHubsKeySource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
-
-        /// <summary> Microsoft.KeyVault. </summary>
+        /// <summary> Gets the MicrosoftKeyVault. </summary>
         public static EventHubsKeySource MicrosoftKeyVault { get; } = new EventHubsKeySource(MicrosoftKeyVaultValue);
+
         /// <summary> Determines if two <see cref="EventHubsKeySource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsKeySource left, EventHubsKeySource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubsKeySource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsKeySource left, EventHubsKeySource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsKeySource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubsKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubsKeySource(string value) => new EventHubsKeySource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubsKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubsKeySource?(string value) => value == null ? null : new EventHubsKeySource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsKeySource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubsKeySource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

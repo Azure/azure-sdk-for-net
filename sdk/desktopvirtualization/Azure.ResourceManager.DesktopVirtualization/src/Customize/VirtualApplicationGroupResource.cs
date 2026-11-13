@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DesktopVirtualizationStartMenuItem" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<DesktopVirtualizationStartMenuItem> GetStartMenuItemsAsync(CancellationToken cancellationToken) => GetStartMenuItemsAsync(cancellationToken);
+        public virtual AsyncPageable<DesktopVirtualizationStartMenuItem> GetStartMenuItemsAsync(CancellationToken cancellationToken) => GetStartMenuItemsAsync(pageSize: null, isDescending: null, initialSkip: null, cancellationToken: cancellationToken);
 
         /// <summary>
         /// List start menu items in the given application group.
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DesktopVirtualizationStartMenuItem" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<DesktopVirtualizationStartMenuItem> GetStartMenuItems(CancellationToken cancellationToken) => GetStartMenuItems(cancellationToken);
+        public virtual Pageable<DesktopVirtualizationStartMenuItem> GetStartMenuItems(CancellationToken cancellationToken) => GetStartMenuItems(pageSize: null, isDescending: null, initialSkip: null, cancellationToken: cancellationToken);
     }
 }

@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "QueueClient": {
+          "type": "object",
+          "description": "Configuration for QueueClient.",
+          "properties": {
+            "Url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Url."
+            },
+            "ConnectionString": {
+              "type": "string"
+            },
+            "QueueName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/queueClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "queueClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Version": {
+              "type": "string"
+            },
+            "GeoRedundantSecondaryUri": {
+              "type": "string",
+              "format": "uri"
+            },
+            "MessageEncoding": {
+              "type": "string"
+            },
+            "EnableTenantDiscovery": {
+              "type": "boolean"
+            },
+            "Audience": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

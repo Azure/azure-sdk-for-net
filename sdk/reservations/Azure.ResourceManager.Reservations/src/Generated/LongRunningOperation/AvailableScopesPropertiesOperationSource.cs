@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    internal class AvailableScopesPropertiesOperationSource : IOperationSource<AvailableScopesProperties>
+    /// <summary></summary>
+    internal partial class AvailableScopesPropertiesOperationSource : IOperationSource<AvailableScopesProperties>
     {
-        AvailableScopesProperties IOperationSource<AvailableScopesProperties>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal AvailableScopesPropertiesOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return AvailableScopesProperties.DeserializeAvailableScopesProperties(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        AvailableScopesProperties IOperationSource<AvailableScopesProperties>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return AvailableScopesProperties.DeserializeAvailableScopesProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AvailableScopesProperties> IOperationSource<AvailableScopesProperties>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return AvailableScopesProperties.DeserializeAvailableScopesProperties(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return AvailableScopesProperties.DeserializeAvailableScopesProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

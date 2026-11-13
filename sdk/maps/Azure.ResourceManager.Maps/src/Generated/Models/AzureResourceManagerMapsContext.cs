@@ -13,9 +13,8 @@ namespace Azure.ResourceManager.Maps
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(CorsRules))]
     [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
     [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryptionKeyIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
@@ -24,20 +23,23 @@ namespace Azure.ResourceManager.Maps
     [ModelReaderWriterBuildable(typeof(MapsAccountPatch))]
     [ModelReaderWriterBuildable(typeof(MapsAccountProperties))]
     [ModelReaderWriterBuildable(typeof(MapsAccountResource))]
-    [ModelReaderWriterBuildable(typeof(MapsAccounts))]
     [ModelReaderWriterBuildable(typeof(MapsAccountSasContent))]
     [ModelReaderWriterBuildable(typeof(MapsAccountSasToken))]
     [ModelReaderWriterBuildable(typeof(MapsCorsRule))]
     [ModelReaderWriterBuildable(typeof(MapsCreatorData))]
-    [ModelReaderWriterBuildable(typeof(MapsCreatorListResult))]
     [ModelReaderWriterBuildable(typeof(MapsCreatorPatch))]
     [ModelReaderWriterBuildable(typeof(MapsCreatorProperties))]
     [ModelReaderWriterBuildable(typeof(MapsCreatorResource))]
     [ModelReaderWriterBuildable(typeof(MapsEncryption))]
     [ModelReaderWriterBuildable(typeof(MapsKeySpecification))]
     [ModelReaderWriterBuildable(typeof(MapsLinkedResource))]
+    [ModelReaderWriterBuildable(typeof(MapsLocationItem))]
+    [ModelReaderWriterBuildable(typeof(MapsPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(MapsPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(MapsPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(MapsPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(MapsPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(MapsSku))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMapsContext : ModelReaderWriterContext

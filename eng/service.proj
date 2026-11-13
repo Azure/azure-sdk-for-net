@@ -41,7 +41,6 @@
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\FormRecognizer\**\*.csproj" />
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.Face\**\*.csproj" />
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.CustomVision.Training\**\*.csproj" />
-      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Personalizer\**\*.csproj" />
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\hdinsight\Microsoft.Azure.HDInsight.Job\**\*.csproj" />
   </ItemGroup>
 
@@ -99,9 +98,26 @@
   </Target>
 
 
-  <Target Name="GenerateCode">
+  <Target Name="InstallTspClient">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="InstallTspClient"
+             BuildInParallel="false"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
+  </Target>
+
+  <Target Name="BuildPlugin">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="BuildPluginIfNeeded"
+             BuildInParallel="false"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
+  </Target>
+
+  <Target Name="GenerateCode" DependsOnTargets="InstallTspClient;BuildPlugin">
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
+             Properties="SkipTspClientInstall=true;SkipBuildPlugin=true"
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />
@@ -136,16 +152,16 @@
             SkipNonexistentTargets="true">
       <Output ItemName="PackageInfoLines" TaskParameter="TargetOutputs" />
     </MSBuild>
-    
+
     <!-- Deduplicate package info lines -->
     <RemoveDuplicates Inputs="@(PackageInfoLines)">
       <Output TaskParameter="Filtered" ItemName="PackageInfoLinesFiltered"/>
     </RemoveDuplicates>
-    
+
     <!-- Write aggregated package info to file if OutputProjectInfoListFilePath is specified -->
-    <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''" 
-                      File="$(OutputProjectInfoListFilePath)" 
-                      Lines="@(PackageInfoLinesFiltered)" 
+    <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''"
+                      File="$(OutputProjectInfoListFilePath)"
+                      Lines="@(PackageInfoLinesFiltered)"
                       Overwrite="true" />
   </Target>
 

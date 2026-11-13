@@ -7,8 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Red team details. </summary>
     public partial class RedTeam : IJsonModel<RedTeam>
@@ -16,6 +17,64 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="RedTeam"/> for deserialization. </summary>
         internal RedTeam()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RedTeam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedTeam>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRedTeam(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedTeam)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedTeam>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RedTeam)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RedTeam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedTeam IPersistableModel<RedTeam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedTeam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="redTeam"> The <see cref="RedTeam"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(RedTeam redTeam)
+        {
+            if (redTeam == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(redTeam, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="RedTeam"/> from. </param>
+        public static explicit operator RedTeam(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRedTeam(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -46,10 +105,10 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(NumTurns))
+            if (Optional.IsDefined(TurnCount))
             {
                 writer.WritePropertyName("numTurns"u8);
-                writer.WriteNumberValue(NumTurns.Value);
+                writer.WriteNumberValue(TurnCount.Value);
             }
             if (Optional.IsCollectionDefined(AttackStrategies))
             {
@@ -61,10 +120,10 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SimulationOnly))
+            if (Optional.IsDefined(IsSimulationOnly))
             {
                 writer.WritePropertyName("simulationOnly"u8);
-                writer.WriteBooleanValue(SimulationOnly.Value);
+                writer.WriteBooleanValue(IsSimulationOnly.Value);
             }
             if (Optional.IsCollectionDefined(RiskCategories))
             {
@@ -164,9 +223,9 @@ namespace Azure.AI.Projects
             }
             string name = default;
             string displayName = default;
-            int? numTurns = default;
+            int? turnCount = default;
             IList<AttackStrategy> attackStrategies = default;
-            bool? simulationOnly = default;
+            bool? isSimulationOnly = default;
             IList<RiskCategory> riskCategories = default;
             string applicationScenario = default;
             IDictionary<string, string> tags = default;
@@ -192,7 +251,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    numTurns = prop.Value.GetInt32();
+                    turnCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("attackStrategies"u8))
@@ -215,7 +274,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    simulationOnly = prop.Value.GetBoolean();
+                    isSimulationOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("riskCategories"u8))
@@ -291,15 +350,15 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RedTeam(
                 name,
                 displayName,
-                numTurns,
+                turnCount,
                 attackStrategies ?? new ChangeTrackingList<AttackStrategy>(),
-                simulationOnly,
+                isSimulationOnly,
                 riskCategories ?? new ChangeTrackingList<RiskCategory>(),
                 applicationScenario,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -307,64 +366,6 @@ namespace Azure.AI.Projects
                 status,
                 target,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RedTeam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedTeam>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RedTeam)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RedTeam IPersistableModel<RedTeam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RedTeam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedTeam>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeRedTeam(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RedTeam)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RedTeam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="redTeam"> The <see cref="RedTeam"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(RedTeam redTeam)
-        {
-            if (redTeam == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(redTeam, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="RedTeam"/> from. </param>
-        public static explicit operator RedTeam(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeRedTeam(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

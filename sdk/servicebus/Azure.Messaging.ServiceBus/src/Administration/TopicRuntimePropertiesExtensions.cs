@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.Core.Pipeline;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {
@@ -68,6 +68,12 @@ namespace Azure.Messaging.ServiceBus.Administration
                         break;
                     case "SubscriptionCount":
                         topicRuntimeInfo.SubscriptionCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
+                        break;
+                    case "SqlFilterCount":
+                        topicRuntimeInfo.SqlFilterCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
+                        break;
+                    case "CorrelationFilterCount":
+                        topicRuntimeInfo.CorrelationFilterCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "UpdatedAt":
                         topicRuntimeInfo.UpdatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);

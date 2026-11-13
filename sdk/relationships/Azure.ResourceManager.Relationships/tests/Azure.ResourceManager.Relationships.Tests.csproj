@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup />
+
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.Relationships.csproj" />
+    <PackageReference Include="Azure.ResourceManager.ServiceGroups" />
+    <PackageReference Include="Azure.ResourceManager.KeyVault" />
+    <PackageReference Include="Azure.ResourceManager.Authorization" />
+  </ItemGroup>
+</Project>

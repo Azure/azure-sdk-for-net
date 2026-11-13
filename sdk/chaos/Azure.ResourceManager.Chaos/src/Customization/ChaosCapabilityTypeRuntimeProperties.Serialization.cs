@@ -5,8 +5,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {

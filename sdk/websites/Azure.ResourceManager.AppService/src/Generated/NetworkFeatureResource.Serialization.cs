@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class NetworkFeatureResource : IJsonModel<NetworkFeatureData>
     {
-        private static NetworkFeatureData s_dataDeserializationInstance;
-        private static NetworkFeatureData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkFeatureData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkFeatureData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFeatureData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFeatureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFeatureData>)Data).Write(writer, options);
 
-        NetworkFeatureData IJsonModel<NetworkFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFeatureData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFeatureData IJsonModel<NetworkFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkFeatureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFeatureData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFeatureData IPersistableModel<NetworkFeatureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFeatureData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<NetworkFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFeatureData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

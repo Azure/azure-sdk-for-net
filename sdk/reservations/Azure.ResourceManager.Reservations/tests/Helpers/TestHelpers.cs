@@ -21,12 +21,15 @@ namespace Azure.ResourceManager.Reservations.Tests.Helper
                 DisplayName = "testVM",
                 AppliedScopeType = new AppliedScopeType(scope),
                 IsRenewEnabled = false,
-                ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On"), null),
+                ReservedResourceInstanceFlexibility = new InstanceFlexibility("On"),
             };
 
             if (scope.Equals("Single"))
             {
-                request.AppliedScopes.Add("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee");
+                request.AppliedScopeProperties = new AppliedScopeProperties
+                {
+                    SubscriptionId = new Core.ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+                };
             }
 
             return request;

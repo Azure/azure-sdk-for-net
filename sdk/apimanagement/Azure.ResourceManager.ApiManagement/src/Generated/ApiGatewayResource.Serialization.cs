@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ApiGatewayResource : IJsonModel<ApiGatewayData>
     {
-        private static ApiGatewayData s_dataDeserializationInstance;
-        private static ApiGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiGatewayData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiGatewayData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiGatewayData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiGatewayData>)Data).Write(writer, options);
 
-        ApiGatewayData IJsonModel<ApiGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiGatewayData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiGatewayData IJsonModel<ApiGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiGatewayData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiGatewayData IPersistableModel<ApiGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiGatewayData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

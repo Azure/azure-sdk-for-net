@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MonitorMetricUnit : IEquatable<MonitorMetricUnit>
     {
         private readonly string _value;
+        /// <summary> Unit of raw quantity. </summary>
+        private const string CountValue = "Count";
+        /// <summary> Unit of memory in bytes. </summary>
+        private const string BytesValue = "Bytes";
+        /// <summary> Unit of time in seconds. </summary>
+        private const string SecondsValue = "Seconds";
+        /// <summary> Rate unit of raw quantity per second. </summary>
+        private const string CountPerSecondValue = "CountPerSecond";
+        /// <summary> Rate unit of memory in bytes per second. </summary>
+        private const string BytesPerSecondValue = "BytesPerSecond";
+        /// <summary> Percentage unit. </summary>
+        private const string PercentValue = "Percent";
+        /// <summary> Unit of time in 1/1000th of a second. </summary>
+        private const string MilliSecondsValue = "MilliSeconds";
+        /// <summary> Unit of data transfer or storage. It is the size of the data in bytes multiplied by the time it takes to transfer or store the data in seconds. </summary>
+        private const string ByteSecondsValue = "ByteSeconds";
+        /// <summary> No specified unit. </summary>
+        private const string UnspecifiedValue = "Unspecified";
+        /// <summary> Unit of processing power. </summary>
+        private const string CoresValue = "Cores";
+        /// <summary> Unit of processing power in 1/1000th of a CPU core. </summary>
+        private const string MilliCoresValue = "MilliCores";
+        /// <summary> Unit of processing power in one billionth of a CPU core. </summary>
+        private const string NanoCoresValue = "NanoCores";
+        /// <summary> Rate unit of binary digits per second. </summary>
+        private const string BitsPerSecondValue = "BitsPerSecond";
 
         /// <summary> Initializes a new instance of <see cref="MonitorMetricUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorMetricUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CountValue = "Count";
-        private const string BytesValue = "Bytes";
-        private const string SecondsValue = "Seconds";
-        private const string CountPerSecondValue = "CountPerSecond";
-        private const string BytesPerSecondValue = "BytesPerSecond";
-        private const string PercentValue = "Percent";
-        private const string MilliSecondsValue = "MilliSeconds";
-        private const string ByteSecondsValue = "ByteSeconds";
-        private const string UnspecifiedValue = "Unspecified";
-        private const string CoresValue = "Cores";
-        private const string MilliCoresValue = "MilliCores";
-        private const string NanoCoresValue = "NanoCores";
-        private const string BitsPerSecondValue = "BitsPerSecond";
-
-        /// <summary> Count. </summary>
+        /// <summary> Unit of raw quantity. </summary>
         public static MonitorMetricUnit Count { get; } = new MonitorMetricUnit(CountValue);
-        /// <summary> Bytes. </summary>
+
+        /// <summary> Unit of memory in bytes. </summary>
         public static MonitorMetricUnit Bytes { get; } = new MonitorMetricUnit(BytesValue);
-        /// <summary> Seconds. </summary>
+
+        /// <summary> Unit of time in seconds. </summary>
         public static MonitorMetricUnit Seconds { get; } = new MonitorMetricUnit(SecondsValue);
-        /// <summary> CountPerSecond. </summary>
+
+        /// <summary> Rate unit of raw quantity per second. </summary>
         public static MonitorMetricUnit CountPerSecond { get; } = new MonitorMetricUnit(CountPerSecondValue);
-        /// <summary> BytesPerSecond. </summary>
+
+        /// <summary> Rate unit of memory in bytes per second. </summary>
         public static MonitorMetricUnit BytesPerSecond { get; } = new MonitorMetricUnit(BytesPerSecondValue);
-        /// <summary> Percent. </summary>
+
+        /// <summary> Percentage unit. </summary>
         public static MonitorMetricUnit Percent { get; } = new MonitorMetricUnit(PercentValue);
-        /// <summary> MilliSeconds. </summary>
+
+        /// <summary> Unit of time in 1/1000th of a second. </summary>
         public static MonitorMetricUnit MilliSeconds { get; } = new MonitorMetricUnit(MilliSecondsValue);
-        /// <summary> ByteSeconds. </summary>
+
+        /// <summary> Unit of data transfer or storage. It is the size of the data in bytes multiplied by the time it takes to transfer or store the data in seconds. </summary>
         public static MonitorMetricUnit ByteSeconds { get; } = new MonitorMetricUnit(ByteSecondsValue);
-        /// <summary> Unspecified. </summary>
+
+        /// <summary> No specified unit. </summary>
         public static MonitorMetricUnit Unspecified { get; } = new MonitorMetricUnit(UnspecifiedValue);
-        /// <summary> Cores. </summary>
+
+        /// <summary> Unit of processing power. </summary>
         public static MonitorMetricUnit Cores { get; } = new MonitorMetricUnit(CoresValue);
-        /// <summary> MilliCores. </summary>
+
+        /// <summary> Unit of processing power in 1/1000th of a CPU core. </summary>
         public static MonitorMetricUnit MilliCores { get; } = new MonitorMetricUnit(MilliCoresValue);
-        /// <summary> NanoCores. </summary>
+
+        /// <summary> Unit of processing power in one billionth of a CPU core. </summary>
         public static MonitorMetricUnit NanoCores { get; } = new MonitorMetricUnit(NanoCoresValue);
-        /// <summary> BitsPerSecond. </summary>
+
+        /// <summary> Rate unit of binary digits per second. </summary>
         public static MonitorMetricUnit BitsPerSecond { get; } = new MonitorMetricUnit(BitsPerSecondValue);
+
         /// <summary> Determines if two <see cref="MonitorMetricUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorMetricUnit left, MonitorMetricUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorMetricUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorMetricUnit left, MonitorMetricUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorMetricUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorMetricUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorMetricUnit(string value) => new MonitorMetricUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorMetricUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorMetricUnit?(string value) => value == null ? null : new MonitorMetricUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorMetricUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorMetricUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

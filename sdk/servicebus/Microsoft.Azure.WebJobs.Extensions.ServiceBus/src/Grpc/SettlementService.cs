@@ -243,7 +243,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
                 // This matches the behavior when constructing a ServiceBusReceivedMessage in the SDK.
                 if (AmqpAnnotatedMessageConverter.TryCreateNetPropertyFromAmqpProperty(pair.Value, out object value))
                 {
-                    dict[pair.Key.ToString()] = value;
+                    dict[pair.Key.Key is AmqpSymbol symbol ? symbol.Value : pair.Key.ToString()] = value;
                 }
             }
 

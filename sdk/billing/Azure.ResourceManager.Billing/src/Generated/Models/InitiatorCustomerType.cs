@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct InitiatorCustomerType : IEquatable<InitiatorCustomerType>
     {
         private readonly string _value;
+        /// <summary> Partner. </summary>
+        private const string PartnerValue = "Partner";
+        /// <summary> EA. </summary>
+        private const string EAValue = "EA";
 
         /// <summary> Initializes a new instance of <see cref="InitiatorCustomerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InitiatorCustomerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PartnerValue = "Partner";
-        private const string EAValue = "EA";
+            _value = value;
+        }
 
         /// <summary> Partner. </summary>
         public static InitiatorCustomerType Partner { get; } = new InitiatorCustomerType(PartnerValue);
+
         /// <summary> EA. </summary>
         public static InitiatorCustomerType EA { get; } = new InitiatorCustomerType(EAValue);
+
         /// <summary> Determines if two <see cref="InitiatorCustomerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InitiatorCustomerType left, InitiatorCustomerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InitiatorCustomerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InitiatorCustomerType left, InitiatorCustomerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InitiatorCustomerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InitiatorCustomerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InitiatorCustomerType(string value) => new InitiatorCustomerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InitiatorCustomerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InitiatorCustomerType?(string value) => value == null ? null : new InitiatorCustomerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InitiatorCustomerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InitiatorCustomerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

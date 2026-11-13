@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Transport = new MockTransport(),
             };
 
-             Client = InstrumentClient(new TextAnalyticsClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
+            Client = InstrumentClient(new TextAnalyticsClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
         }
 
         public TextAnalyticsClient Client { get; set; }

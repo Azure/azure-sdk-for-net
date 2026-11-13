@@ -37,11 +37,15 @@ namespace Azure.Search.Documents.Models
                 next = async ?
                     await _pagingClient.SearchAsync<T>(
                         NextOptions.SearchText,
+                        _querySourceAuthorization,
+                        _enableElevatedRead,
                         NextOptions,
                         cancellationToken)
                         .ConfigureAwait(false) :
                     _pagingClient.Search<T>(
                         NextOptions.SearchText,
+                        _querySourceAuthorization,
+                        _enableElevatedRead,
                         NextOptions,
                         cancellationToken);
             }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class VpnSiteLinkConnectionResource : IJsonModel<VpnSiteLinkConnectionData>
     {
-        private static VpnSiteLinkConnectionData s_dataDeserializationInstance;
-        private static VpnSiteLinkConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VpnSiteLinkConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VpnSiteLinkConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VpnSiteLinkConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VpnSiteLinkConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VpnSiteLinkConnectionData>)Data).Write(writer, options);
 
-        VpnSiteLinkConnectionData IJsonModel<VpnSiteLinkConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnSiteLinkConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VpnSiteLinkConnectionData IJsonModel<VpnSiteLinkConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VpnSiteLinkConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VpnSiteLinkConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VpnSiteLinkConnectionData IPersistableModel<VpnSiteLinkConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnSiteLinkConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VpnSiteLinkConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnSiteLinkConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VpnSiteLinkConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

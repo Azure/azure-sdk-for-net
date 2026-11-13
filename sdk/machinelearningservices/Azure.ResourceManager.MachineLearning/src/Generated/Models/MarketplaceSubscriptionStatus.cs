@@ -7,58 +7,90 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MarketplaceSubscriptionStatus. </summary>
+    /// <summary></summary>
     public readonly partial struct MarketplaceSubscriptionStatus : IEquatable<MarketplaceSubscriptionStatus>
     {
         private readonly string _value;
+        /// <summary>
+        /// The customer can now use the Marketplace Subscription's
+        /// model and will be billed.
+        /// </summary>
+        private const string SubscribedValue = "Subscribed";
+        /// <summary>
+        /// The customer could not be billed for the Marketplace Subscription.
+        /// The customer will not be able to access the model.
+        /// </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary>
+        /// Marketplace Subscriptions reach this state in response to an explicit customer or CSP action.
+        /// A Marketplace Subscription can also be canceled implicitly, as a result of nonpayment of dues,
+        /// after being in the Suspended state for some time.
+        /// </summary>
+        private const string UnsubscribedValue = "Unsubscribed";
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MarketplaceSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SubscribedValue = "Subscribed";
-        private const string SuspendedValue = "Suspended";
-        private const string UnsubscribedValue = "Unsubscribed";
+            _value = value;
+        }
 
         /// <summary>
         /// The customer can now use the Marketplace Subscription's
         /// model and will be billed.
         /// </summary>
         public static MarketplaceSubscriptionStatus Subscribed { get; } = new MarketplaceSubscriptionStatus(SubscribedValue);
+
         /// <summary>
         /// The customer could not be billed for the Marketplace Subscription.
         /// The customer will not be able to access the model.
         /// </summary>
         public static MarketplaceSubscriptionStatus Suspended { get; } = new MarketplaceSubscriptionStatus(SuspendedValue);
+
         /// <summary>
         /// Marketplace Subscriptions reach this state in response to an explicit customer or CSP action.
         /// A Marketplace Subscription can also be canceled implicitly, as a result of nonpayment of dues,
         /// after being in the Suspended state for some time.
         /// </summary>
         public static MarketplaceSubscriptionStatus Unsubscribed { get; } = new MarketplaceSubscriptionStatus(UnsubscribedValue);
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MarketplaceSubscriptionStatus left, MarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MarketplaceSubscriptionStatus left, MarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MarketplaceSubscriptionStatus(string value) => new MarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MarketplaceSubscriptionStatus?(string value) => value == null ? null : new MarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DevCenter.Tests
             ArmOperation<DevCenterScheduleResource> createdResourceResponse = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, scheduleData);
             DevCenterScheduleResource createdResource = createdResourceResponse.Value;
 
-            Assert.NotNull(createdResource);
-            Assert.NotNull(createdResource.Data);
+            Assert.That(createdResource, Is.Not.Null);
+            Assert.That(createdResource.Data, Is.Not.Null);
 
             // List
             List<DevCenterScheduleResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
+            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
 
             // Get
             Response<DevCenterScheduleResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
-            Assert.NotNull(retrievedResource.Value);
-            Assert.NotNull(retrievedResource.Value.Data);
+            Assert.That(retrievedResource.Value, Is.Not.Null);
+            Assert.That(retrievedResource.Value.Data, Is.Not.Null);
 
             // Update
             DevCenterSchedulePatch updateRequest = new DevCenterSchedulePatch()

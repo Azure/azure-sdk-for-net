@@ -7,64 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> BareMetalMachineKeySetList represents a list of bare metal machine key sets. </summary>
     internal partial class BareMetalMachineKeySetList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetList"/>. </summary>
-        internal BareMetalMachineKeySetList()
+        /// <param name="value"> The BareMetalMachineKeySet items on this page. </param>
+        internal BareMetalMachineKeySetList(IEnumerable<NetworkCloudBareMetalMachineKeySetData> value)
         {
-            Value = new ChangeTrackingList<NetworkCloudBareMetalMachineKeySetData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        /// <param name="value"> The list of bare metal machine key sets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineKeySetList(string nextLink, IReadOnlyList<NetworkCloudBareMetalMachineKeySetData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The BareMetalMachineKeySet items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BareMetalMachineKeySetList(IList<NetworkCloudBareMetalMachineKeySetData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextLink = nextLink;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of bare metal machine key sets. </summary>
-        public IReadOnlyList<NetworkCloudBareMetalMachineKeySetData> Value { get; }
+        /// <summary> The BareMetalMachineKeySet items on this page. </summary>
+        public IList<NetworkCloudBareMetalMachineKeySetData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBSqlTriggerOperation : IEquatable<CosmosDBSqlTriggerOperation>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlTriggerOperation"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBSqlTriggerOperation(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllValue = "All";
         private const string CreateValue = "Create";
         private const string UpdateValue = "Update";
         private const string DeleteValue = "Delete";
         private const string ReplaceValue = "Replace";
 
-        /// <summary> All. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlTriggerOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBSqlTriggerOperation(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the All. </summary>
         public static CosmosDBSqlTriggerOperation All { get; } = new CosmosDBSqlTriggerOperation(AllValue);
-        /// <summary> Create. </summary>
+
+        /// <summary> Gets the Create. </summary>
         public static CosmosDBSqlTriggerOperation Create { get; } = new CosmosDBSqlTriggerOperation(CreateValue);
-        /// <summary> Update. </summary>
+
+        /// <summary> Gets the Update. </summary>
         public static CosmosDBSqlTriggerOperation Update { get; } = new CosmosDBSqlTriggerOperation(UpdateValue);
-        /// <summary> Delete. </summary>
+
+        /// <summary> Gets the Delete. </summary>
         public static CosmosDBSqlTriggerOperation Delete { get; } = new CosmosDBSqlTriggerOperation(DeleteValue);
-        /// <summary> Replace. </summary>
+
+        /// <summary> Gets the Replace. </summary>
         public static CosmosDBSqlTriggerOperation Replace { get; } = new CosmosDBSqlTriggerOperation(ReplaceValue);
+
         /// <summary> Determines if two <see cref="CosmosDBSqlTriggerOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBSqlTriggerOperation left, CosmosDBSqlTriggerOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBSqlTriggerOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBSqlTriggerOperation left, CosmosDBSqlTriggerOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBSqlTriggerOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBSqlTriggerOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBSqlTriggerOperation(string value) => new CosmosDBSqlTriggerOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBSqlTriggerOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBSqlTriggerOperation?(string value) => value == null ? null : new CosmosDBSqlTriggerOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBSqlTriggerOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBSqlTriggerOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

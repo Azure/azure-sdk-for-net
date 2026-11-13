@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         /// The identifier for the participant whose bitstream will be written to the channel.
         /// represented by the channel number.
         /// </summary>
-        public CommunicationIdentifier Participant { get;}
+        public CommunicationIdentifier Participant { get; }
 
         /// <summary> Channel number to which bitstream from a particular participant will be written. </summary>
         public int? Channel { get; set; }

@@ -10,7 +10,7 @@ using Azure.Security.KeyVault.Secrets;
 
 namespace Azure.Extensions.AspNetCore.Configuration.Secrets
 {
-    internal class ParallelSecretLoader: IDisposable
+    internal class ParallelSecretLoader : IDisposable
     {
         private const int ParallelismLevel = 32;
         private readonly SecretClient _client;

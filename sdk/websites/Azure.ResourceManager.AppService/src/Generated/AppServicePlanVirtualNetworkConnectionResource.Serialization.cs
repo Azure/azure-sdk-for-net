@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class AppServicePlanVirtualNetworkConnectionResource : IJsonModel<AppServiceVirtualNetworkData>
     {
-        private static AppServiceVirtualNetworkData s_dataDeserializationInstance;
-        private static AppServiceVirtualNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AppServiceVirtualNetworkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AppServiceVirtualNetworkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AppServiceVirtualNetworkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppServiceVirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceVirtualNetworkData>)Data).Write(writer, options);
 
-        AppServiceVirtualNetworkData IJsonModel<AppServiceVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceVirtualNetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppServiceVirtualNetworkData IJsonModel<AppServiceVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AppServiceVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceVirtualNetworkData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AppServiceVirtualNetworkData IPersistableModel<AppServiceVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceVirtualNetworkData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppServiceVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceVirtualNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppServiceVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

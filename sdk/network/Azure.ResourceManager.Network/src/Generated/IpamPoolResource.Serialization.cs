@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class IpamPoolResource : IJsonModel<IpamPoolData>
     {
-        private static IpamPoolData s_dataDeserializationInstance;
-        private static IpamPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IpamPoolData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IpamPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IpamPoolData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IpamPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IpamPoolData>)Data).Write(writer, options);
 
-        IpamPoolData IJsonModel<IpamPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IpamPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpamPoolData IJsonModel<IpamPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IpamPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IpamPoolData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IpamPoolData IPersistableModel<IpamPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IpamPoolData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<IpamPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IpamPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IpamPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

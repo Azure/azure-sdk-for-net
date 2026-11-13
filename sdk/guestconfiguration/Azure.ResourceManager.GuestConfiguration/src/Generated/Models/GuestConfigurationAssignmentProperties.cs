@@ -8,43 +8,27 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> Guest configuration assignment properties. </summary>
     public partial class GuestConfigurationAssignmentProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _targetResourceId;
+        private bool _targetResourceIdIsDefined;
+        private DateTimeOffset? _lastComplianceStatusCheckedOn;
+        private bool _lastComplianceStatusCheckedOnIsDefined;
+        private string _parameterHash;
+        private bool _parameterHashIsDefined;
+        private string _assignmentHash;
+        private bool _assignmentHashIsDefined;
+        private GuestConfigurationProvisioningState? _provisioningState;
+        private bool _provisioningStateIsDefined;
+        private string _resourceType;
+        private bool _resourceTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentProperties"/>. </summary>
         public GuestConfigurationAssignmentProperties()
@@ -65,59 +49,102 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="resourceType"> Type of the resource - VMSS / VM. </param>
         /// <param name="vmssVmList"> The list of VM Compliance data for VMSS. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVmList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVmList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TargetResourceId = targetResourceId;
+            _targetResourceId = targetResourceId;
             GuestConfiguration = guestConfiguration;
             ComplianceStatus = complianceStatus;
-            LastComplianceStatusCheckedOn = lastComplianceStatusCheckedOn;
+            _lastComplianceStatusCheckedOn = lastComplianceStatusCheckedOn;
             LatestReportId = latestReportId;
-            ParameterHash = parameterHash;
+            _parameterHash = parameterHash;
             LatestAssignmentReport = latestAssignmentReport;
             Context = context;
-            AssignmentHash = assignmentHash;
-            ProvisioningState = provisioningState;
-            ResourceType = resourceType;
+            _assignmentHash = assignmentHash;
+            _provisioningState = provisioningState;
+            _resourceType = resourceType;
             VmssVmList = vmssVmList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> VM resource Id. </summary>
         [WirePath("targetResourceId")]
-        public string TargetResourceId { get; }
+        public string TargetResourceId
+        {
+            get
+            {
+                return _targetResourceId;
+            }
+        }
+
         /// <summary> The guest configuration to assign. </summary>
         [WirePath("guestConfiguration")]
         public GuestConfigurationNavigation GuestConfiguration { get; set; }
+
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
         [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
+
         /// <summary> Date and time when last compliance status was checked. </summary>
         [WirePath("lastComplianceStatusChecked")]
-        public DateTimeOffset? LastComplianceStatusCheckedOn { get; }
+        public DateTimeOffset? LastComplianceStatusCheckedOn
+        {
+            get
+            {
+                return _lastComplianceStatusCheckedOn;
+            }
+        }
+
         /// <summary> Id of the latest report for the guest configuration assignment. </summary>
         [WirePath("latestReportId")]
         public ResourceIdentifier LatestReportId { get; }
+
         /// <summary> parameter hash for the guest configuration assignment. </summary>
         [WirePath("parameterHash")]
-        public string ParameterHash { get; }
+        public string ParameterHash
+        {
+            get
+            {
+                return _parameterHash;
+            }
+        }
+
         /// <summary> Last reported guest configuration assignment report. </summary>
         [WirePath("latestAssignmentReport")]
         public GuestConfigurationAssignmentReportInfo LatestAssignmentReport { get; set; }
+
         /// <summary> The source which initiated the guest configuration assignment. Ex: Azure Policy. </summary>
         [WirePath("context")]
         public string Context { get; set; }
+
         /// <summary> Combined hash of the configuration package and parameters. </summary>
         [WirePath("assignmentHash")]
-        public string AssignmentHash { get; }
+        public string AssignmentHash
+        {
+            get
+            {
+                return _assignmentHash;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
         [WirePath("provisioningState")]
-        public GuestConfigurationProvisioningState? ProvisioningState { get; }
+        public GuestConfigurationProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return _provisioningState;
+            }
+        }
+
         /// <summary> Type of the resource - VMSS / VM. </summary>
         [WirePath("resourceType")]
-        public string ResourceType { get; }
-        /// <summary> The list of VM Compliance data for VMSS. </summary>
-        [WirePath("vmssVMList")]
-        public IList<GuestConfigurationVmssVmInfo> VmssVmList { get; set; }
+        public string ResourceType
+        {
+            get
+            {
+                return _resourceType;
+            }
+        }
     }
 }

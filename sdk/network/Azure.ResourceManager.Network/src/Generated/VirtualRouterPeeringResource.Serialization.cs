@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class VirtualRouterPeeringResource : IJsonModel<VirtualRouterPeeringData>
     {
-        private static VirtualRouterPeeringData s_dataDeserializationInstance;
-        private static VirtualRouterPeeringData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualRouterPeeringData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualRouterPeeringData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualRouterPeeringData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualRouterPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualRouterPeeringData>)Data).Write(writer, options);
 
-        VirtualRouterPeeringData IJsonModel<VirtualRouterPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualRouterPeeringData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualRouterPeeringData IJsonModel<VirtualRouterPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualRouterPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualRouterPeeringData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualRouterPeeringData IPersistableModel<VirtualRouterPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualRouterPeeringData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualRouterPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualRouterPeeringData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualRouterPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

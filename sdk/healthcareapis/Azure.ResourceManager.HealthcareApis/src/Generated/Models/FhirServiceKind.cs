@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     public readonly partial struct FhirServiceKind : IEquatable<FhirServiceKind>
     {
         private readonly string _value;
+        /// <summary> fhir-Stu3. </summary>
+        private const string FhirStu3Value = "fhir-Stu3";
+        /// <summary> fhir-R4. </summary>
+        private const string FhirR4Value = "fhir-R4";
 
         /// <summary> Initializes a new instance of <see cref="FhirServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FhirServiceKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FhirStu3Value = "fhir-Stu3";
-        private const string FhirR4Value = "fhir-R4";
+            _value = value;
+        }
 
         /// <summary> fhir-Stu3. </summary>
         public static FhirServiceKind FhirStu3 { get; } = new FhirServiceKind(FhirStu3Value);
+
         /// <summary> fhir-R4. </summary>
         public static FhirServiceKind FhirR4 { get; } = new FhirServiceKind(FhirR4Value);
+
         /// <summary> Determines if two <see cref="FhirServiceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FhirServiceKind left, FhirServiceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FhirServiceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FhirServiceKind left, FhirServiceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FhirServiceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FhirServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FhirServiceKind(string value) => new FhirServiceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FhirServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FhirServiceKind?(string value) => value == null ? null : new FhirServiceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FhirServiceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FhirServiceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

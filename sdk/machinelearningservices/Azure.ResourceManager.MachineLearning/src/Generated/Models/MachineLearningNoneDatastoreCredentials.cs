@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningNoneDatastoreCredentials : MachineLearningDatastoreCredentials
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningNoneDatastoreCredentials"/>. </summary>
-        public MachineLearningNoneDatastoreCredentials()
+        public MachineLearningNoneDatastoreCredentials() : base(CredentialsType.None)
         {
-            CredentialsType = CredentialsType.None;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningNoneDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningNoneDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(credentialsType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningNoneDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(credentialsType, additionalBinaryDataProperties)
         {
-            CredentialsType = credentialsType;
         }
     }
 }

@@ -7,84 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Profile for Linux VMs in the container service cluster. </summary>
     public partial class ContainerServiceLinuxProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
         /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
         /// <param name="ssh"> The SSH configuration for Linux-based VMs running on Azure. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="ssh"/> is null. </exception>
-        public ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh)
-        {
-            Argument.AssertNotNull(adminUsername, nameof(adminUsername));
-            Argument.AssertNotNull(ssh, nameof(ssh));
-
-            AdminUsername = adminUsername;
-            Ssh = ssh;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
-        /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
-        /// <param name="ssh"> The SSH configuration for Linux-based VMs running on Azure. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdminUsername = adminUsername;
             Ssh = ssh;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/> for deserialization. </summary>
-        internal ContainerServiceLinuxProfile()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The administrator username to use for Linux VMs. </summary>
         [WirePath("adminUsername")]
         public string AdminUsername { get; set; }
+
         /// <summary> The SSH configuration for Linux-based VMs running on Azure. </summary>
+        [WirePath("ssh")]
         internal ContainerServiceSshConfiguration Ssh { get; set; }
-        /// <summary> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </summary>
-        [WirePath("ssh.publicKeys")]
-        public IList<ContainerServiceSshPublicKey> SshPublicKeys
-        {
-            get => Ssh is null ? default : Ssh.PublicKeys;
-            set => Ssh = new ContainerServiceSshConfiguration(value);
-        }
     }
 }

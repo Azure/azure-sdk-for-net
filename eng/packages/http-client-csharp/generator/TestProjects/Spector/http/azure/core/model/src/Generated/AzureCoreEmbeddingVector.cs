@@ -12,11 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Core.Model
+namespace Specs.Azure.Core.Model
 {
     public partial class AzureCoreEmbeddingVector
     {
         protected AzureCoreEmbeddingVector() => throw null;
+
+        internal AzureCoreEmbeddingVector(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

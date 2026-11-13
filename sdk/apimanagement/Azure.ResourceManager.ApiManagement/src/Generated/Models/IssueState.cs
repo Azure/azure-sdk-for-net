@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct IssueState : IEquatable<IssueState>
     {
         private readonly string _value;
+        /// <summary> The issue is proposed. </summary>
+        private const string ProposedValue = "proposed";
+        /// <summary> The issue is opened. </summary>
+        private const string OpenValue = "open";
+        /// <summary> The issue was removed. </summary>
+        private const string RemovedValue = "removed";
+        /// <summary> The issue is now resolved. </summary>
+        private const string ResolvedValue = "resolved";
+        /// <summary> The issue was closed. </summary>
+        private const string ClosedValue = "closed";
 
         /// <summary> Initializes a new instance of <see cref="IssueState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IssueState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProposedValue = "proposed";
-        private const string OpenValue = "open";
-        private const string RemovedValue = "removed";
-        private const string ResolvedValue = "resolved";
-        private const string ClosedValue = "closed";
+            _value = value;
+        }
 
         /// <summary> The issue is proposed. </summary>
         public static IssueState Proposed { get; } = new IssueState(ProposedValue);
+
         /// <summary> The issue is opened. </summary>
         public static IssueState Open { get; } = new IssueState(OpenValue);
+
         /// <summary> The issue was removed. </summary>
         public static IssueState Removed { get; } = new IssueState(RemovedValue);
+
         /// <summary> The issue is now resolved. </summary>
         public static IssueState Resolved { get; } = new IssueState(ResolvedValue);
+
         /// <summary> The issue was closed. </summary>
         public static IssueState Closed { get; } = new IssueState(ClosedValue);
+
         /// <summary> Determines if two <see cref="IssueState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IssueState left, IssueState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IssueState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IssueState left, IssueState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IssueState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IssueState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IssueState(string value) => new IssueState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IssueState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IssueState?(string value) => value == null ? null : new IssueState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IssueState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IssueState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

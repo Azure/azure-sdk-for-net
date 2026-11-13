@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> The metadata supported value detail. </summary>
     public partial class MetadataSupportedValueDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
         internal MetadataSupportedValueDetail()
@@ -53,23 +25,40 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> The id of the metadata value. </param>
+        /// <param name="previousId"> The previous value of the id field in case the data has changed. </param>
+        /// <param name="serviceGuid"> The permanent guid for the service. Used when the id is a service name. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="resourceTypes"> The list of associated resource types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetadataSupportedValueDetail(string id, string displayName, IReadOnlyList<ResourceType> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="priority"> Priority of this metadata supported value. Lower number is given higher preference. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataSupportedValueDetail(string id, string previousId, string serviceGuid, string displayName, IReadOnlyList<ResourceType> resourceTypes, int? priority, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
+            PreviousId = previousId;
+            ServiceGuid = serviceGuid;
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Priority = priority;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The id. </summary>
+        /// <summary> The id of the metadata value. </summary>
         public string Id { get; }
+
+        /// <summary> The previous value of the id field in case the data has changed. </summary>
+        public string PreviousId { get; }
+
+        /// <summary> The permanent guid for the service. Used when the id is a service name. </summary>
+        public string ServiceGuid { get; }
+
         /// <summary> The display name. </summary>
         public string DisplayName { get; }
+
         /// <summary> The list of associated resource types. </summary>
         public IReadOnlyList<ResourceType> ResourceTypes { get; }
+
+        /// <summary> Priority of this metadata supported value. Lower number is given higher preference. </summary>
+        public int? Priority { get; }
     }
 }

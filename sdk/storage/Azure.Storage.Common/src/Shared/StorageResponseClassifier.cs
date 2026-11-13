@@ -61,31 +61,36 @@ namespace Azure.Storage
         /// <inheritdoc />
         public override bool IsErrorResponse(HttpMessage message)
         {
-            switch (message.Response.Status)
+            // We're not considering Container/BlobAlreadyExists as errors when the request has conditional headers.
+            // Convenience methods like BlobContainerClient.CreateIfNotExists will cause a lot of these responses and
+            // we don't want them polluting AppInsights with noise.  See RequestActivityPolicy for how this is applied.
+            if (IsConditionalAlreadyExistsConflict(message))
             {
-                case 409:
-                    // We're not considering Container/BlobAlreadyExists as errors when the request has conditional headers.
-                    // Convenience methods like BlobContainerClient.CreateIfNotExists will cause a lot of these responses and
-                    // we don't want them polluting AppInsights with noise.  See RequestActivityPolicy for how this is applied.
-
-                    RequestHeaders requestHeaders = message.Request.Headers;
-
-                    if (message.Response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out var error) &&
-                        (error == Constants.ErrorCodes.ContainerAlreadyExists ||
-                         error == Constants.ErrorCodes.BlobAlreadyExists))
-                    {
-                        var isConditional =
-                            requestHeaders.Contains(HttpHeader.Names.IfMatch) ||
-                            requestHeaders.Contains(HttpHeader.Names.IfNoneMatch) ||
-                            requestHeaders.Contains(HttpHeader.Names.IfModifiedSince) ||
-                            requestHeaders.Contains(HttpHeader.Names.IfUnmodifiedSince);
-                        return !isConditional;
-                    }
-
-                    break;
+                return false;
             }
 
             return base.IsErrorResponse(message);
+        }
+
+        internal static bool IsConditionalAlreadyExistsConflict(HttpMessage message)
+        {
+            if (message.Response.Status != 409)
+            {
+                return false;
+            }
+
+            if (!message.Response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out var error) ||
+                (error != Constants.ErrorCodes.ContainerAlreadyExists &&
+                 error != Constants.ErrorCodes.BlobAlreadyExists))
+            {
+                return false;
+            }
+
+            RequestHeaders requestHeaders = message.Request.Headers;
+            return requestHeaders.Contains(HttpHeader.Names.IfMatch) ||
+                   requestHeaders.Contains(HttpHeader.Names.IfNoneMatch) ||
+                   requestHeaders.Contains(HttpHeader.Names.IfModifiedSince) ||
+                   requestHeaders.Contains(HttpHeader.Names.IfUnmodifiedSince);
         }
     }
 }

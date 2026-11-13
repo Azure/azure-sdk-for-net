@@ -1,0 +1,38 @@
+<Project>
+  <PropertyGroup>
+    <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
+    <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
+    <ImportDirectoryPackagesProps>false</ImportDirectoryPackagesProps>
+  </PropertyGroup>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NuGetAudit>false</NuGetAudit>
+    <IsMgmtLibrary>true</IsMgmtLibrary>
+    <FixtureVariant>Before</FixtureVariant>
+    <ApiCompatBaselineTargetFramework>net8.0</ApiCompatBaselineTargetFramework>
+    <ApiCompatEnableRuleAttributesMustMatch>true</ApiCompatEnableRuleAttributesMustMatch>
+    <ApiCompatEnableRuleCannotChangeParameterName>true</ApiCompatEnableRuleCannotChangeParameterName>
+  </PropertyGroup>
+  <Import Project="Fixture.props" Condition="Exists('Fixture.props')" />
+  <ItemGroup>
+    <Compile Include="Shared.cs" />
+    <Compile Include="EnumOnly.cs" />
+    <Compile Include="Before.cs" Condition="'$(FixtureVariant)' != 'After'" />
+    <Compile Include="After.cs" Condition="'$(FixtureVariant)' == 'After'" />
+    <Compile Include="Enums.Before.cs" Condition="'$(FixtureVariant)' != 'After'" />
+    <Compile Include="Enums.After.cs" Condition="'$(FixtureVariant)' == 'After'" />
+    <Compile Include="Added.cs" Condition="'$(FixtureVariant)' == 'After' or '$(FixtureVariant)' == 'Additions'" />
+    <Compile Include="SourceGenerator.cs" Condition="'$(FixtureVariant)' == 'SourceGenerator'" />
+    <ProjectReference Include="..\dependency\Dependency.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net462" Version="1.0.3" PrivateAssets="All" />
+  </ItemGroup>
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <Target Name="PoisonBuildAndAnalyzers" BeforeTargets="Build;Compile;CoreCompile;RunAnalyzers;ResolveReferences"
+          Condition="Exists('do-not-build')">
+    <Error Text="Fixture build/analyzer targets must never run during SDK change extraction." />
+  </Target>
+</Project>

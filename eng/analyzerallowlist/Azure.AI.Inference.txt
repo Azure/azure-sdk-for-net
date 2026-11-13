@@ -1,0 +1,14 @@
+# Azure.AI.Inference approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# 'FunctionDefinition' and 'ChatCompletionsToolDefinition' name the tool-calling payloads of
+# the chat-completions wire contract. The names are fixed by the protocol these types
+# serialize to and from and match the equivalent surface in Azure.AI.OpenAI, so renaming
+# them to avoid the 'Definition' suffix would make the library inconsistent with both the
+# service and its sibling clients.
+nowarn:AZC0031 T:Azure.AI.Inference.FunctionDefinition
+nowarn:AZC0031 T:Azure.AI.Inference.ChatCompletionsToolDefinition
+
+# The colliding 'FunctionDefinition' is Azure.Deployments.Core.Definitions.Schema.FunctionDefinition,
+# an ARM template engine type that is never referenced alongside an inference client.
+nowarn:AZC0034 T:Azure.AI.Inference.FunctionDefinition

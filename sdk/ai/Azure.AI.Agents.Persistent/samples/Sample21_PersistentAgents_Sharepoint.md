@@ -40,7 +40,7 @@ PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
    instructions: "You are a helpful agent.",
-   tools: [ sharepointTool ]);
+   tools: [sharepointTool]);
 ```
 
 4. Create the thread, add the message containing a query for the agent, and start the run.

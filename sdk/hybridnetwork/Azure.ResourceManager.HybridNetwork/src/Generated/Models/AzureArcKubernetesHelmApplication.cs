@@ -14,27 +14,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class AzureArcKubernetesHelmApplication : AzureArcKubernetesNetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesHelmApplication"/>. </summary>
-        public AzureArcKubernetesHelmApplication()
+        public AzureArcKubernetesHelmApplication() : base(AzureArcKubernetesArtifactType.HelmPackage)
         {
-            ArtifactType = AzureArcKubernetesArtifactType.HelmPackage;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesHelmApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactProfile"> Azure arc kubernetes artifact profile. </param>
         /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
-        internal AzureArcKubernetesHelmApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureArcKubernetesArtifactType artifactType, AzureArcKubernetesArtifactProfile artifactProfile, AzureArcKubernetesDeployMappingRuleProfile deployParametersMappingRuleProfile) : base(name, dependsOnProfile, serializedAdditionalRawData, artifactType)
+        internal AzureArcKubernetesHelmApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureArcKubernetesArtifactType artifactType, AzureArcKubernetesArtifactProfile artifactProfile, AzureArcKubernetesDeployMappingRuleProfile deployParametersMappingRuleProfile) : base(name, dependsOnProfile, additionalBinaryDataProperties, artifactType)
         {
             ArtifactProfile = artifactProfile;
             DeployParametersMappingRuleProfile = deployParametersMappingRuleProfile;
-            ArtifactType = artifactType;
         }
 
         /// <summary> Azure arc kubernetes artifact profile. </summary>
         public AzureArcKubernetesArtifactProfile ArtifactProfile { get; set; }
+
         /// <summary> Deploy mapping rule profile. </summary>
         public AzureArcKubernetesDeployMappingRuleProfile DeployParametersMappingRuleProfile { get; set; }
     }

@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2ACrossClusterMigrationContainerCreationContent : ReplicationProviderSpecificContainerCreationContent
     {
         /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationContainerCreationContent"/>. </summary>
-        public A2ACrossClusterMigrationContainerCreationContent()
+        public A2ACrossClusterMigrationContainerCreationContent() : base("A2ACrossClusterMigration")
         {
-            InstanceType = "A2ACrossClusterMigration";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationContainerCreationContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal A2ACrossClusterMigrationContainerCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal A2ACrossClusterMigrationContainerCreationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType, additionalBinaryDataProperties)
         {
-            InstanceType = instanceType ?? "A2ACrossClusterMigration";
         }
     }
 }

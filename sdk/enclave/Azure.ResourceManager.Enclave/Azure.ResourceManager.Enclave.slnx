@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Enclave.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Enclave.Tests.csproj" />
+</Solution>

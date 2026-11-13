@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Search.Documents.Indexes.Models;
+using Azure.AI.OpenAI;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.AI.OpenAI;
 using OpenAI.Embeddings;
-using System.ClientModel;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
@@ -80,9 +80,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             Environment.SetEnvironmentVariable("OPENAI_KEY", openAIKey);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search_Index
-            string vectorSearchProfileName = "my-vector-profile";
-            string vectorSearchHnswConfig = "my-hsnw-vector-config";
-            string deploymentName = "my-text-embedding-3-small";
+            string vectorSearchProfileName = "vector-profile";
+            string vectorSearchHnswConfig = "hsnw-vector-config";
+            string deploymentName = "text-embedding-3-large";
             int modelDimensions = 256; // Here's the reduced model dimensions
 
             string indexName = "hotel";
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                                 ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                                 ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                                 DeploymentName = deploymentName,
-                                ModelName = AzureOpenAIModelName.TextEmbedding3Small
+                                ModelName = AzureOpenAIModelName.TextEmbedding3Large
                             }
                         }
                     }
@@ -174,7 +174,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             AzureKeyCredential credential = new AzureKeyCredential(key);
 
             AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
-            EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("my-text-embedding-3-small");
+            EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-3-large");
 
             EmbeddingGenerationOptions embeddingsOptions = new EmbeddingGenerationOptions()
             {

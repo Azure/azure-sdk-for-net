@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarSettingsProperties. </summary>
     internal partial class BarSettingsProperties
@@ -31,6 +32,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> enabled. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; }
     }
 }

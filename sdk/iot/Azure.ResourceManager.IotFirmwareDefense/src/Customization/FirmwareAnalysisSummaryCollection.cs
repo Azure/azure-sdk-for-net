@@ -8,7 +8,7 @@ using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
-     /// <summary>
+    /// <summary>
     /// A class representing a collection of <see cref="FirmwareAnalysisSummaryResource"/> and their operations.
     /// Each <see cref="FirmwareAnalysisSummaryResource"/> in the collection will belong to the same instance of <see cref="IotFirmwareResource"/>.
     /// To get a <see cref="FirmwareAnalysisSummaryCollection"/> instance call the GetFirmwareAnalysisSummaries method from an instance of <see cref="IotFirmwareResource"/>.

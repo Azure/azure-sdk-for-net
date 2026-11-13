@@ -5,9 +5,9 @@
 
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes the properties of an existing Shared Private Link Resource managed by the search service. </summary>
     public partial class SharedSearchServicePrivateLinkResourceProperties
     {
         /// <summary> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </summary>

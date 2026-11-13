@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sphere.Models
     public readonly partial struct RegionalDataBoundary : IEquatable<RegionalDataBoundary>
     {
         private readonly string _value;
+        /// <summary> No data boundary. </summary>
+        private const string NoneValue = "None";
+        /// <summary> EU data boundary. </summary>
+        private const string EUValue = "EU";
 
         /// <summary> Initializes a new instance of <see cref="RegionalDataBoundary"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RegionalDataBoundary(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string EUValue = "EU";
+            _value = value;
+        }
 
         /// <summary> No data boundary. </summary>
         public static RegionalDataBoundary None { get; } = new RegionalDataBoundary(NoneValue);
+
         /// <summary> EU data boundary. </summary>
         public static RegionalDataBoundary EU { get; } = new RegionalDataBoundary(EUValue);
+
         /// <summary> Determines if two <see cref="RegionalDataBoundary"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RegionalDataBoundary left, RegionalDataBoundary right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RegionalDataBoundary"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RegionalDataBoundary left, RegionalDataBoundary right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RegionalDataBoundary"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RegionalDataBoundary"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RegionalDataBoundary(string value) => new RegionalDataBoundary(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RegionalDataBoundary"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RegionalDataBoundary?(string value) => value == null ? null : new RegionalDataBoundary(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RegionalDataBoundary other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RegionalDataBoundary other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

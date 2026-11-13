@@ -11,21 +11,35 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     internal static partial class QueryStringCachingBehaviorExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this QueryStringCachingBehavior value) => value switch
         {
-            QueryStringCachingBehavior.NotSet => "NotSet",
             QueryStringCachingBehavior.IgnoreQueryString => "IgnoreQueryString",
             QueryStringCachingBehavior.BypassCaching => "BypassCaching",
             QueryStringCachingBehavior.UseQueryString => "UseQueryString",
+            QueryStringCachingBehavior.NotSet => "NotSet",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryStringCachingBehavior value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static QueryStringCachingBehavior ToQueryStringCachingBehavior(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSet")) return QueryStringCachingBehavior.NotSet;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IgnoreQueryString")) return QueryStringCachingBehavior.IgnoreQueryString;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BypassCaching")) return QueryStringCachingBehavior.BypassCaching;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UseQueryString")) return QueryStringCachingBehavior.UseQueryString;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IgnoreQueryString"))
+            {
+                return QueryStringCachingBehavior.IgnoreQueryString;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BypassCaching"))
+            {
+                return QueryStringCachingBehavior.BypassCaching;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UseQueryString"))
+            {
+                return QueryStringCachingBehavior.UseQueryString;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSet"))
+            {
+                return QueryStringCachingBehavior.NotSet;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryStringCachingBehavior value.");
         }
     }

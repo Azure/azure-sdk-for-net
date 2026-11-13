@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DicomServiceAuthenticationConfiguration))]
     [ModelReaderWriterBuildable(typeof(Models.DicomServiceCollection))]
@@ -68,13 +68,18 @@ namespace Azure.ResourceManager.HealthcareApis
     [ModelReaderWriterBuildable(typeof(HealthcareApisWorkspaceProperties))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(ImplementationGuidesConfiguration))]
-    [ModelReaderWriterBuildable(typeof(IotConnectorCollection))]
-    [ModelReaderWriterBuildable(typeof(IotFhirDestinationCollection))]
+    [ModelReaderWriterBuildable(typeof(LogSpecification))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MetricDimension))]
+    [ModelReaderWriterBuildable(typeof(MetricSpecification))]
+    [ModelReaderWriterBuildable(typeof(OperationDetail))]
+    [ModelReaderWriterBuildable(typeof(OperationDisplay))]
+    [ModelReaderWriterBuildable(typeof(OperationResultsDescription))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionListResultDescription))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourceListResultDescription))]
     [ModelReaderWriterBuildable(typeof(ServiceExportConfigurationInfo))]
     [ModelReaderWriterBuildable(typeof(ServicesDescriptionListResult))]
+    [ModelReaderWriterBuildable(typeof(ServiceSpecification))]
     [ModelReaderWriterBuildable(typeof(SmartIdentityProviderApplication))]
     [ModelReaderWriterBuildable(typeof(SmartIdentityProviderConfiguration))]
     [ModelReaderWriterBuildable(typeof(SubResource))]

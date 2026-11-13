@@ -30,16 +30,14 @@ namespace Azure.Storage.Queues.Models
             _value = value;
         }
 
-        private const string _defaultAudience = "https://storage.azure.com/";
-
         /// <summary>
         /// Default Audience. Use to acquire a token for authorizing requests to any Azure Storage account
         ///
-        /// Resource ID: &quot;https://storage.azure.com/ &quot;.
+        /// Resource ID: &quot;https://storage.azure.com&quot;.
         ///
         /// If no audience is specified, this is the default value.
         /// </summary>
-        public static QueueAudience PublicAudience { get; } = new(_defaultAudience);
+        public static QueueAudience PublicAudience { get; } = new(Constants.DefaultAudience);
 
         /// <summary>
         /// The service endpoint for a given storage account.
@@ -49,7 +47,7 @@ namespace Azure.Storage.Queues.Models
         /// The storage account name used to populate the service endpoint.
         /// </param>
         /// <returns></returns>
-        public static QueueAudience CreateQueueServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.queue.core.windows.net/");
+        public static QueueAudience CreateQueueServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.queue.core.windows.net");
 
         /// <summary> Determines if two <see cref="QueueAudience"/> values are the same. </summary>
         public static bool operator ==(QueueAudience left, QueueAudience right) => left.Equals(right);
@@ -74,13 +72,6 @@ namespace Azure.Storage.Queues.Models
         /// Creates a scope with the respective audience and the default scope.
         /// </summary>
         /// <returns></returns>
-        internal string CreateDefaultScope()
-        {
-            if (_value.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return $"{(_value)}{Constants.DefaultScope}";
-            }
-            return $"{(_value)}/{Constants.DefaultScope}";
-        }
+        internal string CreateDefaultScope() => Constants.CreateDefaultScope(_value);
     }
 }

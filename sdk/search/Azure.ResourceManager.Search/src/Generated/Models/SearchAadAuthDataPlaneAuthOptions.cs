@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Defines the options for how the search service authenticates a data plane request. This cannot be set if 'disableLocalAuth' is set to true. </summary>
     public partial class SearchAadAuthDataPlaneAuthOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchAadAuthDataPlaneAuthOptions"/>. </summary>
         public SearchAadAuthDataPlaneAuthOptions()
@@ -53,57 +26,61 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of <see cref="SearchAadAuthDataPlaneAuthOptions"/>. </summary>
         /// <param name="apiKeyOnly"> Indicates that only the API key can be used for authentication. </param>
         /// <param name="aadOrApiKey"> Indicates that either the API key or an access token from a Microsoft Entra ID tenant can be used for authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchAadAuthDataPlaneAuthOptions(BinaryData apiKeyOnly, DataPlaneAadOrApiKeyAuthOption aadOrApiKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchAadAuthDataPlaneAuthOptions(BinaryData apiKeyOnly, DataPlaneAadOrApiKeyAuthOption aadOrApiKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApiKeyOnly = apiKeyOnly;
             AadOrApiKey = aadOrApiKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// Indicates that only the API key can be used for authentication.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         [WirePath("apiKeyOnly")]
         public BinaryData ApiKeyOnly { get; set; }
+
         /// <summary> Indicates that either the API key or an access token from a Microsoft Entra ID tenant can be used for authentication. </summary>
+        [WirePath("aadOrApiKey")]
         internal DataPlaneAadOrApiKeyAuthOption AadOrApiKey { get; set; }
+
         /// <summary> Describes what response the data plane API of a search service would send for requests that failed authentication. </summary>
         [WirePath("aadOrApiKey.aadAuthFailureMode")]
         public SearchAadAuthFailureMode? AadAuthFailureMode
         {
-            get => AadOrApiKey is null ? default : AadOrApiKey.AadAuthFailureMode;
+            get
+            {
+                return AadOrApiKey is null ? default : AadOrApiKey.AadAuthFailureMode;
+            }
             set
             {
                 if (AadOrApiKey is null)
+                {
                     AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption();
+                }
                 AadOrApiKey.AadAuthFailureMode = value;
             }
         }

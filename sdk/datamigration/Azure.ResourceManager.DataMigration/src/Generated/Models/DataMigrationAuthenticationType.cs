@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationAuthenticationType : IEquatable<DataMigrationAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> WindowsAuthentication. </summary>
+        private const string WindowsAuthenticationValue = "WindowsAuthentication";
+        /// <summary> SqlAuthentication. </summary>
+        private const string SqlAuthenticationValue = "SqlAuthentication";
+        /// <summary> ActiveDirectoryIntegrated. </summary>
+        private const string ActiveDirectoryIntegratedValue = "ActiveDirectoryIntegrated";
+        /// <summary> ActiveDirectoryPassword. </summary>
+        private const string ActiveDirectoryPasswordValue = "ActiveDirectoryPassword";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string WindowsAuthenticationValue = "WindowsAuthentication";
-        private const string SqlAuthenticationValue = "SqlAuthentication";
-        private const string ActiveDirectoryIntegratedValue = "ActiveDirectoryIntegrated";
-        private const string ActiveDirectoryPasswordValue = "ActiveDirectoryPassword";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static DataMigrationAuthenticationType None { get; } = new DataMigrationAuthenticationType(NoneValue);
+
         /// <summary> WindowsAuthentication. </summary>
         public static DataMigrationAuthenticationType WindowsAuthentication { get; } = new DataMigrationAuthenticationType(WindowsAuthenticationValue);
+
         /// <summary> SqlAuthentication. </summary>
         public static DataMigrationAuthenticationType SqlAuthentication { get; } = new DataMigrationAuthenticationType(SqlAuthenticationValue);
+
         /// <summary> ActiveDirectoryIntegrated. </summary>
         public static DataMigrationAuthenticationType ActiveDirectoryIntegrated { get; } = new DataMigrationAuthenticationType(ActiveDirectoryIntegratedValue);
+
         /// <summary> ActiveDirectoryPassword. </summary>
         public static DataMigrationAuthenticationType ActiveDirectoryPassword { get; } = new DataMigrationAuthenticationType(ActiveDirectoryPasswordValue);
+
         /// <summary> Determines if two <see cref="DataMigrationAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationAuthenticationType left, DataMigrationAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationAuthenticationType left, DataMigrationAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationAuthenticationType(string value) => new DataMigrationAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationAuthenticationType?(string value) => value == null ? null : new DataMigrationAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

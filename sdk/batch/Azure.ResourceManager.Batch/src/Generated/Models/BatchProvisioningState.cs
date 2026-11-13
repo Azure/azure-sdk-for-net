@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct BatchProvisioningState : IEquatable<BatchProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The account is in an invalid state. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> The account is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The account is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The account has been created and is ready for use. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The last operation for the account is failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The last operation for the account is cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
 
         /// <summary> Initializes a new instance of <see cref="BatchProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
+            _value = value;
+        }
 
         /// <summary> The account is in an invalid state. </summary>
         public static BatchProvisioningState Invalid { get; } = new BatchProvisioningState(InvalidValue);
+
         /// <summary> The account is being created. </summary>
         public static BatchProvisioningState Creating { get; } = new BatchProvisioningState(CreatingValue);
+
         /// <summary> The account is being deleted. </summary>
         public static BatchProvisioningState Deleting { get; } = new BatchProvisioningState(DeletingValue);
+
         /// <summary> The account has been created and is ready for use. </summary>
         public static BatchProvisioningState Succeeded { get; } = new BatchProvisioningState(SucceededValue);
+
         /// <summary> The last operation for the account is failed. </summary>
         public static BatchProvisioningState Failed { get; } = new BatchProvisioningState(FailedValue);
+
         /// <summary> The last operation for the account is cancelled. </summary>
         public static BatchProvisioningState Cancelled { get; } = new BatchProvisioningState(CancelledValue);
+
         /// <summary> Determines if two <see cref="BatchProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchProvisioningState left, BatchProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchProvisioningState left, BatchProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchProvisioningState(string value) => new BatchProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchProvisioningState?(string value) => value == null ? null : new BatchProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

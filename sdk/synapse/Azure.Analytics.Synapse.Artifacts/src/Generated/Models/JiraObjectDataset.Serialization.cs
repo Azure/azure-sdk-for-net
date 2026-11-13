@@ -76,6 +76,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteObjectValue<object>(TableName);
             }
+            if (Optional.IsDefined(Table))
+            {
+                writer.WritePropertyName("table"u8);
+                writer.WriteObjectValue<object>(Table);
+            }
+            if (Optional.IsDefined(SchemaTypePropertiesSchema))
+            {
+                writer.WritePropertyName("schema"u8);
+                writer.WriteObjectValue<object>(SchemaTypePropertiesSchema);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -100,6 +110,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IList<object> annotations = default;
             DatasetFolder folder = default;
             object tableName = default;
+            object table = default;
+            object schema0 = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -199,6 +211,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             tableName = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("table"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            table = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("schema"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            schema0 = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -215,7 +245,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 annotations ?? new ChangeTrackingList<object>(),
                 folder,
                 additionalProperties,
-                tableName);
+                tableName,
+                table,
+                schema0);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

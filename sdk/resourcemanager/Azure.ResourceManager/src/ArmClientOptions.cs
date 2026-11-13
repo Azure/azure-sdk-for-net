@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.ResourceManager
 {
@@ -25,6 +27,38 @@ namespace Azure.ResourceManager
         /// Gets or sets Azure cloud environment.
         /// </summary>
         public ArmEnvironment? Environment { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
+        /// </summary>
+        public ArmClientOptions()
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="ArmClientOptions"/> from a <see cref="IConfigurationSection"/>.
+        /// </summary>
+        /// <param name="section">The <see cref="IConfigurationSection"/> to read from.</param>
+        [Experimental("SCME0002")]
+        internal ArmClientOptions(IConfigurationSection section)
+            : base(section, null)
+        {
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+
+            IConfigurationSection envSection = section.GetSection(nameof(Environment));
+            if (envSection.Exists())
+            {
+                string endpoint = envSection[nameof(ArmEnvironment.Endpoint)];
+                string audience = envSection[nameof(ArmEnvironment.Audience)];
+                if (!string.IsNullOrEmpty(endpoint) && !string.IsNullOrEmpty(audience))
+                {
+                    Environment = new ArmEnvironment(new Uri(endpoint), audience);
+                }
+            }
+        }
 
         /// <summary>
         /// Sets the api version to use for a given resource type.

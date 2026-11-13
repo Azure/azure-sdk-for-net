@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
         {
             await SetCollectionsAsync();
             // Refer to this page to create a hybrid K8s https://docs.microsoft.com/en-us/rest/api/hybridkubernetes/connected-cluster/create?tabs=HTTP
-            string AnsibleTest = "/subscriptions/"+ DefaultSubscription.Data.SubscriptionId + "/resourceGroups/sdktestrg/providers/Microsoft.Kubernetes/connectedClusters/cle2edfkapconnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator-ansible";
-            string CassandraTest = "/subscriptions/"+ DefaultSubscription.Data.SubscriptionId + "/resourceGroups/sdktestrg/providers/Microsoft.Kubernetes/connectedClusters/cle2edfkapconnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator";
+            string AnsibleTest = "/subscriptions/" + DefaultSubscription.Data.SubscriptionId + "/resourceGroups/sdktestrg/providers/Microsoft.Kubernetes/connectedClusters/cle2edfkapconnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator-ansible";
+            string CassandraTest = "/subscriptions/" + DefaultSubscription.Data.SubscriptionId + "/resourceGroups/sdktestrg/providers/Microsoft.Kubernetes/connectedClusters/cle2edfkapconnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator";
 
             // CREATE CL
             var resourceName = Recording.GenerateAssetName("cltest-");
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
             // PATCH CL
             var patchData = new CustomLocationPatch()
             {
-                Tags = { { "newkey", "newvalue"} }
+                Tags = { { "newkey", "newvalue" } }
             };
             customLocation = await customLocation.UpdateAsync(patchData);
             customLocation = await customLocation.GetAsync();

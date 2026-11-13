@@ -7,43 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Describes the bind options for the container. </summary>
+    /// <summary> The MountBindOptions. </summary>
     public partial class MountBindOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _propagation;
+        private bool _propagationIsDefined;
+        private bool? _shouldCreateHostPath;
+        private bool _shouldCreateHostPathIsDefined;
+        private string _selinux;
+        private bool _selinuxIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MountBindOptions"/>. </summary>
         public MountBindOptions()
@@ -52,25 +30,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MountBindOptions"/>. </summary>
         /// <param name="propagation"> Type of Bind Option. </param>
-        /// <param name="doesCreateHostPath"> Indicate whether to create host path. </param>
+        /// <param name="shouldCreateHostPath"> Indicate whether to create host path. </param>
         /// <param name="selinux"> Mention the selinux options. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MountBindOptions(string propagation, bool? doesCreateHostPath, string selinux, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MountBindOptions(string propagation, bool? shouldCreateHostPath, string selinux, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Propagation = propagation;
-            DoesCreateHostPath = doesCreateHostPath;
-            Selinux = selinux;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _propagation = propagation;
+            _shouldCreateHostPath = shouldCreateHostPath;
+            _selinux = selinux;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of Bind Option. </summary>
         [WirePath("propagation")]
-        public string Propagation { get; set; }
+        public string Propagation
+        {
+            get
+            {
+                return _propagation;
+            }
+            set
+            {
+                _propagation = value;
+                _propagationIsDefined = true;
+            }
+        }
+
         /// <summary> Indicate whether to create host path. </summary>
         [WirePath("createHostPath")]
-        public bool? DoesCreateHostPath { get; set; }
+        public bool? ShouldCreateHostPath
+        {
+            get
+            {
+                return _shouldCreateHostPath;
+            }
+            set
+            {
+                _shouldCreateHostPath = value;
+                _shouldCreateHostPathIsDefined = true;
+            }
+        }
+
         /// <summary> Mention the selinux options. </summary>
         [WirePath("selinux")]
-        public string Selinux { get; set; }
+        public string Selinux
+        {
+            get
+            {
+                return _selinux;
+            }
+            set
+            {
+                _selinux = value;
+                _selinuxIsDefined = true;
+            }
+        }
     }
 }

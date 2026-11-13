@@ -8,6 +8,7 @@ namespace Azure.AI.Inference
     public static partial class AIInferenceModelFactory
     {
         public static Azure.AI.Inference.ChatChoice ChatChoice(int index = 0, Azure.AI.Inference.CompletionsFinishReason? finishReason = default(Azure.AI.Inference.CompletionsFinishReason?), Azure.AI.Inference.ChatResponseMessage message = null) { throw null; }
+        public static Azure.AI.Inference.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), string model = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.ChatChoice> choices = null, Azure.AI.Inference.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsNamedToolChoice ChatCompletionsNamedToolChoice(Azure.AI.Inference.ChatCompletionsNamedToolChoiceType type = default(Azure.AI.Inference.ChatCompletionsNamedToolChoiceType), Azure.AI.Inference.ChatCompletionsNamedToolChoiceFunction function = null) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsToolCall ChatCompletionsToolCall(string id = null, Azure.AI.Inference.ChatCompletionsToolCallType type = default(Azure.AI.Inference.ChatCompletionsToolCallType), Azure.AI.Inference.FunctionCall function = null) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsToolDefinition ChatCompletionsToolDefinition(Azure.AI.Inference.ChatCompletionsToolDefinitionType type = default(Azure.AI.Inference.ChatCompletionsToolDefinitionType), Azure.AI.Inference.FunctionDefinition function = null) { throw null; }
@@ -36,9 +37,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.AudioContentFormat Mp3 { get { throw null; } }
         public static Azure.AI.Inference.AudioContentFormat Wav { get { throw null; } }
         public bool Equals(Azure.AI.Inference.AudioContentFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.AudioContentFormat left, Azure.AI.Inference.AudioContentFormat right) { throw null; }
         public static implicit operator Azure.AI.Inference.AudioContentFormat (string value) { throw null; }
@@ -139,9 +138,7 @@ namespace Azure.AI.Inference
         public ChatCompletionsNamedToolChoiceType(string value) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsNamedToolChoiceType Function { get { throw null; } }
         public bool Equals(Azure.AI.Inference.ChatCompletionsNamedToolChoiceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.ChatCompletionsNamedToolChoiceType left, Azure.AI.Inference.ChatCompletionsNamedToolChoiceType right) { throw null; }
         public static implicit operator Azure.AI.Inference.ChatCompletionsNamedToolChoiceType (string value) { throw null; }
@@ -229,9 +226,7 @@ namespace Azure.AI.Inference
         public ChatCompletionsToolCallType(string value) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsToolCallType Function { get { throw null; } }
         public bool Equals(Azure.AI.Inference.ChatCompletionsToolCallType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.ChatCompletionsToolCallType left, Azure.AI.Inference.ChatCompletionsToolCallType right) { throw null; }
         public static implicit operator Azure.AI.Inference.ChatCompletionsToolCallType (string value) { throw null; }
@@ -258,9 +253,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.ChatCompletionsToolChoicePreset None { get { throw null; } }
         public static Azure.AI.Inference.ChatCompletionsToolChoicePreset Required { get { throw null; } }
         public bool Equals(Azure.AI.Inference.ChatCompletionsToolChoicePreset other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.ChatCompletionsToolChoicePreset left, Azure.AI.Inference.ChatCompletionsToolChoicePreset right) { throw null; }
         public static implicit operator Azure.AI.Inference.ChatCompletionsToolChoicePreset (string value) { throw null; }
@@ -290,9 +283,7 @@ namespace Azure.AI.Inference
         public ChatCompletionsToolDefinitionType(string value) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsToolDefinitionType Function { get { throw null; } }
         public bool Equals(Azure.AI.Inference.ChatCompletionsToolDefinitionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.ChatCompletionsToolDefinitionType left, Azure.AI.Inference.ChatCompletionsToolDefinitionType right) { throw null; }
         public static implicit operator Azure.AI.Inference.ChatCompletionsToolDefinitionType (string value) { throw null; }
@@ -344,9 +335,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.ChatMessageImageDetailLevel High { get { throw null; } }
         public static Azure.AI.Inference.ChatMessageImageDetailLevel Low { get { throw null; } }
         public bool Equals(Azure.AI.Inference.ChatMessageImageDetailLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.ChatMessageImageDetailLevel left, Azure.AI.Inference.ChatMessageImageDetailLevel right) { throw null; }
         public static implicit operator Azure.AI.Inference.ChatMessageImageDetailLevel (string value) { throw null; }
@@ -476,9 +465,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.ChatRole Tool { get { throw null; } }
         public static Azure.AI.Inference.ChatRole User { get { throw null; } }
         public bool Equals(Azure.AI.Inference.ChatRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.ChatRole left, Azure.AI.Inference.ChatRole right) { throw null; }
         public static implicit operator Azure.AI.Inference.ChatRole (string value) { throw null; }
@@ -496,9 +483,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.CompletionsFinishReason TokenLimitReached { get { throw null; } }
         public static Azure.AI.Inference.CompletionsFinishReason ToolCalls { get { throw null; } }
         public bool Equals(Azure.AI.Inference.CompletionsFinishReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.CompletionsFinishReason left, Azure.AI.Inference.CompletionsFinishReason right) { throw null; }
         public static implicit operator Azure.AI.Inference.CompletionsFinishReason (string value) { throw null; }
@@ -531,9 +516,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.EmbeddingEncodingFormat Single { get { throw null; } }
         public static Azure.AI.Inference.EmbeddingEncodingFormat Ubinary { get { throw null; } }
         public bool Equals(Azure.AI.Inference.EmbeddingEncodingFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.EmbeddingEncodingFormat left, Azure.AI.Inference.EmbeddingEncodingFormat right) { throw null; }
         public static implicit operator Azure.AI.Inference.EmbeddingEncodingFormat (string value) { throw null; }
@@ -550,9 +533,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.EmbeddingInputType Query { get { throw null; } }
         public static Azure.AI.Inference.EmbeddingInputType Text { get { throw null; } }
         public bool Equals(Azure.AI.Inference.EmbeddingInputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.EmbeddingInputType left, Azure.AI.Inference.EmbeddingInputType right) { throw null; }
         public static implicit operator Azure.AI.Inference.EmbeddingInputType (string value) { throw null; }
@@ -729,9 +710,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.ModelType ImageGeneration { get { throw null; } }
         public static Azure.AI.Inference.ModelType TextGeneration { get { throw null; } }
         public bool Equals(Azure.AI.Inference.ModelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Inference.ModelType left, Azure.AI.Inference.ModelType right) { throw null; }
         public static implicit operator Azure.AI.Inference.ModelType (string value) { throw null; }

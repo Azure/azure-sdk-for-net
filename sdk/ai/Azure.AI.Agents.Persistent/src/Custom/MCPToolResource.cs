@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent
 {
     public partial class MCPToolResource
@@ -39,5 +41,13 @@ namespace Azure.AI.Agents.Persistent
             toolResources.Mcp.Add(this);
             return toolResources;
         }
+
+        /// <summary>
+        /// Get or set the MCP approval.
+        /// </summary>
+        public MCPApproval RequireApproval { get => MCPApproval.FromBinaryData(RequireApprovalInternal); set => RequireApprovalInternal = value?.ToBinaryData(); }
+
+        [CodeGenMember("RequireApproval")]
+        internal BinaryData RequireApprovalInternal { get; set; }
     }
 }

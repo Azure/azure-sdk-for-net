@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetDiffDiskOption : IEquatable<ComputeFleetDiffDiskOption>
     {
         private readonly string _value;
+        /// <summary> Local Option. </summary>
+        private const string LocalValue = "Local";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetDiffDiskOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetDiffDiskOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LocalValue = "Local";
+            _value = value;
+        }
 
         /// <summary> Local Option. </summary>
         public static ComputeFleetDiffDiskOption Local { get; } = new ComputeFleetDiffDiskOption(LocalValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetDiffDiskOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetDiffDiskOption left, ComputeFleetDiffDiskOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetDiffDiskOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetDiffDiskOption left, ComputeFleetDiffDiskOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetDiffDiskOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiffDiskOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetDiffDiskOption(string value) => new ComputeFleetDiffDiskOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiffDiskOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetDiffDiskOption?(string value) => value == null ? null : new ComputeFleetDiffDiskOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetDiffDiskOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetDiffDiskOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

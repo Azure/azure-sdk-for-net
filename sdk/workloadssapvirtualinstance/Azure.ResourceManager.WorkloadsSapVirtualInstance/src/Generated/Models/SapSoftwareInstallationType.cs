@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     internal readonly partial struct SapSoftwareInstallationType : IEquatable<SapSoftwareInstallationType>
     {
         private readonly string _value;
+        /// <summary> SAP Install managed by service. </summary>
+        private const string ServiceInitiatedValue = "ServiceInitiated";
+        /// <summary> SAP Install without OS Config. </summary>
+        private const string SapInstallWithoutOSConfigValue = "SAPInstallWithoutOSConfig";
+        /// <summary> External software installation type. </summary>
+        private const string ExternalValue = "External";
 
         /// <summary> Initializes a new instance of <see cref="SapSoftwareInstallationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapSoftwareInstallationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ServiceInitiatedValue = "ServiceInitiated";
-        private const string SapInstallWithoutOSConfigValue = "SAPInstallWithoutOSConfig";
-        private const string ExternalValue = "External";
+            _value = value;
+        }
 
         /// <summary> SAP Install managed by service. </summary>
         public static SapSoftwareInstallationType ServiceInitiated { get; } = new SapSoftwareInstallationType(ServiceInitiatedValue);
+
         /// <summary> SAP Install without OS Config. </summary>
         public static SapSoftwareInstallationType SapInstallWithoutOSConfig { get; } = new SapSoftwareInstallationType(SapInstallWithoutOSConfigValue);
+
         /// <summary> External software installation type. </summary>
         public static SapSoftwareInstallationType External { get; } = new SapSoftwareInstallationType(ExternalValue);
+
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapSoftwareInstallationType left, SapSoftwareInstallationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapSoftwareInstallationType left, SapSoftwareInstallationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapSoftwareInstallationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapSoftwareInstallationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapSoftwareInstallationType(string value) => new SapSoftwareInstallationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapSoftwareInstallationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapSoftwareInstallationType?(string value) => value == null ? null : new SapSoftwareInstallationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapSoftwareInstallationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapSoftwareInstallationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

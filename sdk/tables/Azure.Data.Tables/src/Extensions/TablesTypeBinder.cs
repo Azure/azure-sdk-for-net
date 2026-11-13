@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TablesTypeBinder: TypeBinder<IDictionary<string, object>>
+    internal class TablesTypeBinder : TypeBinder<IDictionary<string, object>>
     {
         public static TablesTypeBinder Shared { get; } = new();
         protected override void Set<T>(IDictionary<string, object> destination, T value, BoundMemberInfo memberInfo)
@@ -77,67 +77,67 @@ namespace Azure.Data.Tables
 
             if (typeof(T) == typeof(byte[]))
             {
-                value = (T)(object) Convert.FromBase64String(propertyValue as string);
+                value = (T)(object)Convert.FromBase64String(propertyValue as string);
             }
             else if (typeof(T) == typeof(BinaryData))
             {
-                value = (T)(object) BinaryData.FromBytes(Convert.FromBase64String(propertyValue as string));
+                value = (T)(object)BinaryData.FromBytes(Convert.FromBase64String(propertyValue as string));
             }
             else if (typeof(T) == typeof(long))
             {
-                value = (T)(object) long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                value = (T)(object)long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(long?))
             {
-                value = (T)(object) long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                value = (T)(object)long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(ulong))
             {
-                value = (T)(object) ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                value = (T)(object)ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(ulong?))
             {
-                value = (T)(object) ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                value = (T)(object)ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(double))
             {
-                value = (T) Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
+                value = (T)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(double?))
             {
-                value = (T)(object) (double?)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
+                value = (T)(object)(double?)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(bool))
             {
-                value = (T)(object) (bool)propertyValue;
+                value = (T)(object)(bool)propertyValue;
             }
             else if (typeof(T) == typeof(bool?))
             {
-                value = (T)(object) (bool?)propertyValue;
+                value = (T)(object)(bool?)propertyValue;
             }
             else if (typeof(T) == typeof(Guid))
             {
-                value = (T)(object) Guid.Parse(propertyValue as string);
+                value = (T)(object)Guid.Parse(propertyValue as string);
             }
             else if (typeof(T) == typeof(Guid?))
             {
-                value = (T)(object) Guid.Parse(propertyValue as string);
+                value = (T)(object)Guid.Parse(propertyValue as string);
             }
             else if (typeof(T) == typeof(DateTimeOffset))
             {
-                value = (T)(object) DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                value = (T)(object)DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
             else if (typeof(T) == typeof(DateTimeOffset?))
             {
-                value = (T)(object) DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                value = (T)(object)DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
             else if (typeof(T) == typeof(DateTime))
             {
-                value = (T)(object) DateTime.Parse((string)propertyValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                value = (T)(object)DateTime.Parse((string)propertyValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
             else if (typeof(T) == typeof(DateTime?))
             {
-                value = (T)(object) DateTime.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                value = (T)(object)DateTime.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
             else if (typeof(T) == typeof(TimeSpan))
             {
@@ -161,20 +161,24 @@ namespace Azure.Data.Tables
             }
             else if (typeof(T).IsEnum)
             {
-                if (!Enum.IsDefined(memberInfo.Type, propertyValue as string))
+                if (!TryParseEnum(memberInfo.Type, propertyValue as string, out var parsedEnum))
+                {
                     return false;
+                }
 
-                value = (T)Enum.Parse(memberInfo.Type, propertyValue as string);
+                value = (T)parsedEnum;
             }
             else if (typeof(T).IsGenericType &&
                      typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>) &&
                      typeof(T).GetGenericArguments() is { Length: 1 } arguments &&
                      arguments[0].IsEnum)
             {
-                if (!Enum.IsDefined(arguments[0], propertyValue as string))
+                if (!TryParseEnum(arguments[0], propertyValue as string, out var parsedEnum))
+                {
                     return false;
+                }
 
-                value = (T)Enum.Parse(arguments[0], propertyValue as string);
+                value = (T)parsedEnum;
             }
             else if (typeof(T) == typeof(ETag))
             {
@@ -182,6 +186,46 @@ namespace Azure.Data.Tables
             }
 
             return true;
+        }
+
+        private static bool TryParseEnum(Type enumType, string enumValue, out object parsedEnum)
+        {
+            parsedEnum = default;
+
+            if (string.IsNullOrWhiteSpace(enumValue))
+            {
+                return false;
+            }
+
+            string[] enumParts = enumValue.Split(',');
+            if (enumParts.Length == 0)
+            {
+                return false;
+            }
+
+            if (enumParts.Length > 1 && !enumType.IsDefined(typeof(FlagsAttribute), false))
+            {
+                return false;
+            }
+
+            foreach (string part in enumParts)
+            {
+                string trimmedPart = part.Trim();
+                if (trimmedPart.Length == 0 || !Enum.IsDefined(enumType, trimmedPart))
+                {
+                    return false;
+                }
+            }
+
+            try
+            {
+                parsedEnum = Enum.Parse(enumType, enumValue, false);
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
         }
     }
 }

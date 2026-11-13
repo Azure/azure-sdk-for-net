@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPolicyEventQueryResults_QueryAtManagementGroupScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyEvents_QueryManagementGroupScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyEvents_QueryManagementGroupScope.json
             // this example is just showing the usage of "PolicyEvents_ListQueryResultsForManagementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPolicyEventQueryResults_QueryAtManagementGroupScopeWithNextLink()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyEvents_QueryManagementGroupScopeNextLink.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyEvents_QueryManagementGroupScopeNextLink.json
             // this example is just showing the usage of "PolicyEvents_ListQueryResultsForManagementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPolicyStateQueryResults_QueryLatestAtManagementGroupScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyStates_QueryManagementGroupScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyStates_QueryManagementGroupScope.json
             // this example is just showing the usage of "PolicyStates_ListQueryResultsForManagementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPolicyStateQueryResults_QueryLatestAtManagementGroupScopeWithNextLink()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyStates_QueryManagementGroupScopeNextLink.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyStates_QueryManagementGroupScopeNextLink.json
             // this example is just showing the usage of "PolicyStates_ListQueryResultsForManagementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task SummarizePolicyStates_SummarizeAtManagementGroupScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyStates_SummarizeManagementGroupScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyStates_SummarizeManagementGroupScope.json
             // this example is just showing the usage of "PolicyStates_SummarizeForManagementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckPolicyRestrictions_CheckPolicyRestrictionsAtManagementGroupScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-03-01/examples/PolicyRestrictions_CheckAtManagementGroupScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyRestrictions_CheckAtManagementGroupScope.json
             // this example is just showing the usage of "PolicyRestrictions_CheckAtManagementGroupScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

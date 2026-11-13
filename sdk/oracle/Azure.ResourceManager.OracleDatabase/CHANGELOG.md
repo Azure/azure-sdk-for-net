@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2026-10-16)
+
+### Features Added
+
+- Upgraded API version to 2026-06-01.
+
+### Bugs Fixed
+
+- Fixed hostname deserialization for cloud VM clusters.
+- Fixed base database model factories to return concrete mock instances while preserving discriminator values.
+
+## 1.2.1 (2026-06-23)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.2.0 (2025-09-30)
+
+### Features Added
+
+- Added support for API version 2025-09-01.
 
 ## 1.1.0 (2025-06-26)
 

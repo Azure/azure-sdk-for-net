@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Search.Models
     public readonly partial struct SearchServiceComputeType : IEquatable<SearchServiceComputeType>
     {
         private readonly string _value;
+        /// <summary> Create the service with the Default Compute. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Create the dedicated service with Azure Confidential Compute. </summary>
+        private const string ConfidentialValue = "Confidential";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchServiceComputeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "default";
-        private const string ConfidentialValue = "confidential";
+            _value = value;
+        }
 
         /// <summary> Create the service with the Default Compute. </summary>
         public static SearchServiceComputeType Default { get; } = new SearchServiceComputeType(DefaultValue);
-        /// <summary> Create the service with Azure Confidential Compute. </summary>
+
+        /// <summary> Create the dedicated service with Azure Confidential Compute. </summary>
         public static SearchServiceComputeType Confidential { get; } = new SearchServiceComputeType(ConfidentialValue);
+
         /// <summary> Determines if two <see cref="SearchServiceComputeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchServiceComputeType left, SearchServiceComputeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchServiceComputeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchServiceComputeType left, SearchServiceComputeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceComputeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchServiceComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchServiceComputeType(string value) => new SearchServiceComputeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchServiceComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchServiceComputeType?(string value) => value == null ? null : new SearchServiceComputeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchServiceComputeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchServiceComputeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

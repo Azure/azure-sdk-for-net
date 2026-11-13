@@ -7,45 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Defines whether to send email notifications from AMicrosoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
+    /// <summary> Aggregative state based on the standard's supported controls states. </summary>
     public readonly partial struct SecurityAlertNotificationByRoleState : IEquatable<SecurityAlertNotificationByRoleState>
     {
         private readonly string _value;
+        /// <summary> All supported regulatory compliance controls in the given standard have a passed state. </summary>
+        private const string PassedValue = "Passed";
+        /// <summary> At least one supported regulatory compliance control in the given standard has a state of failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> All supported regulatory compliance controls in the given standard have a state of skipped. </summary>
+        private const string SkippedValue = "Skipped";
+        /// <summary> No supported regulatory compliance data for the given standard. </summary>
+        private const string UnsupportedValue = "Unsupported";
+        /// <summary> Send notification on new alerts to the subscription's admins. </summary>
+        private const string OnValue = "On";
+        /// <summary> Don't send notification on new alerts to the subscription's admins. </summary>
+        private const string OffValue = "Off";
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertNotificationByRoleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAlertNotificationByRoleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string OnValue = "On";
-        private const string OffValue = "Off";
+        /// <summary> All supported regulatory compliance controls in the given standard have a passed state. </summary>
+        public static SecurityAlertNotificationByRoleState Passed { get; } = new SecurityAlertNotificationByRoleState(PassedValue);
+
+        /// <summary> At least one supported regulatory compliance control in the given standard has a state of failed. </summary>
+        public static SecurityAlertNotificationByRoleState Failed { get; } = new SecurityAlertNotificationByRoleState(FailedValue);
+
+        /// <summary> All supported regulatory compliance controls in the given standard have a state of skipped. </summary>
+        public static SecurityAlertNotificationByRoleState Skipped { get; } = new SecurityAlertNotificationByRoleState(SkippedValue);
+
+        /// <summary> No supported regulatory compliance data for the given standard. </summary>
+        public static SecurityAlertNotificationByRoleState Unsupported { get; } = new SecurityAlertNotificationByRoleState(UnsupportedValue);
 
         /// <summary> Send notification on new alerts to the subscription's admins. </summary>
         public static SecurityAlertNotificationByRoleState On { get; } = new SecurityAlertNotificationByRoleState(OnValue);
+
         /// <summary> Don't send notification on new alerts to the subscription's admins. </summary>
         public static SecurityAlertNotificationByRoleState Off { get; } = new SecurityAlertNotificationByRoleState(OffValue);
+
         /// <summary> Determines if two <see cref="SecurityAlertNotificationByRoleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityAlertNotificationByRoleState left, SecurityAlertNotificationByRoleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityAlertNotificationByRoleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityAlertNotificationByRoleState left, SecurityAlertNotificationByRoleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAlertNotificationByRoleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityAlertNotificationByRoleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityAlertNotificationByRoleState(string value) => new SecurityAlertNotificationByRoleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityAlertNotificationByRoleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityAlertNotificationByRoleState?(string value) => value == null ? null : new SecurityAlertNotificationByRoleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityAlertNotificationByRoleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityAlertNotificationByRoleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetASinglePolicyMetadataResource()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyMetadata_GetResource.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyMetadata_GetResource.json
             // this example is just showing the usage of "PolicyMetadata_GetResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetCollectionOfPolicyMetadataResources()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyMetadata_List.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyMetadata_List.json
             // this example is just showing the usage of "PolicyMetadata_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,11 +59,8 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
 
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this PolicyMetadataResource
-            PolicyMetadataCollection collection = tenantResource.GetAllPolicyMetadata();
-
             // invoke the operation and iterate over the result
-            await foreach (SlimPolicyMetadata item in collection.GetAllAsync())
+            await foreach (SlimPolicyMetadata item in tenantResource.GetAllAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -75,7 +72,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetCollectionOfPolicyMetadataResourcesUsingTopQueryParameter()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyMetadata_List_WithTop.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyMetadata_List_WithTop.json
             // this example is just showing the usage of "PolicyMetadata_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,11 +82,8 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
 
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this PolicyMetadataResource
-            PolicyMetadataCollection collection = tenantResource.GetAllPolicyMetadata();
-
             // invoke the operation and iterate over the result
-            await foreach (SlimPolicyMetadata item in collection.GetAllAsync())
+            await foreach (SlimPolicyMetadata item in tenantResource.GetAllAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -101,7 +95,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetASinglePolicyMetadataResource()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyMetadata_GetResource.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyMetadata_GetResource.json
             // this example is just showing the usage of "PolicyMetadata_GetResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +119,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetASinglePolicyMetadataResource()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2019-10-01/examples/PolicyMetadata_GetResource.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/PolicyMetadata_GetResource.json
             // this example is just showing the usage of "PolicyMetadata_GetResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

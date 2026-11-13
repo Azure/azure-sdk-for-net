@@ -44,7 +44,7 @@
         }
     },
     "variables": {
-        "txtUniqueSubDomainName": "[format('{0}', parameters('baseName'))]",
+        "foundryUniqueSubDomainName": "[format('{0}', parameters('baseName'))]",
         "txtEndpointValue": "[format('https://api.cognitive.microsofttranslator.com')]",
         "txtCustomEndpointValue": "[format('https://{0}.cognitiveservices.azure.com', parameters('baseName'))]",
         "txtRegionValue": "[format('{0}', parameters('location'))]",
@@ -131,16 +131,55 @@
         },
         {
             "type": "Microsoft.CognitiveServices/accounts",
-            "apiVersion": "2017-04-18",
-            "name": "[variables('txtUniqueSubDomainName')]",
+            "apiVersion": "2023-05-01",
+            "name": "[variables('foundryUniqueSubDomainName')]",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "S1"
+                "name": "S0"
             },
-            "kind": "TextTranslation",
+            "kind": "AIServices",
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
-                "customSubDomainName": "[variables('txtUniqueSubDomainName')]"
-            }
+                "customSubDomainName": "[variables('foundryUniqueSubDomainName')]",
+                "publicNetworkAccess": "Enabled"
+            },
+            "resources": [
+                {
+                    "type": "deployments",
+                    "apiVersion": "2023-05-01",
+                    "name": "gpt-4o-mini",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.CognitiveServices/accounts', variables('foundryUniqueSubDomainName'))]"
+                    ],
+                    "sku": {
+                        "name": "Standard",
+                        "capacity": 10
+                    },
+                    "properties": {
+                        "model": {
+                            "format": "OpenAI",
+                            "name": "gpt-4o-mini",
+                            "version": "2024-07-18"
+                        },
+                        "versionUpgradeOption": "OnceNewDefaultVersionAvailable"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(concat('foundryUserRoleId', resourceGroup().id))]",
+            "properties": {
+                "roleDefinitionId": "[variables('roleDefinitionId')]",
+                "principalId": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryUniqueSubDomainName')), '2023-05-01', 'full').identity.principalId]",
+                "principalType": "ServicePrincipal"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('foundryUniqueSubDomainName'))]"
+            ]
         }
     ],
     "outputs": {
@@ -158,7 +197,7 @@
         },
         "TEXT_TRANSLATION_API_KEY": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('txtUniqueSubDomainName')), '2017-04-18').key1]"
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryUniqueSubDomainName')), '2023-05-01').key1]"
         },
         "TEXT_TRANSLATION_ENDPOINT": {
             "type": "string",

@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ArizeAIObservabilityEval;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableArizeAIObservabilityEvalArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableArizeAIObservabilityEvalArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableArizeAIObservabilityEvalArmClient for mocking. </summary>
         protected MockableArizeAIObservabilityEvalArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableArizeAIObservabilityEvalArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableArizeAIObservabilityEvalArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableArizeAIObservabilityEvalArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableArizeAIObservabilityEvalArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ArizeAIObservabilityEvalOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArizeAIObservabilityEvalOrganizationResource.CreateResourceIdentifier" /> to create an <see cref="ArizeAIObservabilityEvalOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ArizeAIObservabilityEvalOrganizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ArizeAIObservabilityEvalOrganizationResource"/> object. </returns>
         public virtual ArizeAIObservabilityEvalOrganizationResource GetArizeAIObservabilityEvalOrganizationResource(ResourceIdentifier id)

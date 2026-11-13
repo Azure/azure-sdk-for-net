@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override ModelReaderWriterContext Context => new LocalContext();
 
+        protected override bool HasReflectionBuilderSupport => false;
+
         protected override string CollectionTypeName => "List<Object>";
 
         protected override List<object> GetModelInstance()

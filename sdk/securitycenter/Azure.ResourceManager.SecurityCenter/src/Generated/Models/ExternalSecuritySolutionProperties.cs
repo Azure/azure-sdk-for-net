@@ -8,80 +8,62 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The solution properties (correspond to the solution kind). </summary>
     public partial class ExternalSecuritySolutionProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionProperties"/>. </summary>
         public ExternalSecuritySolutionProperties()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionProperties"/>. </summary>
         /// <param name="deviceVendor"></param>
         /// <param name="deviceType"></param>
         /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ExternalSecuritySolutionProperties(string deviceVendor, string deviceType, WritableSubResource workspace, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal ExternalSecuritySolutionProperties(string deviceVendor, string deviceType, ConnectedWorkspace workspace, IDictionary<string, BinaryData> additionalProperties)
         {
             DeviceVendor = deviceVendor;
             DeviceType = deviceType;
             Workspace = workspace;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
-        /// <summary> Gets or sets the device vendor. </summary>
+        /// <summary> Gets or sets the DeviceVendor. </summary>
         public string DeviceVendor { get; set; }
-        /// <summary> Gets or sets the device type. </summary>
+
+        /// <summary> Gets or sets the DeviceType. </summary>
         public string DeviceType { get; set; }
+
         /// <summary> Represents an OMS workspace to which the solution is connected. </summary>
-        internal WritableSubResource Workspace { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        internal ConnectedWorkspace Workspace { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+
+        /// <summary> Azure resource ID of the connected OMS workspace. </summary>
         public ResourceIdentifier WorkspaceId
         {
-            get => Workspace is null ? default : Workspace.Id;
+            get
+            {
+                return Workspace is null ? default : Workspace.Id;
+            }
             set
             {
                 if (Workspace is null)
-                    Workspace = new WritableSubResource();
+                {
+                    Workspace = new ConnectedWorkspace();
+                }
                 Workspace.Id = value;
             }
         }
-
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -14,43 +14,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class AwsEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="AwsEnvironment"/>. </summary>
-        public AwsEnvironment()
-        {
-            Regions = new ChangeTrackingList<string>();
-            EnvironmentType = EnvironmentType.AwsAccount;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AwsEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="organizationalData">
-        /// The AWS account's organizational data
-        /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
-        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="organizationalData"> The AWS account's organizational data. </param>
         /// <param name="regions"> list of regions to scan. </param>
         /// <param name="accountName"> The AWS account name. </param>
         /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
-        internal AwsEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData, AwsOrganizationalInfo organizationalData, IList<string> regions, string accountName, long? scanInterval) : base(environmentType, serializedAdditionalRawData)
+        internal AwsEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AwsOrganizationalInfo organizationalData, IList<string> regions, string accountName, long? scanInterval) : base(environmentType, additionalBinaryDataProperties)
         {
             OrganizationalData = organizationalData;
             Regions = regions;
             AccountName = accountName;
             ScanInterval = scanInterval;
-            EnvironmentType = environmentType;
         }
-
-        /// <summary>
-        /// The AWS account's organizational data
-        /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
-        /// </summary>
-        public AwsOrganizationalInfo OrganizationalData { get; set; }
-        /// <summary> list of regions to scan. </summary>
-        public IList<string> Regions { get; }
-        /// <summary> The AWS account name. </summary>
-        public string AccountName { get; }
-        /// <summary> Scan interval in hours (value should be between 1-hour to 24-hours). </summary>
-        public long? ScanInterval { get; set; }
     }
 }

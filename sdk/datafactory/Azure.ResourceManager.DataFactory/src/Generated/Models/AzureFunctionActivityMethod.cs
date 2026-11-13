@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct AzureFunctionActivityMethod : IEquatable<AzureFunctionActivityMethod>
     {
         private readonly string _value;
+        /// <summary> GET. </summary>
+        private const string GetValue = "GET";
+        /// <summary> POST. </summary>
+        private const string PostValue = "POST";
+        /// <summary> PUT. </summary>
+        private const string PutValue = "PUT";
+        /// <summary> DELETE. </summary>
+        private const string DeleteValue = "DELETE";
+        /// <summary> OPTIONS. </summary>
+        private const string OptionsValue = "OPTIONS";
+        /// <summary> HEAD. </summary>
+        private const string HeadValue = "HEAD";
+        /// <summary> TRACE. </summary>
+        private const string TraceValue = "TRACE";
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionActivityMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureFunctionActivityMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GetValue = "GET";
-        private const string PostValue = "POST";
-        private const string PutValue = "PUT";
-        private const string DeleteValue = "DELETE";
-        private const string OptionsValue = "OPTIONS";
-        private const string HeadValue = "HEAD";
-        private const string TraceValue = "TRACE";
+            _value = value;
+        }
 
         /// <summary> GET. </summary>
         public static AzureFunctionActivityMethod Get { get; } = new AzureFunctionActivityMethod(GetValue);
+
         /// <summary> POST. </summary>
         public static AzureFunctionActivityMethod Post { get; } = new AzureFunctionActivityMethod(PostValue);
+
         /// <summary> PUT. </summary>
         public static AzureFunctionActivityMethod Put { get; } = new AzureFunctionActivityMethod(PutValue);
+
         /// <summary> DELETE. </summary>
         public static AzureFunctionActivityMethod Delete { get; } = new AzureFunctionActivityMethod(DeleteValue);
+
         /// <summary> OPTIONS. </summary>
         public static AzureFunctionActivityMethod Options { get; } = new AzureFunctionActivityMethod(OptionsValue);
+
         /// <summary> HEAD. </summary>
         public static AzureFunctionActivityMethod Head { get; } = new AzureFunctionActivityMethod(HeadValue);
+
         /// <summary> TRACE. </summary>
         public static AzureFunctionActivityMethod Trace { get; } = new AzureFunctionActivityMethod(TraceValue);
+
         /// <summary> Determines if two <see cref="AzureFunctionActivityMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureFunctionActivityMethod left, AzureFunctionActivityMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureFunctionActivityMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureFunctionActivityMethod left, AzureFunctionActivityMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFunctionActivityMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureFunctionActivityMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureFunctionActivityMethod(string value) => new AzureFunctionActivityMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureFunctionActivityMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureFunctionActivityMethod?(string value) => value == null ? null : new AzureFunctionActivityMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureFunctionActivityMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureFunctionActivityMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

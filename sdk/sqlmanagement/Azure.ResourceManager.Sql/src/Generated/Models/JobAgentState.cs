@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct JobAgentState : IEquatable<JobAgentState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Ready. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="JobAgentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobAgentState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string ReadyValue = "Ready";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static JobAgentState Creating { get; } = new JobAgentState(CreatingValue);
+
         /// <summary> Ready. </summary>
         public static JobAgentState Ready { get; } = new JobAgentState(ReadyValue);
+
         /// <summary> Updating. </summary>
         public static JobAgentState Updating { get; } = new JobAgentState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static JobAgentState Deleting { get; } = new JobAgentState(DeletingValue);
+
         /// <summary> Disabled. </summary>
         public static JobAgentState Disabled { get; } = new JobAgentState(DisabledValue);
+
         /// <summary> Determines if two <see cref="JobAgentState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobAgentState left, JobAgentState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobAgentState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobAgentState left, JobAgentState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobAgentState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobAgentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobAgentState(string value) => new JobAgentState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobAgentState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobAgentState?(string value) => value == null ? null : new JobAgentState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobAgentState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobAgentState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

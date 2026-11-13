@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application gateway web application firewall configuration. </summary>
     public partial class ApplicationGatewayWebApplicationFirewallConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWebApplicationFirewallConfiguration"/>. </summary>
         /// <param name="enabled"> Whether the web application firewall is enabled or not. </param>
@@ -75,8 +47,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="maxRequestBodySizeInKb"> Maximum request body size in Kb for WAF. </param>
         /// <param name="fileUploadLimitInMb"> Maximum file upload size in Mb for WAF. </param>
         /// <param name="exclusions"> The exclusion list. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled, ApplicationGatewayFirewallMode firewallMode, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups, bool? requestBodyCheck, int? maxRequestBodySize, int? maxRequestBodySizeInKb, int? fileUploadLimitInMb, IList<ApplicationGatewayFirewallExclusion> exclusions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled, ApplicationGatewayFirewallMode firewallMode, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups, bool? requestBodyCheck, int? maxRequestBodySize, int? maxRequestBodySizeInKb, int? fileUploadLimitInMb, IList<ApplicationGatewayFirewallExclusion> exclusions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             FirewallMode = firewallMode;
@@ -88,41 +60,45 @@ namespace Azure.ResourceManager.Network.Models
             MaxRequestBodySizeInKb = maxRequestBodySizeInKb;
             FileUploadLimitInMb = fileUploadLimitInMb;
             Exclusions = exclusions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWebApplicationFirewallConfiguration"/> for deserialization. </summary>
-        internal ApplicationGatewayWebApplicationFirewallConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the web application firewall is enabled or not. </summary>
         [WirePath("enabled")]
         public bool Enabled { get; set; }
+
         /// <summary> Web application firewall mode. </summary>
         [WirePath("firewallMode")]
         public ApplicationGatewayFirewallMode FirewallMode { get; set; }
+
         /// <summary> The type of the web application firewall rule set. Possible values are: 'OWASP'. </summary>
         [WirePath("ruleSetType")]
         public string RuleSetType { get; set; }
+
         /// <summary> The version of the rule set type. </summary>
         [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; set; }
+
         /// <summary> The disabled rule groups. </summary>
         [WirePath("disabledRuleGroups")]
         public IList<ApplicationGatewayFirewallDisabledRuleGroup> DisabledRuleGroups { get; }
+
         /// <summary> Whether allow WAF to check request Body. </summary>
         [WirePath("requestBodyCheck")]
         public bool? RequestBodyCheck { get; set; }
+
         /// <summary> Maximum request body size for WAF. </summary>
         [WirePath("maxRequestBodySize")]
         public int? MaxRequestBodySize { get; set; }
+
         /// <summary> Maximum request body size in Kb for WAF. </summary>
         [WirePath("maxRequestBodySizeInKb")]
         public int? MaxRequestBodySizeInKb { get; set; }
+
         /// <summary> Maximum file upload size in Mb for WAF. </summary>
         [WirePath("fileUploadLimitInMb")]
         public int? FileUploadLimitInMb { get; set; }
+
         /// <summary> The exclusion list. </summary>
         [WirePath("exclusions")]
         public IList<ApplicationGatewayFirewallExclusion> Exclusions { get; }

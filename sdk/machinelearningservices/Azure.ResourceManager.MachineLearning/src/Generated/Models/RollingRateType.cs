@@ -7,54 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The RollingRateType. </summary>
+    /// <summary></summary>
     public readonly partial struct RollingRateType : IEquatable<RollingRateType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RollingRateType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RollingRateType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string YearValue = "Year";
         private const string MonthValue = "Month";
         private const string DayValue = "Day";
         private const string HourValue = "Hour";
         private const string MinuteValue = "Minute";
 
-        /// <summary> Year. </summary>
+        /// <summary> Initializes a new instance of <see cref="RollingRateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RollingRateType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Year. </summary>
         public static RollingRateType Year { get; } = new RollingRateType(YearValue);
-        /// <summary> Month. </summary>
+
+        /// <summary> Gets the Month. </summary>
         public static RollingRateType Month { get; } = new RollingRateType(MonthValue);
-        /// <summary> Day. </summary>
+
+        /// <summary> Gets the Day. </summary>
         public static RollingRateType Day { get; } = new RollingRateType(DayValue);
-        /// <summary> Hour. </summary>
+
+        /// <summary> Gets the Hour. </summary>
         public static RollingRateType Hour { get; } = new RollingRateType(HourValue);
-        /// <summary> Minute. </summary>
+
+        /// <summary> Gets the Minute. </summary>
         public static RollingRateType Minute { get; } = new RollingRateType(MinuteValue);
+
         /// <summary> Determines if two <see cref="RollingRateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RollingRateType left, RollingRateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RollingRateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RollingRateType left, RollingRateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RollingRateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RollingRateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RollingRateType(string value) => new RollingRateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RollingRateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RollingRateType?(string value) => value == null ? null : new RollingRateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RollingRateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RollingRateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

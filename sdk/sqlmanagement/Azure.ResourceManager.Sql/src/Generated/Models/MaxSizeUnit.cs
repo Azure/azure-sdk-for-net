@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct MaxSizeUnit : IEquatable<MaxSizeUnit>
     {
         private readonly string _value;
+        /// <summary> Megabytes. </summary>
+        private const string MegabytesValue = "Megabytes";
+        /// <summary> Gigabytes. </summary>
+        private const string GigabytesValue = "Gigabytes";
+        /// <summary> Terabytes. </summary>
+        private const string TerabytesValue = "Terabytes";
+        /// <summary> Petabytes. </summary>
+        private const string PetabytesValue = "Petabytes";
 
         /// <summary> Initializes a new instance of <see cref="MaxSizeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MaxSizeUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MegabytesValue = "Megabytes";
-        private const string GigabytesValue = "Gigabytes";
-        private const string TerabytesValue = "Terabytes";
-        private const string PetabytesValue = "Petabytes";
+            _value = value;
+        }
 
         /// <summary> Megabytes. </summary>
         public static MaxSizeUnit Megabytes { get; } = new MaxSizeUnit(MegabytesValue);
+
         /// <summary> Gigabytes. </summary>
         public static MaxSizeUnit Gigabytes { get; } = new MaxSizeUnit(GigabytesValue);
+
         /// <summary> Terabytes. </summary>
         public static MaxSizeUnit Terabytes { get; } = new MaxSizeUnit(TerabytesValue);
+
         /// <summary> Petabytes. </summary>
         public static MaxSizeUnit Petabytes { get; } = new MaxSizeUnit(PetabytesValue);
+
         /// <summary> Determines if two <see cref="MaxSizeUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MaxSizeUnit left, MaxSizeUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MaxSizeUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MaxSizeUnit left, MaxSizeUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MaxSizeUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MaxSizeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MaxSizeUnit(string value) => new MaxSizeUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MaxSizeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MaxSizeUnit?(string value) => value == null ? null : new MaxSizeUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MaxSizeUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MaxSizeUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

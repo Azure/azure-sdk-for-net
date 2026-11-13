@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The properties of a resource cost item. </summary>
     public partial class DevTestLabResourceCost
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabResourceCost"/>. </summary>
         internal DevTestLabResourceCost()
@@ -60,8 +31,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="resourceStatus"> The status of the resource (ex. Active). </param>
         /// <param name="resourceId"> The ID of the resource. </param>
         /// <param name="externalResourceId"> The ID of the external resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabResourceCost(string resourceName, string resourceUniqueId, double? resourceCost, string resourceType, string resourceOwner, string resourcePricingTier, string resourceStatus, string resourceId, string externalResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabResourceCost(string resourceName, string resourceUniqueId, double? resourceCost, string resourceType, string resourceOwner, string resourcePricingTier, string resourceStatus, string resourceId, string externalResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceName = resourceName;
             ResourceUniqueId = resourceUniqueId;
@@ -72,25 +43,33 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ResourceStatus = resourceStatus;
             ResourceId = resourceId;
             ExternalResourceId = externalResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the resource. </summary>
         public string ResourceName { get; }
+
         /// <summary> The unique identifier of the resource. </summary>
         public string ResourceUniqueId { get; }
+
         /// <summary> The cost component of the resource cost item. </summary>
         public double? ResourceCost { get; }
+
         /// <summary> The logical resource type (ex. virtualmachine, storageaccount). </summary>
         public string ResourceType { get; }
+
         /// <summary> The owner of the resource (ex. janedoe@microsoft.com). </summary>
         public string ResourceOwner { get; }
+
         /// <summary> The category of the resource (ex. Premium_LRS, Standard_DS1). </summary>
         public string ResourcePricingTier { get; }
+
         /// <summary> The status of the resource (ex. Active). </summary>
         public string ResourceStatus { get; }
+
         /// <summary> The ID of the resource. </summary>
         public string ResourceId { get; }
+
         /// <summary> The ID of the external resource. </summary>
         public string ExternalResourceId { get; }
     }

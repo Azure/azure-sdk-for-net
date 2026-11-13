@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsTestSupportProject>true</IsTestSupportProject>
@@ -9,11 +9,12 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Azure.Core" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.Generator.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.Input" />
-	</ItemGroup>
+  </ItemGroup>
 
 </Project>

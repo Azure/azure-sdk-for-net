@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableConnectedCacheArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableConnectedCacheArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableConnectedCacheArmClient for mocking. </summary>
         protected MockableConnectedCacheArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConnectedCacheArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableConnectedCacheArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableConnectedCacheArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableConnectedCacheArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="IspCustomerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IspCustomerResource.CreateResourceIdentifier" /> to create an <see cref="IspCustomerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IspCustomerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IspCustomerResource"/> object. </returns>
         public virtual IspCustomerResource GetIspCustomerResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
             return new IspCustomerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="IspCacheNodeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IspCacheNodeResource.CreateResourceIdentifier" /> to create an <see cref="IspCacheNodeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="IspCacheNodeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IspCacheNodeResource"/> object. </returns>
         public virtual IspCacheNodeResource GetIspCacheNodeResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
             return new IspCacheNodeResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EnterpriseMccCustomerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EnterpriseMccCustomerResource.CreateResourceIdentifier" /> to create an <see cref="EnterpriseMccCustomerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EnterpriseMccCustomerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EnterpriseMccCustomerResource"/> object. </returns>
         public virtual EnterpriseMccCustomerResource GetEnterpriseMccCustomerResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
             return new EnterpriseMccCustomerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EnterpriseMccCacheNodeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EnterpriseMccCacheNodeResource.CreateResourceIdentifier" /> to create an <see cref="EnterpriseMccCacheNodeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EnterpriseMccCacheNodeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EnterpriseMccCacheNodeResource"/> object. </returns>
         public virtual EnterpriseMccCacheNodeResource GetEnterpriseMccCacheNodeResource(ResourceIdentifier id)

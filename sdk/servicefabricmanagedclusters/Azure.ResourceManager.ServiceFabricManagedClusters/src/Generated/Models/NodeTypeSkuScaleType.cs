@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct NodeTypeSkuScaleType : IEquatable<NodeTypeSkuScaleType>
     {
         private readonly string _value;
+        /// <summary> Node count is not adjustable in any way (e.g. it is fixed). </summary>
+        private const string NoneValue = "None";
+        /// <summary> The user must manually scale out/in. </summary>
+        private const string ManualValue = "Manual";
+        /// <summary> Automatic scale is allowed. </summary>
+        private const string AutomaticValue = "Automatic";
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeSkuScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NodeTypeSkuScaleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ManualValue = "Manual";
-        private const string AutomaticValue = "Automatic";
+            _value = value;
+        }
 
         /// <summary> Node count is not adjustable in any way (e.g. it is fixed). </summary>
         public static NodeTypeSkuScaleType None { get; } = new NodeTypeSkuScaleType(NoneValue);
+
         /// <summary> The user must manually scale out/in. </summary>
         public static NodeTypeSkuScaleType Manual { get; } = new NodeTypeSkuScaleType(ManualValue);
+
         /// <summary> Automatic scale is allowed. </summary>
         public static NodeTypeSkuScaleType Automatic { get; } = new NodeTypeSkuScaleType(AutomaticValue);
+
         /// <summary> Determines if two <see cref="NodeTypeSkuScaleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NodeTypeSkuScaleType left, NodeTypeSkuScaleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NodeTypeSkuScaleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NodeTypeSkuScaleType left, NodeTypeSkuScaleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeTypeSkuScaleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NodeTypeSkuScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NodeTypeSkuScaleType(string value) => new NodeTypeSkuScaleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NodeTypeSkuScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NodeTypeSkuScaleType?(string value) => value == null ? null : new NodeTypeSkuScaleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NodeTypeSkuScaleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NodeTypeSkuScaleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

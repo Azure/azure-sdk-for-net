@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VMwareCbtPolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="VMwareCbtPolicyDetails"/>. </summary>
-        internal VMwareCbtPolicyDetails()
+        internal VMwareCbtPolicyDetails() : base("VMwareCbt")
         {
-            InstanceType = "VMwareCbt";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtPolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
-        internal VMwareCbtPolicyDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? recoveryPointHistoryInMinutes, int? appConsistentFrequencyInMinutes, int? crashConsistentFrequencyInMinutes) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareCbtPolicyDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? recoveryPointHistoryInMinutes, int? appConsistentFrequencyInMinutes, int? crashConsistentFrequencyInMinutes) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
-            InstanceType = instanceType ?? "VMwareCbt";
         }
 
         /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
         public int? RecoveryPointHistoryInMinutes { get; }
+
         /// <summary> The app consistent snapshot frequency in minutes. </summary>
         public int? AppConsistentFrequencyInMinutes { get; }
+
         /// <summary> The crash consistent snapshot frequency in minutes. </summary>
         public int? CrashConsistentFrequencyInMinutes { get; }
     }

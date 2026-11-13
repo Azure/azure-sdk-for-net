@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct ManagedNetworkStatus : IEquatable<ManagedNetworkStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ManagedNetworkStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InactiveValue = "Inactive";
         private const string ActiveValue = "Active";
 
-        /// <summary> Inactive. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ManagedNetworkStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Inactive. </summary>
         public static ManagedNetworkStatus Inactive { get; } = new ManagedNetworkStatus(InactiveValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static ManagedNetworkStatus Active { get; } = new ManagedNetworkStatus(ActiveValue);
+
         /// <summary> Determines if two <see cref="ManagedNetworkStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedNetworkStatus left, ManagedNetworkStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedNetworkStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedNetworkStatus left, ManagedNetworkStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedNetworkStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedNetworkStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedNetworkStatus(string value) => new ManagedNetworkStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedNetworkStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedNetworkStatus?(string value) => value == null ? null : new ManagedNetworkStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedNetworkStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedNetworkStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

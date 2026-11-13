@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchEndpointAccessDefaultActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchEndpointAccessDefaultAction value) => value switch
         {
             BatchEndpointAccessDefaultAction.Allow => "Allow",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchEndpointAccessDefaultAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchEndpointAccessDefaultAction ToBatchEndpointAccessDefaultAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow")) return BatchEndpointAccessDefaultAction.Allow;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deny")) return BatchEndpointAccessDefaultAction.Deny;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow"))
+            {
+                return BatchEndpointAccessDefaultAction.Allow;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deny"))
+            {
+                return BatchEndpointAccessDefaultAction.Deny;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchEndpointAccessDefaultAction value.");
         }
     }

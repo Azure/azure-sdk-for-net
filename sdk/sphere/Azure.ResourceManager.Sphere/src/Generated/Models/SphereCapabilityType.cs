@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sphere.Models
     public readonly partial struct SphereCapabilityType : IEquatable<SphereCapabilityType>
     {
         private readonly string _value;
+        /// <summary> Application development capability. </summary>
+        private const string ApplicationDevelopmentValue = "ApplicationDevelopment";
+        /// <summary> Field servicing capability. </summary>
+        private const string FieldServicingValue = "FieldServicing";
 
         /// <summary> Initializes a new instance of <see cref="SphereCapabilityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SphereCapabilityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ApplicationDevelopmentValue = "ApplicationDevelopment";
-        private const string FieldServicingValue = "FieldServicing";
+            _value = value;
+        }
 
         /// <summary> Application development capability. </summary>
         public static SphereCapabilityType ApplicationDevelopment { get; } = new SphereCapabilityType(ApplicationDevelopmentValue);
+
         /// <summary> Field servicing capability. </summary>
         public static SphereCapabilityType FieldServicing { get; } = new SphereCapabilityType(FieldServicingValue);
+
         /// <summary> Determines if two <see cref="SphereCapabilityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SphereCapabilityType left, SphereCapabilityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SphereCapabilityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SphereCapabilityType left, SphereCapabilityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereCapabilityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SphereCapabilityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SphereCapabilityType(string value) => new SphereCapabilityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SphereCapabilityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SphereCapabilityType?(string value) => value == null ? null : new SphereCapabilityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SphereCapabilityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SphereCapabilityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CassandraClusterCommandStatus : IEquatable<CassandraClusterCommandStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CassandraClusterCommandStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CassandraClusterCommandStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DoneValue = "Done";
         private const string RunningValue = "Running";
         private const string EnqueueValue = "Enqueue";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string FinishedValue = "Finished";
         private const string FailedValue = "Failed";
 
-        /// <summary> Done. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterCommandStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CassandraClusterCommandStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Done. </summary>
         public static CassandraClusterCommandStatus Done { get; } = new CassandraClusterCommandStatus(DoneValue);
-        /// <summary> Running. </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static CassandraClusterCommandStatus Running { get; } = new CassandraClusterCommandStatus(RunningValue);
-        /// <summary> Enqueue. </summary>
+
+        /// <summary> Gets the Enqueue. </summary>
         public static CassandraClusterCommandStatus Enqueue { get; } = new CassandraClusterCommandStatus(EnqueueValue);
-        /// <summary> Processing. </summary>
+
+        /// <summary> Gets the Processing. </summary>
         public static CassandraClusterCommandStatus Processing { get; } = new CassandraClusterCommandStatus(ProcessingValue);
-        /// <summary> Finished. </summary>
+
+        /// <summary> Gets the Finished. </summary>
         public static CassandraClusterCommandStatus Finished { get; } = new CassandraClusterCommandStatus(FinishedValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static CassandraClusterCommandStatus Failed { get; } = new CassandraClusterCommandStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="CassandraClusterCommandStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CassandraClusterCommandStatus left, CassandraClusterCommandStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CassandraClusterCommandStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CassandraClusterCommandStatus left, CassandraClusterCommandStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraClusterCommandStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CassandraClusterCommandStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CassandraClusterCommandStatus(string value) => new CassandraClusterCommandStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CassandraClusterCommandStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CassandraClusterCommandStatus?(string value) => value == null ? null : new CassandraClusterCommandStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CassandraClusterCommandStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CassandraClusterCommandStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

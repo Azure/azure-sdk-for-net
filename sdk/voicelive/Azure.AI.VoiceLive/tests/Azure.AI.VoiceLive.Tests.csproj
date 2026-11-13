@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!--We don't care about XML doc comments on test types and members-->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\src\Azure.AI.VoiceLive.csproj">
+      <!-- Exercise the netstandard SDK's non-Framework handshake in the existing .NET 8 CI jobs. -->
+      <SetTargetFramework Condition="'$(TargetFramework)' == 'net8.0'">TargetFramework=netstandard2.0</SetTargetFramework>
+      <SkipGetTargetFrameworkProperties Condition="'$(TargetFramework)' == 'net8.0'">true</SkipGetTargetFrameworkProperties>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.CognitiveServices.Speech"/>
+  </ItemGroup>
+</Project>

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task CreateOrUpdate()
         {
             string name = Recording.GenerateAssetName("testamlFS");
@@ -24,16 +25,18 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Get()
         {
             AmlFileSystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem();
-            AmlFileSystemResource result = await this.DefaultResourceGroup.GetAmlFileSystems().GetAsync(amlFileSystemName: amlFSResource.Id.Name);
+            AmlFileSystemResource result = await this.DefaultResourceGroup.GetAmlFileSystems().GetAsync(amlFSResource.Id.Name);
 
             this.VerifyAmlFileSystem(result, amlFSResource.Data);
         }
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Exists()
         {
             string name = Recording.GenerateAssetName("testamlFS");
@@ -44,6 +47,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task GetAll()
         {
             await AzureResourceTestHelper.TestGetAll<AmlFileSystemResource>(

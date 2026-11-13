@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceLinker.Models;
 
@@ -13,27 +14,50 @@ namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AccessKeyInfoBase))]
     [ModelReaderWriterBuildable(typeof(AuthBaseInfo))]
+    [ModelReaderWriterBuildable(typeof(AzureAppConfigProperties))]
     [ModelReaderWriterBuildable(typeof(AzureKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(AzureResourceBaseProperties))]
     [ModelReaderWriterBuildable(typeof(AzureResourceInfo))]
+    [ModelReaderWriterBuildable(typeof(BasicErrorDryrunPrerequisiteResult))]
     [ModelReaderWriterBuildable(typeof(ConfluentBootstrapServerInfo))]
     [ModelReaderWriterBuildable(typeof(ConfluentSchemaRegistryInfo))]
+    [ModelReaderWriterBuildable(typeof(ConnectorDryrunResource))]
+    [ModelReaderWriterBuildable(typeof(CreateOrUpdateDryrunContent))]
+    [ModelReaderWriterBuildable(typeof(DaprConfiguration))]
+    [ModelReaderWriterBuildable(typeof(DaprMetadata))]
+    [ModelReaderWriterBuildable(typeof(DaprProperties))]
+    [ModelReaderWriterBuildable(typeof(DryrunContent))]
+    [ModelReaderWriterBuildable(typeof(DryrunOperationPreview))]
+    [ModelReaderWriterBuildable(typeof(DryrunPatch))]
+    [ModelReaderWriterBuildable(typeof(DryrunPrerequisiteResult))]
+    [ModelReaderWriterBuildable(typeof(EasyAuthMicrosoftEntraIdAuthInfo))]
+    [ModelReaderWriterBuildable(typeof(FabricPlatformTargetService))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretReferenceSecretInfo))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretUriSecretInfo))]
-    [ModelReaderWriterBuildable(typeof(LinkerList))]
+    [ModelReaderWriterBuildable(typeof(LinkerConfigurationInfo))]
+    [ModelReaderWriterBuildable(typeof(LinkerConfigurationName))]
+    [ModelReaderWriterBuildable(typeof(LinkerConfigurationNameItem))]
+    [ModelReaderWriterBuildable(typeof(LinkerConnectorResource))]
+    [ModelReaderWriterBuildable(typeof(LinkerDryrunData))]
+    [ModelReaderWriterBuildable(typeof(LinkerDryrunResource))]
+    [ModelReaderWriterBuildable(typeof(LinkerFirewallRules))]
+    [ModelReaderWriterBuildable(typeof(LinkerPublicNetworkSolution))]
     [ModelReaderWriterBuildable(typeof(LinkerResource))]
     [ModelReaderWriterBuildable(typeof(LinkerResourceData))]
     [ModelReaderWriterBuildable(typeof(LinkerResourcePatch))]
     [ModelReaderWriterBuildable(typeof(LinkerSecretStore))]
     [ModelReaderWriterBuildable(typeof(LinkerValidateOperationResult))]
     [ModelReaderWriterBuildable(typeof(LinkerValidationResultItemInfo))]
+    [ModelReaderWriterBuildable(typeof(PermissionsMissingDryrunPrerequisiteResult))]
     [ModelReaderWriterBuildable(typeof(RawValueSecretInfo))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecretAuthInfo))]
     [ModelReaderWriterBuildable(typeof(SecretBaseInfo))]
+    [ModelReaderWriterBuildable(typeof(SelfHostedServerTargetService))]
     [ModelReaderWriterBuildable(typeof(ServicePrincipalCertificateAuthInfo))]
     [ModelReaderWriterBuildable(typeof(ServicePrincipalSecretAuthInfo))]
     [ModelReaderWriterBuildable(typeof(SourceConfiguration))]
@@ -45,6 +69,7 @@ namespace Azure.ResourceManager.ServiceLinker
     [ModelReaderWriterBuildable(typeof(UnknownAzureResourcePropertiesBase))]
     [ModelReaderWriterBuildable(typeof(UnknownSecretInfoBase))]
     [ModelReaderWriterBuildable(typeof(UnknownTargetServiceBase))]
+    [ModelReaderWriterBuildable(typeof(UserAccountAuthInfo))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityAuthInfo))]
     [ModelReaderWriterBuildable(typeof(VnetSolution))]
     public partial class AzureResourceManagerServiceLinkerContext : ModelReaderWriterContext

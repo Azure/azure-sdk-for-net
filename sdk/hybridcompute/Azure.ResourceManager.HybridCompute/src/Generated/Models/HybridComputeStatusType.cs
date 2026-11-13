@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,41 +15,67 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeStatusType : IEquatable<HybridComputeStatusType>
     {
         private readonly string _value;
+        /// <summary> Connected. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> Disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> AwaitingConnection. </summary>
+        private const string AwaitingConnectionValue = "AwaitingConnection";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ConnectedValue = "Connected";
-        private const string DisconnectedValue = "Disconnected";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> Connected. </summary>
         public static HybridComputeStatusType Connected { get; } = new HybridComputeStatusType(ConnectedValue);
+
         /// <summary> Disconnected. </summary>
         public static HybridComputeStatusType Disconnected { get; } = new HybridComputeStatusType(DisconnectedValue);
+
         /// <summary> Error. </summary>
         public static HybridComputeStatusType Error { get; } = new HybridComputeStatusType(ErrorValue);
+
+        /// <summary> AwaitingConnection. </summary>
+        public static HybridComputeStatusType AwaitingConnection { get; } = new HybridComputeStatusType(AwaitingConnectionValue);
+
         /// <summary> Determines if two <see cref="HybridComputeStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeStatusType left, HybridComputeStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeStatusType left, HybridComputeStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeStatusType(string value) => new HybridComputeStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeStatusType?(string value) => value == null ? null : new HybridComputeStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

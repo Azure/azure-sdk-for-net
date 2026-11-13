@@ -10,17 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure VM workload-specific workload item.
-    /// Please note <see cref="VmWorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="VmWorkloadSqlDatabaseWorkloadItem"/> and <see cref="VmWorkloadSqlInstanceWorkloadItem"/>.
-    /// </summary>
+    /// <summary> Azure VM workload-specific workload item. </summary>
     public partial class VmWorkloadItem : WorkloadItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadItem"/>. </summary>
-        public VmWorkloadItem()
+        public VmWorkloadItem() : base("AzureVmWorkloadItem")
         {
-            WorkloadItemType = "AzureVmWorkloadItem";
         }
 
         /// <summary> Initializes a new instance of <see cref="VmWorkloadItem"/>. </summary>
@@ -29,30 +24,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="workloadItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parentName"> Name for instance or AG. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
         /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
         /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
-        internal VmWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string parentName, string serverName, bool? isAutoProtectable, int? subInquiredItemCount, int? subWorkloadItemCount) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, serializedAdditionalRawData)
+        internal VmWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string serverName, bool? isAutoProtectable, int? subInquiredItemCount, int? subWorkloadItemCount) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, additionalBinaryDataProperties)
         {
             ParentName = parentName;
             ServerName = serverName;
             IsAutoProtectable = isAutoProtectable;
             SubInquiredItemCount = subInquiredItemCount;
             SubWorkloadItemCount = subWorkloadItemCount;
-            WorkloadItemType = workloadItemType ?? "AzureVmWorkloadItem";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadItem"/>. </summary>
+        /// <param name="workloadItemType"> Type of the backup item. </param>
+        private protected VmWorkloadItem(string workloadItemType) : base(workloadItemType)
+        {
         }
 
         /// <summary> Name for instance or AG. </summary>
         public string ParentName { get; set; }
+
         /// <summary> Host/Cluster Name for instance or AG. </summary>
         public string ServerName { get; set; }
+
         /// <summary> Indicates if workload item is auto-protectable. </summary>
         public bool? IsAutoProtectable { get; set; }
+
         /// <summary> For instance or AG, indicates number of DB's present. </summary>
         public int? SubInquiredItemCount { get; set; }
+
         /// <summary> For instance or AG, indicates number of DB's to be protected. </summary>
         public int? SubWorkloadItemCount { get; set; }
     }

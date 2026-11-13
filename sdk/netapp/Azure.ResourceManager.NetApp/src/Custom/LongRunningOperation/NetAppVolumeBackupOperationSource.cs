@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.NetApp
         NetAppVolumeBackupResource IOperationSource<NetAppVolumeBackupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement);
+            var data = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetAppVolumeBackupResource(_client, data);
         }
 
         async ValueTask<NetAppVolumeBackupResource> IOperationSource<NetAppVolumeBackupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement);
+            var data = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetAppVolumeBackupResource(_client, data);
         }
     }

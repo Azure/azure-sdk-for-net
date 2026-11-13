@@ -7,103 +7,238 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
+    /// The MachineLearningOnlineDeploymentProperties.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
     /// </summary>
     public partial class MachineLearningOnlineDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
+        private DataCollector _dataCollector;
+        private protected bool _dataCollectorIsDefined;
+        private string _instanceType;
+        private protected bool _instanceTypeIsDefined;
+        private MachineLearningProbeSettings _livenessProbe;
+        private protected bool _livenessProbeIsDefined;
+        private string _model;
+        private protected bool _modelIsDefined;
+        private string _modelMountPath;
+        private protected bool _modelMountPathIsDefined;
+        private MachineLearningProbeSettings _readinessProbe;
+        private protected bool _readinessProbeIsDefined;
+        private MachineLearningOnlineRequestSettings _requestSettings;
+        private protected bool _requestSettingsIsDefined;
+        private MachineLearningOnlineScaleSettings _scaleSettings;
+        private protected bool _scaleSettingsIsDefined;
+        private MachineLearningProbeSettings _startupProbe;
+        private protected bool _startupProbeIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentProperties"/>. </summary>
-        public MachineLearningOnlineDeploymentProperties()
+        /// <param name="endpointComputeType"> [Required] The compute type of the endpoint. </param>
+        public MachineLearningOnlineDeploymentProperties(MachineLearningEndpointComputeType endpointComputeType)
         {
+            EndpointComputeType = endpointComputeType;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentProperties"/>. </summary>
-        /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
+        /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
+        /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
+        /// <param name="egressPublicNetworkAccess"> Enum to determine whether PublicNetworkAccess is Enabled or Disabled for egress of a deployment. </param>
         /// <param name="endpointComputeType"> [Required] The compute type of the endpoint. </param>
+        /// <param name="instanceType"> Compute instance type. Default: Standard_F4s_v2. </param>
+        /// <param name="livenessProbe"> Liveness probe monitors the health of the container regularly. </param>
+        /// <param name="model"> The URI path to the model. </param>
+        /// <param name="modelMountPath"> The path to mount the model in custom container. </param>
+        /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
+        /// <param name="readinessProbe"> Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe. </param>
+        /// <param name="requestSettings"> Request settings for the deployment. </param>
         /// <param name="scaleSettings">
         /// Scale settings for the deployment.
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
-        /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
-        /// <param name="requestSettings"> Request settings for the deployment. </param>
-        /// <param name="modelMountPath"> The path to mount the model in custom container. </param>
-        /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
-        /// <param name="livenessProbe"> Liveness probe monitors the health of the container regularly. </param>
-        /// <param name="readinessProbe"> Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
-        /// <param name="instanceType"> Compute instance type. </param>
-        /// <param name="model"> The URI path to the model. </param>
-        /// <param name="egressPublicNetworkAccess"> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </param>
-        /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
-        internal MachineLearningOnlineDeploymentProperties(string description, IDictionary<string, string> properties, MachineLearningCodeConfiguration codeConfiguration, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningEndpointComputeType endpointComputeType, MachineLearningOnlineScaleSettings scaleSettings, MachineLearningOnlineRequestSettings requestSettings, string modelMountPath, bool? appInsightsEnabled, MachineLearningProbeSettings livenessProbe, MachineLearningProbeSettings readinessProbe, MachineLearningDeploymentProvisioningState? provisioningState, string instanceType, string model, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, DataCollector dataCollector) : base(description, properties, codeConfiguration, environmentId, environmentVariables, serializedAdditionalRawData)
+        /// <param name="startupProbe"> Startup probe verify whether an application within a container has started successfully. </param>
+        internal MachineLearningOnlineDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? appInsightsEnabled, DataCollector dataCollector, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, MachineLearningEndpointComputeType endpointComputeType, string instanceType, MachineLearningProbeSettings livenessProbe, string model, string modelMountPath, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningProbeSettings readinessProbe, MachineLearningOnlineRequestSettings requestSettings, MachineLearningOnlineScaleSettings scaleSettings, MachineLearningProbeSettings startupProbe) : base(codeConfiguration, description, environmentId, environmentVariables, properties, additionalBinaryDataProperties)
         {
-            EndpointComputeType = endpointComputeType;
-            ScaleSettings = scaleSettings;
-            RequestSettings = requestSettings;
-            ModelMountPath = modelMountPath;
             AppInsightsEnabled = appInsightsEnabled;
-            LivenessProbe = livenessProbe;
-            ReadinessProbe = readinessProbe;
-            ProvisioningState = provisioningState;
-            InstanceType = instanceType;
-            Model = model;
+            _dataCollector = dataCollector;
             EgressPublicNetworkAccess = egressPublicNetworkAccess;
-            DataCollector = dataCollector;
+            EndpointComputeType = endpointComputeType;
+            _instanceType = instanceType;
+            _livenessProbe = livenessProbe;
+            _model = model;
+            _modelMountPath = modelMountPath;
+            ProvisioningState = provisioningState;
+            _readinessProbe = readinessProbe;
+            _requestSettings = requestSettings;
+            _scaleSettings = scaleSettings;
+            _startupProbe = startupProbe;
         }
 
+        /// <summary> If true, enables Application Insights logging. </summary>
+        [WirePath("appInsightsEnabled")]
+        public bool? AppInsightsEnabled { get; set; }
+
+        /// <summary> The mdc configuration, we disable mdc when it's null. </summary>
+        [WirePath("dataCollector")]
+        public DataCollector DataCollector
+        {
+            get
+            {
+                return _dataCollector;
+            }
+            set
+            {
+                _dataCollector = value;
+                _dataCollectorIsDefined = true;
+            }
+        }
+
+        /// <summary> Enum to determine whether PublicNetworkAccess is Enabled or Disabled for egress of a deployment. </summary>
+        [WirePath("egressPublicNetworkAccess")]
+        public MachineLearningEgressPublicNetworkAccessType? EgressPublicNetworkAccess { get; set; }
+
         /// <summary> [Required] The compute type of the endpoint. </summary>
+        [WirePath("endpointComputeType")]
         internal MachineLearningEndpointComputeType EndpointComputeType { get; set; }
+
+        /// <summary> Compute instance type. Default: Standard_F4s_v2. </summary>
+        [WirePath("instanceType")]
+        public string InstanceType
+        {
+            get
+            {
+                return _instanceType;
+            }
+            set
+            {
+                _instanceType = value;
+                _instanceTypeIsDefined = true;
+            }
+        }
+
+        /// <summary> Liveness probe monitors the health of the container regularly. </summary>
+        [WirePath("livenessProbe")]
+        public MachineLearningProbeSettings LivenessProbe
+        {
+            get
+            {
+                return _livenessProbe;
+            }
+            set
+            {
+                _livenessProbe = value;
+                _livenessProbeIsDefined = true;
+            }
+        }
+
+        /// <summary> The URI path to the model. </summary>
+        [WirePath("model")]
+        public string Model
+        {
+            get
+            {
+                return _model;
+            }
+            set
+            {
+                _model = value;
+                _modelIsDefined = true;
+            }
+        }
+
+        /// <summary> The path to mount the model in custom container. </summary>
+        [WirePath("modelMountPath")]
+        public string ModelMountPath
+        {
+            get
+            {
+                return _modelMountPath;
+            }
+            set
+            {
+                _modelMountPath = value;
+                _modelMountPathIsDefined = true;
+            }
+        }
+
+        /// <summary> Provisioning state for the endpoint deployment. </summary>
+        [WirePath("provisioningState")]
+        public MachineLearningDeploymentProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe. </summary>
+        [WirePath("readinessProbe")]
+        public MachineLearningProbeSettings ReadinessProbe
+        {
+            get
+            {
+                return _readinessProbe;
+            }
+            set
+            {
+                _readinessProbe = value;
+                _readinessProbeIsDefined = true;
+            }
+        }
+
+        /// <summary> Request settings for the deployment. </summary>
+        [WirePath("requestSettings")]
+        public MachineLearningOnlineRequestSettings RequestSettings
+        {
+            get
+            {
+                return _requestSettings;
+            }
+            set
+            {
+                _requestSettings = value;
+                _requestSettingsIsDefined = true;
+            }
+        }
+
         /// <summary>
         /// Scale settings for the deployment.
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
-        /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </summary>
         [WirePath("scaleSettings")]
-        public MachineLearningOnlineScaleSettings ScaleSettings { get; set; }
-        /// <summary> Request settings for the deployment. </summary>
-        [WirePath("requestSettings")]
-        public MachineLearningOnlineRequestSettings RequestSettings { get; set; }
-        /// <summary> The path to mount the model in custom container. </summary>
-        [WirePath("modelMountPath")]
-        public string ModelMountPath { get; set; }
-        /// <summary> If true, enables Application Insights logging. </summary>
-        [WirePath("appInsightsEnabled")]
-        public bool? AppInsightsEnabled { get; set; }
-        /// <summary> Liveness probe monitors the health of the container regularly. </summary>
-        [WirePath("livenessProbe")]
-        public MachineLearningProbeSettings LivenessProbe { get; set; }
-        /// <summary> Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe. </summary>
-        [WirePath("readinessProbe")]
-        public MachineLearningProbeSettings ReadinessProbe { get; set; }
-        /// <summary> Provisioning state for the endpoint deployment. </summary>
-        [WirePath("provisioningState")]
-        public MachineLearningDeploymentProvisioningState? ProvisioningState { get; }
-        /// <summary> Compute instance type. </summary>
-        [WirePath("instanceType")]
-        public string InstanceType { get; set; }
-        /// <summary> The URI path to the model. </summary>
-        [WirePath("model")]
-        public string Model { get; set; }
-        /// <summary> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </summary>
-        [WirePath("egressPublicNetworkAccess")]
-        public MachineLearningEgressPublicNetworkAccessType? EgressPublicNetworkAccess { get; set; }
-        /// <summary> The mdc configuration, we disable mdc when it's null. </summary>
-        [WirePath("dataCollector")]
-        public DataCollector DataCollector { get; set; }
+        public MachineLearningOnlineScaleSettings ScaleSettings
+        {
+            get
+            {
+                return _scaleSettings;
+            }
+            set
+            {
+                _scaleSettings = value;
+                _scaleSettingsIsDefined = true;
+            }
+        }
+
+        /// <summary> Startup probe verify whether an application within a container has started successfully. </summary>
+        [WirePath("startupProbe")]
+        public MachineLearningProbeSettings StartupProbe
+        {
+            get
+            {
+                return _startupProbe;
+            }
+            set
+            {
+                _startupProbe = value;
+                _startupProbeIsDefined = true;
+            }
+        }
     }
 }

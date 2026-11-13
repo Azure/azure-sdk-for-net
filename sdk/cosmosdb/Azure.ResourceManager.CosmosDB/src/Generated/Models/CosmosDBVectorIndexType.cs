@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBVectorIndexType : IEquatable<CosmosDBVectorIndexType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndexType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBVectorIndexType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string FlatValue = "flat";
         private const string DiskAnnValue = "diskANN";
         private const string QuantizedFlatValue = "quantizedFlat";
 
-        /// <summary> flat. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBVectorIndexType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Flat. </summary>
         public static CosmosDBVectorIndexType Flat { get; } = new CosmosDBVectorIndexType(FlatValue);
-        /// <summary> diskANN. </summary>
+
+        /// <summary> Gets the DiskAnn. </summary>
         public static CosmosDBVectorIndexType DiskAnn { get; } = new CosmosDBVectorIndexType(DiskAnnValue);
-        /// <summary> quantizedFlat. </summary>
+
+        /// <summary> Gets the QuantizedFlat. </summary>
         public static CosmosDBVectorIndexType QuantizedFlat { get; } = new CosmosDBVectorIndexType(QuantizedFlatValue);
+
         /// <summary> Determines if two <see cref="CosmosDBVectorIndexType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBVectorIndexType left, CosmosDBVectorIndexType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBVectorIndexType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBVectorIndexType left, CosmosDBVectorIndexType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBVectorIndexType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBVectorIndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBVectorIndexType(string value) => new CosmosDBVectorIndexType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBVectorIndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBVectorIndexType?(string value) => value == null ? null : new CosmosDBVectorIndexType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBVectorIndexType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBVectorIndexType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

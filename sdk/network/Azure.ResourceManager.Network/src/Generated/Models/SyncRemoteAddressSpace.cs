@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The SyncRemoteAddressSpace. </summary>
+    /// <summary></summary>
     public readonly partial struct SyncRemoteAddressSpace : IEquatable<SyncRemoteAddressSpace>
     {
         private readonly string _value;
+        /// <summary> true. </summary>
+        private const string TrueValue = "true";
 
         /// <summary> Initializes a new instance of <see cref="SyncRemoteAddressSpace"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncRemoteAddressSpace(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrueValue = "true";
+            _value = value;
+        }
 
         /// <summary> true. </summary>
         public static SyncRemoteAddressSpace True { get; } = new SyncRemoteAddressSpace(TrueValue);
+
         /// <summary> Determines if two <see cref="SyncRemoteAddressSpace"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyncRemoteAddressSpace left, SyncRemoteAddressSpace right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyncRemoteAddressSpace"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyncRemoteAddressSpace left, SyncRemoteAddressSpace right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncRemoteAddressSpace"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyncRemoteAddressSpace"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyncRemoteAddressSpace(string value) => new SyncRemoteAddressSpace(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyncRemoteAddressSpace"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyncRemoteAddressSpace?(string value) => value == null ? null : new SyncRemoteAddressSpace(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyncRemoteAddressSpace other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyncRemoteAddressSpace other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

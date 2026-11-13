@@ -67,6 +67,20 @@ namespace Azure.Messaging.WebPubSub.Tests
             }
         }
 
+        [Test]
+        public void GetClientAccessUri_MicrosoftEntraId_ForwardsGroups()
+        {
+            var serviceClient = new WebPubSubServiceSubClass(new Uri("https://localhost"), "hub", new DefaultAzureCredential());
+            var groups = new[] { "group1", "group2" };
+
+            serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), groups: groups);
+            serviceClient.GetClientAccessUri(DateTimeOffset.UtcNow.AddMinutes(1), groups: groups);
+
+            Assert.That(serviceClient.InvocationParameters, Has.Count.EqualTo(2));
+            CollectionAssert.AreEqual(groups, serviceClient.InvocationParameters[0][3] as IEnumerable<string>);
+            CollectionAssert.AreEqual(groups, serviceClient.InvocationParameters[1][3] as IEnumerable<string>);
+        }
+
         /// <summary>
         /// A subclass of WebPubSubServiceClient to mock method GenerateClientTokenImpl(Async)
         /// </summary>
@@ -108,7 +122,9 @@ namespace Azure.Messaging.WebPubSub.Tests
 
             var expireTime = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
             Assert.IsTrue(long.TryParse(expireTime, out var expireTimestamp));
-            Assert.AreEqual(utcnow.Add(TimeSpan.FromMinutes(expectedMinutesAfter)).ToUnixTimeSeconds(), expireTimestamp);
+            var expectedExp = utcnow.Add(TimeSpan.FromMinutes(expectedMinutesAfter)).ToUnixTimeSeconds();
+            // Allow a small tolerance around the expected Exp value (±1 second), which covers timer resolution/scheduling effects without depending on monotonicity:
+            Assert.That(expireTimestamp, Is.InRange(expectedExp - 1, expectedExp + 1));
         }
 
         [TestCase(1)]

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationDatabaseObjectType : IEquatable<DataMigrationDatabaseObjectType>
     {
         private readonly string _value;
+        /// <summary> StoredProcedures. </summary>
+        private const string StoredProceduresValue = "StoredProcedures";
+        /// <summary> Table. </summary>
+        private const string TableValue = "Table";
+        /// <summary> User. </summary>
+        private const string UserValue = "User";
+        /// <summary> View. </summary>
+        private const string ViewValue = "View";
+        /// <summary> Function. </summary>
+        private const string FunctionValue = "Function";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationDatabaseObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationDatabaseObjectType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StoredProceduresValue = "StoredProcedures";
-        private const string TableValue = "Table";
-        private const string UserValue = "User";
-        private const string ViewValue = "View";
-        private const string FunctionValue = "Function";
+            _value = value;
+        }
 
         /// <summary> StoredProcedures. </summary>
         public static DataMigrationDatabaseObjectType StoredProcedures { get; } = new DataMigrationDatabaseObjectType(StoredProceduresValue);
+
         /// <summary> Table. </summary>
         public static DataMigrationDatabaseObjectType Table { get; } = new DataMigrationDatabaseObjectType(TableValue);
+
         /// <summary> User. </summary>
         public static DataMigrationDatabaseObjectType User { get; } = new DataMigrationDatabaseObjectType(UserValue);
+
         /// <summary> View. </summary>
         public static DataMigrationDatabaseObjectType View { get; } = new DataMigrationDatabaseObjectType(ViewValue);
+
         /// <summary> Function. </summary>
         public static DataMigrationDatabaseObjectType Function { get; } = new DataMigrationDatabaseObjectType(FunctionValue);
+
         /// <summary> Determines if two <see cref="DataMigrationDatabaseObjectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationDatabaseObjectType left, DataMigrationDatabaseObjectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationDatabaseObjectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationDatabaseObjectType left, DataMigrationDatabaseObjectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationDatabaseObjectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationDatabaseObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationDatabaseObjectType(string value) => new DataMigrationDatabaseObjectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationDatabaseObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationDatabaseObjectType?(string value) => value == null ? null : new DataMigrationDatabaseObjectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationDatabaseObjectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationDatabaseObjectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

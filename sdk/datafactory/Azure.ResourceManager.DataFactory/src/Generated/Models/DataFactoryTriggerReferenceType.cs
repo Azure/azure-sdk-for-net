@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DataFactoryTriggerReferenceType : IEquatable<DataFactoryTriggerReferenceType>
     {
         private readonly string _value;
+        /// <summary> TriggerReference. </summary>
+        private const string TriggerReferenceValue = "TriggerReference";
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFactoryTriggerReferenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TriggerReferenceValue = "TriggerReference";
+            _value = value;
+        }
 
         /// <summary> TriggerReference. </summary>
         public static DataFactoryTriggerReferenceType TriggerReference { get; } = new DataFactoryTriggerReferenceType(TriggerReferenceValue);
+
         /// <summary> Determines if two <see cref="DataFactoryTriggerReferenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFactoryTriggerReferenceType left, DataFactoryTriggerReferenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFactoryTriggerReferenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFactoryTriggerReferenceType left, DataFactoryTriggerReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryTriggerReferenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFactoryTriggerReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFactoryTriggerReferenceType(string value) => new DataFactoryTriggerReferenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFactoryTriggerReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFactoryTriggerReferenceType?(string value) => value == null ? null : new DataFactoryTriggerReferenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFactoryTriggerReferenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFactoryTriggerReferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

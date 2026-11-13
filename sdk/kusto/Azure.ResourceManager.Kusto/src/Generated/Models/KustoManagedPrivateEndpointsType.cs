@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/managedPrivateEndpoints. </summary>
+    /// <summary></summary>
     public readonly partial struct KustoManagedPrivateEndpointsType : IEquatable<KustoManagedPrivateEndpointsType>
     {
         private readonly string _value;
+        /// <summary> Microsoft.Kusto/clusters/managedPrivateEndpoints. </summary>
+        private const string MicrosoftKustoClustersManagedPrivateEndpointsValue = "Microsoft.Kusto/clusters/managedPrivateEndpoints";
 
         /// <summary> Initializes a new instance of <see cref="KustoManagedPrivateEndpointsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoManagedPrivateEndpointsType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftKustoClustersManagedPrivateEndpointsValue = "Microsoft.Kusto/clusters/managedPrivateEndpoints";
+            _value = value;
+        }
 
         /// <summary> Microsoft.Kusto/clusters/managedPrivateEndpoints. </summary>
         public static KustoManagedPrivateEndpointsType MicrosoftKustoClustersManagedPrivateEndpoints { get; } = new KustoManagedPrivateEndpointsType(MicrosoftKustoClustersManagedPrivateEndpointsValue);
+
         /// <summary> Determines if two <see cref="KustoManagedPrivateEndpointsType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoManagedPrivateEndpointsType left, KustoManagedPrivateEndpointsType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoManagedPrivateEndpointsType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoManagedPrivateEndpointsType left, KustoManagedPrivateEndpointsType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoManagedPrivateEndpointsType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoManagedPrivateEndpointsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoManagedPrivateEndpointsType(string value) => new KustoManagedPrivateEndpointsType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoManagedPrivateEndpointsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoManagedPrivateEndpointsType?(string value) => value == null ? null : new KustoManagedPrivateEndpointsType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoManagedPrivateEndpointsType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoManagedPrivateEndpointsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningApplicationSharingPolicy : IEquatable<MachineLearningApplicationSharingPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningApplicationSharingPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningApplicationSharingPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PersonalValue = "Personal";
         private const string SharedValue = "Shared";
 
-        /// <summary> Personal. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningApplicationSharingPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningApplicationSharingPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Personal. </summary>
         public static MachineLearningApplicationSharingPolicy Personal { get; } = new MachineLearningApplicationSharingPolicy(PersonalValue);
-        /// <summary> Shared. </summary>
+
+        /// <summary> Gets the Shared. </summary>
         public static MachineLearningApplicationSharingPolicy Shared { get; } = new MachineLearningApplicationSharingPolicy(SharedValue);
+
         /// <summary> Determines if two <see cref="MachineLearningApplicationSharingPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningApplicationSharingPolicy left, MachineLearningApplicationSharingPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningApplicationSharingPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningApplicationSharingPolicy left, MachineLearningApplicationSharingPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningApplicationSharingPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningApplicationSharingPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningApplicationSharingPolicy(string value) => new MachineLearningApplicationSharingPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningApplicationSharingPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningApplicationSharingPolicy?(string value) => value == null ? null : new MachineLearningApplicationSharingPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningApplicationSharingPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningApplicationSharingPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

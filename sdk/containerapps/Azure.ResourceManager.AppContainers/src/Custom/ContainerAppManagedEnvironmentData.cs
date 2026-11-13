@@ -4,10 +4,7 @@
 #nullable enable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
@@ -16,8 +13,15 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary> A class representing the ContainerAppManagedEnvironmentData data model. </summary>
     public partial class ContainerAppManagedEnvironmentData : TrackedResourceData
     {
+        // This property and the AppContainersSkuName type were removed from the service spec
+        // but are preserved here as hidden members to avoid breaking existing consumers.
+        // See https://github.com/Azure/azure-sdk-for-net/issues/56807
+
         /// <summary> SkuName for container app. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Azure.ResourceManager.AppContainers.Models.AppContainersSkuName? SkuName { get; set; }
+        [Obsolete("SkuName is no longer supported by the service and will be removed in a future release.")]
+#pragma warning disable CS0618 // Type or member is obsolete
+        public AppContainersSkuName? SkuName { get; set; }
+#pragma warning restore CS0618
     }
 }

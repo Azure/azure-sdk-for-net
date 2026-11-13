@@ -38,6 +38,21 @@ Of the format:
 }
 ```
 
+.PARAMETER TemplateParametersJson
+YAML runtime template parameters to provide to the pipeline execution. Unlike
+BuildParametersJson (which sets pipeline variables that must be marked settable
+at queue time), these override values declared in the pipeline's `parameters:`
+block.
+
+Of the format:
+
+```json
+{
+  "parameter1": "value1",
+  "parameter2": "value2"
+}
+```
+
 #>
 
 [CmdletBinding(SupportsShouldProcess = $true)]
@@ -64,7 +79,10 @@ param(
   [string]$BearerToken=$null,
 
   [Parameter(Mandatory = $false)]
-  [string]$BuildParametersJson
+  [string]$BuildParametersJson,
+
+  [Parameter(Mandatory = $false)]
+  [string]$TemplateParametersJson
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -105,7 +123,8 @@ try {
     -DefinitionId $DefinitionId `
     -Base64EncodedToken $Base64EncodedToken `
     -BearerToken $BearerToken `
-    -BuildParametersJson $BuildParametersJson
+    -BuildParametersJson $BuildParametersJson `
+    -TemplateParametersJson $TemplateParametersJson
 }
 catch {
   LogError "Start-DevOpsBuild failed with exception:`n$_"

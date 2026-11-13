@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
@@ -51,9 +51,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var credential = new DefaultAzureCredential();
 #else
-            var  fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            var  eventHubName = "fake";
-            var  credential = EventHubsTestEnvironment.Instance.Credential;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = "fake";
+            var credential = EventHubsTestEnvironment.Instance.Credential;
 #endif
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 

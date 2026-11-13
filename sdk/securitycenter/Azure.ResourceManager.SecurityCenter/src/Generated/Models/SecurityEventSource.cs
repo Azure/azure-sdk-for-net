@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,65 +15,112 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityEventSource : IEquatable<SecurityEventSource>
     {
         private readonly string _value;
+        /// <summary> Assessments. </summary>
+        private const string AssessmentsValue = "Assessments";
+        /// <summary> AssessmentsSnapshot. </summary>
+        private const string AssessmentsSnapshotValue = "AssessmentsSnapshot";
+        /// <summary> SubAssessments. </summary>
+        private const string SubAssessmentsValue = "SubAssessments";
+        /// <summary> SubAssessmentsSnapshot. </summary>
+        private const string SubAssessmentsSnapshotValue = "SubAssessmentsSnapshot";
+        /// <summary> Alerts. </summary>
+        private const string AlertsValue = "Alerts";
+        /// <summary> SecureScores. </summary>
+        private const string SecureScoresValue = "SecureScores";
+        /// <summary> SecureScoresSnapshot. </summary>
+        private const string SecureScoresSnapshotValue = "SecureScoresSnapshot";
+        /// <summary> SecureScoreControls. </summary>
+        private const string SecureScoreControlsValue = "SecureScoreControls";
+        /// <summary> SecureScoreControlsSnapshot. </summary>
+        private const string SecureScoreControlsSnapshotValue = "SecureScoreControlsSnapshot";
+        /// <summary> RegulatoryComplianceAssessment. </summary>
+        private const string RegulatoryComplianceAssessmentValue = "RegulatoryComplianceAssessment";
+        /// <summary> RegulatoryComplianceAssessmentSnapshot. </summary>
+        private const string RegulatoryComplianceAssessmentSnapshotValue = "RegulatoryComplianceAssessmentSnapshot";
+        /// <summary> AttackPaths. </summary>
+        private const string AttackPathsValue = "AttackPaths";
+        /// <summary> AttackPathsSnapshot. </summary>
+        private const string AttackPathsSnapshotValue = "AttackPathsSnapshot";
 
         /// <summary> Initializes a new instance of <see cref="SecurityEventSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityEventSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AssessmentsValue = "Assessments";
-        private const string AssessmentsSnapshotValue = "AssessmentsSnapshot";
-        private const string SubAssessmentsValue = "SubAssessments";
-        private const string SubAssessmentsSnapshotValue = "SubAssessmentsSnapshot";
-        private const string AlertsValue = "Alerts";
-        private const string SecureScoresValue = "SecureScores";
-        private const string SecureScoresSnapshotValue = "SecureScoresSnapshot";
-        private const string SecureScoreControlsValue = "SecureScoreControls";
-        private const string SecureScoreControlsSnapshotValue = "SecureScoreControlsSnapshot";
-        private const string RegulatoryComplianceAssessmentValue = "RegulatoryComplianceAssessment";
-        private const string RegulatoryComplianceAssessmentSnapshotValue = "RegulatoryComplianceAssessmentSnapshot";
+            _value = value;
+        }
 
         /// <summary> Assessments. </summary>
         public static SecurityEventSource Assessments { get; } = new SecurityEventSource(AssessmentsValue);
+
         /// <summary> AssessmentsSnapshot. </summary>
         public static SecurityEventSource AssessmentsSnapshot { get; } = new SecurityEventSource(AssessmentsSnapshotValue);
+
         /// <summary> SubAssessments. </summary>
         public static SecurityEventSource SubAssessments { get; } = new SecurityEventSource(SubAssessmentsValue);
+
         /// <summary> SubAssessmentsSnapshot. </summary>
         public static SecurityEventSource SubAssessmentsSnapshot { get; } = new SecurityEventSource(SubAssessmentsSnapshotValue);
+
         /// <summary> Alerts. </summary>
         public static SecurityEventSource Alerts { get; } = new SecurityEventSource(AlertsValue);
+
         /// <summary> SecureScores. </summary>
         public static SecurityEventSource SecureScores { get; } = new SecurityEventSource(SecureScoresValue);
+
         /// <summary> SecureScoresSnapshot. </summary>
         public static SecurityEventSource SecureScoresSnapshot { get; } = new SecurityEventSource(SecureScoresSnapshotValue);
+
         /// <summary> SecureScoreControls. </summary>
         public static SecurityEventSource SecureScoreControls { get; } = new SecurityEventSource(SecureScoreControlsValue);
+
         /// <summary> SecureScoreControlsSnapshot. </summary>
         public static SecurityEventSource SecureScoreControlsSnapshot { get; } = new SecurityEventSource(SecureScoreControlsSnapshotValue);
+
         /// <summary> RegulatoryComplianceAssessment. </summary>
         public static SecurityEventSource RegulatoryComplianceAssessment { get; } = new SecurityEventSource(RegulatoryComplianceAssessmentValue);
+
         /// <summary> RegulatoryComplianceAssessmentSnapshot. </summary>
         public static SecurityEventSource RegulatoryComplianceAssessmentSnapshot { get; } = new SecurityEventSource(RegulatoryComplianceAssessmentSnapshotValue);
+
+        /// <summary> AttackPaths. </summary>
+        public static SecurityEventSource AttackPaths { get; } = new SecurityEventSource(AttackPathsValue);
+
+        /// <summary> AttackPathsSnapshot. </summary>
+        public static SecurityEventSource AttackPathsSnapshot { get; } = new SecurityEventSource(AttackPathsSnapshotValue);
+
         /// <summary> Determines if two <see cref="SecurityEventSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityEventSource left, SecurityEventSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityEventSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityEventSource left, SecurityEventSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityEventSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityEventSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityEventSource(string value) => new SecurityEventSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityEventSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityEventSource?(string value) => value == null ? null : new SecurityEventSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityEventSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityEventSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

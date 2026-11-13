@@ -1,0 +1,7 @@
+# Azure.Storage.Queues approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# Queues' UserDelegationKey is a GA'd model that intentionally mirrors
+# Azure.Storage.Blobs.Models.UserDelegationKey (both wrap the same service concept). Renaming it to
+# avoid the collision would be a breaking change, so AZC0034 is suppressed for this type.
+nowarn:AZC0034 T:Azure.Storage.Queues.Models.UserDelegationKey

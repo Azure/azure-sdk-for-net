@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ValidateLicenseLicense_ValidateALicense()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/license/License_ValidateLicense.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/license/License_ValidateLicense.json
             // this example is just showing the usage of "Licenses_ValidateLicense" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                     Processors = 6,
                 },
             };
-            ArmOperation<HybridComputeLicenseResource> lro = await subscriptionResource.ValidateLicenseLicenseAsync(WaitUntil.Completed, data);
+            ArmOperation<HybridComputeLicenseResource> lro = await subscriptionResource.ValidateLicenseAsync(WaitUntil.Completed, data);
             HybridComputeLicenseResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetHybridComputeLicenses_ListLicensesBySubscription()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/license/License_ListBySubscription.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/license/License_ListBySubscription.json
             // this example is just showing the usage of "Licenses_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetHybridComputeMachines_ListMachinesByResourceGroup()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_ListBySubscription.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_ListBySubscription.json
             // this example is just showing the usage of "Machines_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetArcGateways_ListGatewaysBySubscription()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/gateway/Gateway_ListBySubscription.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/gateway/Gateway_ListBySubscription.json
             // this example is just showing the usage of "Gateways_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetHybridComputePrivateLinkScopes_PrivateLinkScopesListJson()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/privateLinkScope/PrivateLinkScopes_List.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/privateLinkScope/PrivateLinkScopes_List.json
             // this example is just showing the usage of "PrivateLinkScopes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetValidationDetailsPrivateLinkScope_PrivateLinkScopeGet()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/privateLinkScope/PrivateLinkScopes_GetValidation.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/privateLinkScope/PrivateLinkScopes_GetValidation.json
             // this example is just showing the usage of "PrivateLinkScopes_GetValidationDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("wus2");
             string privateLinkScopeId = "f5dc51d3-92ed-4d7e-947a-775ea79b4919";
-            PrivateLinkScopeValidationDetails result = await subscriptionResource.GetValidationDetailsPrivateLinkScopeAsync(location, privateLinkScopeId);
+            PrivateLinkScopeValidationDetails result = await subscriptionResource.GetValidationDetailsAsync(location, privateLinkScopeId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

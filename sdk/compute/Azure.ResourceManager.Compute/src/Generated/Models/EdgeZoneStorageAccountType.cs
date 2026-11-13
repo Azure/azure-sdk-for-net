@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct EdgeZoneStorageAccountType : IEquatable<EdgeZoneStorageAccountType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EdgeZoneStorageAccountType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EdgeZoneStorageAccountType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardLrsValue = "Standard_LRS";
         private const string StandardZrsValue = "Standard_ZRS";
         private const string StandardSsdLrsValue = "StandardSSD_LRS";
         private const string PremiumLrsValue = "Premium_LRS";
 
-        /// <summary> Standard_LRS. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeZoneStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EdgeZoneStorageAccountType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the StandardLrs. </summary>
         public static EdgeZoneStorageAccountType StandardLrs { get; } = new EdgeZoneStorageAccountType(StandardLrsValue);
-        /// <summary> Standard_ZRS. </summary>
+
+        /// <summary> Gets the StandardZrs. </summary>
         public static EdgeZoneStorageAccountType StandardZrs { get; } = new EdgeZoneStorageAccountType(StandardZrsValue);
-        /// <summary> StandardSSD_LRS. </summary>
+
+        /// <summary> Gets the StandardSsdLrs. </summary>
         public static EdgeZoneStorageAccountType StandardSsdLrs { get; } = new EdgeZoneStorageAccountType(StandardSsdLrsValue);
-        /// <summary> Premium_LRS. </summary>
+
+        /// <summary> Gets the PremiumLrs. </summary>
         public static EdgeZoneStorageAccountType PremiumLrs { get; } = new EdgeZoneStorageAccountType(PremiumLrsValue);
+
         /// <summary> Determines if two <see cref="EdgeZoneStorageAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeZoneStorageAccountType left, EdgeZoneStorageAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeZoneStorageAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeZoneStorageAccountType left, EdgeZoneStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeZoneStorageAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeZoneStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeZoneStorageAccountType(string value) => new EdgeZoneStorageAccountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeZoneStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeZoneStorageAccountType?(string value) => value == null ? null : new EdgeZoneStorageAccountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeZoneStorageAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeZoneStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

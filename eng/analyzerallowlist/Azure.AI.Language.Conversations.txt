@@ -1,0 +1,18 @@
+# Azure.AI.Language.Conversations approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# These public model names mirror the predecessor
+# Azure.AI.Language.QuestionAnswering surface for migration continuity; the
+# colliding libraries are never referenced together.
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.AnswerSpan
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.AnswersResult
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.KnowledgeBaseAnswer
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.KnowledgeBaseAnswerContext
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.KnowledgeBaseAnswerDialog
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.KnowledgeBaseAnswerPrompt
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.LengthUnit
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.LogicalOperationKind
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.MetadataFilter
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.MetadataRecord
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.QueryFilters
+nowarn:AZC0034 T:Azure.AI.Language.Conversations.Models.RankerKind

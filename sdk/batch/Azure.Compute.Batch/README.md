@@ -18,7 +18,7 @@ Use the client library for to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Compute.Batch --prerelease
+dotnet add package Azure.Compute.Batch
 ```
 
 ### Prerequisites
@@ -147,12 +147,6 @@ The following section provides several synchronous code snippets covering some o
   * [Node File Properties](#get-node-file-properties)
   * [Get Remote Login Settings](#getremoteloginsettings)
   * [Upload Compute Node BatchService Logs](#uploadcomputenodebatchservicelogs)
-* [Certificate Operations](#certificate-operations)
-  * [Create a Certificate](#createcertificate)
-  * [Get a Certificatec](#getcertificate)
-  * [List Certificates](#listcertificates)
-  * [Delete Certificate](#deletecertificate)
-  * [Cancel Delete Certificate](#canceldeletecertificate)
 * [Application Operations](#application-operations)
   * [Get Application](#get-application)
   * [List Applications](#list-application)
@@ -284,7 +278,7 @@ foreach (BatchPool item in batchClient.GetPools())
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.DeletePool("poolID");
+batchClient.DeletePool(WaitUntil.Started, "poolID");
 ```
 Optionally you can use the returned `DeletePoolOperation` object to wait for the operation to complete.
 
@@ -292,7 +286,7 @@ Optionally you can use the returned `DeletePoolOperation` object to wait for the
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-DeletePoolOperation operation = batchClient.DeletePool("poolID");
+DeletePoolOperation operation = batchClient.DeletePool(WaitUntil.Started, "poolID");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -330,15 +324,7 @@ BatchApplicationPackageReference[] batchApplicationPackageReferences = new Batch
         }
     };
 
-BatchCertificateReference[] certificateReferences = new BatchCertificateReference[] {
-        new BatchCertificateReference("thumbprint","thumbprintAlgorithm")
-        {
-            StoreLocation = "storeLocation",
-            StoreName = "storeName"
-        }
-};
-
-BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(certificateReferences, batchApplicationPackageReferences, metadataItems);
+BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(batchApplicationPackageReferences, metadataItems);
 batchClient.ReplacePoolProperties("poolID", replaceOptions);
 ```
 #### Resize Pool
@@ -355,7 +341,7 @@ BatchPoolResizeOptions resizeOptions = new BatchPoolResizeOptions()
     ResizeTimeout = TimeSpan.FromMinutes(10),
 };
 
-batchClient.ResizePool("poolID", resizeOptions);
+batchClient.ResizePool(WaitUntil.Started, "poolID", resizeOptions);
 ```
                     
 #### Stop ResizePool
@@ -366,7 +352,7 @@ batchClient.ResizePool("poolID", resizeOptions);
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.StopPoolResize("poolId");
+batchClient.StopPoolResize(WaitUntil.Started, "poolId");
 ```
 
 #### Enable AutoScalePool
@@ -505,7 +491,7 @@ foreach (BatchJob item in batchClient.GetJobs())
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.DeleteJob("jobID");
+batchClient.DeleteJob(WaitUntil.Completed, "jobID");
 ```
 Optionally you can use the returned `DeleteJobOperation` object to wait for the operation to complete.
 
@@ -513,7 +499,7 @@ Optionally you can use the returned `DeleteJobOperation` object to wait for the 
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-DeleteJobOperation operation = batchClient.DeleteJob("jobID");
+DeleteJobOperation operation = batchClient.DeleteJob(WaitUntil.Started, "jobID");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -555,7 +541,7 @@ BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 BatchJobDisableOptions options = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
-batchClient.DisableJob("jobID", options);
+batchClient.DisableJob(WaitUntil.Started, "jobID", options);
 ```
 Optionally you can use the returned `DisableJobOperation` object to wait for the operation to complete.
 
@@ -564,7 +550,7 @@ BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 BatchJobDisableOptions options = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
-DisableJobOperation operation = batchClient.DisableJob("jobID", options);
+DisableJobOperation operation = batchClient.DisableJob(WaitUntil.Started, "jobID", options);
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -577,7 +563,7 @@ operation.WaitForCompletion();
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.EnableJob("jobID");
+batchClient.EnableJob(WaitUntil.Started, "jobID");
 ```
 Optionally you can use the returned `EnableJobOperation` object to wait for the operation to complete.
 
@@ -585,7 +571,7 @@ Optionally you can use the returned `EnableJobOperation` object to wait for the 
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-EnableJobOperation operation = batchClient.EnableJob("jobID");
+EnableJobOperation operation = batchClient.EnableJob(WaitUntil.Started, "jobID");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -624,7 +610,7 @@ BatchTaskCountsResult batchTaskCountsResult = batchClient.GetJobTaskCounts("jobI
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.TerminateJob("jobID");
+batchClient.TerminateJob(WaitUntil.Started, "jobID");
 ```
 Optionally you can use the returned `TerminateJobOperation` object to wait for the operation to complete.
 
@@ -632,7 +618,7 @@ Optionally you can use the returned `TerminateJobOperation` object to wait for t
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-TerminateJobOperation operation = batchClient.TerminateJob("jobID");
+TerminateJobOperation operation = batchClient.TerminateJob(WaitUntil.Started, "jobID");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -698,7 +684,7 @@ foreach (BatchJobSchedule item in batchClient.GetJobSchedules())
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.DeleteJobSchedule("jobScheduleId");
+batchClient.DeleteJobSchedule(WaitUntil.Started, "jobScheduleId");
 ```
 Optionally you can use the returned `DeleteJobScheduleOperation` object to wait for the operation to complete.
 
@@ -706,7 +692,7 @@ Optionally you can use the returned `DeleteJobScheduleOperation` object to wait 
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-DeleteJobScheduleOperation operation = batchClient.DeleteJobSchedule("jobScheduleId");
+DeleteJobScheduleOperation operation = batchClient.DeleteJobSchedule(WaitUntil.Started, "jobScheduleId");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -725,7 +711,7 @@ BatchJobSchedule batchJobSchedule = batchClient.GetJobSchedule("jobScheduleId");
 DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
 batchJobSchedule.Schedule = new BatchJobScheduleConfiguration()
 {
-    DoNotRunUntil = unboundDNRU,
+    DoNotRunBefore = unboundDNRU,
 };
 batchClient.ReplaceJobSchedule("jobScheduleId", batchJobSchedule);
 ```
@@ -774,7 +760,7 @@ batchClient.EnableJobSchedule("jobScheduleId");
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.TerminateJobSchedule("jobScheduleId");
+batchClient.TerminateJobSchedule(WaitUntil.Started, "jobScheduleId");
 ```
 Optionally you can use the returned `TerminateJobScheduleOperation` object to wait for the operation to complete.
 
@@ -782,7 +768,7 @@ Optionally you can use the returned `TerminateJobScheduleOperation` object to wa
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-TerminateJobScheduleOperation operation = batchClient.TerminateJobSchedule("jobScheduleId");
+TerminateJobScheduleOperation operation = batchClient.TerminateJobSchedule(WaitUntil.Started, "jobScheduleId");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -983,7 +969,7 @@ foreach (BatchNode item in batchClient.GetNodes("poolID"))
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.RebootNode("poolId", "computeNodeId");
+batchClient.RebootNode(WaitUntil.Started, "poolId", "computeNodeId");
 ```
 Optionally you can use the returned `RebootNodeOperation` object to wait for the operation to complete.
 
@@ -991,7 +977,7 @@ Optionally you can use the returned `RebootNodeOperation` object to wait for the
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-RebootNodeOperation operation = batchClient.RebootNode("poolId", "computeNodeId");
+RebootNodeOperation operation = batchClient.RebootNode(WaitUntil.Started, "poolId", "computeNodeId");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -1004,7 +990,7 @@ operation.WaitForCompletion();
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-ReimageNodeOperation operation = batchClient.ReimageNode("poolId", "computeNodeId");
+ReimageNodeOperation operation = batchClient.ReimageNode(WaitUntil.Started, "poolId", "computeNodeId");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -1015,7 +1001,7 @@ Optionally you can use the returned `ReimageNodeOperation` object to wait for th
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-ReimageNodeOperation operation = batchClient.ReimageNode("poolId", "computeNodeId");
+ReimageNodeOperation operation = batchClient.ReimageNode(WaitUntil.Started, "poolId", "computeNodeId");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -1028,7 +1014,7 @@ operation.WaitForCompletion();
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.StartNode("poolId", "computeNodeId");
+batchClient.StartNode(WaitUntil.Started, "poolId", "computeNodeId");
 ```
 Optionally you can use the returned `StartNodeOperation` object to wait for the operation to complete.
 
@@ -1036,7 +1022,7 @@ Optionally you can use the returned `StartNodeOperation` object to wait for the 
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-StartNodeOperation operation = batchClient.StartNode("poolId", "computeNodeId");
+StartNodeOperation operation = batchClient.StartNode(WaitUntil.Started, "poolId", "computeNodeId");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -1050,7 +1036,7 @@ operation.WaitForCompletion();
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.DeallocateNode("poolId", "computeNodeId");
+batchClient.DeallocateNode(WaitUntil.Started, "poolId", "computeNodeId");
 ```
  Optionally you can use the returned `DeallocateNodeOperation` object to wait for the operation to complete.
 
@@ -1058,7 +1044,7 @@ batchClient.DeallocateNode("poolId", "computeNodeId");
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-DeallocateNodeOperation operation = batchClient.DeallocateNode("poolId", "computeNodeId");
+DeallocateNodeOperation operation = batchClient.DeallocateNode(WaitUntil.Started, "poolId", "computeNodeId");
 
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
@@ -1159,85 +1145,6 @@ UploadBatchServiceLogsOptions uploadBatchServiceLogsOptions = new UploadBatchSer
 UploadBatchServiceLogsResult uploadBatchServiceLogsResult = batchClient.UploadNodeLogs("poolId", "computeNodeId", uploadBatchServiceLogsOptions);
 ```
 
-### Certificate Operations
-
-> Note: Certificates has been [deprecated].
-
-#### CreateCertificate
-
-Call `CreateCertificate` with a `BatchCertificate` param to create a Certificate.
-
-```C# Snippet:Batch_Migration_CreateCerCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-byte[] certData = File.ReadAllBytes("certPath");
-BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
-{
-    CertificateFormat = BatchCertificateFormat.Cer,
-    Password = "",
-};
-
-Response response = batchClient.CreateCertificate(cerCertificate);
-```
-
-#### GetCertificate
-
-Call `GetCertificate` to get the certificate which will return a `GetCertificateResponse`.
-
-```C# Snippet:Batch_Migration_GetCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-BatchCertificate cerCertificateResponse = batchClient.GetCertificate("ThumbprintAlgorithm", "Thumbprint");
-```
-
-#### ListCertificates
-
-Call `GetCertificates` to get a list of certificates.
-
-```C# Snippet:Batch_Migration_ListCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-foreach (BatchCertificate item in batchClient.GetCertificates())
-{
-    // do something
-}
-```
-
-#### DeleteCertificate
-
-Call `DeleteCertificate` to delete a Certificate.
-
-```C# Snippet:Batch_Migration_DeleteCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
-```
-Optionally you can use the returned `DeleteCertificateOperation` object to wait for the operation to complete.
-
-```C# Snippet:Batch_Migration_DeleteCertificate_Operation
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-DeleteCertificateOperation operation = batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
-
-// Optional, wait for operation to complete
-operation.WaitForCompletion();
-```
-
-#### CancelDeleteCertificate
-
-Call `CancelCertificateDeletion` to cancel a delete of a certificate.
-
-```C# Snippet:Batch_Migration_CancelDeleteCertificate
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-batchClient.CancelCertificateDeletion("ThumbprintAlgorithm", "Thumbprint");
-```
-
 ### Application Operations
 
 #### Get Application
@@ -1271,7 +1178,7 @@ In `Azure.Compute.Batch` when a command fails due to an error on the server side
 ```C# Snippet:Batch_Migration_Exception
 try
 {
-    batchClient.ResizePool("fakepool", resizeOptions);
+    batchClient.ResizePool(WaitUntil.Started, "fakepool", resizeOptions);
 }
 catch (Azure.RequestFailedException e)
 {

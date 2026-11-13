@@ -3,10 +3,11 @@
 
 using Azure.Core;
 
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Model factory for Conversations Authoring models. </summary>
-    [CodeGenModel("AILanguageConversationsAuthoringModelFactory")]
+    [CodeGenType("LanguageConversationsAuthoringModelFactory")]
     public static partial class ConversationAnalysisAuthoringModelFactory
     {
     }

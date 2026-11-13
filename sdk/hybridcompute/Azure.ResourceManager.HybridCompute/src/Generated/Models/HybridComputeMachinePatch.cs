@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -22,56 +23,163 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeMachinePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
-        /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
-        /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
-        /// <param name="cloudMetadata"> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </param>
-        /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
-        /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
-        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
-        internal HybridComputeMachinePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, HybridComputeOSProfile osProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId) : base(tags, serializedAdditionalRawData)
+        /// <param name="properties"> Hybrid Compute Machine properties. </param>
+        internal HybridComputeMachinePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedServiceIdentity identity, ArcKindEnum? kind, MachineUpdateProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Identity = identity;
             Kind = kind;
-            LocationData = locationData;
-            OSProfile = osProfile;
-            CloudMetadata = cloudMetadata;
-            AgentUpgrade = agentUpgrade;
-            ParentClusterResourceId = parentClusterResourceId;
-            PrivateLinkScopeResourceId = privateLinkScopeResourceId;
+            Properties = properties;
         }
 
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
         [WirePath("kind")]
         public ArcKindEnum? Kind { get; set; }
+
+        /// <summary> Hybrid Compute Machine properties. </summary>
+        [WirePath("properties")]
+        internal MachineUpdateProperties Properties { get; set; }
+
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
         [WirePath("properties.locationData")]
-        public HybridComputeLocation LocationData { get; set; }
+        public HybridComputeLocation LocationData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocationData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineUpdateProperties();
+                }
+                Properties.LocationData = value;
+            }
+        }
+
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
         [WirePath("properties.osProfile")]
-        public HybridComputeOSProfile OSProfile { get; set; }
-        /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
-        internal HybridComputeCloudMetadata CloudMetadata { get; set; }
-        /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
-        [WirePath("properties.cloudMetadata.provider")]
-        public string CloudMetadataProvider
+        public HybridComputeOSProfile OSProfile
         {
-            get => CloudMetadata is null ? default : CloudMetadata.Provider;
+            get
+            {
+                return Properties is null ? default : Properties.OSProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineUpdateProperties();
+                }
+                Properties.OSProfile = value;
+            }
         }
 
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
         [WirePath("properties.agentUpgrade")]
-        public AgentUpgrade AgentUpgrade { get; set; }
+        public AgentUpgrade AgentUpgrade
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentUpgrade;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineUpdateProperties();
+                }
+                Properties.AgentUpgrade = value;
+            }
+        }
+
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
         [WirePath("properties.parentClusterResourceId")]
-        public ResourceIdentifier ParentClusterResourceId { get; set; }
+        public ResourceIdentifier ParentClusterResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ParentClusterResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineUpdateProperties();
+                }
+                Properties.ParentClusterResourceId = value;
+            }
+        }
+
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
         [WirePath("properties.privateLinkScopeResourceId")]
-        public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkScopeResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkScopeResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineUpdateProperties();
+                }
+                Properties.PrivateLinkScopeResourceId = value;
+            }
+        }
+
+        /// <summary> Identity key store type of the machine. </summary>
+        [WirePath("properties.identityKeyStore")]
+        public string IdentityKeyStore
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdentityKeyStore;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineUpdateProperties();
+                }
+                Properties.IdentityKeyStore = value;
+            }
+        }
+
+        /// <summary> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </summary>
+        [WirePath("properties.tpmEkCertificate")]
+        public string TpmEkCertificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TpmEkCertificate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineUpdateProperties();
+                }
+                Properties.TpmEkCertificate = value;
+            }
+        }
+
+        /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
+        [WirePath("properties.cloudMetadata.provider")]
+        public string CloudMetadataProvider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CloudMetadataProvider;
+            }
+        }
     }
 }

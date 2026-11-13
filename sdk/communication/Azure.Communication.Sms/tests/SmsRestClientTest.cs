@@ -64,7 +64,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("from", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("from"));
                 return;
             }
         }
@@ -83,7 +83,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("smsRecipients", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("smsRecipients"));
                 return;
             }
         }
@@ -102,7 +102,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("message", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("message"));
                 return;
             }
         }
@@ -125,7 +125,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual(nameof(MessagingConnectOptions.Partner).ToLower(), ex.ParamName?.ToLower());
+                Assert.That(ex.ParamName?.ToLower(), Is.EqualTo(nameof(MessagingConnectOptions.Partner).ToLower()));
                 return;
             }
         }
@@ -148,7 +148,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual(nameof(MessagingConnectOptions.ApiKey).ToLower(), ex.ParamName?.ToLower());
+                Assert.That(ex.ParamName?.ToLower(), Is.EqualTo(nameof(MessagingConnectOptions.ApiKey).ToLower()));
                 return;
             }
         }
@@ -167,7 +167,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("from", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("from"));
                 return;
             }
         }
@@ -186,7 +186,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("smsRecipients", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("smsRecipients"));
                 return;
             }
         }
@@ -205,7 +205,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("message", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("message"));
                 return;
             }
         }
@@ -228,7 +228,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual(nameof(MessagingConnectOptions.ApiKey).ToLower(), ex.ParamName?.ToLower());
+                Assert.That(ex.ParamName?.ToLower(), Is.EqualTo(nameof(MessagingConnectOptions.ApiKey).ToLower()));
                 return;
             }
         }
@@ -251,7 +251,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual(nameof(MessagingConnectOptions.Partner).ToLower(), ex.ParamName?.ToLower());
+                Assert.That(ex.ParamName?.ToLower(), Is.EqualTo(nameof(MessagingConnectOptions.Partner).ToLower()));
                 return;
             }
         }

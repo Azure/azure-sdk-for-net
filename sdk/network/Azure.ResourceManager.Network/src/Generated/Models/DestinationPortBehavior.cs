@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct DestinationPortBehavior : IEquatable<DestinationPortBehavior>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> ListenIfAvailable. </summary>
+        private const string ListenIfAvailableValue = "ListenIfAvailable";
 
         /// <summary> Initializes a new instance of <see cref="DestinationPortBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DestinationPortBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ListenIfAvailableValue = "ListenIfAvailable";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static DestinationPortBehavior None { get; } = new DestinationPortBehavior(NoneValue);
+
         /// <summary> ListenIfAvailable. </summary>
         public static DestinationPortBehavior ListenIfAvailable { get; } = new DestinationPortBehavior(ListenIfAvailableValue);
+
         /// <summary> Determines if two <see cref="DestinationPortBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DestinationPortBehavior left, DestinationPortBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DestinationPortBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DestinationPortBehavior left, DestinationPortBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DestinationPortBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DestinationPortBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DestinationPortBehavior(string value) => new DestinationPortBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DestinationPortBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DestinationPortBehavior?(string value) => value == null ? null : new DestinationPortBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DestinationPortBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DestinationPortBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

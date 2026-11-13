@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -43,7 +43,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -279,7 +279,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -311,7 +311,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -340,7 +340,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -361,7 +361,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -377,7 +377,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -393,7 +393,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -409,7 +409,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -425,7 +425,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -446,7 +446,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -463,7 +463,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -479,7 +479,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 
@@ -495,7 +495,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
             catch (Exception e)
             {
-                Assert.AreEqual(exceptionType, e.GetType());
+                Assert.That(e.GetType(), Is.EqualTo(exceptionType));
             }
         }
 

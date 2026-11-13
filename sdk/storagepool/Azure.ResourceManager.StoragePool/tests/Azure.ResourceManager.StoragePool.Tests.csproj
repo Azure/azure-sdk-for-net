@@ -3,9 +3,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.StoragePool.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="SessionRecords\DiskPoolTests\" />
     <Folder Include="SessionRecords\IscsiTargetTests\" />
   </ItemGroup>

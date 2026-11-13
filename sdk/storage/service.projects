@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.*\**\*.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(SDKType)' == 'functions'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.Storage*\**\*.csproj" />

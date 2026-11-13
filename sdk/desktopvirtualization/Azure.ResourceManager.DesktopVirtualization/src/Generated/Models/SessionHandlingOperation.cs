@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct SessionHandlingOperation : IEquatable<SessionHandlingOperation>
     {
         private readonly string _value;
+        /// <summary> No action will be taken after disconnect. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Session Host will be deallocated after disconnect. </summary>
+        private const string DeallocateValue = "Deallocate";
+        /// <summary> Session Host will hibernate after disconnect. </summary>
+        private const string HibernateValue = "Hibernate";
 
         /// <summary> Initializes a new instance of <see cref="SessionHandlingOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SessionHandlingOperation(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string DeallocateValue = "Deallocate";
-        private const string HibernateValue = "Hibernate";
-
-        /// <summary> None. </summary>
+        /// <summary> No action will be taken after disconnect. </summary>
         public static SessionHandlingOperation None { get; } = new SessionHandlingOperation(NoneValue);
-        /// <summary> Deallocate. </summary>
+
+        /// <summary> Session Host will be deallocated after disconnect. </summary>
         public static SessionHandlingOperation Deallocate { get; } = new SessionHandlingOperation(DeallocateValue);
-        /// <summary> Hibernate. </summary>
+
+        /// <summary> Session Host will hibernate after disconnect. </summary>
         public static SessionHandlingOperation Hibernate { get; } = new SessionHandlingOperation(HibernateValue);
+
         /// <summary> Determines if two <see cref="SessionHandlingOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SessionHandlingOperation left, SessionHandlingOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SessionHandlingOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SessionHandlingOperation left, SessionHandlingOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionHandlingOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SessionHandlingOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SessionHandlingOperation(string value) => new SessionHandlingOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SessionHandlingOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SessionHandlingOperation?(string value) => value == null ? null : new SessionHandlingOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SessionHandlingOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SessionHandlingOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

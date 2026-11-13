@@ -7,12 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningAssetContainer. </summary>
     public partial class MachineLearningAssetContainer : MachineLearningResourceBase
     {
+        private string _latestVersion;
+        private protected bool _latestVersionIsDefined;
+        private string _nextVersion;
+        private protected bool _nextVersionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningAssetContainer"/>. </summary>
         public MachineLearningAssetContainer()
         {
@@ -20,27 +26,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAssetContainer"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
-        internal MachineLearningAssetContainer(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, string latestVersion, string nextVersion) : base(description, tags, properties, serializedAdditionalRawData)
+        internal MachineLearningAssetContainer(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isArchived, string latestVersion, string nextVersion) : base(description, properties, tags, additionalBinaryDataProperties)
         {
             IsArchived = isArchived;
-            LatestVersion = latestVersion;
-            NextVersion = nextVersion;
+            _latestVersion = latestVersion;
+            _nextVersion = nextVersion;
         }
 
         /// <summary> Is the asset archived?. </summary>
         [WirePath("isArchived")]
         public bool? IsArchived { get; set; }
+
         /// <summary> The latest version inside this container. </summary>
         [WirePath("latestVersion")]
-        public string LatestVersion { get; }
+        public string LatestVersion
+        {
+            get
+            {
+                return _latestVersion;
+            }
+        }
+
         /// <summary> The next auto incremental version. </summary>
         [WirePath("nextVersion")]
-        public string NextVersion { get; }
+        public string NextVersion
+        {
+            get
+            {
+                return _nextVersion;
+            }
+        }
     }
 }

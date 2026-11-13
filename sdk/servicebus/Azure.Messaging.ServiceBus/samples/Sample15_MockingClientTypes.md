@@ -46,7 +46,7 @@ Mock<ServiceBusSender> mockSender = new();
 // This sets up the mock ServiceBusClient to return the mock of the ServiceBusSender.
 
 mockClient
-    .Setup(client =>client.CreateSender(It.IsAny<string>()))
+    .Setup(client => client.CreateSender(It.IsAny<string>()))
     .Returns(mockSender.Object);
 
 // This sets up the mock sender to successfully return a completed task when any message is passed to
@@ -101,7 +101,7 @@ int numMessagesToReturn = 10;
 // for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage
 // method.
 
-for (int i=0; i < numMessagesToReturn; i++)
+for (int i = 0; i < numMessagesToReturn; i++)
 {
     // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
     // potential outputs from the broker.
@@ -197,7 +197,7 @@ ServiceBusMessageBatch mockBatch = ServiceBusModelFactory.ServiceBusMessageBatch
     batchOptions: new CreateMessageBatchOptions(),
     // The model factory allows a custom TryAddMessage callback, allowing control of
     // what messages the batch accepts.
-    tryAddCallback: _=> backingList.Count < batchCountThreshold);
+    tryAddCallback: _ => backingList.Count < batchCountThreshold);
 
 // This sets up a mock of the CreateMessageBatchAsync method, returning the batch that was previously
 // mocked.
@@ -311,10 +311,10 @@ mockSender
         It.IsAny<ServiceBusMessage>(),
         It.IsAny<CancellationToken>()))
     .Callback<ServiceBusMessage, CancellationToken>(
-    (m,ct) => messagesToReturn.Enqueue(ServiceBusModelFactory.ServiceBusReceivedMessage(
-        body:m.Body,
-        messageId:m.MessageId,
-        sessionId:m.SessionId)))
+    (m, ct) => messagesToReturn.Enqueue(ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: m.Body,
+        messageId: m.MessageId,
+        sessionId: m.SessionId)))
     .Returns(Task.CompletedTask);
 
 // This sets up the receiver to return a message off of the queue, or return null if there are no messages waiting to be received.
@@ -626,7 +626,7 @@ mockClient
 // complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
 
 List<ServiceBusReceivedMessage> messagesToReturn = new();
-int numMessages= 3;
+int numMessages = 3;
 
 for (int i = 0; i < numMessages; i++)
 {
@@ -870,7 +870,7 @@ mockReceiver
     .ReturnsAsync(() =>
     {
         ServiceBusReceivedMessage m = messagesToReturn.FirstOrDefault();
-        if (m!= null)
+        if (m != null)
         {
             messagesToReturn.RemoveAt(0);
         }
@@ -1445,7 +1445,7 @@ The key interactions with the `ServiceBusClient` when using topics and subscript
 ```C# Snippet:ServiceBus_MockingTopicSubscriptionCrud
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
 Mock<Response<TopicProperties>> mockTopicResponse = new();
-Mock<Response<SubscriptionProperties>> mockSubscriptionResponse= new();
+Mock<Response<SubscriptionProperties>> mockSubscriptionResponse = new();
 
 // This sets up the mock administration client to return a mocked topic properties using the
 // service bus model factory. It populates each of the arguments using the CreateTopicOptions instance
@@ -1522,7 +1522,7 @@ TopicProperties createdTopic = await adminClient.CreateTopicAsync(topicOptions);
 string subscriptionName = "subscription";
 var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName)
 {
-    UserMetadata= "some metadata"
+    UserMetadata = "some metadata"
 };
 SubscriptionProperties createdSubscription = await adminClient.CreateSubscriptionAsync(subscriptionOptions);
 ```

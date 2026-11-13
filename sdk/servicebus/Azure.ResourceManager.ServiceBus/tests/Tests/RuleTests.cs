@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceBus.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create rule with correlation filter
             string ruleName2 = Recording.GenerateAssetName("rule");
-            ServiceBusRuleResource rule2 = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName2, new ServiceBusRuleData(){FilterType = ServiceBusFilterType.CorrelationFilter})).Value;
+            ServiceBusRuleResource rule2 = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName2, new ServiceBusRuleData() { FilterType = ServiceBusFilterType.CorrelationFilter })).Value;
             Assert.NotNull(rule2);
             Assert.AreEqual(rule2.Id.Name, ruleName2);
 
@@ -120,12 +121,29 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 FilterType = ServiceBusFilterType.CorrelationFilter,
                 CorrelationFilter = new ServiceBusCorrelationFilter()
             };
-            input.CorrelationFilter.ApplicationProperties.Add("stringKey", "stringVal");
-            input.CorrelationFilter.ApplicationProperties.Add("intKey", 5);
-            input.CorrelationFilter.ApplicationProperties.Add("dateTimeKey", Recording.Now.UtcDateTime);
+            string dateTimeValue = Recording.Now.UtcDateTime.ToString("O", CultureInfo.InvariantCulture);
+            input.CorrelationFilter.Properties.Add("stringKey", "stringVal");
+            input.CorrelationFilter.Properties.Add("intKey", "5");
+            input.CorrelationFilter.Properties.Add("dateTimeKey", dateTimeValue);
             ServiceBusRuleResource rule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input)).Value;
             Assert.NotNull(rule);
             Assert.AreEqual(rule.Id.Name, ruleName);
+
+            // Assert the values survive the create round-trip. Without this the test
+            // passes even if the service drops the properties or changes their type.
+            // dateTimeKey is compared as a parsed instant on purpose, because the
+            // recorded response can carry fewer fractional digits than were sent.
+            IDictionary<string, string> properties = rule.Data.CorrelationFilter.Properties;
+            foreach (string key in new[] { "stringKey", "intKey", "dateTimeKey" })
+            {
+                Assert.IsTrue(properties.ContainsKey(key), $"correlation filter property '{key}' is missing");
+                Assert.IsNotNull(properties[key], $"correlation filter property '{key}' is null");
+            }
+            Assert.AreEqual("stringVal", properties["stringKey"]);
+            Assert.AreEqual("5", properties["intKey"]);
+            Assert.AreEqual(
+                DateTimeOffset.Parse(dateTimeValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                DateTimeOffset.Parse(properties["dateTimeKey"], CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind));
         }
     }
 }

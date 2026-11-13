@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetARunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
             // this example is just showing the usage of "MachineRunCommands_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MachineRunCommandResource created on azure
-            // for more information of creating MachineRunCommandResource, please refer to the document of MachineRunCommandResource
+            // this example assumes you already have this HybridComputeMachineRunCommandResource created on azure
+            // for more information of creating HybridComputeMachineRunCommandResource, please refer to the document of HybridComputeMachineRunCommandResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             string runCommandName = "myRunCommand";
-            ResourceIdentifier machineRunCommandResourceId = MachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
-            MachineRunCommandResource machineRunCommand = client.GetMachineRunCommandResource(machineRunCommandResourceId);
+            ResourceIdentifier machineRunCommandResourceId = HybridComputeMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
+            HybridComputeMachineRunCommandResource machineRunCommand = client.GetHybridComputeMachineRunCommandResource(machineRunCommandResourceId);
 
             // invoke the operation
-            MachineRunCommandResource result = await machineRunCommand.GetAsync();
+            HybridComputeMachineRunCommandResource result = await machineRunCommand.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MachineRunCommandData resourceData = result.Data;
+            HybridComputeMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAMachineRunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Delete.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Delete.json
             // this example is just showing the usage of "MachineRunCommands_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MachineRunCommandResource created on azure
-            // for more information of creating MachineRunCommandResource, please refer to the document of MachineRunCommandResource
+            // this example assumes you already have this HybridComputeMachineRunCommandResource created on azure
+            // for more information of creating HybridComputeMachineRunCommandResource, please refer to the document of HybridComputeMachineRunCommandResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             string runCommandName = "myRunCommand";
-            ResourceIdentifier machineRunCommandResourceId = MachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
-            MachineRunCommandResource machineRunCommand = client.GetMachineRunCommandResource(machineRunCommandResourceId);
+            ResourceIdentifier machineRunCommandResourceId = HybridComputeMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
+            HybridComputeMachineRunCommandResource machineRunCommand = client.GetHybridComputeMachineRunCommandResource(machineRunCommandResourceId);
 
             // invoke the operation
             await machineRunCommand.DeleteAsync(WaitUntil.Completed);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateARunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_CreateOrUpdate.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_CreateOrUpdate.json
             // this example is just showing the usage of "MachineRunCommands_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,36 +86,36 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MachineRunCommandResource created on azure
-            // for more information of creating MachineRunCommandResource, please refer to the document of MachineRunCommandResource
+            // this example assumes you already have this HybridComputeMachineRunCommandResource created on azure
+            // for more information of creating HybridComputeMachineRunCommandResource, please refer to the document of HybridComputeMachineRunCommandResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             string runCommandName = "myRunCommand";
-            ResourceIdentifier machineRunCommandResourceId = MachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
-            MachineRunCommandResource machineRunCommand = client.GetMachineRunCommandResource(machineRunCommandResourceId);
+            ResourceIdentifier machineRunCommandResourceId = HybridComputeMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
+            HybridComputeMachineRunCommandResource machineRunCommand = client.GetHybridComputeMachineRunCommandResource(machineRunCommandResourceId);
 
             // invoke the operation
-            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus2"))
+            HybridComputeMachineRunCommandData data = new HybridComputeMachineRunCommandData(new AzureLocation("eastus2"))
             {
                 Source = new MachineRunCommandScriptSource
                 {
                     Script = "Write-Host Hello World!",
                 },
-                Parameters = { new RunCommandInputParameter("param1", "value1"), new RunCommandInputParameter("param2", "value2") },
-                AsyncExecution = false,
+                Parameters = { new RunCommandInputContent("param1", "value1"), new RunCommandInputContent("param2", "value2") },
+                IsAsyncExecution = false,
                 RunAsUser = "user1",
                 RunAsPassword = "<runAsPassword>",
                 TimeoutInSeconds = 3600,
                 OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
                 ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
             };
-            ArmOperation<MachineRunCommandResource> lro = await machineRunCommand.UpdateAsync(WaitUntil.Completed, data);
-            MachineRunCommandResource result = lro.Value;
+            ArmOperation<HybridComputeMachineRunCommandResource> lro = await machineRunCommand.UpdateAsync(WaitUntil.Completed, data);
+            HybridComputeMachineRunCommandResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MachineRunCommandData resourceData = result.Data;
+            HybridComputeMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

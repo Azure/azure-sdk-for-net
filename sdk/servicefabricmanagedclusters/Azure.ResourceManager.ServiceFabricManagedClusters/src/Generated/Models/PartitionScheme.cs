@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     internal readonly partial struct PartitionScheme : IEquatable<PartitionScheme>
     {
         private readonly string _value;
+        /// <summary> Indicates that the partition is based on string names, and is a SingletonPartitionScheme object, The value is 0. </summary>
+        private const string SingletonValue = "Singleton";
+        /// <summary> Indicates that the partition is based on Int64 key ranges, and is a UniformInt64RangePartitionScheme object. The value is 1. </summary>
+        private const string UniformInt64RangeValue = "UniformInt64Range";
+        /// <summary> Indicates that the partition is based on string names, and is a NamedPartitionScheme object. The value is 2. </summary>
+        private const string NamedValue = "Named";
 
         /// <summary> Initializes a new instance of <see cref="PartitionScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartitionScheme(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingletonValue = "Singleton";
-        private const string UniformInt64RangeValue = "UniformInt64Range";
-        private const string NamedValue = "Named";
+            _value = value;
+        }
 
         /// <summary> Indicates that the partition is based on string names, and is a SingletonPartitionScheme object, The value is 0. </summary>
         public static PartitionScheme Singleton { get; } = new PartitionScheme(SingletonValue);
+
         /// <summary> Indicates that the partition is based on Int64 key ranges, and is a UniformInt64RangePartitionScheme object. The value is 1. </summary>
         public static PartitionScheme UniformInt64Range { get; } = new PartitionScheme(UniformInt64RangeValue);
+
         /// <summary> Indicates that the partition is based on string names, and is a NamedPartitionScheme object. The value is 2. </summary>
         public static PartitionScheme Named { get; } = new PartitionScheme(NamedValue);
+
         /// <summary> Determines if two <see cref="PartitionScheme"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PartitionScheme left, PartitionScheme right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PartitionScheme"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PartitionScheme left, PartitionScheme right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PartitionScheme"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PartitionScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PartitionScheme(string value) => new PartitionScheme(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PartitionScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PartitionScheme?(string value) => value == null ? null : new PartitionScheme(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PartitionScheme other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PartitionScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DevCenter.Models
     public readonly partial struct DevCenterHealthStatus : IEquatable<DevCenterHealthStatus>
     {
         private readonly string _value;
+        /// <summary> Unknown health status. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Pending health status. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Healthy health status. </summary>
+        private const string HealthyValue = "Healthy";
+        /// <summary> Warning health status. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Unhealthy health status. </summary>
+        private const string UnhealthyValue = "Unhealthy";
 
         /// <summary> Initializes a new instance of <see cref="DevCenterHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevCenterHealthStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string UnknownValue = "Unknown";
-        private const string PendingValue = "Pending";
-        private const string HealthyValue = "Healthy";
-        private const string WarningValue = "Warning";
-        private const string UnhealthyValue = "Unhealthy";
-
-        /// <summary> Unknown. </summary>
+        /// <summary> Unknown health status. </summary>
         public static DevCenterHealthStatus Unknown { get; } = new DevCenterHealthStatus(UnknownValue);
-        /// <summary> Pending. </summary>
+
+        /// <summary> Pending health status. </summary>
         public static DevCenterHealthStatus Pending { get; } = new DevCenterHealthStatus(PendingValue);
-        /// <summary> Healthy. </summary>
+
+        /// <summary> Healthy health status. </summary>
         public static DevCenterHealthStatus Healthy { get; } = new DevCenterHealthStatus(HealthyValue);
-        /// <summary> Warning. </summary>
+
+        /// <summary> Warning health status. </summary>
         public static DevCenterHealthStatus Warning { get; } = new DevCenterHealthStatus(WarningValue);
-        /// <summary> Unhealthy. </summary>
+
+        /// <summary> Unhealthy health status. </summary>
         public static DevCenterHealthStatus Unhealthy { get; } = new DevCenterHealthStatus(UnhealthyValue);
+
         /// <summary> Determines if two <see cref="DevCenterHealthStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevCenterHealthStatus left, DevCenterHealthStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevCenterHealthStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevCenterHealthStatus left, DevCenterHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterHealthStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevCenterHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevCenterHealthStatus(string value) => new DevCenterHealthStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevCenterHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevCenterHealthStatus?(string value) => value == null ? null : new DevCenterHealthStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevCenterHealthStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevCenterHealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

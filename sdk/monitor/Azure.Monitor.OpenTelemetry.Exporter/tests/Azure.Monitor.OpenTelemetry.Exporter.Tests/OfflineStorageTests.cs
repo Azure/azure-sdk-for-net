@@ -11,6 +11,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
@@ -40,6 +41,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             ActivitySource.AddActivityListener(listener);
 
             HttpPipelineHelper.MinimumRetryInterval = 6000;
+
+            // These tests assert on exact storage contents, which a background drain would race.
+            TransmitFromStorageHandler.DisableEagerDrainForTesting = true;
         }
 
         [Fact]
@@ -53,7 +57,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponse = new MockResponse(200).SetContent("Ok");
             using var transmitter = GetTransmitter(mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -71,7 +76,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
             using var transmitter = GetTransmitter(mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -91,7 +97,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("Too Many Requests");
             using var transmitter = GetTransmitter(mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -108,7 +115,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Transmit
             using var transmitter = GetTransmitter(null);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -134,7 +142,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 429,\"message\": \"Throttle\"},{\"index\": 1,\"statusCode\": 429,\"message\": \"Throttle\"}]}");
             using var transmitter = GetTransmitter(mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -165,7 +174,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponseSuccess = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
             var transmitter = GetTransmitter(mockResponseError, mockResponseSuccess);
 
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -199,7 +209,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponseSuccess = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
             var transmitter = GetTransmitter(mockResponseError, mockResponseSuccess);
 
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -223,11 +234,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItem = CreateTelemetryItem(activity);
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
-;
+
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
             var transmitter = GetTransmitter(mockResponse, mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -267,7 +279,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
 
             // Transmit
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+            transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             // Telemetry should be stored offline as the state is open.
@@ -347,13 +360,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             protected override bool OnTryCreateBlob(byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob blob)
             {
                 blob = new MockFileBlob(_mockStorage);
-                return blob.TryWrite(buffer);
+                return blob.TryWrite(new ReadOnlySpan<byte>(buffer));
             }
 
             protected override bool OnTryCreateBlob(byte[] buffer, out PersistentBlob blob)
             {
                 blob = new MockFileBlob(_mockStorage);
-                return blob.TryWrite(buffer);
+                return blob.TryWrite(new ReadOnlySpan<byte>(buffer));
             }
 
             protected override bool OnTryGetBlob(out PersistentBlob blob)

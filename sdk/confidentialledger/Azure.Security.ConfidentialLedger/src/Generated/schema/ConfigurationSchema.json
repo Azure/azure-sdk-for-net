@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "ConfidentialLedgerClient": {
+          "type": "object",
+          "description": "Configuration for ConfidentialLedgerClient.",
+          "properties": {
+            "LedgerEndpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the LedgerEndpoint."
+            },
+            "ClientCertificate": {
+              "type": "object"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/confidentialLedgerClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "confidentialLedgerClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "CertificateEndpoint": {
+              "type": "string",
+              "format": "uri"
+            },
+            "VerifyConnection": {
+              "type": "boolean"
+            },
+            "UseLedgerGateway": {
+              "type": "boolean"
+            },
+            "EnableArchivedCollectionFallback": {
+              "type": "boolean"
+            },
+            "Failover": {
+              "type": "string"
+            },
+            "FailoverNetworkTimeout": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

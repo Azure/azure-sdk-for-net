@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class PublicCertificateLocationExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PublicCertificateLocation value) => value switch
         {
-            PublicCertificateLocation.Unknown => "Unknown",
             PublicCertificateLocation.CurrentUserMy => "CurrentUserMy",
             PublicCertificateLocation.LocalMachineMy => "LocalMachineMy",
+            PublicCertificateLocation.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicCertificateLocation value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PublicCertificateLocation ToPublicCertificateLocation(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return PublicCertificateLocation.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CurrentUserMy")) return PublicCertificateLocation.CurrentUserMy;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalMachineMy")) return PublicCertificateLocation.LocalMachineMy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CurrentUserMy"))
+            {
+                return PublicCertificateLocation.CurrentUserMy;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalMachineMy"))
+            {
+                return PublicCertificateLocation.LocalMachineMy;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
+            {
+                return PublicCertificateLocation.Unknown;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicCertificateLocation value.");
         }
     }

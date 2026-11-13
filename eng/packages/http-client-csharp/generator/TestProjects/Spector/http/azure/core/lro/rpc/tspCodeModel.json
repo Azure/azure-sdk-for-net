@@ -8,6 +8,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "OperationState",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Azure.Core.Foundations.OperationState",
       "valueType": {
         "$id": "2",
@@ -29,7 +30,8 @@
             "$ref": "1"
           },
           "doc": "The operation has not started.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -43,7 +45,8 @@
             "$ref": "1"
           },
           "doc": "The operation is in progress.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -57,7 +60,8 @@
             "$ref": "1"
           },
           "doc": "The operation has completed successfully.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "6",
@@ -71,7 +75,8 @@
             "$ref": "1"
           },
           "doc": "The operation has failed.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "7",
@@ -85,7 +90,8 @@
             "$ref": "1"
           },
           "doc": "The operation has been canceled by the user.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Azure.Core.Foundations",
@@ -93,12 +99,16 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Json,LroInitial,LroPolling,LroFinalEnvelope",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.Versions",
       "valueType": {
         "$id": "9",
@@ -120,7 +130,8 @@
             "$ref": "8"
           },
           "doc": "The 2022-12-01-preview version.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Core.Lro.Rpc",
@@ -128,14 +139,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "11",
       "kind": "constant",
-      "name": "longRunningRpcContentType",
+      "name": "LongRunningRpcContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -146,12 +158,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "longRunningRpcContentType1",
+      "name": "LongRunningRpcContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -162,12 +175,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "longRunningRpcContentType2",
+      "name": "LongRunningRpcContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -178,12 +192,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
       "kind": "constant",
-      "name": "longRunningRpcContentType3",
+      "name": "LongRunningRpcContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -194,7 +209,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -202,16 +218,28 @@
       "$id": "19",
       "kind": "model",
       "name": "GenerationOptions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Lro.Rpc",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.GenerationOptions",
       "usage": "Input,Json",
       "doc": "Options for the generation.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "GenerationOptions"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "20",
           "kind": "property",
           "name": "prompt",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "prompt",
           "doc": "Prompt.",
           "type": {
@@ -232,7 +260,8 @@
               "name": "prompt"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -240,16 +269,24 @@
       "$id": "22",
       "kind": "model",
       "name": "ResourceOperationStatusGenerationResponseGenerationResultError",
+      "apiVersions": [],
       "namespace": "Azure.Core",
       "crossLanguageDefinitionId": "Azure.Core.ResourceOperationStatus",
       "usage": "Json,LroInitial",
       "doc": "Provides status details for long running operations.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceOperationStatus"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "23",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "doc": "The unique ID of the operation.",
           "type": {
@@ -270,12 +307,14 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "25",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "The status of the operation",
           "type": {
@@ -292,28 +331,38 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "26",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "Error object that describes the error when status is \"Failed\".",
           "type": {
             "$id": "27",
             "kind": "model",
             "name": "Error",
+            "apiVersions": [],
             "namespace": "Azure.Core.Foundations",
             "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
             "usage": "Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
             "doc": "The error object.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "Error"
+              }
+            },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "28",
                 "kind": "property",
                 "name": "code",
+                "apiVersions": [],
                 "serializedName": "code",
                 "doc": "One of a server-defined set of error codes.",
                 "type": {
@@ -334,12 +383,14 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "30",
                 "kind": "property",
                 "name": "message",
+                "apiVersions": [],
                 "serializedName": "message",
                 "doc": "A human-readable representation of the error.",
                 "type": {
@@ -360,12 +411,14 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "32",
                 "kind": "property",
                 "name": "target",
+                "apiVersions": [],
                 "serializedName": "target",
                 "doc": "The target of the error.",
                 "type": {
@@ -386,12 +439,14 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "34",
                 "kind": "property",
                 "name": "details",
+                "apiVersions": [],
                 "serializedName": "details",
                 "doc": "An array of details about specific errors that led to this reported error.",
                 "type": {
@@ -415,28 +470,38 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "36",
                 "kind": "property",
                 "name": "innererror",
+                "apiVersions": [],
                 "serializedName": "innererror",
                 "doc": "An object containing more specific information than the current object about the error.",
                 "type": {
                   "$id": "37",
                   "kind": "model",
                   "name": "InnerError",
+                  "apiVersions": [],
                   "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
                   "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
                   "decorators": [],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "InnerError"
+                    }
+                  },
+                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "38",
                       "kind": "property",
                       "name": "code",
+                      "apiVersions": [],
                       "serializedName": "code",
                       "doc": "One of a server-defined set of error codes.",
                       "type": {
@@ -457,12 +522,14 @@
                           "name": "code"
                         }
                       },
-                      "isHttpMetadata": false
+                      "isHttpMetadata": false,
+                      "isExactName": false
                     },
                     {
                       "$id": "40",
                       "kind": "property",
                       "name": "innererror",
+                      "apiVersions": [],
                       "serializedName": "innererror",
                       "doc": "Inner error.",
                       "type": {
@@ -479,7 +546,8 @@
                           "name": "innererror"
                         }
                       },
-                      "isHttpMetadata": false
+                      "isHttpMetadata": false,
+                      "isExactName": false
                     }
                   ]
                 },
@@ -494,7 +562,8 @@
                     "name": "innererror"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -509,28 +578,42 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "41",
           "kind": "property",
           "name": "result",
+          "apiVersions": [],
           "serializedName": "result",
           "doc": "The result of the operation.",
           "type": {
             "$id": "42",
             "kind": "model",
             "name": "GenerationResult",
+            "apiVersions": [
+              "2022-12-01-preview"
+            ],
             "namespace": "_Specs_.Azure.Core.Lro.Rpc",
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.GenerationResult",
             "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
             "doc": "Result of the generation.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "GenerationResult"
+              }
+            },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "43",
                 "kind": "property",
                 "name": "data",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
                 "serializedName": "data",
                 "doc": "The data.",
                 "type": {
@@ -551,7 +634,8 @@
                     "name": "data"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -566,7 +650,8 @@
               "name": "result"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -583,16 +668,24 @@
       "$id": "45",
       "kind": "model",
       "name": "ErrorResponse",
+      "apiVersions": [],
       "namespace": "Azure.Core.Foundations",
       "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse",
       "usage": "Json,Exception",
       "doc": "A response containing error details.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "46",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
@@ -609,12 +702,14 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "47",
           "kind": "property",
           "name": "errorCode",
+          "apiVersions": [],
           "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
@@ -635,7 +730,8 @@
               "name": "errorCode"
             }
           },
-          "isHttpMetadata": true
+          "isHttpMetadata": true,
+          "isExactName": false
         }
       ]
     },
@@ -643,16 +739,24 @@
       "$id": "49",
       "kind": "model",
       "name": "OperationStatusGenerationResultError",
+      "apiVersions": [],
       "namespace": "Azure.Core.Foundations",
       "crossLanguageDefinitionId": "Azure.Core.Foundations.OperationStatus",
       "usage": "LroPolling,LroFinalEnvelope",
       "doc": "Provides status details for long running operations.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "OperationStatus"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "50",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "doc": "The unique ID of the operation.",
           "type": {
@@ -673,12 +777,14 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "52",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "The status of the operation",
           "type": {
@@ -695,12 +801,14 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "53",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "Error object that describes the error when status is \"Failed\".",
           "type": {
@@ -717,12 +825,14 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "54",
           "kind": "property",
           "name": "result",
+          "apiVersions": [],
           "serializedName": "result",
           "doc": "The result of the operation.",
           "type": {
@@ -739,7 +849,8 @@
               "name": "result"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -749,6 +860,7 @@
       "$id": "55",
       "kind": "client",
       "name": "RpcClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.Core.Lro.Rpc",
       "doc": "Illustrates bodies templated with Azure Core with long-running RPC operation",
       "methods": [
@@ -756,6 +868,7 @@
           "$id": "56",
           "kind": "lro",
           "name": "longRunningRpc",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -765,7 +878,7 @@
           "operation": {
             "$id": "57",
             "name": "longRunningRpc",
-            "resourceName": "Rpc",
+            "isExactName": false,
             "summary": "Generate data.",
             "doc": "Generate data.",
             "accessibility": "public",
@@ -798,10 +911,45 @@
                 "scope": "Client",
                 "decorators": [],
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.apiVersion",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "61",
+                    "kind": "method",
+                    "name": "apiVersion",
+                    "serializedName": "apiVersion",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "62",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "",
+                    "isApiVersion": true,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "63",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2022-12-01-preview"
+                    },
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.apiVersion",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "61",
+                "$id": "64",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
@@ -815,15 +963,37 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.contentType"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "65",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "11"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "62",
+                "$id": "66",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "13"
+                  "$ref": "15"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -831,10 +1001,31 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.accept"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "67",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "17"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "63",
+                "$id": "68",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
@@ -851,7 +1042,34 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.body"
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.body",
+                "methodParameterSegments": [
+                  {
+                    "$id": "69",
+                    "kind": "method",
+                    "name": "body",
+                    "serializedName": "body",
+                    "doc": "The body parameter.",
+                    "type": {
+                      "$ref": "19"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.body",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -868,12 +1086,12 @@
                     "nameInResponse": "Operation-Location",
                     "doc": "The location for monitoring the operation state.",
                     "type": {
-                      "$id": "64",
+                      "$id": "70",
                       "kind": "url",
                       "name": "ResourceLocation",
                       "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
                       "baseType": {
-                        "$id": "65",
+                        "$id": "71",
                         "kind": "url",
                         "name": "url",
                         "crossLanguageDefinitionId": "TypeSpec.url",
@@ -886,7 +1104,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -899,61 +1122,18 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Lro.Rpc"
           },
           "parameters": [
             {
-              "$id": "66",
-              "kind": "method",
-              "name": "body",
-              "serializedName": "body",
-              "doc": "The body parameter.",
-              "type": {
-                "$ref": "19"
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.body",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "69"
             },
             {
-              "$id": "67",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "doc": "Body parameter's content type. Known values are application/json",
-              "type": {
-                "$ref": "15"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "65"
             },
             {
-              "$id": "68",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "17"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "67"
             }
           ],
           "response": {
@@ -984,13 +1164,13 @@
       ],
       "parameters": [
         {
-          "$id": "69",
+          "$id": "72",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "70",
+            "$id": "73",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1001,7 +1181,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "71",
+              "$id": "74",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1011,14 +1191,20 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.endpoint",
+          "isExactName": false
+        },
+        {
+          "$ref": "61"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

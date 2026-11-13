@@ -7,73 +7,48 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxAnalysisConfig. </summary>
     public partial class NginxAnalysisConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxAnalysisConfig"/>. </summary>
         public NginxAnalysisConfig()
         {
             Files = new ChangeTrackingList<NginxConfigurationFile>();
-            ProtectedFiles = new ChangeTrackingList<NginxConfigurationProtectedFileContent>();
+            ProtectedFiles = new ChangeTrackingList<NginxConfigurationContentProtectedFile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxAnalysisConfig"/>. </summary>
         /// <param name="rootFile"> The root file of the NGINX config file(s). It must match one of the files' filepath. </param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
-        /// <param name="package"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxAnalysisConfig(string rootFile, IList<NginxConfigurationFile> files, IList<NginxConfigurationProtectedFileContent> protectedFiles, NginxConfigurationPackage package, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="package"> Nginx Configuration Package. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxAnalysisConfig(string rootFile, IList<NginxConfigurationFile> files, IList<NginxConfigurationContentProtectedFile> protectedFiles, NginxConfigurationPackage package, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RootFile = rootFile;
             Files = files;
             ProtectedFiles = protectedFiles;
             Package = package;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The root file of the NGINX config file(s). It must match one of the files' filepath. </summary>
         public string RootFile { get; set; }
-        /// <summary> Gets the files. </summary>
+
+        /// <summary> Gets the Files. </summary>
         public IList<NginxConfigurationFile> Files { get; }
-        /// <summary> Gets the protected files. </summary>
-        public IList<NginxConfigurationProtectedFileContent> ProtectedFiles { get; }
-        /// <summary> Gets or sets the package. </summary>
+
+        /// <summary> Gets the ProtectedFiles. </summary>
+        public IList<NginxConfigurationContentProtectedFile> ProtectedFiles { get; }
+
+        /// <summary> Nginx Configuration Package. </summary>
         public NginxConfigurationPackage Package { get; set; }
     }
 }

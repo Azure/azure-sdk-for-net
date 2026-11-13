@@ -116,7 +116,8 @@ namespace Azure.Search.Documents.Batching
         protected override async Task<bool> OnSubmitBatchAsync(IList<PublisherAction<IndexDocumentsAction<T>>> batch, CancellationToken cancellationToken)
         {
             // Bail early if someone sent an empty batch
-            if (batch.Count == 0) { return false; }
+            if (batch.Count == 0)
+            { return false; }
 
             // Notify the action is being sent
             foreach (PublisherAction<IndexDocumentsAction<T>> action in batch)
@@ -166,7 +167,7 @@ namespace Azure.Search.Documents.Batching
                 }
 
                 // Search currently uses 503s for throttling
-                return (ex is RequestFailedException failure && failure.Status ==  503);
+                return (ex is RequestFailedException failure && failure.Status == 503);
             }
 
             // Handle individual responses which might be success or failure

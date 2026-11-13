@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.ServerSentEvents;
+using System.Text;
 using System.Text.Json;
 
 namespace Azure.AI.Agents.Persistent;
@@ -47,36 +48,51 @@ public abstract partial class StreamingUpdate
     internal static IEnumerable<StreamingUpdate> FromEvent(SseItem<byte[]> sseItem)
     {
         StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(sseItem.EventType);
-        using JsonDocument dataDocument = JsonDocument.Parse(sseItem.Data);
-        JsonElement e = dataDocument.RootElement;
-
-        return updateKind switch
+        try
         {
-            StreamingUpdateReason.ThreadCreated => ThreadUpdate.DeserializeThreadCreationUpdates(e, updateKind),
-            StreamingUpdateReason.RunCreated
-            or StreamingUpdateReason.RunQueued
-            or StreamingUpdateReason.RunInProgress
-            or StreamingUpdateReason.RunCompleted
-            or StreamingUpdateReason.RunIncomplete
-            or StreamingUpdateReason.RunFailed
-            or StreamingUpdateReason.RunCancelling
-            or StreamingUpdateReason.RunCancelled
-            or StreamingUpdateReason.RunExpired => RunUpdate.DeserializeRunUpdates(e, updateKind),
-            StreamingUpdateReason.RunRequiresAction => DeserializeRequiredActionUpdate(e),
-            StreamingUpdateReason.RunStepCreated
-            or StreamingUpdateReason.RunStepInProgress
-            or StreamingUpdateReason.RunStepCompleted
-            or StreamingUpdateReason.RunStepFailed
-            or StreamingUpdateReason.RunStepCancelled
-            or StreamingUpdateReason.RunStepExpired => RunStepUpdate.DeserializeRunStepUpdates(e, updateKind),
-            StreamingUpdateReason.MessageCreated
-            or StreamingUpdateReason.MessageInProgress
-            or StreamingUpdateReason.MessageCompleted
-            or StreamingUpdateReason.MessageFailed => MessageStatusUpdate.DeserializeMessageStatusUpdates(e, updateKind),
-            StreamingUpdateReason.RunStepUpdated => RunStepDetailsUpdate.DeserializeRunStepDetailsUpdates(e, updateKind),
-            StreamingUpdateReason.MessageUpdated => MessageContentUpdate.DeserializeMessageContentUpdates(e, updateKind),
-            _ => null,
-        };
+            using JsonDocument dataDocument = sseItem.Data is null || sseItem.Data.Length == 0 ? null : JsonDocument.Parse(sseItem.Data);
+            JsonElement e = dataDocument is null ? new JsonElement() : dataDocument.RootElement;
+
+            return updateKind switch
+            {
+                StreamingUpdateReason.ThreadCreated => ThreadUpdate.DeserializeThreadCreationUpdates(e, updateKind),
+                StreamingUpdateReason.RunCreated
+                or StreamingUpdateReason.RunQueued
+                or StreamingUpdateReason.RunInProgress
+                or StreamingUpdateReason.RunCompleted
+                or StreamingUpdateReason.RunIncomplete
+                or StreamingUpdateReason.RunFailed
+                or StreamingUpdateReason.RunCancelling
+                or StreamingUpdateReason.RunCancelled
+                or StreamingUpdateReason.RunExpired => RunUpdate.DeserializeRunUpdates(e, updateKind),
+                StreamingUpdateReason.RunRequiresAction => DeserializeRequiredActionUpdate(e),
+                StreamingUpdateReason.RunStepCreated
+                or StreamingUpdateReason.RunStepInProgress
+                or StreamingUpdateReason.RunStepCompleted
+                or StreamingUpdateReason.RunStepFailed
+                or StreamingUpdateReason.RunStepCancelled
+                or StreamingUpdateReason.RunStepExpired => RunStepUpdate.DeserializeRunStepUpdates(e, updateKind),
+                StreamingUpdateReason.MessageCreated
+                or StreamingUpdateReason.MessageInProgress
+                or StreamingUpdateReason.MessageCompleted
+                or StreamingUpdateReason.MessageFailed => MessageStatusUpdate.DeserializeMessageStatusUpdates(e, updateKind),
+                StreamingUpdateReason.RunStepUpdated => RunStepDetailsUpdate.DeserializeRunStepDetailsUpdates(e, updateKind),
+                StreamingUpdateReason.MessageUpdated => MessageContentUpdate.DeserializeMessageContentUpdates(e, updateKind),
+                StreamingUpdateReason.KeepAlive => KeepAliveUpdate.GetRunSteps(),
+                _ => null,
+            };
+        }
+        catch (JsonException ex)
+        {
+            string invalidJson = sseItem.Data is null ? "" : Encoding.UTF8.GetString(sseItem.Data);
+            if (invalidJson.Length > 500)
+            {
+                invalidJson = invalidJson.Remove(500);
+                invalidJson += "...";
+            }
+            string invalidEvent = string.IsNullOrEmpty(sseItem.EventType) ? "<Unknown>" : sseItem.EventType;
+            throw new InvalidOperationException($"The stream returned invalid JSON: \"{invalidJson}\" for event of type {invalidEvent}. Original error: {ex.Message}", ex);
+        }
     }
 
     internal static IEnumerable<StreamingUpdate> DeserializeRequiredActionUpdate(JsonElement e)

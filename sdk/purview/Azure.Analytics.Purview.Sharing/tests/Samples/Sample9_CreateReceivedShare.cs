@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "11726395-c265-4d91-acc8-7bb2cc650f5c", RequestContent.Create(data));
 #endif
 
-#endregion
+            #endregion
         }
     }
 }

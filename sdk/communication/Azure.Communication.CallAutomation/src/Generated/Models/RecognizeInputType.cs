@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Determines the type of the recognition. </summary>
+    /// <summary> Defines the type of the recognize input. </summary>
     public readonly partial struct RecognizeInputType : IEquatable<RecognizeInputType>
     {
         private readonly string _value;

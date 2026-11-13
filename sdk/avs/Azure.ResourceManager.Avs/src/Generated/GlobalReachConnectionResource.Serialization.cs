@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class GlobalReachConnectionResource : IJsonModel<GlobalReachConnectionData>
     {
-        private static GlobalReachConnectionData s_dataDeserializationInstance;
-        private static GlobalReachConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GlobalReachConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GlobalReachConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GlobalReachConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GlobalReachConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GlobalReachConnectionData>)Data).Write(writer, options);
 
-        GlobalReachConnectionData IJsonModel<GlobalReachConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GlobalReachConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GlobalReachConnectionData IJsonModel<GlobalReachConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GlobalReachConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GlobalReachConnectionData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GlobalReachConnectionData IPersistableModel<GlobalReachConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GlobalReachConnectionData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<GlobalReachConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GlobalReachConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GlobalReachConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

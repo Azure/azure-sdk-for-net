@@ -1,6 +1,6 @@
 # Release History
 
-## 12.24.0-beta.2 (Unreleased)
+## 12.29.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,95 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.29.0-beta.1 (2026-11-05)
+
+### Features Added
+- Added support for Session Authentication for `TokenCredential`-authenticated clients using GET Blob operations. This is currently disabled by default and can be enabled via `DataLakeClientOptions.SessionOptions.SessionMode`.
+- Added support for locality-aware downloads for `DataLakeFileClient.ReadTo`, `DataLakeFileClient.ReadToAsync`, `DataLakeFileClient.OpenRead`, and `DataLakeFileClient.OpenReadAsync` operations. This is currently disabled by default and can be enabled via `DataLakeFileReadToOptions.LayoutAwareRouting` and `DataLakeOpenReadOptions.LayoutAwareRouting`.
+- Added support for scheduling file deletion with `DataLakeFileClient.Upload` and `UploadAsync`.
+
+### Breaking Changes
+- Changed the default value of `StorageTransferOptions.InitialTransferSize` used by partitioned uploads and downloads when it is not set by the caller. It now matches the default size of subsequent chunks instead of 256 MB:
+  - Downloads (`DataLakeFileClient.ReadTo`/`ReadToAsync`): the first range request now defaults to 4 MB, the same as subsequent ranges. Previously, it was 256 MB when no transfer checksum was used.
+  - Uploads (`DataLakeFileClient.Upload`/`UploadAsync`): a file is now uploaded in a single Append and Flush only if its content is smaller than the default block size (4 MB, or 8 MB for content of 100 MB or more). Previously, content smaller than 256 MB was uploaded in a single append.
+  - This means uploads and downloads may be partitioned more often, leading to more requests.
+  - Explicitly set `InitialTransferSize` and `MaximumTransferSize` values are still respected. To restore the previous behavior, set `StorageTransferOptions.InitialTransferSize` to 256 MB.
+
+### Bugs Fixed
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `DataLakeFileSystemClient.GenerateSasUri(...)`
+  - `DataLakeFileSystemClient.GenerateUserDelegationSasUri(...)`
+  - `DataLakePathClient.GenerateSasUri(...)`
+  - `DataLakePathClient.GenerateUserDelegationSasUri(...)`
+  - `DataLakeServiceClient.GenerateAccountSasUri(...)`
+  - `DataLakeSasBuilder`
+
+## 12.28.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.28.0-beta.1
+
+## 12.28.0-beta.1 (2026-07-21)
+
+### Features Added
+- Added support for service version 2026-10-06.
+
+## 12.27.1 (2026-06-23)
+
+### Bugs Fixed
+- Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on Data Lake clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `DataLakeSasBuilder`.
+
+## 12.27.0 (2026-06-04)
+
+### Features Added
+- Includes all features from 12.27.0-beta.1
+
+## 12.26.0 (2026-05-12)
+
+### Features Added
+- Includes all features from 12.26.0-beta.1
+
+### Bugs Fixed
+- Fixed issue where the `TokenRequestContext.Scopes` contained a double slash (e.g. `https://storage.azure.com//.default`) when using `TokenCredential` authentication. (#58295)
+
+## 12.27.0-beta.1 (2026-03-24)
+
+### Features Added
+- Added support for service version 2026-06-06.
+- Added DataLakePathClient, DataLakeFileClient, and DataLakeDirectoryClient.GetSystemProperties() and .GetSystemPropertiesAsync().
+- Added DataLakePathClient, DataLakeFileClient, and DataLakeDirectoryClient.GetTags(), .GetTagsAsync(), .SetTags(), and .SetTagsAsync().
+
+## 12.26.0-beta.1 (2026-01-20)
+
+### Features Added
+- Added support for service version 2026-04-06.
+- Added support for Content Validation via Structured Message
+- Added cross-tenant support for Principal-Bound User Delegation SAS.
+- Added support for Dynamic User Delegation SAS.
+
+### Other Changes
+- Changed the default concurrency transfer count from 5 to Math.Clamp(Environment.ProcessorCount * 2, 8, 32). This controls the maximum number of concurrent tasks that will be used during large downloads or uploads, and this change should result in higher throughput for these operations by default in most environments. This can be reverted by enabling "Azure.Storage.UseLegacyDefaultConcurrency" in the AppContext switch or "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY" in the environment variable.
+
+## 12.25.0 (2026-01-08)
+
+### Features Added
+- Includes all features from 12.25.0-beta.1
+
+## 12.25.0-beta.1 (2025-11-17)
+
+### Features Added
+- Added support for service version 2026-02-06.
+- Added support for Principal-Bound Identity User Delegation SAS
+- Added support for the StartFrom parameter on DataLakeFileSystemClient.GetPaths() and .GetPathsAsync().
+
+### Breaking Changes
+- All parameters for the existing DataLakeFileSystemClient.GetPaths() and .GetPathsAsync() overloads are now required, as these overloads are being phased out and hidden from IntelliSense.  We recommend switching to the new overloads taking optional DataLakeGetPathsOptions.
+
+## 12.24.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
 
 ## 12.23.0 (2025-07-14)
 

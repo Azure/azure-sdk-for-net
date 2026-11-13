@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubJobType : IEquatable<IotHubJobType>
     {
         private readonly string _value;
+        /// <summary> unknown. </summary>
+        private const string UnknownValue = "unknown";
+        /// <summary> export. </summary>
+        private const string ExportValue = "export";
+        /// <summary> import. </summary>
+        private const string ImportValue = "import";
+        /// <summary> backup. </summary>
+        private const string BackupValue = "backup";
+        /// <summary> readDeviceProperties. </summary>
+        private const string ReadDevicePropertiesValue = "readDeviceProperties";
+        /// <summary> writeDeviceProperties. </summary>
+        private const string WriteDevicePropertiesValue = "writeDeviceProperties";
+        /// <summary> updateDeviceConfiguration. </summary>
+        private const string UpdateDeviceConfigurationValue = "updateDeviceConfiguration";
+        /// <summary> rebootDevice. </summary>
+        private const string RebootDeviceValue = "rebootDevice";
+        /// <summary> factoryResetDevice. </summary>
+        private const string FactoryResetDeviceValue = "factoryResetDevice";
+        /// <summary> firmwareUpdate. </summary>
+        private const string FirmwareUpdateValue = "firmwareUpdate";
 
         /// <summary> Initializes a new instance of <see cref="IotHubJobType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubJobType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "unknown";
-        private const string ExportValue = "export";
-        private const string ImportValue = "import";
-        private const string BackupValue = "backup";
-        private const string ReadDevicePropertiesValue = "readDeviceProperties";
-        private const string WriteDevicePropertiesValue = "writeDeviceProperties";
-        private const string UpdateDeviceConfigurationValue = "updateDeviceConfiguration";
-        private const string RebootDeviceValue = "rebootDevice";
-        private const string FactoryResetDeviceValue = "factoryResetDevice";
-        private const string FirmwareUpdateValue = "firmwareUpdate";
+            _value = value;
+        }
 
         /// <summary> unknown. </summary>
         public static IotHubJobType Unknown { get; } = new IotHubJobType(UnknownValue);
+
         /// <summary> export. </summary>
         public static IotHubJobType Export { get; } = new IotHubJobType(ExportValue);
+
         /// <summary> import. </summary>
         public static IotHubJobType Import { get; } = new IotHubJobType(ImportValue);
+
         /// <summary> backup. </summary>
         public static IotHubJobType Backup { get; } = new IotHubJobType(BackupValue);
+
         /// <summary> readDeviceProperties. </summary>
         public static IotHubJobType ReadDeviceProperties { get; } = new IotHubJobType(ReadDevicePropertiesValue);
+
         /// <summary> writeDeviceProperties. </summary>
         public static IotHubJobType WriteDeviceProperties { get; } = new IotHubJobType(WriteDevicePropertiesValue);
+
         /// <summary> updateDeviceConfiguration. </summary>
         public static IotHubJobType UpdateDeviceConfiguration { get; } = new IotHubJobType(UpdateDeviceConfigurationValue);
+
         /// <summary> rebootDevice. </summary>
         public static IotHubJobType RebootDevice { get; } = new IotHubJobType(RebootDeviceValue);
+
         /// <summary> factoryResetDevice. </summary>
         public static IotHubJobType FactoryResetDevice { get; } = new IotHubJobType(FactoryResetDeviceValue);
+
         /// <summary> firmwareUpdate. </summary>
         public static IotHubJobType FirmwareUpdate { get; } = new IotHubJobType(FirmwareUpdateValue);
+
         /// <summary> Determines if two <see cref="IotHubJobType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubJobType left, IotHubJobType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubJobType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubJobType left, IotHubJobType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubJobType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubJobType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubJobType(string value) => new IotHubJobType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubJobType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubJobType?(string value) => value == null ? null : new IotHubJobType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubJobType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubJobType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

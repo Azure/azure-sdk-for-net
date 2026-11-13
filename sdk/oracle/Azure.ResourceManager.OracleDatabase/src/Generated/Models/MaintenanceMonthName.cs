@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,68 +15,107 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct MaintenanceMonthName : IEquatable<MaintenanceMonthName>
     {
         private readonly string _value;
+        /// <summary> January value. </summary>
+        private const string JanuaryValue = "January";
+        /// <summary> February value. </summary>
+        private const string FebruaryValue = "February";
+        /// <summary> March value. </summary>
+        private const string MarchValue = "March";
+        /// <summary> April value. </summary>
+        private const string AprilValue = "April";
+        /// <summary> May value. </summary>
+        private const string MayValue = "May";
+        /// <summary> June value. </summary>
+        private const string JuneValue = "June";
+        /// <summary> July value. </summary>
+        private const string JulyValue = "July";
+        /// <summary> August value. </summary>
+        private const string AugustValue = "August";
+        /// <summary> September value. </summary>
+        private const string SeptemberValue = "September";
+        /// <summary> October value. </summary>
+        private const string OctoberValue = "October";
+        /// <summary> November value. </summary>
+        private const string NovemberValue = "November";
+        /// <summary> December value. </summary>
+        private const string DecemberValue = "December";
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceMonthName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MaintenanceMonthName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string JanuaryValue = "January";
-        private const string FebruaryValue = "February";
-        private const string MarchValue = "March";
-        private const string AprilValue = "April";
-        private const string MayValue = "May";
-        private const string JuneValue = "June";
-        private const string JulyValue = "July";
-        private const string AugustValue = "August";
-        private const string SeptemberValue = "September";
-        private const string OctoberValue = "October";
-        private const string NovemberValue = "November";
-        private const string DecemberValue = "December";
+            _value = value;
+        }
 
         /// <summary> January value. </summary>
         public static MaintenanceMonthName January { get; } = new MaintenanceMonthName(JanuaryValue);
+
         /// <summary> February value. </summary>
         public static MaintenanceMonthName February { get; } = new MaintenanceMonthName(FebruaryValue);
+
         /// <summary> March value. </summary>
         public static MaintenanceMonthName March { get; } = new MaintenanceMonthName(MarchValue);
+
         /// <summary> April value. </summary>
         public static MaintenanceMonthName April { get; } = new MaintenanceMonthName(AprilValue);
+
         /// <summary> May value. </summary>
         public static MaintenanceMonthName May { get; } = new MaintenanceMonthName(MayValue);
+
         /// <summary> June value. </summary>
         public static MaintenanceMonthName June { get; } = new MaintenanceMonthName(JuneValue);
+
         /// <summary> July value. </summary>
         public static MaintenanceMonthName July { get; } = new MaintenanceMonthName(JulyValue);
+
         /// <summary> August value. </summary>
         public static MaintenanceMonthName August { get; } = new MaintenanceMonthName(AugustValue);
+
         /// <summary> September value. </summary>
         public static MaintenanceMonthName September { get; } = new MaintenanceMonthName(SeptemberValue);
+
         /// <summary> October value. </summary>
         public static MaintenanceMonthName October { get; } = new MaintenanceMonthName(OctoberValue);
+
         /// <summary> November value. </summary>
         public static MaintenanceMonthName November { get; } = new MaintenanceMonthName(NovemberValue);
+
         /// <summary> December value. </summary>
         public static MaintenanceMonthName December { get; } = new MaintenanceMonthName(DecemberValue);
+
         /// <summary> Determines if two <see cref="MaintenanceMonthName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MaintenanceMonthName left, MaintenanceMonthName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MaintenanceMonthName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MaintenanceMonthName left, MaintenanceMonthName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenanceMonthName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MaintenanceMonthName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MaintenanceMonthName(string value) => new MaintenanceMonthName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MaintenanceMonthName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MaintenanceMonthName?(string value) => value == null ? null : new MaintenanceMonthName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MaintenanceMonthName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MaintenanceMonthName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

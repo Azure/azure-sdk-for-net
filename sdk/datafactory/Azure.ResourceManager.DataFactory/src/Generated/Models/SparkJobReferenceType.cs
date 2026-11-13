@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct SparkJobReferenceType : IEquatable<SparkJobReferenceType>
     {
         private readonly string _value;
+        /// <summary> SparkJobDefinitionReference. </summary>
+        private const string SparkJobDefinitionReferenceValue = "SparkJobDefinitionReference";
 
         /// <summary> Initializes a new instance of <see cref="SparkJobReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SparkJobReferenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SparkJobDefinitionReferenceValue = "SparkJobDefinitionReference";
+            _value = value;
+        }
 
         /// <summary> SparkJobDefinitionReference. </summary>
         public static SparkJobReferenceType SparkJobDefinitionReference { get; } = new SparkJobReferenceType(SparkJobDefinitionReferenceValue);
+
         /// <summary> Determines if two <see cref="SparkJobReferenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SparkJobReferenceType left, SparkJobReferenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SparkJobReferenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SparkJobReferenceType left, SparkJobReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SparkJobReferenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SparkJobReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SparkJobReferenceType(string value) => new SparkJobReferenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SparkJobReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SparkJobReferenceType?(string value) => value == null ? null : new SparkJobReferenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SparkJobReferenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SparkJobReferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,28 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedUri, actualUri);
         }
 
+        [Test]
+        public void BlobUriBuilder_UserDelegationSasKeyTimes_RoundTrip()
+        {
+            string skt = "2026-01-01T10:00:00Z";
+            string ske = "2026-01-01T12:00:00Z";
+            string se = "2026-01-01T13:00:00Z";
+            string uriString =
+                "https://account.blob.core.windows.net/container/blob" +
+                "?skoid=oid&sktid=tid&skt=" + Uri.EscapeDataString(skt) + "&ske=" + Uri.EscapeDataString(ske) + "&sks=b&skv=2022-11-02" +
+                "&sp=r&sr=b&sv=2022-11-02&se=" + Uri.EscapeDataString(se) + "&sig=abc";
+
+            var blobUriBuilder = new BlobUriBuilder(new Uri(uriString));
+
+            Dictionary<string, string> queryParameters = blobUriBuilder.ToUri().Query.TrimStart('?').Split('&')
+                .ToDictionary(
+                    s => s.Split('=')[0],
+                    s => Uri.UnescapeDataString(s.Split('=')[1]));
+
+            Assert.AreEqual(skt, queryParameters[Constants.Sas.Parameters.KeyStart]);
+            Assert.AreEqual(ske, queryParameters[Constants.Sas.Parameters.KeyExpiry]);
+        }
+
         [RecordedTest]
         public void BlobUriBuilder_RegularUrl_AccountTest()
         {
@@ -56,6 +79,58 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("", blobUriBuilder.Snapshot);
             Assert.IsNull(blobUriBuilder.Sas);
             Assert.AreEqual("comp=list", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        [TestCase("https://myaccount.blob.core.windows.net/")]
+        [TestCase("https://myaccount-secondary.blob.core.windows.net/")]
+        [TestCase("https://myaccount-dualstack.blob.core.windows.net/")]
+        [TestCase("https://myaccount-ipv6.blob.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-dualstack.blob.core.windows.net/")]
+        [TestCase("https://myaccount-secondary-ipv6.blob.core.windows.net/")]
+        public void BlobUriBuilder_Secondary_IPV6_Dualstack(string uriString)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("myaccount", blobUriBuilder.AccountName);
+            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        [TestCase("https://md-d3rqxhqbxbwq.blob.core.windows.net/", "md-d3rqxhqbxbwq")]
+        [TestCase("https://md-ssd-bndub02px100c21.blob.core.windows.net/", "md-ssd-bndub02px100c21")]
+        public void BlobUriBuilder_InternalAccounts(string uriString, string actualAccountName)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual(actualAccountName, blobUriBuilder.AccountName);
+            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
             Assert.AreEqual(443, blobUriBuilder.Port);
             Assert.AreEqual(originalUri, newUri);
         }

@@ -1,0 +1,14 @@
+# Azure.Storage.ChangeFeed.Common approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# This project exists only for IDE navigation and build validation; its sources are
+# compiled into consumer packages via Compile Include linking and it is not shipped as
+# a NuGet package (IsShippable/IsPackable are false). XML doc comments are therefore not
+# authored on these internal shared sources.
+nowarn:CS1591
+
+# The shared Avro/change-feed sources use reflection-style and dynamic-code patterns that
+# trip the trimming/AOT analyzers here. AOT compatibility is validated in the shipping
+# consumer packages, and this non-shipping validation project opts out (AotCompatOptOut=true).
+nowarn:IL2026
+nowarn:IL3050

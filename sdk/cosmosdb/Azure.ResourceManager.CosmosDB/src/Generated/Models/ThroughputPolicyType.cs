@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct ThroughputPolicyType : IEquatable<ThroughputPolicyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ThroughputPolicyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ThroughputPolicyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "none";
         private const string EqualValue = "equal";
         private const string CustomValue = "custom";
 
-        /// <summary> none. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThroughputPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ThroughputPolicyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static ThroughputPolicyType None { get; } = new ThroughputPolicyType(NoneValue);
-        /// <summary> equal. </summary>
+
+        /// <summary> Gets the Equal. </summary>
         public static ThroughputPolicyType Equal { get; } = new ThroughputPolicyType(EqualValue);
-        /// <summary> custom. </summary>
+
+        /// <summary> Gets the Custom. </summary>
         public static ThroughputPolicyType Custom { get; } = new ThroughputPolicyType(CustomValue);
+
         /// <summary> Determines if two <see cref="ThroughputPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ThroughputPolicyType left, ThroughputPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ThroughputPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ThroughputPolicyType left, ThroughputPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ThroughputPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ThroughputPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ThroughputPolicyType(string value) => new ThroughputPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ThroughputPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ThroughputPolicyType?(string value) => value == null ? null : new ThroughputPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ThroughputPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ThroughputPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

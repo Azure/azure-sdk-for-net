@@ -2,16 +2,15 @@
 // Licensed under the MIT License.
 
 extern alias BaseBlobs;
-
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Shared;
 using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using NUnit.Framework;
-using BaseBlobs::Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {

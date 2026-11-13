@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.SerialConsole.csproj" />
+  <Project Path="tests/Azure.ResourceManager.SerialConsole.Tests.csproj" />
+</Solution>

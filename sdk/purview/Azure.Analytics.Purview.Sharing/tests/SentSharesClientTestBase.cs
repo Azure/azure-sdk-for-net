@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Net.Http;
+using Azure.Analytics.Purview.Tests;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Analytics.Purview.Tests;
 using Azure.Core.TestFramework.Models;
 
 namespace Azure.Analytics.Purview.Sharing.Tests

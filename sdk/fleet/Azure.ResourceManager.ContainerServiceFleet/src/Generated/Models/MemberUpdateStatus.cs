@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of a member update operation. </summary>
     public partial class MemberUpdateStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MemberUpdateStatus"/>. </summary>
         internal MemberUpdateStatus()
@@ -57,25 +28,29 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="clusterResourceId"> The Azure resource id of the target Kubernetes cluster. </param>
         /// <param name="operationId"> The operation resource id of the latest attempt to perform the operation. </param>
         /// <param name="message"> The status message after processing the member update operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MemberUpdateStatus(ContainerServiceFleetUpdateStatus status, string name, ResourceIdentifier clusterResourceId, string operationId, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MemberUpdateStatus(ContainerServiceFleetUpdateStatus status, string name, ResourceIdentifier clusterResourceId, string operationId, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Name = name;
             ClusterResourceId = clusterResourceId;
             OperationId = operationId;
             Message = message;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the MemberUpdate operation. </summary>
         public ContainerServiceFleetUpdateStatus Status { get; }
+
         /// <summary> The name of the FleetMember. </summary>
         public string Name { get; }
+
         /// <summary> The Azure resource id of the target Kubernetes cluster. </summary>
         public ResourceIdentifier ClusterResourceId { get; }
+
         /// <summary> The operation resource id of the latest attempt to perform the operation. </summary>
         public string OperationId { get; }
+
         /// <summary> The status message after processing the member update operation. </summary>
         public string Message { get; }
     }

@@ -28,6 +28,15 @@ namespace Azure.Maps.Geolocation
             IsoCode = countryRegion.IsoCode;
         }
 
+        /// <summary> Initializes a new instance of CountryRegionResult. </summary>
+        /// <param name="isoCode"> The IP Address's 2-character code (ISO 3166-1) of the country or region. </param>
+        /// <param name="ipAddress"> The IP Address of the request. </param>
+        internal CountryRegionResult(string isoCode, IPAddress ipAddress)
+        {
+            IsoCode = isoCode;
+            IpAddress = ipAddress;
+        }
+
         /// <summary> The object containing the country/region information. </summary>
         [CodeGenMember("CountryRegion")]
         internal CountryRegion CountryRegion { get; }

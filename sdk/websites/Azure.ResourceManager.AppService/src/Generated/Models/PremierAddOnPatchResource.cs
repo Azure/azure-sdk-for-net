@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a PremierAddOn. </summary>
     public partial class PremierAddOnPatchResource : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnPatchResource"/>. </summary>
         public PremierAddOnPatchResource()
@@ -53,45 +25,116 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnPatchResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku"> Premier add on SKU. </param>
-        /// <param name="product"> Premier add on Product. </param>
-        /// <param name="vendor"> Premier add on Vendor. </param>
-        /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
-        /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> PremierAddOnPatchResource resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PremierAddOnPatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PremierAddOnPatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PremierAddOnPatchResourceProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Sku = sku;
-            Product = product;
-            Vendor = vendor;
-            MarketplacePublisher = marketplacePublisher;
-            MarketplaceOffer = marketplaceOffer;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Premier add on SKU. </summary>
-        [WirePath("properties.sku")]
-        public string Sku { get; set; }
-        /// <summary> Premier add on Product. </summary>
-        [WirePath("properties.product")]
-        public string Product { get; set; }
-        /// <summary> Premier add on Vendor. </summary>
-        [WirePath("properties.vendor")]
-        public string Vendor { get; set; }
-        /// <summary> Premier add on Marketplace publisher. </summary>
-        [WirePath("properties.marketplacePublisher")]
-        public string MarketplacePublisher { get; set; }
-        /// <summary> Premier add on Marketplace offer. </summary>
-        [WirePath("properties.marketplaceOffer")]
-        public string MarketplaceOffer { get; set; }
+        /// <summary> PremierAddOnPatchResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal PremierAddOnPatchResourceProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Premier add on SKU. </summary>
+        [WirePath("properties.sku")]
+        public string Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnPatchResourceProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
+        /// <summary> Premier add on Product. </summary>
+        [WirePath("properties.product")]
+        public string Product
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Product;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnPatchResourceProperties();
+                }
+                Properties.Product = value;
+            }
+        }
+
+        /// <summary> Premier add on Vendor. </summary>
+        [WirePath("properties.vendor")]
+        public string Vendor
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Vendor;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnPatchResourceProperties();
+                }
+                Properties.Vendor = value;
+            }
+        }
+
+        /// <summary> Premier add on Marketplace publisher. </summary>
+        [WirePath("properties.marketplacePublisher")]
+        public string MarketplacePublisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplacePublisher;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnPatchResourceProperties();
+                }
+                Properties.MarketplacePublisher = value;
+            }
+        }
+
+        /// <summary> Premier add on Marketplace offer. </summary>
+        [WirePath("properties.marketplaceOffer")]
+        public string MarketplaceOffer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplaceOffer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnPatchResourceProperties();
+                }
+                Properties.MarketplaceOffer = value;
+            }
+        }
     }
 }

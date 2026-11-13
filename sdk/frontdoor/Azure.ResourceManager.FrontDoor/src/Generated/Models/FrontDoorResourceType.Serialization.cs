@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 {
     internal static partial class FrontDoorResourceTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FrontDoorResourceType value) => value switch
         {
             FrontDoorResourceType.MicrosoftNetworkFrontDoors => "Microsoft.Network/frontDoors",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontDoorResourceType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static FrontDoorResourceType ToFrontDoorResourceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Network/frontDoors")) return FrontDoorResourceType.MicrosoftNetworkFrontDoors;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Network/frontDoors/frontendEndpoints")) return FrontDoorResourceType.MicrosoftNetworkFrontDoorsFrontendEndpoints;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Network/frontDoors"))
+            {
+                return FrontDoorResourceType.MicrosoftNetworkFrontDoors;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Network/frontDoors/frontendEndpoints"))
+            {
+                return FrontDoorResourceType.MicrosoftNetworkFrontDoorsFrontendEndpoints;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontDoorResourceType value.");
         }
     }

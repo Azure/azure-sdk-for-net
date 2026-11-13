@@ -7,17 +7,61 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecuteDataFlowActivity : IUtf8JsonSerializable, IJsonModel<ExecuteDataFlowActivity>
+    /// <summary> Execute data flow activity. </summary>
+    public partial class ExecuteDataFlowActivity : ExecutionActivity, IJsonModel<ExecuteDataFlowActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteDataFlowActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivity"/> for deserialization. </summary>
+        internal ExecuteDataFlowActivity()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExecuteDataFlowActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExecuteDataFlowActivity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExecuteDataFlowActivity IPersistableModel<ExecuteDataFlowActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExecuteDataFlowActivity)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExecuteDataFlowActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExecuteDataFlowActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,336 +73,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("dataFlow"u8);
-            writer.WriteObjectValue(DataFlow, options);
-            if (Optional.IsDefined(Staging))
-            {
-                writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging, options);
-            }
-            if (Optional.IsDefined(IntegrationRuntime))
-            {
-                writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime, options);
-            }
-            if (Optional.IsDefined(ContinuationSettings))
-            {
-                writer.WritePropertyName("continuationSettings"u8);
-                writer.WriteObjectValue(ContinuationSettings, options);
-            }
-            if (Optional.IsDefined(Compute))
-            {
-                writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue(Compute, options);
-            }
-            if (Optional.IsDefined(TraceLevel))
-            {
-                writer.WritePropertyName("traceLevel"u8);
-                JsonSerializer.Serialize(writer, TraceLevel);
-            }
-            if (Optional.IsDefined(ContinueOnError))
-            {
-                writer.WritePropertyName("continueOnError"u8);
-                JsonSerializer.Serialize(writer, ContinueOnError);
-            }
-            if (Optional.IsDefined(RunConcurrently))
-            {
-                writer.WritePropertyName("runConcurrently"u8);
-                JsonSerializer.Serialize(writer, RunConcurrently);
-            }
-            if (Optional.IsDefined(SourceStagingConcurrency))
-            {
-                writer.WritePropertyName("sourceStagingConcurrency"u8);
-                JsonSerializer.Serialize(writer, SourceStagingConcurrency);
-            }
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
-        ExecuteDataFlowActivity IJsonModel<ExecuteDataFlowActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExecuteDataFlowActivity IJsonModel<ExecuteDataFlowActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExecuteDataFlowActivity)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExecuteDataFlowActivity(document.RootElement, options);
         }
-
-        internal static ExecuteDataFlowActivity DeserializeExecuteDataFlowActivity(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            DataFactoryLinkedServiceReference linkedServiceName = default;
-            PipelineActivityPolicy policy = default;
-            string name = default;
-            string type = default;
-            string description = default;
-            PipelineActivityState? state = default;
-            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
-            IList<PipelineActivityDependency> dependsOn = default;
-            IList<PipelineActivityUserProperty> userProperties = default;
-            DataFlowReference dataFlow = default;
-            DataFlowStagingInfo staging = default;
-            IntegrationRuntimeReference integrationRuntime = default;
-            ContinuationSettingsReference continuationSettings = default;
-            ExecuteDataFlowActivityComputeType compute = default;
-            DataFactoryElement<string> traceLevel = default;
-            DataFactoryElement<bool> continueOnError = default;
-            DataFactoryElement<bool> runConcurrently = default;
-            DataFactoryElement<int> sourceStagingConcurrency = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("linkedServiceName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("policy"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("state"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new PipelineActivityState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("onInactiveMarkAs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dependsOn"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
-                    }
-                    dependsOn = array;
-                    continue;
-                }
-                if (property.NameEquals("userProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
-                    }
-                    userProperties = array;
-                    continue;
-                }
-                if (property.NameEquals("typeProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("dataFlow"u8))
-                        {
-                            dataFlow = DataFlowReference.DeserializeDataFlowReference(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("staging"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("integrationRuntime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("continuationSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            continuationSettings = ContinuationSettingsReference.DeserializeContinuationSettingsReference(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("compute"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            compute = ExecuteDataFlowActivityComputeType.DeserializeExecuteDataFlowActivityComputeType(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("traceLevel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            traceLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("continueOnError"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            continueOnError = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("runConcurrently"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            runConcurrently = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceStagingConcurrency"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceStagingConcurrency = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteDataFlowActivity(
-                name,
-                type,
-                description,
-                state,
-                onInactiveMarkAs,
-                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
-                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
-                additionalProperties,
-                linkedServiceName,
-                policy,
-                dataFlow,
-                staging,
-                integrationRuntime,
-                continuationSettings,
-                compute,
-                traceLevel,
-                continueOnError,
-                runConcurrently,
-                sourceStagingConcurrency);
-        }
-
-        BinaryData IPersistableModel<ExecuteDataFlowActivity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExecuteDataFlowActivity IPersistableModel<ExecuteDataFlowActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExecuteDataFlowActivity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExecuteDataFlowActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

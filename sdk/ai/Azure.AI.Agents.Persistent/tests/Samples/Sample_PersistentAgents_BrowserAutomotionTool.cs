@@ -170,7 +170,7 @@ public partial class Sample_PersistentAgents_BrowserAutamotionTool : SamplesBase
         WriteMessages(messages);
         #endregion
         #region Snippet:PersistentAgents_BrowserAutomationTool_ShowRunSteps_Sync
-        IReadOnlyList<RunStep> steps = [..client.Runs.GetRunSteps(run)];
+        IReadOnlyList<RunStep> steps = [.. client.Runs.GetRunSteps(run)];
         printRunStepInfo(steps);
         #endregion
         #region Snippet:PersistentAgents_BrowserAutomationTool_Cleanup_Sync

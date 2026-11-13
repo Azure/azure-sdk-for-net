@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     public readonly partial struct CarbonEmissionQuerySortDirection : IEquatable<CarbonEmissionQuerySortDirection>
     {
         private readonly string _value;
+        /// <summary> Descending order for query result. </summary>
+        private const string DescValue = "Desc";
+        /// <summary> Ascending order for query result. </summary>
+        private const string AscValue = "Asc";
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionQuerySortDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CarbonEmissionQuerySortDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DescValue = "Desc";
-        private const string AscValue = "Asc";
+            _value = value;
+        }
 
         /// <summary> Descending order for query result. </summary>
         public static CarbonEmissionQuerySortDirection Desc { get; } = new CarbonEmissionQuerySortDirection(DescValue);
+
         /// <summary> Ascending order for query result. </summary>
         public static CarbonEmissionQuerySortDirection Asc { get; } = new CarbonEmissionQuerySortDirection(AscValue);
+
         /// <summary> Determines if two <see cref="CarbonEmissionQuerySortDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CarbonEmissionQuerySortDirection left, CarbonEmissionQuerySortDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CarbonEmissionQuerySortDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CarbonEmissionQuerySortDirection left, CarbonEmissionQuerySortDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionQuerySortDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CarbonEmissionQuerySortDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CarbonEmissionQuerySortDirection(string value) => new CarbonEmissionQuerySortDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CarbonEmissionQuerySortDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CarbonEmissionQuerySortDirection?(string value) => value == null ? null : new CarbonEmissionQuerySortDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CarbonEmissionQuerySortDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CarbonEmissionQuerySortDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

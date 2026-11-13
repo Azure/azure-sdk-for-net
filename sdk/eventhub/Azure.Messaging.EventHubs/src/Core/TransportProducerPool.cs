@@ -155,13 +155,13 @@ namespace Azure.Messaging.EventHubs.Core
         public virtual async Task ExpirePooledProducerAsync(string partitionId,
                                                             bool forceClose = false)
         {
-           if (Pool.TryRemove(partitionId, out var poolItem))
-           {
-               if (poolItem.ActiveInstances.IsEmpty || forceClose)
-               {
-                   await poolItem.PartitionProducer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-               }
-           }
+            if (Pool.TryRemove(partitionId, out var poolItem))
+            {
+                if (poolItem.ActiveInstances.IsEmpty || forceClose)
+                {
+                    await poolItem.PartitionProducer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+            }
         }
 
         /// <summary>

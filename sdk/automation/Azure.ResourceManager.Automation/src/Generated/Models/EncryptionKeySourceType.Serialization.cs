@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     internal static partial class EncryptionKeySourceTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EncryptionKeySourceType value) => value switch
         {
             EncryptionKeySourceType.MicrosoftAutomation => "Microsoft.Automation",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Automation.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EncryptionKeySourceType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static EncryptionKeySourceType ToEncryptionKeySourceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Automation")) return EncryptionKeySourceType.MicrosoftAutomation;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Keyvault")) return EncryptionKeySourceType.MicrosoftKeyvault;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Automation"))
+            {
+                return EncryptionKeySourceType.MicrosoftAutomation;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Keyvault"))
+            {
+                return EncryptionKeySourceType.MicrosoftKeyvault;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EncryptionKeySourceType value.");
         }
     }

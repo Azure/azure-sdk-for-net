@@ -8,20 +8,77 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MgmtTypeSpec;
+using Azure;
+using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The FooProperties. </summary>
     [JsonConverter(typeof(FooPropertiesConverter))]
     public partial class FooProperties : IJsonModel<FooProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="FooProperties"/> for deserialization. </summary>
+        internal FooProperties()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FooProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFooProperties(document.RootElement, data, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FooProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FooProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FooProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FooProperties IPersistableModel<FooProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FooProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -36,46 +93,118 @@ namespace MgmtTypeSpec.Models
             {
                 throw new FormatException($"The model {nameof(FooProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ServiceUri))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Optional.IsDefined(ServiceUri) && !Patch.Contains("$.serviceUrl"u8))
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Something))
+            if (!Patch.Contains("$.something"u8))
             {
                 writer.WritePropertyName("something"u8);
-                writer.WriteStringValue(Something);
+                ((IJsonModel<ManagedServiceIdentity>)Something).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
-            if (Optional.IsDefined(BoolValue))
+            if (Optional.IsDefined(BoolValue) && !Patch.Contains("$.boolValue"u8))
             {
                 writer.WritePropertyName("boolValue"u8);
                 writer.WriteBooleanValue(BoolValue.Value);
             }
-            if (Optional.IsDefined(FloatValue))
+            if (Optional.IsDefined(FloatValue) && !Patch.Contains("$.floatValue"u8))
             {
                 writer.WritePropertyName("floatValue"u8);
                 writer.WriteNumberValue(FloatValue.Value);
             }
-            if (Optional.IsDefined(DoubleValue))
+            if (Optional.IsDefined(DoubleValue) && !Patch.Contains("$.doubleValue"u8))
             {
                 writer.WritePropertyName("doubleValue"u8);
                 writer.WriteNumberValue(DoubleValue.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (Patch.Contains("$.prop1"u8))
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                if (!Patch.IsRemoved("$.prop1"u8))
                 {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WritePropertyName("prop1"u8);
+                    Patch.WriteTo(writer, "$.prop1"u8);
                 }
             }
+            else
+            {
+                writer.WritePropertyName("prop1"u8);
+                writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "prop1"u8);
+                for (int i = 0; i < Prop1.Count; i++)
+                {
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop1[{i}]")))
+                    {
+                        continue;
+                    }
+                    if (Prop1[i] == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(Prop1[i]);
+                }
+                Patch.WriteTo(writer, "$.prop1"u8);
+                writer.WriteEndArray();
+            }
+            if (Patch.Contains("$.prop2"u8))
+            {
+                if (!Patch.IsRemoved("$.prop2"u8))
+                {
+                    writer.WritePropertyName("prop2"u8);
+                    Patch.WriteTo(writer, "$.prop2"u8);
+                }
+            }
+            else if (Optional.IsCollectionDefined(Prop2))
+            {
+                writer.WritePropertyName("prop2"u8);
+                writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "prop2"u8);
+                for (int i = 0; i < Prop2.Count; i++)
+                {
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop2[{i}]")))
+                    {
+                        continue;
+                    }
+                    writer.WriteNumberValue(Prop2[i]);
+                }
+                Patch.WriteTo(writer, "$.prop2"u8);
+                writer.WriteEndArray();
+            }
+            if (!Patch.Contains("$.nestedProperty"u8))
+            {
+                writer.WritePropertyName("nestedProperty"u8);
+                writer.WriteObjectValue(NestedProperty, options);
+            }
+            if (Optional.IsDefined(OptionalProperty) && !Patch.Contains("$.optionalProperty"u8))
+            {
+                writer.WritePropertyName("optionalProperty"u8);
+                writer.WriteObjectValue(OptionalProperty, options);
+            }
+            if (Optional.IsDefined(VmProfile) && !Patch.Contains("$.vmProfile"u8))
+            {
+                writer.WritePropertyName("vmProfile"u8);
+                writer.WriteObjectValue(VmProfile, options);
+            }
+            if (Optional.IsDefined(ETag) && !Patch.Contains("$.etag"u8))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(WritableSubResourceProp) && !Patch.Contains("$.writableSubResourceProp"u8))
+            {
+                writer.WritePropertyName("writableSubResourceProp"u8);
+                ((IJsonModel<WritableSubResource>)WritableSubResourceProp).Write(writer, options);
+            }
+            if (Optional.IsDefined(ComputeFleetVmProfile) && !Patch.Contains("$.computeFleetVmProfile"u8))
+            {
+                writer.WritePropertyName("computeFleetVmProfile"u8);
+                writer.WriteObjectValue(ComputeFleetVmProfile, options);
+            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -92,23 +221,34 @@ namespace MgmtTypeSpec.Models
                 throw new FormatException($"The model {nameof(FooProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFooProperties(document.RootElement, options);
+            return DeserializeFooProperties(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FooProperties DeserializeFooProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static FooProperties DeserializeFooProperties(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri serviceUri = default;
-            string something = default;
+            ManagedServiceIdentity something = default;
             bool? boolValue = default;
             float? floatValue = default;
             double? doubleValue = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<string> prop1 = default;
+            IList<int> prop2 = default;
+            NestedFooModel nestedProperty = default;
+            SafeFlattenModel optionalProperty = default;
+            VmProfile vmProfile = default;
+            ETag? eTag = default;
+            WritableSubResource writableSubResourceProp = default;
+            ComputeFleetVmProfile computeFleetVmProfile = default;
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("serviceUrl"u8))
@@ -117,12 +257,12 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    serviceUri = new Uri(prop.Value.GetString());
+                    serviceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("something"u8))
                 {
-                    something = prop.Value.GetString();
+                    something = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("boolValue"u8))
@@ -152,10 +292,88 @@ namespace MgmtTypeSpec.Models
                     doubleValue = prop.Value.GetDouble();
                     continue;
                 }
-                if (options.Format != "W")
+                if (prop.NameEquals("prop1"u8))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    prop1 = array;
+                    continue;
                 }
+                if (prop.NameEquals("prop2"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<int> array = new List<int>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    prop2 = array;
+                    continue;
+                }
+                if (prop.NameEquals("nestedProperty"u8))
+                {
+                    nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    continue;
+                }
+                if (prop.NameEquals("optionalProperty"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    optionalProperty = SafeFlattenModel.DeserializeSafeFlattenModel(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    continue;
+                }
+                if (prop.NameEquals("vmProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmProfile = VmProfile.DeserializeVmProfile(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("writableSubResourceProp"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writableSubResourceProp = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("computeFleetVmProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeFleetVmProfile = ComputeFleetVmProfile.DeserializeComputeFleetVmProfile(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    continue;
+                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
             return new FooProperties(
                 serviceUri,
@@ -163,48 +381,111 @@ namespace MgmtTypeSpec.Models
                 boolValue,
                 floatValue,
                 doubleValue,
-                additionalBinaryDataProperties);
+                prop1 ?? new ChangeTrackingList<string>(),
+                prop2 ?? new ChangeTrackingList<int>(),
+                nestedProperty,
+                optionalProperty,
+                vmProfile,
+                eTag,
+                writableSubResourceProp,
+                computeFleetVmProfile,
+                patch);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FooProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        /// <summary></summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out JsonPatch.EncodedValue value)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+            value = default;
+
+            if (local.StartsWith("nestedProperty"u8))
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FooProperties)} does not support writing '{options.Format}' format.");
+                if (NestedProperty == null)
+                {
+                    return false;
+                }
+                return NestedProperty.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("nestedProperty"u8.Length)], out value);
             }
+            if (local.StartsWith("optionalProperty"u8))
+            {
+                if (OptionalProperty == null)
+                {
+                    return false;
+                }
+                return OptionalProperty.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("optionalProperty"u8.Length)], out value);
+            }
+            if (local.StartsWith("vmProfile"u8))
+            {
+                if (VmProfile == null)
+                {
+                    return false;
+                }
+                return VmProfile.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("vmProfile"u8.Length)], out value);
+            }
+            if (local.StartsWith("computeFleetVmProfile"u8))
+            {
+                if (ComputeFleetVmProfile == null)
+                {
+                    return false;
+                }
+                return ComputeFleetVmProfile.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("computeFleetVmProfile"u8.Length)], out value);
+            }
+            return false;
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FooProperties IPersistableModel<FooProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FooProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        /// <summary></summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeFooProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FooProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            if (local.StartsWith("nestedProperty"u8))
+            {
+                if (NestedProperty == null)
+                {
+                    return false;
+                }
+                NestedProperty.Patch.Set([.. "$"u8, .. local.Slice("nestedProperty"u8.Length)], value);
+                return true;
+            }
+            if (local.StartsWith("optionalProperty"u8))
+            {
+                if (OptionalProperty == null)
+                {
+                    return false;
+                }
+                OptionalProperty.Patch.Set([.. "$"u8, .. local.Slice("optionalProperty"u8.Length)], value);
+                return true;
+            }
+            if (local.StartsWith("vmProfile"u8))
+            {
+                if (VmProfile == null)
+                {
+                    return false;
+                }
+                VmProfile.Patch.Set([.. "$"u8, .. local.Slice("vmProfile"u8.Length)], value);
+                return true;
+            }
+            if (local.StartsWith("computeFleetVmProfile"u8))
+            {
+                if (ComputeFleetVmProfile == null)
+                {
+                    return false;
+                }
+                ComputeFleetVmProfile.Patch.Set([.. "$"u8, .. local.Slice("computeFleetVmProfile"u8.Length)], value);
+                return true;
+            }
+            return false;
+        }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         internal partial class FooPropertiesConverter : JsonConverter<FooProperties>
         {
@@ -224,7 +505,7 @@ namespace MgmtTypeSpec.Models
             public override FooProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeFooProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+                return DeserializeFooProperties(document.RootElement, document.RootElement.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions);
             }
         }
     }

@@ -14,18 +14,16 @@ namespace Azure.ResourceManager.StorageMover.Models
     public partial class NfsMountEndpointUpdateProperties : EndpointBaseUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="NfsMountEndpointUpdateProperties"/>. </summary>
-        public NfsMountEndpointUpdateProperties()
+        public NfsMountEndpointUpdateProperties() : base(EndpointType.NfsMount)
         {
-            EndpointType = EndpointType.NfsMount;
         }
 
         /// <summary> Initializes a new instance of <see cref="NfsMountEndpointUpdateProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NfsMountEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpointType, description, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NfsMountEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(endpointType, description, additionalBinaryDataProperties)
         {
-            EndpointType = endpointType;
         }
     }
 }

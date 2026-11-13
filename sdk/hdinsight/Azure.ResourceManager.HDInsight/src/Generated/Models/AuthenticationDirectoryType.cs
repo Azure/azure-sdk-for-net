@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct AuthenticationDirectoryType : IEquatable<AuthenticationDirectoryType>
     {
         private readonly string _value;
+        /// <summary> ActiveDirectory. </summary>
+        private const string ActiveDirectoryValue = "ActiveDirectory";
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationDirectoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthenticationDirectoryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveDirectoryValue = "ActiveDirectory";
+            _value = value;
+        }
 
         /// <summary> ActiveDirectory. </summary>
         public static AuthenticationDirectoryType ActiveDirectory { get; } = new AuthenticationDirectoryType(ActiveDirectoryValue);
+
         /// <summary> Determines if two <see cref="AuthenticationDirectoryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuthenticationDirectoryType left, AuthenticationDirectoryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuthenticationDirectoryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuthenticationDirectoryType left, AuthenticationDirectoryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthenticationDirectoryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AuthenticationDirectoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuthenticationDirectoryType(string value) => new AuthenticationDirectoryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuthenticationDirectoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuthenticationDirectoryType?(string value) => value == null ? null : new AuthenticationDirectoryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuthenticationDirectoryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuthenticationDirectoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

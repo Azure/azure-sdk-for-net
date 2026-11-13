@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct QueryDebugMode : IEquatable<QueryDebugMode>
     {
         private readonly string _value;
+        /// <summary> No query debugging information will be returned. </summary>
+        private const string DisabledValue = "disabled";
+        /// <summary> Allows the user to further explore their reranked results. </summary>
+        private const string SemanticValue = "semantic";
+        /// <summary> Allows the user to further explore their hybrid and vector query results. </summary>
+        private const string VectorValue = "vector";
+        /// <summary> Allows the user to explore the list of query rewrites generated for their search request. </summary>
+        private const string QueryRewritesValue = "queryRewrites";
+        /// <summary> Allows the user to retrieve scoring information regarding vectors matched within a collection of complex types. </summary>
+        private const string InnerHitsValue = "innerHits";
+        /// <summary> Turn on all debug options. </summary>
+        private const string AllValue = "all";
 
         /// <summary> Initializes a new instance of <see cref="QueryDebugMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryDebugMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "disabled";
-        private const string SemanticValue = "semantic";
-        private const string VectorValue = "vector";
-        private const string QueryRewritesValue = "queryRewrites";
-        private const string InnerHitsValue = "innerHits";
-        private const string AllValue = "all";
+            _value = value;
+        }
 
         /// <summary> No query debugging information will be returned. </summary>
         public static QueryDebugMode Disabled { get; } = new QueryDebugMode(DisabledValue);
+
         /// <summary> Allows the user to further explore their reranked results. </summary>
         public static QueryDebugMode Semantic { get; } = new QueryDebugMode(SemanticValue);
+
         /// <summary> Allows the user to further explore their hybrid and vector query results. </summary>
         public static QueryDebugMode Vector { get; } = new QueryDebugMode(VectorValue);
+
         /// <summary> Allows the user to explore the list of query rewrites generated for their search request. </summary>
         public static QueryDebugMode QueryRewrites { get; } = new QueryDebugMode(QueryRewritesValue);
+
         /// <summary> Allows the user to retrieve scoring information regarding vectors matched within a collection of complex types. </summary>
         public static QueryDebugMode InnerHits { get; } = new QueryDebugMode(InnerHitsValue);
+
         /// <summary> Turn on all debug options. </summary>
         public static QueryDebugMode All { get; } = new QueryDebugMode(AllValue);
+
         /// <summary> Determines if two <see cref="QueryDebugMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryDebugMode left, QueryDebugMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QueryDebugMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryDebugMode left, QueryDebugMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryDebugMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QueryDebugMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QueryDebugMode(string value) => new QueryDebugMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QueryDebugMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QueryDebugMode?(string value) => value == null ? null : new QueryDebugMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QueryDebugMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QueryDebugMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

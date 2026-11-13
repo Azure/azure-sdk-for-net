@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Billing
 {
+    /// <summary></summary>
     public partial class SubscriptionPolicyResource : IJsonModel<SubscriptionPolicyData>
     {
-        private static SubscriptionPolicyData s_dataDeserializationInstance;
-        private static SubscriptionPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SubscriptionPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SubscriptionPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SubscriptionPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SubscriptionPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionPolicyData>)Data).Write(writer, options);
 
-        SubscriptionPolicyData IJsonModel<SubscriptionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubscriptionPolicyData IJsonModel<SubscriptionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SubscriptionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionPolicyData>(Data, options, AzureResourceManagerBillingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SubscriptionPolicyData IPersistableModel<SubscriptionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionPolicyData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<SubscriptionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SubscriptionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

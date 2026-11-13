@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableBotServiceArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableBotServiceArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableBotServiceArmClient for mocking. </summary>
         protected MockableBotServiceArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableBotServiceArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableBotServiceArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableBotServiceArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableBotServiceArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="BotResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BotResource.CreateResourceIdentifier" /> to create a <see cref="BotResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="BotResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BotResource"/> object. </returns>
         public virtual BotResource GetBotResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.BotService.Mocking
             return new BotResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="BotChannelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BotChannelResource.CreateResourceIdentifier" /> to create a <see cref="BotChannelResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="BotChannelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BotChannelResource"/> object. </returns>
         public virtual BotChannelResource GetBotChannelResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.BotService.Mocking
             return new BotChannelResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="BotConnectionSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BotConnectionSettingResource.CreateResourceIdentifier" /> to create a <see cref="BotConnectionSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="BotConnectionSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BotConnectionSettingResource"/> object. </returns>
         public virtual BotConnectionSettingResource GetBotConnectionSettingResource(ResourceIdentifier id)
@@ -70,16 +53,22 @@ namespace Azure.ResourceManager.BotService.Mocking
             return new BotConnectionSettingResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="BotServicePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BotServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="BotServicePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="BotServicePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BotServicePrivateEndpointConnectionResource"/> object. </returns>
         public virtual BotServicePrivateEndpointConnectionResource GetBotServicePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             BotServicePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new BotServicePrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual BotServiceNetworkSecurityPerimeterConfigurationResource GetBotServiceNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            BotServiceNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new BotServiceNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }
 }

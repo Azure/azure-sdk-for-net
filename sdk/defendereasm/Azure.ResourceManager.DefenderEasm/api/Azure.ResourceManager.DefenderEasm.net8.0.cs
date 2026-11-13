@@ -190,9 +190,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         public static Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState RunningValidations { get { throw null; } }
         public static Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState left, Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState (string value) { throw null; }

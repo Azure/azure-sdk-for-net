@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ApiSchemaType : IEquatable<ApiSchemaType>
     {
         private readonly string _value;
+        /// <summary> XML schema type. </summary>
+        private const string XmlValue = "xml";
+        /// <summary> Json schema type. </summary>
+        private const string JsonValue = "json";
 
         /// <summary> Initializes a new instance of <see cref="ApiSchemaType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiSchemaType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string XmlValue = "xml";
-        private const string JsonValue = "json";
+            _value = value;
+        }
 
         /// <summary> XML schema type. </summary>
         public static ApiSchemaType Xml { get; } = new ApiSchemaType(XmlValue);
+
         /// <summary> Json schema type. </summary>
         public static ApiSchemaType Json { get; } = new ApiSchemaType(JsonValue);
+
         /// <summary> Determines if two <see cref="ApiSchemaType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiSchemaType left, ApiSchemaType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiSchemaType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiSchemaType left, ApiSchemaType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiSchemaType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiSchemaType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiSchemaType(string value) => new ApiSchemaType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiSchemaType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiSchemaType?(string value) => value == null ? null : new ApiSchemaType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiSchemaType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiSchemaType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

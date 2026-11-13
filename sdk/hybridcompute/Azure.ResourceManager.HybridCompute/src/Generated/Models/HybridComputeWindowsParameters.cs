@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
     public partial class HybridComputeWindowsParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeWindowsParameters"/>. </summary>
         public HybridComputeWindowsParameters()
@@ -51,6 +23,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationWindow>();
             KbNumbersToInclude = new ChangeTrackingList<string>();
             KbNumbersToExclude = new ChangeTrackingList<string>();
+            PatchNameMasksToInclude = new ChangeTrackingList<string>();
+            PatchNameMasksToExclude = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeWindowsParameters"/>. </summary>
@@ -59,31 +33,47 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="kbNumbersToExclude"> Kbs to exclude in the patch operation. </param>
         /// <param name="excludeKbsRequiringReboot"> Filters out Kbs that don't have an InstallationRebootBehavior of 'NeverReboots' when this is set to true. </param>
         /// <param name="maxPatchPublishOn"> This is used to install patches that were published on or before this given max published date. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeWindowsParameters(IList<VmGuestPatchClassificationWindow> classificationsToInclude, IList<string> kbNumbersToInclude, IList<string> kbNumbersToExclude, bool? excludeKbsRequiringReboot, DateTimeOffset? maxPatchPublishOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="patchNameMasksToInclude"> This is used to include patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </param>
+        /// <param name="patchNameMasksToExclude"> This is used to exclude patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeWindowsParameters(IList<VmGuestPatchClassificationWindow> classificationsToInclude, IList<string> kbNumbersToInclude, IList<string> kbNumbersToExclude, bool? excludeKbsRequiringReboot, DateTimeOffset? maxPatchPublishOn, IList<string> patchNameMasksToInclude, IList<string> patchNameMasksToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClassificationsToInclude = classificationsToInclude;
             KbNumbersToInclude = kbNumbersToInclude;
             KbNumbersToExclude = kbNumbersToExclude;
             ExcludeKbsRequiringReboot = excludeKbsRequiringReboot;
             MaxPatchPublishOn = maxPatchPublishOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            PatchNameMasksToInclude = patchNameMasksToInclude;
+            PatchNameMasksToExclude = patchNameMasksToExclude;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The update classifications to select when installing patches for Windows. </summary>
         [WirePath("classificationsToInclude")]
         public IList<VmGuestPatchClassificationWindow> ClassificationsToInclude { get; }
+
         /// <summary> Kbs to include in the patch operation. </summary>
         [WirePath("kbNumbersToInclude")]
         public IList<string> KbNumbersToInclude { get; }
+
         /// <summary> Kbs to exclude in the patch operation. </summary>
         [WirePath("kbNumbersToExclude")]
         public IList<string> KbNumbersToExclude { get; }
+
         /// <summary> Filters out Kbs that don't have an InstallationRebootBehavior of 'NeverReboots' when this is set to true. </summary>
         [WirePath("excludeKbsRequiringReboot")]
         public bool? ExcludeKbsRequiringReboot { get; set; }
+
         /// <summary> This is used to install patches that were published on or before this given max published date. </summary>
         [WirePath("maxPatchPublishDate")]
         public DateTimeOffset? MaxPatchPublishOn { get; set; }
+
+        /// <summary> This is used to include patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </summary>
+        [WirePath("patchNameMasksToInclude")]
+        public IList<string> PatchNameMasksToInclude { get; }
+
+        /// <summary> This is used to exclude patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </summary>
+        [WirePath("patchNameMasksToExclude")]
+        public IList<string> PatchNameMasksToExclude { get; }
     }
 }

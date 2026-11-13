@@ -168,16 +168,38 @@ public static partial class AssistantsModelFactory
         return new ThreadMessage(id, @object: null, createdAt, threadId, role, contentItems?.ToList(), assistantId, runId, fileIds?.ToList(), metadata, serializedAdditionalRawData: null);
     }
 
+    /// <summary>
+    /// Instantiates a new instance of <see cref="Assistants.RequiredFunctionToolCall"/>.
+    /// </summary>
+    /// <param name="toolCallId"> The ID of the tool call that the output is required for. </param>
+    /// <param name="functionName"> The name of the function to be called. </param>
+    /// <param name="functionArguments"> The arguments to call the function with, as provided by the model. </param>
+    /// <returns> A new <see cref="Assistants.RequiredFunctionToolCall"/> instance for mocking. </returns>
     public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, string functionArguments)
     {
         return new RequiredFunctionToolCall(toolCallId, new InternalRequiredFunctionToolCallDetails(functionName, functionArguments));
     }
 
+    /// <summary>
+    /// Instantiates a new instance of <see cref="Assistants.RunStepFunctionToolCall"/>.
+    /// </summary>
+    /// <param name="id"> The ID of the tool call. </param>
+    /// <param name="name"> The name of the function that was called. </param>
+    /// <param name="arguments"> The arguments the function was called with, as provided by the model. </param>
+    /// <param name="output"> The output of the function, only populated after the tool outputs have been submitted. </param>
+    /// <returns> A new <see cref="Assistants.RunStepFunctionToolCall"/> instance for mocking. </returns>
     public static RunStepFunctionToolCall RunStepFunctionToolCall(string id, string name, string arguments, string output)
     {
         return new RunStepFunctionToolCall(id, new InternalRunStepFunctionToolCallDetails(name, arguments, output));
     }
 
+    /// <summary>
+    /// Instantiates a new instance of <see cref="Assistants.RunStepCodeInterpreterToolCall"/>.
+    /// </summary>
+    /// <param name="id"> The ID of the tool call. </param>
+    /// <param name="input"> The input provided to the code interpreter tool. </param>
+    /// <param name="outputs"> The outputs produced by the code interpreter tool. </param>
+    /// <returns> A new <see cref="Assistants.RunStepCodeInterpreterToolCall"/> instance for mocking. </returns>
     public static RunStepCodeInterpreterToolCall RunStepCodeInterpreterToolCall(string id, string input, IReadOnlyList<RunStepCodeInterpreterToolCallOutput> outputs)
     {
         return new RunStepCodeInterpreterToolCall(id, new InternalCodeInterpreterToolCallDetails(input, outputs));

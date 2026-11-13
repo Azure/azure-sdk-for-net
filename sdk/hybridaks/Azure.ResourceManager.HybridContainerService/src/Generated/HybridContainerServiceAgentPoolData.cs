@@ -13,122 +13,250 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    /// <summary>
-    /// A class representing the HybridContainerServiceAgentPool data model.
-    /// The agentPool resource definition
-    /// </summary>
+    /// <summary> The agentPool resource definition. </summary>
     public partial class HybridContainerServiceAgentPoolData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolData"/>. </summary>
         public HybridContainerServiceAgentPoolData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            NodeLabels = new ChangeTrackingDictionary<string, string>();
-            NodeTaints = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
-        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
-        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
-        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
-        /// <param name="nodeTaints"> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
-        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
-        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
-        /// <param name="enableAutoScaling"> Whether to enable auto-scaler. Default value is false. </param>
-        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
-        /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
-        /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
-        /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
-        /// <param name="provisioningState"> The status of the latest long running operation for the agent pool. </param>
-        /// <param name="status"> The observed status of the agent pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, HybridContainerServiceExtendedLocation extendedLocation, HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods, int? count, string vmSize, string kubernetesVersion, HybridContainerServiceResourceProvisioningState? provisioningState, AgentPoolProvisioningStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AgentPoolProperties properties, HybridContainerServiceExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Tags = tags;
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            OSType = osType;
-            OSSku = osSku;
-            NodeLabels = nodeLabels;
-            NodeTaints = nodeTaints;
-            MaxCount = maxCount;
-            MinCount = minCount;
-            EnableAutoScaling = enableAutoScaling;
-            MaxPods = maxPods;
-            Count = count;
-            VmSize = vmSize;
-            KubernetesVersion = kubernetesVersion;
-            ProvisioningState = provisioningState;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal AgentPoolProperties Properties { get; set; }
+
         /// <summary> Extended location pointing to the underlying infrastructure. </summary>
         public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
-        public HybridContainerServiceOSType? OSType { get; set; }
+        public HybridContainerServiceOSType? OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.OSType = value;
+            }
+        }
+
         /// <summary> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </summary>
-        public HybridContainerServiceOSSku? OSSku { get; set; }
+        public HybridContainerServiceOSSku? OSSku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSSku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.OSSku = value;
+            }
+        }
+
         /// <summary> The node labels to be persisted across all nodes in agent pool. </summary>
-        public IDictionary<string, string> NodeLabels { get; }
+        public IDictionary<string, string> NodeLabels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                return Properties.NodeLabels;
+            }
+        }
+
         /// <summary> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
-        public IList<string> NodeTaints { get; }
+        public IList<string> NodeTaints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                return Properties.NodeTaints;
+            }
+        }
+
         /// <summary> The maximum number of nodes for auto-scaling. </summary>
-        public int? MaxCount { get; set; }
+        public int? MaxCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.MaxCount = value;
+            }
+        }
+
         /// <summary> The minimum number of nodes for auto-scaling. </summary>
-        public int? MinCount { get; set; }
+        public int? MinCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.MinCount = value;
+            }
+        }
+
         /// <summary> Whether to enable auto-scaler. Default value is false. </summary>
-        public bool? EnableAutoScaling { get; set; }
+        public bool? EnableAutoScaling
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableAutoScaling;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.EnableAutoScaling = value;
+            }
+        }
+
         /// <summary> The maximum number of pods that can run on a node. </summary>
-        public int? MaxPods { get; set; }
+        public int? MaxPods
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxPods;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.MaxPods = value;
+            }
+        }
+
         /// <summary> Number of nodes in the agent pool. The default value is 1. </summary>
-        public int? Count { get; set; }
+        public int? Count
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Count;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.Count = value;
+            }
+        }
+
         /// <summary> The VM sku size of the agent pool node VMs. </summary>
-        public string VmSize { get; set; }
+        public string VmSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.VmSize = value;
+            }
+        }
+
         /// <summary> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </summary>
-        public string KubernetesVersion { get; }
+        public string KubernetesVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KubernetesVersion;
+            }
+        }
+
+        /// <summary> The number of gpus attached to a node. </summary>
+        public int? GpuCountPerNode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GpuCountPerNode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.GpuCountPerNode = value;
+            }
+        }
+
         /// <summary> The status of the latest long running operation for the agent pool. </summary>
-        public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
+        public HybridContainerServiceResourceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The observed status of the agent pool. </summary>
-        public AgentPoolProvisioningStatus Status { get; set; }
+        public AgentPoolProvisioningStatus Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AgentPoolProperties();
+                }
+                Properties.Status = value;
+            }
+        }
     }
 }

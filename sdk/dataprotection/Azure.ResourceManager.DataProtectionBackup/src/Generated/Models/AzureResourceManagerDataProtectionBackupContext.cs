@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdhocBackupRules))]
     [ModelReaderWriterBuildable(typeof(AdhocBackupTriggerContent))]
@@ -21,6 +22,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(AdhocBackupValidateContent))]
     [ModelReaderWriterBuildable(typeof(AdhocBasedBackupTaggingCriteria))]
     [ModelReaderWriterBuildable(typeof(AdhocBasedBackupTriggerContext))]
+    [ModelReaderWriterBuildable(typeof(AdlsBlobBackupDatasourceParametersForAutoProtection))]
+    [ModelReaderWriterBuildable(typeof(AdlsBlobBackupDataSourceSettings))]
     [ModelReaderWriterBuildable(typeof(AzureBackupJobResourceList))]
     [ModelReaderWriterBuildable(typeof(AzureBackupRecoveryPointResourceList))]
     [ModelReaderWriterBuildable(typeof(AzureMonitorAlertSettings))]
@@ -56,9 +59,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(BackupVaultSoftDeleteSettings))]
     [ModelReaderWriterBuildable(typeof(BaseBackupPolicyResourceList))]
     [ModelReaderWriterBuildable(typeof(BaseResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(BlobBackupAutoProtectionRule))]
+    [ModelReaderWriterBuildable(typeof(BlobBackupAutoProtectionSettings))]
+    [ModelReaderWriterBuildable(typeof(BlobBackupDatasourceParametersForAutoProtection))]
     [ModelReaderWriterBuildable(typeof(BlobBackupDataSourceSettings))]
+    [ModelReaderWriterBuildable(typeof(BlobBackupRuleBasedAutoProtectionSettings))]
     [ModelReaderWriterBuildable(typeof(CmkKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(CopyOnExpirySetting))]
+    [ModelReaderWriterBuildable(typeof(CostManagementSettings))]
     [ModelReaderWriterBuildable(typeof(CrossRegionRestoreDetails))]
     [ModelReaderWriterBuildable(typeof(CrossRegionRestoreJobContent))]
     [ModelReaderWriterBuildable(typeof(CrossRegionRestoreJobsContent))]
@@ -73,6 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupDay))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupDeleteSetting))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupDiscreteRecoveryPointProperties))]
+    [ModelReaderWriterBuildable(typeof(DataProtectionBackupInnerError))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupInstanceData))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupInstanceResource))]
@@ -95,15 +104,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupStorageSetting))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupTaggingCriteria))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupTriggerContext))]
+    [ModelReaderWriterBuildable(typeof(DataProtectionBackupUserFacingError))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupVaultData))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupVaultPatch))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupVaultPatchProperties))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupVaultProperties))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBackupVaultResource))]
     [ModelReaderWriterBuildable(typeof(DataProtectionBasePolicyRule))]
+    [ModelReaderWriterBuildable(typeof(DataProtectionDeletedBackupVaultData))]
+    [ModelReaderWriterBuildable(typeof(DataProtectionDeletedBackupVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(DataProtectionDeletedBackupVaultResource))]
     [ModelReaderWriterBuildable(typeof(DataProtectionIdentityDetails))]
     [ModelReaderWriterBuildable(typeof(DataProtectionOperationExtendedInfo))]
     [ModelReaderWriterBuildable(typeof(DataProtectionOperationJobExtendedInfo))]
+    [ModelReaderWriterBuildable(typeof(DataProtectionResourceDeletionInfo))]
     [ModelReaderWriterBuildable(typeof(DataProtectionRetentionRule))]
     [ModelReaderWriterBuildable(typeof(DataProtectionUnlockDeleteContent))]
     [ModelReaderWriterBuildable(typeof(DataProtectionUnlockDeleteResult))]
@@ -113,13 +127,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(DataStoreSettings))]
     [ModelReaderWriterBuildable(typeof(DefaultResourceProperties))]
     [ModelReaderWriterBuildable(typeof(DeletedBackupInstanceResourceList))]
+    [ModelReaderWriterBuildable(typeof(DeletedBackupVaultResourceListResult))]
     [ModelReaderWriterBuildable(typeof(DeletedDataProtectionBackupInstanceData))]
     [ModelReaderWriterBuildable(typeof(DeletedDataProtectionBackupInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(DeletedDataProtectionBackupInstanceResource))]
     [ModelReaderWriterBuildable(typeof(DppBaseResourceList))]
     [ModelReaderWriterBuildable(typeof(DppResourceList))]
+    [ModelReaderWriterBuildable(typeof(DppTrackedResourceList))]
     [ModelReaderWriterBuildable(typeof(FetchSecondaryRPsRequestContent))]
+    [ModelReaderWriterBuildable(typeof(GenericBackupDataSourceSettings))]
+    [ModelReaderWriterBuildable(typeof(GenericRestoreDataSourceCriteria))]
     [ModelReaderWriterBuildable(typeof(ImmediateCopySetting))]
+    [ModelReaderWriterBuildable(typeof(ImmutabilityConfiguration))]
     [ModelReaderWriterBuildable(typeof(ImmutabilitySettings))]
     [ModelReaderWriterBuildable(typeof(ItemLevelRestoreCriteria))]
     [ModelReaderWriterBuildable(typeof(ItemLevelRestoreTargetInfo))]
@@ -133,8 +152,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(MonitoringSettings))]
     [ModelReaderWriterBuildable(typeof(NamespacedName))]
     [ModelReaderWriterBuildable(typeof(OperationalDataStoreSettings))]
+    [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerBackupDataSourceSettings))]
     [ModelReaderWriterBuildable(typeof(RangeBasedItemLevelRestoreCriteria))]
     [ModelReaderWriterBuildable(typeof(RecoveryPointDataStoreDetail))]
+    [ModelReaderWriterBuildable(typeof(RecoveryPointImmutabilityProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceGuardData))]
     [ModelReaderWriterBuildable(typeof(ResourceGuardOperationDetail))]
     [ModelReaderWriterBuildable(typeof(ResourceGuardOperationDetails))]
@@ -147,6 +168,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(ResourceGuardProxyBaseResourceList))]
     [ModelReaderWriterBuildable(typeof(ResourceGuardResource))]
     [ModelReaderWriterBuildable(typeof(ResourceGuardResourceList))]
+    [ModelReaderWriterBuildable(typeof(ResourceListSelectionCriteria))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorableTimeRange))]
     [ModelReaderWriterBuildable(typeof(RestoreFilesTargetDetails))]
@@ -170,9 +192,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(UnknownBackupCriteria))]
     [ModelReaderWriterBuildable(typeof(UnknownBackupDatasourceParameters))]
     [ModelReaderWriterBuildable(typeof(UnknownBackupParameters))]
+    [ModelReaderWriterBuildable(typeof(UnknownBackupRecoveryPointBasedRestoreContent))]
     [ModelReaderWriterBuildable(typeof(UnknownBaseBackupPolicy))]
     [ModelReaderWriterBuildable(typeof(UnknownBasePolicyRule))]
     [ModelReaderWriterBuildable(typeof(UnknownBaseResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(UnknownBlobBackupAutoProtectionSettings))]
+    [ModelReaderWriterBuildable(typeof(UnknownBlobBackupDataSourceSettings))]
     [ModelReaderWriterBuildable(typeof(UnknownCopyOption))]
     [ModelReaderWriterBuildable(typeof(UnknownDataStoreParameters))]
     [ModelReaderWriterBuildable(typeof(UnknownDeleteOption))]
@@ -185,6 +210,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserFacingWarningDetail))]
     [ModelReaderWriterBuildable(typeof(ValidateCrossRegionRestoreRequestObject))]
+    [ModelReaderWriterBuildable(typeof(ValidateForModifyBackupContent))]
     public partial class AzureResourceManagerDataProtectionBackupContext : ModelReaderWriterContext
     {
     }

@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class AwsS3CheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="AwsS3CheckRequirements"/>. </summary>
-        public AwsS3CheckRequirements()
+        public AwsS3CheckRequirements() : base(DataConnectorKind.AmazonWebServicesS3)
         {
-            Kind = DataConnectorKind.AmazonWebServicesS3;
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsS3CheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AwsS3CheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AwsS3CheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
-            Kind = kind;
         }
     }
 }

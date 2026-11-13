@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -75,9 +74,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string directoryPath)
             => new BlobStorageResourceContainer(
                 containerClient,
-                new BlobStorageResourceContainerOptions() {
+                new BlobStorageResourceContainerOptions()
+                {
                     BlobPrefix = directoryPath,
-                    BlobType = BlobType.Block });
+                    BlobType = BlobType.Block
+                });
 
         protected internal override PageBlobClient GetDestinationBlob(BlobContainerClient containerClient, string blobName)
             => containerClient.GetPageBlobClient(blobName);

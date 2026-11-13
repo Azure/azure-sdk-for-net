@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Search.Models
     public readonly partial struct SearchPrivateLinkServiceConnectionProvisioningState : IEquatable<SearchPrivateLinkServiceConnectionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The private link service connection is in the process of being created along with other resources for it to be fully functional. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The private link service connection is in the process of being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The private link service connection has failed to be provisioned or deleted. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The private link service connection has finished provisioning and is ready for approval. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Provisioning request for the private link service connection resource has been accepted but the process of creation has not commenced yet. </summary>
+        private const string IncompleteValue = "Incomplete";
+        /// <summary> Provisioning request for the private link service connection resource has been canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchPrivateLinkServiceConnectionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string IncompleteValue = "Incomplete";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> The private link service connection is in the process of being created along with other resources for it to be fully functional. </summary>
         public static SearchPrivateLinkServiceConnectionProvisioningState Updating { get; } = new SearchPrivateLinkServiceConnectionProvisioningState(UpdatingValue);
+
         /// <summary> The private link service connection is in the process of being deleted. </summary>
         public static SearchPrivateLinkServiceConnectionProvisioningState Deleting { get; } = new SearchPrivateLinkServiceConnectionProvisioningState(DeletingValue);
+
         /// <summary> The private link service connection has failed to be provisioned or deleted. </summary>
         public static SearchPrivateLinkServiceConnectionProvisioningState Failed { get; } = new SearchPrivateLinkServiceConnectionProvisioningState(FailedValue);
+
         /// <summary> The private link service connection has finished provisioning and is ready for approval. </summary>
         public static SearchPrivateLinkServiceConnectionProvisioningState Succeeded { get; } = new SearchPrivateLinkServiceConnectionProvisioningState(SucceededValue);
+
         /// <summary> Provisioning request for the private link service connection resource has been accepted but the process of creation has not commenced yet. </summary>
         public static SearchPrivateLinkServiceConnectionProvisioningState Incomplete { get; } = new SearchPrivateLinkServiceConnectionProvisioningState(IncompleteValue);
+
         /// <summary> Provisioning request for the private link service connection resource has been canceled. </summary>
         public static SearchPrivateLinkServiceConnectionProvisioningState Canceled { get; } = new SearchPrivateLinkServiceConnectionProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchPrivateLinkServiceConnectionProvisioningState left, SearchPrivateLinkServiceConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchPrivateLinkServiceConnectionProvisioningState left, SearchPrivateLinkServiceConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchPrivateLinkServiceConnectionProvisioningState(string value) => new SearchPrivateLinkServiceConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchPrivateLinkServiceConnectionProvisioningState?(string value) => value == null ? null : new SearchPrivateLinkServiceConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchPrivateLinkServiceConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchPrivateLinkServiceConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct TargetLagsMode : IEquatable<TargetLagsMode>
     {
         private readonly string _value;
+        /// <summary> Target lags to be determined automatically. </summary>
+        private const string AutoValue = "Auto";
+        /// <summary> Use the custom target lags. </summary>
+        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="TargetLagsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TargetLagsMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutoValue = "Auto";
-        private const string CustomValue = "Custom";
+            _value = value;
+        }
 
         /// <summary> Target lags to be determined automatically. </summary>
         public static TargetLagsMode Auto { get; } = new TargetLagsMode(AutoValue);
+
         /// <summary> Use the custom target lags. </summary>
         public static TargetLagsMode Custom { get; } = new TargetLagsMode(CustomValue);
+
         /// <summary> Determines if two <see cref="TargetLagsMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TargetLagsMode left, TargetLagsMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TargetLagsMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TargetLagsMode left, TargetLagsMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TargetLagsMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TargetLagsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TargetLagsMode(string value) => new TargetLagsMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TargetLagsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TargetLagsMode?(string value) => value == null ? null : new TargetLagsMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TargetLagsMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TargetLagsMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

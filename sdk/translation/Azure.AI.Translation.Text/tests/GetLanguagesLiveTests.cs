@@ -33,7 +33,7 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.Greater(response.Value.Translation.Count, 0);
             Assert.Greater(response.Value.Transliteration.Count, 0);
-            Assert.Greater(response.Value.Dictionary.Count, 0);
+            Assert.Greater(response.Value.Models.Count, 0);
         }
 
         [RecordedTest]
@@ -70,13 +70,13 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.NotNull(transliterationLanguage.Scripts[0].Directionality);
             Assert.NotNull(transliterationLanguage.Scripts[0].Name);
             Assert.NotNull(transliterationLanguage.Scripts[0].NativeName);
-            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts);
+            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts);
 
-            Assert.Greater(transliterationLanguage.Scripts[0].TargetLanguageScripts.Count, 0);
-            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts[0].Code);
-            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts[0].Directionality);
-            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts[0].Name);
-            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts[0].NativeName);
+            Assert.Greater(transliterationLanguage.Scripts[0].ToScripts.Count, 0);
+            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Code);
+            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Directionality);
+            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Name);
+            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].NativeName);
         }
 
         [RecordedTest]
@@ -94,45 +94,8 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.NotNull(transliterationLanguage.Scripts);
 
             Assert.Greater(transliterationLanguage.Scripts.Count, 1);
-            Assert.Greater(transliterationLanguage.Scripts[0].TargetLanguageScripts.Count, 1);
-            Assert.Greater(transliterationLanguage.Scripts[1].TargetLanguageScripts.Count, 1);
-        }
-
-        [RecordedTest]
-        public async Task GetSupportedLanguagesDictionaryScope()
-        {
-            TextTranslationClient client = GetClient();
-            Response<GetSupportedLanguagesResult> response =
-                await client.GetSupportedLanguagesAsync(scope: "dictionary", cancellationToken: CancellationToken.None).ConfigureAwait(false);
-
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.Greater(response.Value.Dictionary.Count, 0);
-            Assert.IsTrue(response.Value.Dictionary.TryGetValue("de", out SourceDictionaryLanguage dictionaryLanguage));
-            Assert.NotNull(dictionaryLanguage.Directionality);
-            Assert.NotNull(dictionaryLanguage.Name);
-            Assert.NotNull(dictionaryLanguage.NativeName);
-
-            Assert.Greater(dictionaryLanguage.Translations.Count, 0);
-            Assert.NotNull(dictionaryLanguage.Translations[0].Code);
-            Assert.NotNull(dictionaryLanguage.Translations[0].Directionality);
-            Assert.NotNull(dictionaryLanguage.Translations[0].Name);
-            Assert.NotNull(dictionaryLanguage.Translations[0].NativeName);
-        }
-
-        [RecordedTest]
-        public async Task GetSupportedLanguagesDictionaryScopeMultipleTranslations()
-        {
-            TextTranslationClient client = GetClient();
-            Response<GetSupportedLanguagesResult> response =
-                await client.GetSupportedLanguagesAsync(scope: "dictionary", cancellationToken: CancellationToken.None).ConfigureAwait(false);
-
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.Greater(response.Value.Dictionary.Count, 0);
-            Assert.IsTrue(response.Value.Dictionary.TryGetValue("en", out SourceDictionaryLanguage dictionaryLanguage));
-            Assert.NotNull(dictionaryLanguage.Directionality);
-            Assert.NotNull(dictionaryLanguage.Name);
-            Assert.NotNull(dictionaryLanguage.NativeName);
-            Assert.Greater(dictionaryLanguage.Translations.Count, 1);
+            Assert.Greater(transliterationLanguage.Scripts[0].ToScripts.Count, 1);
+            Assert.Greater(transliterationLanguage.Scripts[1].ToScripts.Count, 1);
         }
 
         [RecordedTest]
@@ -145,7 +108,6 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.Greater(response.Value.Translation.Count, 0);
             Assert.Greater(response.Value.Transliteration.Count, 0);
-            Assert.Greater(response.Value.Dictionary.Count, 0);
             Assert.IsTrue(response.Value.Translation.TryGetValue("en", out TranslationLanguage language));
             Assert.NotNull(language.Directionality);
             Assert.NotNull(language.Name);

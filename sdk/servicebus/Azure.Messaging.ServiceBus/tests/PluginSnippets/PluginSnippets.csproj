@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsSamplesProject>true</IsSamplesProject>
+    <IsPackable>false</IsPackable>
+    <IsShippingLibrary>false</IsShippingLibrary>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.Messaging.ServiceBus.csproj" />
+  </ItemGroup>
+
+</Project>

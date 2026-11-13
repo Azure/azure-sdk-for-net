@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlPrivateLinkServiceConnectionActionsRequired : IEquatable<SqlPrivateLinkServiceConnectionActionsRequired>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="SqlPrivateLinkServiceConnectionActionsRequired"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlPrivateLinkServiceConnectionActionsRequired(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SqlPrivateLinkServiceConnectionActionsRequired None { get; } = new SqlPrivateLinkServiceConnectionActionsRequired(NoneValue);
+
         /// <summary> Determines if two <see cref="SqlPrivateLinkServiceConnectionActionsRequired"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlPrivateLinkServiceConnectionActionsRequired left, SqlPrivateLinkServiceConnectionActionsRequired right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlPrivateLinkServiceConnectionActionsRequired"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlPrivateLinkServiceConnectionActionsRequired left, SqlPrivateLinkServiceConnectionActionsRequired right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlPrivateLinkServiceConnectionActionsRequired"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlPrivateLinkServiceConnectionActionsRequired"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlPrivateLinkServiceConnectionActionsRequired(string value) => new SqlPrivateLinkServiceConnectionActionsRequired(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlPrivateLinkServiceConnectionActionsRequired"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlPrivateLinkServiceConnectionActionsRequired?(string value) => value == null ? null : new SqlPrivateLinkServiceConnectionActionsRequired(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlPrivateLinkServiceConnectionActionsRequired other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlPrivateLinkServiceConnectionActionsRequired other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

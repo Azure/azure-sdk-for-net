@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -17,48 +18,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="databaseName"></param>
         /// <param name="collectionName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="collectionName"/> is null. </exception>
-        public CosmosMongoVCoreDataTransferDataSourceSink(string databaseName, string collectionName)
+        public CosmosMongoVCoreDataTransferDataSourceSink(string databaseName, string collectionName) : base(DataTransferComponent.CosmosDBMongoVCore)
         {
             Argument.AssertNotNull(databaseName, nameof(databaseName));
             Argument.AssertNotNull(collectionName, nameof(collectionName));
 
             DatabaseName = databaseName;
             CollectionName = collectionName;
-            Component = DataTransferComponent.CosmosDBMongoVCore;
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosMongoVCoreDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"></param>
         /// <param name="collectionName"></param>
         /// <param name="hostName"></param>
         /// <param name="connectionStringKeyVaultUri"></param>
-        internal CosmosMongoVCoreDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, string collectionName, string hostName, Uri connectionStringKeyVaultUri) : base(component, serializedAdditionalRawData)
+        internal CosmosMongoVCoreDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> additionalBinaryDataProperties, string databaseName, string collectionName, string hostName, string connectionStringKeyVaultUri) : base(component, additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             CollectionName = collectionName;
             HostName = hostName;
             ConnectionStringKeyVaultUri = connectionStringKeyVaultUri;
-            Component = component;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosMongoVCoreDataTransferDataSourceSink"/> for deserialization. </summary>
-        internal CosmosMongoVCoreDataTransferDataSourceSink()
-        {
-        }
-
-        /// <summary> Gets or sets the database name. </summary>
+        /// <summary> Gets or sets the DatabaseName. </summary>
         [WirePath("databaseName")]
         public string DatabaseName { get; set; }
-        /// <summary> Gets or sets the collection name. </summary>
+
+        /// <summary> Gets or sets the CollectionName. </summary>
         [WirePath("collectionName")]
         public string CollectionName { get; set; }
-        /// <summary> Gets or sets the host name. </summary>
+
+        /// <summary> Gets or sets the HostName. </summary>
         [WirePath("hostName")]
         public string HostName { get; set; }
-        /// <summary> Gets or sets the connection string key vault uri. </summary>
+
+        /// <summary> Gets or sets the ConnectionStringKeyVaultUri. </summary>
         [WirePath("connectionStringKeyVaultUri")]
-        public Uri ConnectionStringKeyVaultUri { get; set; }
+        public string ConnectionStringKeyVaultUri { get; set; }
     }
 }

@@ -11,17 +11,25 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class GeoBackupPolicyStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this GeoBackupPolicyState value) => value switch
         {
-            GeoBackupPolicyState.Disabled => "Disabled",
             GeoBackupPolicyState.Enabled => "Enabled",
+            GeoBackupPolicyState.Disabled => "Disabled",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GeoBackupPolicyState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static GeoBackupPolicyState ToGeoBackupPolicyState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return GeoBackupPolicyState.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return GeoBackupPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return GeoBackupPolicyState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return GeoBackupPolicyState.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GeoBackupPolicyState value.");
         }
     }

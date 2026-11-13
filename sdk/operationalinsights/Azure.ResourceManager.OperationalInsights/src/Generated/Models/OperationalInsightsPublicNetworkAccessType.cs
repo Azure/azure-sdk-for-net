@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,38 +15,62 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsPublicNetworkAccessType : IEquatable<OperationalInsightsPublicNetworkAccessType>
     {
         private readonly string _value;
+        /// <summary> Enables connectivity to Log Analytics through public DNS. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disables public connectivity to Log Analytics through public DNS. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Resource is only accessible from private networks and access approved by network security perimeter associated to this resource. </summary>
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsPublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsPublicNetworkAccessType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enables connectivity to Log Analytics through public DNS. </summary>
         public static OperationalInsightsPublicNetworkAccessType Enabled { get; } = new OperationalInsightsPublicNetworkAccessType(EnabledValue);
+
         /// <summary> Disables public connectivity to Log Analytics through public DNS. </summary>
         public static OperationalInsightsPublicNetworkAccessType Disabled { get; } = new OperationalInsightsPublicNetworkAccessType(DisabledValue);
+
+        /// <summary> Resource is only accessible from private networks and access approved by network security perimeter associated to this resource. </summary>
+        public static OperationalInsightsPublicNetworkAccessType SecuredByPerimeter { get; } = new OperationalInsightsPublicNetworkAccessType(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsPublicNetworkAccessType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsPublicNetworkAccessType left, OperationalInsightsPublicNetworkAccessType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsPublicNetworkAccessType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsPublicNetworkAccessType left, OperationalInsightsPublicNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsPublicNetworkAccessType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsPublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsPublicNetworkAccessType(string value) => new OperationalInsightsPublicNetworkAccessType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsPublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsPublicNetworkAccessType?(string value) => value == null ? null : new OperationalInsightsPublicNetworkAccessType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsPublicNetworkAccessType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsPublicNetworkAccessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

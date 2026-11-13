@@ -7,232 +7,501 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the SecurityInsightsProductPackage data model.
-    /// Represents a Package in Azure Security Insights.
-    /// </summary>
+    /// <summary> Represents a Package in Azure Security Insights. </summary>
     public partial class SecurityInsightsProductPackageData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsProductPackageData"/>. </summary>
         public SecurityInsightsProductPackageData()
         {
-            Providers = new ChangeTrackingList<string>();
-            ThreatAnalysisTactics = new ChangeTrackingList<string>();
-            ThreatAnalysisTechniques = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsProductPackageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="contentId"> The content id of the package. </param>
-        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package. </param>
-        /// <param name="contentKind"> The package kind. </param>
-        /// <param name="contentSchemaVersion"> The version of the content schema. </param>
-        /// <param name="isNew"> Flag indicates if this is a newly published package. </param>
-        /// <param name="isPreview"> Flag indicates if this package is in preview. </param>
-        /// <param name="isFeatured"> Flag indicates if this package is among the featured list. </param>
-        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
-        /// <param name="version"> the latest version number of the package. </param>
-        /// <param name="displayName"> The display name of the package. </param>
-        /// <param name="description"> The description of the package. </param>
-        /// <param name="publisherDisplayName"> The publisher display name of the package. </param>
-        /// <param name="source"> The source of the package. </param>
-        /// <param name="author"> The author of the package. </param>
-        /// <param name="support"> The support tier of the package. </param>
-        /// <param name="dependencies"> The support tier of the package. </param>
-        /// <param name="providers"> Providers for the package item. </param>
-        /// <param name="firstPublishOn"> first publish date package item. </param>
-        /// <param name="lastPublishOn"> last publish date for the package item. </param>
-        /// <param name="categories"> The categories of the package. </param>
-        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
-        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
-        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
-        /// <param name="installedVersion"> The version of the installed package, null or absent means not installed. </param>
-        /// <param name="metadataResourceId"> The metadata resource id. </param>
-        /// <param name="packagedContent"> The json of the ARM template to deploy. Expandable. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsProductPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentId, string contentProductId, SecurityInsightsMetadataPackageKind? contentKind, string contentSchemaVersion, SecurityInsightsMetadataFlag? isNew, SecurityInsightsMetadataFlag? isPreview, SecurityInsightsMetadataFlag? isFeatured, SecurityInsightsMetadataFlag? isDeprecated, string version, string displayName, string description, string publisherDisplayName, SecurityInsightsMetadataSource source, SecurityInsightsMetadataAuthor author, SecurityInsightsMetadataSupport support, SecurityInsightsMetadataDependencies dependencies, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, SecurityInsightsMetadataCategories categories, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, string icon, string installedVersion, ResourceIdentifier metadataResourceId, BinaryData packagedContent, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> package properties. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsProductPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProductPackageProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ContentId = contentId;
-            ContentProductId = contentProductId;
-            ContentKind = contentKind;
-            ContentSchemaVersion = contentSchemaVersion;
-            IsNew = isNew;
-            IsPreview = isPreview;
-            IsFeatured = isFeatured;
-            IsDeprecated = isDeprecated;
-            Version = version;
-            DisplayName = displayName;
-            Description = description;
-            PublisherDisplayName = publisherDisplayName;
-            Source = source;
-            Author = author;
-            Support = support;
-            Dependencies = dependencies;
-            Providers = providers;
-            FirstPublishOn = firstPublishOn;
-            LastPublishOn = lastPublishOn;
-            Categories = categories;
-            ThreatAnalysisTactics = threatAnalysisTactics;
-            ThreatAnalysisTechniques = threatAnalysisTechniques;
-            Icon = icon;
-            InstalledVersion = installedVersion;
-            MetadataResourceId = metadataResourceId;
-            PackagedContent = packagedContent;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The content id of the package. </summary>
-        [WirePath("properties.contentId")]
-        public string ContentId { get; set; }
-        /// <summary> Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package. </summary>
-        [WirePath("properties.contentProductId")]
-        public string ContentProductId { get; set; }
-        /// <summary> The package kind. </summary>
-        [WirePath("properties.contentKind")]
-        public SecurityInsightsMetadataPackageKind? ContentKind { get; set; }
-        /// <summary> The version of the content schema. </summary>
-        [WirePath("properties.contentSchemaVersion")]
-        public string ContentSchemaVersion { get; set; }
-        /// <summary> Flag indicates if this is a newly published package. </summary>
-        [WirePath("properties.isNew")]
-        public SecurityInsightsMetadataFlag? IsNew { get; set; }
-        /// <summary> Flag indicates if this package is in preview. </summary>
-        [WirePath("properties.isPreview")]
-        public SecurityInsightsMetadataFlag? IsPreview { get; set; }
-        /// <summary> Flag indicates if this package is among the featured list. </summary>
-        [WirePath("properties.isFeatured")]
-        public SecurityInsightsMetadataFlag? IsFeatured { get; set; }
-        /// <summary> Flag indicates if this template is deprecated. </summary>
-        [WirePath("properties.isDeprecated")]
-        public SecurityInsightsMetadataFlag? IsDeprecated { get; set; }
-        /// <summary> the latest version number of the package. </summary>
-        [WirePath("properties.version")]
-        public string Version { get; set; }
-        /// <summary> The display name of the package. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
-        /// <summary> The description of the package. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> The publisher display name of the package. </summary>
-        [WirePath("properties.publisherDisplayName")]
-        public string PublisherDisplayName { get; set; }
-        /// <summary> The source of the package. </summary>
-        [WirePath("properties.source")]
-        public SecurityInsightsMetadataSource Source { get; set; }
-        /// <summary> The author of the package. </summary>
-        [WirePath("properties.author")]
-        public SecurityInsightsMetadataAuthor Author { get; set; }
-        /// <summary> The support tier of the package. </summary>
-        [WirePath("properties.support")]
-        public SecurityInsightsMetadataSupport Support { get; set; }
-        /// <summary> The support tier of the package. </summary>
-        [WirePath("properties.dependencies")]
-        public SecurityInsightsMetadataDependencies Dependencies { get; set; }
-        /// <summary> Providers for the package item. </summary>
-        [WirePath("properties.providers")]
-        public IList<string> Providers { get; }
-        /// <summary> first publish date package item. </summary>
-        [WirePath("properties.firstPublishDate")]
-        public DateTimeOffset? FirstPublishOn { get; set; }
-        /// <summary> last publish date for the package item. </summary>
-        [WirePath("properties.lastPublishDate")]
-        public DateTimeOffset? LastPublishOn { get; set; }
-        /// <summary> The categories of the package. </summary>
-        [WirePath("properties.categories")]
-        public SecurityInsightsMetadataCategories Categories { get; set; }
-        /// <summary> the tactics the resource covers. </summary>
-        [WirePath("properties.threatAnalysisTactics")]
-        public IList<string> ThreatAnalysisTactics { get; }
-        /// <summary> the techniques the resource covers, these have to be aligned with the tactics being used. </summary>
-        [WirePath("properties.threatAnalysisTechniques")]
-        public IList<string> ThreatAnalysisTechniques { get; }
-        /// <summary> the icon identifier. this id can later be fetched from the content metadata. </summary>
-        [WirePath("properties.icon")]
-        public string Icon { get; set; }
-        /// <summary> The version of the installed package, null or absent means not installed. </summary>
-        [WirePath("properties.installedVersion")]
-        public string InstalledVersion { get; set; }
-        /// <summary> The metadata resource id. </summary>
-        [WirePath("properties.metadataResourceId")]
-        public ResourceIdentifier MetadataResourceId { get; set; }
-        /// <summary>
-        /// The json of the ARM template to deploy. Expandable.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.packagedContent")]
-        public BinaryData PackagedContent { get; set; }
+        /// <summary> package properties. </summary>
+        [WirePath("properties")]
+        internal ProductPackageProperties Properties { get; set; }
+
         /// <summary> Etag of the azure resource. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; set; }
+
+        /// <summary> The content id of the package. </summary>
+        [WirePath("properties.contentId")]
+        public string ContentId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.ContentId = value;
+            }
+        }
+
+        /// <summary> Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package. </summary>
+        [WirePath("properties.contentProductId")]
+        public string ContentProductId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentProductId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.ContentProductId = value;
+            }
+        }
+
+        /// <summary> The package kind. </summary>
+        [WirePath("properties.contentKind")]
+        public SecurityInsightsMetadataPackageKind? ContentKind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentKind;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.ContentKind = value;
+            }
+        }
+
+        /// <summary> The version of the content schema. </summary>
+        [WirePath("properties.contentSchemaVersion")]
+        public string ContentSchemaVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentSchemaVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.ContentSchemaVersion = value;
+            }
+        }
+
+        /// <summary> Flag indicates if this is a newly published package. </summary>
+        [WirePath("properties.isNew")]
+        public SecurityInsightsMetadataFlag? IsNew
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsNew;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.IsNew = value;
+            }
+        }
+
+        /// <summary> Flag indicates if this package is in preview. </summary>
+        [WirePath("properties.isPreview")]
+        public SecurityInsightsMetadataFlag? IsPreview
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPreview;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.IsPreview = value;
+            }
+        }
+
+        /// <summary> Flag indicates if this package is among the featured list. </summary>
+        [WirePath("properties.isFeatured")]
+        public SecurityInsightsMetadataFlag? IsFeatured
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFeatured;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.IsFeatured = value;
+            }
+        }
+
+        /// <summary> Flag indicates if this template is deprecated. </summary>
+        [WirePath("properties.isDeprecated")]
+        public SecurityInsightsMetadataFlag? IsDeprecated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDeprecated;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.IsDeprecated = value;
+            }
+        }
+
+        /// <summary> the latest version number of the package. </summary>
+        [WirePath("properties.version")]
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
+        /// <summary> The display name of the package. </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> The description of the package. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The publisher display name of the package. </summary>
+        [WirePath("properties.publisherDisplayName")]
+        public string PublisherDisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublisherDisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.PublisherDisplayName = value;
+            }
+        }
+
+        /// <summary> The source of the package. </summary>
+        [WirePath("properties.source")]
+        public SecurityInsightsMetadataSource Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
+        /// <summary> The author of the package. </summary>
+        [WirePath("properties.author")]
+        public SecurityInsightsMetadataAuthor Author
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Author;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.Author = value;
+            }
+        }
+
+        /// <summary> The support tier of the package. </summary>
+        [WirePath("properties.support")]
+        public SecurityInsightsMetadataSupport Support
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Support;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.Support = value;
+            }
+        }
+
+        /// <summary> The support tier of the package. </summary>
+        [WirePath("properties.dependencies")]
+        public SecurityInsightsMetadataDependencies Dependencies
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Dependencies;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.Dependencies = value;
+            }
+        }
+
+        /// <summary> Providers for the package item. </summary>
+        [WirePath("properties.providers")]
+        public IList<string> Providers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                return Properties.Providers;
+            }
+        }
+
+        /// <summary> first publish date package item. </summary>
+        [WirePath("properties.firstPublishDate")]
+        public DateTimeOffset? FirstPublishOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FirstPublishOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.FirstPublishOn = value;
+            }
+        }
+
+        /// <summary> last publish date for the package item. </summary>
+        [WirePath("properties.lastPublishDate")]
+        public DateTimeOffset? LastPublishOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastPublishOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.LastPublishOn = value;
+            }
+        }
+
+        /// <summary> The categories of the package. </summary>
+        [WirePath("properties.categories")]
+        public SecurityInsightsMetadataCategories Categories
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Categories;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.Categories = value;
+            }
+        }
+
+        /// <summary> the tactics the resource covers. </summary>
+        [WirePath("properties.threatAnalysisTactics")]
+        public IList<string> ThreatAnalysisTactics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                return Properties.ThreatAnalysisTactics;
+            }
+        }
+
+        /// <summary> the techniques the resource covers, these have to be aligned with the tactics being used. </summary>
+        [WirePath("properties.threatAnalysisTechniques")]
+        public IList<string> ThreatAnalysisTechniques
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                return Properties.ThreatAnalysisTechniques;
+            }
+        }
+
+        /// <summary> the icon identifier. this id can later be fetched from the content metadata. </summary>
+        [WirePath("properties.icon")]
+        public string Icon
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Icon;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.Icon = value;
+            }
+        }
+
+        /// <summary> The version of the installed package, null or absent means not installed. </summary>
+        [WirePath("properties.installedVersion")]
+        public string InstalledVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstalledVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.InstalledVersion = value;
+            }
+        }
+
+        /// <summary> The metadata resource id. </summary>
+        [WirePath("properties.metadataResourceId")]
+        public ResourceIdentifier MetadataResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetadataResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.MetadataResourceId = value;
+            }
+        }
+
+        /// <summary> The json of the ARM template to deploy. Expandable. </summary>
+        [WirePath("properties.packagedContent")]
+        public BinaryData PackagedContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackagedContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProductPackageProperties();
+                }
+                Properties.PackagedContent = value;
+            }
+        }
     }
 }

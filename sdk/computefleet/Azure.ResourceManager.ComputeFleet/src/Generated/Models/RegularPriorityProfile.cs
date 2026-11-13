@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary> Configuration Options for Regular instances in Compute Fleet. </summary>
     public partial class RegularPriorityProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegularPriorityProfile"/>. </summary>
         public RegularPriorityProfile()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="capacity"> Total capacity to achieve. It is currently in terms of number of VMs. </param>
         /// <param name="minCapacity"> Minimum capacity to achieve which cannot be updated. If we will not be able to "guarantee" minimum capacity, we will reject the request in the sync path itself. </param>
         /// <param name="allocationStrategy"> Allocation strategy to follow when determining the VM sizes distribution for Regular VMs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegularPriorityProfile(int? capacity, int? minCapacity, RegularPriorityAllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RegularPriorityProfile(int? capacity, int? minCapacity, RegularPriorityAllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Capacity = capacity;
             MinCapacity = minCapacity;
             AllocationStrategy = allocationStrategy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Total capacity to achieve. It is currently in terms of number of VMs. </summary>
         public int? Capacity { get; set; }
+
         /// <summary> Minimum capacity to achieve which cannot be updated. If we will not be able to "guarantee" minimum capacity, we will reject the request in the sync path itself. </summary>
         public int? MinCapacity { get; set; }
+
         /// <summary> Allocation strategy to follow when determining the VM sizes distribution for Regular VMs. </summary>
         public RegularPriorityAllocationStrategy? AllocationStrategy { get; set; }
     }

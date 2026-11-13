@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Allow to exclude some variable satisfy the condition for the WAF check. </summary>
     public partial class OwaspCrsExclusionEntry
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OwaspCrsExclusionEntry"/>. </summary>
         /// <param name="matchVariable"> The variable to be excluded. </param>
@@ -65,30 +37,28 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </param>
         /// <param name="exclusionManagedRuleSets"> The managed rule sets that are associated with the exclusion. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OwaspCrsExclusionEntry(OwaspCrsExclusionEntryMatchVariable matchVariable, OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator, string selector, IList<ExclusionManagedRuleSet> exclusionManagedRuleSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OwaspCrsExclusionEntry(OwaspCrsExclusionEntryMatchVariable matchVariable, OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator, string selector, IList<ExclusionManagedRuleSet> exclusionManagedRuleSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
             ExclusionManagedRuleSets = exclusionManagedRuleSets;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OwaspCrsExclusionEntry"/> for deserialization. </summary>
-        internal OwaspCrsExclusionEntry()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The variable to be excluded. </summary>
         [WirePath("matchVariable")]
         public OwaspCrsExclusionEntryMatchVariable MatchVariable { get; set; }
+
         /// <summary> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </summary>
         [WirePath("selectorMatchOperator")]
         public OwaspCrsExclusionEntrySelectorMatchOperator SelectorMatchOperator { get; set; }
+
         /// <summary> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </summary>
         [WirePath("selector")]
         public string Selector { get; set; }
+
         /// <summary> The managed rule sets that are associated with the exclusion. </summary>
         [WirePath("exclusionManagedRuleSets")]
         public IList<ExclusionManagedRuleSet> ExclusionManagedRuleSets { get; }

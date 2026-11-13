@@ -21,14 +21,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dateTimeFormat"> The format for DateTime values. Type: string (or Expression with resultType string). </param>
         /// <param name="dateTimeOffsetFormat"> The format for DateTimeOffset values. Type: string (or Expression with resultType string). </param>
         /// <param name="timeSpanFormat"> The format for TimeSpan values. Type: string (or Expression with resultType string). </param>
+        /// <param name="timeFormat"> The format for Time values. Type: string (or Expression with resultType string). </param>
+        /// <param name="dateFormat"> The format for Date values. Type: string (or Expression with resultType string). </param>
         /// <param name="culture"> The culture used to convert data from/to string. Type: string (or Expression with resultType string). </param>
-        internal TypeConversionSettings(object allowDataTruncation, object treatBooleanAsNumber, object dateTimeFormat, object dateTimeOffsetFormat, object timeSpanFormat, object culture)
+        internal TypeConversionSettings(object allowDataTruncation, object treatBooleanAsNumber, object dateTimeFormat, object dateTimeOffsetFormat, object timeSpanFormat, object timeFormat, object dateFormat, object culture)
         {
             AllowDataTruncation = allowDataTruncation;
             TreatBooleanAsNumber = treatBooleanAsNumber;
             DateTimeFormat = dateTimeFormat;
             DateTimeOffsetFormat = dateTimeOffsetFormat;
             TimeSpanFormat = timeSpanFormat;
+            TimeFormat = timeFormat;
+            DateFormat = dateFormat;
             Culture = culture;
         }
 
@@ -42,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object DateTimeOffsetFormat { get; set; }
         /// <summary> The format for TimeSpan values. Type: string (or Expression with resultType string). </summary>
         public object TimeSpanFormat { get; set; }
+        /// <summary> The format for Time values. Type: string (or Expression with resultType string). </summary>
+        public object TimeFormat { get; set; }
+        /// <summary> The format for Date values. Type: string (or Expression with resultType string). </summary>
+        public object DateFormat { get; set; }
         /// <summary> The culture used to convert data from/to string. Type: string (or Expression with resultType string). </summary>
         public object Culture { get; set; }
     }

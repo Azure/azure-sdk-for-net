@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ConnectionMonitorEndpointType : IEquatable<ConnectionMonitorEndpointType>
     {
         private readonly string _value;
+        /// <summary> AzureVM. </summary>
+        private const string AzureVmValue = "AzureVM";
+        /// <summary> AzureVNet. </summary>
+        private const string AzureVNetValue = "AzureVNet";
+        /// <summary> AzureSubnet. </summary>
+        private const string AzureSubnetValue = "AzureSubnet";
+        /// <summary> ExternalAddress. </summary>
+        private const string ExternalAddressValue = "ExternalAddress";
+        /// <summary> MMAWorkspaceMachine. </summary>
+        private const string MMAWorkspaceMachineValue = "MMAWorkspaceMachine";
+        /// <summary> MMAWorkspaceNetwork. </summary>
+        private const string MMAWorkspaceNetworkValue = "MMAWorkspaceNetwork";
+        /// <summary> AzureArcVM. </summary>
+        private const string AzureArcVmValue = "AzureArcVM";
+        /// <summary> AzureVMSS. </summary>
+        private const string AzureVmssValue = "AzureVMSS";
+        /// <summary> AzureArcNetwork. </summary>
+        private const string AzureArcNetworkValue = "AzureArcNetwork";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionMonitorEndpointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureVmValue = "AzureVM";
-        private const string AzureVNetValue = "AzureVNet";
-        private const string AzureSubnetValue = "AzureSubnet";
-        private const string ExternalAddressValue = "ExternalAddress";
-        private const string MMAWorkspaceMachineValue = "MMAWorkspaceMachine";
-        private const string MMAWorkspaceNetworkValue = "MMAWorkspaceNetwork";
-        private const string AzureArcVmValue = "AzureArcVM";
-        private const string AzureVmssValue = "AzureVMSS";
-        private const string AzureArcNetworkValue = "AzureArcNetwork";
+            _value = value;
+        }
 
         /// <summary> AzureVM. </summary>
         public static ConnectionMonitorEndpointType AzureVm { get; } = new ConnectionMonitorEndpointType(AzureVmValue);
+
         /// <summary> AzureVNet. </summary>
         public static ConnectionMonitorEndpointType AzureVNet { get; } = new ConnectionMonitorEndpointType(AzureVNetValue);
+
         /// <summary> AzureSubnet. </summary>
         public static ConnectionMonitorEndpointType AzureSubnet { get; } = new ConnectionMonitorEndpointType(AzureSubnetValue);
+
         /// <summary> ExternalAddress. </summary>
         public static ConnectionMonitorEndpointType ExternalAddress { get; } = new ConnectionMonitorEndpointType(ExternalAddressValue);
+
         /// <summary> MMAWorkspaceMachine. </summary>
         public static ConnectionMonitorEndpointType MMAWorkspaceMachine { get; } = new ConnectionMonitorEndpointType(MMAWorkspaceMachineValue);
+
         /// <summary> MMAWorkspaceNetwork. </summary>
         public static ConnectionMonitorEndpointType MMAWorkspaceNetwork { get; } = new ConnectionMonitorEndpointType(MMAWorkspaceNetworkValue);
+
         /// <summary> AzureArcVM. </summary>
         public static ConnectionMonitorEndpointType AzureArcVm { get; } = new ConnectionMonitorEndpointType(AzureArcVmValue);
+
         /// <summary> AzureVMSS. </summary>
         public static ConnectionMonitorEndpointType AzureVmss { get; } = new ConnectionMonitorEndpointType(AzureVmssValue);
+
         /// <summary> AzureArcNetwork. </summary>
         public static ConnectionMonitorEndpointType AzureArcNetwork { get; } = new ConnectionMonitorEndpointType(AzureArcNetworkValue);
+
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionMonitorEndpointType left, ConnectionMonitorEndpointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionMonitorEndpointType left, ConnectionMonitorEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionMonitorEndpointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionMonitorEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionMonitorEndpointType(string value) => new ConnectionMonitorEndpointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionMonitorEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionMonitorEndpointType?(string value) => value == null ? null : new ConnectionMonitorEndpointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionMonitorEndpointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionMonitorEndpointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

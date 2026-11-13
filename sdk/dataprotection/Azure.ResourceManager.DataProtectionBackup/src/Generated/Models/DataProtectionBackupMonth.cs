@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The DataProtectionBackupMonth. </summary>
+    /// <summary></summary>
     public readonly partial struct DataProtectionBackupMonth : IEquatable<DataProtectionBackupMonth>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupMonth"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataProtectionBackupMonth(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AprilValue = "April";
         private const string AugustValue = "August";
         private const string DecemberValue = "December";
@@ -35,47 +28,82 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private const string OctoberValue = "October";
         private const string SeptemberValue = "September";
 
-        /// <summary> April. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupMonth"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataProtectionBackupMonth(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the April. </summary>
         public static DataProtectionBackupMonth April { get; } = new DataProtectionBackupMonth(AprilValue);
-        /// <summary> August. </summary>
+
+        /// <summary> Gets the August. </summary>
         public static DataProtectionBackupMonth August { get; } = new DataProtectionBackupMonth(AugustValue);
-        /// <summary> December. </summary>
+
+        /// <summary> Gets the December. </summary>
         public static DataProtectionBackupMonth December { get; } = new DataProtectionBackupMonth(DecemberValue);
-        /// <summary> February. </summary>
+
+        /// <summary> Gets the February. </summary>
         public static DataProtectionBackupMonth February { get; } = new DataProtectionBackupMonth(FebruaryValue);
-        /// <summary> January. </summary>
+
+        /// <summary> Gets the January. </summary>
         public static DataProtectionBackupMonth January { get; } = new DataProtectionBackupMonth(JanuaryValue);
-        /// <summary> July. </summary>
+
+        /// <summary> Gets the July. </summary>
         public static DataProtectionBackupMonth July { get; } = new DataProtectionBackupMonth(JulyValue);
-        /// <summary> June. </summary>
+
+        /// <summary> Gets the June. </summary>
         public static DataProtectionBackupMonth June { get; } = new DataProtectionBackupMonth(JuneValue);
-        /// <summary> March. </summary>
+
+        /// <summary> Gets the March. </summary>
         public static DataProtectionBackupMonth March { get; } = new DataProtectionBackupMonth(MarchValue);
-        /// <summary> May. </summary>
+
+        /// <summary> Gets the May. </summary>
         public static DataProtectionBackupMonth May { get; } = new DataProtectionBackupMonth(MayValue);
-        /// <summary> November. </summary>
+
+        /// <summary> Gets the November. </summary>
         public static DataProtectionBackupMonth November { get; } = new DataProtectionBackupMonth(NovemberValue);
-        /// <summary> October. </summary>
+
+        /// <summary> Gets the October. </summary>
         public static DataProtectionBackupMonth October { get; } = new DataProtectionBackupMonth(OctoberValue);
-        /// <summary> September. </summary>
+
+        /// <summary> Gets the September. </summary>
         public static DataProtectionBackupMonth September { get; } = new DataProtectionBackupMonth(SeptemberValue);
+
         /// <summary> Determines if two <see cref="DataProtectionBackupMonth"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataProtectionBackupMonth left, DataProtectionBackupMonth right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataProtectionBackupMonth"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataProtectionBackupMonth left, DataProtectionBackupMonth right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataProtectionBackupMonth"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataProtectionBackupMonth"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataProtectionBackupMonth(string value) => new DataProtectionBackupMonth(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataProtectionBackupMonth"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataProtectionBackupMonth?(string value) => value == null ? null : new DataProtectionBackupMonth(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataProtectionBackupMonth other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataProtectionBackupMonth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

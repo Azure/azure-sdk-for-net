@@ -7,46 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
     /// <summary> Specifies the network settings for the Azure Large Instance disks. </summary>
     public partial class LargeInstanceNetworkProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceNetworkProfile"/>. </summary>
-        internal LargeInstanceNetworkProfile()
+        public LargeInstanceNetworkProfile()
         {
             NetworkInterfaces = new ChangeTrackingList<LargeInstanceIPAddress>();
         }
@@ -54,17 +26,18 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <summary> Initializes a new instance of <see cref="LargeInstanceNetworkProfile"/>. </summary>
         /// <param name="networkInterfaces"> Specifies the network interfaces for the Azure Large Instance. </param>
         /// <param name="circuitId"> Specifies the circuit id for connecting to express route. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LargeInstanceNetworkProfile(IReadOnlyList<LargeInstanceIPAddress> networkInterfaces, string circuitId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LargeInstanceNetworkProfile(IList<LargeInstanceIPAddress> networkInterfaces, string circuitId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkInterfaces = networkInterfaces;
             CircuitId = circuitId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the network interfaces for the Azure Large Instance. </summary>
-        public IReadOnlyList<LargeInstanceIPAddress> NetworkInterfaces { get; }
+        public IList<LargeInstanceIPAddress> NetworkInterfaces { get; }
+
         /// <summary> Specifies the circuit id for connecting to express route. </summary>
-        public string CircuitId { get; }
+        public string CircuitId { get; set; }
     }
 }

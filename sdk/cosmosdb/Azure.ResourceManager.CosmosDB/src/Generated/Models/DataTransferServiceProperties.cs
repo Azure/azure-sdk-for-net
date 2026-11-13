@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,10 +15,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class DataTransferServiceProperties : CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataTransferServiceProperties"/>. </summary>
-        public DataTransferServiceProperties()
+        public DataTransferServiceProperties() : base(CosmosDBServiceType.DataTransfer)
         {
             Locations = new ChangeTrackingList<DataTransferRegionalService>();
-            ServiceType = CosmosDBServiceType.DataTransfer;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataTransferServiceProperties"/>. </summary>
@@ -26,12 +26,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
         /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="locations"> An array that contains all of the locations for the service. </param>
         internal DataTransferServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, IReadOnlyList<DataTransferRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
         {
             Locations = locations;
-            ServiceType = serviceType;
         }
 
         /// <summary> An array that contains all of the locations for the service. </summary>

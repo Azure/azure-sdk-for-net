@@ -14,46 +14,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Description of the Device Registry namespace that is linked to the provisioning service. </summary>
     public partial class DeviceRegistryNamespaceDescription
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceDescription"/>. </summary>
         /// <param name="resourceId"> The ARM resource ID of the Device Registry namespace. </param>
         /// <param name="authenticationType"> Device Registry Namespace MI authentication type: UserAssigned, SystemAssigned. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public DeviceRegistryNamespaceDescription(ResourceIdentifier resourceId, DeviceRegistryNamespaceAuthenticationType authenticationType)
+        internal DeviceRegistryNamespaceDescription(ResourceIdentifier resourceId, DeviceRegistryNamespaceAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
             ResourceId = resourceId;
             AuthenticationType = authenticationType;
         }
@@ -62,25 +30,42 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="resourceId"> The ARM resource ID of the Device Registry namespace. </param>
         /// <param name="authenticationType"> Device Registry Namespace MI authentication type: UserAssigned, SystemAssigned. </param>
         /// <param name="selectedUserAssignedIdentityResourceId"> The selected user-assigned identity resource Id associated with Device Registry namespace. This is required when authenticationType is UserAssigned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryNamespaceDescription(ResourceIdentifier resourceId, DeviceRegistryNamespaceAuthenticationType authenticationType, ResourceIdentifier selectedUserAssignedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="namespaceUuid"> Unique identifier of the linked Device Registry namespace. </param>
+        /// <param name="dataAddress"> The data plane address of the linked Azure Device Registry namespace. </param>
+        /// <param name="location"> Azure location of the linked Device Registry namespace. </param>
+        /// <param name="linkingState"> The linking state of this namespace. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceRegistryNamespaceDescription(ResourceIdentifier resourceId, DeviceRegistryNamespaceAuthenticationType authenticationType, ResourceIdentifier selectedUserAssignedIdentityResourceId, string namespaceUuid, string dataAddress, AzureLocation? location, LinkingState? linkingState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             AuthenticationType = authenticationType;
             SelectedUserAssignedIdentityResourceId = selectedUserAssignedIdentityResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceDescription"/> for deserialization. </summary>
-        internal DeviceRegistryNamespaceDescription()
-        {
+            NamespaceUuid = namespaceUuid;
+            DataAddress = dataAddress;
+            Location = location;
+            LinkingState = linkingState;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM resource ID of the Device Registry namespace. </summary>
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; }
+
         /// <summary> Device Registry Namespace MI authentication type: UserAssigned, SystemAssigned. </summary>
-        public DeviceRegistryNamespaceAuthenticationType AuthenticationType { get; set; }
+        public DeviceRegistryNamespaceAuthenticationType AuthenticationType { get; }
+
         /// <summary> The selected user-assigned identity resource Id associated with Device Registry namespace. This is required when authenticationType is UserAssigned. </summary>
-        public ResourceIdentifier SelectedUserAssignedIdentityResourceId { get; set; }
+        public ResourceIdentifier SelectedUserAssignedIdentityResourceId { get; }
+
+        /// <summary> Unique identifier of the linked Device Registry namespace. </summary>
+        public string NamespaceUuid { get; }
+
+        /// <summary> The data plane address of the linked Azure Device Registry namespace. </summary>
+        public string DataAddress { get; }
+
+        /// <summary> Azure location of the linked Device Registry namespace. </summary>
+        public AzureLocation? Location { get; }
+
+        /// <summary> The linking state of this namespace. </summary>
+        public LinkingState? LinkingState { get; }
     }
 }

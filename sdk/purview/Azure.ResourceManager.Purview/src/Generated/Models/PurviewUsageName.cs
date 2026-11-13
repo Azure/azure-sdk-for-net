@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Initializes a new instance of <see cref="PurviewUsageName"/>. </summary>
         /// <param name="localizedValue"> Gets or sets the localized name value. </param>
         /// <param name="value"> Gets or sets the name value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewUsageName(string localizedValue, string value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(localizedValue, value, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewUsageName(string localizedValue, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(localizedValue, value, additionalBinaryDataProperties)
         {
         }
     }

@@ -8,13 +8,12 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BrowserCredential))]
     [ModelReaderWriterBuildable(typeof(FcmV1Credential))]
@@ -28,15 +27,14 @@ namespace Azure.ResourceManager.NotificationHubs
     [ModelReaderWriterBuildable(typeof(NotificationHubData))]
     [ModelReaderWriterBuildable(typeof(NotificationHubGcmCredential))]
     [ModelReaderWriterBuildable(typeof(NotificationHubIPRule))]
-    [ModelReaderWriterBuildable(typeof(NotificationHubListResult))]
     [ModelReaderWriterBuildable(typeof(NotificationHubMpnsCredential))]
     [ModelReaderWriterBuildable(typeof(NotificationHubNamespaceAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(NotificationHubNamespaceData))]
-    [ModelReaderWriterBuildable(typeof(NotificationHubNamespaceListResult))]
     [ModelReaderWriterBuildable(typeof(NotificationHubNamespacePatch))]
     [ModelReaderWriterBuildable(typeof(NotificationHubNamespaceProperties))]
     [ModelReaderWriterBuildable(typeof(NotificationHubNamespaceResource))]
     [ModelReaderWriterBuildable(typeof(NotificationHubNetworkAcls))]
+    [ModelReaderWriterBuildable(typeof(NotificationHubPatch))]
     [ModelReaderWriterBuildable(typeof(NotificationHubPnsCredentials))]
     [ModelReaderWriterBuildable(typeof(NotificationHubPolicyKey))]
     [ModelReaderWriterBuildable(typeof(NotificationHubPrivateEndpointConnectionData))]
@@ -48,18 +46,12 @@ namespace Azure.ResourceManager.NotificationHubs
     [ModelReaderWriterBuildable(typeof(NotificationHubSku))]
     [ModelReaderWriterBuildable(typeof(NotificationHubsPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(NotificationHubsPrivateLinkResourceData))]
-    [ModelReaderWriterBuildable(typeof(NotificationHubsPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(NotificationHubsPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(NotificationHubTestSendResult))]
     [ModelReaderWriterBuildable(typeof(NotificationHubWnsCredential))]
     [ModelReaderWriterBuildable(typeof(PnsCredentials))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(PublicInternetAuthorizationRule))]
     [ModelReaderWriterBuildable(typeof(RemotePrivateLinkServiceConnectionState))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SharedAccessAuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(SharedAccessAuthorizationRuleProperties))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(XiaomiCredential))]
     public partial class AzureResourceManagerNotificationHubsContext : ModelReaderWriterContext

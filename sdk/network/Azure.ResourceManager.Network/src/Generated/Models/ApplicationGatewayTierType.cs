@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The ApplicationGatewayTierType. </summary>
+    /// <summary></summary>
     public readonly partial struct ApplicationGatewayTierType : IEquatable<ApplicationGatewayTierType>
     {
         private readonly string _value;
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> WAF. </summary>
+        private const string WafValue = "WAF";
+        /// <summary> Standard_v2. </summary>
+        private const string StandardV2Value = "Standard_v2";
+        /// <summary> WAF_v2. </summary>
+        private const string WafV2Value = "WAF_v2";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTierType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayTierType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string WafValue = "WAF";
-        private const string StandardV2Value = "Standard_v2";
-        private const string WafV2Value = "WAF_v2";
+            _value = value;
+        }
 
         /// <summary> Standard. </summary>
         public static ApplicationGatewayTierType Standard { get; } = new ApplicationGatewayTierType(StandardValue);
+
         /// <summary> WAF. </summary>
         public static ApplicationGatewayTierType Waf { get; } = new ApplicationGatewayTierType(WafValue);
+
         /// <summary> Standard_v2. </summary>
         public static ApplicationGatewayTierType StandardV2 { get; } = new ApplicationGatewayTierType(StandardV2Value);
+
         /// <summary> WAF_v2. </summary>
         public static ApplicationGatewayTierType WafV2 { get; } = new ApplicationGatewayTierType(WafV2Value);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayTierType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayTierType left, ApplicationGatewayTierType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayTierType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayTierType left, ApplicationGatewayTierType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayTierType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayTierType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayTierType(string value) => new ApplicationGatewayTierType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayTierType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayTierType?(string value) => value == null ? null : new ApplicationGatewayTierType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayTierType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayTierType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

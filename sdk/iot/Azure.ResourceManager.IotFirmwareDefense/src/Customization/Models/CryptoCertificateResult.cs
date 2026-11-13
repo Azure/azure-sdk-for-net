@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary> Role of the certificate (Root CA, etc). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string Role {
+        public string Role
+        {
             get => CertificateRole;
             set => CertificateRole = value;
         }
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         //public string SignatureAlgorithm { get; set; }
         /// <summary> Size of the certificate's key in bits. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public long? KeySize {
+        public long? KeySize
+        {
             get => CertificateKeySize;
             set => CertificateKeySize = value;
         }
         /// <summary> Key algorithm used in the certificate. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string KeyAlgorithm {
+        public string KeyAlgorithm
+        {
             get => CertificateKeyAlgorithm;
             set => CertificateKeyAlgorithm = value;
         }

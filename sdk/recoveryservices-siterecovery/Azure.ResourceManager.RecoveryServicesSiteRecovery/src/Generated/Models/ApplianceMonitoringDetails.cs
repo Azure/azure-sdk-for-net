@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Appliance details of the migration item. </summary>
     public partial class ApplianceMonitoringDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplianceMonitoringDetails"/>. </summary>
         internal ApplianceMonitoringDetails()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="disksReplicationDetails"> The disk replication details. </param>
         /// <param name="esxiNfcBuffer"> The ESXi NFC buffer details. </param>
         /// <param name="networkBandwidth"> The appliance network bandwidth details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplianceMonitoringDetails(ApplianceResourceDetails cpuDetails, ApplianceResourceDetails ramDetails, IReadOnlyList<DataStoreUtilizationDetails> datastoreSnapshot, ApplianceResourceDetails disksReplicationDetails, ApplianceResourceDetails esxiNfcBuffer, ApplianceResourceDetails networkBandwidth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceMonitoringDetails(ApplianceResourceDetails cpuDetails, ApplianceResourceDetails ramDetails, IReadOnlyList<DataStoreUtilizationDetails> datastoreSnapshot, ApplianceResourceDetails disksReplicationDetails, ApplianceResourceDetails esxiNfcBuffer, ApplianceResourceDetails networkBandwidth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CpuDetails = cpuDetails;
             RamDetails = ramDetails;
@@ -67,19 +39,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DisksReplicationDetails = disksReplicationDetails;
             EsxiNfcBuffer = esxiNfcBuffer;
             NetworkBandwidth = networkBandwidth;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The appliance CPU details. </summary>
         public ApplianceResourceDetails CpuDetails { get; }
+
         /// <summary> The appliance RAM details. </summary>
         public ApplianceResourceDetails RamDetails { get; }
+
         /// <summary> The appliance datastore snapshot details. </summary>
         public IReadOnlyList<DataStoreUtilizationDetails> DatastoreSnapshot { get; }
+
         /// <summary> The disk replication details. </summary>
         public ApplianceResourceDetails DisksReplicationDetails { get; }
+
         /// <summary> The ESXi NFC buffer details. </summary>
         public ApplianceResourceDetails EsxiNfcBuffer { get; }
+
         /// <summary> The appliance network bandwidth details. </summary>
         public ApplianceResourceDetails NetworkBandwidth { get; }
     }

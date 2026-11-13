@@ -7,14 +7,14 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: **None,** **Windows_Server_Hybrid,** **Windows_Server_Perpetual.** The default value is: **None.**. </summary>
+    /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </summary>
     public enum DedicatedHostLicenseType
     {
         /// <summary> None. </summary>
         None,
-        /// <summary> Windows_Server_Hybrid. </summary>
+        /// <summary> WindowsServerHybrid. </summary>
         WindowsServerHybrid,
-        /// <summary> Windows_Server_Perpetual. </summary>
+        /// <summary> WindowsServerPerpetual. </summary>
         WindowsServerPerpetual
     }
 }

@@ -1,13 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -151,6 +148,49 @@ namespace Azure.ResourceManager.Storage.Tests
             var falseId = account1.Id.ToString().Replace(accountName, "missingaccount");
             var missingStorage = new StorageAccountResource(Client, new ResourceIdentifier(falseId));
             await missingStorage.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateAndUpdateStorageAccountWithTurboTier()
+        {
+            AzureLocation location = new AzureLocation("eastus2euap");
+            string accountName = Recording.GenerateAssetName(namePrefix);
+            string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
+            _resourceGroup = (await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(location))).Value;
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2);
+            parameters.Location = location;
+            parameters.AccessTier = StorageAccountAccessTier.Hot;
+            parameters.TurboTier = new TurboTier
+            {
+                Status = TurboTierStatus.Enabled,
+                TargetPercent = 10
+            };
+
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                accountName,
+                parameters)).Value;
+
+            Assert.AreEqual(TurboTierStatus.Enabled, account.Data.TurboTier.Status);
+            Assert.AreEqual(10, account.Data.TurboTier.TargetPercent);
+
+            account = await account.UpdateAsync(new StorageAccountPatch
+            {
+                TurboTier = new TurboTier
+                {
+                    Status = TurboTierStatus.Disabled
+                }
+            });
+
+            account = await account.GetAsync();
+            Assert.AreEqual(TurboTierStatus.Disabled, account.Data.TurboTier.Status);
         }
 
         [Test]
@@ -435,6 +475,69 @@ namespace Azure.ResourceManager.Storage.Tests
             account1 = await account1.GetAsync();
             VerifyAccountProperties(account1, false);
             Assert.IsFalse(account1.Data.AllowSharedKeyAccess);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateAndUpdateStorageAccountDelegationSasPolicy()
+        {
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
+            parameters.AllowCrossTenantDelegationSas = true;
+            parameters.SasPolicy = new StorageAccountSasPolicy("1.00:00:00", ExpirationAction.Log)
+            {
+                IsUserBoundUserDelegationSasRequired = true,
+                RequireUserBoundUserDelegationSasAction = PolicyViolationAction.Log
+            };
+
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                accountName,
+                parameters)).Value;
+
+            account = await account.GetAsync();
+            Assert.IsTrue(account.Data.AllowCrossTenantDelegationSas);
+            Assert.AreEqual("1.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
+            Assert.AreEqual(ExpirationAction.Log, account.Data.SasPolicy.ExpirationAction);
+            Assert.IsTrue(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
+            Assert.AreEqual(PolicyViolationAction.Log, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
+
+            var patch = new StorageAccountPatch
+            {
+                AllowCrossTenantDelegationSas = false,
+                SasPolicy = new StorageAccountSasPolicy("2.00:00:00", ExpirationAction.Block)
+                {
+                    IsUserBoundUserDelegationSasRequired = true,
+                    RequireUserBoundUserDelegationSasAction = PolicyViolationAction.Block
+                }
+            };
+            account = await account.UpdateAsync(patch);
+
+            account = await account.GetAsync();
+            Assert.IsFalse(account.Data.AllowCrossTenantDelegationSas);
+            Assert.AreEqual("2.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
+            Assert.AreEqual(ExpirationAction.Block, account.Data.SasPolicy.ExpirationAction);
+            Assert.IsTrue(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
+            Assert.AreEqual(PolicyViolationAction.Block, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
+
+            patch = new StorageAccountPatch
+            {
+                SasPolicy = new StorageAccountSasPolicy("2.00:00:00", ExpirationAction.Log)
+                {
+                    IsUserBoundUserDelegationSasRequired = false,
+                    RequireUserBoundUserDelegationSasAction = PolicyViolationAction.None
+                }
+            };
+            account = await account.UpdateAsync(patch);
+
+            account = await account.GetAsync();
+            Assert.IsFalse(account.Data.AllowCrossTenantDelegationSas);
+            Assert.AreEqual("2.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
+            Assert.AreEqual(ExpirationAction.Log, account.Data.SasPolicy.ExpirationAction);
+            Assert.IsFalse(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
+            Assert.AreEqual(PolicyViolationAction.None, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
         }
 
         [Test]
@@ -1376,7 +1479,9 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task GetDeletedAccounts()
         {
             //get all deleted accounts
+#pragma warning disable CS0618 // Obsolete backward-compat overload used for test coverage
             await foreach (var _ in DefaultSubscription.GetDeletedAccountsAsync())
+#pragma warning restore CS0618
             {
                 return;
             }
@@ -1554,21 +1659,23 @@ namespace Azure.ResourceManager.Storage.Tests
             ManagementPolicyRule rule3 = new ManagementPolicyRule("rule3", "Lifecycle", definition3);
             rules.Add(rule3);
 
+            // TypeSpec migration: Policy wrapper removed; Rules is now a direct property on StorageAccountManagementPolicyData
             StorageAccountManagementPolicyData parameter = new StorageAccountManagementPolicyData()
             {
-                Policy = new ManagementPolicySchema(rules)
+                Rules = rules
             };
 
             //set management policy, the policy name should always be default
             StorageAccountManagementPolicyResource managementPolicy = (await account.GetStorageAccountManagementPolicy().CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
             Assert.NotNull(managementPolicy);
-            Assert.AreEqual(managementPolicy.Data.Policy.Rules.Count, 3);
+            // TypeSpec migration: Policy wrapper removed; Rules is accessed directly
+            Assert.AreEqual(managementPolicy.Data.Rules.Count, 3);
             Assert.AreEqual(managementPolicy.Data.Rules[0].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
             Assert.AreEqual(managementPolicy.Data.Rules[1].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
             Assert.AreEqual(managementPolicy.Data.Rules[0].Definition.Filters.BlobTypes.Count, 2);
             Assert.AreEqual(managementPolicy.Data.Rules[1].Definition.Filters.BlobTypes.Count, 1);
             Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
-            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.TierToCold.DaysAfterCreationGreaterThan ,100);
+            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.TierToCold.DaysAfterCreationGreaterThan, 100);
             Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.TierToCool.DaysAfterCreationGreaterThan, 500);
             Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.Snapshot.TierToCool.DaysAfterCreationGreaterThan, 100);
             Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.Snapshot.TierToCold.DaysAfterCreationGreaterThan, 500);
@@ -1601,9 +1708,10 @@ namespace Azure.ResourceManager.Storage.Tests
             ManagementPolicyRule rule4 = new ManagementPolicyRule("rule4", "Lifecycle", definition4);
             List<ManagementPolicyRule> rules2 = new List<ManagementPolicyRule>();
             rules2.Add(rule4);
+            // TypeSpec migration: Policy wrapper removed; Rules is now a direct property on StorageAccountManagementPolicyData
             parameter = new StorageAccountManagementPolicyData()
             {
-                Policy = new ManagementPolicySchema(rules2)
+                Rules = rules2
             };
             StorageAccountManagementPolicyResource managementPolicy2 = (await account2.GetStorageAccountManagementPolicy().CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
             Assert.AreEqual(50, managementPolicy2.Data.Rules[0].Definition.Actions.BaseBlob.TierToHot.DaysAfterCreationGreaterThan);
@@ -1854,10 +1962,12 @@ namespace Azure.ResourceManager.Storage.Tests
             ResourceGroupResource resourceGroup1 = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
-            parameters.KeyPolicy = new StorageAccountKeyPolicy(2);
+            // TypeSpec migration: KeyPolicy wrapper removed; KeyExpirationPeriodInDays is now a direct property
+            parameters.KeyExpirationPeriodInDays = 2;
             parameters.SasPolicy = new StorageAccountSasPolicy("2.02:03:59", ExpirationAction.Log);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
-            Assert.AreEqual(2, account.Data.KeyPolicy.KeyExpirationPeriodInDays);
+            // TypeSpec migration: KeyPolicy wrapper removed; KeyExpirationPeriodInDays is now a direct property
+            Assert.AreEqual(2, account.Data.KeyExpirationPeriodInDays);
             Assert.AreEqual("2.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
 
             //update storage account type
@@ -1865,13 +1975,15 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Kind = StorageKind.StorageV2,
                 EnableHttpsTrafficOnly = true,
-                KeyPolicy = new StorageAccountKeyPolicy(9),
+                // TypeSpec migration: KeyPolicy wrapper removed; KeyExpirationPeriodInDays is now a direct property
+                KeyExpirationPeriodInDays = 9,
                 SasPolicy = new StorageAccountSasPolicy("0.02:03:59", ExpirationAction.Block),
             };
             account = await account.UpdateAsync(updateParameters);
 
             //validate
-            Assert.AreEqual(9, account.Data.KeyPolicy.KeyExpirationPeriodInDays);
+            // TypeSpec migration: KeyPolicy wrapper removed; KeyExpirationPeriodInDays is now a direct property
+            Assert.AreEqual(9, account.Data.KeyExpirationPeriodInDays);
             Assert.AreEqual("0.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
             Assert.AreEqual(ExpirationAction.Block, account.Data.SasPolicy.ExpirationAction);
             Assert.NotNull(account.Data.KeyCreationTime.Key1);
@@ -2543,6 +2655,430 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountNonGuidFormatDomainGuid()
+        {
+            // E2E test for issue https://github.com/Azure/azure-sdk-for-net/issues/56903
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+
+            // With domainName = " ", domainId = Guid.Empty, can create a storage account which server returns domainId as " ".
+            // If re-record this case, need check the record file to make sure server still return domainId as " ".
+            // We still don't find a way to set domainId to other non-GUID value on server with .net SDK, but has unit test to cover other value in test class StorageActiveDirectoryPropertiesSerializationTests.
+            string domainName = " ";
+            var domainId = Guid.Empty;
+            var data = new FilesIdentityBasedAuthentication(DirectoryServiceOption.Aadkerb)
+            {
+                ActiveDirectoryProperties = new StorageActiveDirectoryProperties(domainName, domainId)
+            };
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                DefaultLocation
+                )
+            {
+                AzureFilesIdentityBasedAuthentication = data
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+
+            // Get  storage account
+            account = (await storageAccountCollection.GetAsync(accountName)).Value;
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+
+            // Update storage account
+            var updateParameters = new StorageAccountPatch
+            {
+                AzureFilesIdentityBasedAuthentication = data
+            };
+            account = (await account.UpdateAsync(updateParameters)).Value;
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+
+            // List storage account
+            account = null;
+            await foreach (StorageAccountResource account1 in _resourceGroup.GetStorageAccounts().GetAllAsync())
+            {
+                if (account1.Id.Name == accountName)
+                {
+                    account = account1;
+                }
+            }
+            Assert.IsNotNull(account);
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountCreateSetGetFileSmbOauth()
+        {
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            var data = new FilesIdentityBasedAuthentication(DirectoryServiceOption.None)
+            {
+                IsSmbOAuthEnabled = true,
+            };
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                "centraluseuap"
+                )
+            {
+                AzureFilesIdentityBasedAuthentication = data
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            Assert.AreEqual(account.Data.AzureFilesIdentityBasedAuthentication.IsSmbOAuthEnabled, true);
+
+            // Update storage account to None
+            var updateParameters = new StorageAccountPatch
+            {
+                AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.None)
+                {
+                    IsSmbOAuthEnabled = false,
+                }
+            };
+            account = (await account.UpdateAsync(updateParameters)).Value;
+            Assert.AreEqual(account.Data.AzureFilesIdentityBasedAuthentication.IsSmbOAuthEnabled, false);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountCreateGetSetZonePlacementPolicy()
+        {
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName1 = await CreateValidAccountNameAsync(namePrefix);
+            var parameters1 = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.PremiumLrs),
+                StorageKind.FileStorage,
+                "centraluseuap"
+                )
+            {
+                Zones = { "1" },
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters1)).Value;
+            Assert.AreEqual(account1.Data.Zones[0], "1");
+
+            string accountName2 = await CreateValidAccountNameAsync(namePrefix);
+            var parameters2 = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.PremiumLrs),
+                StorageKind.FileStorage,
+                "centraluseuap"
+                )
+            {
+                ZonePlacementPolicy = StorageAccountZonePlacementPolicy.Any,
+            };
+            StorageAccountResource account2 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName2, parameters2)).Value;
+            Assert.AreEqual(account2.Data.ZonePlacementPolicy, StorageAccountZonePlacementPolicy.Any);
+
+            // Update storage account to None
+            var updateParameters1 = new StorageAccountPatch
+            {
+                ZonePlacementPolicy = StorageAccountZonePlacementPolicy.None,
+            };
+
+            account2 = (await account2.UpdateAsync(updateParameters1)).Value;
+            Assert.AreEqual(account2.Data.ZonePlacementPolicy, StorageAccountZonePlacementPolicy.None);
+
+            string accountName3 = await CreateValidAccountNameAsync(namePrefix);
+            var parameters3 = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.PremiumLrs),
+                StorageKind.FileStorage,
+                "centraluseuap"
+                );
+            var account3 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName3, parameters3)).Value;
+            Assert.AreEqual(account3.Data.Zones.Count, 0);
+
+            var updateParameters2 = new StorageAccountPatch
+            {
+                Zones = { "1" }
+            };
+            account3 = (await account3.UpdateAsync(updateParameters2)).Value;
+            Assert.AreEqual(account3.Data.Zones[0], "1");
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountCreateUpdateGeoSLA()
+        {
+            //create storage account with GeoPriorityReplicationStatus.IsBlobEnabled = true
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName1 = await CreateValidAccountNameAsync(namePrefix);
+            var parameters1 = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardGrs),
+                StorageKind.StorageV2,
+                "centraluseuap"
+                )
+            {
+                // TypeSpec migration: GeoPriorityReplicationStatus wrapper removed; IsBlobEnabled is now a direct property
+                IsBlobEnabled = true
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters1)).Value;
+            // TypeSpec migration: GeoPriorityReplicationStatus wrapper removed; IsBlobEnabled is now a direct property
+            Assert.AreEqual(account1.Data.IsBlobEnabled, true);
+
+            // Update storage account to GeoPriorityReplicationStatus.IsBlobEnabled = false
+            var updateParameters1 = new StorageAccountPatch
+            {
+                // TypeSpec migration: GeoPriorityReplicationStatus wrapper removed; IsBlobEnabled is now a direct property
+                IsBlobEnabled = false
+            };
+
+            account1 = (await account1.UpdateAsync(updateParameters1)).Value;
+            // TypeSpec migration: GeoPriorityReplicationStatus wrapper removed; IsBlobEnabled is now a direct property
+            Assert.AreEqual(account1.Data.IsBlobEnabled, false);
+
+            await account1.DeleteAsync(waitUntil: WaitUntil.Started);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateStorageAccountWithAllowSharedKeyAccessForServices()
+        {
+            //create storage account with per-service shared key access
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                DefaultLocation)
+            {
+                AllowSharedKeyAccessForServices = new StorageAccountSharedKeyAccessProperties()
+                {
+                    IsBlobEnabled = true,
+                    IsFileEnabled = true,
+                    IsTableEnabled = false,
+                    IsQueueEnabled = false
+                }
+            };
+
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            VerifyAccountProperties(account, false);
+
+            //validate create response
+            Assert.IsNotNull(account.Data.AllowSharedKeyAccessForServices);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsBlobEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsFileEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsTableEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsQueueEnabled);
+
+            //validate round-trip via GetAsync
+            account = await account.GetAsync();
+            Assert.IsNotNull(account.Data.AllowSharedKeyAccessForServices);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsBlobEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsFileEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsTableEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsQueueEnabled);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task UpdateStorageAccountAllowSharedKeyAccessForServices()
+        {
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
+            VerifyAccountProperties(account, true);
+
+            //update to set per-service shared key access
+            var patch = new StorageAccountPatch()
+            {
+                AllowBlobPublicAccess = false,
+                AllowSharedKeyAccessForServices = new StorageAccountSharedKeyAccessProperties()
+                {
+                    IsBlobEnabled = false,
+                    IsFileEnabled = false,
+                    IsTableEnabled = true,
+                    IsQueueEnabled = true
+                }
+            };
+            account = await account.UpdateAsync(patch);
+            account = await account.GetAsync();
+
+            //validate
+            Assert.IsNotNull(account.Data.AllowSharedKeyAccessForServices);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsBlobEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsFileEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsTableEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsQueueEnabled);
+
+            //update again to flip settings
+            patch = new StorageAccountPatch()
+            {
+                AllowBlobPublicAccess = false,
+                AllowSharedKeyAccessForServices = new StorageAccountSharedKeyAccessProperties()
+                {
+                    IsBlobEnabled = true,
+                    IsFileEnabled = true,
+                    IsTableEnabled = false,
+                    IsQueueEnabled = false
+                }
+            };
+            account = await account.UpdateAsync(patch);
+            account = await account.GetAsync();
+
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsBlobEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsFileEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsTableEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsQueueEnabled);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateStorageAccountWithDataCollaborationPolicy()
+        {
+            //create storage account with data collaboration policy
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                DefaultLocation)
+            {
+                DataCollaborationPolicyProperties = new StorageDataCollaborationPolicyProperties()
+                {
+                    AllowStorageConnectors = true,
+                    AllowStorageDataShares = true,
+                    AllowCrossTenantDataSharing = false
+                }
+            };
+
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            VerifyAccountProperties(account, false);
+
+            account = await account.GetAsync();
+            Assert.IsNotNull(account.Data.DataCollaborationPolicyProperties);
+            Assert.IsTrue(account.Data.DataCollaborationPolicyProperties.AllowStorageConnectors);
+            Assert.IsTrue(account.Data.DataCollaborationPolicyProperties.AllowStorageDataShares);
+            Assert.IsFalse(account.Data.DataCollaborationPolicyProperties.AllowCrossTenantDataSharing);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task UpdateStorageAccountDataCollaborationPolicy()
+        {
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
+            VerifyAccountProperties(account, true);
+
+            //update data collaboration policy
+            var patch = new StorageAccountPatch()
+            {
+                DataCollaborationPolicyProperties = new StorageDataCollaborationPolicyProperties()
+                {
+                    AllowStorageConnectors = true,
+                    AllowStorageDataShares = false,
+                    AllowCrossTenantDataSharing = true
+                }
+            };
+            account = await account.UpdateAsync(patch);
+            account = await account.GetAsync();
+
+            Assert.IsNotNull(account.Data.DataCollaborationPolicyProperties);
+            Assert.IsTrue(account.Data.DataCollaborationPolicyProperties.AllowStorageConnectors);
+            Assert.IsFalse(account.Data.DataCollaborationPolicyProperties.AllowStorageDataShares);
+            Assert.IsTrue(account.Data.DataCollaborationPolicyProperties.AllowCrossTenantDataSharing);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateStorageAccountWithAllowedCopyScopeAll()
+        {
+            //create storage account with AllowedCopyScope set to All (new enum value in 2025-08-01)
+            //Aad and PrivateLink values are already covered by StorageAccountAllowedCopyScope
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                DefaultLocation)
+            {
+                AllowedCopyScope = AllowedCopyScope.All
+            };
+
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            VerifyAccountProperties(account, false);
+            Assert.AreEqual(AllowedCopyScope.All, account.Data.AllowedCopyScope);
+
+            account = await account.GetAsync();
+            Assert.AreEqual(AllowedCopyScope.All, account.Data.AllowedCopyScope);
+
+            //update AllowedCopyScope to Aad
+            var patch = new StorageAccountPatch()
+            {
+                AllowedCopyScope = AllowedCopyScope.Aad
+            };
+            account = await account.UpdateAsync(patch);
+            Assert.AreEqual(AllowedCopyScope.Aad, account.Data.AllowedCopyScope);
+
+            //update AllowedCopyScope back to All
+            patch = new StorageAccountPatch()
+            {
+                AllowedCopyScope = AllowedCopyScope.All
+            };
+            account = await account.UpdateAsync(patch);
+            Assert.AreEqual(AllowedCopyScope.All, account.Data.AllowedCopyScope);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateStorageAccountWithSmartAccessTier()
+        {
+            //create StorageV2 account with Smart access tier (new in 2025-08-01)
+            //Smart tier requires zonal redundancy (ZRS, GZRS, or RA-GZRS)
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardZrs),
+                StorageKind.StorageV2,
+                DefaultLocation)
+            {
+                AccessTier = StorageAccountAccessTier.Hot
+            };
+
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            VerifyAccountProperties(account, false);
+            Assert.AreEqual(StorageAccountAccessTier.Hot, account.Data.AccessTier);
+
+            //update access tier to Smart
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
+            {
+                AccessTier = StorageAccountAccessTier.Smart
+            };
+            account = await account.UpdateAsync(updateParameters);
+            Assert.AreEqual(StorageAccountAccessTier.Smart, account.Data.AccessTier);
+
+            account = await account.GetAsync();
+            Assert.AreEqual(StorageAccountAccessTier.Smart, account.Data.AccessTier);
         }
     }
 }

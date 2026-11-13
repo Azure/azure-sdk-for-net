@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the frontend configurations for the node type. </summary>
     public partial class NodeTypeFrontendConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeFrontendConfiguration"/>. </summary>
         public NodeTypeFrontendConfiguration()
@@ -56,22 +27,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="loadBalancerBackendAddressPoolId"> The resource Id of the Load Balancer backend address pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}'. </param>
         /// <param name="loadBalancerInboundNatPoolId"> The resource Id of the Load Balancer inbound NAT pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatPools/{inboundNatPoolName}'. </param>
         /// <param name="applicationGatewayBackendAddressPoolId"> The resource Id of application gateway backend address pool. The format of the resource Id is '/subscriptions/&lt;subscriptionId&gt;/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendAddressPools/{backendAddressPoolName}'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NodeTypeFrontendConfiguration(NodeTypeFrontendConfigurationIPAddressType? ipAddressType, ResourceIdentifier loadBalancerBackendAddressPoolId, ResourceIdentifier loadBalancerInboundNatPoolId, ResourceIdentifier applicationGatewayBackendAddressPoolId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeFrontendConfiguration(NodeTypeFrontendConfigurationIPAddressType? ipAddressType, ResourceIdentifier loadBalancerBackendAddressPoolId, ResourceIdentifier loadBalancerInboundNatPoolId, ResourceIdentifier applicationGatewayBackendAddressPoolId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPAddressType = ipAddressType;
             LoadBalancerBackendAddressPoolId = loadBalancerBackendAddressPoolId;
             LoadBalancerInboundNatPoolId = loadBalancerInboundNatPoolId;
             ApplicationGatewayBackendAddressPoolId = applicationGatewayBackendAddressPoolId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IP address type of this frontend configuration. If omitted the default value is IPv4. </summary>
         public NodeTypeFrontendConfigurationIPAddressType? IPAddressType { get; set; }
+
         /// <summary> The resource Id of the Load Balancer backend address pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}'. </summary>
         public ResourceIdentifier LoadBalancerBackendAddressPoolId { get; set; }
+
         /// <summary> The resource Id of the Load Balancer inbound NAT pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatPools/{inboundNatPoolName}'. </summary>
         public ResourceIdentifier LoadBalancerInboundNatPoolId { get; set; }
+
         /// <summary> The resource Id of application gateway backend address pool. The format of the resource Id is '/subscriptions/&lt;subscriptionId&gt;/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendAddressPools/{backendAddressPoolName}'. </summary>
         public ResourceIdentifier ApplicationGatewayBackendAddressPoolId { get; set; }
     }

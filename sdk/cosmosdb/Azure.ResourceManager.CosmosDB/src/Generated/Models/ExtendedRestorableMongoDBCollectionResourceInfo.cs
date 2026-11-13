@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>
     public partial class ExtendedRestorableMongoDBCollectionResourceInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExtendedRestorableMongoDBCollectionResourceInfo"/>. </summary>
         internal ExtendedRestorableMongoDBCollectionResourceInfo()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="eventTimestamp"> The time when this collection event happened. </param>
         /// <param name="collectionName"> The name of this MongoDB collection. </param>
         /// <param name="collectionId"> The resource ID of this MongoDB collection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableMongoDBCollectionResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string collectionName, string collectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedRestorableMongoDBCollectionResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string collectionName, string collectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rid = rid;
             OperationType = operationType;
@@ -68,27 +40,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
             EventTimestamp = eventTimestamp;
             CollectionName = collectionName;
             CollectionId = collectionId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
         [WirePath("_rid")]
         public string Rid { get; }
+
         /// <summary> The operation type of this collection event. </summary>
         [WirePath("operationType")]
         public CosmosDBOperationType? OperationType { get; }
+
         /// <summary> A state of this collection to identify if this container is restorable in same account. </summary>
         [WirePath("canUndelete")]
         public string CanUndelete { get; }
+
         /// <summary> The reason why this collection can not be restored in same account. </summary>
         [WirePath("canUndeleteReason")]
         public string CanUndeleteReason { get; }
+
         /// <summary> The time when this collection event happened. </summary>
         [WirePath("eventTimestamp")]
         public string EventTimestamp { get; }
+
         /// <summary> The name of this MongoDB collection. </summary>
         [WirePath("ownerId")]
         public string CollectionName { get; }
+
         /// <summary> The resource ID of this MongoDB collection. </summary>
         [WirePath("ownerResourceId")]
         public string CollectionId { get; }

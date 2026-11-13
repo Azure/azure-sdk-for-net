@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Nested representation of a complex expression. </summary>
     public partial class DataFactoryExpressionV2
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryExpressionV2"/>. </summary>
         public DataFactoryExpressionV2()
@@ -58,22 +30,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="v2Value"> Value for Constant/Field Type: object. </param>
         /// <param name="operators"> Expression operator value Type: list of strings. </param>
         /// <param name="operands"> List of nested expressions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryExpressionV2(DataFactoryExpressionV2Type? v2Type, DataFactoryElement<string> v2Value, IList<DataFactoryElement<string>> operators, IList<DataFactoryExpressionV2> operands, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryExpressionV2(DataFactoryExpressionV2Type? v2Type, DataFactoryElement<string> v2Value, IList<DataFactoryElement<string>> operators, IList<DataFactoryExpressionV2> operands, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             V2Type = v2Type;
             V2Value = v2Value;
             Operators = operators;
             Operands = operands;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of expressions supported by the system. Type: string. </summary>
         public DataFactoryExpressionV2Type? V2Type { get; set; }
+
         /// <summary> Value for Constant/Field Type: object. </summary>
         public DataFactoryElement<string> V2Value { get; set; }
+
         /// <summary> Expression operator value Type: list of strings. </summary>
         public IList<DataFactoryElement<string>> Operators { get; }
+
         /// <summary> List of nested expressions. </summary>
         public IList<DataFactoryExpressionV2> Operands { get; }
     }

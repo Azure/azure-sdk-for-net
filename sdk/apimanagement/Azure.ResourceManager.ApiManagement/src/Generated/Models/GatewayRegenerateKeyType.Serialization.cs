@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class GatewayRegenerateKeyTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this GatewayRegenerateKeyType value) => value switch
         {
             GatewayRegenerateKeyType.Primary => "primary",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GatewayRegenerateKeyType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static GatewayRegenerateKeyType ToGatewayRegenerateKeyType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "primary")) return GatewayRegenerateKeyType.Primary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondary")) return GatewayRegenerateKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "primary"))
+            {
+                return GatewayRegenerateKeyType.Primary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondary"))
+            {
+                return GatewayRegenerateKeyType.Secondary;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GatewayRegenerateKeyType value.");
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Developer.DevCenter.Models
     public readonly partial struct DevBoxActionDelayStatus : IEquatable<DevBoxActionDelayStatus>
     {
         private readonly string _value;
+        /// <summary> The delay operation succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The delay operation failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevBoxActionDelayStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> The delay operation succeeded. </summary>
         public static DevBoxActionDelayStatus Succeeded { get; } = new DevBoxActionDelayStatus(SucceededValue);
+
         /// <summary> The delay operation failed. </summary>
         public static DevBoxActionDelayStatus Failed { get; } = new DevBoxActionDelayStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="DevBoxActionDelayStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevBoxActionDelayStatus left, DevBoxActionDelayStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevBoxActionDelayStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevBoxActionDelayStatus left, DevBoxActionDelayStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevBoxActionDelayStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevBoxActionDelayStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevBoxActionDelayStatus(string value) => new DevBoxActionDelayStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevBoxActionDelayStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevBoxActionDelayStatus?(string value) => value == null ? null : new DevBoxActionDelayStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevBoxActionDelayStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevBoxActionDelayStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

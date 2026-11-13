@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -17,34 +18,29 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="parameters"/> is null. </exception>
-        public ConversationalAITask(ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters)
+        public ConversationalAITask(ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters) : base(AnalyzeConversationInputKind.ConversationalAI)
         {
             Argument.AssertNotNull(analysisInput, nameof(analysisInput));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            Kind = AnalyzeConversationInputKind.ConversationalAI;
             AnalysisInput = analysisInput;
             Parameters = parameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationalAITask"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
-        internal ConversationalAITask(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters) : base(kind, serializedAdditionalRawData)
+        internal ConversationalAITask(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters) : base(kind, additionalBinaryDataProperties)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAITask"/> for deserialization. </summary>
-        internal ConversationalAITask()
-        {
-        }
-
         /// <summary> The input ConversationItem and its optional parameters. </summary>
         public ConversationalAIAnalysisInput AnalysisInput { get; }
+
         /// <summary> Input parameters necessary for a Conversation language understanding task. </summary>
         public AIConversationLanguageUnderstandingActionContent Parameters { get; }
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Kusto
 {
+    /// <summary></summary>
     public partial class KustoManagedPrivateEndpointResource : IJsonModel<KustoManagedPrivateEndpointData>
     {
-        private static KustoManagedPrivateEndpointData s_dataDeserializationInstance;
-        private static KustoManagedPrivateEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<KustoManagedPrivateEndpointData> s_dataDeserializationInstance;
 
+        private static IJsonModel<KustoManagedPrivateEndpointData> DataDeserializationInstance => s_dataDeserializationInstance ??= new KustoManagedPrivateEndpointData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoManagedPrivateEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoManagedPrivateEndpointData>)Data).Write(writer, options);
 
-        KustoManagedPrivateEndpointData IJsonModel<KustoManagedPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoManagedPrivateEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoManagedPrivateEndpointData IJsonModel<KustoManagedPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<KustoManagedPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoManagedPrivateEndpointData>(Data, options, AzureResourceManagerKustoContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         KustoManagedPrivateEndpointData IPersistableModel<KustoManagedPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoManagedPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoManagedPrivateEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoManagedPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

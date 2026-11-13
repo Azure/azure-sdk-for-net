@@ -10,7 +10,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Summary of revision metadata. </summary>
+    // Old SDK had PrivateUri (System.Uri); renamed to PrivateUriString (string) via @@clientName.
+    // This obsolete shim preserves binary compat for callers using the old property name/type.
     public partial class ApiRevisionContract
     {
         /// <summary> Gateway URL for accessing the non-current API Revision. </summary>

@@ -37,20 +37,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         public async Task GetDataFlows()
         {
             DataFlowClient client = CreateClient();
-            await using DisposableDataFlow flow = await DisposableDataFlow.Create (client, this.Recording);
+            await using DisposableDataFlow flow = await DisposableDataFlow.Create(client, this.Recording);
 
-            AsyncPageable<DataFlowResource> dataFlows = client.GetDataFlowsByWorkspaceAsync ();
-            Assert.GreaterOrEqual((await dataFlows.ToListAsync()).Count, 1);
+            AsyncPageable<DataFlowResource> dataFlows = client.GetDataFlowsByWorkspaceAsync();
+            Assert.That((await dataFlows.ToListAsync()).Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [RecordedTest]
         public async Task GetDataFlow()
         {
             DataFlowClient client = CreateClient();
-            await using DisposableDataFlow flow = await DisposableDataFlow.Create (client, this.Recording);
+            await using DisposableDataFlow flow = await DisposableDataFlow.Create(client, this.Recording);
 
-            DataFlowResource dataFlow = await client.GetDataFlowAsync (flow.Name);
-            Assert.AreEqual (flow.Name, dataFlow.Name);
+            DataFlowResource dataFlow = await client.GetDataFlowAsync(flow.Name);
+            Assert.That(dataFlow.Name, Is.EqualTo(flow.Name));
         }
 
         [RecordedTest]
@@ -58,17 +58,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             DataFlowClient client = CreateClient();
 
-            DataFlowResource resource = await DisposableDataFlow.CreateResource (client, this.Recording);
+            DataFlowResource resource = await DisposableDataFlow.CreateResource(client, this.Recording);
 
             string newFlowName = Recording.GenerateAssetName("DataFlow2");
 
-            DataFlowRenameDataFlowOperation renameOperation = await client.StartRenameDataFlowAsync (resource.Name, new ArtifactRenameRequest () { NewName = newFlowName } );
+            DataFlowRenameDataFlowOperation renameOperation = await client.StartRenameDataFlowAsync(resource.Name, new ArtifactRenameRequest() { NewName = newFlowName });
             await renameOperation.WaitForCompletionResponseAsync();
 
-            DataFlowResource dataFlow = await client.GetDataFlowAsync (newFlowName);
-            Assert.AreEqual (newFlowName, dataFlow.Name);
+            DataFlowResource dataFlow = await client.GetDataFlowAsync(newFlowName);
+            Assert.That(dataFlow.Name, Is.EqualTo(newFlowName));
 
-            DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync (newFlowName);
+            DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync(newFlowName);
             await operation.WaitForCompletionResponseAsync();
         }
 
@@ -77,10 +77,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             DataFlowClient client = CreateClient();
 
-            DataFlowResource resource = await DisposableDataFlow.CreateResource (client, this.Recording);
+            DataFlowResource resource = await DisposableDataFlow.CreateResource(client, this.Recording);
 
-            DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync (resource.Name);
-            await operation.WaitAndAssertSuccessfulCompletion ();
+            DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync(resource.Name);
+            await operation.WaitAndAssertSuccessfulCompletion();
         }
     }
 }

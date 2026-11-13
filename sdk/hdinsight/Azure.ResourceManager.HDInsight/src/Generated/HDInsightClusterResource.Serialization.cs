@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HDInsight
 {
+    /// <summary></summary>
     public partial class HDInsightClusterResource : IJsonModel<HDInsightClusterData>
     {
-        private static HDInsightClusterData s_dataDeserializationInstance;
-        private static HDInsightClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HDInsightClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HDInsightClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HDInsightClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HDInsightClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightClusterData>)Data).Write(writer, options);
 
-        HDInsightClusterData IJsonModel<HDInsightClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HDInsightClusterData IJsonModel<HDInsightClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HDInsightClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HDInsightClusterData>(Data, options, AzureResourceManagerHDInsightContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HDInsightClusterData IPersistableModel<HDInsightClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HDInsightClusterData>(data, options, AzureResourceManagerHDInsightContext.Default);
 
-        string IPersistableModel<HDInsightClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HDInsightClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

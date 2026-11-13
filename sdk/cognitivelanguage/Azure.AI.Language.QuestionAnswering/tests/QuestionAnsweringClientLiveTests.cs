@@ -138,7 +138,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Assert.That(ex.Status, Is.EqualTo(400));
             Assert.That(ex.ErrorCode, Is.EqualTo("InvalidArgument"));
-       }
+        }
 
         [RecordedTest]
         public async Task GetsKnowledgeBaseQuestion()

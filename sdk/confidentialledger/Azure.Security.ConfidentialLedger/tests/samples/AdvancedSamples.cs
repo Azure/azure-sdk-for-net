@@ -18,7 +18,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
         [Test]
         public void TrustServiceCertificate()
         {
-            #region Snippet:GetIdentity
+            #region Snippet:ConfidentialLedger_GetIdentity
 
 #if SNIPPET
             Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com"); // The hostname from the identityServiceUri

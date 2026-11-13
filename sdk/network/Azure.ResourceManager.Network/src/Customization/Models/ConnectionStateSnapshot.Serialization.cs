@@ -11,10 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionStateSnapshot : IUtf8JsonSerializable, IJsonModel<ConnectionStateSnapshot>
+    public partial class ConnectionStateSnapshot : IJsonModel<ConnectionStateSnapshot>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionStateSnapshot>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
         void IJsonModel<ConnectionStateSnapshot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -26,12 +24,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionStateSnapshot>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionStateSnapshot>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectionStateSnapshot)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(NetworkConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
@@ -81,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("hops"u8);
                 writer.WriteStartArray();
-                foreach (var item in Hops)
+                foreach (ConnectivityHopInfo item in Hops)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -93,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
@@ -106,12 +103,11 @@ namespace Azure.ResourceManager.Network.Models
 
         ConnectionStateSnapshot IJsonModel<ConnectionStateSnapshot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionStateSnapshot>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionStateSnapshot>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectionStateSnapshot)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectionStateSnapshot(document.RootElement, options);
         }
@@ -119,7 +115,6 @@ namespace Azure.ResourceManager.Network.Models
         internal static ConnectionStateSnapshot DeserializeConnectionStateSnapshot(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,129 +129,105 @@ namespace Azure.ResourceManager.Network.Models
             long? probesSent = default;
             long? probesFailed = default;
             IReadOnlyList<ConnectivityHopInfo> hops = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            var serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        connectionState = new NetworkConnectionState(property.Value.GetString());
                     }
-                    connectionState = new NetworkConnectionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        startTime = property.Value.GetDateTimeOffset("O");
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        endTime = property.Value.GetDateTimeOffset("O");
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("evaluationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        evaluationState = new EvaluationState(property.Value.GetString());
                     }
-                    evaluationState = new EvaluationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("avgLatencyInMs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        avgLatencyInMs = property.Value.GetInt64();
                     }
-                    avgLatencyInMs = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("minLatencyInMs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        minLatencyInMs = property.Value.GetInt64();
                     }
-                    minLatencyInMs = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxLatencyInMs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        maxLatencyInMs = property.Value.GetInt64();
                     }
-                    maxLatencyInMs = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("probesSent"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        probesSent = property.Value.GetInt64();
                     }
-                    probesSent = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("probesFailed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        probesFailed = property.Value.GetInt64();
                     }
-                    probesFailed = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("hops"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        continue;
+                        var array = new List<ConnectivityHopInfo>();
+                        foreach (JsonElement item in property.Value.EnumerateArray())
+                        {
+                            array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item, options));
+                        }
+                        hops = array;
                     }
-                    List<ConnectivityHopInfo> array = new List<ConnectivityHopInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item, options));
-                    }
-                    hops = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionStateSnapshot(
-                connectionState,
-                startTime,
-                endTime,
-                evaluationState,
-                avgLatencyInMs,
-                minLatencyInMs,
-                maxLatencyInMs,
-                probesSent,
-                probesFailed,
-                hops ?? new ChangeTrackingList<ConnectivityHopInfo>(),
-                serializedAdditionalRawData);
+            return new ConnectionStateSnapshot(connectionState, startTime, endTime, evaluationState, avgLatencyInMs, minLatencyInMs, maxLatencyInMs, probesSent, probesFailed, hops ?? new ChangeTrackingList<ConnectivityHopInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionStateSnapshot>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionStateSnapshot>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionStateSnapshot>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -268,13 +239,12 @@ namespace Azure.ResourceManager.Network.Models
 
         ConnectionStateSnapshot IPersistableModel<ConnectionStateSnapshot>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionStateSnapshot>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionStateSnapshot>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectionStateSnapshot(document.RootElement, options);
                     }
                 default:

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterStatus : IEquatable<MongoClusterStatus>
     {
         private readonly string _value;
+        /// <summary> The mongo cluster resource is ready for use. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> The mongo cluster resource is being provisioned. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The mongo cluster resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The mongo cluster resource is being started. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> The mongo cluster resource is being stopped. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> The mongo cluster resource is stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> The mongo cluster resource is being dropped. </summary>
+        private const string DroppingValue = "Dropping";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadyValue = "Ready";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string StartingValue = "Starting";
-        private const string StoppingValue = "Stopping";
-        private const string StoppedValue = "Stopped";
-        private const string DroppingValue = "Dropping";
+            _value = value;
+        }
 
         /// <summary> The mongo cluster resource is ready for use. </summary>
         public static MongoClusterStatus Ready { get; } = new MongoClusterStatus(ReadyValue);
+
         /// <summary> The mongo cluster resource is being provisioned. </summary>
         public static MongoClusterStatus Provisioning { get; } = new MongoClusterStatus(ProvisioningValue);
+
         /// <summary> The mongo cluster resource is being updated. </summary>
         public static MongoClusterStatus Updating { get; } = new MongoClusterStatus(UpdatingValue);
+
         /// <summary> The mongo cluster resource is being started. </summary>
         public static MongoClusterStatus Starting { get; } = new MongoClusterStatus(StartingValue);
+
         /// <summary> The mongo cluster resource is being stopped. </summary>
         public static MongoClusterStatus Stopping { get; } = new MongoClusterStatus(StoppingValue);
+
         /// <summary> The mongo cluster resource is stopped. </summary>
         public static MongoClusterStatus Stopped { get; } = new MongoClusterStatus(StoppedValue);
+
         /// <summary> The mongo cluster resource is being dropped. </summary>
         public static MongoClusterStatus Dropping { get; } = new MongoClusterStatus(DroppingValue);
+
         /// <summary> Determines if two <see cref="MongoClusterStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterStatus left, MongoClusterStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterStatus left, MongoClusterStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterStatus(string value) => new MongoClusterStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterStatus?(string value) => value == null ? null : new MongoClusterStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct PortMirroringProfileDirection : IEquatable<PortMirroringProfileDirection>
     {
         private readonly string _value;
+        /// <summary> is ingress. </summary>
+        private const string IngressValue = "INGRESS";
+        /// <summary> is egress. </summary>
+        private const string EgressValue = "EGRESS";
+        /// <summary> is bidirectional. </summary>
+        private const string BidirectionalValue = "BIDIRECTIONAL";
 
         /// <summary> Initializes a new instance of <see cref="PortMirroringProfileDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PortMirroringProfileDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IngressValue = "INGRESS";
-        private const string EgressValue = "EGRESS";
-        private const string BidirectionalValue = "BIDIRECTIONAL";
+            _value = value;
+        }
 
         /// <summary> is ingress. </summary>
         public static PortMirroringProfileDirection Ingress { get; } = new PortMirroringProfileDirection(IngressValue);
+
         /// <summary> is egress. </summary>
         public static PortMirroringProfileDirection Egress { get; } = new PortMirroringProfileDirection(EgressValue);
+
         /// <summary> is bidirectional. </summary>
         public static PortMirroringProfileDirection Bidirectional { get; } = new PortMirroringProfileDirection(BidirectionalValue);
+
         /// <summary> Determines if two <see cref="PortMirroringProfileDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PortMirroringProfileDirection left, PortMirroringProfileDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PortMirroringProfileDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PortMirroringProfileDirection left, PortMirroringProfileDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PortMirroringProfileDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PortMirroringProfileDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PortMirroringProfileDirection(string value) => new PortMirroringProfileDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PortMirroringProfileDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PortMirroringProfileDirection?(string value) => value == null ? null : new PortMirroringProfileDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PortMirroringProfileDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PortMirroringProfileDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

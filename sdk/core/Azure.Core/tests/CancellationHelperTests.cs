@@ -15,7 +15,7 @@ namespace Azure.Core.Tests
         {
             using var cts = new CancellationTokenSource();
             cts.Cancel();
-            var ex = (TaskCanceledException) CancellationHelper.CreateOperationCanceledException(new Exception("test"), cts.Token);
+            var ex = (TaskCanceledException)CancellationHelper.CreateOperationCanceledException(new Exception("test"), cts.Token);
 
 #if NETCOREAPP2_1_OR_GREATER
             Assert.IsTrue(ex.CancellationToken.IsCancellationRequested);

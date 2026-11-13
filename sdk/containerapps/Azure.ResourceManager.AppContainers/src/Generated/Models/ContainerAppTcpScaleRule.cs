@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App container Tcp scaling rule. </summary>
     public partial class ContainerAppTcpScaleRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppTcpScaleRule"/>. </summary>
         public ContainerAppTcpScaleRule()
@@ -56,21 +28,23 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="metadata"> Metadata properties to describe tcp scale rule. </param>
         /// <param name="auth"> Authentication secrets for the tcp scale rule. </param>
         /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppTcpScaleRule(IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppTcpScaleRule(IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth, string identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Auth = auth;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Metadata properties to describe tcp scale rule. </summary>
         [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; }
+
         /// <summary> Authentication secrets for the tcp scale rule. </summary>
         [WirePath("auth")]
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
+
         /// <summary> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </summary>
         [WirePath("identity")]
         public string Identity { get; set; }

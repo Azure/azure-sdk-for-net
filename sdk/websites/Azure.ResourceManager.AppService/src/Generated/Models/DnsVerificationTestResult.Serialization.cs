@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class DnsVerificationTestResultExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DnsVerificationTestResult value) => value switch
         {
             DnsVerificationTestResult.Passed => "Passed",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsVerificationTestResult value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DnsVerificationTestResult ToDnsVerificationTestResult(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Passed")) return DnsVerificationTestResult.Passed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return DnsVerificationTestResult.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped")) return DnsVerificationTestResult.Skipped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Passed"))
+            {
+                return DnsVerificationTestResult.Passed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return DnsVerificationTestResult.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped"))
+            {
+                return DnsVerificationTestResult.Skipped;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsVerificationTestResult value.");
         }
     }

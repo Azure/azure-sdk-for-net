@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.ApiManagement.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
-using NUnit.Framework;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
-using Azure.Core.TestFramework.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
 {
@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
+        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await SetCollectionsAsync();

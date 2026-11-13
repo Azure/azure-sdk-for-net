@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class DefenderForStorageSettingResource : IJsonModel<DefenderForStorageSettingData>
     {
-        private static DefenderForStorageSettingData s_dataDeserializationInstance;
-        private static DefenderForStorageSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DefenderForStorageSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DefenderForStorageSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DefenderForStorageSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DefenderForStorageSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForStorageSettingData>)Data).Write(writer, options);
 
-        DefenderForStorageSettingData IJsonModel<DefenderForStorageSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForStorageSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DefenderForStorageSettingData IJsonModel<DefenderForStorageSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DefenderForStorageSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DefenderForStorageSettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DefenderForStorageSettingData IPersistableModel<DefenderForStorageSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefenderForStorageSettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<DefenderForStorageSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DefenderForStorageSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DefenderForStorageSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

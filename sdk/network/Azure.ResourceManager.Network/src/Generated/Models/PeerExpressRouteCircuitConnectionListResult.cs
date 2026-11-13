@@ -7,64 +7,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections that belongs to a Private Peering for an ExpressRouteCircuit. </summary>
+    /// <summary> The response of a PeerExpressRouteCircuitConnection list operation. </summary>
     internal partial class PeerExpressRouteCircuitConnectionListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionListResult"/>. </summary>
-        internal PeerExpressRouteCircuitConnectionListResult()
+        /// <param name="value"> The PeerExpressRouteCircuitConnection items on this page. </param>
+        internal PeerExpressRouteCircuitConnectionListResult(IEnumerable<PeerExpressRouteCircuitConnectionData> value)
         {
-            Value = new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionListResult"/>. </summary>
-        /// <param name="value"> The global reach peer circuit connection associated with Private Peering in an ExpressRoute Circuit. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeerExpressRouteCircuitConnectionListResult(IReadOnlyList<PeerExpressRouteCircuitConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The PeerExpressRouteCircuitConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PeerExpressRouteCircuitConnectionListResult(IList<PeerExpressRouteCircuitConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The global reach peer circuit connection associated with Private Peering in an ExpressRoute Circuit. </summary>
-        public IReadOnlyList<PeerExpressRouteCircuitConnectionData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The PeerExpressRouteCircuitConnection items on this page. </summary>
+        [WirePath("value")]
+        public IList<PeerExpressRouteCircuitConnectionData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

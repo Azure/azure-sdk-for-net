@@ -1,3 +1,4 @@
-directory: specification/translation/Azure.AI.DocumentTranslation
-commit: dde20d195ffc89fab6f08b58a368e353cd89ac06
+directory: specification/translation/data-plane/DocumentTranslation
+commit: 83f54c7b56487fbb2e8716795790228c5c454e25
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"

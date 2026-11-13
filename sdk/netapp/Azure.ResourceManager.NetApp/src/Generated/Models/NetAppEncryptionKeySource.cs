@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppEncryptionKeySource : IEquatable<NetAppEncryptionKeySource>
     {
         private readonly string _value;
+        /// <summary> Microsoft-managed key encryption. </summary>
+        private const string MicrosoftNetAppValue = "Microsoft.NetApp";
+        /// <summary> Customer-managed key encryption. </summary>
+        private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
 
         /// <summary> Initializes a new instance of <see cref="NetAppEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppEncryptionKeySource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftNetAppValue = "Microsoft.NetApp";
-        private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
+            _value = value;
+        }
 
         /// <summary> Microsoft-managed key encryption. </summary>
         public static NetAppEncryptionKeySource MicrosoftNetApp { get; } = new NetAppEncryptionKeySource(MicrosoftNetAppValue);
+
         /// <summary> Customer-managed key encryption. </summary>
         public static NetAppEncryptionKeySource MicrosoftKeyVault { get; } = new NetAppEncryptionKeySource(MicrosoftKeyVaultValue);
+
         /// <summary> Determines if two <see cref="NetAppEncryptionKeySource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppEncryptionKeySource left, NetAppEncryptionKeySource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppEncryptionKeySource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppEncryptionKeySource left, NetAppEncryptionKeySource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppEncryptionKeySource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppEncryptionKeySource(string value) => new NetAppEncryptionKeySource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppEncryptionKeySource?(string value) => value == null ? null : new NetAppEncryptionKeySource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppEncryptionKeySource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppEncryptionKeySource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

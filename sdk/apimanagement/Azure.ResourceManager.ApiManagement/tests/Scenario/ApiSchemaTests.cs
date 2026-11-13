@@ -177,6 +177,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
+        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();

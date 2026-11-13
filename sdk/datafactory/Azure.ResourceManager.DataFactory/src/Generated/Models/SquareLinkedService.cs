@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SquareLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/>. </summary>
-        public SquareLinkedService()
+        public SquareLinkedService() : base("Square")
         {
-            LinkedServiceType = "Square";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/>. </summary>
@@ -27,76 +27,150 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionProperties"> Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
-        /// <param name="host"> The URL of the Square instance. (i.e. mystore.mysquare.com). </param>
-        /// <param name="clientId"> The client ID associated with your Square application. </param>
-        /// <param name="clientSecret"> The client secret associated with your Square application. </param>
-        /// <param name="redirectUri"> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </param>
-        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
-        /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SquareLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> host, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> redirectUri, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Square Service linked service properties. </param>
+        internal SquareLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SquareLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionProperties = connectionProperties;
-            Host = host;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            RedirectUri = redirectUri;
-            UseEncryptedEndpoints = useEncryptedEndpoints;
-            UseHostVerification = useHostVerification;
-            UsePeerVerification = usePeerVerification;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Square";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary>
-        /// Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ConnectionProperties { get; set; }
+        /// <summary> Square Service linked service properties. </summary>
+        internal SquareLinkedServiceTypeProperties TypeProperties { get; set; }
+
+        /// <summary> Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public BinaryData ConnectionProperties
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionProperties;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SquareLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionProperties = value;
+            }
+        }
+
         /// <summary> The URL of the Square instance. (i.e. mystore.mysquare.com). </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SquareLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> The client ID associated with your Square application. </summary>
-        public DataFactoryElement<string> ClientId { get; set; }
-        /// <summary> The client secret associated with your Square application. </summary>
-        public DataFactorySecret ClientSecret { get; set; }
+        public DataFactoryElement<string> ClientId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SquareLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientId = value;
+            }
+        }
+
         /// <summary> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </summary>
-        public DataFactoryElement<string> RedirectUri { get; set; }
+        public DataFactoryElement<string> RedirectUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.RedirectUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SquareLinkedServiceTypeProperties();
+                }
+                TypeProperties.RedirectUri = value;
+            }
+        }
+
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
+        public DataFactoryElement<bool> UseEncryptedEndpoints
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseEncryptedEndpoints;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SquareLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseEncryptedEndpoints = value;
+            }
+        }
+
         /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
-        public DataFactoryElement<bool> UseHostVerification { get; set; }
+        public DataFactoryElement<bool> UseHostVerification
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseHostVerification;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SquareLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseHostVerification = value;
+            }
+        }
+
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
-        public DataFactoryElement<bool> UsePeerVerification { get; set; }
+        public DataFactoryElement<bool> UsePeerVerification
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UsePeerVerification;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SquareLinkedServiceTypeProperties();
+                }
+                TypeProperties.UsePeerVerification = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SquareLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

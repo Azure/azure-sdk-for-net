@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct ScheduledActionDeadlineType : IEquatable<ScheduledActionDeadlineType>
     {
         private readonly string _value;
+        /// <summary> Default value of Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Initiate the operation at the given deadline. </summary>
+        private const string InitiateAtValue = "InitiateAt";
+        /// <summary> Complete the operation by the given deadline. </summary>
+        private const string CompleteByValue = "CompleteBy";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionDeadlineType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionDeadlineType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string InitiateAtValue = "InitiateAt";
-        private const string CompleteByValue = "CompleteBy";
+            _value = value;
+        }
 
         /// <summary> Default value of Unknown. </summary>
         public static ScheduledActionDeadlineType Unknown { get; } = new ScheduledActionDeadlineType(UnknownValue);
+
         /// <summary> Initiate the operation at the given deadline. </summary>
         public static ScheduledActionDeadlineType InitiateAt { get; } = new ScheduledActionDeadlineType(InitiateAtValue);
+
         /// <summary> Complete the operation by the given deadline. </summary>
         public static ScheduledActionDeadlineType CompleteBy { get; } = new ScheduledActionDeadlineType(CompleteByValue);
+
         /// <summary> Determines if two <see cref="ScheduledActionDeadlineType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionDeadlineType left, ScheduledActionDeadlineType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledActionDeadlineType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionDeadlineType left, ScheduledActionDeadlineType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionDeadlineType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledActionDeadlineType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledActionDeadlineType(string value) => new ScheduledActionDeadlineType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledActionDeadlineType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledActionDeadlineType?(string value) => value == null ? null : new ScheduledActionDeadlineType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionDeadlineType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledActionDeadlineType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
+    /// <summary></summary>
     public partial class NewRelicObservabilityTagRuleResource : IJsonModel<NewRelicObservabilityTagRuleData>
     {
-        private static NewRelicObservabilityTagRuleData s_dataDeserializationInstance;
-        private static NewRelicObservabilityTagRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NewRelicObservabilityTagRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NewRelicObservabilityTagRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NewRelicObservabilityTagRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NewRelicObservabilityTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicObservabilityTagRuleData>)Data).Write(writer, options);
 
-        NewRelicObservabilityTagRuleData IJsonModel<NewRelicObservabilityTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicObservabilityTagRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NewRelicObservabilityTagRuleData IJsonModel<NewRelicObservabilityTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NewRelicObservabilityTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NewRelicObservabilityTagRuleData>(Data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NewRelicObservabilityTagRuleData IPersistableModel<NewRelicObservabilityTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
-        string IPersistableModel<NewRelicObservabilityTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NewRelicObservabilityTagRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NewRelicObservabilityTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

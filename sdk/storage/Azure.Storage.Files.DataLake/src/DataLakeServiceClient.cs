@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using PublicAccessType = Azure.Storage.Files.DataLake.Models.PublicAccessType;
+using UserDelegationKey = Azure.Storage.Files.DataLake.Models.UserDelegationKey;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -315,7 +318,7 @@ namespace Azure.Storage.Files.DataLake
                     string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
                     options),
                 options,
-                storageSharedKeyCredential:null,
+                storageSharedKeyCredential: null,
                 sasCredential: null,
                 tokenCredential: credential)
         {
@@ -389,28 +392,62 @@ namespace Azure.Storage.Files.DataLake
             _uri = serviceUri;
             _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
 
+            // Build the DFS pipeline from the supplied authentication policy as-is.
+            // For token-credential scenarios, only the inner blob service client gets a
+            // separate pipeline wrapped with SessionAuthenticationPolicy, so DFS endpoint
+            // requests can never route through session auth.
+            HttpPipeline dfsPipeline = options.Build(authentication);
+
+            HttpPipeline blobPipeline = dfsPipeline;
+            HttpPipelinePolicy blobAuthentication = authentication;
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(options);
+            if (tokenCredential != null)
+            {
+                blobAuthentication = BlobServiceClientInternals.CreateSessionPolicy(
+                    _blobUri,
+                    CreateBlobClientOptions(options, clientDiagnostics),
+                    authentication,
+                    dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
+                    tokenCredential,
+                    options.SessionOptions);
+                blobPipeline = options.Build(blobAuthentication);
+            }
+
             _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: options.Build(authentication),
+                pipeline: dfsPipeline,
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: clientDiagnostics,
                 clientOptions: options,
-                customerProvidedKey: options.CustomerProvidedKey);
+                customerProvidedKey: options.CustomerProvidedKey)
+            {
+                BlobPipeline = blobPipeline,
+            };
 
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
                 _clientConfiguration,
-                authentication);
+                blobAuthentication);
 
             DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+        }
+
+        private static BlobClientOptions CreateBlobClientOptions(
+            DataLakeClientOptions clientOptions,
+            ClientDiagnostics clientDiagnostics)
+        {
+            return new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
+            {
+                Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled }
+            };
         }
 
         /// <summary>
         /// Helper to access protected static members of BlobServiceClient
         /// that should not be exposed directly to customers.
         /// </summary>
-        private class BlobServiceClientInternals : BlobServiceClient
+        internal class BlobServiceClientInternals : BlobServiceClient
         {
             public static BlobServiceClient Create(
                 Uri uri,
@@ -419,15 +456,34 @@ namespace Azure.Storage.Files.DataLake
             {
                 return BlobServiceClient.CreateClient(
                     uri,
-                    new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                    {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled }
-                    },
+                    CreateBlobClientOptions(clientConfiguration.ClientOptions, clientConfiguration.ClientDiagnostics),
                     authentication,
-                    clientConfiguration.Pipeline,
+                    clientConfiguration.BlobPipeline,
                     clientConfiguration.SharedKeyCredential,
                     clientConfiguration.SasCredential,
                     clientConfiguration.TokenCredential);
+            }
+
+            public static HttpPipelinePolicy CreateSessionPolicy(
+                Uri endpoint,
+                BlobClientOptions blobClientOptions,
+                HttpPipelinePolicy bearerTokenAuthPolicy,
+                HttpPipeline createSessionPipeline,
+                TokenCredential tokenCredential,
+                Blobs.Models.SessionOptions sessionOptions)
+            {
+                Blobs.Models.SessionProvider sessionProvider = sessionOptions?.SessionProvider
+                    ?? BlobServiceClient.CreateContainerSessionProvider(
+                        endpoint,
+                        blobClientOptions,
+                        bearerTokenAuthPolicy,
+                        createSessionPipeline,
+                        tokenCredential);
+                return BlobServiceClient.CreateSessionAuthenticationPolicy(
+                    endpoint,
+                    bearerTokenAuthPolicy,
+                    sessionProvider,
+                    sessionOptions);
             }
         }
         #endregion ctors
@@ -451,7 +507,120 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get User Delegation Key
         /// <summary>
-        /// The <see cref="GetUserDelegationKey"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKey(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{UserDelegationKey}"/> describing
+        /// the use delegation key.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual Response<UserDelegationKey> GetUserDelegationKey(
+            DataLakeGetUserDelegationKeyOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+
+            try
+            {
+                scope.Start();
+
+                BlobGetUserDelegationKeyOptions blobOptions = MapOptions(options);
+
+                Response<Blobs.Models.UserDelegationKey> response = _blobServiceClient.GetUserDelegationKey(
+                    blobOptions,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    new UserDelegationKey(response.Value),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{UserDelegationKey}"/> describing
+        /// the use delegation key.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+            DataLakeGetUserDelegationKeyOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+
+            try
+            {
+                scope.Start();
+
+                BlobGetUserDelegationKeyOptions blobOptions = MapOptions(options);
+
+                Response<Blobs.Models.UserDelegationKey> response = await _blobServiceClient.GetUserDelegationKeyAsync(
+                    blobOptions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new UserDelegationKey(response.Value),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKey(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
@@ -482,10 +651,13 @@ namespace Azure.Storage.Files.DataLake
         /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
@@ -514,7 +686,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKeyAsync(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
@@ -545,10 +717,13 @@ namespace Azure.Storage.Files.DataLake
         /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
@@ -577,6 +752,16 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        private static BlobGetUserDelegationKeyOptions MapOptions(DataLakeGetUserDelegationKeyOptions options)
+        {
+            if (options == null)
+                return null;
+            return new BlobGetUserDelegationKeyOptions(expiresOn: options.ExpiresOn)
+            {
+                StartsOn = options.StartsOn,
+                DelegatedUserTenantId = options.DelegatedUserTenantId
+            };
+        }
         #endregion Get User Delegation Key
 
         #region Get File Systems
@@ -1042,6 +1227,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response DeleteFileSystem(
             string fileSystemName,
@@ -1097,6 +1292,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response> DeleteFileSystemAsync(
             string fileSystemName,
@@ -1130,8 +1335,8 @@ namespace Azure.Storage.Files.DataLake
         #region Undelete File System
         /// <summary>
         /// Restores a previously deleted file system.
-        /// This API is only functional is Container Soft Delete is enabled
-        /// for the storage account associated with the filesystem.
+        /// This API is only functional if Container Soft Delete is enabled
+        /// for the storage account associated with the file system.
         /// </summary>
         /// <param name="deletedFileSystemName">
         /// The name of the previously deleted file system.
@@ -1189,8 +1394,8 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// Restores a previously deleted file system.
-        /// This API is only functional is Container Soft Delete is enabled
-        /// for the storage account associated with the filesystem.
+        /// This API is only functional if Container Soft Delete is enabled
+        /// for the storage account associated with the file system.
         /// </summary>
         /// <param name="deletedFileSystemName">
         /// The name of the previously deleted file system.

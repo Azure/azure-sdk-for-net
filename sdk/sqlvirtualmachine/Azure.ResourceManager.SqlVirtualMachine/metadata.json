@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.SqlVirtualMachine": "2023-10-01"
+  }
+}

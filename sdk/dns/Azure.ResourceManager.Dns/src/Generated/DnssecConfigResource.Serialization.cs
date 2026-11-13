@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Dns
 {
+    /// <summary></summary>
     public partial class DnssecConfigResource : IJsonModel<DnssecConfigData>
     {
-        private static DnssecConfigData s_dataDeserializationInstance;
-        private static DnssecConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DnssecConfigData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DnssecConfigData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DnssecConfigData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DnssecConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnssecConfigData>)Data).Write(writer, options);
 
-        DnssecConfigData IJsonModel<DnssecConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnssecConfigData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnssecConfigData IJsonModel<DnssecConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DnssecConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnssecConfigData>(Data, options, AzureResourceManagerDnsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DnssecConfigData IPersistableModel<DnssecConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnssecConfigData>(data, options, AzureResourceManagerDnsContext.Default);
 
-        string IPersistableModel<DnssecConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnssecConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DnssecConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

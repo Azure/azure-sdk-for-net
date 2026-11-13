@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -292,7 +292,7 @@ value = 843F,
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -562,7 +562,7 @@ value = 843F,
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -834,7 +834,7 @@ value = 843F,
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1106,7 +1106,7 @@ value = 843F,
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             UnivariateDetectionOptions options = new UnivariateDetectionOptions(new TimeSeriesPoint[]
             {
@@ -1319,7 +1319,7 @@ Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             UnivariateDetectionOptions options = new UnivariateDetectionOptions(new TimeSeriesPoint[]
             {
@@ -1532,7 +1532,7 @@ Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2842,7 +2842,7 @@ value = 3233500F,
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4152,7 +4152,7 @@ value = 3233500F,
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             UnivariateChangePointDetectionOptions options = new UnivariateChangePointDetectionOptions(new TimeSeriesPoint[]
             {
@@ -5200,7 +5200,7 @@ Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
+            UnivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateDetectorClient();
 
             UnivariateChangePointDetectionOptions options = new UnivariateChangePointDetectionOptions(new TimeSeriesPoint[]
             {

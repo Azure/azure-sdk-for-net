@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExpressRoutePortsBillingType : IEquatable<ExpressRoutePortsBillingType>
     {
         private readonly string _value;
+        /// <summary> MeteredData. </summary>
+        private const string MeteredDataValue = "MeteredData";
+        /// <summary> UnlimitedData. </summary>
+        private const string UnlimitedDataValue = "UnlimitedData";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsBillingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRoutePortsBillingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MeteredDataValue = "MeteredData";
-        private const string UnlimitedDataValue = "UnlimitedData";
+            _value = value;
+        }
 
         /// <summary> MeteredData. </summary>
         public static ExpressRoutePortsBillingType MeteredData { get; } = new ExpressRoutePortsBillingType(MeteredDataValue);
+
         /// <summary> UnlimitedData. </summary>
         public static ExpressRoutePortsBillingType UnlimitedData { get; } = new ExpressRoutePortsBillingType(UnlimitedDataValue);
+
         /// <summary> Determines if two <see cref="ExpressRoutePortsBillingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressRoutePortsBillingType left, ExpressRoutePortsBillingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressRoutePortsBillingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressRoutePortsBillingType left, ExpressRoutePortsBillingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRoutePortsBillingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressRoutePortsBillingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressRoutePortsBillingType(string value) => new ExpressRoutePortsBillingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressRoutePortsBillingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressRoutePortsBillingType?(string value) => value == null ? null : new ExpressRoutePortsBillingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressRoutePortsBillingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressRoutePortsBillingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

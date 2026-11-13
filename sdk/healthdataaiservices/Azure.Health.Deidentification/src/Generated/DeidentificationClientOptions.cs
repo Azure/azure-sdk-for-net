@@ -6,14 +6,16 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Health.Deidentification
 {
     /// <summary> Client options for <see cref="DeidentificationClient"/>. </summary>
     public partial class DeidentificationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_15;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_07_15_Preview;
 
         /// <summary> Initializes a new instance of DeidentificationClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -22,18 +24,42 @@ namespace Azure.Health.Deidentification
             Version = version switch
             {
                 ServiceVersion.V2024_11_15 => "2024-11-15",
+                ServiceVersion.V2025_07_15_Preview => "2025-07-15-preview",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of DeidentificationClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal DeidentificationClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2025-07-15-preview";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> V2024_11_15. </summary>
-            V2024_11_15 = 1
+            V2024_11_15 = 1,
+            /// <summary> V2025_07_15_Preview. </summary>
+            V2025_07_15_Preview = 2
         }
     }
 }

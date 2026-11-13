@@ -14,35 +14,55 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SelfHostedIntegrationRuntime : DataFactoryIntegrationRuntimeProperties
     {
         /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntime"/>. </summary>
-        public SelfHostedIntegrationRuntime()
+        public SelfHostedIntegrationRuntime() : base(IntegrationRuntimeType.SelfHosted)
         {
-            IntegrationRuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntime"/>. </summary>
         /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedInfo">
-        /// The base definition of a linked integration runtime.
-        /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
-        /// </param>
-        /// <param name="isSelfContainedInteractiveAuthoringEnabled"> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </param>
-        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, LinkedIntegrationRuntimeType linkedInfo, bool? isSelfContainedInteractiveAuthoringEnabled) : base(integrationRuntimeType, description, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> When this property is not null, means this is a linked integration runtime. The property is used to access original integration runtime. </param>
+        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, SelfHostedIntegrationRuntimeTypeProperties typeProperties) : base(integrationRuntimeType, description, additionalProperties)
         {
-            LinkedInfo = linkedInfo;
-            IsSelfContainedInteractiveAuthoringEnabled = isSelfContainedInteractiveAuthoringEnabled;
-            IntegrationRuntimeType = integrationRuntimeType;
+            TypeProperties = typeProperties;
         }
 
-        /// <summary>
-        /// The base definition of a linked integration runtime.
-        /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
-        /// </summary>
-        public LinkedIntegrationRuntimeType LinkedInfo { get; set; }
+        /// <summary> When this property is not null, means this is a linked integration runtime. The property is used to access original integration runtime. </summary>
+        internal SelfHostedIntegrationRuntimeTypeProperties TypeProperties { get; set; }
+
+        /// <summary> The base definition of a linked integration runtime. </summary>
+        public LinkedIntegrationRuntimeType LinkedInfo
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.LinkedInfo;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SelfHostedIntegrationRuntimeTypeProperties();
+                }
+                TypeProperties.LinkedInfo = value;
+            }
+        }
+
         /// <summary> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </summary>
-        public bool? IsSelfContainedInteractiveAuthoringEnabled { get; set; }
+        public bool? IsSelfContainedInteractiveAuthoringEnabled
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.IsSelfContainedInteractiveAuthoringEnabled;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SelfHostedIntegrationRuntimeTypeProperties();
+                }
+                TypeProperties.IsSelfContainedInteractiveAuthoringEnabled = value;
+            }
+        }
     }
 }

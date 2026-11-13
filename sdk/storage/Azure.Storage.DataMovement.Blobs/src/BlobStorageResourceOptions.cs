@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Storage.Blobs.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -33,6 +34,10 @@ namespace Azure.Storage.DataMovement.Blobs
         private AccessTier? _accessTier = default;
         internal bool _isAccessTierSet = false;
 
+        private string _snapshot = default;
+
+        private string _versionId = default;
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -56,6 +61,8 @@ namespace Azure.Storage.DataMovement.Blobs
             _isContentTypeSet = other?._isContentTypeSet ?? false;
             AccessTier = other?.AccessTier;
             _isAccessTierSet = other?._isAccessTierSet ?? false;
+            _snapshot = other?._snapshot;
+            _versionId = other?._versionId;
         }
 
         internal BlobStorageResourceOptions(BlobDestinationCheckpointDetails checkpointDetails)
@@ -206,6 +213,40 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 _accessTier = value;
                 _isAccessTierSet = true;
+            }
+        }
+
+        /// <summary>
+        /// Optional. Snapshot identifier for reading from a specific snapshot.
+        /// Only valid for source resources. Cannot be used with <see cref="VersionId"/>.
+        /// </summary>
+        public string Snapshot
+        {
+            get => _snapshot;
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(_versionId))
+                {
+                    throw Errors.SnapshotVersionSet(nameof(Snapshot));
+                }
+                _snapshot = value;
+            }
+        }
+
+        /// <summary>
+        /// Optional. Version identifier for reading from a specific version.
+        /// Only valid for source resources. Cannot be used with <see cref="Snapshot"/>.
+        /// </summary>
+        public string VersionId
+        {
+            get => _versionId;
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(_snapshot))
+                {
+                    throw Errors.SnapshotVersionSet(nameof(VersionId));
+                }
+                _versionId = value;
             }
         }
     }

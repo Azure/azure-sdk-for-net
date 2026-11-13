@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> Evidence's properties. </summary>
     public partial class AppComplianceReportEvidenceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportEvidenceProperties"/>. </summary>
         /// <param name="filePath"> The path of the file in storage. </param>
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="controlId"> Control id. </param>
         /// <param name="responsibilityId"> Responsibility id. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceReportEvidenceProperties(AppComplianceReportEvidenceType? evidenceType, string filePath, string extraData, string controlId, string responsibilityId, AppComplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppComplianceReportEvidenceProperties(AppComplianceReportEvidenceType? evidenceType, string filePath, string extraData, string controlId, string responsibilityId, AppComplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EvidenceType = evidenceType;
             FilePath = filePath;
@@ -71,24 +43,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             ControlId = controlId;
             ResponsibilityId = responsibilityId;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppComplianceReportEvidenceProperties"/> for deserialization. </summary>
-        internal AppComplianceReportEvidenceProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Evidence type. </summary>
         public AppComplianceReportEvidenceType? EvidenceType { get; set; }
+
         /// <summary> The path of the file in storage. </summary>
         public string FilePath { get; set; }
+
         /// <summary> Extra data considered as evidence. </summary>
         public string ExtraData { get; set; }
+
         /// <summary> Control id. </summary>
         public string ControlId { get; set; }
+
         /// <summary> Responsibility id. </summary>
         public string ResponsibilityId { get; set; }
+
         /// <summary> Azure lifecycle management. </summary>
         public AppComplianceProvisioningState? ProvisioningState { get; }
     }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Properties that define a ProactiveDetection configuration. </summary>
     public partial class ApplicationInsightsComponentProactiveDetectionConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/>. </summary>
         public ApplicationInsightsComponentProactiveDetectionConfiguration()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="customEmails"> Custom email addresses for this rule notifications. </param>
         /// <param name="lastUpdatedOn"> The last time this rule was updated. </param>
         /// <param name="ruleDefinitions"> Static definitions of the ProactiveDetection configuration rule (same values for all components). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentProactiveDetectionConfiguration(string name, bool? isEnabled, bool? sendEmailsToSubscriptionOwners, IList<string> customEmails, DateTimeOffset? lastUpdatedOn, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentProactiveDetectionConfiguration(string name, bool? isEnabled, bool? sendEmailsToSubscriptionOwners, IList<string> customEmails, DateTimeOffset? lastUpdatedOn, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsEnabled = isEnabled;
@@ -67,26 +39,31 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             CustomEmails = customEmails;
             LastUpdatedOn = lastUpdatedOn;
             RuleDefinitions = ruleDefinitions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The rule name. </summary>
-        [WirePath("Name")]
+        [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> A flag that indicates whether this rule is enabled by the user. </summary>
-        [WirePath("Enabled")]
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
+
         /// <summary> A flag that indicated whether notifications on this rule should be sent to subscription owners. </summary>
-        [WirePath("SendEmailsToSubscriptionOwners")]
+        [WirePath("sendEmailsToSubscriptionOwners")]
         public bool? SendEmailsToSubscriptionOwners { get; set; }
+
         /// <summary> Custom email addresses for this rule notifications. </summary>
-        [WirePath("CustomEmails")]
+        [WirePath("customEmails")]
         public IList<string> CustomEmails { get; }
+
         /// <summary> The last time this rule was updated. </summary>
-        [WirePath("LastUpdatedTime")]
+        [WirePath("lastUpdatedTime")]
         public DateTimeOffset? LastUpdatedOn { get; set; }
+
         /// <summary> Static definitions of the ProactiveDetection configuration rule (same values for all components). </summary>
-        [WirePath("RuleDefinitions")]
+        [WirePath("ruleDefinitions")]
         public ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions RuleDefinitions { get; set; }
     }
 }

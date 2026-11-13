@@ -10,87 +10,47 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
-    /// <summary> Playwright workspace quota resource resource free-trial properties. </summary>
+    /// <summary> Playwright workspace quota free trial properties. </summary>
     public partial class PlaywrightWorkspaceFreeTrialProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceFreeTrialProperties"/>. </summary>
-        /// <param name="createdOn"> The free-trial createdAt utcDateTime. </param>
-        /// <param name="expiryOn"> The free-trial expiryAt utcDateTime. </param>
-        /// <param name="allocatedValue"> The free-trial allocated limit value eg. allocated free execution minutes. </param>
-        /// <param name="usedValue"> The free-trial used value eg. used free execution minutes. </param>
-        /// <param name="percentageUsed"> The free-trial percentage used. </param>
-        internal PlaywrightWorkspaceFreeTrialProperties(DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, float usedValue, float percentageUsed)
-        {
-            CreatedOn = createdOn;
-            ExpiryOn = expiryOn;
-            AllocatedValue = allocatedValue;
-            UsedValue = usedValue;
-            PercentageUsed = percentageUsed;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceFreeTrialProperties"/>. </summary>
-        /// <param name="createdOn"> The free-trial createdAt utcDateTime. </param>
-        /// <param name="expiryOn"> The free-trial expiryAt utcDateTime. </param>
-        /// <param name="allocatedValue"> The free-trial allocated limit value eg. allocated free execution minutes. </param>
-        /// <param name="usedValue"> The free-trial used value eg. used free execution minutes. </param>
-        /// <param name="percentageUsed"> The free-trial percentage used. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightWorkspaceFreeTrialProperties(DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, float usedValue, float percentageUsed, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            CreatedOn = createdOn;
-            ExpiryOn = expiryOn;
-            AllocatedValue = allocatedValue;
-            UsedValue = usedValue;
-            PercentageUsed = percentageUsed;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceFreeTrialProperties"/> for deserialization. </summary>
         internal PlaywrightWorkspaceFreeTrialProperties()
         {
         }
 
-        /// <summary> The free-trial createdAt utcDateTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceFreeTrialProperties"/>. </summary>
+        /// <param name="createdOn"> The free trial creation timestamp in UTC. </param>
+        /// <param name="expiryOn"> The free trial expiration timestamp in UTC. </param>
+        /// <param name="allocatedValue"> The allocated limit value (e.g., allocated free execution minutes). </param>
+        /// <param name="usedValue"> The used value (e.g., used free execution minutes). </param>
+        /// <param name="percentageUsed"> The percentage of the free trial quota used. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PlaywrightWorkspaceFreeTrialProperties(DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, float usedValue, float percentageUsed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            CreatedOn = createdOn;
+            ExpiryOn = expiryOn;
+            AllocatedValue = allocatedValue;
+            UsedValue = usedValue;
+            PercentageUsed = percentageUsed;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The free trial creation timestamp in UTC. </summary>
         public DateTimeOffset CreatedOn { get; }
-        /// <summary> The free-trial expiryAt utcDateTime. </summary>
+
+        /// <summary> The free trial expiration timestamp in UTC. </summary>
         public DateTimeOffset ExpiryOn { get; }
-        /// <summary> The free-trial allocated limit value eg. allocated free execution minutes. </summary>
+
+        /// <summary> The allocated limit value (e.g., allocated free execution minutes). </summary>
         public int AllocatedValue { get; }
-        /// <summary> The free-trial used value eg. used free execution minutes. </summary>
+
+        /// <summary> The used value (e.g., used free execution minutes). </summary>
         public float UsedValue { get; }
-        /// <summary> The free-trial percentage used. </summary>
+
+        /// <summary> The percentage of the free trial quota used. </summary>
         public float PercentageUsed { get; }
     }
 }

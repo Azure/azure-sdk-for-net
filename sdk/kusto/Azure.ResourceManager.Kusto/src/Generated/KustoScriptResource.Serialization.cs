@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Kusto
 {
+    /// <summary></summary>
     public partial class KustoScriptResource : IJsonModel<KustoScriptData>
     {
-        private static KustoScriptData s_dataDeserializationInstance;
-        private static KustoScriptData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<KustoScriptData> s_dataDeserializationInstance;
 
+        private static IJsonModel<KustoScriptData> DataDeserializationInstance => s_dataDeserializationInstance ??= new KustoScriptData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoScriptData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoScriptData>)Data).Write(writer, options);
 
-        KustoScriptData IJsonModel<KustoScriptData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoScriptData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoScriptData IJsonModel<KustoScriptData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<KustoScriptData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoScriptData>(Data, options, AzureResourceManagerKustoContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         KustoScriptData IPersistableModel<KustoScriptData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoScriptData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoScriptData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoScriptData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoScriptData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

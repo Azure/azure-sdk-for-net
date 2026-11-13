@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,79 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.9.0 (2026-10-28)
+
+### Features Added
+
+- Upgraded api-version from `2026-06-01` to `2026-09-01`. Tag details available at https://github.com/Azure/azure-rest-api-specs/tree/fd6b671904429f73310b882648f81346b05024d1/specification/storage/resource-manager/Microsoft.Storage/Storage.
+    - Supported new `BlobAccessPointConfigurationResource` for managing Blob Access Point configurations and testing proposed and existing connections to backing data stores.
+    - Supported attaching blob containers to Blob Access Point configurations and enabling Blob Access Points through `StorageDataCollaborationPolicyProperties.AllowBlobAccessPoints`.
+    - Supported new `TurboTier` configuration on storage account create/update, including status and target percentage.
+    - Supported context cache name availability checks.
+    - Supported new `ServiceTags` property on `NspAccessRuleProperties` for inbound network security perimeter access rules.
+
+## 1.8.0 (2026-09-23)
+
+### Features Added
+
+- Upgraded api-version from `2025-08-01` to `2026-06-01`. Tag details available at https://github.com/Azure/azure-rest-api-specs/tree/302730db231ef7b679967f94db3bb492cba291f7/specification/storage/Storage.Management.
+    - Supported new `AdvancedPlatformMetricsRuleResource` for managing advanced platform metrics rules on storage accounts.
+    - Supported new `ContextCacheResource` and `ContextCacheContainerResource` for managing context caches and their containers.
+    - Supported new `AllowCrossTenantDelegationSas` property on storage account create/update.
+    - Supported new `IsUserBoundUserDelegationSasRequired` and `RequireUserBoundUserDelegationSasAction` properties on `StorageAccountSasPolicy`.
+    - Supported new `GuardrailIOScalar` and `GuardrailBandwidthScalar` properties on `FileShareLimits`.
+
+### Bugs Fixed
+
+- Fixed `StorageAccountResourceAccessRule.TenantId` deserialization to handle empty or invalid string values returned by the service ([#59323](https://github.com/Azure/azure-sdk-for-net/issues/59323)).
+
+## 1.7.0 (2026-05-22)
+
+### Features Added
+
+- Upgraded api-version from `2025-06-01` to `2025-08-01`. Tag details available at https://github.com/Azure/azure-rest-api-specs/tree/dddcb1f2f0131aa15cc761624959063f2e197b57/specification/storage/Storage.Management.
+    - Supported new `StorageAccountAccessTier.Smart` access tier (requires zone-redundant storage).
+    - Supported new `AllowedCopyScope.All` value.
+    - Supported new property `TagsReplicationEnabled` on `ObjectReplicationPolicyData`.
+    - Supported new `StaticWebsite` property on `BlobServiceData` with `DefaultIndexDocumentPath`.
+    - Supported new `StorageConnectorResource` for managing storage connectors.
+    - Supported new `StorageDataShareResource` for managing storage data shares.
+    - Supported new `StopAssignment` operation on `StorageTaskAssignmentResource`.
+    - Supported new `AllowSharedKeyAccessForServices` property on storage account create/update.
+    - Supported new `DataCollaborationPolicyProperties` property on storage account create/update.
+    - Supported new `TaskExecutionTriggerType.MockRun` trigger type.
+
+## 1.6.2 (2026-04-02)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.52.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+- Migrated from AutoRest/Swagger to TypeSpec-based generation.
+
+## 1.6.1 (2026-03-10)
+
+### Bugs Fixed
+
+- Fixed `ActiveDirectoryDomainGuid` deserialization to handle empty string values returned by the service ([#56903](https://github.com/Azure/azure-sdk-for-net/issues/56903))
+
+## 1.6.0 (2025-10-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-01' to 'package-2025-06'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/1e7684349abdacee94cbf89200f319cd49e323f2/specification/storage/resource-manager/readme.md.
+    - Supported new property GeoPriorityReplicationStatus.IsBlobEnabled on Storage accounts.
+    - Supported new ObjectReplicationPolicy Properties: PriorityReplication.Enabled.
+
+## 1.5.0 (2025-09-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-01' to 'package-2025-01'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/9e8f84cab64ffb562abbb0790f2b1e7a707b5ad6/specification/storage/resource-manager/readme.md.
+    - Supported new property isSmbOauth on Storage accounts.
+    - Supported new properties Zone and ZonePlacementPolicy on Storage accounts.
+    - Supported new property EncryptionInTransit in NFS and SMB settings.
 
 ## 1.4.4 (2025-07-28)
 
@@ -330,21 +403,21 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
 ```
 ```C# Snippet:Create_Storage_Account
-string accountName = "myaccount";
-string resourceGroupName = "myResourceGroup";
-ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
-StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
-StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+        string accountName = "myaccount";
+        string resourceGroupName = "myResourceGroup";
+        ArmClient client = new ArmClient(new DefaultAzureCredential());
+        ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+        StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
+        StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
+        StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+        {
+            Tags =
 {
-    Tags =
-    {
-        ["key1"] = "value1",
-        ["key2"] = "value2"
-    }
-};
-StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
+    ["key1"] = "value1",
+    ["key2"] = "value2"
+}
+        };
+        StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
 ```
 
 #### Object Model Changes

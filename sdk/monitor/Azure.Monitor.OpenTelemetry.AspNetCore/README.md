@@ -109,7 +109,7 @@ var app = builder.Build();
 Note that in the examples above, `UseAzureMonitor` is added to the `IServiceCollection` in the `Program.cs` file. You can also add it in the `ConfigureServices` method of your `Startup.cs` file.
 
 > **Note**
-  > Multiple calls to `AddOpenTelemetry.UseAzureMonitor()` will **NOT** result in multiple providers. Only a single `TracerProvider`, `MeterProvider` and `LoggerProvider` will be created in the target `IServiceCollection`. To establish multiple providers use the `Sdk.CreateTracerProviderBuilder()` and/or `Sdk.CreateMeterProviderBuilder()` and/or `LoggerFactory.CreateLogger` methods with the [Azure Monitor Exporter](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter) instead of using Azure Monitor Distro.
+  > Multiple calls to `AddOpenTelemetry.UseAzureMonitor()` will **NOT** result in multiple providers and will throw `System.NotSupportedException`. Only a single `TracerProvider`, `MeterProvider` and `LoggerProvider` can be created in the target `IServiceCollection`. To establish multiple providers use the `Sdk.CreateTracerProviderBuilder()` and/or `Sdk.CreateMeterProviderBuilder()` and/or `LoggerFactory.CreateLogger` methods with the [Azure Monitor Exporter](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter) instead of using Azure Monitor Distro.
 
 ### Authenticate the client
 
@@ -130,16 +130,45 @@ Note that the `Credential` property is optional. If it is not set, Azure Monitor
 
 ### Advanced configuration
 
-#### Customizing Sampling Percentage
+#### Customizing Sampling Behavior
 
-When using the Azure Monitor Distro, the sampling percentage for telemetry data is set to 100% (1.0F) by default. For example, let's say you want to set the sampling percentage to 50%. You can achieve this by modifying the code as follows:
+The Azure Monitor Distro uses **rate-limited sampling** by default, collecting up to **5.0 traces per second**. This provides cost-effective telemetry collection for most applications while maintaining observability.
 
+To customize the sampling behavior:
+
+**Option 1: Set the rate limited sampler to use a configured traces per second**
 ``` C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 {
-    options.SamplingRatio = 0.5F;
+    options.TracesPerSecond = 10.0; // Collect up to 10 traces per second
 });
 ```
+
+**Option 2: Switch to percentage-based sampling**
+``` C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
+{
+    options.SamplingRatio = 0.5F; // Sample 50% of traces
+    options.TracesPerSecond = null; // Disable rate-limited sampling
+});
+```
+
+**Option 3: Use environment variables**
+For rate-limited sampling:
+
+```
+OTEL_TRACES_SAMPLER=microsoft.rate_limited
+OTEL_TRACES_SAMPLER_ARG=10
+```
+
+For percentage-based sampling:
+
+```
+OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
+OTEL_TRACES_SAMPLER_ARG=0.5
+```
+
+**Note**: When both `TracesPerSecond` and `SamplingRatio` are configured, `TracesPerSecond` takes precedence.
 
 #### Adding Custom ActivitySource to Traces
 
@@ -196,9 +225,12 @@ builder.Services.ConfigureOpenTelemetryMeterProvider((sp, builder) => builder.Ad
 To modify the resource, use the following code.
 
 ```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.ConfigureResource(resourceBuilder => resourceBuilder.AddService("service-name")));
+builder.Services.AddOpenTelemetry()
+    .UseAzureMonitor()
+    .ConfigureResource(resourceBuilder => resourceBuilder.AddService("service-name"));
 ```
+
+`OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES` override resource attributes detected from the Azure environment. To override these attributes in code, call `ConfigureResource(...)` after `UseAzureMonitor()` as shown above.
 
 It is also possible to configure the `Resource` by using following
 environmental variables:
@@ -280,6 +312,27 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 });
 ```
 
+#### HTTP Client Metrics
+
+On .NET 8+, only `http.client.request.duration` is collected from `System.Net.Http` by default. This retains request latency, count, and failure dimensions while reducing default telemetry volume. `http.client.active_requests`, `http.client.open_connections`, `http.client.connection.duration`, `http.client.request.time_in_queue`, and future instruments from this meter are opt-in. HTTP dependency tracing and server metrics are unchanged.
+
+To collect an additional metric, configure an OpenTelemetry view before the provider is built:
+
+```csharp
+using OpenTelemetry.Metrics;
+
+builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
+    metrics.AddView(instrument =>
+        instrument.Meter.Name == "System.Net.Http"
+        && instrument.Name == "http.client.open_connections"
+            ? new MetricStreamConfiguration()
+            : null));
+```
+
+To restore all metrics from this meter, remove the `instrument.Name` condition. Views are additive: a matching non-drop view collects a metric even when the distro's drop view also matches, regardless of registration order. Existing broad non-drop views can therefore re-enable these metrics. Calling `AddMeter("System.Net.Http")` again does not override the drop view. Views affect all exporters on the same meter provider.
+
+To disable request duration too, use `metrics.AddView("http.client.request.duration", MetricStreamConfiguration.Drop)` without a competing non-drop view. Older-runtime HTTP instrumentation already emits request duration only and is unchanged. DNS metrics belong to the separate `System.Net.NameResolution` meter. This change does not affect `_APPRESOURCEPREVIEW_` resource-metric emission or standalone Azure Monitor exporter defaults.
+
 #### Drop a Metrics Instrument
 
 The Azure Monitor Distro enables metric collection and collects several metrics by default.
@@ -292,6 +345,33 @@ builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
 ```
 
 Refer to [Drop an instrument](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/metrics/customizing-the-sdk#drop-an-instrument) for more examples.
+
+#### Larger GenAI input and output messages (experimental)
+
+By default, the `gen_ai.input.messages` and `gen_ai.output.messages` attributes are truncated at 256 KiB (characters). Multimodal content, such as base64-encoded images or audio, can exceed that limit. To keep these two attributes up to 4 MiB, enable the experimental `Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase` `AppContext` switch. Other GenAI attributes stay at 256 KiB and all other attributes stay at 8 KiB.
+
+The switch is read once, when the first telemetry item is exported. Set it at the top of `Program.cs`, before the app is built:
+
+```C#
+AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase", true);
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddOpenTelemetry()
+    .UseAzureMonitor()
+    .WithTracing(tracing => tracing.AddSource("MyCompany.MyGenAIApp"));
+
+var app = builder.Build();
+```
+
+Alternatively, enable it without code changes in the project file. The setting is written to the application's `runtimeconfig.json`:
+
+```xml
+<ItemGroup>
+  <RuntimeHostConfigurationOption Include="Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase" Value="true" />
+</ItemGroup>
+```
+
+Large multimodal messages produce large telemetry items. See [Custom property truncation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter#custom-property-truncation) in the exporter README for the limits and storage considerations.
 
 ## Key concepts
 

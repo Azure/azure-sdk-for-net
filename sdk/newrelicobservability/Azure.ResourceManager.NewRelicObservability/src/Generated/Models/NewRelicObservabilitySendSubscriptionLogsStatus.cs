@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct NewRelicObservabilitySendSubscriptionLogsStatus : IEquatable<NewRelicObservabilitySendSubscriptionLogsStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilitySendSubscriptionLogsStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NewRelicObservabilitySendSubscriptionLogsStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IsEnabledValue = "Enabled";
         private const string IsDisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilitySendSubscriptionLogsStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NewRelicObservabilitySendSubscriptionLogsStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the IsEnabled. </summary>
         public static NewRelicObservabilitySendSubscriptionLogsStatus IsEnabled { get; } = new NewRelicObservabilitySendSubscriptionLogsStatus(IsEnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the IsDisabled. </summary>
         public static NewRelicObservabilitySendSubscriptionLogsStatus IsDisabled { get; } = new NewRelicObservabilitySendSubscriptionLogsStatus(IsDisabledValue);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilitySendSubscriptionLogsStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NewRelicObservabilitySendSubscriptionLogsStatus left, NewRelicObservabilitySendSubscriptionLogsStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilitySendSubscriptionLogsStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NewRelicObservabilitySendSubscriptionLogsStatus left, NewRelicObservabilitySendSubscriptionLogsStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilitySendSubscriptionLogsStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilitySendSubscriptionLogsStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NewRelicObservabilitySendSubscriptionLogsStatus(string value) => new NewRelicObservabilitySendSubscriptionLogsStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilitySendSubscriptionLogsStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NewRelicObservabilitySendSubscriptionLogsStatus?(string value) => value == null ? null : new NewRelicObservabilitySendSubscriptionLogsStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NewRelicObservabilitySendSubscriptionLogsStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NewRelicObservabilitySendSubscriptionLogsStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

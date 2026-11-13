@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct MigrationValidatioUpdateActionType : IEquatable<MigrationValidatioUpdateActionType>
     {
         private readonly string _value;
+        /// <summary> DeletedOnTarget. </summary>
+        private const string DeletedOnTargetValue = "DeletedOnTarget";
+        /// <summary> ChangedOnTarget. </summary>
+        private const string ChangedOnTargetValue = "ChangedOnTarget";
+        /// <summary> AddedOnTarget. </summary>
+        private const string AddedOnTargetValue = "AddedOnTarget";
 
         /// <summary> Initializes a new instance of <see cref="MigrationValidatioUpdateActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MigrationValidatioUpdateActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeletedOnTargetValue = "DeletedOnTarget";
-        private const string ChangedOnTargetValue = "ChangedOnTarget";
-        private const string AddedOnTargetValue = "AddedOnTarget";
+            _value = value;
+        }
 
         /// <summary> DeletedOnTarget. </summary>
         public static MigrationValidatioUpdateActionType DeletedOnTarget { get; } = new MigrationValidatioUpdateActionType(DeletedOnTargetValue);
+
         /// <summary> ChangedOnTarget. </summary>
         public static MigrationValidatioUpdateActionType ChangedOnTarget { get; } = new MigrationValidatioUpdateActionType(ChangedOnTargetValue);
+
         /// <summary> AddedOnTarget. </summary>
         public static MigrationValidatioUpdateActionType AddedOnTarget { get; } = new MigrationValidatioUpdateActionType(AddedOnTargetValue);
+
         /// <summary> Determines if two <see cref="MigrationValidatioUpdateActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MigrationValidatioUpdateActionType left, MigrationValidatioUpdateActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MigrationValidatioUpdateActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MigrationValidatioUpdateActionType left, MigrationValidatioUpdateActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationValidatioUpdateActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MigrationValidatioUpdateActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MigrationValidatioUpdateActionType(string value) => new MigrationValidatioUpdateActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MigrationValidatioUpdateActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MigrationValidatioUpdateActionType?(string value) => value == null ? null : new MigrationValidatioUpdateActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MigrationValidatioUpdateActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MigrationValidatioUpdateActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

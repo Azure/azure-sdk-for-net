@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ProcessorArchitecture : IEquatable<ProcessorArchitecture>
     {
         private readonly string _value;
+        /// <summary> Amd64. </summary>
+        private const string Amd64Value = "Amd64";
+        /// <summary> X86. </summary>
+        private const string X86Value = "X86";
 
         /// <summary> Initializes a new instance of <see cref="ProcessorArchitecture"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProcessorArchitecture(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Amd64Value = "Amd64";
-        private const string X86Value = "X86";
+            _value = value;
+        }
 
         /// <summary> Amd64. </summary>
         public static ProcessorArchitecture Amd64 { get; } = new ProcessorArchitecture(Amd64Value);
+
         /// <summary> X86. </summary>
         public static ProcessorArchitecture X86 { get; } = new ProcessorArchitecture(X86Value);
+
         /// <summary> Determines if two <see cref="ProcessorArchitecture"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProcessorArchitecture left, ProcessorArchitecture right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProcessorArchitecture"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProcessorArchitecture left, ProcessorArchitecture right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProcessorArchitecture"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProcessorArchitecture"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProcessorArchitecture(string value) => new ProcessorArchitecture(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProcessorArchitecture"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProcessorArchitecture?(string value) => value == null ? null : new ProcessorArchitecture(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProcessorArchitecture other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProcessorArchitecture other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

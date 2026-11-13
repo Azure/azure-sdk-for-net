@@ -11,21 +11,35 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class AutomaticTuningModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AutomaticTuningMode value) => value switch
         {
-            AutomaticTuningMode.Unspecified => "Unspecified",
             AutomaticTuningMode.Inherit => "Inherit",
             AutomaticTuningMode.Custom => "Custom",
             AutomaticTuningMode.Auto => "Auto",
+            AutomaticTuningMode.Unspecified => "Unspecified",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AutomaticTuningMode ToAutomaticTuningMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unspecified")) return AutomaticTuningMode.Unspecified;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Inherit")) return AutomaticTuningMode.Inherit;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return AutomaticTuningMode.Custom;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Auto")) return AutomaticTuningMode.Auto;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Inherit"))
+            {
+                return AutomaticTuningMode.Inherit;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom"))
+            {
+                return AutomaticTuningMode.Custom;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Auto"))
+            {
+                return AutomaticTuningMode.Auto;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unspecified"))
+            {
+                return AutomaticTuningMode.Unspecified;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningMode value.");
         }
     }

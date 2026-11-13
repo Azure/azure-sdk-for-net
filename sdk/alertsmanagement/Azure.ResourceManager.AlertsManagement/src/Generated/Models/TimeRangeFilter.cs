@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The TimeRangeFilter. </summary>
+    /// <summary></summary>
     public readonly partial struct TimeRangeFilter : IEquatable<TimeRangeFilter>
     {
         private readonly string _value;
+        /// <summary> 1h. </summary>
+        private const string OneHourValue = "1h";
+        /// <summary> 1d. </summary>
+        private const string OneDayValue = "1d";
+        /// <summary> 7d. </summary>
+        private const string SevenDaysValue = "7d";
+        /// <summary> 30d. </summary>
+        private const string ThirtyDaysValue = "30d";
 
         /// <summary> Initializes a new instance of <see cref="TimeRangeFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TimeRangeFilter(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OneHourValue = "1h";
-        private const string OneDayValue = "1d";
-        private const string SevenDaysValue = "7d";
-        private const string ThirtyDaysValue = "30d";
+            _value = value;
+        }
 
         /// <summary> 1h. </summary>
         public static TimeRangeFilter OneHour { get; } = new TimeRangeFilter(OneHourValue);
+
         /// <summary> 1d. </summary>
         public static TimeRangeFilter OneDay { get; } = new TimeRangeFilter(OneDayValue);
+
         /// <summary> 7d. </summary>
         public static TimeRangeFilter SevenDays { get; } = new TimeRangeFilter(SevenDaysValue);
+
         /// <summary> 30d. </summary>
         public static TimeRangeFilter ThirtyDays { get; } = new TimeRangeFilter(ThirtyDaysValue);
+
         /// <summary> Determines if two <see cref="TimeRangeFilter"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TimeRangeFilter left, TimeRangeFilter right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TimeRangeFilter"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TimeRangeFilter left, TimeRangeFilter right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TimeRangeFilter"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TimeRangeFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TimeRangeFilter(string value) => new TimeRangeFilter(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TimeRangeFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TimeRangeFilter?(string value) => value == null ? null : new TimeRangeFilter(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TimeRangeFilter other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TimeRangeFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.Communication.PhoneNumbers
     internal partial class PhoneNumberSearchRequest
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchRequest"/>. </summary>
-        /// <param name="phoneNumberType"> The type of phone numbers to search for, e.g. geographic, or tollFree. </param>
+        /// <param name="phoneNumberType"> The type of phone numbers to search for, e.g. geographic, tollFree, mobile. </param>
         /// <param name="assignmentType"> The assignment type of the phone numbers to search for. A phone number can be assigned to a person, or to an application. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilities"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchRequest"/>. </summary>
-        /// <param name="phoneNumberType"> The type of phone numbers to search for, e.g. geographic, or tollFree. </param>
+        /// <param name="phoneNumberType"> The type of phone numbers to search for, e.g. geographic, tollFree, mobile. </param>
         /// <param name="assignmentType"> The assignment type of the phone numbers to search for. A phone number can be assigned to a person, or to an application. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="areaCode"> The area code of the desired phone number, e.g. 425. </param>
@@ -41,7 +41,7 @@ namespace Azure.Communication.PhoneNumbers
             Quantity = quantity;
         }
 
-        /// <summary> The type of phone numbers to search for, e.g. geographic, or tollFree. </summary>
+        /// <summary> The type of phone numbers to search for, e.g. geographic, tollFree, mobile. </summary>
         public PhoneNumberType PhoneNumberType { get; }
         /// <summary> The assignment type of the phone numbers to search for. A phone number can be assigned to a person, or to an application. </summary>
         public PhoneNumberAssignmentType AssignmentType { get; }

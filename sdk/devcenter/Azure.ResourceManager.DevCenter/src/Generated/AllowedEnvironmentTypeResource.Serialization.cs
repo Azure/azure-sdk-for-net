@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevCenter
 {
+    /// <summary></summary>
     public partial class AllowedEnvironmentTypeResource : IJsonModel<AllowedEnvironmentTypeData>
     {
-        private static AllowedEnvironmentTypeData s_dataDeserializationInstance;
-        private static AllowedEnvironmentTypeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AllowedEnvironmentTypeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AllowedEnvironmentTypeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AllowedEnvironmentTypeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AllowedEnvironmentTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AllowedEnvironmentTypeData>)Data).Write(writer, options);
 
-        AllowedEnvironmentTypeData IJsonModel<AllowedEnvironmentTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AllowedEnvironmentTypeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AllowedEnvironmentTypeData IJsonModel<AllowedEnvironmentTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AllowedEnvironmentTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AllowedEnvironmentTypeData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AllowedEnvironmentTypeData IPersistableModel<AllowedEnvironmentTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AllowedEnvironmentTypeData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<AllowedEnvironmentTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AllowedEnvironmentTypeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AllowedEnvironmentTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

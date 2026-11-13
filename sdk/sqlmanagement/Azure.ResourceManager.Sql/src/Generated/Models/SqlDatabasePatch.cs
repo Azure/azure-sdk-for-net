@@ -8,382 +8,797 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database update resource. </summary>
     public partial class SqlDatabasePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabasePatch"/>. </summary>
         public SqlDatabasePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabasePatch"/>. </summary>
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="identity"> Database identity. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="createMode">
-        /// Specifies the mode of database creation.
-        ///
-        /// Default: regular database creation.
-        ///
-        /// Copy: creates a database as a copy of an existing database. sourceDatabaseId must be specified as the resource ID of the source database.
-        ///
-        /// Secondary: creates a database as a secondary replica of an existing database. sourceDatabaseId must be specified as the resource ID of the existing primary database.
-        ///
-        /// PointInTimeRestore: Creates a database by restoring a point in time backup of an existing database. sourceDatabaseId must be specified as the resource ID of the existing database, and restorePointInTime must be specified.
-        ///
-        /// Recovery: Creates a database by restoring a geo-replicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.
-        ///
-        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
-        ///
-        /// RestoreLongTermRetentionBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.
-        ///
-        /// Copy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition.
-        /// </param>
-        /// <param name="collation"> The collation of the database. </param>
-        /// <param name="maxSizeBytes"> The max size of the database expressed in bytes. </param>
-        /// <param name="sampleName"> The name of the sample schema to apply when creating this database. </param>
-        /// <param name="elasticPoolId"> The resource identifier of the elastic pool containing this database. </param>
-        /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
-        /// <param name="status"> The status of the database. </param>
-        /// <param name="databaseId"> The ID of the database. </param>
-        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
-        /// <param name="currentServiceObjectiveName"> The current service level objective name of the database. </param>
-        /// <param name="requestedServiceObjectiveName"> The requested service level objective name of the database. </param>
-        /// <param name="defaultSecondaryLocation"> The default secondary region for this database. </param>
-        /// <param name="failoverGroupId"> Failover Group resource identifier that this database belongs to. </param>
-        /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="sourceDatabaseDeletedOn"> Specifies the time that the database was deleted. </param>
-        /// <param name="recoveryServicesRecoveryPointId"> The resource identifier of the recovery point associated with create operation of this database. </param>
-        /// <param name="longTermRetentionBackupResourceId"> The resource identifier of the long term retention backup associated with create operation of this database. </param>
-        /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
-        /// <param name="restorableDroppedDatabaseId"> The resource identifier of the restorable dropped database associated with create operation of this database. </param>
-        /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
-        /// <param name="isZoneRedundant"> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </param>
-        /// <param name="licenseType"> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </param>
-        /// <param name="maxLogSizeBytes"> The max log size for this database. </param>
-        /// <param name="earliestRestoreOn"> This records the earliest start date and time that restore is available for this database (ISO8601 format). </param>
-        /// <param name="readScale"> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </param>
-        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </param>
-        /// <param name="secondaryType"> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </param>
-        /// <param name="currentSku"> The name and tier of the SKU. </param>
-        /// <param name="autoPauseDelay"> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </param>
-        /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this database. </param>
-        /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this database. </param>
-        /// <param name="minCapacity"> Minimal capacity that database will always have allocated, if not paused. </param>
-        /// <param name="pausedOn"> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </param>
-        /// <param name="resumedOn"> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </param>
-        /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </param>
-        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
-        /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
-        /// <param name="federatedClientId"> The Client id used for cross tenant per database CMK scenario. </param>
-        /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
-        /// <param name="encryptionProtector"> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </param>
-        /// <param name="preferredEnclaveType"> Type of enclave requested on the database i.e. Default or VBS enclaves. </param>
-        /// <param name="useFreeLimit"> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </param>
-        /// <param name="freeLimitExhaustionBehavior">
-        /// Specifies the behavior when monthly free limits are exhausted for the free database.
-        ///
-        /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
-        ///
-        /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
-        /// </param>
-        /// <param name="manualCutover">
-        /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier.
-        ///
-        /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
-        ///
-        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
-        /// </param>
-        /// <param name="performCutover">
-        /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
-        ///
-        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
-        ///
-        /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
-        /// </param>
-        /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabasePatch(SqlSku sku, DatabaseIdentity identity, IDictionary<string, string> tags, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, bool? manualCutover, bool? performCutover, bool? encryptionProtectorAutoRotation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDatabasePatch(SqlSku sku, DatabaseIdentity identity, DatabaseUpdateProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Identity = identity;
+            Properties = properties;
             Tags = tags;
-            CreateMode = createMode;
-            Collation = collation;
-            MaxSizeBytes = maxSizeBytes;
-            SampleName = sampleName;
-            ElasticPoolId = elasticPoolId;
-            SourceDatabaseId = sourceDatabaseId;
-            Status = status;
-            DatabaseId = databaseId;
-            CreatedOn = createdOn;
-            CurrentServiceObjectiveName = currentServiceObjectiveName;
-            RequestedServiceObjectiveName = requestedServiceObjectiveName;
-            DefaultSecondaryLocation = defaultSecondaryLocation;
-            FailoverGroupId = failoverGroupId;
-            RestorePointInTime = restorePointInTime;
-            SourceDatabaseDeletedOn = sourceDatabaseDeletedOn;
-            RecoveryServicesRecoveryPointId = recoveryServicesRecoveryPointId;
-            LongTermRetentionBackupResourceId = longTermRetentionBackupResourceId;
-            RecoverableDatabaseId = recoverableDatabaseId;
-            RestorableDroppedDatabaseId = restorableDroppedDatabaseId;
-            CatalogCollation = catalogCollation;
-            IsZoneRedundant = isZoneRedundant;
-            LicenseType = licenseType;
-            MaxLogSizeBytes = maxLogSizeBytes;
-            EarliestRestoreOn = earliestRestoreOn;
-            ReadScale = readScale;
-            HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
-            SecondaryType = secondaryType;
-            CurrentSku = currentSku;
-            AutoPauseDelay = autoPauseDelay;
-            CurrentBackupStorageRedundancy = currentBackupStorageRedundancy;
-            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
-            MinCapacity = minCapacity;
-            PausedOn = pausedOn;
-            ResumedOn = resumedOn;
-            MaintenanceConfigurationId = maintenanceConfigurationId;
-            IsLedgerOn = isLedgerOn;
-            IsInfraEncryptionEnabled = isInfraEncryptionEnabled;
-            FederatedClientId = federatedClientId;
-            Keys = keys;
-            EncryptionProtector = encryptionProtector;
-            PreferredEnclaveType = preferredEnclaveType;
-            UseFreeLimit = useFreeLimit;
-            FreeLimitExhaustionBehavior = freeLimitExhaustionBehavior;
-            ManualCutover = manualCutover;
-            PerformCutover = performCutover;
-            EncryptionProtectorAutoRotation = encryptionProtectorAutoRotation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name and tier of the SKU. </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; set; }
+
         /// <summary> Database identity. </summary>
         [WirePath("identity")]
         public DatabaseIdentity Identity { get; set; }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal DatabaseUpdateProperties Properties { get; set; }
+
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary>
         /// Specifies the mode of database creation.
-        ///
         /// Default: regular database creation.
-        ///
         /// Copy: creates a database as a copy of an existing database. sourceDatabaseId must be specified as the resource ID of the source database.
-        ///
         /// Secondary: creates a database as a secondary replica of an existing database. sourceDatabaseId must be specified as the resource ID of the existing primary database.
-        ///
         /// PointInTimeRestore: Creates a database by restoring a point in time backup of an existing database. sourceDatabaseId must be specified as the resource ID of the existing database, and restorePointInTime must be specified.
-        ///
         /// Recovery: Creates a database by restoring a geo-replicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.
-        ///
         /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
-        ///
         /// RestoreLongTermRetentionBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.
-        ///
         /// Copy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition.
         /// </summary>
         [WirePath("properties.createMode")]
-        public SqlDatabaseCreateMode? CreateMode { get; set; }
+        public SqlDatabaseCreateMode? CreateMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.CreateMode = value;
+            }
+        }
+
         /// <summary> The collation of the database. </summary>
         [WirePath("properties.collation")]
-        public string Collation { get; set; }
+        public string Collation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Collation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.Collation = value;
+            }
+        }
+
         /// <summary> The max size of the database expressed in bytes. </summary>
         [WirePath("properties.maxSizeBytes")]
-        public long? MaxSizeBytes { get; set; }
+        public long? MaxSizeBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxSizeBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.MaxSizeBytes = value;
+            }
+        }
+
         /// <summary> The name of the sample schema to apply when creating this database. </summary>
         [WirePath("properties.sampleName")]
-        public SampleSchemaName? SampleName { get; set; }
+        public SampleSchemaName? SampleName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SampleName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.SampleName = value;
+            }
+        }
+
         /// <summary> The resource identifier of the elastic pool containing this database. </summary>
         [WirePath("properties.elasticPoolId")]
-        public ResourceIdentifier ElasticPoolId { get; set; }
+        public ResourceIdentifier ElasticPoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ElasticPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.ElasticPoolId = value;
+            }
+        }
+
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         [WirePath("properties.sourceDatabaseId")]
-        public ResourceIdentifier SourceDatabaseId { get; set; }
+        public ResourceIdentifier SourceDatabaseId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceDatabaseId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.SourceDatabaseId = value;
+            }
+        }
+
         /// <summary> The status of the database. </summary>
         [WirePath("properties.status")]
-        public SqlDatabaseStatus? Status { get; }
+        public SqlDatabaseStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> The ID of the database. </summary>
         [WirePath("properties.databaseId")]
-        public Guid? DatabaseId { get; }
+        public Guid? DatabaseId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseId;
+            }
+        }
+
         /// <summary> The creation date of the database (ISO8601 format). </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The current service level objective name of the database. </summary>
         [WirePath("properties.currentServiceObjectiveName")]
-        public string CurrentServiceObjectiveName { get; }
+        public string CurrentServiceObjectiveName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentServiceObjectiveName;
+            }
+        }
+
         /// <summary> The requested service level objective name of the database. </summary>
         [WirePath("properties.requestedServiceObjectiveName")]
-        public string RequestedServiceObjectiveName { get; }
+        public string RequestedServiceObjectiveName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestedServiceObjectiveName;
+            }
+        }
+
         /// <summary> The default secondary region for this database. </summary>
         [WirePath("properties.defaultSecondaryLocation")]
-        public AzureLocation? DefaultSecondaryLocation { get; }
+        public AzureLocation? DefaultSecondaryLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultSecondaryLocation;
+            }
+        }
+
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         [WirePath("properties.failoverGroupId")]
-        public ResourceIdentifier FailoverGroupId { get; }
+        public ResourceIdentifier FailoverGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailoverGroupId;
+            }
+        }
+
         /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
         [WirePath("properties.restorePointInTime")]
-        public DateTimeOffset? RestorePointInTime { get; set; }
+        public DateTimeOffset? RestorePointInTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestorePointInTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.RestorePointInTime = value;
+            }
+        }
+
         /// <summary> Specifies the time that the database was deleted. </summary>
         [WirePath("properties.sourceDatabaseDeletionDate")]
-        public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
+        public DateTimeOffset? SourceDatabaseDeletedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceDatabaseDeletedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.SourceDatabaseDeletedOn = value;
+            }
+        }
+
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
         [WirePath("properties.recoveryServicesRecoveryPointId")]
-        public ResourceIdentifier RecoveryServicesRecoveryPointId { get; set; }
+        public ResourceIdentifier RecoveryServicesRecoveryPointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecoveryServicesRecoveryPointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.RecoveryServicesRecoveryPointId = value;
+            }
+        }
+
         /// <summary> The resource identifier of the long term retention backup associated with create operation of this database. </summary>
         [WirePath("properties.longTermRetentionBackupResourceId")]
-        public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
+        public ResourceIdentifier LongTermRetentionBackupResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LongTermRetentionBackupResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.LongTermRetentionBackupResourceId = value;
+            }
+        }
+
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
         [WirePath("properties.recoverableDatabaseId")]
-        public ResourceIdentifier RecoverableDatabaseId { get; set; }
+        public ResourceIdentifier RecoverableDatabaseId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecoverableDatabaseId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.RecoverableDatabaseId = value;
+            }
+        }
+
         /// <summary> The resource identifier of the restorable dropped database associated with create operation of this database. </summary>
         [WirePath("properties.restorableDroppedDatabaseId")]
-        public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
+        public ResourceIdentifier RestorableDroppedDatabaseId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestorableDroppedDatabaseId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.RestorableDroppedDatabaseId = value;
+            }
+        }
+
         /// <summary> Collation of the metadata catalog. </summary>
         [WirePath("properties.catalogCollation")]
-        public CatalogCollationType? CatalogCollation { get; set; }
+        public CatalogCollationType? CatalogCollation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CatalogCollation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.CatalogCollation = value;
+            }
+        }
+
         /// <summary> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? IsZoneRedundant { get; set; }
+        public bool? IsZoneRedundant
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsZoneRedundant;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.IsZoneRedundant = value;
+            }
+        }
+
         /// <summary> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </summary>
         [WirePath("properties.licenseType")]
-        public DatabaseLicenseType? LicenseType { get; set; }
+        public DatabaseLicenseType? LicenseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LicenseType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.LicenseType = value;
+            }
+        }
+
         /// <summary> The max log size for this database. </summary>
         [WirePath("properties.maxLogSizeBytes")]
-        public long? MaxLogSizeBytes { get; }
+        public long? MaxLogSizeBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxLogSizeBytes;
+            }
+        }
+
         /// <summary> This records the earliest start date and time that restore is available for this database (ISO8601 format). </summary>
         [WirePath("properties.earliestRestoreDate")]
-        public DateTimeOffset? EarliestRestoreOn { get; }
+        public DateTimeOffset? EarliestRestoreOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EarliestRestoreOn;
+            }
+        }
+
         /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </summary>
         [WirePath("properties.readScale")]
-        public DatabaseReadScale? ReadScale { get; set; }
+        public DatabaseReadScale? ReadScale
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReadScale;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.ReadScale = value;
+            }
+        }
+
         /// <summary> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
         [WirePath("properties.highAvailabilityReplicaCount")]
-        public int? HighAvailabilityReplicaCount { get; set; }
+        public int? HighAvailabilityReplicaCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HighAvailabilityReplicaCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.HighAvailabilityReplicaCount = value;
+            }
+        }
+
         /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </summary>
         [WirePath("properties.secondaryType")]
-        public SecondaryType? SecondaryType { get; set; }
+        public SecondaryType? SecondaryType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.SecondaryType = value;
+            }
+        }
+
         /// <summary> The name and tier of the SKU. </summary>
         [WirePath("properties.currentSku")]
-        public SqlSku CurrentSku { get; }
+        public SqlSku CurrentSku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentSku;
+            }
+        }
+
         /// <summary> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
         [WirePath("properties.autoPauseDelay")]
-        public int? AutoPauseDelay { get; set; }
+        public int? AutoPauseDelay
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoPauseDelay;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.AutoPauseDelay = value;
+            }
+        }
+
         /// <summary> The storage account type used to store backups for this database. </summary>
         [WirePath("properties.currentBackupStorageRedundancy")]
-        public SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentBackupStorageRedundancy;
+            }
+        }
+
         /// <summary> The storage account type to be used to store backups for this database. </summary>
         [WirePath("properties.requestedBackupStorageRedundancy")]
-        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestedBackupStorageRedundancy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.RequestedBackupStorageRedundancy = value;
+            }
+        }
+
         /// <summary> Minimal capacity that database will always have allocated, if not paused. </summary>
         [WirePath("properties.minCapacity")]
-        public double? MinCapacity { get; set; }
+        public double? MinCapacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinCapacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.MinCapacity = value;
+            }
+        }
+
         /// <summary> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </summary>
         [WirePath("properties.pausedDate")]
-        public DateTimeOffset? PausedOn { get; }
+        public DateTimeOffset? PausedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PausedOn;
+            }
+        }
+
         /// <summary> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </summary>
         [WirePath("properties.resumedDate")]
-        public DateTimeOffset? ResumedOn { get; }
+        public DateTimeOffset? ResumedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResumedOn;
+            }
+        }
+
         /// <summary> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </summary>
         [WirePath("properties.maintenanceConfigurationId")]
-        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.MaintenanceConfigurationId = value;
+            }
+        }
+
         /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
         [WirePath("properties.isLedgerOn")]
-        public bool? IsLedgerOn { get; set; }
+        public bool? IsLedgerOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLedgerOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.IsLedgerOn = value;
+            }
+        }
+
         /// <summary> Infra encryption is enabled for this database. </summary>
         [WirePath("properties.isInfraEncryptionEnabled")]
-        public bool? IsInfraEncryptionEnabled { get; }
+        public bool? IsInfraEncryptionEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsInfraEncryptionEnabled;
+            }
+        }
+
         /// <summary> The Client id used for cross tenant per database CMK scenario. </summary>
         [WirePath("properties.federatedClientId")]
-        public Guid? FederatedClientId { get; set; }
+        public Guid? FederatedClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FederatedClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.FederatedClientId = value;
+            }
+        }
+
         /// <summary> The resource ids of the user assigned identities to use. </summary>
         [WirePath("properties.keys")]
-        public IDictionary<string, SqlDatabaseKey> Keys { get; }
+        public IDictionary<string, SqlDatabaseKey> Keys
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                return Properties.Keys;
+            }
+        }
+
         /// <summary> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </summary>
         [WirePath("properties.encryptionProtector")]
-        public string EncryptionProtector { get; set; }
+        public string EncryptionProtector
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionProtector;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.EncryptionProtector = value;
+            }
+        }
+
         /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
         [WirePath("properties.preferredEnclaveType")]
-        public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
+        public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreferredEnclaveType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.PreferredEnclaveType = value;
+            }
+        }
+
         /// <summary> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </summary>
         [WirePath("properties.useFreeLimit")]
-        public bool? UseFreeLimit { get; set; }
+        public bool? UseFreeLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseFreeLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.UseFreeLimit = value;
+            }
+        }
+
         /// <summary>
         /// Specifies the behavior when monthly free limits are exhausted for the free database.
-        ///
         /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
-        ///
         /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
         /// </summary>
         [WirePath("properties.freeLimitExhaustionBehavior")]
-        public FreeLimitExhaustionBehavior? FreeLimitExhaustionBehavior { get; set; }
+        public FreeLimitExhaustionBehavior? FreeLimitExhaustionBehavior
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FreeLimitExhaustionBehavior;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.FreeLimitExhaustionBehavior = value;
+            }
+        }
+
         /// <summary>
         /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
-        ///
         /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier.
-        ///
         /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
-        ///
         /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
         /// </summary>
         [WirePath("properties.manualCutover")]
-        public bool? ManualCutover { get; set; }
+        public bool? ManualCutover
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManualCutover;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.ManualCutover = value;
+            }
+        }
+
         /// <summary>
         /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
-        ///
         /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
-        ///
         /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
-        ///
         /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
         /// </summary>
         [WirePath("properties.performCutover")]
-        public bool? PerformCutover { get; set; }
+        public bool? PerformCutover
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PerformCutover;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.PerformCutover = value;
+            }
+        }
+
         /// <summary> The flag to enable or disable auto rotation of database encryption protector AKV key. </summary>
         [WirePath("properties.encryptionProtectorAutoRotation")]
-        public bool? EncryptionProtectorAutoRotation { get; set; }
+        public bool? EncryptionProtectorAutoRotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionProtectorAutoRotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.EncryptionProtectorAutoRotation = value;
+            }
+        }
+
+        /// <summary> Specifies the provisioning state for this resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

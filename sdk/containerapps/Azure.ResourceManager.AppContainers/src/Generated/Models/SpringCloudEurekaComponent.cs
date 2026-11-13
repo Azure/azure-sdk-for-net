@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,9 +15,8 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class SpringCloudEurekaComponent : JavaComponentProperties
     {
         /// <summary> Initializes a new instance of <see cref="SpringCloudEurekaComponent"/>. </summary>
-        public SpringCloudEurekaComponent()
+        public SpringCloudEurekaComponent() : base(JavaComponentType.SpringCloudEureka)
         {
-            ComponentType = JavaComponentType.SpringCloudEureka;
         }
 
         /// <summary> Initializes a new instance of <see cref="SpringCloudEurekaComponent"/>. </summary>
@@ -25,21 +25,25 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="configurations"> List of Java Components configuration properties. </param>
         /// <param name="scale"> Java component scaling configurations. </param>
         /// <param name="serviceBinds"> List of Java Components that are bound to the Java component. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ingress"> Java Component Ingress configurations. </param>
-        internal SpringCloudEurekaComponent(JavaComponentType componentType, JavaComponentProvisioningState? provisioningState, IList<JavaComponentConfigurationProperty> configurations, JavaComponentPropertiesScale scale, IList<JavaComponentServiceBind> serviceBinds, IDictionary<string, BinaryData> serializedAdditionalRawData, JavaComponentIngress ingress) : base(componentType, provisioningState, configurations, scale, serviceBinds, serializedAdditionalRawData)
+        internal SpringCloudEurekaComponent(JavaComponentType componentType, JavaComponentProvisioningState? provisioningState, IList<JavaComponentConfigurationProperty> configurations, JavaComponentPropertiesScale scale, IList<JavaComponentServiceBind> serviceBinds, IDictionary<string, BinaryData> additionalBinaryDataProperties, JavaComponentIngress ingress) : base(componentType, provisioningState, configurations, scale, serviceBinds, additionalBinaryDataProperties)
         {
             Ingress = ingress;
-            ComponentType = componentType;
         }
 
         /// <summary> Java Component Ingress configurations. </summary>
+        [WirePath("ingress")]
         internal JavaComponentIngress Ingress { get; set; }
+
         /// <summary> Hostname of the Java Component endpoint. </summary>
         [WirePath("ingress.fqdn")]
         public string IngressFqdn
         {
-            get => Ingress is null ? default : Ingress.Fqdn;
+            get
+            {
+                return Ingress is null ? default : Ingress.Fqdn;
+            }
         }
     }
 }

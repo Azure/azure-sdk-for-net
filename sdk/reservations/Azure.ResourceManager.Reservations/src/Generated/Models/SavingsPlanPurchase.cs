@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Request body for savings plan purchase. </summary>
     public partial class SavingsPlanPurchase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanPurchase"/>. </summary>
         public SavingsPlanPurchase()
@@ -53,54 +24,155 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanPurchase"/>. </summary>
         /// <param name="sku"> The name of sku. </param>
-        /// <param name="displayName"> Friendly name of the savings plan. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing reservation or savings plan. </param>
-        /// <param name="term"> Represent savings plan term in ISO 8601 format. </param>
-        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
-        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
-        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
-        /// <param name="commitment"> Commitment towards the benefit. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanPurchase(ReservationsSkuName sku, string displayName, ResourceIdentifier billingScopeId, SavingsPlanTerm? term, SavingsPlanBillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, BenefitsCommitment commitment, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of a savings plan purchase. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanPurchase(ReservationsSkuName sku, SavingsPlanPurchaseRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
-            DisplayName = displayName;
-            BillingScopeId = billingScopeId;
-            Term = term;
-            BillingPlan = billingPlan;
-            AppliedScopeType = appliedScopeType;
-            AppliedScopeProperties = appliedScopeProperties;
-            Commitment = commitment;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of sku. </summary>
         internal ReservationsSkuName Sku { get; set; }
-        /// <summary> Gets or sets the sku name. </summary>
+
+        /// <summary> Properties of a savings plan purchase. </summary>
+        internal SavingsPlanPurchaseRequestProperties Properties { get; set; }
+
+        /// <summary> Gets or sets the Name. </summary>
         public string SkuName
         {
-            get => Sku is null ? default : Sku.Name;
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
             set
             {
                 if (Sku is null)
+                {
                     Sku = new ReservationsSkuName();
+                }
                 Sku.Name = value;
             }
         }
 
         /// <summary> Friendly name of the savings plan. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanPurchaseRequestProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Subscription that will be charged for purchasing reservation or savings plan. </summary>
-        public ResourceIdentifier BillingScopeId { get; set; }
+        public ResourceIdentifier BillingScopeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingScopeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanPurchaseRequestProperties();
+                }
+                Properties.BillingScopeId = value;
+            }
+        }
+
         /// <summary> Represent savings plan term in ISO 8601 format. </summary>
-        public SavingsPlanTerm? Term { get; set; }
+        public SavingsPlanTerm? Term
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Term;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanPurchaseRequestProperties();
+                }
+                Properties.Term = value;
+            }
+        }
+
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
-        public SavingsPlanBillingPlan? BillingPlan { get; set; }
+        public SavingsPlanBillingPlan? BillingPlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingPlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanPurchaseRequestProperties();
+                }
+                Properties.BillingPlan = value;
+            }
+        }
+
         /// <summary> Type of the Applied Scope. </summary>
-        public AppliedScopeType? AppliedScopeType { get; set; }
+        public AppliedScopeType? AppliedScopeType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanPurchaseRequestProperties();
+                }
+                Properties.AppliedScopeType = value;
+            }
+        }
+
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
-        public AppliedScopeProperties AppliedScopeProperties { get; set; }
+        public AppliedScopeProperties AppliedScopeProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanPurchaseRequestProperties();
+                }
+                Properties.AppliedScopeProperties = value;
+            }
+        }
+
         /// <summary> Commitment towards the benefit. </summary>
-        public BenefitsCommitment Commitment { get; set; }
+        public BenefitsCommitment Commitment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Commitment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanPurchaseRequestProperties();
+                }
+                Properties.Commitment = value;
+            }
+        }
     }
 }

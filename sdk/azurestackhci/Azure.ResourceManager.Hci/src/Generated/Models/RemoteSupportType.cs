@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct RemoteSupportType : IEquatable<RemoteSupportType>
     {
         private readonly string _value;
+        /// <summary> Enable remote support for the cluster. </summary>
+        private const string EnableValue = "Enable";
+        /// <summary> Revoke previously enabled remote support for the cluster. </summary>
+        private const string RevokeValue = "Revoke";
 
         /// <summary> Initializes a new instance of <see cref="RemoteSupportType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RemoteSupportType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnableValue = "Enable";
-        private const string RevokeValue = "Revoke";
-
-        /// <summary> Enable. </summary>
+        /// <summary> Enable remote support for the cluster. </summary>
         public static RemoteSupportType Enable { get; } = new RemoteSupportType(EnableValue);
-        /// <summary> Revoke. </summary>
+
+        /// <summary> Revoke previously enabled remote support for the cluster. </summary>
         public static RemoteSupportType Revoke { get; } = new RemoteSupportType(RevokeValue);
+
         /// <summary> Determines if two <see cref="RemoteSupportType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RemoteSupportType left, RemoteSupportType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RemoteSupportType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RemoteSupportType left, RemoteSupportType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RemoteSupportType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RemoteSupportType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RemoteSupportType(string value) => new RemoteSupportType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RemoteSupportType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RemoteSupportType?(string value) => value == null ? null : new RemoteSupportType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RemoteSupportType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RemoteSupportType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

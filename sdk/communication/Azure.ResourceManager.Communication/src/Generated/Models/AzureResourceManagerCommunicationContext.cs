@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Communication
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CommunicationAcceptTags))]
     [ModelReaderWriterBuildable(typeof(CommunicationDomainResource))]
@@ -27,6 +28,8 @@ namespace Azure.ResourceManager.Communication
     [ModelReaderWriterBuildable(typeof(CommunicationServiceResourceData))]
     [ModelReaderWriterBuildable(typeof(CommunicationServiceResourceList))]
     [ModelReaderWriterBuildable(typeof(CommunicationServiceResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(CommunicationSmtpUsernameData))]
+    [ModelReaderWriterBuildable(typeof(CommunicationSmtpUsernameResource))]
     [ModelReaderWriterBuildable(typeof(DomainPropertiesVerificationRecords))]
     [ModelReaderWriterBuildable(typeof(DomainPropertiesVerificationStates))]
     [ModelReaderWriterBuildable(typeof(DomainResourceList))]
@@ -36,14 +39,20 @@ namespace Azure.ResourceManager.Communication
     [ModelReaderWriterBuildable(typeof(EmailServiceResourceData))]
     [ModelReaderWriterBuildable(typeof(EmailServiceResourceList))]
     [ModelReaderWriterBuildable(typeof(EmailServiceResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(EmailSuppressionListAddressData))]
+    [ModelReaderWriterBuildable(typeof(EmailSuppressionListAddressResource))]
+    [ModelReaderWriterBuildable(typeof(EmailSuppressionListData))]
+    [ModelReaderWriterBuildable(typeof(EmailSuppressionListResource))]
     [ModelReaderWriterBuildable(typeof(LinkedNotificationHub))]
     [ModelReaderWriterBuildable(typeof(LinkNotificationHubContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegenerateCommunicationServiceKeyContent))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameResource))]
-    [ModelReaderWriterBuildable(typeof(Models.SenderUsernameResourceCollection))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameResourceData))]
+    [ModelReaderWriterBuildable(typeof(SmtpUsernameResourceCollection))]
+    [ModelReaderWriterBuildable(typeof(SuppressionListAddressResourceCollection))]
+    [ModelReaderWriterBuildable(typeof(SuppressionListResourceCollection))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VerificationDnsRecord))]

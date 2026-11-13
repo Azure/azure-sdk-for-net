@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct RunbookState : IEquatable<RunbookState>
     {
         private readonly string _value;
+        /// <summary> New. </summary>
+        private const string NewValue = "New";
+        /// <summary> Edit. </summary>
+        private const string EditValue = "Edit";
+        /// <summary> Published. </summary>
+        private const string PublishedValue = "Published";
 
         /// <summary> Initializes a new instance of <see cref="RunbookState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RunbookState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NewValue = "New";
-        private const string EditValue = "Edit";
-        private const string PublishedValue = "Published";
+            _value = value;
+        }
 
         /// <summary> New. </summary>
         public static RunbookState New { get; } = new RunbookState(NewValue);
+
         /// <summary> Edit. </summary>
         public static RunbookState Edit { get; } = new RunbookState(EditValue);
+
         /// <summary> Published. </summary>
         public static RunbookState Published { get; } = new RunbookState(PublishedValue);
+
         /// <summary> Determines if two <see cref="RunbookState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RunbookState left, RunbookState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RunbookState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RunbookState left, RunbookState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RunbookState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RunbookState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RunbookState(string value) => new RunbookState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RunbookState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RunbookState?(string value) => value == null ? null : new RunbookState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RunbookState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RunbookState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,107 +13,131 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningRegistry data model. </summary>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class MachineLearningRegistryData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public MachineLearningRegistryData(AzureLocation location) : base(location)
         {
-            RegistryPrivateEndpointConnections = new ChangeTrackingList<RegistryPrivateEndpointConnection>();
-            RegionDetails = new ChangeTrackingList<RegistryRegionArmDetails>();
+
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        /// <param name="discoveryUri"> Discovery URL for the Registry. </param>
-        /// <param name="intellectualPropertyPublisher"> IntellectualPropertyPublisher for the registry. </param>
-        /// <param name="managedResourceGroup"> ResourceId of the managed RG if the registry has system created resources. </param>
-        /// <param name="mlFlowRegistryUri"> MLFlow Registry URI for the Registry. </param>
-        /// <param name="registryPrivateEndpointConnections"> Private endpoint connections info used for pending connections in private link portal. </param>
-        /// <param name="publicNetworkAccess">
-        /// Is the Registry accessible from the internet?
-        /// Possible values: "Enabled" or "Disabled"
-        /// </param>
-        /// <param name="regionDetails"> Details of each region the registry is in. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, Uri discoveryUri, string intellectualPropertyPublisher, ArmResourceId managedResourceGroup, Uri mlFlowRegistryUri, IList<RegistryPrivateEndpointConnection> registryPrivateEndpointConnections, string publicNetworkAccess, IList<RegistryRegionArmDetails> regionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RegistryProperties properties, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Identity = identity;
             Kind = kind;
             Sku = sku;
-            DiscoveryUri = discoveryUri;
-            IntellectualPropertyPublisher = intellectualPropertyPublisher;
-            ManagedResourceGroup = managedResourceGroup;
-            MlFlowRegistryUri = mlFlowRegistryUri;
-            RegistryPrivateEndpointConnections = registryPrivateEndpointConnections;
-            PublicNetworkAccess = publicNetworkAccess;
-            RegionDetails = regionDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryData"/> for deserialization. </summary>
-        internal MachineLearningRegistryData()
-        {
-        }
+        /// <summary> [Required] Additional attributes of the entity. </summary>
+        [WirePath("properties")]
+        internal RegistryProperties Properties { get; set; }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
         [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
+
         /// <summary> Discovery URL for the Registry. </summary>
         [WirePath("properties.discoveryUrl")]
-        public Uri DiscoveryUri { get; set; }
+        public Uri DiscoveryUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiscoveryUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.DiscoveryUri = value;
+            }
+        }
+
         /// <summary> IntellectualPropertyPublisher for the registry. </summary>
         [WirePath("properties.intellectualPropertyPublisher")]
-        public string IntellectualPropertyPublisher { get; set; }
-        /// <summary> ResourceId of the managed RG if the registry has system created resources. </summary>
-        internal ArmResourceId ManagedResourceGroup { get; set; }
+        public string IntellectualPropertyPublisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntellectualPropertyPublisher;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.IntellectualPropertyPublisher = value;
+            }
+        }
+
+        /// <summary> MLFlow Registry URI for the Registry. </summary>
+        [WirePath("properties.mlFlowRegistryUri")]
+        public Uri MlFlowRegistryUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MlFlowRegistryUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.MlFlowRegistryUri = value;
+            }
+        }
+
+        /// <summary>
+        /// Is the Registry accessible from the internet?
+        /// Possible values: "Enabled" or "Disabled"
+        /// </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public string PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
         /// <summary>
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"
         /// or "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{AcrName}"
@@ -121,29 +145,32 @@ namespace Azure.ResourceManager.MachineLearning
         [WirePath("properties.managedResourceGroup.resourceId")]
         public ResourceIdentifier ManagedResourceId
         {
-            get => ManagedResourceGroup is null ? default : ManagedResourceGroup.ResourceId;
+            get
+            {
+                return Properties is null ? default : Properties.ManagedResourceId;
+            }
             set
             {
-                if (ManagedResourceGroup is null)
-                    ManagedResourceGroup = new ArmResourceId();
-                ManagedResourceGroup.ResourceId = value;
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.ManagedResourceId = value;
             }
         }
 
-        /// <summary> MLFlow Registry URI for the Registry. </summary>
-        [WirePath("properties.mlFlowRegistryUri")]
-        public Uri MlFlowRegistryUri { get; set; }
-        /// <summary> Private endpoint connections info used for pending connections in private link portal. </summary>
-        [WirePath("properties.registryPrivateEndpointConnections")]
-        public IList<RegistryPrivateEndpointConnection> RegistryPrivateEndpointConnections { get; set; }
-        /// <summary>
-        /// Is the Registry accessible from the internet?
-        /// Possible values: "Enabled" or "Disabled"
-        /// </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public string PublicNetworkAccess { get; set; }
-        /// <summary> Details of each region the registry is in. </summary>
-        [WirePath("properties.regionDetails")]
-        public IList<RegistryRegionArmDetails> RegionDetails { get; set; }
+        /// <summary> List of assigned identities for the managed resource group. </summary>
+        [WirePath("properties.managedResourceGroupSettings.assignedIdentities")]
+        public IList<ManagedResourceGroupAssignedIdentities> ManagedResourceGroupAssignedIdentities
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                return Properties.ManagedResourceGroupAssignedIdentities;
+            }
+        }
     }
 }

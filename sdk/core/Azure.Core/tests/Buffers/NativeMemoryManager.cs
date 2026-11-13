@@ -26,13 +26,13 @@ namespace Azure.Core.Tests.Buffers
             _ptr = Marshal.AllocHGlobal(length);
         }
 
-        #pragma warning disable CA2015 // Finalizer is defined for testing purposes
+#pragma warning disable CA2015 // Finalizer is defined for testing purposes
         ~NativeMemoryManager()
         {
             Debug.WriteLine($"{nameof(NativeMemoryManager)} being finalized");
             Dispose(false);
         }
-        #pragma warning restore CA2015
+#pragma warning restore CA2015
 
         public bool IsDisposed
         {

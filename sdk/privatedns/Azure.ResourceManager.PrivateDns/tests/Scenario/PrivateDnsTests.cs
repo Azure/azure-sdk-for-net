@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             // Add NxDomainRedirect resolutionPolicy
             var virtualNetworkLinkData = new VirtualNetworkLinkData("global")
             {
-                VirtualNetwork = new WritableSubResource { Id = vnet.Id },
+                VirtualNetworkId = vnet.Id,
                 RegistrationEnabled = false,
                 PrivateDnsResolutionPolicy = PrivateDnsResolutionPolicy.NxDomainRedirect,
             };

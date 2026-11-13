@@ -114,7 +114,7 @@ public partial class Subscription : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the Subscription.</param>
     public Subscription(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Resources/subscriptions", resourceVersion ?? "2019-10-01")
+        : base(bicepIdentifier, "Microsoft.Resources/subscriptions", resourceVersion ?? "2022-12-01")
     {
     }
 
@@ -140,6 +140,11 @@ public partial class Subscription : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
         /// <summary>
         /// 2019-10-01.
         /// </summary>

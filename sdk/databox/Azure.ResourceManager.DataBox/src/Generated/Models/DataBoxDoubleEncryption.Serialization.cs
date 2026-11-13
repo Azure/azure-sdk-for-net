@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataBoxDoubleEncryptionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataBoxDoubleEncryption value) => value switch
         {
             DataBoxDoubleEncryption.Enabled => "Enabled",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxDoubleEncryption value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataBoxDoubleEncryption ToDataBoxDoubleEncryption(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataBoxDoubleEncryption.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataBoxDoubleEncryption.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return DataBoxDoubleEncryption.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return DataBoxDoubleEncryption.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxDoubleEncryption value.");
         }
     }

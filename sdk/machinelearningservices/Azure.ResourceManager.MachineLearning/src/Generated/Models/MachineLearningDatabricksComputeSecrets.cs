@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,19 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningDatabricksComputeSecrets : MachineLearningComputeSecrets
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningDatabricksComputeSecrets"/>. </summary>
-        internal MachineLearningDatabricksComputeSecrets()
+        internal MachineLearningDatabricksComputeSecrets() : base(ComputeType.Databricks)
         {
-            ComputeType = ComputeType.Databricks;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningDatabricksComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databricksAccessToken"> access token for databricks account. </param>
-        internal MachineLearningDatabricksComputeSecrets(ComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databricksAccessToken) : base(computeType, serializedAdditionalRawData)
+        internal MachineLearningDatabricksComputeSecrets(ComputeType computeType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string databricksAccessToken) : base(computeType, additionalBinaryDataProperties)
         {
             DatabricksAccessToken = databricksAccessToken;
-            ComputeType = computeType;
         }
 
         /// <summary> access token for databricks account. </summary>

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -17,6 +17,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -27,9 +28,16 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class ResourceOperationMethodProvider
     {
         public bool IsLongRunningOperation { get; }
+        public bool IsFakeLongRunningOperation { get; }
+
+        /// <summary>
+        /// Determines whether LRO handling should be applied in the method body.
+        /// Subclasses like Exists/GetIfExists override this to false since they should never be LROs.
+        /// </summary>
+        protected virtual bool ShouldApplyLroHandling => IsLongRunningOperation || IsFakeLongRunningOperation;
 
         protected readonly TypeProvider _enclosingType;
-        protected readonly RequestPathPattern _contextualPath;
+        protected readonly ParameterProvider? _scopeParameter;
         protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
@@ -40,53 +48,75 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly MethodBodyStatement[] _bodyStatements;
 
         private readonly string _methodName;
+        private readonly ResourceOperationKind _resourceOperationKind;
+        private readonly bool _hasTypedResultForPublicSurface;
         private protected readonly CSharpType? _originalBodyType;
         private protected readonly CSharpType? _returnBodyType;
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
-        private readonly bool _isFakeLongRunningOperation;
         private readonly FormattableString? _description;
+
+        private readonly ParameterContextRegistry _parameterMappings;
 
         /// <summary>
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
         /// </summary>
         /// <param name="enclosingType">The enclosing type of this operation. </param>
-        /// <param name="contextualPath">The contextual path of the enclosing type. </param>
+        /// <param name="parameterMappings">The parameter mappings to use for the operation. </param>
         /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
         /// <param name="method">The input service method that we are building from. </param>
+        /// <param name="resourceOperationKind">ARM resource operation kind for CRUD-aware method shaping.</param>
         /// <param name="isAsync">Whether this method is an async method. </param>
         /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
+        /// <param name="explicitResourceClient">Explicit resource client to use when multiple resources share the same model. </param>
+        /// <param name="scopeParameter">Optional scope parameter for extension-scoped non-resource methods. When provided, contextual parameters are extracted from this scope instead of Id.</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
-            RequestPathPattern contextualPath,
+            ParameterContextRegistry parameterMappings,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
+            ResourceOperationKind resourceOperationKind,
             bool isAsync,
             string? methodName = null,
             FormattableString? description = null,
-            bool forceLro = false)
+            bool forceLro = false,
+            ResourceClientProvider? explicitResourceClient = null,
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
-            _contextualPath = contextualPath;
+            _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
+            _parameterMappings = parameterMappings;
             _isAsync = isAsync;
-            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
-            bool isLongRunningOperation = false;
-            InitializeLroFlags(
-                _serviceMethod,
-                forceLro: forceLro,
-                ref isLongRunningOperation,
-                ref _isFakeLongRunningOperation);
-            IsLongRunningOperation = isLongRunningOperation;
+            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync, enclosingType);
+            _resourceOperationKind = resourceOperationKind;
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _description = description ?? _convenienceMethod.Signature.Description;
             InitializeTypeInfo(
                 _serviceMethod,
+                _enclosingType,
                 ref _originalBodyType,
                 ref _returnBodyType,
-                ref _returnBodyResourceClient);
+                ref _returnBodyResourceClient,
+                explicitResourceClient);
+
+            bool isLongRunningOperation = false;
+            bool isFakeLongRunningOperation = false;
+            bool hasTypedResultForPublicSurface = false;
+            InitializeLroFlags(
+                _serviceMethod,
+                _returnBodyType,
+                _resourceOperationKind,
+                forceLro: forceLro,
+                ref isLongRunningOperation,
+                ref isFakeLongRunningOperation,
+                ref hasTypedResultForPublicSurface);
+            IsLongRunningOperation = isLongRunningOperation;
+            IsFakeLongRunningOperation = isFakeLongRunningOperation;
+            _hasTypedResultForPublicSurface = hasTypedResultForPublicSurface;
+
             _clientDiagnosticsField = restClientInfo.Diagnostics;
             _restClientField = restClientInfo.RestClient;
             _signature = CreateSignature();
@@ -95,44 +125,145 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private static void InitializeLroFlags(
             in InputServiceMethod serviceMethod,
+            in CSharpType? returnBodyType,
+            in ResourceOperationKind resourceOperationKind,
             in bool forceLro,
             ref bool isLongRunningOperation,
-            ref bool isFakeLongRunningOperation)
+            ref bool isFakeLongRunningOperation,
+            ref bool hasTypedResultForPublicSurface)
         {
             isLongRunningOperation = serviceMethod.IsLongRunningOperation();
             // when the method is not a real LRO, but we have to force it to be an LRO, the fake lro flag is true.
             isFakeLongRunningOperation = forceLro && !isLongRunningOperation;
+
+            hasTypedResultForPublicSurface =
+                returnBodyType != null &&
+                !(resourceOperationKind == ResourceOperationKind.Delete &&
+                  (isLongRunningOperation || isFakeLongRunningOperation));
         }
 
         private static void InitializeTypeInfo(
             in InputServiceMethod serviceMethod,
+            TypeProvider enclosingType,
             ref CSharpType? originalBodyType,
             ref CSharpType? returnBodyType,
-            ref ResourceClientProvider? wrappedResourceClient)
+            ref ResourceClientProvider? wrappedResourceClient,
+            ResourceClientProvider? explicitResourceClient = null)
         {
             originalBodyType = serviceMethod.GetResponseBodyType();
             // see if the body type could be wrapped into a resource client
             returnBodyType = originalBodyType;
-            if (originalBodyType != null && ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(originalBodyType, out wrappedResourceClient))
+            if (originalBodyType != null)
             {
-                returnBodyType = wrappedResourceClient.Type;
+                // If explicit resource client is provided, use it to avoid incorrect lookup
+                // when multiple resources share the same model
+                if (explicitResourceClient != null && explicitResourceClient.IsResourceDataType(originalBodyType))
+                {
+                    wrappedResourceClient = explicitResourceClient;
+                    originalBodyType = wrappedResourceClient.ResourceData.Type;
+                    returnBodyType = wrappedResourceClient.Type;
+                    return;
+                }
+
+                // If the enclosing type is a ResourceCollectionClientProvider, use its associated resource
+                // This ensures we get the correct resource when multiple resources share the same data type
+                if (enclosingType is ResourceCollectionClientProvider collectionProvider)
+                {
+                    // Check if the collection's resource data type matches the response body type
+                    if (collectionProvider.Resource.IsResourceDataType(originalBodyType))
+                    {
+                        wrappedResourceClient = collectionProvider.Resource;
+                        originalBodyType = wrappedResourceClient.ResourceData.Type;
+                        returnBodyType = wrappedResourceClient.Type;
+                        return;
+                    }
+                }
+                // If the enclosing type is a ResourceClientProvider itself, use it directly
+                else if (enclosingType is ResourceClientProvider resourceProvider)
+                {
+                    // Check if this resource's data type matches the response body type
+                    if (resourceProvider.IsResourceDataType(originalBodyType))
+                    {
+                        wrappedResourceClient = resourceProvider;
+                        originalBodyType = wrappedResourceClient.ResourceData.Type;
+                        returnBodyType = wrappedResourceClient.Type;
+                        return;
+                    }
+                }
+
+                // Fallback to the general lookup for other cases (e.g., MockableResourceProvider)
+                if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(originalBodyType, out wrappedResourceClient))
+                {
+                    returnBodyType = wrappedResourceClient.Type;
+                }
             }
         }
 
         private CSharpType? _returnType;
         public CSharpType ReturnType => _returnType ??= BuildReturnType();
 
+        private bool HasTypedResultForPublicSurface =>
+            _hasTypedResultForPublicSurface;
+
         protected virtual CSharpType BuildReturnType()
         {
-            return _returnBodyType.WrapResponse(IsLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
+            var effectiveReturnBodyType = HasTypedResultForPublicSurface ? _returnBodyType : null;
+            return effectiveReturnBodyType.WrapResponse(IsLongRunningOperation || IsFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            return new MethodProvider(
+            var methodProvider = new ManagementMethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._enclosingType);
+                resourceOperationMethodProvider._enclosingType,
+                ScmMethodKind.Convenience,
+                serviceMethod: resourceOperationMethodProvider._serviceMethod,
+                additionalBodyDependencyTypes: resourceOperationMethodProvider.BuildBodyDependencyTypes());
+
+            // Add enhanced XML documentation with structured tags
+            ResourceHelpers.BuildEnhancedXmlDocs(
+                resourceOperationMethodProvider._serviceMethod,
+                resourceOperationMethodProvider._description,
+                resourceOperationMethodProvider._enclosingType,
+                methodProvider.XmlDocs);
+
+            return methodProvider;
+        }
+
+        private IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+        {
+            if (!ShouldApplyLroHandling)
+            {
+                return [];
+            }
+
+            var outputLibrary = ManagementClientGenerator.Instance.OutputLibrary;
+            var dependencies = new List<CSharpType>
+            {
+                HasTypedResultForPublicSurface
+                    ? outputLibrary.ArmOperationOfT.Type
+                    : outputLibrary.ArmOperation.Type
+            };
+
+            if (IsFakeLongRunningOperation || !HasTypedResultForPublicSurface)
+            {
+                return dependencies;
+            }
+
+            if (_returnBodyResourceClient != null)
+            {
+                dependencies.Add(outputLibrary.GetOperationSource(_returnBodyResourceClient).Type);
+                return dependencies;
+            }
+
+            if (_originalBodyType != null &&
+                outputLibrary.OperationSourceDict.TryGetValue(_originalBodyType, out var operationSource))
+            {
+                dependencies.Add(operationSource.Type);
+            }
+
+            return dependencies;
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
@@ -148,9 +279,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ];
         }
 
-        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
+        protected virtual IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _isFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: ShouldApplyLroHandling, scopeParameter: _scopeParameter, methodName: _methodName);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -158,7 +289,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new MethodSignature(
                 _methodName,
                 _description,
-                _convenienceMethod.Signature.Modifiers,
+                GetMethodModifiers(),
                 ReturnType,
                 _convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(),
@@ -167,6 +298,25 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.GenericParameterConstraints,
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
+        }
+
+        private MethodSignatureModifiers GetMethodModifiers()
+        {
+            var modifiers = _convenienceMethod.Signature.Modifiers;
+            if (_serviceMethod is not InputLongRunningPagingServiceMethod)
+            {
+                return modifiers;
+            }
+
+            // LRO paging support is not finalized for management SDKs yet. Keep only
+            // these operation methods internal until the public API shape is ready.
+            return (modifiers
+                & ~MethodSignatureModifiers.Public
+                & ~MethodSignatureModifiers.Protected
+                & ~MethodSignatureModifiers.Private
+                & ~MethodSignatureModifiers.Virtual
+                & ~MethodSignatureModifiers.Override)
+                | MethodSignatureModifiers.Internal;
         }
 
         private TryExpression BuildTryExpression()
@@ -180,16 +330,21 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             // Populate arguments for the REST client method call
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
+            // When a scope parameter is provided (extension-scoped non-resource methods on ArmClient),
+            // use the scope parameter as the source for contextual parameter extraction instead of Id.
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            var arguments = _parameterMappings.PopulateArguments(idExpression, requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (IsLongRunningOperation || _isFakeLongRunningOperation)
+            if (ShouldApplyLroHandling)
             {
                 tryStatements.AddRange(
-                    _isFakeLongRunningOperation ?
+                    IsFakeLongRunningOperation ?
                     BuildFakeLroHandling(messageVariable, responseVariable, cancellationTokenParameter) :
                     BuildLroHandling(messageVariable, responseVariable, cancellationTokenParameter));
             }
@@ -200,17 +355,21 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new TryExpression(tryStatements);
         }
 
-        private IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
+        protected virtual IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            if (_originalBodyType != null && !IsLongRunningOperation)
+            // Use generic response pipeline only when the body type is actually surfaced on the public API.
+            // For delete LRO operations, the final result is suppressed from the public surface, so we must
+            // use non-generic pipeline processing to produce a plain Response that matches the non-generic
+            // ArmOperation constructor.
+            if (!IsLongRunningOperation && HasTypedResultForPublicSurface)
             {
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
-                    _originalBodyType,
+                    _originalBodyType!,
                     _isAsync,
                     out responseVariable);
             }
@@ -224,6 +383,84 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
         }
 
+        /// <summary>
+        /// Builds client pipeline handling with status code switch logic for exists/get-if-exists operations.
+        /// Handles 200 (success) and 404 (not found) status codes specifically.
+        /// </summary>
+        protected IReadOnlyList<MethodBodyStatement> BuildExistsOperationPipelineProcessing(
+            VariableExpression messageVariable,
+            VariableExpression contextVariable,
+            out ScopedApi<Response> responseVariable)
+        {
+            var statements = new List<MethodBodyStatement>();
+
+            var sendMethod = _isAsync ? "SendAsync" : "Send";
+            var sendArguments = new ValueExpression[] { messageVariable, contextVariable.Property(nameof(RequestContext.CancellationToken)) };
+
+            var sendStatement = _isAsync
+                ? This.Property("Pipeline").Invoke(sendMethod, sendArguments, null, _isAsync).Terminate()
+                : This.Property("Pipeline").Invoke(sendMethod, sendArguments).Terminate();
+            statements.Add(sendStatement);
+
+            var resultDeclaration = Declare(
+                "result",
+                typeof(Response),
+                messageVariable.Property("Response"),
+                out var resultVariable);
+            statements.Add(resultDeclaration);
+
+            var responseDeclaration = Declare(
+                "response",
+                new CSharpType(typeof(Response<>), _originalBodyType!),
+                Default,
+                out var responseVar);
+            responseVariable = responseVar.As<Response>();
+            statements.Add(responseDeclaration);
+
+            var switchStatement = new SwitchStatement(resultVariable.Property("Status"));
+
+            // Case 200: response = Response.FromValue(FooData.FromResponse(result), result);
+            var case200Body = CreateSwitchCaseBody(
+                responseVar,
+                Static(_originalBodyType!).Invoke(SerializationVisitor.FromResponseMethodName, new ValueExpression[] { resultVariable }),
+                resultVariable);
+            var case200 = new SwitchCaseStatement(new ValueExpression[] { Literal(200) }, case200Body);
+            switchStatement.Add(case200);
+
+            // Case 404: response = Response.FromValue((FooData)null, result);
+            var case404Body = CreateSwitchCaseBody(
+                responseVar,
+                Null.CastTo(_originalBodyType!),
+                resultVariable);
+            var case404 = new SwitchCaseStatement(new ValueExpression[] { Literal(404) }, case404Body);
+            switchStatement.Add(case404);
+
+            // Default case: throw new RequestFailedException(result);
+            var defaultBody = new List<MethodBodyStatement>
+            {
+                Throw(New.Instance(typeof(RequestFailedException), resultVariable))
+            };
+            var defaultCase = new SwitchCaseStatement(new ValueExpression[0], defaultBody);
+            switchStatement.Add(defaultCase);
+
+            statements.Add(switchStatement);
+
+            return statements;
+
+            // Helper method to create switch case body
+            static List<MethodBodyStatement> CreateSwitchCaseBody(VariableExpression responseVar, ValueExpression valueExpression, VariableExpression resultVariable)
+            {
+                return new List<MethodBodyStatement>
+                {
+                    responseVar.Assign(
+                        Static(typeof(Response)).Invoke(
+                            nameof(Response.FromValue),
+                            new ValueExpression[] { valueExpression, resultVariable })).Terminate(),
+                    Break
+                };
+            }
+        }
+
         private IReadOnlyList<MethodBodyStatement> BuildFakeLroHandling(
             VariableExpression messageVariable,
             ScopedApi<Response> responseVariable,
@@ -231,9 +468,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             var statements = new List<MethodBodyStatement>();
 
-            var armOperationType = _returnBodyType != null
+            var armOperationType = HasTypedResultForPublicSurface
                 ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type
-                    .MakeGenericType([_returnBodyType])
+                    .MakeGenericType([_returnBodyType!])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
             var uriDeclaration = ResourceMethodSnippets.CreateUriFromMessage(messageVariable, out var uriVariable);
@@ -243,7 +480,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             ValueExpression responseValueExpression = responseVariable;
             // when the response is wrapped by a resource, we need to construct it from the response value.
-            if (_returnBodyResourceClient != null)
+            if (HasTypedResultForPublicSurface && _returnBodyResourceClient != null)
             {
                 responseValueExpression = ResponseSnippets.FromValue(
                     New.Instance(
@@ -274,12 +511,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var finalStateVia = _serviceMethod.GetOperationFinalStateVia();
 
-            var armOperationType = _returnBodyType != null
+            var armOperationType = HasTypedResultForPublicSurface
                 ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type
-                    .MakeGenericType([_returnBodyType])
+                    .MakeGenericType([_returnBodyType!])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
-            ValueExpression[] armOperationArguments = [
+            ValueExpression[] commonArmOperationArguments = [
                 _clientDiagnosticsField,
                 This.As<ArmResource>().Pipeline(),
                 messageVariable.Property("Request"),
@@ -287,17 +524,35 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = _returnBodyResourceClient != null
-                ? [
-                    New.Instance(_returnBodyResourceClient.Source.Type, This.As<ArmResource>().Client()),
-                    .. armOperationArguments
-                  ]
-                : armOperationArguments;
+            // TODO: Temporary workaround - pass skipApiVersionOverride: true to prevent LRO polling from
+            // overriding the api-version. Remove once the issue is properly resolved in Azure.Core.
+            if (ManagementClientGenerator.Instance.IsSkipApiVersionOverrideEnabled())
+            {
+                commonArmOperationArguments = [.. commonArmOperationArguments, Literal(true)];
+            }
+
+            ValueExpression? operationSourceInstance = null;
+            if (HasTypedResultForPublicSurface && _returnBodyResourceClient != null)
+            {
+                // Resource type - pass client to operation source constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.GetOperationSource(_returnBodyResourceClient).Type;
+                operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
+            }
+            else if (HasTypedResultForPublicSurface && _originalBodyType != null)
+            {
+                // Non-resource type - use parameterless constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_originalBodyType].Type;
+                operationSourceInstance = New.Instance(operationSourceType);
+            }
+
+            var armOperationArguments = operationSourceInstance != null
+                ? [operationSourceInstance, .. commonArmOperationArguments]
+                : commonArmOperationArguments;
 
             var operationDeclaration = Declare(
                 "operation",
                 armOperationType,
-                New.Instance(armOperationType, operationInstanceArguments),
+                New.Instance(armOperationType, armOperationArguments),
                 out var operationVariable);
             statements.Add(operationDeclaration);
 
@@ -311,7 +566,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression operationVariable,
             ParameterProvider cancellationTokenParameter)
         {
-            var waitMethod = _returnBodyType != null
+            var waitMethod = HasTypedResultForPublicSurface
                 ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 
@@ -341,15 +596,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                         responseVariable.GetRawResponse()))).Terminate()
             };
 
-            List<MethodBodyStatement> statements = [nullCheckStatement];
+            // if the return type is Response with no content, no need to check null.
+            List<MethodBodyStatement> statements =
+                CheckIfReturnTypeIsResponseWithNoContent()
+                ? []
+                : [nullCheckStatement];
 
             // If the return type has been wrapped by a resource client, we need to return the resource client type.
-            if (_returnBodyResourceClient != null)
+            if (_returnBodyResourceClient != null && HasTypedResultForPublicSurface)
             {
                 var returnValueExpression = New.Instance(
-                    _returnBodyResourceClient.Type,
-                    This.As<ArmResource>().Client(),
-                    responseVariable.Value());
+                        _returnBodyResourceClient.Type,
+                        This.As<ArmResource>().Client(),
+                        responseVariable.Value());
                 var returnStatement = Return(
                     ResponseSnippets.FromValue(
                         returnValueExpression,
@@ -362,6 +621,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
 
             return statements;
+
+            bool CheckIfReturnTypeIsResponseWithNoContent()
+            {
+                var returnType = signature.ReturnType;
+                return returnType != null && (returnType.Equals(typeof(Response)) || returnType.Equals(typeof(Task<Response>)));
+            }
         }
     }
 }

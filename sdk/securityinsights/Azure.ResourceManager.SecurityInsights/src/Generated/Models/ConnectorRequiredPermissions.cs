@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Required permissions for the connector. </summary>
     public partial class ConnectorRequiredPermissions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectorRequiredPermissions"/>. </summary>
         public ConnectorRequiredPermissions()
@@ -55,25 +27,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="isWriteAction"> write permission. </param>
         /// <param name="isReadAction"> read permission. </param>
         /// <param name="isDeleteAction"> delete permission. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorRequiredPermissions(bool? isCustomAction, bool? isWriteAction, bool? isReadAction, bool? isDeleteAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorRequiredPermissions(bool? isCustomAction, bool? isWriteAction, bool? isReadAction, bool? isDeleteAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsCustomAction = isCustomAction;
             IsWriteAction = isWriteAction;
             IsReadAction = isReadAction;
             IsDeleteAction = isDeleteAction;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> action permission. </summary>
         [WirePath("action")]
         public bool? IsCustomAction { get; set; }
+
         /// <summary> write permission. </summary>
         [WirePath("write")]
         public bool? IsWriteAction { get; set; }
+
         /// <summary> read permission. </summary>
         [WirePath("read")]
         public bool? IsReadAction { get; set; }
+
         /// <summary> delete permission. </summary>
         [WirePath("delete")]
         public bool? IsDeleteAction { get; set; }

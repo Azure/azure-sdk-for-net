@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
+    /// <summary></summary>
     public partial class CognitiveServicesAccountDeploymentResource : IJsonModel<CognitiveServicesAccountDeploymentData>
     {
-        private static CognitiveServicesAccountDeploymentData s_dataDeserializationInstance;
-        private static CognitiveServicesAccountDeploymentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CognitiveServicesAccountDeploymentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CognitiveServicesAccountDeploymentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CognitiveServicesAccountDeploymentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CognitiveServicesAccountDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesAccountDeploymentData>)Data).Write(writer, options);
 
-        CognitiveServicesAccountDeploymentData IJsonModel<CognitiveServicesAccountDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesAccountDeploymentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CognitiveServicesAccountDeploymentData IJsonModel<CognitiveServicesAccountDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CognitiveServicesAccountDeploymentData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CognitiveServicesAccountDeploymentData IPersistableModel<CognitiveServicesAccountDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesAccountDeploymentData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<CognitiveServicesAccountDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CognitiveServicesAccountDeploymentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CognitiveServicesAccountDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

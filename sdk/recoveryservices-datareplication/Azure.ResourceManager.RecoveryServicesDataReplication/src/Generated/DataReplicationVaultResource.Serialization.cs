@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
+    /// <summary></summary>
     public partial class DataReplicationVaultResource : IJsonModel<DataReplicationVaultData>
     {
-        private static DataReplicationVaultData s_dataDeserializationInstance;
-        private static DataReplicationVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataReplicationVaultData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataReplicationVaultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataReplicationVaultData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationVaultData>)Data).Write(writer, options);
 
-        DataReplicationVaultData IJsonModel<DataReplicationVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationVaultData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataReplicationVaultData IJsonModel<DataReplicationVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataReplicationVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationVaultData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationVaultData IPersistableModel<DataReplicationVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationVaultData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        string IPersistableModel<DataReplicationVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataReplicationVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

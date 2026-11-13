@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Maps
 {
+    /// <summary></summary>
     public partial class MapsAccountResource : IJsonModel<MapsAccountData>
     {
-        private static MapsAccountData s_dataDeserializationInstance;
-        private static MapsAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MapsAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MapsAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MapsAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MapsAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MapsAccountData>)Data).Write(writer, options);
 
-        MapsAccountData IJsonModel<MapsAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MapsAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MapsAccountData IJsonModel<MapsAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MapsAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MapsAccountData>(Data, options, AzureResourceManagerMapsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MapsAccountData IPersistableModel<MapsAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MapsAccountData>(data, options, AzureResourceManagerMapsContext.Default);
 
-        string IPersistableModel<MapsAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MapsAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MapsAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

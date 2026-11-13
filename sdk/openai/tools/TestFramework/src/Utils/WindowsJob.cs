@@ -146,7 +146,7 @@ public class WindowsJob : IDisposable
     [return: MarshalAs(UnmanagedType.Bool)]
     internal static extern bool CloseHandle(IntPtr hObject);
 
-#endregion
+    #endregion
 
     #region native types
 

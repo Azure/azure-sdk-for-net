@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataBoxKeyEncryptionKeyTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataBoxKeyEncryptionKeyType value) => value switch
         {
             DataBoxKeyEncryptionKeyType.MicrosoftManaged => "MicrosoftManaged",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxKeyEncryptionKeyType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataBoxKeyEncryptionKeyType ToDataBoxKeyEncryptionKeyType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MicrosoftManaged")) return DataBoxKeyEncryptionKeyType.MicrosoftManaged;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerManaged")) return DataBoxKeyEncryptionKeyType.CustomerManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MicrosoftManaged"))
+            {
+                return DataBoxKeyEncryptionKeyType.MicrosoftManaged;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerManaged"))
+            {
+                return DataBoxKeyEncryptionKeyType.CustomerManaged;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxKeyEncryptionKeyType value.");
         }
     }

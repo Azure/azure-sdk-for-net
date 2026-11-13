@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
+using Azure.Core.Expressions.DataFactory;
+using Azure.Generator.Providers;
 using Azure.Generator.Visitors;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -28,6 +31,31 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
+    private RawRequestUriBuilderExtensionsDefinition? _rawRequestUriBuilderExtensionsDefinition;
+    internal RawRequestUriBuilderExtensionsDefinition RawRequestUriBuilderExtensionsDefinition =>
+        _rawRequestUriBuilderExtensionsDefinition ??= new();
+
+    internal RequestHeaderExtensionsDefinition RequestHeaderExtensionsDefinition { get; } = new();
+
+    internal bool HasDataFactoryElement => _hasDataFactoryElement ??= BuildHasDataFactoryElement();
+    private bool? _hasDataFactoryElement;
+    internal const string DataFactoryElementIdentity = "Azure.Core.Expressions.DataFactoryElement";
+
+    private bool BuildHasDataFactoryElement()
+    {
+        foreach (var model in InputLibrary.InputNamespace.Models)
+        {
+            foreach (var property in model.Properties)
+            {
+                if (property.Type.External?.Identity == DataFactoryElementIdentity)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /// <summary>
     /// Constructs the Azure client generator used to generate the Azure client SDK.
     /// </summary>
@@ -46,8 +74,17 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     {
         base.Configure();
 
+        // Use Azure-specific configuration schema settings
+        ConfigurationSchema.SectionName = "AzureClients";
+        ConfigurationSchema.OptionsRef = "azureOptions";
+        ConfigurationSchema.GenerateNuGetTargets = false;
+
         // Include Azure.Core
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
+        if (HasDataFactoryElement)
+        {
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(DataFactoryElement<>).Assembly.Location));
+        }
 
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientGenerator).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
@@ -57,12 +94,18 @@ public class AzureClientGenerator : ScmCodeModelGenerator
 
         // Rest of the visitors can be added in any order.
         AddVisitor(new NamespaceVisitor());
-        AddVisitor(new DistributedTracingVisitor());
+        AddVisitor(new AzureDistributedTracingVisitor());
         AddVisitor(new PipelinePropertyVisitor());
         AddVisitor(new LroVisitor());
-        AddVisitor(new SpecialHeadersVisitor());
         AddVisitor(new MatchConditionsHeadersVisitor());
-        AddVisitor(new RequestClientIdHeaderVisitor());
+        AddVisitor(new ClientRequestIdHeaderVisitor());
         AddVisitor(new SystemTextJsonConverterVisitor());
+        AddVisitor(new MultiPartFormDataVisitor());
+        AddVisitor(new MultiPartFormDataConvenienceMethodVisitor());
+        AddVisitor(new OptionalResponseBodyVisitor());
+        AddVisitor(new StreamingResponseVisitor());
+        AddVisitor(new InvokeDelimitedMethodVisitor());
+        AddVisitor(new XmlSerializableVisitor());
+        AddVisitor(new ClientSettingsVisitor());
     }
 }

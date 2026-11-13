@@ -11,14 +11,33 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal static partial class FirewallPolicyIdpsSignatureDirectionExtensions
     {
+        /// <param name="value"> The value to deserialize. </param>
         public static FirewallPolicyIdpsSignatureDirection ToFirewallPolicyIdpsSignatureDirection(this int value)
         {
-            if (value == 0) return FirewallPolicyIdpsSignatureDirection.Zero;
-            if (value == 1) return FirewallPolicyIdpsSignatureDirection.One;
-            if (value == 2) return FirewallPolicyIdpsSignatureDirection.Two;
-            if (value == 3) return FirewallPolicyIdpsSignatureDirection.Three;
-            if (value == 4) return FirewallPolicyIdpsSignatureDirection.Four;
-            if (value == 5) return FirewallPolicyIdpsSignatureDirection.Five;
+            if (value == 0)
+            {
+                return FirewallPolicyIdpsSignatureDirection.Zero;
+            }
+            if (value == 1)
+            {
+                return FirewallPolicyIdpsSignatureDirection.One;
+            }
+            if (value == 2)
+            {
+                return FirewallPolicyIdpsSignatureDirection.Two;
+            }
+            if (value == 3)
+            {
+                return FirewallPolicyIdpsSignatureDirection.Three;
+            }
+            if (value == 4)
+            {
+                return FirewallPolicyIdpsSignatureDirection.Four;
+            }
+            if (value == 5)
+            {
+                return FirewallPolicyIdpsSignatureDirection.Five;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureDirection value.");
         }
     }

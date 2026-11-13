@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseCustomerManagedKeyIdentityType : IEquatable<RedisEnterpriseCustomerManagedKeyIdentityType>
     {
         private readonly string _value;
+        /// <summary> systemAssignedIdentity. </summary>
+        private const string SystemAssignedIdentityValue = "systemAssignedIdentity";
+        /// <summary> userAssignedIdentity. </summary>
+        private const string UserAssignedIdentityValue = "userAssignedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseCustomerManagedKeyIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SystemAssignedIdentityValue = "systemAssignedIdentity";
-        private const string UserAssignedIdentityValue = "userAssignedIdentity";
+            _value = value;
+        }
 
         /// <summary> systemAssignedIdentity. </summary>
         public static RedisEnterpriseCustomerManagedKeyIdentityType SystemAssignedIdentity { get; } = new RedisEnterpriseCustomerManagedKeyIdentityType(SystemAssignedIdentityValue);
+
         /// <summary> userAssignedIdentity. </summary>
         public static RedisEnterpriseCustomerManagedKeyIdentityType UserAssignedIdentity { get; } = new RedisEnterpriseCustomerManagedKeyIdentityType(UserAssignedIdentityValue);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseCustomerManagedKeyIdentityType left, RedisEnterpriseCustomerManagedKeyIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseCustomerManagedKeyIdentityType left, RedisEnterpriseCustomerManagedKeyIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseCustomerManagedKeyIdentityType(string value) => new RedisEnterpriseCustomerManagedKeyIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseCustomerManagedKeyIdentityType?(string value) => value == null ? null : new RedisEnterpriseCustomerManagedKeyIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseCustomerManagedKeyIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseCustomerManagedKeyIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

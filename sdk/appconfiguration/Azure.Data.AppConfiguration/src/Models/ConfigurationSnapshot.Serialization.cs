@@ -9,15 +9,8 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    public partial class ConfigurationSnapshot : IUtf8JsonSerializable
+    public partial class ConfigurationSnapshot
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, ModelSerializationExtensions.WireOptions);
-            writer.WriteEndObject();
-        }
-
         internal static ConfigurationSnapshot DeserializeSnapshot(JsonElement element)
         {
             string name = default;
@@ -30,6 +23,7 @@ namespace Azure.Data.AppConfiguration
             long? size = default;
             long? itemsCount = default;
             IDictionary<string, string> tags = default;
+            string description = default;
             string etag = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -138,6 +132,11 @@ namespace Azure.Data.AppConfiguration
                     etag = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("description"))
+                {
+                    description = property.Value.ValueKind == JsonValueKind.Null ? null : property.Value.GetString();
+                    continue;
+                }
             }
             return new ConfigurationSnapshot(
                 name,
@@ -150,6 +149,7 @@ namespace Azure.Data.AppConfiguration
                 size,
                 itemsCount,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
                 new ETag(etag));
         }
 
@@ -229,6 +229,11 @@ namespace Azure.Data.AppConfiguration
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteObjectValue(ETag, options);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseKind : IEquatable<RedisEnterpriseKind>
     {
         private readonly string _value;
+        /// <summary> v1. </summary>
+        private const string V1Value = "v1";
+        /// <summary> v2. </summary>
+        private const string V2Value = "v2";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string V1Value = "v1";
-        private const string V2Value = "v2";
+            _value = value;
+        }
 
         /// <summary> v1. </summary>
         public static RedisEnterpriseKind V1 { get; } = new RedisEnterpriseKind(V1Value);
+
         /// <summary> v2. </summary>
         public static RedisEnterpriseKind V2 { get; } = new RedisEnterpriseKind(V2Value);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseKind left, RedisEnterpriseKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseKind left, RedisEnterpriseKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseKind(string value) => new RedisEnterpriseKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseKind?(string value) => value == null ? null : new RedisEnterpriseKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

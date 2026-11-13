@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     internal partial class PhysicalPartitionThroughputInfoResultPropertiesResource : PhysicalPartitionThroughputInfoProperties
     {
         /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResultPropertiesResource"/>. </summary>
-        public PhysicalPartitionThroughputInfoResultPropertiesResource()
+        internal PhysicalPartitionThroughputInfoResultPropertiesResource()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResultPropertiesResource"/>. </summary>
         /// <param name="physicalPartitionThroughputInfo"> Array of physical partition throughput info objects. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PhysicalPartitionThroughputInfoResultPropertiesResource(IList<PhysicalPartitionThroughputInfoResource> physicalPartitionThroughputInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(physicalPartitionThroughputInfo, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PhysicalPartitionThroughputInfoResultPropertiesResource(IList<CosmosDBPhysicalPartitionThroughputInfo> physicalPartitionThroughputInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(physicalPartitionThroughputInfo, additionalBinaryDataProperties)
         {
         }
     }

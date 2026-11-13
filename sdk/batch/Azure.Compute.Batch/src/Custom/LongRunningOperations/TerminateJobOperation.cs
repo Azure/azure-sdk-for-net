@@ -172,10 +172,10 @@ namespace Azure.Compute.Batch
             {
                 _rawResponse = response.GetRawResponse();
 
-                if ( response.Value.State != BatchJobState.Terminating)
+                if (response.Value.State != BatchJobState.Terminating)
                 {
-                   _value = true;
-                   _hasCompleted = true;
+                    _value = true;
+                    _hasCompleted = true;
                 }
             }
             return _rawResponse;

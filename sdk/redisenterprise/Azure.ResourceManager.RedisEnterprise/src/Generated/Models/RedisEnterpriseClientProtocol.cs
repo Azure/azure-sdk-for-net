@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseClientProtocol : IEquatable<RedisEnterpriseClientProtocol>
     {
         private readonly string _value;
+        /// <summary> Encrypted. </summary>
+        private const string EncryptedValue = "Encrypted";
+        /// <summary> Plaintext. </summary>
+        private const string PlainTextValue = "Plaintext";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClientProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseClientProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EncryptedValue = "Encrypted";
-        private const string PlainTextValue = "Plaintext";
+            _value = value;
+        }
 
         /// <summary> Encrypted. </summary>
         public static RedisEnterpriseClientProtocol Encrypted { get; } = new RedisEnterpriseClientProtocol(EncryptedValue);
+
         /// <summary> Plaintext. </summary>
         public static RedisEnterpriseClientProtocol PlainText { get; } = new RedisEnterpriseClientProtocol(PlainTextValue);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseClientProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseClientProtocol left, RedisEnterpriseClientProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseClientProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseClientProtocol left, RedisEnterpriseClientProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseClientProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseClientProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseClientProtocol(string value) => new RedisEnterpriseClientProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseClientProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseClientProtocol?(string value) => value == null ? null : new RedisEnterpriseClientProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseClientProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseClientProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct ExtendedTermOption : IEquatable<ExtendedTermOption>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Opted-In. </summary>
+        private const string OptedInValue = "Opted-In";
+        /// <summary> Opted-Out. </summary>
+        private const string OptedOutValue = "Opted-Out";
 
         /// <summary> Initializes a new instance of <see cref="ExtendedTermOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExtendedTermOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string OptedInValue = "Opted-In";
-        private const string OptedOutValue = "Opted-Out";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static ExtendedTermOption Other { get; } = new ExtendedTermOption(OtherValue);
+
         /// <summary> Opted-In. </summary>
         public static ExtendedTermOption OptedIn { get; } = new ExtendedTermOption(OptedInValue);
+
         /// <summary> Opted-Out. </summary>
         public static ExtendedTermOption OptedOut { get; } = new ExtendedTermOption(OptedOutValue);
+
         /// <summary> Determines if two <see cref="ExtendedTermOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExtendedTermOption left, ExtendedTermOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExtendedTermOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExtendedTermOption left, ExtendedTermOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExtendedTermOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExtendedTermOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExtendedTermOption(string value) => new ExtendedTermOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExtendedTermOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExtendedTermOption?(string value) => value == null ? null : new ExtendedTermOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExtendedTermOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExtendedTermOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

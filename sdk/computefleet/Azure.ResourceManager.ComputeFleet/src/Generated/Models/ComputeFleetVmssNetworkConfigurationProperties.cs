@@ -9,44 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's IP configuration. </summary>
     public partial class ComputeFleetVmssNetworkConfigurationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssNetworkConfigurationProperties"/>. </summary>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
@@ -79,8 +50,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies whether the Auxiliary sku is enabled for the Network Interface
         /// resource.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssNetworkConfigurationProperties(bool? isPrimary, bool? isAcceleratedNetworkingEnabled, bool? isTcpStateTrackingDisabled, bool? isFpgaEnabled, WritableSubResource networkSecurityGroup, ComputeFleetVmssNetworkDnsSettings dnsSettings, IList<ComputeFleetVmssIPConfiguration> ipConfigurations, bool? isIPForwardingEnabled, ComputeFleetVmDeleteOption? deleteOption, ComputeFleetNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeFleetNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssNetworkConfigurationProperties(bool? isPrimary, bool? isAcceleratedNetworkingEnabled, bool? isTcpStateTrackingDisabled, bool? isFpgaEnabled, SubResource networkSecurityGroup, ComputeFleetVmssNetworkDnsSettings dnsSettings, IList<ComputeFleetVmssIPConfiguration> ipConfigurations, bool? isIPForwardingEnabled, ComputeFleetVmDeleteOption? deleteOption, ComputeFleetNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeFleetNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPrimary = isPrimary;
             IsAcceleratedNetworkingEnabled = isAcceleratedNetworkingEnabled;
@@ -93,12 +64,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             DeleteOption = deleteOption;
             AuxiliaryMode = auxiliaryMode;
             AuxiliarySku = auxiliarySku;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssNetworkConfigurationProperties"/> for deserialization. </summary>
-        internal ComputeFleetVmssNetworkConfigurationProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -106,54 +72,71 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// than 1 network interface.
         /// </summary>
         public bool? IsPrimary { get; set; }
+
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? IsAcceleratedNetworkingEnabled { get; set; }
+
         /// <summary> Specifies whether the network interface is disabled for tcp state tracking. </summary>
         public bool? IsTcpStateTrackingDisabled { get; set; }
+
         /// <summary> Specifies whether the network interface is FPGA networking-enabled. </summary>
         public bool? IsFpgaEnabled { get; set; }
+
         /// <summary> The network security group. </summary>
-        internal WritableSubResource NetworkSecurityGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        internal SubResource NetworkSecurityGroup { get; set; }
+
+        /// <summary> The dns settings to be applied on the network interfaces. </summary>
+        internal ComputeFleetVmssNetworkDnsSettings DnsSettings { get; set; }
+
+        /// <summary> Specifies the IP configurations of the network interface. </summary>
+        public IList<ComputeFleetVmssIPConfiguration> IPConfigurations { get; }
+
+        /// <summary> Whether IP forwarding enabled on this NIC. </summary>
+        public bool? IsIPForwardingEnabled { get; set; }
+
+        /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
+        public ComputeFleetVmDeleteOption? DeleteOption { get; set; }
+
+        /// <summary>
+        /// Specifies whether the Auxiliary mode is enabled for the Network Interface
+        /// resource.
+        /// </summary>
+        public ComputeFleetNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
+
+        /// <summary>
+        /// Specifies whether the Auxiliary sku is enabled for the Network Interface
+        /// resource.
+        /// </summary>
+        public ComputeFleetNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
+
+        /// <summary> Resource Id. </summary>
         public ResourceIdentifier NetworkSecurityGroupId
         {
-            get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
+            get
+            {
+                return NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
+            }
             set
             {
                 if (NetworkSecurityGroup is null)
-                    NetworkSecurityGroup = new WritableSubResource();
+                {
+                    NetworkSecurityGroup = new SubResource();
+                }
                 NetworkSecurityGroup.Id = value;
             }
         }
 
-        /// <summary> The dns settings to be applied on the network interfaces. </summary>
-        internal ComputeFleetVmssNetworkDnsSettings DnsSettings { get; set; }
         /// <summary> List of DNS servers IP addresses. </summary>
         public IList<string> DnsServers
         {
             get
             {
                 if (DnsSettings is null)
+                {
                     DnsSettings = new ComputeFleetVmssNetworkDnsSettings();
+                }
                 return DnsSettings.DnsServers;
             }
         }
-
-        /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<ComputeFleetVmssIPConfiguration> IPConfigurations { get; }
-        /// <summary> Whether IP forwarding enabled on this NIC. </summary>
-        public bool? IsIPForwardingEnabled { get; set; }
-        /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public ComputeFleetVmDeleteOption? DeleteOption { get; set; }
-        /// <summary>
-        /// Specifies whether the Auxiliary mode is enabled for the Network Interface
-        /// resource.
-        /// </summary>
-        public ComputeFleetNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
-        /// <summary>
-        /// Specifies whether the Auxiliary sku is enabled for the Network Interface
-        /// resource.
-        /// </summary>
-        public ComputeFleetNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
     }
 }

@@ -6,26 +6,25 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    // Data plane generated client.
-    /// <summary> The DataMap service client. </summary>
+    /// <summary> The DataMapClient. </summary>
     public partial class DataMapClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
+        private readonly string _apiVersion;
+        private DataMapEntity _cachedDataMapEntity;
+        private DataMapGlossary _cachedDataMapGlossary;
+        private DataMapDiscovery _cachedDataMapDiscovery;
+        private DataMapLineage _cachedDataMapLineage;
+        private DataMapRelationship _cachedDataMapRelationship;
+        private TypeDefinition _cachedTypeDefinition;
 
         /// <summary> Initializes a new instance of DataMapClient for mocking. </summary>
         protected DataMapClient()
@@ -33,77 +32,92 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Initializes a new instance of DataMapClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DataMapClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DataMapClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DataMapClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DataMapClient(Uri endpoint, TokenCredential credential, DataMapClientOptions options)
+        internal DataMapClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DataMapClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+
             options ??= new DataMapClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        private Relationship _cachedRelationship;
-
-        /// <summary> Initializes a new instance of Entity. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        public virtual Entity GetEntityClient(string apiVersion = "2023-09-01")
+        /// <summary> Initializes a new instance of DataMapClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DataMapClient(Uri endpoint, TokenCredential credential, DataMapClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
-            return new Entity(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of Glossary. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        public virtual Glossary GetGlossaryClient(string apiVersion = "2023-09-01")
+        /// <summary> Initializes a new instance of DataMapClient from a <see cref="DataMapClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for DataMapClient. </param>
+        [Experimental("SCME0002")]
+        public DataMapClient(DataMapClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
-            return new Glossary(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of Discovery. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Discovery GetDiscoveryClient(string apiVersion = "2023-09-01")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            return new Discovery(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of DataMapEntity. </summary>
+        public virtual DataMapEntity GetDataMapEntityClient()
+        {
+            return Volatile.Read(ref _cachedDataMapEntity) ?? Interlocked.CompareExchange(ref _cachedDataMapEntity, new DataMapEntity(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataMapEntity;
         }
 
-        /// <summary> Initializes a new instance of Lineage. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Lineage GetLineageClient(string apiVersion = "2023-09-01")
+        /// <summary> Initializes a new instance of DataMapGlossary. </summary>
+        public virtual DataMapGlossary GetDataMapGlossaryClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Lineage(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedDataMapGlossary) ?? Interlocked.CompareExchange(ref _cachedDataMapGlossary, new DataMapGlossary(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataMapGlossary;
         }
 
-        /// <summary> Initializes a new instance of Relationship. </summary>
-        public virtual Relationship GetRelationshipClient()
+        /// <summary> Initializes a new instance of DataMapDiscovery. </summary>
+        public virtual DataMapDiscovery GetDataMapDiscoveryClient()
         {
-            return Volatile.Read(ref _cachedRelationship) ?? Interlocked.CompareExchange(ref _cachedRelationship, new Relationship(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedRelationship;
+            return Volatile.Read(ref _cachedDataMapDiscovery) ?? Interlocked.CompareExchange(ref _cachedDataMapDiscovery, new DataMapDiscovery(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataMapDiscovery;
+        }
+
+        /// <summary> Initializes a new instance of DataMapLineage. </summary>
+        public virtual DataMapLineage GetDataMapLineageClient()
+        {
+            return Volatile.Read(ref _cachedDataMapLineage) ?? Interlocked.CompareExchange(ref _cachedDataMapLineage, new DataMapLineage(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataMapLineage;
+        }
+
+        /// <summary> Initializes a new instance of DataMapRelationship. </summary>
+        public virtual DataMapRelationship GetDataMapRelationshipClient()
+        {
+            return Volatile.Read(ref _cachedDataMapRelationship) ?? Interlocked.CompareExchange(ref _cachedDataMapRelationship, new DataMapRelationship(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDataMapRelationship;
         }
 
         /// <summary> Initializes a new instance of TypeDefinition. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        public virtual TypeDefinition GetTypeDefinitionClient(string apiVersion = "2023-09-01")
+        public virtual TypeDefinition GetTypeDefinitionClient()
         {
-            return new TypeDefinition(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedTypeDefinition) ?? Interlocked.CompareExchange(ref _cachedTypeDefinition, new TypeDefinition(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedTypeDefinition;
         }
     }
 }

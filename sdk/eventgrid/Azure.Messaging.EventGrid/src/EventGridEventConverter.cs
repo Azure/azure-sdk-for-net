@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid
             {
                 Topic = value.Topic
             };
-            ((IUtf8JsonSerializable) eventGridEventInternal).Write(writer);
+            ((IUtf8JsonSerializable)eventGridEventInternal).Write(writer);
         }
     }
 }

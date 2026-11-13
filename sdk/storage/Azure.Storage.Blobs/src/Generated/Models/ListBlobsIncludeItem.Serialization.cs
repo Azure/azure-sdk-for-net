@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Storage.Blobs.Models
 {
     internal static partial class ListBlobsIncludeItemExtensions

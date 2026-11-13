@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct VirtualNetworkAddressLifecycleState : IEquatable<VirtualNetworkAddressLifecycleState>
     {
         private readonly string _value;
+        /// <summary> Indicates that resource in Provisioning state. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Indicates that resource in Available state. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Indicates that resource in Terminating state. </summary>
+        private const string TerminatingValue = "Terminating";
+        /// <summary> Indicates that resource in Terminated state. </summary>
+        private const string TerminatedValue = "Terminated";
+        /// <summary> Indicates that resource in Failed state. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkAddressLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkAddressLifecycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProvisioningValue = "Provisioning";
-        private const string AvailableValue = "Available";
-        private const string TerminatingValue = "Terminating";
-        private const string TerminatedValue = "Terminated";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Indicates that resource in Provisioning state. </summary>
         public static VirtualNetworkAddressLifecycleState Provisioning { get; } = new VirtualNetworkAddressLifecycleState(ProvisioningValue);
+
         /// <summary> Indicates that resource in Available state. </summary>
         public static VirtualNetworkAddressLifecycleState Available { get; } = new VirtualNetworkAddressLifecycleState(AvailableValue);
+
         /// <summary> Indicates that resource in Terminating state. </summary>
         public static VirtualNetworkAddressLifecycleState Terminating { get; } = new VirtualNetworkAddressLifecycleState(TerminatingValue);
+
         /// <summary> Indicates that resource in Terminated state. </summary>
         public static VirtualNetworkAddressLifecycleState Terminated { get; } = new VirtualNetworkAddressLifecycleState(TerminatedValue);
+
         /// <summary> Indicates that resource in Failed state. </summary>
         public static VirtualNetworkAddressLifecycleState Failed { get; } = new VirtualNetworkAddressLifecycleState(FailedValue);
+
         /// <summary> Determines if two <see cref="VirtualNetworkAddressLifecycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualNetworkAddressLifecycleState left, VirtualNetworkAddressLifecycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualNetworkAddressLifecycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualNetworkAddressLifecycleState left, VirtualNetworkAddressLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkAddressLifecycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualNetworkAddressLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualNetworkAddressLifecycleState(string value) => new VirtualNetworkAddressLifecycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualNetworkAddressLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualNetworkAddressLifecycleState?(string value) => value == null ? null : new VirtualNetworkAddressLifecycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualNetworkAddressLifecycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualNetworkAddressLifecycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MongoCluster
 {
+    /// <summary></summary>
     public partial class MongoClusterResource : IJsonModel<MongoClusterData>
     {
-        private static MongoClusterData s_dataDeserializationInstance;
-        private static MongoClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MongoClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MongoClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MongoClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterData>)Data).Write(writer, options);
 
-        MongoClusterData IJsonModel<MongoClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MongoClusterData IJsonModel<MongoClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MongoClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoClusterData>(Data, options, AzureResourceManagerMongoClusterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MongoClusterData IPersistableModel<MongoClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterData>(data, options, AzureResourceManagerMongoClusterContext.Default);
 
-        string IPersistableModel<MongoClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MongoClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

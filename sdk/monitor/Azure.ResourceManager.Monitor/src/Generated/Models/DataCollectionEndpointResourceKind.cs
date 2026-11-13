@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct DataCollectionEndpointResourceKind : IEquatable<DataCollectionEndpointResourceKind>
     {
         private readonly string _value;
+        /// <summary> Linux. </summary>
+        private const string LinuxValue = "Linux";
+        /// <summary> Windows. </summary>
+        private const string WindowsValue = "Windows";
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointResourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataCollectionEndpointResourceKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LinuxValue = "Linux";
-        private const string WindowsValue = "Windows";
+            _value = value;
+        }
 
         /// <summary> Linux. </summary>
         public static DataCollectionEndpointResourceKind Linux { get; } = new DataCollectionEndpointResourceKind(LinuxValue);
+
         /// <summary> Windows. </summary>
         public static DataCollectionEndpointResourceKind Windows { get; } = new DataCollectionEndpointResourceKind(WindowsValue);
+
         /// <summary> Determines if two <see cref="DataCollectionEndpointResourceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataCollectionEndpointResourceKind left, DataCollectionEndpointResourceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataCollectionEndpointResourceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataCollectionEndpointResourceKind left, DataCollectionEndpointResourceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataCollectionEndpointResourceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataCollectionEndpointResourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataCollectionEndpointResourceKind(string value) => new DataCollectionEndpointResourceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataCollectionEndpointResourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataCollectionEndpointResourceKind?(string value) => value == null ? null : new DataCollectionEndpointResourceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataCollectionEndpointResourceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataCollectionEndpointResourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

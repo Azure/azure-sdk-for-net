@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct ExascaleDBStorageVaultLifecycleState : IEquatable<ExascaleDBStorageVaultLifecycleState>
     {
         private readonly string _value;
+        /// <summary> Indicates that resource in Provisioning state. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Indicates that resource in Available state. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Indicates that resource in Updating state. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Indicates that resource in Terminating state. </summary>
+        private const string TerminatingValue = "Terminating";
+        /// <summary> Indicates that resource in Terminated state. </summary>
+        private const string TerminatedValue = "Terminated";
+        /// <summary> Indicates that resource in Failed state. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExascaleDBStorageVaultLifecycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProvisioningValue = "Provisioning";
-        private const string AvailableValue = "Available";
-        private const string UpdatingValue = "Updating";
-        private const string TerminatingValue = "Terminating";
-        private const string TerminatedValue = "Terminated";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Indicates that resource in Provisioning state. </summary>
         public static ExascaleDBStorageVaultLifecycleState Provisioning { get; } = new ExascaleDBStorageVaultLifecycleState(ProvisioningValue);
+
         /// <summary> Indicates that resource in Available state. </summary>
         public static ExascaleDBStorageVaultLifecycleState Available { get; } = new ExascaleDBStorageVaultLifecycleState(AvailableValue);
+
         /// <summary> Indicates that resource in Updating state. </summary>
         public static ExascaleDBStorageVaultLifecycleState Updating { get; } = new ExascaleDBStorageVaultLifecycleState(UpdatingValue);
+
         /// <summary> Indicates that resource in Terminating state. </summary>
         public static ExascaleDBStorageVaultLifecycleState Terminating { get; } = new ExascaleDBStorageVaultLifecycleState(TerminatingValue);
+
         /// <summary> Indicates that resource in Terminated state. </summary>
         public static ExascaleDBStorageVaultLifecycleState Terminated { get; } = new ExascaleDBStorageVaultLifecycleState(TerminatedValue);
+
         /// <summary> Indicates that resource in Failed state. </summary>
         public static ExascaleDBStorageVaultLifecycleState Failed { get; } = new ExascaleDBStorageVaultLifecycleState(FailedValue);
+
         /// <summary> Determines if two <see cref="ExascaleDBStorageVaultLifecycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExascaleDBStorageVaultLifecycleState left, ExascaleDBStorageVaultLifecycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExascaleDBStorageVaultLifecycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExascaleDBStorageVaultLifecycleState left, ExascaleDBStorageVaultLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExascaleDBStorageVaultLifecycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExascaleDBStorageVaultLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExascaleDBStorageVaultLifecycleState(string value) => new ExascaleDBStorageVaultLifecycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExascaleDBStorageVaultLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExascaleDBStorageVaultLifecycleState?(string value) => value == null ? null : new ExascaleDBStorageVaultLifecycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExascaleDBStorageVaultLifecycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExascaleDBStorageVaultLifecycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

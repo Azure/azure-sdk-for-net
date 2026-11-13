@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys
     /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing the <see cref="KeyVaultKey"/>.
     /// The client also supports listing <see cref="DeletedKey"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
-    public class KeyClient
+    public class KeyClient : IDisposable
     {
         internal const string KeysPath = "/keys/";
         internal const string DeletedKeysPath = "/deletedkeys/";
@@ -25,6 +25,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string OTelKeyNameKey = "az.keyvault.key.name";
         private const string OTelKeyVersionKey = "az.keyvault.key.version";
         private readonly KeyVaultPipeline _pipeline;
+        private DisposableHttpPipeline _ownedPipeline;
 
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -69,17 +70,36 @@ namespace Azure.Security.KeyVault.Keys
             options ??= new KeyClientOptions();
             string apiVersion = options.GetVersionString();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
+            _ownedPipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
+                transportOptions: new HttpPipelineTransportOptions(),
+                responseClassifier: null);
 
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, _clientDiagnostics);
+            _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, _ownedPipeline, _clientDiagnostics);
         }
 
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="KeyClient"/>.
         /// </summary>
         public virtual Uri VaultUri => _pipeline.VaultUri;
+
+        /// <summary>
+        /// Releases the HTTP pipeline resources owned by this client.
+        /// </summary>
+        /// <remarks>
+        /// Reuse the client for its intended lifetime and dispose it after its operations, including long-running
+        /// operations and pageable enumeration, have completed. Cryptography clients created by
+        /// <see cref="GetCryptographyClient"/> share this client's pipeline and must no longer be used after disposal.
+        /// Caller-provided transports and credentials are not disposed.
+        /// </remarks>
+        public virtual void Dispose()
+        {
+            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
@@ -321,6 +341,68 @@ namespace Azure.Security.KeyVault.Keys
             try
             {
                 return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Registers a Managed HSM key that points at material managed by an external HSM.
+        /// This operation requires the keys/create permission. Only available with service version
+        /// <see cref="KeyClientOptions.ServiceVersion.V2026_01_01_Preview"/> and newer, and only supported on Managed HSM.
+        /// </summary>
+        /// <param name="externalKeyOptions">The key options object containing the name and external key reference for the key being registered.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="externalKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual Response<KeyVaultKey> CreateExternalKey(CreateExternalKeyOptions externalKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(externalKeyOptions, nameof(externalKeyOptions));
+
+            var parameters = new KeyRequestParameters(externalKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateExternalKey)}");
+            scope.AddAttribute(OTelKeyNameKey, externalKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(externalKeyOptions.Name), cancellationToken, KeysPath, externalKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Registers a Managed HSM key that points at material managed by an external HSM.
+        /// This operation requires the keys/create permission. Only available with service version
+        /// <see cref="KeyClientOptions.ServiceVersion.V2026_01_01_Preview"/> and newer, and only supported on Managed HSM.
+        /// </summary>
+        /// <param name="externalKeyOptions">The key options object containing the name and external key reference for the key being registered.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="externalKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual async Task<Response<KeyVaultKey>> CreateExternalKeyAsync(CreateExternalKeyOptions externalKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(externalKeyOptions, nameof(externalKeyOptions));
+
+            var parameters = new KeyRequestParameters(externalKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateExternalKey)}");
+            scope.AddAttribute(OTelKeyNameKey, externalKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(externalKeyOptions.Name), cancellationToken, KeysPath, externalKeyOptions.Name, "/create").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1443,6 +1525,8 @@ namespace Azure.Security.KeyVault.Keys
         /// Given a key <paramref name="keyName"/> and optional <paramref name="keyVersion"/>, a new <see cref="CryptographyClient"/> will be created
         /// using the same <see cref="VaultUri"/> and options passed to this <see cref="KeyClient"/>, including the <see cref="KeyClientOptions.ServiceVersion"/>,
         /// <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, and other options.
+        /// Keep this <see cref="KeyClient"/> alive until you have finished using the returned client.
+        /// Disposing the returned client does not dispose this client's shared pipeline.
         /// </para>
         /// <para>
         /// If you want to create a <see cref="CryptographyClient"/> using a different Key Vault or Managed HSM endpoint, with different options, or even with a

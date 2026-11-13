@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the information necessary to perform import operation for existing database. </summary>
     public partial class ImportExistingDatabaseDefinition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImportExistingDatabaseDefinition"/>. </summary>
         /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
@@ -71,8 +43,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
         /// <param name="authenticationType"> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportExistingDatabaseDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, NetworkIsolationSettings networkIsolation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImportExistingDatabaseDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, NetworkIsolationSettings networkIsolation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageKeyType = storageKeyType;
             StorageKey = storageKey;
@@ -81,32 +53,33 @@ namespace Azure.ResourceManager.Sql.Models
             AdministratorLoginPassword = administratorLoginPassword;
             AuthenticationType = authenticationType;
             NetworkIsolation = networkIsolation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ImportExistingDatabaseDefinition"/> for deserialization. </summary>
-        internal ImportExistingDatabaseDefinition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </summary>
         [WirePath("storageKeyType")]
         public StorageKeyType StorageKeyType { get; }
+
         /// <summary> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
         [WirePath("storageKey")]
         public string StorageKey { get; }
+
         /// <summary> Storage Uri. </summary>
         [WirePath("storageUri")]
         public Uri StorageUri { get; }
+
         /// <summary> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
         [WirePath("administratorLogin")]
         public string AdministratorLogin { get; }
+
         /// <summary> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </summary>
         [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
+
         /// <summary> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </summary>
         [WirePath("authenticationType")]
         public string AuthenticationType { get; set; }
+
         /// <summary> Optional resource information to enable network isolation for request. </summary>
         [WirePath("networkIsolation")]
         public NetworkIsolationSettings NetworkIsolation { get; set; }

@@ -1,18 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
-pr:
+trigger:
   branches:
     include:
     - main
-    - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/operationalinsights/ci.mgmt.yml
-    - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights/
-
+    - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
+    - sdk/operationalinsights/Azure.Provisioning.OperationalInsights
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -21,7 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.OperationalInsights
       safeName: AzureResourceManagerOperationalInsights
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.OperationalInsights
-      ExpectedWarningsFilepath: None
+    - name: Azure.Provisioning.OperationalInsights
+      safeName: AzureProvisioningOperationalInsights

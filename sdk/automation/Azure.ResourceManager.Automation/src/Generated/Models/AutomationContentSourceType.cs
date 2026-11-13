@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct AutomationContentSourceType : IEquatable<AutomationContentSourceType>
     {
         private readonly string _value;
+        /// <summary> embeddedContent. </summary>
+        private const string EmbeddedContentValue = "embeddedContent";
+        /// <summary> uri. </summary>
+        private const string UriValue = "uri";
 
         /// <summary> Initializes a new instance of <see cref="AutomationContentSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationContentSourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EmbeddedContentValue = "embeddedContent";
-        private const string UriValue = "uri";
+            _value = value;
+        }
 
         /// <summary> embeddedContent. </summary>
         public static AutomationContentSourceType EmbeddedContent { get; } = new AutomationContentSourceType(EmbeddedContentValue);
+
         /// <summary> uri. </summary>
         public static AutomationContentSourceType Uri { get; } = new AutomationContentSourceType(UriValue);
+
         /// <summary> Determines if two <see cref="AutomationContentSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationContentSourceType left, AutomationContentSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationContentSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationContentSourceType left, AutomationContentSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationContentSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationContentSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationContentSourceType(string value) => new AutomationContentSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationContentSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationContentSourceType?(string value) => value == null ? null : new AutomationContentSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationContentSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationContentSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

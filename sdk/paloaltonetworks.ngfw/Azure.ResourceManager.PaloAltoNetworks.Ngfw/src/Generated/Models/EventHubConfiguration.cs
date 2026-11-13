@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> EventHub configurations. </summary>
     public partial class EventHubConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventHubConfiguration"/>. </summary>
         public EventHubConfiguration()
@@ -57,25 +28,29 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="name"> EventHub name. </param>
         /// <param name="nameSpace"> EventHub namespace. </param>
         /// <param name="policyName"> EventHub policy name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubConfiguration(ResourceIdentifier id, string subscriptionId, string name, string nameSpace, string policyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubConfiguration(ResourceIdentifier id, string subscriptionId, string name, string nameSpace, string policyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SubscriptionId = subscriptionId;
             Name = name;
             NameSpace = nameSpace;
             PolicyName = policyName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID of EventHub. </summary>
         public ResourceIdentifier Id { get; set; }
+
         /// <summary> Subscription Id. </summary>
         public string SubscriptionId { get; set; }
+
         /// <summary> EventHub name. </summary>
         public string Name { get; set; }
+
         /// <summary> EventHub namespace. </summary>
         public string NameSpace { get; set; }
+
         /// <summary> EventHub policy name. </summary>
         public string PolicyName { get; set; }
     }

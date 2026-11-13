@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class SensitivityLabelRankExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SensitivityLabelRank value) => value switch
         {
             SensitivityLabelRank.None => "None",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SensitivityLabelRank value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SensitivityLabelRank ToSensitivityLabelRank(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return SensitivityLabelRank.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Low")) return SensitivityLabelRank.Low;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Medium")) return SensitivityLabelRank.Medium;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "High")) return SensitivityLabelRank.High;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return SensitivityLabelRank.Critical;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return SensitivityLabelRank.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Low"))
+            {
+                return SensitivityLabelRank.Low;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Medium"))
+            {
+                return SensitivityLabelRank.Medium;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "High"))
+            {
+                return SensitivityLabelRank.High;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical"))
+            {
+                return SensitivityLabelRank.Critical;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SensitivityLabelRank value.");
         }
     }

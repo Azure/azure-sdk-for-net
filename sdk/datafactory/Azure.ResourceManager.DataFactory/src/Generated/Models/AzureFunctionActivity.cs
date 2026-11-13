@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,15 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="functionName"> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
-        public AzureFunctionActivity(string name, AzureFunctionActivityMethod method, DataFactoryElement<string> functionName) : base(name)
+        public AzureFunctionActivity(string name, AzureFunctionActivityMethod @method, DataFactoryElement<string> functionName) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(functionName, nameof(functionName));
 
-            Method = method;
-            FunctionName = functionName;
-            RequestHeaders = new ChangeTrackingDictionary<string, BinaryData>();
-            ActivityType = "AzureFunctionActivity";
+            TypeProperties = new AzureFunctionActivityTypeProperties(@method, functionName);
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionActivity"/>. </summary>
@@ -38,63 +36,80 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="method"> Rest API method for target endpoint. </param>
-        /// <param name="functionName"> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </param>
-        /// <param name="requestHeaders"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </param>
-        /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
-        internal AzureFunctionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, AzureFunctionActivityMethod method, DataFactoryElement<string> functionName, IDictionary<string, BinaryData> requestHeaders, DataFactoryElement<string> body) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="typeProperties"> Azure Function activity properties. </param>
+        internal AzureFunctionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, AzureFunctionActivityTypeProperties typeProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
-            Method = method;
-            FunctionName = functionName;
-            RequestHeaders = requestHeaders;
-            Body = body;
-            ActivityType = activityType ?? "AzureFunctionActivity";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionActivity"/> for deserialization. </summary>
-        internal AzureFunctionActivity()
-        {
-        }
+        /// <summary> Azure Function activity properties. </summary>
+        internal AzureFunctionActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> Rest API method for target endpoint. </summary>
-        public AzureFunctionActivityMethod Method { get; set; }
+        public AzureFunctionActivityMethod Method
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Method;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFunctionActivityTypeProperties();
+                }
+                TypeProperties.Method = value;
+            }
+        }
+
         /// <summary> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> FunctionName { get; set; }
-        /// <summary>
-        /// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> RequestHeaders { get; }
+        public DataFactoryElement<string> FunctionName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FunctionName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFunctionActivityTypeProperties();
+                }
+                TypeProperties.FunctionName = value;
+            }
+        }
+
+        /// <summary> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </summary>
+        public IDictionary<string, BinaryData> RequestHeaders
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFunctionActivityTypeProperties();
+                }
+                return TypeProperties.RequestHeaders;
+            }
+        }
+
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Body { get; set; }
+        public DataFactoryElement<string> Body
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Body;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFunctionActivityTypeProperties();
+                }
+                TypeProperties.Body = value;
+            }
+        }
     }
 }

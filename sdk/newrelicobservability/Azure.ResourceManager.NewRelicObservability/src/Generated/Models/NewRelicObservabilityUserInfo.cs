@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> User Info of NewRelic Monitor resource. </summary>
     public partial class NewRelicObservabilityUserInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUserInfo"/>. </summary>
         public NewRelicObservabilityUserInfo()
@@ -53,32 +25,36 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUserInfo"/>. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
-        /// <param name="emailAddress"> User Email. </param>
+        /// <param name="emailAddress"> Reusable representation of an email address. </param>
         /// <param name="phoneNumber"> Contact phone number. </param>
         /// <param name="country"> country if user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicObservabilityUserInfo(string firstName, string lastName, string emailAddress, string phoneNumber, string country, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicObservabilityUserInfo(string firstName, string lastName, string emailAddress, string phoneNumber, string country, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;
             PhoneNumber = phoneNumber;
             Country = country;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> First name. </summary>
         [WirePath("firstName")]
         public string FirstName { get; set; }
+
         /// <summary> Last name. </summary>
         [WirePath("lastName")]
         public string LastName { get; set; }
-        /// <summary> User Email. </summary>
+
+        /// <summary> Reusable representation of an email address. </summary>
         [WirePath("emailAddress")]
         public string EmailAddress { get; set; }
+
         /// <summary> Contact phone number. </summary>
         [WirePath("phoneNumber")]
         public string PhoneNumber { get; set; }
+
         /// <summary> country if user. </summary>
         [WirePath("country")]
         public string Country { get; set; }

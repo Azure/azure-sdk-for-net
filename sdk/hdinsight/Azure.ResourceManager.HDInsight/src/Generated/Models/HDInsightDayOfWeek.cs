@@ -7,60 +7,90 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The HDInsightDayOfWeek. </summary>
+    /// <summary></summary>
     public readonly partial struct HDInsightDayOfWeek : IEquatable<HDInsightDayOfWeek>
     {
         private readonly string _value;
+        /// <summary> Monday. </summary>
+        private const string MondayValue = "Monday";
+        /// <summary> Tuesday. </summary>
+        private const string TuesdayValue = "Tuesday";
+        /// <summary> Wednesday. </summary>
+        private const string WednesdayValue = "Wednesday";
+        /// <summary> Thursday. </summary>
+        private const string ThursdayValue = "Thursday";
+        /// <summary> Friday. </summary>
+        private const string FridayValue = "Friday";
+        /// <summary> Saturday. </summary>
+        private const string SaturdayValue = "Saturday";
+        /// <summary> Sunday. </summary>
+        private const string SundayValue = "Sunday";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightDayOfWeek(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MondayValue = "Monday";
-        private const string TuesdayValue = "Tuesday";
-        private const string WednesdayValue = "Wednesday";
-        private const string ThursdayValue = "Thursday";
-        private const string FridayValue = "Friday";
-        private const string SaturdayValue = "Saturday";
-        private const string SundayValue = "Sunday";
+            _value = value;
+        }
 
         /// <summary> Monday. </summary>
         public static HDInsightDayOfWeek Monday { get; } = new HDInsightDayOfWeek(MondayValue);
+
         /// <summary> Tuesday. </summary>
         public static HDInsightDayOfWeek Tuesday { get; } = new HDInsightDayOfWeek(TuesdayValue);
+
         /// <summary> Wednesday. </summary>
         public static HDInsightDayOfWeek Wednesday { get; } = new HDInsightDayOfWeek(WednesdayValue);
+
         /// <summary> Thursday. </summary>
         public static HDInsightDayOfWeek Thursday { get; } = new HDInsightDayOfWeek(ThursdayValue);
+
         /// <summary> Friday. </summary>
         public static HDInsightDayOfWeek Friday { get; } = new HDInsightDayOfWeek(FridayValue);
+
         /// <summary> Saturday. </summary>
         public static HDInsightDayOfWeek Saturday { get; } = new HDInsightDayOfWeek(SaturdayValue);
+
         /// <summary> Sunday. </summary>
         public static HDInsightDayOfWeek Sunday { get; } = new HDInsightDayOfWeek(SundayValue);
+
         /// <summary> Determines if two <see cref="HDInsightDayOfWeek"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightDayOfWeek left, HDInsightDayOfWeek right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightDayOfWeek"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightDayOfWeek left, HDInsightDayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightDayOfWeek"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightDayOfWeek(string value) => new HDInsightDayOfWeek(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightDayOfWeek?(string value) => value == null ? null : new HDInsightDayOfWeek(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightDayOfWeek other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

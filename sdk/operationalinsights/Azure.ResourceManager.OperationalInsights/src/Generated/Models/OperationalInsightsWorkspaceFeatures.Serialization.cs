@@ -8,16 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspaceFeatures : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspaceFeatures>
+    /// <summary> Workspace features. </summary>
+    public partial class OperationalInsightsWorkspaceFeatures : IJsonModel<OperationalInsightsWorkspaceFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspaceFeatures>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OperationalInsightsWorkspaceFeatures PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OperationalInsightsWorkspaceFeatures>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsWorkspaceFeatures IPersistableModel<OperationalInsightsWorkspaceFeatures>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OperationalInsightsWorkspaceFeatures>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OperationalInsightsWorkspaceFeatures>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,13 +70,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(IsDataExportEnabled))
+            if (Optional.IsDefined(IsDataExportEnabled, _isDataExportEnabledIsDefined))
             {
                 if (IsDataExportEnabled != null)
                 {
@@ -44,10 +84,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 else
                 {
-                    writer.WriteNull("enableDataExport");
+                    writer.WriteNull("enableDataExport"u8);
                 }
             }
-            if (Optional.IsDefined(ImmediatePurgeDataOn30Days))
+            if (Optional.IsDefined(ImmediatePurgeDataOn30Days, _immediatePurgeDataOn30DaysIsDefined))
             {
                 if (ImmediatePurgeDataOn30Days != null)
                 {
@@ -56,10 +96,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 else
                 {
-                    writer.WriteNull("immediatePurgeDataOn30Days");
+                    writer.WriteNull("immediatePurgeDataOn30Days"u8);
                 }
             }
-            if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled))
+            if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled, _isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined))
             {
                 if (IsLogAccessUsingOnlyResourcePermissionsEnabled != null)
                 {
@@ -68,22 +108,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 else
                 {
-                    writer.WriteNull("enableLogAccessUsingOnlyResourcePermissions");
+                    writer.WriteNull("enableLogAccessUsingOnlyResourcePermissions"u8);
                 }
             }
             if (Optional.IsDefined(ClusterResourceId))
             {
-                if (ClusterResourceId != null)
-                {
-                    writer.WritePropertyName("clusterResourceId"u8);
-                    writer.WriteStringValue(ClusterResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("clusterResourceId");
-                }
+                writer.WritePropertyName("clusterResourceId"u8);
+                writer.WriteStringValue(ClusterResourceId);
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (Optional.IsDefined(IsLocalAuthDisabled, _isLocalAuthDisabledIsDefined))
             {
                 if (IsLocalAuthDisabled != null)
                 {
@@ -92,10 +125,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 else
                 {
-                    writer.WriteNull("disableLocalAuth");
+                    writer.WriteNull("disableLocalAuth"u8);
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUnifiedSentinelBillingOnly))
+            if (options.Format != "W" && Optional.IsDefined(IsUnifiedSentinelBillingOnly, _isUnifiedSentinelBillingOnlyIsDefined))
             {
                 if (IsUnifiedSentinelBillingOnly != null)
                 {
@@ -104,16 +137,43 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 else
                 {
-                    writer.WriteNull("unifiedSentinelBillingOnly");
+                    writer.WriteNull("unifiedSentinelBillingOnly"u8);
+                }
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Associations))
+            {
+                writer.WritePropertyName("associations"u8);
+                writer.WriteStartArray();
+                foreach (string item in Associations)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsDataAuthorizationMode, _isDataAuthorizationModeIsDefined))
+            {
+                if (IsDataAuthorizationMode != null)
+                {
+                    writer.WritePropertyName("dataAuthorizationMode"u8);
+                    writer.WriteBooleanValue(IsDataAuthorizationMode.Value);
+                }
+                else
+                {
+                    writer.WriteNull("dataAuthorizationMode"u8);
                 }
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -121,250 +181,164 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
         }
 
-        OperationalInsightsWorkspaceFeatures IJsonModel<OperationalInsightsWorkspaceFeatures>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsWorkspaceFeatures IJsonModel<OperationalInsightsWorkspaceFeatures>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OperationalInsightsWorkspaceFeatures JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
         }
 
-        internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? enableDataExport = default;
+            bool isDataExportEnabledIsDefined = false;
+            bool? isDataExportEnabled = default;
+            bool immediatePurgeDataOn30DaysIsDefined = false;
             bool? immediatePurgeDataOn30Days = default;
-            bool? enableLogAccessUsingOnlyResourcePermissions = default;
+            bool isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined = false;
+            bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default;
             ResourceIdentifier clusterResourceId = default;
-            bool? disableLocalAuth = default;
-            bool? unifiedSentinelBillingOnly = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool isLocalAuthDisabledIsDefined = false;
+            bool? isLocalAuthDisabled = default;
+            bool isUnifiedSentinelBillingOnlyIsDefined = false;
+            bool? isUnifiedSentinelBillingOnly = default;
+            IReadOnlyList<string> associations = default;
+            bool isDataAuthorizationModeIsDefined = false;
+            bool? isDataAuthorizationMode = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("enableDataExport"u8))
+                if (prop.NameEquals("enableDataExport"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    isDataExportEnabledIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        enableDataExport = null;
+                        isDataExportEnabled = null;
                         continue;
                     }
-                    enableDataExport = property.Value.GetBoolean();
+                    isDataExportEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("immediatePurgeDataOn30Days"u8))
+                if (prop.NameEquals("immediatePurgeDataOn30Days"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    immediatePurgeDataOn30DaysIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         immediatePurgeDataOn30Days = null;
                         continue;
                     }
-                    immediatePurgeDataOn30Days = property.Value.GetBoolean();
+                    immediatePurgeDataOn30Days = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableLogAccessUsingOnlyResourcePermissions"u8))
+                if (prop.NameEquals("enableLogAccessUsingOnlyResourcePermissions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        enableLogAccessUsingOnlyResourcePermissions = null;
+                        isLogAccessUsingOnlyResourcePermissionsEnabled = null;
                         continue;
                     }
-                    enableLogAccessUsingOnlyResourcePermissions = property.Value.GetBoolean();
+                    isLogAccessUsingOnlyResourcePermissionsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("clusterResourceId"u8))
+                if (prop.NameEquals("clusterResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        clusterResourceId = null;
                         continue;
                     }
-                    clusterResourceId = new ResourceIdentifier(property.Value.GetString());
+                    clusterResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("disableLocalAuth"u8))
+                if (prop.NameEquals("disableLocalAuth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    isLocalAuthDisabledIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        disableLocalAuth = null;
+                        isLocalAuthDisabled = null;
                         continue;
                     }
-                    disableLocalAuth = property.Value.GetBoolean();
+                    isLocalAuthDisabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("unifiedSentinelBillingOnly"u8))
+                if (prop.NameEquals("unifiedSentinelBillingOnly"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    isUnifiedSentinelBillingOnlyIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        unifiedSentinelBillingOnly = null;
+                        isUnifiedSentinelBillingOnly = null;
                         continue;
                     }
-                    unifiedSentinelBillingOnly = property.Value.GetBoolean();
+                    isUnifiedSentinelBillingOnly = prop.Value.GetBoolean();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                if (prop.NameEquals("associations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    associations = array;
+                    continue;
+                }
+                if (prop.NameEquals("dataAuthorizationMode"u8))
+                {
+                    isDataAuthorizationModeIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isDataAuthorizationMode = null;
+                        continue;
+                    }
+                    isDataAuthorizationMode = prop.Value.GetBoolean();
+                    continue;
+                }
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new OperationalInsightsWorkspaceFeatures(
-                enableDataExport,
+                isDataExportEnabled,
                 immediatePurgeDataOn30Days,
-                enableLogAccessUsingOnlyResourcePermissions,
+                isLogAccessUsingOnlyResourcePermissionsEnabled,
                 clusterResourceId,
-                disableLocalAuth,
-                unifiedSentinelBillingOnly,
-                additionalProperties);
+                isLocalAuthDisabled,
+                isUnifiedSentinelBillingOnly,
+                associations ?? new ChangeTrackingList<string>(),
+                isDataAuthorizationMode,
+                additionalProperties)
+            {
+                _isDataExportEnabledIsDefined = isDataExportEnabledIsDefined,
+                _immediatePurgeDataOn30DaysIsDefined = immediatePurgeDataOn30DaysIsDefined,
+                _isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined = isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined,
+                _isLocalAuthDisabledIsDefined = isLocalAuthDisabledIsDefined,
+                _isUnifiedSentinelBillingOnlyIsDefined = isUnifiedSentinelBillingOnlyIsDefined,
+                _isDataAuthorizationModeIsDefined = isDataAuthorizationModeIsDefined
+            };
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDataExportEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableDataExport: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDataExportEnabled))
-                {
-                    builder.Append("  enableDataExport: ");
-                    var boolValue = IsDataExportEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImmediatePurgeDataOn30Days), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  immediatePurgeDataOn30Days: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ImmediatePurgeDataOn30Days))
-                {
-                    builder.Append("  immediatePurgeDataOn30Days: ");
-                    var boolValue = ImmediatePurgeDataOn30Days.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLogAccessUsingOnlyResourcePermissionsEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableLogAccessUsingOnlyResourcePermissions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled))
-                {
-                    builder.Append("  enableLogAccessUsingOnlyResourcePermissions: ");
-                    var boolValue = IsLogAccessUsingOnlyResourcePermissionsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clusterResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterResourceId))
-                {
-                    builder.Append("  clusterResourceId: ");
-                    builder.AppendLine($"'{ClusterResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLocalAuthDisabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  disableLocalAuth: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsLocalAuthDisabled))
-                {
-                    builder.Append("  disableLocalAuth: ");
-                    var boolValue = IsLocalAuthDisabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUnifiedSentinelBillingOnly), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  unifiedSentinelBillingOnly: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsUnifiedSentinelBillingOnly))
-                {
-                    builder.Append("  unifiedSentinelBillingOnly: ");
-                    var boolValue = IsUnifiedSentinelBillingOnly.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<OperationalInsightsWorkspaceFeatures>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        OperationalInsightsWorkspaceFeatures IPersistableModel<OperationalInsightsWorkspaceFeatures>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<OperationalInsightsWorkspaceFeatures>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

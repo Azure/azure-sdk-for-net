@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SftpWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="SftpWriteSettings"/>. </summary>
-        public SftpWriteSettings()
+        public SftpWriteSettings() : base("SftpWriteSettings")
         {
-            StoreWriteSettingsType = "SftpWriteSettings";
         }
 
         /// <summary> Initializes a new instance of <see cref="SftpWriteSettings"/>. </summary>
@@ -26,18 +25,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="operationTimeout"> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </param>
         /// <param name="useTempFileRename"> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn't support rename operation. Type: boolean (or Expression with resultType boolean). </param>
         internal SftpWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> operationTimeout, DataFactoryElement<bool> useTempFileRename) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, metadata, additionalProperties)
         {
             OperationTimeout = operationTimeout;
             UseTempFileRename = useTempFileRename;
-            StoreWriteSettingsType = storeWriteSettingsType ?? "SftpWriteSettings";
         }
 
         /// <summary> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> OperationTimeout { get; set; }
+
         /// <summary> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn't support rename operation. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> UseTempFileRename { get; set; }
     }

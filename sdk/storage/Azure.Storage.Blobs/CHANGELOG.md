@@ -1,6 +1,6 @@
 # Release History
 
-## 12.26.0-beta.2 (Unreleased)
+## 12.31.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,149 @@
 
 ### Other Changes
 
+## 12.31.0-beta.1 (2026-11-05)
+
+### Features Added
+- Added support for Session Authentication for `TokenCredential`-authenticated clients using GET Blob operations. This is currently disabled by default and can be enabled via `BlobClientOptions.SessionOptions.SessionMode`.
+- Changed the default value of `GetBlobsOptions.ResponseFormat` and `GetBlobsByHierarchyOptions.ResponseFormat` to `StorageResponseFormat.Arrow`. The default value was previously `StorageResponseFormat.Xml`. This change will improve performance and modify the response format of the `GetBlobs` and `GetBlobsByHierarchy` APIs when the caller does not explicitly set the response format. Callers that require XML responses should explicitly set the response format to `StorageResponseFormat.Xml`.
+- Added support for locality-aware downloads for `BlobBaseClient.DownloadTo`, `BlobBaseClient.DownloadToAsync`, `BlobBaseClient.OpenRead`, and `BlobBaseClient.OpenReadAsync` operations. This is currently disabled by default and can be enabled via `BlobDownloadToOptions.LayoutAwareRouting` and `BlobOpenReadOptions.LayoutAwareRouting`.
+
+### Breaking Changes
+- Changed the default value of `StorageTransferOptions.InitialTransferSize` used by partitioned uploads and downloads when it is not set by the caller. It now matches the default size of subsequent chunks instead of 256 MB:
+  - Downloads (`BlobBaseClient.DownloadTo`/`DownloadToAsync`): the first range request now defaults to 4 MB, the same as subsequent ranges. Previously, it was 256 MB when no transfer checksum was used.
+  - Uploads (`BlobClient.Upload`/`UploadAsync`, `BlockBlobClient.Upload`/`UploadAsync`): a blob is now uploaded in a single Put Blob request only if its content is smaller than the default block size (4 MB, or 8 MB for content of 100 MB or more). Previously, content smaller than 256 MB was uploaded in a single request.
+  - This means uploads and downloads may be partitioned more often, leading to more requests.
+  - Explicitly set `InitialTransferSize` and `MaximumTransferSize` values are still respected. To restore the previous behavior, set `StorageTransferOptions.InitialTransferSize` to 256 MB.
+
+### Bugs Fixed
+- Fixed client-side encryption v1 decryption of ranged downloads so the 16-byte IV is fully read even when the ciphertext stream returns short reads, and a truncated IV now fails instead of silently corrupting plaintext.
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `BlobBaseClient.GenerateSasUri(...)`
+  - `BlobBaseClient.GenerateUserDelegationSasUri(...)`
+  - `BlobContainerClient.GenerateSasUri(...)`
+  - `BlobContainerClient.GenerateUserDelegationSasUri(...)`
+  - `BlobServiceClient.GenerateAccountSasUri(...)`
+  - `BlobSasBuilder`
+
+## 12.30.1 (2026-10-05)
+
+### Bugs Fixed
+- Fixed `AuthenticatedRegionCryptoStream.Dispose()` to be idempotent and thread-safe, so the buffer it rents is no longer returned to the shared `ArrayPool<byte>` more than once when the stream is disposed repeatedly or concurrently. Returning the same array twice allowed unrelated callers to rent the same array instance and corrupt each other's data.
+
+## 12.30.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.30.0-beta.1 and 12.30.0-beta.2.
+
+## 12.30.0-beta.2 (2026-08-24)
+
+### Bugs Fixed
+- Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
+- Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
+
+## 12.29.2 (2026-08-24)
+
+### Bugs Fixed
+- Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
+- Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
+
+## 12.30.0-beta.1 (2026-07-21)
+
+### Features Added
+- Added support for service version 2026-10-06.
+- Added `AccessTier`, `AccessTierInferred`, `AccessTierChangedOn`, and `SmartAccessTier` to `BlobDownloadDetails`.
+- Added support for PUT blob operations returning both the existing MD5 content hash and the new CRC64 checksum.
+- Added support for Apache Arrow response format for `GetBlobs` and `GetBlobsByHierarchy`.
+- Added support for the `EndBefore` property in `GetBlobs` and `GetBlobsByHierarchy`. Note that `EndBefore` is currently only available for Apache Arrow response format and is not returned for XML response format.
+
+### Breaking Changes
+- Block IDs generated during partitioned uploads are now randomly generated instead of based on sequential integers. This ensures uniqueness across concurrent uploads to the same blob but means block IDs are no longer predictable or ordered.
+
+### Other Changes
+- Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.
+
+## 12.29.1 (2026-06-23)
+
+### Bugs Fixed
+- Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on blob clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `BlobSasBuilder`.
+- Fixed an issue where structured-message Uploads with checksum validation could fail with a `ArgumentOutOfRangeException` for empty content
+
+## 12.29.0 (2026-06-04)
+
+### Features Added
+- Includes all features from 12.29.0-beta.1
+
+### Bugs Fixed
+- Added validation for length-prefixed fields when parsing Blob Query responses to prevent excessive memory allocation from malformed or untrusted payloads.
+
+## 12.28.0 (2026-05-12)
+
+### Features Added
+- Includes all features from 12.28.0-beta.1
+
+### Bugs Fixed
+- Fixed issue where the `TokenRequestContext.Scopes` contained a double slash (e.g. `https://storage.azure.com//.default`) when using `TokenCredential` authentication. (#58295)
+
+## 12.29.0-beta.1 (2026-03-24)
+
+### Features Added
+- Added support for service version 2026-06-06.
+- Added support for Blob Smart Tier.
+- Added support for Directory-level SAS and User Delegation SAS.
+
+## 12.28.0-beta.1 (2026-01-20)
+
+### Features Added
+- Added support for service version 2026-04-06.
+- Added support for Content Validation via Structured Message.
+- Added support for Delete Blob Conditional Tier.
+- Added support for Server-side Encryption Rekeying.
+- Added cross-tenant support for Principal-Bound User Delegation SAS.
+- Added support for Dynamic User Delegation SAS.
+
+### Other Changes
+- Changed the default concurrency transfer count from 5 to Math.Clamp(Environment.ProcessorCount * 2, 8, 32). This controls the maximum number of concurrent tasks that will be used during large downloads or uploads, and this change should result in higher throughput for these operations by default in most environments. This can be reverted by enabling "Azure.Storage.UseLegacyDefaultConcurrency" in the AppContext switch or "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY" in the environment variable.
+
+### Bugs Fixed
+- Added BlobErrorCode.IncrementalCopyOfEarlierSnapshotNotAllowed, deprecated BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed.
+- Added support for missing SkuName values.
+
+## 12.27.0 (2026-01-08)
+
+### Features Added
+- Includes all features from 12.27.0-beta.1
+
+## 12.27.0-beta.1 (2025-11-17)
+
+### Features Added
+- Added support for service version 2026-02-06.
+- Added support for the StartFrom parameter on BlobContainerClient.GetBlobs(), .GetBlobsAsync(), .GetBlobsByHierarchy(), and .GetBlobsByHierarchyAsync().
+- Added support for Principal-Bound Identity User Delegation SAS
+- Added support for conditional headers on BlobBaseClient.GetTags(), .GetTagsAsync(), .SetTags(), and .SetTagsAsync().
+
+### Breaking Changes
+- All parameters for the BlobContainerClient.GetBlobs(), .GetBlobsAsync(), .GetBlobsByHierarchy(), and .GetBlobsByHierarchyAsync() overloads are now required, as these overloads are being phased out and hidden from IntelliSense.  We recommend switching to the new overloads taking optional GetBlobsOptions or GetBlobsByHierarchyOptions.
+
+## 12.26.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.26.0-beta.1
+
+## 12.25.1 (2025-09-24)
+
+### Bugs Fixed
+- Fixed bug for processing partitioned downloads for empty blobs with content validation enabled.
+
 ## 12.25.0 (2025-07-14)
 
 ### Features Added
 - Includes all features from 12.25.0-beta.1
 - Includes all features from 12.24.1
+
+## 12.24.1 (2025-06-10)
+
+### Features Added
+- Added `PageBlobCreateOptions.PremiumPageBlobAccessTier` for `PageBlobClient.Create(..)`
 
 ## 12.26.0-beta.1 (2025-06-09)
 
@@ -25,11 +163,6 @@
 
 ### Other Changes
 - Changed BlobServiceClient.AccountName to be virtual so that it can be overridden and mocked.
-
-## 12.24.1 (2025-06-10)
-
-### Features Added
-- Added `PageBlobCreateOptions.PremiumPageBlobAccessTier` for `PageBlobClient.Create(..)`
 
 ## 12.25.0-beta.1 (2025-05-06)
 

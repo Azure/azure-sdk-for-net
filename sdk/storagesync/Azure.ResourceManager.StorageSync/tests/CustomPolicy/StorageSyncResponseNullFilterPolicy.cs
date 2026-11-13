@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.Pipeline;
 using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.StorageSync.Tests.CustomPolicy
 {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Support.Models
     public readonly partial struct SupportTicketCommunicationDirection : IEquatable<SupportTicketCommunicationDirection>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationDirection"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SupportTicketCommunicationDirection(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InboundValue = "inbound";
         private const string OutboundValue = "outbound";
 
-        /// <summary> inbound. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SupportTicketCommunicationDirection(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Inbound. </summary>
         public static SupportTicketCommunicationDirection Inbound { get; } = new SupportTicketCommunicationDirection(InboundValue);
-        /// <summary> outbound. </summary>
+
+        /// <summary> Gets the Outbound. </summary>
         public static SupportTicketCommunicationDirection Outbound { get; } = new SupportTicketCommunicationDirection(OutboundValue);
+
         /// <summary> Determines if two <see cref="SupportTicketCommunicationDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SupportTicketCommunicationDirection left, SupportTicketCommunicationDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SupportTicketCommunicationDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SupportTicketCommunicationDirection left, SupportTicketCommunicationDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SupportTicketCommunicationDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SupportTicketCommunicationDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SupportTicketCommunicationDirection(string value) => new SupportTicketCommunicationDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SupportTicketCommunicationDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SupportTicketCommunicationDirection?(string value) => value == null ? null : new SupportTicketCommunicationDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SupportTicketCommunicationDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SupportTicketCommunicationDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

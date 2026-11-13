@@ -13,18 +13,21 @@ namespace BasicTypeSpec
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DataFactoryElementModel))]
     [ModelReaderWriterBuildable(typeof(FriendModel))]
-    [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenHeaderResponseResponse))]
-    [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenResponse))]
-    [ModelReaderWriterBuildable(typeof(ListWithHeaderNextLinkResponse))]
-    [ModelReaderWriterBuildable(typeof(ListWithNextLinkResponse))]
-    [ModelReaderWriterBuildable(typeof(ListWithStringNextLinkResponse))]
     [ModelReaderWriterBuildable(typeof(ModelWithRequiredNullableProperties))]
-    [ModelReaderWriterBuildable(typeof(PageThingModel))]
+    [ModelReaderWriterBuildable(typeof(Plant))]
     [ModelReaderWriterBuildable(typeof(RenamedModel))]
-    [ModelReaderWriterBuildable(typeof(ReturnsAnonymousModelResponse))]
+    [ModelReaderWriterBuildable(typeof(ResourceIdentifierModel))]
+    [ModelReaderWriterBuildable(typeof(ReturnsAnonymousModelResult))]
     [ModelReaderWriterBuildable(typeof(RoundTripModel))]
+    [ModelReaderWriterBuildable(typeof(StreamingItem))]
     [ModelReaderWriterBuildable(typeof(ThingModel))]
+    [ModelReaderWriterBuildable(typeof(Tree))]
+    [ModelReaderWriterBuildable(typeof(XmlAdvancedModel))]
+    [ModelReaderWriterBuildable(typeof(XmlItem))]
+    [ModelReaderWriterBuildable(typeof(XmlModelWithNamespace))]
+    [ModelReaderWriterBuildable(typeof(XmlNestedModel))]
     public partial class BasicTypeSpecContext : ModelReaderWriterContext
     {
     }

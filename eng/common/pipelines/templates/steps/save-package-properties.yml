@@ -32,9 +32,8 @@ steps:
       - task: Powershell@2
         displayName: Generate PR Diff
         inputs:
-          targetType: inline
-          script: >
-            ${{ parameters.ScriptDirectory }}/Generate-PR-Diff.ps1
+          filePath: ${{ parameters.ScriptDirectory }}/Generate-PR-Diff.ps1
+          arguments: >
             -TargetPath '${{ parameters.TargetPath }}'
             -ArtifactPath '${{ parameters.DiffDirectory }}'
             -ExcludePaths ('${{ convertToJson(parameters.ExcludePaths) }}' | ConvertFrom-Json)

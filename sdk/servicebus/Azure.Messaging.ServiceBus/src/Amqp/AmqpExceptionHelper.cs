@@ -112,6 +112,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return new NotSupportedException(EnrichMessage(message));
             }
 
+            // A receiver opening a non-exclusive session link reports one refusal carrying this condition as a
+            // NotSupportedException instead, because that refusal is the endpoint declining the feature rather than
+            // the operation. See AmqpReceiver.IsUnrecognizedFilterRejection; every other refusal maps here.
             if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new InvalidOperationException(EnrichMessage(message));
@@ -195,31 +198,30 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             switch (exception)
             {
-                case SocketException _:
-                    message = stringBuilder.Append($" ErrorCode: {((SocketException)exception).SocketErrorCode}").ToString();
+                case SocketException socketException:
+                    message = stringBuilder.Append($" ErrorCode: {socketException:.SocketErrorCode}").ToString();
                     return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
-                case IOException _:
-                    if (exception.InnerException is SocketException socketException)
+                case IOException ioException:
+                    if (ioException.InnerException is SocketException socketEx)
                     {
-                        message = stringBuilder.Append($" ErrorCode: {socketException.SocketErrorCode}").ToString();
+                        message = stringBuilder.Append($" ErrorCode: {socketEx.SocketErrorCode}").ToString();
                     }
                     return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
                 case AmqpException amqpException:
                     return amqpException.Error.ToMessagingContractException(connectionError);
 
-                case OperationCanceledException operationCanceledException when operationCanceledException.InnerException is AmqpException amqpException:
+                case OperationCanceledException { InnerException: AmqpException amqpException }:
                     return amqpException.Error.ToMessagingContractException(connectionError);
 
                 case OperationCanceledException _ when connectionError:
                     return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
-                case OperationCanceledException operationCanceledException when
-                operationCanceledException.InnerException != null:
+                case OperationCanceledException { InnerException: not null } operationCanceledException:
                     return operationCanceledException.InnerException;
 
-                case OperationCanceledException operationEx when !(operationEx is TaskCanceledException):
+                case OperationCanceledException operationEx and not TaskCanceledException:
                     return new ServiceBusException(operationEx.Message, ServiceBusFailureReason.ServiceTimeout);
 
                 case TimeoutException _:

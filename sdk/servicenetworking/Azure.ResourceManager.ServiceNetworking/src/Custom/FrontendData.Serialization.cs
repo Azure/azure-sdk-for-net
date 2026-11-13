@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

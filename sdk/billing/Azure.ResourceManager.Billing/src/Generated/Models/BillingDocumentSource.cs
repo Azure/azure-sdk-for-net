@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingDocumentSource : IEquatable<BillingDocumentSource>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> DRS. </summary>
+        private const string DrsValue = "DRS";
+        /// <summary> ENF. </summary>
+        private const string EnfValue = "ENF";
 
         /// <summary> Initializes a new instance of <see cref="BillingDocumentSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingDocumentSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string DrsValue = "DRS";
-        private const string EnfValue = "ENF";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingDocumentSource Other { get; } = new BillingDocumentSource(OtherValue);
+
         /// <summary> DRS. </summary>
         public static BillingDocumentSource Drs { get; } = new BillingDocumentSource(DrsValue);
+
         /// <summary> ENF. </summary>
         public static BillingDocumentSource Enf { get; } = new BillingDocumentSource(EnfValue);
+
         /// <summary> Determines if two <see cref="BillingDocumentSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingDocumentSource left, BillingDocumentSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingDocumentSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingDocumentSource left, BillingDocumentSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingDocumentSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingDocumentSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingDocumentSource(string value) => new BillingDocumentSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingDocumentSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingDocumentSource?(string value) => value == null ? null : new BillingDocumentSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingDocumentSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingDocumentSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

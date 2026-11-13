@@ -13,20 +13,20 @@ This sample demonstrates how to use the synchronous and asynchronous `.deploymen
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_DeploymentExampleSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List all deployments:");
-foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
+foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
@@ -39,20 +39,20 @@ Console.WriteLine(deploymentDetails);
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_DeploymentExampleAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List all deployments:");
-await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
+await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
+await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
